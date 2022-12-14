@@ -1,0 +1,228 @@
+@startuml Change Profile
+actor Administrator
+Administrator -> System:1 Request List
+System -> Administrator:2 Retrieves List
+Administrator -> System:3 Select User Account
+System -> Administrator:4 Retrieves User Account
+Administrator -> System:5 Update Profile
+System --> System:6 Validate the Update
+System --> Administrator:7 Notify
+@enduml
+
+Inactivate User Account
+@startuml
+actor Administrator
+Administrator -> System:1 Requests the list of all Users
+System --> Administrator:2 Return List
+Administrator -> System:3 Select a user Account
+Administrator <-- System:4 Return the user Account
+Administrator -> System:5 Change the status to "Inactive"
+Administrator -> System:6 Save the Change
+System <- System:7 Validates
+System --> Administrator:8 Notifies the Update
+@enduml
+
+Activate User Account
+@startuml
+actor Administrator
+Administrator -> System:1 Request List
+System -> Administrator:2 Retrieves List
+Administrator -> System:3 Select user Account
+System -> Administrator:4 Account Information
+Administrator -> System:5 Activate user Account
+System --> System:6 Validate the Update
+System --> Administrator:7 Notify
+@enduml
+
+2.3.1 Register User Account
+@startuml
+actor Administrator as Admin
+Admin -> System:1 Enters new account Information
+Admin -> System:2 Requests to save Values
+Admin <-- System:3 Validates Information
+Admin <-- System:4 Associates new account with an \n "user" Profile
+Admin <-- System:5 Notifies that new account has \n been Created
+@enduml
+
+2.3.2 Reset Password
+@startuml
+actor User
+actor Account
+Account -> System:1 Accesses form through Link
+Account -> System:2 Inserts E-mail
+Account <-- System:3 Sends message with Link
+Account -> System:4 Accesses Link
+Account -> System:5 Enters new Password
+Account <-- System:6 Validates new Password
+Account <-- System:7 Notifies that password has been Updated
+@enduml
+
+Create Password
+@startuml
+actor Account
+Account -> System:1 Create Password
+Account -> System:1 Enter Password
+System -> System:2 Password Validated
+Account <-- System:3 Password Created
+@enduml
+
+2.3.3 Edit Account
+@startuml
+actor Account
+Account -> System: Enters user account Information
+Account -> System: Request to save Values
+Account <-- System: Validates entered Information
+Account <-- System: Notifies the Update
+@enduml
+
+Sign In
+@startuml
+actor Account
+Account -> System:1 Enter credentials: e-mail and Password
+System --> Account:2 Grants Access
+Account <-- System:3 Creates a Session
+System -> System:4 User becomes identifiable\nin subsequent Requests
+@enduml
+
+Logout
+@startuml
+actor Account
+Account -> System:1 Closes Session
+System --> Account:2 Session ended Message
+@enduml
+
+2.4.1 Poject creation
+@startuml
+actor Manager
+Manager -> System: Create a Product
+Manager -> System: Define information about the Product
+Manager <-- System: Product Registration
+@enduml
+
+2.4.1 Project Management
+@startuml
+actor "Product Manager" as PM
+PM -> System: Edit product Information
+PM <-- System: Product information Updated
+@enduml
+
+2.4.2 Project search
+@startuml
+actor Account as A
+A -> System: Access System
+A <-- System: Access Granted
+A -> System: Search Project
+A <-- System: List of Projects
+@enduml
+
+2.4.3 US registration
+@startuml
+actor "Product Owner" as PO
+PO -> System: Registers US
+PO <-- System: us Registed
+PO -> System: Adds us to product Backlog
+PO <-- System: US added to product Backlog
+@enduml
+
+2.4.3 Sprint backlog definition
+@startuml
+Team -> System: Access to product Backlog
+Team <-- System: Returns product Backlog
+Team -> System: Sprint backlog and effort Definition
+Team <-- System: Sprint backlog Defined
+@enduml
+
+2.4.3 Product backlog grooming definition
+@startuml
+actor "Product Owner" as PO
+PO -> System: Requests access to product Backlog
+PO <-- System: Returns US
+PO -> System: Replace US
+PO <-- System: Product backlog Updated
+@enduml
+
+2.4.3 Sprint review
+@startuml
+Team -> System: Access to product Backlog
+Team <-- System: Returns product Backlog
+Team -> System: Sprint backlog and effort Definition
+Team <-- System: Sprint backlog Defined
+@enduml
+
+2.4.3 Tasks for us
+@startuml
+actor "Product Owner" as PO
+Team -> System: Registers finished Task
+System -> System: Finished US
+System -> System: Product backlog\nUpdated \n
+PO -> System: Request the finished US
+PO <-- System: Retrieves finished US
+PO -> System: Update product backlog\nwith rejected US
+@enduml
+
+2.4.4 Task update
+@startuml
+actor Account
+Account -> System:1 Access Information
+System --> Account:2 Grants Access
+Account -> System:3 Updates Information
+Account -> System:4 Completes the comment Field
+System --> Account:5 Generates a Record
+@enduml
+
+2.4.5  Project allocation
+@startuml
+actor Manager
+Manager -> System:1 Access System
+System --> Manager:2 Grants Access
+Manager -> System:3 Checks available Resources
+System --> Manager:4 Shows available Resources
+Manager -> System:5 Choose resource and select Project
+System --> Manager:6 System assigns resource to Project
+@enduml
+
+2.4.6 Project activity
+@startuml
+actor Account
+Account -> System:1 Access Project
+System --> Account:2 Grant Access
+Account -> System:3 View project activity Status
+Account -> System:4 Choose what type of View
+System --> Account:5 Returns a table-shaped View
+System --> Account:6 Returns a Gantt form View
+@enduml
+
+2.4.7 Allocation report
+@startuml
+actor Account
+Account -> System:1 Access Project
+System --> Account:2 Grant Access
+Account -> System:3 Request allocation Report
+System -> System:4 Checks all Projects
+System --> Account:5 Generate Report
+@enduml
+
+2.4.8 KPI report
+@startuml
+actor Account
+Account -> System:1 Access System
+System --> Account:2 Grant Access
+Account -> System:3 Request KPI Report
+System -> System:4 Generate CPI
+System -> System:5 Generate SPI
+System --> Account:6 Chose XML file or on Screen
+Account -> System:7 Pick XML file or on Screen
+System --> Account:8 Reports CPI and SPI in chosen Format
+@enduml
+
+2.5 Scrum recording
+@startuml
+System -> System:1 Saves time in minutes of each ceremony Duration
+@enduml
+
+2.6 Legacy data input
+@startuml
+database "Legacy Platform" as LP
+LP --> System:1 Import of Projects
+@enduml
+
