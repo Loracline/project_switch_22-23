@@ -1,0 +1,68 @@
+@startuml
+title Domain model v.01 \nDec 14, 2022
+hide empty member
+
+Class Account{
+Name
+E-mail
+Password
+Status
+Photo - optional
+}
+Class Profile
+Class UserInProject
+Class Role
+Class Project{
+Code
+Name
+Description
+Start date
+Sprint Duration
+Number of sprints
+End date
+Customer
+Typology
+Budget
+Project manager
+Product Owner
+Scrum Master
+Project team
+Project status
+}
+Class Sprint{
+Effort
+}
+Class UserStory{
+Number
+Actor
+User story text
+Acceptance criteria
+}
+Class Task{
+Name
+Description
+User Story
+Start date
+End date
+Hours spent
+Effort estimate
+Percentage of execution
+Type
+Status
+Responsible
+}
+
+Account "*"--"1" Profile : has >
+note left: Administrator \nUser \nManager
+Account "1"--"*" UserInProject : is a >
+UserInProject "*"--"1" Role : has >
+note left: Project Manager \nProduct Owner \nScrum Master \nTeam Member
+UserInProject "*"--"1" Project : works in >
+Project "1"--"*" Sprint : comprises >
+Project "1"--"*" UserStory : contains >
+Sprint "1"--"*" Task : contains >
+Sprint "1"--"*" UserStory : works in >
+
+
+
+@enduml
