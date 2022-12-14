@@ -33,3 +33,36 @@ Responsive Layout
 
 The development of the user interface should be responsive, that is, adapt the design of the forms to the type of device that is used by the user. For different devices, with different screen sizes, such as a computer and a mobile phone, the layout should adapt and display the information in a different layout to maximize the usability and user experience of the application.
 
+**Reliability**
+
+*Not defined*
+
+**Performance**
+
+Session timeout
+
+If there is a period of inactivity of more than 30 minutes, the session should be automatically
+
+**Supportability**
+
+*Not defined*
+
+**Implementation**
+
+*Not defined*
+
+**Interface**
+
+*Not defined*
+
+**Operations**
+
+*Not defined*
+
+**Packaging**
+
+*Not defined*
+
+**Legal**
+
+*Not defined*
