@@ -1,102 +1,125 @@
-@startuml Change Profile
+@startuml
+skinparam sequenceMessageAlign center
+autonumber
+title TO CHANGE PROFILE
+legend top
+US003: As Administrator, I want to change user Profile
+end legend
 actor Administrator
-Administrator -> System:1 Request List
-System -> Administrator:2 Retrieves List
-Administrator -> System:3 Select User Account
-System -> Administrator:4 Retrieves User Account
-Administrator -> System:5 Update Profile
-System --> System:6 Validate the Update
-System --> Administrator:7 Notify
+Administrator -> System: Requests users List
+System --> Administrator: Returns users List
+Administrator -> System: Updates Profile
+System --> Administrator: Notifies the Change
 @enduml
 
-Inactivate User Account
 @startuml
+skinparam sequenceMessageAlign center
+autonumber
+title TO INACTIVATE USER ACCOUNT
+legend top
+US005: As Administrator, I want to Inactivate a user Account
+end legend
 actor Administrator
-Administrator -> System:1 Requests the list of all Users
-System --> Administrator:2 Return List
-Administrator -> System:3 Select a user Account
-Administrator <-- System:4 Return the user Account
-Administrator -> System:5 Change the status to "Inactive"
-Administrator -> System:6 Save the Change
-System <- System:7 Validates
-System --> Administrator:8 Notifies the Update
+Administrator -> System: Requests the list of all Users
+System --> Administrator: Returns the List
+Administrator -> System: Changes the status to "Inactive"
+System --> Administrator: Notifies the Update
 @enduml
 
-Activate User Account
+
 @startuml
+skinparam sequenceMessageAlign center
+autonumber
+title TO ACTIVATE USER ACCOUNT
+legend top
+US006: As Administrator, I want to Activate a user Account
+end legend
 actor Administrator
-Administrator -> System:1 Request List
-System -> Administrator:2 Retrieves List
-Administrator -> System:3 Select user Account
-System -> Administrator:4 Account Information
-Administrator -> System:5 Activate user Account
-System --> System:6 Validate the Update
-System --> Administrator:7 Notify
+Administrator -> System: Requests List
+System -> Administrator: Returns List
+Administrator -> System: Selects user Account
+Administrator -> System: Activates user Account
+System --> System: Validates the Update
+System --> Administrator: Notifies the Status
 @enduml
 
-2.3.1 Register User Account
+2.3.1
 @startuml
+skinparam sequenceMessageAlign center
+autonumber
+title REGISTER USER ACCOUNT
+legend top
+US002: As Administrator, I want to Register a user Account
+end legend
 actor Administrator as Admin
-Admin -> System:1 Enters new account Information
-Admin -> System:2 Requests to save Values
-Admin <-- System:3 Validates Information
-Admin <-- System:4 Associates new account with an \n "user" Profile
-Admin <-- System:5 Notifies that new account has \n been Created
+Admin -> System: Requests new Registration
+Admin -> System: Enters account Information(name,email,phone number)
+System --> System: Validates Information
+Admin -> System: Associates new account with an \n "user" Profile
+Admin <-- System: Notifies that new account has \n been Created
 @enduml
 
 2.3.2 Reset Password
 @startuml
-actor User
+skinparam sequenceMessageAlign center
+autonumber
+title RESET PASSWORD
+legend top
+As User, I want to reset a Password
+end legend
 actor Account
-Account -> System:1 Accesses form through Link
-Account -> System:2 Inserts E-mail
-Account <-- System:3 Sends message with Link
-Account -> System:4 Accesses Link
-Account -> System:5 Enters new Password
-Account <-- System:6 Validates new Password
-Account <-- System:7 Notifies that password has been Updated
+Account -> System: Inserts E-mail
+Account -> System: Requests creation of new Password
+System --> Account: Sends a Link
+Account -> System: Enters new Password
+System --> System: Validates new Password
+Account <-- System: Notifies that password has been Updated
 @enduml
 
-Create Password
 @startuml
+skinparam sequenceMessageAlign center
+autonumber
+title CREATE PASSWORD
+legend top
+As User, I want to create a Password
+end legend
 actor Account
-Account -> System:1 Create Password
-Account -> System:1 Enter Password
-System -> System:2 Password Validated
-Account <-- System:3 Password Created
+Account -> System: Logs in for the first Time
+Account <-- System: Requests password Creation
+Account -> System: Enters Password
+System --> System: Validates the Password
+Account <-- System: Notifies the password Creation
 @enduml
 
-2.3.3 Edit Account
+
 @startuml
+skinparam sequenceMessageAlign center
+autonumber
+title EDIT ACCOUNT
+legend top
+As User, I want to edit the Account
+end legend
 actor Account
-Account -> System: Enters user account Information
-Account -> System: Request to save Values
-Account <-- System: Validates entered Information
+Account -> System: Updates user account Information
+Account -> System: Requests to save Values
+System --> System: Validates Information
 Account <-- System: Notifies the Update
 @enduml
 
-Sign In
-@startuml
-actor Account
-Account -> System:1 Enter credentials: e-mail and Password
-System --> Account:2 Grants Access
-Account <-- System:3 Creates a Session
-System -> System:4 User becomes identifiable\nin subsequent Requests
-@enduml
-
-Logout
-@startuml
-actor Account
-Account -> System:1 Closes Session
-System --> Account:2 Session ended Message
-@enduml
 
 2.4.1 Poject creation
 @startuml
+skinparam sequenceMessageAlign center
+autonumber
+title PROJECT CREATION
+legend top
+As Manager, I want to create a Project
+end legend
 actor Manager
-Manager -> System: Create a Product
-Manager -> System: Define information about the Product
-Manager <-- System: Product Registration
+Manager -> System: Requests new Project Creation
+Manager -> System: Defines information about the Project
+System --> System: Validates Project
+Manager <-- System: Notifies Project Registration
 @enduml
 
 2.4.1 Project Management
@@ -119,7 +142,7 @@ A <-- System: List of Projects
 @startuml
 actor "Product Owner" as PO
 PO -> System: Registers US
-PO <-- System: us Registed
+PO <-- System: Us Registed
 PO -> System: Adds us to product Backlog
 PO <-- System: US added to product Backlog
 @enduml
@@ -183,46 +206,83 @@ System --> Manager:6 System assigns resource to Project
 
 2.4.6 Project activity
 @startuml
+skinparam sequenceMessageAlign center
+autonumber
+title TO CHECK PROJECT ACTIVITY
 actor Account
-Account -> System:1 Access Project
-System --> Account:2 Grant Access
-Account -> System:3 View project activity Status
-Account -> System:4 Choose what type of View
-System --> Account:5 Returns a table-shaped View
-System --> Account:6 Returns a Gantt form View
+Account -> System: View project activity Status
+Account -> System: Choose what type of View
+System --> Account: Returns a table-shaped View
+System --> Account: Returns a Gantt form View
 @enduml
 
-2.4.7 Allocation report
+2.4.7
 @startuml
-actor Account
-Account -> System:1 Access Project
-System --> Account:2 Grant Access
-Account -> System:3 Request allocation Report
-System -> System:4 Checks all Projects
-System --> Account:5 Generate Report
+skinparam sequenceMessageAlign center
+autonumber
+title TO GENERATE ALLOCATION REPORT
+actor Manager
+Manager -> System: Requests allocation report for any project and any member
+System --> Manager: Generates Report
 @enduml
 
-2.4.8 KPI report
 @startuml
-actor Account
-Account -> System:1 Access System
-System --> Account:2 Grant Access
-Account -> System:3 Request KPI Report
-System -> System:4 Generate CPI
-System -> System:5 Generate SPI
-System --> Account:6 Chose XML file or on Screen
-Account -> System:7 Pick XML file or on Screen
-System --> Account:8 Reports CPI and SPI in chosen Format
+skinparam sequenceMessageAlign center
+autonumber
+title TO GENERATE ALLOCATION REPORT
+actor "Product Owner" as PO
+PO -> System: Requests allocation report of any member of the projects he/she/they is involved in
+System --> PO: Generates Report
 @enduml
 
-2.5 Scrum recording
 @startuml
-System -> System:1 Saves time in minutes of each ceremony Duration
+skinparam sequenceMessageAlign center
+autonumber
+title TO GENERATE ALLOCATION REPORT
+actor "Scrum Master" as SM
+SM -> System: Requests allocation report of any member of the projects he/she/they is involved in
+System --> SM: Generates Report
 @enduml
 
-2.6 Legacy data input
 @startuml
-database "Legacy Platform" as LP
-LP --> System:1 Import of Projects
+skinparam sequenceMessageAlign center
+autonumber
+title TO GENERATE ALLOCATION REPORT
+actor "Team Member" as TM
+TM -> System: Requests allocation Report of the project he/she/they is involved
+System --> TM: Generates Report
 @enduml
 
+2.4.8
+@startuml
+skinparam sequenceMessageAlign center
+autonumber
+title TO GENERATE A KPI REPORT
+actor Manager
+Manager -> System: Requests KPI Report any of Project
+System --> Manager: Chooses XML file or on Screen
+Manager -> System: Selects XML file or on Screen
+System --> Manager: Reports CPI and SPI in chosen Format
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+autonumber
+title TO GENERATE A KPI REPORT
+actor "Project Manager" as PA
+PA -> System: Requests KPI Report of Project he/she/they is involved
+System --> PA: Chooses XML file or on Screen
+PA -> System: Selects XML file or on Screen
+System --> PA: Reports CPI and SPI in chosen Format
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+autonumber
+title TO GENERATE A KPI REPORT
+actor "Product Owner" as PO
+PO -> System: Requests KPI Report of Project he/she/they is involved
+System --> PO: Chooses XML file or on Screen
+PO -> System: Selects XML file or on Screen
+System --> PO: Reports CPI and SPI in chosen Format
+@enduml
