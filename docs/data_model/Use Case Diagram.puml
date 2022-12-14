@@ -1,0 +1,75 @@
+@startuml
+
+left to right direction
+actor "Manager" as mg
+
+actor "User" as usr
+actor "Product Owner" as po
+actor "Team" as tm
+actor "Account" as acc
+actor "System" as sm
+actor "Administrator" as admin
+actor "Product Manager" as pm
+
+
+rectangle System {
+  usecase "Project Creation" as UC1
+  usecase "Project Management" as UC2
+  usecase "Project Search" as UC3
+  usecase "Reset Password" as UC22
+  usecase "Product backlog grooming definition" as UC6
+  usecase "Sprint backlog definition" as UC5
+  usecase "Sprint review" as UC7
+  usecase "Tasks for User Story" as UC8
+  usecase "Task update" as UC9
+  usecase "Project activity" as UC10
+  usecase "Allocation Report" as UC11
+  usecase "KPI Report" as UC12
+  usecase "Project Allocation" as UC13
+  usecase "Scrum Recording" as UC14
+  usecase "Legacy Data Input" as UC15
+  usecase "Register User Account" as UC16
+  usecase "Change Profile" as UC17
+  usecase "User Management" as UC18
+  usecase "Activate User Account" as UC19
+  usecase "Inactivate User Account" as UC20
+  usecase "Edit User Account" as UC21
+  usecase "User Story Registration" as UC4
+  usecase "Login" as UC23
+  usecase "Logout" as UC24
+  usecase "Create Password" as UC25
+
+}
+
+mg -- UC1
+pm -- UC2
+acc -- UC3
+po -- UC4
+tm -- UC5
+po -- UC6
+tm -- UC7
+tm -- UC8
+po -- UC8
+acc -- UC9
+acc -- UC10
+acc -- UC11
+acc -- UC12
+mg -- UC13
+sm -- UC14
+sm -- UC15
+admin -- UC16
+admin -- UC17
+admin -- UC18
+admin -- UC19
+admin -- UC20
+usr -- UC21
+usr -- UC22
+acc -- UC23
+acc -- UC24
+acc -- UC25
+
+
+
+
+
+@enduml
