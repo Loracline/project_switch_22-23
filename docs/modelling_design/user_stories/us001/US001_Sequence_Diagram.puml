@@ -1,0 +1,55 @@
+@startuml
+/'
+actor Administrator
+participant ":CreateProfileUI" as cpu
+participant ":CreateProfileController" as cpc
+participant ":System" as System
+participant "profile:Profile" as Profile
+
+activate Administrator
+Administrator -> cpu: 1. starts the definition of a new profile
+activate cpu
+cpu --> Administrator: 1.1 requests data(name, permissions)
+deactivate cpu
+Administrator -> cpu: 2. types requested data
+activate cpu
+cpu -> cpc: 2.1 createNewProfile(name, permissions)
+activate cpc
+cpc -> System: 2.1.1 profile=createNewProfile(name, permissions)
+activate System
+System --> Profile: 2.1.1.1 create(name, permissions)
+deactivate System
+cpc -> System: 2.1.2 validateProfile(profile)
+activate System
+deactivate cpc
+deactivate System
+cpu --> Administrator: 2.2 shows data and requests confirmation
+
+deactivate cpu
+Administrator -> cpu: 3. confirms
+activate cpu
+cpu -> cpc: 3.1 saveProfile()
+activate cpc
+cpc -> System: 3.1.1 saveProfile(profile)
+activate System
+System -> System: 3.1.1.1 validateProfile(profile)
+System -> System: 3.1.1.2 addProfile(profile)
+deactivate System
+deactivate cpc
+cpu --> Administrator: 3.2 informs success
+deactivate cpu
+'/
+
+
+participant ":CreateProfile:Controller" as Controller
+participant "profile:Profile" as Profile
+
+activate Controller
+[-> Controller: 1. createNewProfile(name, permissions)
+Controller --> Profile: 1.1 createProfile(profile)
+Profile -> Controller: 1.2 validateProfile(profile)
+deactivate Controller
+Controller -> Controller: 1.3.1 validateProfile(profile)
+Controller -> Controller: 1.3.2 addProfile(profile)
+
+@enduml
