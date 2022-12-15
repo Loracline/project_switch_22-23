@@ -269,11 +269,11 @@ System --> Manager: Reports CPI and SPI in chosen Format
 skinparam sequenceMessageAlign center
 autonumber
 title TO GENERATE A KPI REPORT
-actor "Project Manager" as PA
-PA -> System: Requests KPI Report of Project he/she/they is involved
-System --> PA: Chooses XML file or on Screen
-PA -> System: Selects XML file or on Screen
-System --> PA: Reports CPI and SPI in chosen Format
+actor "Project Manager" as PM
+PM -> System: Requests KPI Report of Project he/she/they is involved
+System --> PM: Chooses XML file or on Screen
+PM -> System: Selects XML file or on Screen
+System --> PM: Reports CPI and SPI in chosen Format
 @enduml
 
 @startuml
