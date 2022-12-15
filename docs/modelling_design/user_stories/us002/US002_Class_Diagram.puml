@@ -1,20 +1,11 @@
 @startuml
-
-class RegisterAccountUI
-class RegisterAccountController
-class System
+class Controller
 class Account
 
-class RegisterAccountController {
-+registerAccount(name, email, phoneNumber)
-+saveAccount()
-}
-
-class System {
-+registerAccount(name, email phoneNumber)
-+validateAccount(reg)
-+saveAccount(reg)
--addAccount(reg)
+class Controller {
++registerNewAccount(name, email phoneNumber)
++validateAccount(account)
+-addAccount(account)
 }
 
 class Account {
@@ -24,41 +15,8 @@ class Account {
 +Account(name, email, phoneNumber)
 }
 
-RegisterAccountUI ..> RegisterAccountController
-RegisterAccountController ..> System
-RegisterAccountController ..> Account
-System "1" --> "*" Account: contains
+Controller "1" --> "*" Account: contains
 
-
-hide RegisterAccountUI circle
-hide RegisterAccountController circle
-hide System circle
+hide Controller circle
 hide Account circle
-
-
 @enduml
-
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
-}
-
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
-
-hide ArrayList circle
