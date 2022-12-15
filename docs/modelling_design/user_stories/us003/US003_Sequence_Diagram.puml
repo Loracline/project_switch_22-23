@@ -1,0 +1,19 @@
+
+@startuml
+'https://plantuml.com/sequence-diagram
+autonumber
+actor Administrator
+participant ":ChangeProfileController" as Controller
+participant ":Administrator" as admin
+
+Administrator -> Controller: Inserts user e-mail and desired profile
+
+
+Controller -> Controller: isUserValid (e-mail)
+Controller -> Controller: isProfileValid (profile)
+
+Controller --> admin: changeProfile (e-mail, profile)
+
+
+ Controller --> Administrator: Informs about operation success!
+@enduml
