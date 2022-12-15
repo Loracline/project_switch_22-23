@@ -1,11 +1,21 @@
-US001_Sequence_Diagram.pumlUS001_Sequence_Diagram.puml@startuml
-'https://plantuml.com/sequence-diagram
+@startuml
 
-autonumber
+skinparam sequenceMessageAlign center
+actor "Administrator"
+participant ":CreateAccountListController" as cal
+participant ":Account" as acc
+participant "AccountList" as acclist
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+activate Administrator
+Administrator -> cal: 1 request list of all accounts and status
+activate cal
+cal -> acc: 1.1 accountInfo=createInfo(e-mail, status)
+activate acc
+acc -> acclist: 1.1.1 getEmailStatus()
+activate acclist
+deactivate acc
+acclist -> acclist: 1.1.1.1 addToList(accountInfo)
+cal --> Administrator: returns data
+deactivate acclist
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
 @enduml
