@@ -1,167 +1,231 @@
 @startuml
 skinparam sequenceMessageAlign center
+title TO CREATE NEW PROFILE
+legend top
+US001 - As Administrator, I want to create user profiles.
+end legend
+actor Administrator
 autonumber
+Administrator  -> ":System": Create new profile
+note left
+Account is authenticated.
+System grants access.
+end note
+":System" --> Administrator: Returns data (profile name, profile permissions)
+Administrator -> ":System": Enters profile data
+":System" --> Administrator: New profile created
+@enduml
+
+@startuml
+legend top
+US002 - As Administrator, I want to Register a user.
+end legend
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW ACCOUNT
+autonumber
+actor Administrator
+Administrator -> ":System": Create new Account
+note left
+Account is authenticated.
+System grants access.
+end note
+Administrator <-- ":System": Returns data (account name, account e-mail, etc)
+Administrator  -> ":System": Enters account data
+":System" --> Administrator: New profile created
+@enduml
+
+@startuml
+legend top
+US003 - As Administrator, I want to change the profile of a user account.
+end legend
+skinparam sequenceMessageAlign center
 title TO CHANGE PROFILE
-legend top
-US003: As Administrator, I want to change user Profile
-end legend
 actor Administrator
-Administrator -> System: Requests users List
-System --> Administrator: Returns users List
-Administrator -> System: Updates Profile
-System --> Administrator: Notifies the Change
+autonumber
+Administrator -> ":System": Request account info
+note left
+Account is authenticated.
+System grants access.
+end note
+":System" --> Administrator: Returns account info
+Administrator -> ":System": Change account data (profile type)
+":System" --> Administrator: Profile was updated
+@enduml
+
+@startuml
+legend top
+US004 - As Administrator, I want to get a list of all user accounts and their status.
+end legend
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNT
+actor Administrator
+autonumber
+Administrator -> ":System": Request list of all accounts and status
+note left
+Account is authenticated.
+System grants access.
+end note
+":System" --> Administrator: Returns data
 @enduml
 
 @startuml
 skinparam sequenceMessageAlign center
-autonumber
-title TO INACTIVATE USER ACCOUNT
-legend top
-US005: As Administrator, I want to Inactivate a user Account
-end legend
+title TO SEARCH ACCOUNT BY E-MAIL
 actor Administrator
-Administrator -> System: Requests the list of all Users
-System --> Administrator: Returns the List
-Administrator -> System: Changes the status to "Inactive"
-System --> Administrator: Notifies the Update
+autonumber
+Administrator -> ":System": Search account by e-mail
+note left
+Account is authenticated.
+System grants access.
+end note
+":System" --> Administrator: Returns data
 @enduml
-
 
 @startuml
 skinparam sequenceMessageAlign center
+title TO SEARCH ACCOUNT BY PROFLIE
+actor Administrator
 autonumber
+Administrator -> ":System": Search account by profile
+note left
+Account is authenticated.
+System grants access.
+end note
+":System" --> Administrator: Returns list of accounts
+@enduml
+
+@startuml
+legend top
+US005 - As Administrator, I want to activate a user account.
+end legend
+skinparam sequenceMessageAlign center
 title TO ACTIVATE USER ACCOUNT
-legend top
-US006: As Administrator, I want to Activate a user Account
-end legend
 actor Administrator
-Administrator -> System: Requests List
-System -> Administrator: Returns List
-Administrator -> System: Selects user Account
-Administrator -> System: Activates user Account
-System --> System: Validates the Update
-System --> Administrator: Notifies the Status
+autonumber
+Administrator -> ":System": Request account Info
+note left
+Account is authenticated.
+System grants access.
+end note
+":System" --> Administrator: Returns account Info
+Administrator -> ":System": Change the status to "Active"
+":System" --> Administrator: Status was updated
 @enduml
 
-2.3.1
 @startuml
-skinparam sequenceMessageAlign center
-autonumber
-title REGISTER USER ACCOUNT
 legend top
-US002: As Administrator, I want to Register a user Account
+US006 - As Administrator, I want to inactivate a user account.
 end legend
-actor Administrator as Admin
-Admin -> System: Requests new Registration
-Admin -> System: Enters account Information(name,email,phone number)
-System --> System: Validates Information
-Admin -> System: Associates new account with an \n "user" Profile
-Admin <-- System: Notifies that new account has \n been Created
-@enduml
-
-2.3.2 Reset Password
-@startuml
 skinparam sequenceMessageAlign center
+title TO INACTIVATE USER ACCOUNT
+actor Administrator
 autonumber
-title RESET PASSWORD
-legend top
-As User, I want to reset a Password
-end legend
-actor Account
-Account -> System: Inserts E-mail
-Account -> System: Requests creation of new Password
-System --> Account: Sends a Link
-Account -> System: Enters new Password
-System --> System: Validates new Password
-Account <-- System: Notifies that password has been Updated
+Administrator -> ":System": Request account info
+note left
+Account is authenticated.
+System grants access.
+end note
+Administrator <-- ":System": Returns account info
+Administrator -> ":System": Change the status to "Inactive"
+":System" --> Administrator: Status was updated
 @enduml
 
 @startuml
 skinparam sequenceMessageAlign center
+title TO CREATE PROJECT
 autonumber
-title CREATE PASSWORD
-legend top
-As User, I want to create a Password
-end legend
-actor Account
-Account -> System: Logs in for the first Time
-Account <-- System: Requests password Creation
-Account -> System: Enters Password
-System --> System: Validates the Password
-Account <-- System: Notifies the password Creation
-@enduml
-
-
-@startuml
-skinparam sequenceMessageAlign center
-autonumber
-title EDIT ACCOUNT
-legend top
-As User, I want to edit the Account
-end legend
-actor Account
-Account -> System: Updates user account Information
-Account -> System: Requests to save Values
-System --> System: Validates Information
-Account <-- System: Notifies the Update
-@enduml
-
-
-2.4.1 Poject creation
-@startuml
-skinparam sequenceMessageAlign center
-autonumber
-title PROJECT CREATION
-legend top
-As Manager, I want to create a Project
-end legend
 actor Manager
-Manager -> System: Requests new Project Creation
-Manager -> System: Defines information about the Project
-System --> System: Validates Project
-Manager <-- System: Notifies Project Registration
+Manager -> ":System": Create new Project
+note left
+Account is authenticated.
+System grants access.
+end note
+Manager <-- ":System": Returns data (name, description, etc)
+Manager -> ":System":  Enters project data
+Manager <-- ":System": New project created
 @enduml
 
-2.4.1 Project Management
 @startuml
+skinparam sequenceMessageAlign center
+title TO MANAGE PROJECT
 actor "Product Manager" as PM
-PM -> System: Edit product Information
-PM <-- System: Product information Updated
+autonumber
+PM -> ":System": Edit project Information
+note left
+Account is authenticated.
+System grants access.
+end note
+PM <-- ":System": Project information Updated
 @enduml
 
-2.4.2 Project search
 @startuml
-actor Account as A
-A -> System: Access System
-A <-- System: Access Granted
-A -> System: Search Project
-A <-- System: List of Projects
+skinparam sequenceMessageAlign center
+title TO SEARCH PROJECT BY MANAGER
+actor Manager
+autonumber
+Manager -> ":System": Search Project by(code, name, etc)
+note left
+Account is authenticated.
+System grants access.
+end note
+Manager <-- ":System": List of all Projects
 @enduml
 
-2.4.3 US registration
 @startuml
+skinparam sequenceMessageAlign center
+title TO SEARCH PROJECT BY USER
+actor User
+autonumber
+User -> ":System": Search Project by(code, name, etc)
+note left
+Account is authenticated.
+System grants access.
+end note
+User <-- ":System": List of some Projects where User is/was enrolled.
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE USER STORIES
 actor "Product Owner" as PO
-PO -> System: Registers US
-PO <-- System: Us Registed
-PO -> System: Adds us to product Backlog
-PO <-- System: US added to product Backlog
+autonumber
+PO -> ":System": Create new User Story
+note left
+Account is authenticated.
+System grants access.
+end note
+PO <-- ":System": Returns data (US number, Actor, priority in PB, etc)
+PO -> ":System": Enters User Story data
+PO <-- ":System": User Story created and added to PB
 @enduml
 
-2.4.3 Sprint backlog definition
 @startuml
-Team -> System: Access to product Backlog
-Team <-- System: Returns product Backlog
-Team -> System: Sprint backlog and effort Definition
-Team <-- System: Sprint backlog Defined
+skinparam sequenceMessageAlign center
+title TO CREATE SPRINT
+actor Team
+autonumber
+Team -> ":System": Request product Backlog data
+note left
+Account is authenticated.
+System grants access.
+end note
+Team <-- ":System": Returns User Stories
+Team -> ":System": Defines User Stories for Sprint
+Team <-- ":System": New Sprint created
 @enduml
 
-2.4.3 Product backlog grooming definition
 @startuml
+skinparam sequenceMessageAlign center
+title TO GROOM USER STORIES
 actor "Product Owner" as PO
-PO -> System: Requests access to product Backlog
-PO <-- System: Returns US
-PO -> System: Replace US
-PO <-- System: Product backlog Updated
+PO -> ":System": Request product Backlog data
+note left
+Account is authenticated.
+System grants access.
+end note
+PO <-- ":System": Returns User Stories
+PO -> ":System": Decompose User Story
+PO <-- ":System": User Story was replaced
 @enduml
 
 2.4.3 Sprint review
@@ -269,11 +333,11 @@ System --> Manager: Reports CPI and SPI in chosen Format
 skinparam sequenceMessageAlign center
 autonumber
 title TO GENERATE A KPI REPORT
-actor "Project Manager" as PA
-PA -> System: Requests KPI Report of Project he/she/they is involved
-System --> PA: Chooses XML file or on Screen
-PA -> System: Selects XML file or on Screen
-System --> PA: Reports CPI and SPI in chosen Format
+actor "Project Manager" as PM
+PM -> System: Requests KPI Report of Project he/she/they is involved
+System --> PM: Chooses XML file or on Screen
+PM -> System: Selects XML file or on Screen
+System --> PM: Reports CPI and SPI in chosen Format
 @enduml
 
 @startuml

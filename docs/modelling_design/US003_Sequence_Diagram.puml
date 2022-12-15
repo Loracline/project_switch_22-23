@@ -1,11 +1,32 @@
+
 @startuml
 'https://plantuml.com/sequence-diagram
 
-autonumber
+actor Administrator
+participant ":Change Profile UI" as rgui
+participant ":ChangerProfileController" as rgc
+participant ":System" as System
+participant ":Administrator" as admin
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+activate Administrator
+Administrator -> rgui: 1. requests the change of profile
+activate rgui
+rgui --> Administrator: 1.1 requests data (code, profile)
+deactivate rgui
+Administrator -> rgui: 2. types requested data
+activate rgui
+rgui -> rgc: 2.1 changeProfile (code, profile)
+activate rgc
+rgc -> System: 2.1.1 changeProfile (code, profile)
+activate System
+System -> System: 2.1.1.1 isUserValid (code)
+System -> System: 2.1.1.2 isProfileValid (profile)
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+System --> admin: 2.1.1.3 updateProfile ()
+deactivate System
+deactivate rgc
+deactivate System
+
+rgui --> Administrator: 2.2 informs about success!
+deactivate rgui
 @enduml

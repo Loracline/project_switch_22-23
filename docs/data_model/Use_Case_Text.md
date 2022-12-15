@@ -1,115 +1,49 @@
 # Use-Case Texts
 
-## UC1: To Change Profile
-Administrator requests users list. System returns users list. Administrator
-changes profile of account. System notifies the change.
+## UC1: To create new profile
+The administrator creates new profile. System returns data (name, permissions). Administrator enters profile data. System notifies that profile is created.
 
-## UC2: To Inactive Account
-Administrator requests users list. System returns users list. The System 
-displays the User Account information currently stored for the User.
-The Administrator enters a button that turns the User Account status to
-“Inactive” and requests the System to save the information. The System validates
-and notifies the Administrator that the status has been updated.
+## UC2: To register new account
+The administrator creates new account. System returns data (name, email, phone number and photo). Administrator enters account data. System notifies that account is created.
 
+## UC3: To change profile
+The administrator requests account information. System returns account information. Administrator change account profile type. System notifies profile was updated.
 
+## UC4: To list all accounts
+The administrator request list of all accounts and status. System returns data.
 
+## UC5: To search account by email
+The Administrator searches account by email. System returns data.
 
+## UC6: To search accounts by profile
+The Administrator searches user accounts by profile user. System returns list of accounts.
 
+## UC7: To activate user account
+Administrator request account information. System returns account information. Administrator change the status to inactive. System notifies that status was updated.
 
+## UC8: To inactive user account
+Administrator request account information. System returns account information. Administrator change the status to inactive. System notifies that status was updated.
 
-## UC1: Register Account
-Administrator accesses System. Administrator enters required account data (name,
-e-mail, phone number). System validates and saves entered account data. System 
-automatically associates created account with "User" profile. System notifies 
-that new account has been created successfully. 
+## UC9: To create project
+The manager creates a new project. System returns data (name, description etc.). The manager enters project data. The system notifies that the project was created.
 
+## UC10: To manage project
+The project manager edit project information. The system notifies that  the project information is updated.
 
-## UC4: Create Profile
-Administrator accesses System. Administrator enters required profile data (name, 
-permissions). System validates and saves entered profile data. System notifies 
-that new profile has been created successfully.
+## UC11: To search project by manager
+Manager searches project by code, name etc. System returns a list of all projects.
 
+## UC12: To search project by user
+User searches project by code, name etc. System returns a list of all projects where user is/was enrolled.
 
-## UC5: Create Password
-Account accesses System for the first time. System requests password creation. 
-Account enters password. System checks if password is valid. System notifies 
-that new password has been created successfully. 
+## UC13: To create US
+Product Owner create new US. System returns data (US number, actor, priority in product backlog, etc). Product owner enters US data. System notifies that new US is created and added to product backlog.
 
+## UC14: To create sprint
+Team request access to product backlog data. System returns all user stories. Team defines user stories for the sprint. System notifies that sprint is created.
 
-## UC6: To Change Profile
-Administrator requests users list. System returns users list. Administrator 
-changes profile of account. System notifies the change.
-
-
-## UC7: Edit Account
-The Account accesses the System. The System displays the information currently 
-stored. The Account enters the desired User Account information values and 
-requests the System to save the entered values. The System validates the entered 
-User Account information. The System notifies the Account that the account has 
-been updated.
-
-
-## UC8: Reset Password
-The User accesses a form through a link in the Login Zone. The System displays 
-the page where the User inserts their account e-mail and enters a button. The 
-System sends a message to the User’s mailbox with a link. The User accesses the 
-link that forward them to a page where they can enter the new password. The 
-System validates the entered information. The System notifies the User that the 
-password has been updated.
-
-
-# UC9: User Management
-The Administrator requests the access to the list of all users in the System. 
-The System displays all user accounts registered in the System and their status.
-The Administrator enters the e-mail or the profile of the User Account they are 
-searching for. The System displays the matching User Account information.
-
-
-## UC10: Activate Account
-The Administrator accesses the System. The Administrator requests the access to 
-the list of all users in the System and selects the desired User Account. The 
-System displays the User Account information currently stored for the User. 
-The Administrator enters a button that turns the User Account status to “Active” 
-and requests the System to save the information. The System validates and 
-notifies the Administrator that the status has been updated.
-
-
-
-
-
-# UC12: Project creation
-The Manager creates a project in the System entering information specific for 
-this project. System should allow project registration.
-
-
-## UC13: Project management
-The User with the Project Manager role can modify part of the project 
-information. System records the changes.
-
-
-## UC14: Project Search
-User searches for a project in the System. System verifies if the User is part 
-of the project to show its content. Manager searches for project in the System 
-and System returns a list of all projects.
-
-
-## UC15: US registration
-Product Owner registers in the System user stories related to a project. Product 
-Owner add user stories to product backlog. System records product backlog.
-
-
-## UC16: Sprint Backlog Definition
-Project Team access product backlog to get user stories in the product backlog. 
-System returns all user stories. Project Team defines user stories for the 
-sprint backlog and estimates effort for each user stories. System records sprint 
-backlog.
-
-
-## UC17: Product backlog grooming
-Product Owner requests access to product backlog. System returns the product 
-backlog and breaks user story into multiple user stories. System replaces the 
-old user story with new ones.
-
+## UC15: To groom US
+Product Owner request access to product backlog data. System returns user stories. Product Owner decompose user story. System notifies that the user story was replaced.
 
 ## UC18: Sprint review
 Team registers in the system tasks finished during the sprint. System removes 
