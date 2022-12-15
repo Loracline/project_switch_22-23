@@ -1,11 +1,44 @@
 @startuml
+@startuml
 'https://plantuml.com/sequence-diagram
 
-autonumber
+actor Administrator
+participant ":RegisterAccountUI" as rgui
+participant ":RegisterAccountController" as rgc
+participant ":System" as System
+participant "reg:Account" as Account
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+activate Administrator
+Administrator -> rgui: 1. starts new account register
+activate rgui
+rgui --> Administrator: 1.1 requests data(name, email, phoneNumber)
+deactivate rgui
+Administrator -> rgui: 2. types requested data
+activate rgui
+rgui -> rgc: 2.1 registerAccount(name, email, phoneNumber)
+activate rgc
+rgc -> System: 2.1.1 reg=registerAccount(name, email, phoneNumber)
+activate System
+System --> Account: 2.1.1.1 register(name, email, phoneNumber)
+deactivate System
+rgc -> System: 2.1.2 validateAccount(reg)
+activate System
+deactivate rgc
+deactivate System
+rgui --> Administrator: 2.2 shows data and requests confirmation
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+deactivate rgui
+Administrator -> rgui: 3. confirms
+activate rgui
+rgui -> rgc: 3.1 saveAccount()
+activate rgc
+rgc -> System: 3.1.1 saveAccount(reg)
+activate System
+System -> System: 3.1.1.1 validateAccount(reg)
+System -> System: 3.1.1.2 addAccount(reg)
+deactivate System
+deactivate rgc
+rgui --> Administrator: 3.2 informs success!
+deactivate rgui
+@enduml
 @enduml
