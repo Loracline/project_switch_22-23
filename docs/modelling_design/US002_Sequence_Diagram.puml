@@ -1,11 +1,21 @@
 @startuml
-@startuml
-'https://plantuml.com/sequence-diagram
+actor Administrator
+participant ":registerAccountController" as controller
+participant "account:Account" as Account
+
+Administrator -> controller: 1. account=registerNewAccount(name, email, phoneNumber)
+activate controller
+controller --> Account: 1.1 registerAccount(name, email, phoneNumber)
+deactivate controller
+controller -> controller: 1.2 validateAccount(account)
+activate controller
+controller -> controller: 1.3 addAccount(account)
+@enduml
 
 actor Administrator
 participant ":RegisterAccountUI" as rgui
 participant ":RegisterAccountController" as rgc
-participant ":System" as System
+participant ":registerAccountController" as controller
 participant "reg:Account" as Account
 
 activate Administrator
@@ -17,14 +27,14 @@ Administrator -> rgui: 2. types requested data
 activate rgui
 rgui -> rgc: 2.1 registerAccount(name, email, phoneNumber)
 activate rgc
-rgc -> System: 2.1.1 reg=registerAccount(name, email, phoneNumber)
-activate System
-System --> Account: 2.1.1.1 register(name, email, phoneNumber)
-deactivate System
-rgc -> System: 2.1.2 validateAccount(reg)
-activate System
+rgc -> controller: 2.1.1 reg=registerAccount(name, email, phoneNumber)
+activate controller
+controller --> Account: 2.1.1.1 register(name, email, phoneNumber)
+deactivate controller
+rgc -> controller: 2.1.2 validateAccount(reg)
+activate controller
 deactivate rgc
-deactivate System
+deactivate controller
 rgui --> Administrator: 2.2 shows data and requests confirmation
 
 deactivate rgui
@@ -32,13 +42,11 @@ Administrator -> rgui: 3. confirms
 activate rgui
 rgui -> rgc: 3.1 saveAccount()
 activate rgc
-rgc -> System: 3.1.1 saveAccount(reg)
-activate System
-System -> System: 3.1.1.1 validateAccount(reg)
-System -> System: 3.1.1.2 addAccount(reg)
-deactivate System
+rgc -> controller: 3.1.1 saveAccount(reg)
+activate controller
+controller -> controller: 3.1.1.1 validateAccount(reg)
+controller -> controller: 3.1.1.2 addAccount(reg)
+deactivate controller
 deactivate rgc
 rgui --> Administrator: 3.2 informs success!
 deactivate rgui
-@enduml
-@enduml
