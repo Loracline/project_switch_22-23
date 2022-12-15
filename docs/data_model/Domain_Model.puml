@@ -1,6 +1,13 @@
 @startuml
 title Domain model v.01 \nDec 14, 2022
 hide empty member
+hide Account circle
+hide Profile circle
+hide UserStory circle
+hide UserInProject circle
+hide Sprint circle
+hide Task circle
+hide Project circle
 
 Class Account{
 Name
