@@ -10,6 +10,7 @@ deactivate controller
 controller -> controller: 1.2 validateAccount(account)
 activate controller
 controller -> controller: 1.3 addAccount(account)
+
 @enduml
 
 actor Administrator
