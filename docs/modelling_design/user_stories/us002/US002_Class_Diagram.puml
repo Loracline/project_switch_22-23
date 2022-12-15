@@ -1,0 +1,22 @@
+@startuml
+class Controller
+class Account
+
+class Controller {
++registerNewAccount(name, email phoneNumber)
++validateAccount(account)
+-addAccount(account)
+}
+
+class Account {
+-name
+-email
+-phoneNumber
++Account(name, email, phoneNumber)
+}
+
+Controller "1" --> "*" Account: contains
+
+hide Controller circle
+hide Account circle
+@enduml

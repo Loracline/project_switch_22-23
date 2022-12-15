@@ -93,6 +93,7 @@ System grants access.
 end note
 ":System" --> Administrator: Returns list of accounts
 @enduml
+
 @startuml
 legend top
 US005 - As Administrator, I want to activate a user account.
