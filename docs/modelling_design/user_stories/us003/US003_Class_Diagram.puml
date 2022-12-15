@@ -1,0 +1,17 @@
+@startuml
+class ChangeProfileController
+class Administrator
+hide ChangeProfileController circle
+hide Administrator circle
+
+class ChangeProfileController {
++isUserValid(email)
++isProfileValid(profile)
+}
+
+class Administrator {
++changeProfile(email,profile)
+}
+
+ChangeProfileController "1" --> "*" Administrator
+@enduml
