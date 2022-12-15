@@ -1,3 +1,31 @@
+## Use Case
+
+
+| **Candidate Conceptual Classes**                                  || 
+|:------------------------------------------------------------------|:--------------------|
+| **Category**                                                      | **Candidate Classes** |
+| (Business) Transactions                                           ||
+| Transaction line items                                            ||
+| Products or services related to a transaction or transaction line | Project, Task|
+| Transaction records/registers                                     | KPI report, Report |
+| Roles of people or organizations                                  | Account, User, Administrator, Profile, Manager, Role, Project Manager, Produc Owner, Team|
+| Places                                                            | System|
+| Noteworthy events                                                 ||
+| Physical objects                                                  ||
+| Description of things                                             | Profile, User Story|
+| Catalogs                                                          ||
+| Containers of things                                              | Product backlog, Sprint backlog, sprint|
+| Elements of containers                                            | Project, Account, User story, Sprint|
+| (Other) organizations                                             ||
+| Other (external) systems                                          |Legacy platform|
+| Records of finance, work, contracts, legal matters                ||
+| Financial instruments                                             ||
+| Documents mentioned/used to perform some work                     ||
+
+
+
+
+
 
 # OO Analysis
 
