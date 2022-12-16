@@ -2,7 +2,12 @@
 class ChangeProfileController
 class Administrator
 hide ChangeProfileController circle
+hide Account circle
 hide Administrator circle
+
+Administrator "1" -->"*"ChangeProfileController
+
+ChangeProfileController "1" -->"*"Account
 
 class ChangeProfileController {
 +isUserValid(email)
@@ -12,6 +17,14 @@ class ChangeProfileController {
 class Administrator {
 +changeProfile(email,profile)
 }
+
+class Account{
+
++ updateProfile (email, profile)
+}
+
+
+@enduml
 
 ChangeProfileController "1" --> "*" Administrator
 @enduml
