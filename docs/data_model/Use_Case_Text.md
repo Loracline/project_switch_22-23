@@ -7,7 +7,7 @@ The administrator creates new profile. System returns data (name, permissions). 
 The administrator creates new account. System returns data (name, email, phone number and photo). Administrator enters account data. System notifies that account is created.
 
 ## UC3: To change profile
-The administrator requests account information. System returns account information. Administrator change account profile type. System notifies profile was updated.
+The administrator changes account profile. System requests data (e-mail, desired profile). Administrator enters data. System notifies profile was updated.
 
 ## UC4: To list all accounts
 The administrator request list of all accounts and status. System returns data.
