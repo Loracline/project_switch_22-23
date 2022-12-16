@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+actor "Administrator"
+participant ":ChangeAccountController" as rgc
+participant ":Account" as Account
+
+Administrator -> rgc: 1. Changes status to inactive
+activate rgc
+rgc -> rgc: 2. isStatusValid(inactive)
+rgc -> Account: 3. changesStatus(inactive)
+activate Account
+deactivate rgc
+deactivate Account
+
+@enduml
