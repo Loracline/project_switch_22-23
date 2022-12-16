@@ -26,5 +26,3 @@ class Account{
 
 @enduml
 
-ChangeProfileController "1" --> "*" Administrator
-@enduml
