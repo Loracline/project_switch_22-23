@@ -1,0 +1,94 @@
+@startuml
+class Administrator{
+}
+class Profile{
+-profile
++createProfile(profile)
+}
+class "CreateProfile:Controller" {
++validateProfile(profile)
++saveProfile(profile)
+-addProfile(profile)
+}
+
+class "RegisterAccount:Controller" {
++registerNewAccount(name, email phoneNumber)
++validateAccount(account)
+-addAccount(account)
+}
+class Account {
+-name
+-email
+-phoneNumber
++Account(name, email, phoneNumber)
+}
+
+class ChangeStatusController{
++changesStatus(inactive)
++isStatusValid(inactive)
++changesStatus(active)
++isStatusValid(active)
+}
+class Account{
++ updateStatus(inactive)
++ updateStatus(active)
+}
+class ChangeProfileController {
++isUserValid(email)
++isProfileValid(profile)
+}
+
+class Administrator {
++changeProfile(email,profile)
+}
+
+class Account{
++ updateProfile (email, profile)
+}
+
+class Account{
+-email
+-status
++getemail()
++getstatus()
+
+}
+class "AccountListController" {
++createInfo(email, status)
+}
+class AccountList{
++addToList(accountInfo)
++accountInfo(email, status)
+}
+
+hide Profile circle
+hide "CreateProfile:Controller" circle
+hide Administrator circle
+hide "RegisterAccount:Controller" circle
+hide Account circle
+hide ChangeStatusController circle
+hide Account circle
+hide ChangeStatusController circle
+hide Account circle
+hide ChangeProfileController circle
+hide Account circle
+hide Administrator circle
+hide "Account" circle
+hide "AccountList" circle
+hide "AccountListController" circle
+
+Administrator <|-- "CreateProfile:Controller"
+Administrator <|-- "RegisterAccount:Controller"
+Administrator <|-- ChangeStatusController
+Administrator <|-- ChangeProfileController
+Administrator <|-- "AccountListController"
+
+"CreateProfile:Controller" "1" --> "*" Profile: creates
+"RegisterAccount:Controller" "1" --> "*" Account: contains
+ChangeStatusController "1" -->"*"Account
+ChangeProfileController "1" -->"*"Account
+"AccountListController" "1" --> "*" Account: get
+Account *-- AccountList
+
+
+@enduml
