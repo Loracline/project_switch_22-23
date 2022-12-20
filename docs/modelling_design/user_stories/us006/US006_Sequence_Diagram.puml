@@ -3,14 +3,14 @@
 
 
 actor "Administrator"
-participant ":ChangeAccountController" as rgc
+participant ":Controller" as rgc
 participant ":Account" as Account
 
 
-Administrator -> rgc: 1. Changes status to active
+Administrator -> rgc: 1 changesStatus(status)
 activate rgc
-rgc -> rgc: 2. isStatusValid(active)
-rgc -> Account: 3. changesStatus(active)
+rgc -> rgc: 1.1 isStatusValid(status)
+rgc -> Account: 1.2  updateStatus(status)
 activate Account
 deactivate Account
 deactivate rgc
