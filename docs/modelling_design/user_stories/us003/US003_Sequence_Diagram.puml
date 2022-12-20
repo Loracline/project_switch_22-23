@@ -1,19 +1,39 @@
 
 @startuml
 'https://plantuml.com/sequence-diagram
-autonumber
+/'autonumber'/
 actor Administrator
-participant ":ChangeProfileController" as Controller
-participant ":Account" as account
+participant ":Controller" as Controller
+participant ":Company" as company
+participant ":ProfileList" as profileList
+participant ":AccountList" as userList
+participant "account :Account" as account
 
-Administrator -> Controller: Inserts user e-mail and desired profile
 
+Administrator -> Controller: changeProfile(e-mail,profile)
+activate Controller
+Controller -> company: changeProfile(e-mail,profile)
+activate company
+company -> profileList: isProfileValid(profile)
+activate profileList
+profileList --> company: return true
+deactivate profileList
+company -> userList: isUserValid(e-mail)
+activate userList
+userList --> company: return true
+deactivate userList
+company -> userList: account = getAccount(e-mail)
+activate userList
+userList --> company: return account
+deactivate userList
 
-Controller -> Controller: isUserValid (e-mail)
+create account
+company -> account: updateProfile(profile)
+
+/'Controller -> Controller: isUserValid (e-mail)
 Controller -> Controller: isProfileValid (profile)
 
-Controller --> account: changeProfile (e-mail, profile)
+Controller --> account: changeProfile (e-mail, profile)'/
 
 
- Controller --> Administrator: Informs about operation success
 @enduml
