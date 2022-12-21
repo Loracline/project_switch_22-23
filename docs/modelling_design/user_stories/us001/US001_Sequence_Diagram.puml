@@ -1,28 +1,28 @@
 @startuml
-/'
+
 actor Administrator
 participant ":CreateProfileUI" as cpu
 participant ":CreateProfileController" as cpc
-participant ":System" as System
+participant ":Company" as Company
 participant "profile:Profile" as Profile
 
 activate Administrator
 Administrator -> cpu: 1. starts the definition of a new profile
 activate cpu
-cpu --> Administrator: 1.1 requests data(name, permissions)
+cpu --> Administrator: 1.1 requests data(name)
 deactivate cpu
 Administrator -> cpu: 2. types requested data
 activate cpu
-cpu -> cpc: 2.1 createNewProfile(name, permissions)
+cpu -> cpc: 2.1 createNewProfile(name)
 activate cpc
-cpc -> System: 2.1.1 profile=createNewProfile(name, permissions)
-activate System
-System --> Profile: 2.1.1.1 create(name, permissions)
-deactivate System
-cpc -> System: 2.1.2 validateProfile(profile)
-activate System
+cpc -> Company: 2.1.1 profile=createNewProfile(name)
+activate Company
+Company --> Profile: 2.1.1.1 create(name)
+deactivate Company
+cpc -> Company: 2.1.2 validateProfile(profile)
+activate Company
 deactivate cpc
-deactivate System
+deactivate Company
 cpu --> Administrator: 2.2 shows data and requests confirmation
 
 deactivate cpu
@@ -30,26 +30,31 @@ Administrator -> cpu: 3. confirms
 activate cpu
 cpu -> cpc: 3.1 saveProfile()
 activate cpc
-cpc -> System: 3.1.1 saveProfile(profile)
-activate System
-System -> System: 3.1.1.1 validateProfile(profile)
-System -> System: 3.1.1.2 addProfile(profile)
-deactivate System
+cpc -> Company: 3.1.1 saveProfile(profile)
+activate Company
+Company -> Company: 3.1.1.1 validateProfile(profile)
+Company -> Company: 3.1.1.2 addProfile(profile)
+deactivate Company
 deactivate cpc
 cpu --> Administrator: 3.2 informs success
 deactivate cpu
+
+
+/'
+actor Administrator as Admin
+participant ":Controller" as Cont
+participant ":Company" as Comp
+participant "prof:Profile" as Prof
+
+activate Cont
+Admin -> Cont: 1. createNewProfile(profileName)
+Cont -> Comp: 1.1 prof = createProfile(profileName)
+activate Comp
+create Prof
+Comp --> Prof: 1.1.1 createProfile(profileName)
+Comp -> Comp: 1.1.2 validateProfile(profileName)
+Comp -> Comp: 1.1.3 addProfile(profileName)
 '/
-
-actor Administrator
-participant ":Controller" as Controller
-participant ":Company" as Company
-participant "prof:Profile" as Profile
-
-activate Controller
-[-> Controller: 1. createNewProfile(nameProfile)
-Controller --> Company: 1.1 createProfile(profile)
-deactivate Controller
-Company -> Company: 2.1.1 validateProfile(profile)
-Company -> Company: 2.1.2 addProfile(profile)
+@enduml
 
 @enduml
