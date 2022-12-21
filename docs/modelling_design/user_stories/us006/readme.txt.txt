@@ -1,1 +1,1 @@
-All artifacts related to the modelling of user story US001.
+All artifacts related to the modelling of user story US006.

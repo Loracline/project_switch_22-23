@@ -1,1 +1,1 @@
-Put here deprecated artifacts related to US001.
+Put here deprecated artifacts related to US004.
