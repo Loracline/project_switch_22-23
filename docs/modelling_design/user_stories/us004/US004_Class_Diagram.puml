@@ -1,0 +1,25 @@
+@startuml
+
+class Account{
+-email
+-status
++getemail()
++getstatus()
+
+}
+class "AccountListController" {
++createInfo(email, status)
+}
+class AccountList{
++addToList(accountInfo)
++accountInfo(email, status)
+}
+
+"AccountList" "1" --> "*" Account: list
+"AccountListController" "1" --> "*" Account: get
+
+hide "Account" circle
+hide "AccountList" circle
+hide "AccountListController" circle
+
+@enduml
