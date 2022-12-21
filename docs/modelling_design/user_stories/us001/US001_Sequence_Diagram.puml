@@ -5,7 +5,6 @@ participant ":CreateProfileUI" as cpu
 participant ":CreateProfileController" as cpc
 participant ":Company" as Company
 participant "profile:Profile" as Profile
-
 activate Administrator
 Administrator -> cpu: 1. starts the definition of a new profile
 activate cpu
@@ -17,6 +16,7 @@ cpu -> cpc: 2.1 createNewProfile(name)
 activate cpc
 cpc -> Company: 2.1.1 profile=createNewProfile(name)
 activate Company
+create Profile
 Company --> Profile: 2.1.1.1 create(name)
 deactivate Company
 cpc -> Company: 2.1.2 validateProfile(profile)
