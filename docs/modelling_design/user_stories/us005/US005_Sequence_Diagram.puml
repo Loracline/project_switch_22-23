@@ -6,7 +6,7 @@
 
 actor "Administrator"
 participant ":ChangeAccountUI" as caUi
-participant ":ChangerAccountController" as cac
+participant ":ChangeAccountController" as cac
 participant ":Company" as company
 participant "status:Account" as Account
 
@@ -17,13 +17,13 @@ caUi --> Administrator: 1.1 requests data (status)
 deactivate caUi
 Administrator -> caUi: 2. inserts requested data
 activate caUi
-caUi -> cac: 2.1 changeStatus(inactivate or activate)
+caUi -> cac: 2.1 changeStatus(status)
 activate cac
 cac -> company: 2.1.1 chg=changeAccount(status)
 activate company
 company --> Account: 2.1.1.1 change(status)
 deactivate company
-cac -> company: 2.1.2 validateStatus(inactivate or activate)
+cac -> company: 2.1.2 validateStatus(status)
 activate company
 deactivate cac
 deactivate company
@@ -33,7 +33,7 @@ Administrator -> caUi: 3. confirms
 activate caUi
 caUi -> cac: 3.1 saveStatus()
 activate cac
-cac -> company: 3.1.1 saveStatus(inactivate or activate)
+cac -> company: 3.1.1 saveStatus(status)
 activate company
 company -> company: 3.1.1.1 validateStatus
 deactivate company
