@@ -8,14 +8,16 @@ hide UserInProject circle
 hide Sprint circle
 hide Task circle
 hide Project circle
+hide Role circle
 
-Class Account{
-Name
-E-mail
-Password
-Status
-Photo - optional
+Class Account {
+name
+email
+password
+status
+photo
 }
+
 Class Profile
 Class UserInProject
 Class Role
