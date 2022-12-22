@@ -1,20 +1,37 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class Account
-class ChangeStatusController
-hide ChangeStatusController circle
-hide Account circle
+class "ChangeAccountUI"
+class "ChangeStatusController"
+class "Company"
+class "Account"
+annotation "Dependency"
+annotation "Association"
 
-ChangeStatusController "1" -->"*"Account
+"ChangeAccountUI" ..> "ChangeStatusController"
+"ChangeStatusController"  ..> "Company"
+"ChangeStatusController" ..> "Account"
+"Company" "1  " -->"*" "Account"
 
-class ChangeStatusController{
-+changesStatus(inactive)
-+isStatusValid(inactive)
+("ChangeAccountUI", "ChangeStatusController") . "Dependency"
+("Company", "ChangeStatusController") . "Dependency"
+("Company", "Account") . "Association"
+
+
+class "Company"{
++changeAccount(status)
++validateStatus(status)
++saveStatus(status)
+-validateStatus
 }
-class Account{
+class "ChangeStatusController"{
++changeStatus(status)
+-status
+}
 
-+ updateStatus(inactive)
+class Account{
++ change(status)
+-status
 }
 
 @enduml

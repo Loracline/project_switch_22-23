@@ -6,7 +6,7 @@
 
 actor "Administrator"
 participant ":ChangeAccountUI" as caUi
-participant ":ChangeAccountController" as cac
+participant ":ChangeStatusController" as cac
 participant ":Company" as company
 participant "status:Account" as Account
 
@@ -42,21 +42,3 @@ deactivate caUi
 
 @enduml
 
-'@startuml
-''primeira verão
-''https://plantuml.com/sequence-diagram
-'
-'
-'actor "Administrator"
-'participant ":ChangeAccountController" as cac
-'participant ":Account" as Account
-'
-'Administrator -> cac: 1. Changes status to inactive
-'activate cac
-'cac -> cac: 2. isStatusValid(inactive)
-'cac -> Account: 3. changesStatus(inactive)
-'activate Account
-'deactivate cac
-'deactivate Account
-'
-'@enduml
