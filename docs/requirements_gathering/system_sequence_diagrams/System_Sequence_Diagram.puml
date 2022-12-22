@@ -1,0 +1,411 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE NEW PROFILE
+legend top
+US001 - As Administrator, I want to create user profiles.
+end legend
+actor Administrator
+autonumber
+Administrator  -> ":System": Creates new profile
+note left
+Account is authenticated.
+":System" grants access.
+end note
+":System" --> Administrator: requests data
+Administrator -> ":System": Enters profile data
+":System" --> Administrator: new profile created
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW ACCOUNT
+legend top
+US002 - As Administrator, I want to register a user.
+end legend
+autonumber
+actor Administrator
+Administrator -> ":System": Creates new account
+note left
+Account is authenticated.
+":System" grants access.
+end note
+Administrator <-- ":System": requests data (name, email, phoneNumber)
+Administrator  -> ":System": Enters data
+":System" --> Administrator: new account created
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO CHANGE PROFILE
+legend top
+US003 - As Administrator, I want to change the profile of a user account.
+end legend
+actor Administrator
+autonumber
+Administrator -> ":System": Changes account profile
+note left
+Account is authenticated.
+":System" grants access.
+end note
+":System" --> Administrator: requests data (email, profile)
+Administrator -> ":System": Enters account data
+":System" --> Administrator: profile is updated
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS
+legend top
+US004 - As Administrator, I want to get a list of all user accounts and their status.
+end legend
+actor Administrator
+autonumber
+Administrator -> ":System": Requests list of all accounts and status
+note left
+Account is authenticated.
+":System" grants access.
+end note
+":System" --> Administrator: returns data
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO SEARCH ACCOUNT BY E-MAIL
+actor Administrator
+autonumber
+Administrator -> ":System": Searches account by e-mail
+note left
+Account is authenticated.
+":System" grants access.
+end note
+":System" --> Administrator: returns account matching
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO SEARCH ACCOUNT BY PROFILE
+actor Administrator
+autonumber
+Administrator -> ":System": Searches account by profile
+note left
+Account is authenticated.
+":System" grants access.
+end note
+":System" --> Administrator: returns list of accounts
+@enduml
+
+
+@startuml
+legend top
+US005 - As Administrator, I want to activate a user account.
+end legend
+skinparam sequenceMessageAlign center
+title TO ACTIVATE USER ACCOUNT
+actor Administrator
+autonumber
+Administrator -> ":System": Requests account info
+note left
+Account is authenticated.
+":System" grants access.
+end note
+":System" --> Administrator: returns account info
+Administrator -> ":System": Changes status to "Active"
+":System" --> Administrator: status updated
+@enduml
+
+
+@startuml
+legend top
+US006 - As Administrator, I want to inactivate a user account.
+end legend
+skinparam sequenceMessageAlign center
+title TO INACTIVATE USER ACCOUNT
+actor Administrator
+autonumber
+Administrator -> ":System": Requests account info
+note left
+Account is authenticated.
+":System" grants access.
+end note
+Administrator <-- ":System": returns account info
+Administrator -> ":System": Changes status to "Inactive"
+":System" --> Administrator: status updated
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE PROJECT
+autonumber
+actor UIP
+UIP -> ":System": Creates new project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": requests data (name, description, etc.)
+UIP -> ":System":  Enters project data
+UIP <-- ":System": new project created
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO MANAGE PROJECT
+actor "Project Manager" as PM
+autonumber
+PM -> ":System": Edits project info
+note left
+Account is authenticated.
+":System" grants access.
+end note
+PM <-- ":System": project info updated
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO SEARCH PROJECT BY MANAGER
+actor UIP
+autonumber
+UIP -> ":System": Searches project by (code, name, etc.)
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": lists all projects matching
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO SEARCH PROJECT BY USER
+actor User
+autonumber
+User -> ":System": Searches project by (code, name, etc.)
+note left
+Account is authenticated.
+":System" grants access.
+end note
+User <-- ":System": lists projects User is / was enrolled
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE USER STORY (US)
+actor "Product Owner" as PO
+autonumber
+PO -> ":System": Creates new US
+note left
+Account is authenticated.
+":System" grants access.
+end note
+PO <-- ":System": requests data (US_number, actor, US_text, etc.)
+PO -> ":System": Enters US data
+PO <-- ":System": US created and added to product backlog
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE SPRINT
+actor "User in project" as UIP
+autonumber
+UIP -> ":System": Requests product backlog data
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": returns US
+UIP -> ":System": Defines US for sprint
+UIP <-- ":System": new sprint created
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO GROOM USER STORY
+actor "Product Owner" as PO
+PO -> ":System": Requests product backlog data
+note left
+Account is authenticated.
+":System" grants access.
+end note
+PO <-- ":System": returns US
+PO -> ":System": Decomposes US
+PO <-- ":System": US replaced
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO REVIEW SPRINT
+actor "Product Owner" as PO
+PO -> ":System": Accesses all sprint's US
+note left
+Account is authenticated.
+":System" grants access.
+end note
+PO <-- ":System": returns US
+PO -> ":System": Returns not finished US to product backlog
+PO <-- ":System": US remains in product backlog
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE TASK FOR USER STORY
+actor "User in project" as UIP
+UIP -> ":System": Creates task related to US
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": requests task data
+UIP -> ":System": Enters task data
+UIP <-- ":System": new task created
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO UPDATE TASK IN USER STORY
+actor "User in project" as UIP
+UIP -> ":System": Updates info about task
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": requests update description
+UIP -> ":System": Enters data
+UIP <-- ":System": task updated
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO FINISH TASK IN USER STORY
+actor "User in project" as UIP
+UIP -> ":System": Registers task finished during sprint
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": returns unfinished US to product backlog
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO ALLOCATE RESOURCE IN PROJECT
+actor "Manager" as UIP
+UIP -> ":System": Assigns resource to project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": requests data (startingDate, endingDate,\n costPerHour, percentAllocation)
+UIP -> ":System": Enters data
+UIP <-- ":System": resource added to project
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO ALLOCATE RESOURCE IN PROJECT
+actor "Manager" as UIP
+UIP -> ":System": Assigns resource to project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": requests data (startingDate, endingDate,\n costPerHour, percentAllocation)
+UIP -> ":System": Enters data
+UIP <-- ":System": resource added to project
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO GENERATE ALLOCATION REPORT BY MANAGER
+actor "Manager" as UIP
+UIP -> ":System": Requests allocation report of \n any member of any projects
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": generates allocation report
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO GENERATE ALLOCATION REPORT BY \n PROJECT MANAGER, PRODUCT OWNER OR SCRUM MASTER
+actor "PM, PO or SM" as UIP
+UIP -> ":System": Requests allocation report of any member \n of projects he / she / they are involved in
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": generates allocation report
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO GENERATE ALLOCATION REPORT BY TEAM MEMBER
+actor "Team Member" as UIP
+UIP -> ":System": Requests personal allocation report \n of projects he / she / they are involved in
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": generates allocation report
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO GENERATE KPI REPORT BY MANAGER
+actor "Manager" as UIP
+UIP -> ":System": Requests KPI report of any project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": reports CPI and SPO in chosen format
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO GENERATE KPI REPORT BY PROJECT MANAGER OR PRODUCT OWNER
+actor "PM or PO" as UIP
+UIP -> ":System": Requests KPI report of project \n he/she/they are involved in
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": reports CPI and SPO in chosen format
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO KEEP RECORD OF SCRUM CEREMONY
+actor "User in project" as UIP
+UIP -> ":System": Begins ceremony
+note left
+Account is authenticated.
+":System" grants access.
+end note
+UIP <-- ":System": starts recording
+UIP -> ":System": Finishes ceremony
+UIP <-- ":System": stops recording and keeps record
+@enduml
