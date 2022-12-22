@@ -1,17 +1,62 @@
+
 @startuml
+'última versão
 'https://plantuml.com/sequence-diagram
 
 
 actor "Administrator"
-participant ":ChangeAccountController" as rgc
-participant ":Account" as Account
+participant ":ChangeAccountUI" as caUi
+participant ":ChangerAccountController" as cac
+participant ":Company" as company
+participant "status:Account" as Account
 
-Administrator -> rgc: 1. Changes status to inactive
-activate rgc
-rgc -> rgc: 2. isStatusValid(inactive)
-rgc -> Account: 3. changesStatus(inactive)
-activate Account
-deactivate rgc
-deactivate Account
+activate Administrator
+Administrator  -> caUi : 1. changes status in Account
+activate caUi
+caUi --> Administrator: 1.1 requests data (status)
+deactivate caUi
+Administrator -> caUi: 2. inserts requested data
+activate caUi
+caUi -> cac: 2.1 changeStatus(inactivate or activate)
+activate cac
+cac -> company: 2.1.1 chg=changeAccount(status)
+activate company
+company --> Account: 2.1.1.1 change(status)
+deactivate company
+cac -> company: 2.1.2 validateStatus(inactivate or activate)
+activate company
+deactivate cac
+deactivate company
+caUi --> Administrator: 2.2 shows status and requests confirmation
+deactivate caUi
+Administrator -> caUi: 3. confirms
+activate caUi
+caUi -> cac: 3.1 saveStatus()
+activate cac
+cac -> company: 3.1.1 saveStatus(inactivate or activate)
+activate company
+company -> company: 3.1.1.1 validateStatus
+deactivate company
+caUi --> Administrator: 3.2 informs success!
+deactivate caUi
 
 @enduml
+
+'@startuml
+''primeira verão
+''https://plantuml.com/sequence-diagram
+'
+'
+'actor "Administrator"
+'participant ":ChangeAccountController" as cac
+'participant ":Account" as Account
+'
+'Administrator -> cac: 1. Changes status to inactive
+'activate cac
+'cac -> cac: 2. isStatusValid(inactive)
+'cac -> Account: 3. changesStatus(inactive)
+'activate Account
+'deactivate cac
+'deactivate Account
+'
+'@enduml
