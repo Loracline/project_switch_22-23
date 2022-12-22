@@ -1,116 +1,98 @@
 # Use-Case Texts
 
-## UC1: To create new profile
-The administrator creates new profile. System returns data (name, permissions). Administrator enters profile data. System notifies that profile is created.
+### Revision History
 
-## UC2: To register new account
-The administrator creates new account. System returns data (name, email, phone number and photo). Administrator enters account data. System notifies that account is created.
-
-## UC3: To change profile
-The administrator changes account profile. System requests data (e-mail, desired profile). Administrator enters data. System notifies profile was updated.
-
-## UC4: To list all accounts
-The administrator request list of all accounts and status. System returns data.
-
-## UC5: To search account by email
-The Administrator searches account by email. System returns data.
-
-## UC6: To search accounts by profile
-The Administrator searches user accounts by profile user. System returns list of accounts.
-
-## UC7: To activate user account
-Administrator request account information. System returns account information. Administrator change the status to inactive. System notifies that status was updated.
-
-## UC8: To inactive user account
-Administrator request account information. System returns account information. Administrator change the status to inactive. System notifies that status was updated.
-
-## UC9: To create project
-The manager creates a new project. System returns data (name, description etc.). The manager enters project data. The system notifies that the project was created.
-
-## UC10: To manage project
-The project manager edit project information. The system notifies that  the project information is updated.
-
-## UC11: To search project by manager
-Manager searches project by code, name etc. System returns a list of all projects.
-
-## UC12: To search project by user
-User searches project by code, name etc. System returns a list of all projects where user is/was enrolled.
-
-## UC13: To create US
-Product Owner create new US. System returns data (US number, actor, priority in product backlog, etc). Product owner enters US data. System notifies that new US is created and added to product backlog.
-
-## UC14: To create sprint
-Team request access to product backlog data. System returns all user stories. Team defines user stories for the sprint. System notifies that sprint is created.
-
-## UC15: To groom US
-Product Owner request access to product backlog data. System returns user stories. Product Owner decompose user story. System notifies that the user story was replaced.
-
-## UC18: Sprint review
-Team registers in the system tasks finished during the sprint. System removes 
-user stories done from the product backlog. System returns unfinished user 
-stories to the product backlog. Product Owner requests access to the sprint 
-finished user stories. System returns user stories. Product Owner may return a 
-user story to the product backlog.
+| Version | Date     | Description                   | Author                           |
+|---------|----------|-------------------------------|----------------------------------|
+| v.01    | 14/12/22 | Identification of UC 001-015. | Cristiana Moreira, Rui Pinho     |
+| v.02    | 15/12/22 | Identification of UC 016-028. | Bárbara Oliveira, João Magalhães |
+| v.03    | 22/12/22 | Use-case grooming.            | Bárbara Oliveira                 |
 
 
-## UC19: Tasks for US
-Team members create tasks related to US. System records tasks. During the sprint 
-users update tasks. System records updated tasks.
+### Introduction
 
+This document lists the use-case texts identified in the *Vision Document* of the software management product.
 
-## UC20: Task update
-A user access information about a task. System grants access. User update 
-information. System generates comments where attachment files can be added. User 
-accesses the comment and completes it with necessary changes. System generates 
-record.
+## [UC001] To create new profile
+Administrator creates new profile. System requests data. Administrator enters profile data. System notifies that profile is created.
 
+## [UC002] To register new account
+Administrator creates new account. System requests data (name, e-mail, phone number). Administrator enters account data. System notifies that account is created.
 
-## UC21: Project allocation
-Manager access project. System grants access. Manager checks available 
-resources. Manager assigns resources to project. System generate form with start 
-date, end date, cost per hour and percentage of allocation. Manager fills form. 
-System calculates allocation time for each resource in different projects.
+## [UC003] To change profile
+Administrator changes account profile. System requests data (e-mail, desired profile). Administrator enters data. System notifies profile was updated.
 
+## [UC004] To list all accounts
+Administrator request list of all accounts and status. System returns data.
 
-## UC22: Project activity
-User access project. System grants access. User views the status of activities 
-of the project. User chooses type of viewing mode. System returns data in 
-viewing mode selected.
+## [UC005] To search account by e-mail
+Administrator searches account by e-mail. System returns account matching the given e-mail.
 
+## [UC006] To search account by profile
+Administrator searches account by profile. System returns list of accounts with desired profile.
 
-## UC23: To Generate Allocation Report by Manager
-Account requests allocation report of any member of any project. System 
-generates allocation report.
+## [UC007] To activate user account
+Administrator request account information. System returns account information. Administrator change the status to *Active*. System notifies that status was updated.
 
-## UC23: To Generate Allocation Report by Project Manager
-Account requests allocation report of any member of projects he/she is involved in. System 
-generates allocation report.
+## [UC008] To inactive user account
+Administrator request account information. System returns account information. Administrator change the status to *Inactive*. System notifies that status was updated.
 
-## UC23: To Generate Allocation Report by Product Owner
-Account requests allocation report of projects he/she is involved in. System
-generates allocation report.
+## [UC009] To create project
+Manager creates new project. System requests data (name, description, etc.). Manager enters project data. System notifies that project was created.
 
-## UC23: To Generate Allocation Report by Scrum Master
-Account requests allocation report of projects he/she is involved in. System
-generates allocation report.
+## [UC010] To manage project
+Project Manager (PM) edits project information. System notifies that project information is updated.
 
+## [UC011] To search project by manager
+Manager searches project by code, name, etc. System returns list of all projects matching the criteria.
 
-## UC23: To Generate Allocation Report by Team Member
-Account requests allocation report of projects he/she is involved in. System
-generates allocation report.
+## [UC012] To search project by user
+User searches project by code, name, etc. System returns a list of all projects where user is/was enrolled.
 
+## [UC013] To create user story (US)
+Product Owner (PO) creates new US. System requests data (US number, actor, priority in product backlog, etc.). PO enters US data. System notifies that new US is created and added to product backlog.
 
-## UC: To Generate KPI Report by Manager
-Manager requests KPI report of any project. System provides report in XML file 
-or on screen. Manager selects XML file or on screen. System reports CPI and SPI 
-in chosen format. 
+## [UC014] To create sprint
+User in project requests access to product backlog data. System returns all US. User defines US for the sprint. System notifies that sprint is created.
 
-## UC: To Generate KPI Report by Project Manager
-Project Manager requests KPI report of project he/she/they is involved. System 
-provides report in XML file or on screen. Manager selects XML file or on screen. 
-System reports CPI and SPI in chosen format. 
+## [UC015] To groom US
+PO requests access to product backlog data. System returns US. PO decomposes US. System notifies that US was replaced.
 
-## UC: To Generate KPI Report by Product Owner
-Product Owner requests KPI report of project he/she/they is involved. System
-provides report in XML file or on screen. Manager selects XML file or on screen.
-System reports CPI and SPI in chosen format. 
+## [UC016] To review sprint
+PO requests access to sprint's finished US. System returns US. PO returns US to product backlog if needed. System notifies that US remains in product backlog.
+
+## [UC017] To create task for US
+User in project creates task related to US. System requests task data. User enters task information. System notifies that new task is created for given US. 
+
+## [UC018] To update task in US
+User in project updates information about task. System requests information (update description). User enters data. System notifies that task is updated. 
+
+## [UC019] To finish task in US
+User in project registers tasks finished during sprint. System notifies that task is finished and returns US with unfinished tasks to product backlog.
+
+## [UC020] To allocate resource in project
+Manager assigns resource to project. System requests data (starting date, ending date, cost per hour and percentage of allocation). Manager enters data. System notifies that resource is added to project.
+
+## [UC021] To choose project activity's viewing mode
+User in project chooses type of viewing mode. System returns data in viewing mode selected.
+
+## [UC022] To generate allocation report by Manager
+Manager requests allocation report of any member of any project. System generates allocation report.
+
+## [UC023] To generate allocation report by PM, PO or Scrum Master (SM)
+PM, PO or SM requests allocation report of any member of projects he/she/they are involved in. System generates allocation report.
+
+## [UC024] To generate allocation report by TM
+TM requests personal allocation report of projects he/she/they are involved in. System generates allocation report.
+
+## [UC025] To generate KPI report by Manager
+Manager requests KPI report of any project. System asks to choose between XML file or screen. Manager selects option. System reports CPI and SPI in chosen format. 
+
+## [UC026] To generate KPI report by PM or PO
+PM or PO requests KPI report of project he/she/they are involved in. System asks to choose between XML file or screen. PM selects option. System reports CPI and SPI in chosen format.
+
+## [UC027] To keep record of Scrum ceremony 
+User in projects starts time counter when ceremony begins. System starts recording. User finishes time counter when ceremony ends. System stops recording and keeps record. 
+
+## [UC028] To import project created in legacy platform
+Manager imports project created in legacy platform. System checks if project is not violating current business rules. Manager confirms the import. System notifies project is successfully imported. 
