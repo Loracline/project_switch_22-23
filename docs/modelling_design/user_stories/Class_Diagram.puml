@@ -1,5 +1,5 @@
 @startuml
-class Administrator{
+class UserInterface{
 +createNewProfile(name, permissions)
 +changeProfile(email,profile)
 +insertUserInformation(email),(profile)
@@ -57,7 +57,7 @@ class AccountList{
 
 hide Profile circle
 hide "CreateProfile:Controller" circle
-hide Administrator circle
+hide UserInterface circle
 hide "RegisterAccount:Controller" circle
 hide Account circle
 hide ChangeStatusController circle
@@ -66,16 +66,16 @@ hide ChangeStatusController circle
 hide Account circle
 hide ChangeProfileController circle
 hide Account circle
-hide Administrator circle
+hide UserInterface circle
 hide "Account" circle
 hide "AccountList" circle
 hide "AccountListController" circle
 
-Administrator <|-- "CreateProfile:Controller"
-Administrator <|-- "RegisterAccount:Controller"
-Administrator <|-- ChangeStatusController
-Administrator <|-- ChangeProfileController
-Administrator <|-- "AccountListController"
+UserInterface <|-- "CreateProfile:Controller"
+UserInterface <|-- "RegisterAccount:Controller"
+UserInterface <|-- ChangeStatusController
+UserInterface <|-- ChangeProfileController
+UserInterface <|-- "AccountListController"
 
 "CreateProfile:Controller" "1" --> "*" Profile: creates
 "RegisterAccount:Controller" "1" --> "*" Account: contains
