@@ -2,19 +2,19 @@
 'https://plantuml.com/class-diagram
 
 class "ChangeAccountUI"
-class "ChangeAccountController"
+class "ChangeStatusController"
 class "Company"
 class "Account"
 annotation "Dependency"
 annotation "Association"
 
-"ChangeAccountUI" ..> ChangeAccountController
-"ChangeAccountController"  ..> "Company"
-"ChangeAccountController" ..> "Account"
-"Company" "1" -->"*" "Account"
+"ChangeAccountUI" ..> "ChangeStatusController"
+"ChangeStatusController"  ..> "Company"
+"ChangeStatusController" ..> "Account"
+"Company" "1  " -->"*" "Account"
 
-("ChangeAccountUI", "ChangeAccountController") . "Dependency"
-("Company", "ChangeAccountController") . "Dependency"
+("ChangeAccountUI", "ChangeStatusController") . "Dependency"
+("Company", "ChangeStatusController") . "Dependency"
 ("Company", "Account") . "Association"
 
 
@@ -24,9 +24,9 @@ class "Company"{
 +saveStatus(status)
 -validateStatus
 }
-class "ChangeAccountController"{
+class "ChangeStatusController"{
 +changeStatus(status)
-+saveStatus()
+-status
 }
 
 class Account{

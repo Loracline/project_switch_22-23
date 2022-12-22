@@ -1,28 +1,41 @@
 @startuml
+
 class ChangeProfileController
-class Administrator
+class ChangeProfileUI
+class Company
 hide ChangeProfileController circle
+hide Company circle
 hide Account circle
-hide Administrator circle
+hide ChangeProfileUI circle
 
-Administrator "1" -->"*"ChangeProfileController
+ChangeProfileUI ..> ChangeProfileController: changes
 
-ChangeProfileController "1" -->"*"Account
+ChangeProfileController ..> Company
+
+Company "1" -->"*"Account: validate
+
+class ChangeProfileUI {
+}
 
 class ChangeProfileController {
+-email
+-profile
++changeProfile(email,profile)
+}
+
+class Company {
 +isUserValid(email)
 +isProfileValid(profile)
 }
 
-class Administrator {
-+changeProfile(email,profile)
-}
-
 class Account{
-
+-email
+-profile
 + updateProfile (email, profile)
 }
 
 
 @enduml
+
+
 
