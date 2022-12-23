@@ -2,20 +2,26 @@
 
 skinparam sequenceMessageAlign center
 actor "Administrator"
-participant ":CreateAccountListController" as cal
-participant ":Account" as acc
-participant "AccountList" as acclist
+participant ":AccountListUI" as ui
+participant ":AccountListController" as cal
+participant ":Company" as ca
+participant AccountList as ac
 
-activate Administrator
-Administrator -> cal: 1 request list of all accounts and status
+activate "Administrator"
+"Administrator" -> ui: 1: request list of all accounts
+activate ui
+ui -> cal: 1.1: getListAllAccounts()
 activate cal
-cal -> acc: 1.1 accountInfo=createInfo(e-mail, status)
-activate acc
-acc -> acclist: 1.1.1 getEmailStatus()
-activate acclist
-deactivate acc
-acclist -> acclist: 1.1.1.1 addToList(accountInfo)
-cal --> Administrator: returns data
-deactivate acclist
-
+activate ca
+cal -> ca: 1.1.1: getListAllAccounts()
+activate ac
+ca -> ac: 1.1.1.1 getList()
+ac --> ca :returns list of all accounts
+deactivate ac
+ca --> cal :returns list of all accounts
+deactivate ca
+cal --> ui :returns list of all accounts
+deactivate cal
+ui --> "Administrator": returns list of all accounts
+deactivate ui
 @enduml
