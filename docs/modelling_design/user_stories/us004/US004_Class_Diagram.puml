@@ -3,8 +3,8 @@
 class Account{
 -email
 -status
-+getemail()
-+getstatus()
++getEmail()
++getStatus()
 
 }
 class "AccountListController" {
@@ -15,8 +15,8 @@ class AccountList{
 +accountInfo(email, status)
 }
 
-"AccountList" "1" --> "*" Account: list
-"AccountListController" "1" --> "*" Account: get
+"AccountList" "1" --> "*" Account: lists
+"AccountListController" "1" --> "*" Account: gets
 
 hide "Account" circle
 hide "AccountList" circle

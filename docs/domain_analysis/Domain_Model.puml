@@ -1,5 +1,5 @@
 @startuml
-title Domain model v.01 \nDec 14, 2022
+title Domain model v.01 \n Dec 14, 2022
 hide empty member
 hide Account circle
 hide Profile circle
@@ -19,46 +19,52 @@ photo
 }
 
 Class Profile
+
 Class UserInProject
+
 Class Role
-Class Project{
-Code
-Name
-Description
-Start date
-Sprint Duration
-Number of sprints
-End date
-Customer
-Typology
-Budget
-Project manager
-Product Owner
-Scrum Master
-Project team
-Project status
+
+Class Project {
+code
+name
+description
+startingDate
+sprintDuration
+numberOfSprints
+endingDate
+customer
+typology
+budget
+projectManager
+productOwner
+scrumMaster
+projectTeam
+projectStatus
 }
-Class Sprint{
-Effort
+
+Class Sprint {
+effort
 }
-Class UserStory{
-Number
-Actor
-User story text
-Acceptance criteria
+
+Class UserStory {
+number
+actor
+userStoryText
+acceptanceCriteria
 }
-Class Task{
-Name
-Description
-User Story
-Start date
-End date
-Hours spent
-Effort estimate
-Percentage of execution
-Type
-Status
-Responsible
+
+Class Task {
+name
+description
+userStory
+startingDate
+endingDate
+hoursSpent
+effortEstimate
+percentExecution
+type
+status
+responsible
 }
 
 Account "*"--"1" Profile : has >

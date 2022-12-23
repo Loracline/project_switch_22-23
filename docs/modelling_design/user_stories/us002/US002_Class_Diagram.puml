@@ -1,22 +1,36 @@
 @startuml
-class Controller
-class Account
+'https://plantuml.com/class-diagram
 
-class Controller {
-+registerNewAccount(name, email phoneNumber)
+class "RegisterAccountUI"{
+}
+
+class "RegisterAccountController" {
++registerAccount(name, email, phoneNumber)
++saveAccount()
+}
+
+class "Company" {
++registerAccount(name, email, phoneNumber)
 +validateAccount(account)
++saveAccount(account)
 -addAccount(account)
 }
 
-class Account {
+class "Account" {
 -name
 -email
 -phoneNumber
-+Account(name, email, phoneNumber)
+-photo
++Account(name,email,phoneNumber)
 }
 
-Controller "1" --> "*" Account: contains
+hide "Account" circle
+hide "RegisterAccountController" circle
+hide "RegisterAccountUI" circle
+hide "Company" circle
 
-hide Controller circle
-hide Account circle
+"RegisterAccountUI" ..>  "RegisterAccountController"
+"RegisterAccountController" ..>  "Company"
+"Company" "1" --> "*" "Account": registers
+
 @enduml

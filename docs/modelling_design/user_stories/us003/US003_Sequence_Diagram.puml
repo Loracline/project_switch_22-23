@@ -1,6 +1,6 @@
 
 @startuml
-'https://plantuml.com/sequence-diagram
+
 /'autonumber'/
 actor Administrator
 participant ":Controller" as Controller
@@ -34,6 +34,5 @@ company -> account: updateProfile(profile)
 Controller -> Controller: isProfileValid (profile)
 
 Controller --> account: changeProfile (e-mail, profile)'/
-
 
 @enduml

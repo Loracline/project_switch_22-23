@@ -1,8 +1,5 @@
 
 @startuml
-'última versão
-'https://plantuml.com/sequence-diagram
-
 
 actor "Administrator"
 participant ":ChangeAccountUI" as caUi
@@ -35,9 +32,9 @@ caUi -> cac: 3.1 saveStatus()
 activate cac
 cac -> company: 3.1.1 saveStatus(status)
 activate company
-company -> company: 3.1.1.1 validateStatus
+company -> company: 3.1.1.1 validateStatus(status)
 deactivate company
-caUi --> Administrator: 3.2 informs success!
+caUi --> Administrator: 3.2 informs success
 deactivate caUi
 
 @enduml
