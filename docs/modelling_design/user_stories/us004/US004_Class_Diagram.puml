@@ -1,25 +1,26 @@
 @startuml
 
-class Account{
--email
--status
-+getEmail()
-+getStatus()
-
+class "AccountListUI"{
++getListAllAccounts()
 }
 class "AccountListController" {
-+createInfo(email, status)
+
++getListAllAccounts()
+}
+class "Company"{
+AccountList
++getListAllAccounts()
 }
 class AccountList{
-+addToList(accountInfo)
-+accountInfo(email, status)
+Account
++getList()
 }
-
-"AccountList" "1" --> "*" Account: lists
-"AccountListController" "1" --> "*" Account: gets
-
-hide "Account" circle
+"AccountListUI" "1" --> "1" "AccountListController":request
+"AccountListController" "1" --> "1" "Company":request
+"Company" "1" --> "1" "AccountList":get
+hide "AccountListUI" circle
 hide "AccountList" circle
 hide "AccountListController" circle
+hide "Company" circle
 
 @enduml
