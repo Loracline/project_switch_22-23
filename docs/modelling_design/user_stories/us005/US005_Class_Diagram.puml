@@ -1,33 +1,33 @@
 @startuml
 
-class "ChangeAccountUI"
+class "ChangeStatusUI"
 class "ChangeStatusController"
-class "Company"
+class "Repository"
 class "Account"
 
-"ChangeAccountUI" ..> "ChangeStatusController"
-"ChangeStatusController"  ..> "Company"
-"Company" "1  " -->"*" "Account"
+"ChangeStatusUI" ..> "ChangeStatusController"
+"ChangeStatusController"  ..> "Repository"
+"Repository" "1  " -->"*" "Account"
 
-class "Company"{
-+changeAccount(status)
-+validateStatus(status)
-+saveStatus(status)
--validateStatus
-}
 class "ChangeStatusController"{
-+changeStatus(status)
--status
+- e-mail
+- status
++changeStatus(e-mail, status)
 }
+class "Repository"{
+-e-mail
++isUserValid(e-mail)
+}
+
 
 class Account{
-+ change(status)
--status
+- status
++ updateStatus(status)
 }
 
-hide "ChangeAccountUI" circle
+hide "ChangeStatusUI" circle
 hide "ChangeStatusController" circle
-hide "Company" circle
+hide "Repository" circle
 hide "Account" circle
 
 @enduml
