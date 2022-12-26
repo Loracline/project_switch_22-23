@@ -9,8 +9,6 @@ actor "Team Member" as tm
 actor "Project Manager" as pm
 actor "Administrator" as admin
 
-
-
 rectangle System {
   usecase "Create Project" as UC1
   usecase "Manage Project" as UC2
@@ -30,15 +28,13 @@ rectangle System {
   usecase "Register Account" as UC16
   usecase "Change Account Profile" as UC17
   usecase "Create Profile" as UC18
-  usecase "Activate User Account" as UC19
-  usecase "Inactivate User Account" as UC20
+  usecase "Change Account Status" as UC19
   usecase "Register Finished Task" as UC21
-
 }
 
-mg -- UC1
-pm -- UC2
-mg -- UC3
+UC1 -- mg
+UC2 -- pm
+UC3 -- mg
 usr -- UC3
 admin -- UC4
 po -- UC5
@@ -46,14 +42,14 @@ po -- UC6
 po -- UC7
 usr -- UC8
 usr -- UC9
-mg -- UC10
-mg -- UC11
-pm -- UC11
+UC10 -- mg
+UC11 -- mg
+UC11 -- pm
 po -- UC11
 scrum -- UC11
 tm -- UC11
-mg -- UC12
-pm -- UC12
+UC12 -- mg
+UC12 -- pm
 po -- UC12
 usr -- UC13
 usr -- UC14
@@ -62,7 +58,6 @@ admin -- UC16
 admin -- UC17
 admin -- UC18
 admin -- UC19
-admin -- UC20
 usr -- UC21
 
 @enduml
