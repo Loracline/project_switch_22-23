@@ -3,8 +3,8 @@
 actor Administrator
 participant ":CreateProfileUI" as cpu
 participant ":CreateProfileController" as cpc
-participant ":Company" as Company
-participant "profile:Profile" as Profile
+participant ":Repository" as Repository
+participant "prof:Profile" as Profile
 activate Administrator
 Administrator -> cpu: 1. starts the definition of a new profile
 activate cpu
@@ -14,15 +14,15 @@ Administrator -> cpu: 2. types requested data
 activate cpu
 cpu -> cpc: 2.1 createNewProfile(name)
 activate cpc
-cpc -> Company: 2.1.1 profile=createNewProfile(name)
-activate Company
+cpc -> Repository: 2.1.1 profile=createNewProfile(name)
+activate Repository
 create Profile
-Company --> Profile: 2.1.1.1 create(name)
-deactivate Company
-cpc -> Company: 2.1.2 validateProfile(profile)
-activate Company
+Repository --> Profile: 2.1.1.1 create(name)
+deactivate Repository
+cpc -> Repository: 2.1.2 validateProfile(profile)
+activate Repository
 deactivate cpc
-deactivate Company
+deactivate Repository
 cpu --> Administrator: 2.2 shows data and requests confirmation
 
 deactivate cpu
@@ -30,11 +30,10 @@ Administrator -> cpu: 3. confirms
 activate cpu
 cpu -> cpc: 3.1 saveProfile()
 activate cpc
-cpc -> Company: 3.1.1 saveProfile(profile)
-activate Company
-Company -> Company: 3.1.1.1 validateProfile(profile)
-Company -> Company: 3.1.1.2 addProfile(profile)
-deactivate Company
+cpc -> Repository: 3.1.1 saveProfile(profile)
+activate Repository
+Repository -> Repository: 3.1.1.1 addProfile(profile)
+deactivate Repository
 deactivate cpc
 cpu --> Administrator: 3.2 informs success
 deactivate cpu
