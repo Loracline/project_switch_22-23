@@ -5,15 +5,16 @@ legend top
 US001 - As Administrator, I want to create user profiles.
 end legend
 actor Administrator
-autonumber
-Administrator  -> ":System": Creates new profile
+
+Administrator  -> ":System": 1. Starts the definition of a new profile
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-":System" --> Administrator: requests data
-Administrator -> ":System": Enters profile data
-":System" --> Administrator: new profile created
+":System" --> Administrator: 1.1 requests data
+Administrator -> ":System": 2. Types requested data
+Administrator -> ":System": 2.1 Create new profile
+":System" --> Administrator: 2.2 Shows data and requests confirmation
 @enduml
 
 
