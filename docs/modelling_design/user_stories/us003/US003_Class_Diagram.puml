@@ -2,39 +2,41 @@
 
 class ChangeProfileController
 class ChangeProfileUI
-class Company
+class Repository
 hide ChangeProfileController circle
-hide Company circle
+hide Repository circle
 hide Account circle
 hide ChangeProfileUI circle
 
+
 ChangeProfileUI ..> ChangeProfileController: changes
 
-ChangeProfileController ..> Company
+ChangeProfileController ..> Repository
 
-Company "1" -->"*"Account: validate
+
+Repository "1" -->"*"Account: validate
+
 
 class ChangeProfileUI {
 }
 
 class ChangeProfileController {
--email
--profile
-+changeProfile(email,profile)
+Repository
++changeProfile(e-mail,profile)
 }
 
-class Company {
-+isUserValid(email)
+class Repository {
+Account
++isUserValid(e-mail)
 +isProfileValid(profile)
 }
+
 
 class Account{
 -email
 -profile
-+ updateProfile (email, profile)
++ updateProfile (e-mail, profile)
 }
 
+
 @enduml
-
-
-

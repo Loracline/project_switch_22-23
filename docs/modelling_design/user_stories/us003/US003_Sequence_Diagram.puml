@@ -5,38 +5,33 @@
 actor Administrator
 participant ":ChangeProfileUI" as ui
 participant ":ChangeProfileController" as Controller
-participant ":Company" as company
-participant ":AccountList" as userList
+participant ":Repository" as repository
 participant "account :Account" as account
 
 activate Administrator
-Administrator -> ui: 1. starts the change of a user profile
+Administrator -> ui: 1. changes account profile
 activate ui
-Administrator <-- ui: 1.1. requests data
+Administrator <-- ui: 1.1. requests data (e-mail, profile)
 deactivate ui
-Administrator -> ui: 2. provides user id (e-mail) and profile
+Administrator -> ui: 2.  enters account data
 activate ui
 ui -> Controller: 2.1. changeProfile(e-mail,profile)
 activate Controller
-Controller -> company: 2.1.1. changeProfile(e-mail,profile)
-activate company
-company -> company: 2.1.1.1. isProfileValid(profile)
-company -> userList: 2.1.1.2. isUserValid(e-mail)
-activate userList
-userList --> company: 2.1.1.3. return true
-deactivate userList
-company -> userList: 2.1.1.4. account = getAccount(e-mail)
-activate userList
-userList --> company: 2.1.1.5. return account
-deactivate userList
+Controller -> repository: 2.1.1. changeProfile(e-mail,profile)
+activate repository
+repository -> repository: 2.1.1.1. isProfileValid(profile)
+repository -> repository: 2.1.1.2. isUserValid(e-mail)
+activate repository
+
+repository -> repository: 2.1.1.4. account = getAccount(e-mail)
+activate repository
+repository --> repository: 2.1.1.5. return account
 create account
-company -> account: 2.1.1.6. updateProfile(profile)
-company --> Controller: 2.1.2. return true
-deactivate company
-Controller --> ui: 2.2. return true
-deactivate Controller
+repository -> account: 2.1.1.6. updateProfile(profile)
+
+
 deactivate ui
-ui --> Administrator: 3. informs about operation success
+ui --> Administrator: 3. informs profile update
 deactivate Administrator
 
 /'Controller -> Controller: isUserValid (e-mail)

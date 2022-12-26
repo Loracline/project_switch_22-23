@@ -1,88 +1,117 @@
 @startuml
-class UserInterface{
-+createNewProfile(name, permissions)
-+changeProfile(email,profile)
-+insertUserInformation(email),(profile)
+class CreateProfileUI{
+}
+hide CreateProfileUI circle
+
+class RegisterAccountUI{
+}
+hide RegisterAccountUI circle
+
+class ChangeProfileUI{
+}
+hide ChangeProfileUI circle
+
+class AccountListUI{
+}
+hide AccountListUI circle
+
+class ChangeStatusUI{
+}
+hide ChangeStatusUI circle
+
+class Repository{
+-profileList
+-accountList
++Repository()
++createNewProfile(name)
++saveProfile(profile)
++validateProfile(profile)
++addProfile(profile)
 +registerAccount(name, email, phoneNumber)
-+listAccountsAndStatus(email),(status)
-+changeStatusToInactive(status)
-+changeStatusToActive(status)
++saveAccount(account)
++validateAccount(account)
++addAccount(account)
++isProfileValid(profileName)
++getProfile(profileName)
++isUserValid(email)
++getAccount(email)
++getListAllAccounts()
++isStatusValid(status)
 }
+hide Repository circle
+
 class Profile{
--profile
-+createProfile(profile)
+-profileName
++Profile(profileName)
++getProfile()
 }
+hide Profile circle
+
 class Account {
 -name
 -email
 -phoneNumber
-+Account(name, email, phoneNumber)
-+ updateStatus(inactive)
-+ updateStatus(active)
-+ updateProfile (email, profile)
--email
+-profile
 -status
-+getemail()
-+getstatus()
++Account(name, email, phoneNumber)
++getEmail()
++changeStatus(status)
++updateProfile(profile)
 }
-
-class "CreateProfile:Controller" {
-+validateProfile(profile)
-+saveProfile(profile)
--addProfile(profile)
-}
-class "RegisterAccount:Controller" {
-+registerNewAccount(name, email phoneNumber)
-+validateAccount(account)
--addAccount(account)
-}
-class ChangeStatusController{
-+changesStatus(inactive)
-+isStatusValid(inactive)
-+changesStatus(active)
-+isStatusValid(active)
-}
-class ChangeProfileController {
-+isUserValid(email)
-+isProfileValid(profile)
-}
-class "AccountListController" {
-+createInfo(email, status)
-}
-
-class AccountList{
-+addToList(accountInfo)
-+accountInfo(email, status)
-}
-
 hide Profile circle
-hide "CreateProfile:Controller" circle
-hide UserInterface circle
-hide "RegisterAccount:Controller" circle
-hide Account circle
-hide ChangeStatusController circle
-hide Account circle
-hide ChangeStatusController circle
-hide Account circle
+
+class CreateProfileController {
+-repository
++CreateProfileController()
++createNewProfile(name)
++saveProfile()
+}
+hide CreateProfileController circle
+
+class RegisterAccountController {
+-repository
++RegisterAccountController()
++registerAccount(name, email, phoneNumber)
++saveAccount(account)
+
+}
+hide RegisterAccountController circle
+
+class ChangeProfileController {
+-repository
++ChangeProfileController()
++changeProfile(email,profileName)
+}
 hide ChangeProfileController circle
-hide Account circle
-hide UserInterface circle
-hide "Account" circle
-hide "AccountList" circle
-hide "AccountListController" circle
 
-UserInterface <|-- "CreateProfile:Controller"
-UserInterface <|-- "RegisterAccount:Controller"
-UserInterface <|-- ChangeStatusController
-UserInterface <|-- ChangeProfileController
-UserInterface <|-- "AccountListController"
+class AccountListController{
+-repository
++AccountListController()
++getListAllAccounts()
+}
 
-"CreateProfile:Controller" "1" --> "*" Profile: creates
-"RegisterAccount:Controller" "1" --> "*" Account: contains
-ChangeStatusController "1" -->"*"Account: changes
-ChangeProfileController "1" -->"*"Account: changes
-"AccountListController" "1" --> "*" Account: gets
-Account *-- AccountList
+class ChangeStatusController{
+-repository
++ChangeStatusController()
++changeStatus(email, status)
+}
+hide ChangeStatusController circle
+
+CreateProfileUI ..>  CreateProfileController: requests
+RegisterAccountUI ..>  RegisterAccountController: requests
+ChangeProfileUI ..> ChangeProfileController: requests
+AccountListUI ..> AccountListController: requests
+ChangeStatusUI ..> ChangeStatusController: requests
+
+CreateProfileController ..> Repository
+RegisterAccountController ..> Repository
+ChangeProfileController ..> Repository
+AccountListController ..> Repository
+ChangeStatusController ..> Repository
+
+Repository --> Profile: creates
+Repository --> Account: creates
+
 
 
 @enduml
