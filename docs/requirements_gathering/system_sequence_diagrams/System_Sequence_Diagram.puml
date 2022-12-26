@@ -25,14 +25,16 @@ US002 - As Administrator, I want to register a user.
 end legend
 autonumber
 actor Administrator
-Administrator -> ":System": Creates new account
+Administrator -> ":System": starts new account register
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-Administrator <-- ":System": requests data (name, email, phoneNumber)
-Administrator  -> ":System": Enters data
-":System" --> Administrator: new account created
+Administrator <-- ":System": requests data(name, email, phoneNumber)
+Administrator  -> ":System": types requested data
+":System" --> Administrator: shows data and requests confirmation
+Administrator  -> ":System": confirms
+":System" --> Administrator: informs success
 @enduml
 
 
