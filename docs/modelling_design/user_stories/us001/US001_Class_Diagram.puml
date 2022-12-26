@@ -3,18 +3,17 @@
 
 class "Profile"{
 -name
-+createProfile(name)
++Profile(name)
 }
 
 class "CreateProfileController" {
--name
 +createNewProfile(name)
 }
 
 class "CreateProfileUI"{
 }
 
-class "Company"{
+class "Repository"{
 -profile
 +validateProfile(profile)
 +saveProfile(profile)
@@ -24,10 +23,10 @@ class "Company"{
 hide "Profile" circle
 hide "CreateProfileController" circle
 hide "CreateProfileUI" circle
-hide "Company" circle
+hide "Repository" circle
 
 "CreateProfileUI" ..>  "CreateProfileController": requests
-"CreateProfileController" ..>  "Company"
-"Company" "1" --> "*" "Profile": creates
+"CreateProfileController" ..>  "Repository"
+"Repository" "1" --> "*" "Profile": creates
 
 @enduml

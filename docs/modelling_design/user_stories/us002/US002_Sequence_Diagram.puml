@@ -2,8 +2,8 @@
 actor Administrator
 participant ":RegisterAccountUI" as ui
 participant ":registerAccountController" as controller
-participant ":Company" as company
-participant "reg:Account" as account
+participant ":Repository" as repository
+participant "acc:Account" as account
 
 activate Administrator
 Administrator -> ui: 1. starts new account register
@@ -14,29 +14,28 @@ Administrator -> ui: 2. types requested data
 activate ui
 ui -> controller: 2.1 registerAccount(name, email, phoneNumber)
 activate controller
-controller -> company: 2.1.1 reg=registerAccount(name, email, phoneNumber)
-activate company
+controller -> repository: 2.1.1 acc=registerAccount(name, email, phoneNumber)
+activate repository
 create account
-company --> account: 2.1.1.1 registerAccount(name, email, phoneNumber)
-activate account
-company -> company: 2.1.1.2 validateAccount(reg)
-deactivate account
+repository --> account: 2.1.1.1 registerAccount(name, email, phoneNumber)
+deactivate repository
+repository -> repository: 2.1.1.2 validateAccount(acc)
+activate repository
 ui --> Administrator: 2.2 shows data and requests confirmation
 deactivate controller
-deactivate company
+deactivate repository
 deactivate ui
 Administrator -> ui: 3. confirms
 activate ui
 ui -> controller: 3.1 saveAccount()
 activate controller
-controller -> company: 3.1.1 saveAccount()
-activate company
-company -> company: 3.1.1.1 saveAccount(reg)
-company -> company: 3.1.1.2 validateAccount(reg)
-company -> company: 3.1.1.3 addAccount(reg)
-
+controller -> repository: 3.1.1 saveAccount(acc)
+activate repository
+repository -> repository: 3.1.1.1 validateAccount(acc)
+repository -> repository: 3.1.1.2 addAccount(acc)
+deactivate repository
 ui --> Administrator: 3.2 informs success!
-deactivate company
+
 deactivate controller
 deactivate ui
 
@@ -45,24 +44,24 @@ deactivate ui
 
 actor Administrator
 participant ":RegisterAccountController" as controller
-participant ":Company" as company
+participant ":Repository" as repository
 participant "acc :Account" as account
 
 Administrator -> controller: 1. registerNewAccount(name, email, phoneNumber)
 activate controller
-controller -> company: 1.1 acc=registerNewAccount(name, email, phoneNumber)
-activate company
+controller -> repository: 1.1 acc=registerNewAccount(name, email, phoneNumber)
+activate repository
 create account
-company --> account: 1.1.1 registerAccount(name, email, phoneNumber)
-company -> company: 1.1.2 validateAccount(acc)
-company -> company: 1.1.3 addAccount(acc)
+repository --> account: 1.1.1 registerAccount(name, email, phoneNumber)
+repository -> repository: 1.1.2 validateAccount(acc)
+repository -> repository: 1.1.3 addAccount(acc)
 
 
 actor Administrator
 participant ":RegisterAccountUI" as ui
 participant ":RegisterAccountController" as rgc
 participant ":registerAccountController" as controller
-participant "reg:Account" as account
+participant "acc:Account" as account
 
 activate Administrator
 Administrator -> ui: 1. starts new account register
