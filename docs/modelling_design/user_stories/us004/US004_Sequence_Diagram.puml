@@ -4,22 +4,18 @@ skinparam sequenceMessageAlign center
 actor "Administrator"
 participant ":AccountListUI" as ui
 participant ":AccountListController" as cal
-participant ":Company" as ca
-participant AccountList as ac
+participant ":Repository" as rp
+
 
 activate "Administrator"
 "Administrator" -> ui: 1: request list of all accounts
 activate ui
 ui -> cal: 1.1: getListAllAccounts()
 activate cal
-activate ca
-cal -> ca: 1.1.1: getListAllAccounts()
-activate ac
-ca -> ac: 1.1.1.1 getList()
-ac --> ca :returns list of all accounts
-deactivate ac
-ca --> cal :returns list of all accounts
-deactivate ca
+cal -> rp: 1.1.1: getListAllAccounts()
+activate rp
+rp --> cal :returns list of all accounts
+deactivate rp
 cal --> ui :returns list of all accounts
 deactivate cal
 ui --> "Administrator": returns list of all accounts
