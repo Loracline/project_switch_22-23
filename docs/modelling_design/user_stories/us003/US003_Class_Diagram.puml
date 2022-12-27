@@ -1,5 +1,4 @@
 @startuml
-
 class ChangeProfileController
 class ChangeProfileUI
 class Repository
@@ -7,30 +6,45 @@ hide ChangeProfileController circle
 hide Repository circle
 hide Account circle
 hide ChangeProfileUI circle
-
-
-ChangeProfileUI ..> ChangeProfileController: changes
-
+hide Profile circle
+ChangeProfileUI ..> ChangeProfileController: requests
 ChangeProfileController ..> Repository
-
-
-Repository "1" -->"*"Account: validate
-
-
+Repository "1" -->"*"Account
+Repository "1"-->"*" Profile
 class ChangeProfileUI {
 }
-
 class ChangeProfileController {
-Repository
-+changeProfile(e-mail,profile)
+-repository
++ChangeProfileController()
++changeProfile(e-mail,profileName)
 }
-
 class Repository {
-Account
-+isUserValid(e-mail)
-+isProfileValid(profile)
+-profileList
+-accountList
++Repository()
++changeProfile(email, profileName)
++isUserValid(email)
++getAccount(email)
++isProfileValid(profileName)
++getProfile(profileName)
 }
-
+class Account{
+-name
+-email
+-phoneNumber
+-profile
+-status
++Account(name, email, phoneNumber)
++getEmail()
++changeStatus(status)
++updateProfile(profile)
+}
+class Profile{
+-profileName
++Profile(profileName)
++getProfile()
+}
+@enduml
 
 class Account{
 -email
