@@ -31,11 +31,13 @@ class Repository{
 +saveAccount(account)
 +validateAccount(account)
 +addAccount(account)
++changeProfile(email, profileName)
 +isProfileValid(profileName)
 +getProfile(profileName)
 +isUserValid(email)
 +getAccount(email)
 +getListAllAccounts()
++changeStatus(email, status)
 +isStatusValid(status)
 }
 hide Repository circle
