@@ -13,7 +13,13 @@ public class Repository {
     private List<Account> accountsList;
     private List<Profile> profilesList;
 
-
+    /**
+     * Repository constructor
+     */
+    public Repository(List<Account> accountList, List<Profile> profilesList) {
+        this.accountsList = accountList;
+        this.profilesList = profilesList;
+    }
     /**
      * Getter method for the attribute ACCOUNTS LIST.
      *

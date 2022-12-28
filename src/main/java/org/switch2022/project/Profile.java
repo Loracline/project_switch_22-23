@@ -1,13 +1,19 @@
 package org.switch2022.project;
 
+import java.util.Objects;
+
 public class Profile {
-    private String profile;/* administrator, manager, user */
-    public static final String Adm= "Administrator"; /*é uma variável constante, por isso final, ou será que não?*/
-    public static final String Man= "Manager";
-    public static final String Us= "User";
+    private String profileName;
 
-    public Profile() {
+    Profile(String profileName) {
+        this.profileName = profileName;
+    }
 
-        this.profile = Us;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Profile)) return false;
+        Profile profile = (Profile) o;
+        return Objects.equals(profileName, profile.profileName);
     }
 }
