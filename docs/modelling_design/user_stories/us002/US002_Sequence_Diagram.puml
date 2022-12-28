@@ -1,7 +1,7 @@
 @startuml
 actor Administrator
 participant ":RegisterAccountUI" as ui
-participant ":registerAccountController" as controller
+participant ":RegisterAccountController" as controller
 participant ":Repository" as repository
 participant "acc:Account" as account
 
@@ -34,64 +34,8 @@ activate repository
 repository -> repository: 3.1.1.1 validateAccount(acc)
 repository -> repository: 3.1.1.2 addAccount(acc)
 deactivate repository
-ui --> Administrator: 3.2 informs success!
+ui --> Administrator: 3.2 informs success
 
 deactivate controller
 deactivate ui
-
-
 @enduml
-
-actor Administrator
-participant ":RegisterAccountController" as controller
-participant ":Repository" as repository
-participant "acc :Account" as account
-
-Administrator -> controller: 1. registerNewAccount(name, email, phoneNumber)
-activate controller
-controller -> repository: 1.1 acc=registerNewAccount(name, email, phoneNumber)
-activate repository
-create account
-repository --> account: 1.1.1 registerAccount(name, email, phoneNumber)
-repository -> repository: 1.1.2 validateAccount(acc)
-repository -> repository: 1.1.3 addAccount(acc)
-
-
-actor Administrator
-participant ":RegisterAccountUI" as ui
-participant ":RegisterAccountController" as rgc
-participant ":registerAccountController" as controller
-participant "acc:Account" as account
-
-activate Administrator
-Administrator -> ui: 1. starts new account register
-activate ui
-ui --> Administrator: 1.1 requests data(name, email, phoneNumber)
-deactivate ui
-Administrator -> ui: 2. types requested data
-activate ui
-ui -> rgc: 2.1 registerAccount(name, email, phoneNumber)
-activate rgc
-rgc -> controller: 2.1.1 reg=registerAccount(name, email, phoneNumber)
-activate controller
-controller --> account: 2.1.1.1 register(name, email, phoneNumber)
-deactivate controller
-rgc -> controller: 2.1.2 validateAccount(reg)
-activate controller
-deactivate rgc
-deactivate controller
-ui --> Administrator: 2.2 shows data and requests confirmation
-
-deactivate ui
-Administrator -> ui: 3. confirms
-activate ui
-ui -> rgc: 3.1 saveAccount()
-activate rgc
-rgc -> controller: 3.1.1 saveAccount(reg)
-activate controller
-controller -> controller: 3.1.1.1 validateAccount(reg)
-controller -> controller: 3.1.1.2 addAccount(reg)
-deactivate controller
-deactivate rgc
-ui --> Administrator: 3.2 informs success!
-deactivate ui

@@ -9,11 +9,11 @@ class "RegisterAccountController" {
 +saveAccount()
 }
 
-class "Company" {
+class "Repository" {
 +registerAccount(name, email, phoneNumber)
-+validateAccount(account)
-+saveAccount(account)
--addAccount(account)
++validateAccount(acc)
++saveAccount(acc)
+-addAccount(acc)
 }
 
 class "Account" {
@@ -27,10 +27,10 @@ class "Account" {
 hide "Account" circle
 hide "RegisterAccountController" circle
 hide "RegisterAccountUI" circle
-hide "Company" circle
+hide "Repository" circle
 
 "RegisterAccountUI" ..>  "RegisterAccountController"
-"RegisterAccountController" ..>  "Company"
-"Company" "1" --> "*" "Account": registers
+"RegisterAccountController" ..>  "Repository"
+"Repository" "1" --> "*" "Account": registers
 
 @enduml
