@@ -10,18 +10,17 @@ class "Account"
 "Repository" "1  " -->"*" "Account"
 
 class "ChangeStatusController"{
-- e-mail
-- status
 +changeStatus(e-mail, status)
 }
 class "Repository"{
--e-mail
-+isUserValid(e-mail)
+-accountsList
++doesEmailAccountExist(email)
 }
 
 class Account{
-- status
-+ updateStatus(status)
+- accountStatus
+-email
++ updateStatus(accountStatus)
 }
 
 hide "ChangeStatusUI" circle

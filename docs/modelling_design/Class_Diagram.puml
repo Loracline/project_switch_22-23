@@ -55,12 +55,14 @@ class Account {
 -phoneNumber
 -profile
 -status
+-photo
 +Account(name, email, phoneNumber)
 +getEmail()
 +changeStatus(status)
 +updateProfile(profile)
 }
 hide Profile circle
+hide Account circle
 
 class CreateProfileController {
 -repository
@@ -69,6 +71,7 @@ class CreateProfileController {
 +saveProfile()
 }
 hide CreateProfileController circle
+hide AccountListController circle
 
 class RegisterAccountController {
 -repository

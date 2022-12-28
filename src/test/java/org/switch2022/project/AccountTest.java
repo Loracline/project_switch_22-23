@@ -2,50 +2,42 @@ package org.switch2022.project;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AccountTest {
+    /**
+     * Testing the Constructor
+     */
     @Test
-    void testGetName() {
-
-        Account one = new Account("Juca", "12121212@isep.ipp.pt", "******", true, 912345678,null,new Profile() );
-
-        assertEquals("Juca", one.getName());
-    }
-    @Test
-    void testGetEmail() {
-
-        Account one = new Account("Juca", "12121212@isep.ipp.pt", "******", true, 912345678,null,new Profile() );
-
-        assertEquals("12121212@isep.ipp.pt", one.getEmail());
-    }
-    @Test
-    void testGetPassword() {
-
-        Account one = new Account("Juca", "12121212@isep.ipp.pt", "******", true, 912345678,null,new Profile() );
-
-        assertEquals("******", one.getPassword());
-    }
-    @Test
-    void testGetStatusAccount() {
-
-        Account one = new Account("Juca", "12121212@isep.ipp.pt", "******", true,912345678, null,new Profile() );
-
-        assertEquals(true, one.isStatusAccount());
-    }
-    @Test
-    void testGetPhoneNumber() {
-
-        Account one = new Account("Juca", "12121212@isep.ipp.pt", "******", true,912345678, null,new Profile() );
-
-        assertEquals(912345678, one.getPhoneNumber());
-    }
-    @Test
-    void testGetPhoto() {
-
-        Account one = new Account("Juca", "12121212@isep.ipp.pt", "******", true,912345678, null,new Profile() );
-
-        assertEquals(null, one.getPhoto());
+    void newAccount_HappyPath() {
+        Account account_one = new Account("John", "john@isep.ipp.pt", 912345678);
     }
 
+    /**
+     * Testing the Setter Method for the attribute ACCOUNT STATUS
+     */
+    @Test
+    void setAccountStatus_Active() {
+        // Arrange
+        Account account_one = new Account("John", "john@isep.ipp.pt", 912345678);
+
+        // Act
+        account_one.updateAccountStatus(true);
+
+        // Assert
+        assertTrue(account_one.isAccountStatusActive());
+    }
+
+    @Test
+    void setAccountStatus_Inactive() {
+        // Arrange
+        Account account_one = new Account("John", "john@isep.ipp.pt", 912345678);
+
+        // Act
+        account_one.updateAccountStatus(false);
+
+        // Assert
+        assertFalse(account_one.isAccountStatusActive());
+    }
 }
