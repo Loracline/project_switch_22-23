@@ -15,9 +15,8 @@ class "ChangeStatusController"{
 
 class "Repository"{
 -accountsList
-+doesEmailAccountExist(email)
++doesEmailExist(email)
 }
-
 
 class Account{
 - accountStatus
