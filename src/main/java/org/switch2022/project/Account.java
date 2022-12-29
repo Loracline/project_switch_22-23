@@ -33,7 +33,11 @@ public class Account {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.accountProfile = accountProfile;
+        this.accountProfile = new Profile("User");
+
+        if(photo != null){
+            this.photo = photo;
+        }
     }
 
     /**
