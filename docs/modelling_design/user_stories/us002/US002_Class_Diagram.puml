@@ -5,14 +5,15 @@ class "RegisterAccountUI"{
 }
 
 class "RegisterAccountController" {
-+registerAccount(name, email, phoneNumber)
-+saveAccount()
++registerAccount(name, email, phoneNumber,photo)
+-repository
 }
 
 class "Repository" {
-+registerAccount(name, email, phoneNumber)
++registerAccount(name, email, phoneNumber,photo)
 +doesEmailExist(email)
-+saveAccount(acc)
+-accountList
+-profileList
 -addAccount(acc)
 }
 
@@ -21,7 +22,7 @@ class "Account" {
 -email
 -phoneNumber
 -photo
-+Account(name,email,phoneNumber)
++Account(name,email,phoneNumber,photo)
 }
 
 hide "Account" circle

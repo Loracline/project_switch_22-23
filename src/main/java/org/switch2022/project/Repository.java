@@ -3,6 +3,7 @@ package org.switch2022.project;
 import org.switch2022.project.Account;
 import org.switch2022.project.Profile;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,17 +68,16 @@ public class Repository {
      * @param name        of the new account
      * @param email       of the new account
      * @param phoneNumber of the new account
+     * @param photo       of the new account
      * @return instance of Account with given parameters if email is unique;
      * @return null if email already exists
      */
-    public Account registerAccount(String name, String email, long phoneNumber) {
-        Account result;
+    public Account registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
+        Account result = null;
 
         if (!doesEmailExist(email)) {
-            result = new Account(name, email, phoneNumber);
+            result = new Account(name, email, phoneNumber, photo);
             this.addAccount(result);
-        } else {
-            result = null;
         }
 
         return result;
@@ -88,7 +88,7 @@ public class Repository {
      *
      * @param acc instance of Account to be added to accountList
      */
-    public void addAccount(Account acc) {
+    private void addAccount(Account acc) {
         this.accountList.add(acc);
     }
 

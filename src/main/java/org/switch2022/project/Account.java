@@ -26,9 +26,10 @@ public class Account {
      * @param name        of the new account
      * @param email       of the new account
      * @param phoneNumber of the new account
-     * @param accountProfile of the new account
+     * @param photo       of the new account
+     *
      */
-    public Account(String name, String email, long phoneNumber, Profile accountProfile) {
+    public Account(String name, String email, long phoneNumber,BufferedImage photo) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
