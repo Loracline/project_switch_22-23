@@ -11,7 +11,7 @@ class "RegisterAccountController" {
 
 class "Repository" {
 +registerAccount(name, email, phoneNumber)
-+validateAccount(acc)
++doesEmailExist(email)
 +saveAccount(acc)
 -addAccount(acc)
 }

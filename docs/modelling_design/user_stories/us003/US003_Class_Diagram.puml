@@ -23,7 +23,7 @@ class Repository {
 -accountList
 +Repository()
 +changeProfile(email, profileName)
-+isUserValid(email)
++doesEmailExist(email)
 +getAccount(email)
 +isProfileValid(profileName)
 +getProfile(profileName)
