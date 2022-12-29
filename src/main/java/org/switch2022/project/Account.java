@@ -26,13 +26,14 @@ public class Account {
      * @param name        of the new account
      * @param email       of the new account
      * @param phoneNumber of the new account
+     * @param accountProfile of the new account
      */
-    public Account(String name, String email, long phoneNumber) {
+    public Account(String name, String email, long phoneNumber, Profile accountProfile) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.accountProfile = accountProfile;
     }
-
 
     /**
      * Method that checks if two instances of Account are equal by comparing

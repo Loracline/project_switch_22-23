@@ -11,7 +11,8 @@ class AccountTest {
      */
     @Test
     void newAccount_HappyPath() {
-        Account account_one = new Account("John", "john@isep.ipp.pt", 912345678);
+        Profile accountProfile = new Profile ("User");
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, accountProfile);
     }
 
     /**
@@ -19,25 +20,27 @@ class AccountTest {
      */
     @Test
     void setAccountStatus_Active() {
+        Profile accountProfile = new Profile ("User");
         // Arrange
-        Account account_one = new Account("John", "john@isep.ipp.pt", 912345678);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, accountProfile);
 
         // Act
-        account_one.updateAccountStatus(true);
+        accountOne.updateAccountStatus(true);
 
         // Assert
-        assertTrue(account_one.isAccountStatusActive());
+        assertTrue(accountOne.isAccountStatusActive());
     }
 
     @Test
     void setAccountStatus_Inactive() {
+        Profile accountProfile = new Profile ("User");
         // Arrange
-        Account account_one = new Account("John", "john@isep.ipp.pt", 912345678);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, accountProfile);
 
         // Act
-        account_one.updateAccountStatus(false);
+        accountOne.updateAccountStatus(false);
 
         // Assert
-        assertFalse(account_one.isAccountStatusActive());
+        assertFalse(accountOne.isAccountStatusActive());
     }
 }
