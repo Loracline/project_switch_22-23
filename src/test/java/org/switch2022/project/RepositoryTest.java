@@ -16,11 +16,11 @@ class RepositoryTest {
         Account user1 = new Account("Ana", "ana@mail.com", 12345678, user);
         Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, user);
 
-        List<Account> accountList = new ArrayList<Account>();
+        List<Account> accountList = new ArrayList<>();
         accountList.add(user1);
         accountList.add(user2);
 
-        List<Profile> profileList = new ArrayList<Profile>();
+        List<Profile> profileList = new ArrayList<>();
         profileList.add(user);
         profileList.add(administrator);
         profileList.add(manager);
@@ -30,5 +30,80 @@ class RepositoryTest {
         List<Account> result = test.getAccountsList();
 
         assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {
+        //ARRANGE
+        //create empty repository with empty accountList
+        Repository test = new Repository();
+
+        //add user1 to accountList
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678);
+        test.addAccount(user1);
+
+        //register new user
+        Account user2 = test.registerAccount("Paulo", "paulo@mail.com", 23456789);
+
+        //create expected accountList
+        List<Account> expectedAccountList = new ArrayList<>();
+        expectedAccountList.add(user1);
+        expectedAccountList.add(user2);
+
+        //ACT
+        List<Account> resultAccountList = test.getAccountsList();
+
+        //ASSERT
+        assertEquals(expectedAccountList, resultAccountList);
+    }
+
+    @Test
+    void ensureThatNewAccountIsNotRegisteredIfEmailIsDuplicated() {
+        //ARRANGE
+        //create empty repository with empty accountList
+        Repository test = new Repository();
+
+        //add user1 to accountList
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678);
+        test.addAccount(user1);
+
+        //register new user
+        test.registerAccount("Paulo", "ana@mail.com", 23456789);
+
+        //create expected accountList
+        List<Account> expectedAccountList = new ArrayList<>();
+        expectedAccountList.add(user1);
+
+        //ACT
+        List<Account> resultAccountList = test.getAccountsList();
+
+        //ASSERT
+        assertEquals(expectedAccountList, resultAccountList);
+    }
+
+    @Test
+    void ensureThatNewAccountIsAddedToAccountList() {
+        //ARRANGE
+        //create account and account list
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678);
+        List<Account> accountList = new ArrayList<>();
+        accountList.add(user1);
+
+        //create empty test repository
+        Repository test = new Repository();
+
+        //register new account
+        Account acc = new Account("Ana", "ana@mail.com", 12345678);
+
+        //add new registered account to account list
+        test.addAccount(acc);
+
+        List<Account> expectedList = accountList;
+
+        //ACT
+        List<Account> resultList = test.getAccountsList();
+
+        //ASSERT
+        assertEquals(expectedList, resultList);
     }
 }
