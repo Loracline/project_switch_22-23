@@ -92,4 +92,28 @@ public class Repository {
         this.accountList.add(acc);
     }
 
+
+
+    public Account getAccount(String email) {
+        Account requestedAccount = null;
+        for (Account account : this.accountList) {
+            if (account.getEmail().equals(email)) {
+                requestedAccount = account;
+                break;
+            }
+        }
+        return requestedAccount;
+    }
+
+    public Account getAccount(String email) {
+        Account requestedAccount = null;
+        for (int i = 0; i < this.accountList.size() +1 ; i++) {
+            if (accountList.get(i).getEmail().equals(email)) {
+                requestedAccount = accountList.get(i);
+                break;
+            }
+        }
+        return requestedAccount;
+    }
+
 }

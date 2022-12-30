@@ -13,8 +13,8 @@ class RepositoryTest {
         Profile user = new Profile("User");
         Profile administrator = new Profile("Administrator");
         Profile manager = new Profile("Manager");
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678, user);
-        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, user);
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678);
+        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789);
 
         List<Account> accountList = new ArrayList<>();
         accountList.add(user1);

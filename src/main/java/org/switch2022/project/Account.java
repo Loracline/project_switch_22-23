@@ -1,6 +1,6 @@
 package org.switch2022.project;
-
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 /**
  * Class Account is built to create and manage new accounts.
@@ -26,34 +26,31 @@ public class Account {
      * @param name        of the new account
      * @param email       of the new account
      * @param phoneNumber of the new account
-     * @param accountProfile of the new account
      */
-    public Account(String name, String email, long phoneNumber, Profile accountProfile) {
+    public Account(String name, String email, long phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.accountProfile = accountProfile;
+        this.accountProfile = new Profile("User");
     }
 
     /**
      * Method that checks if two instances of Account are equal by comparing
      * their e-mail addresses.
      *
-     * @param toCompare Account instance to compare with
-     * @return TRUE if the two have the same e-mail address, and FALSE otherwise
      */
-    @Override
-    public boolean equals(Object toCompare) {
-        if (this == toCompare) {
-            return true;
-        }
-        if (!(toCompare instanceof Account)) {
-            return false;
-        }
-        Account account = (Account) toCompare;
-        return email.equals(account.email);
-    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Account)) return false;
+        Account account = (Account) o;
+        return phoneNumber == account.phoneNumber &&
+                accountStatus == account.accountStatus &&
+                name.equals(account.name) && email.equals(account.email) &&
+                Objects.equals(photo, account.photo) &&
+                accountProfile.equals(account.accountProfile);
+    }
 
     /**
      * Setter method for the attribute PHOTO.
@@ -93,5 +90,14 @@ public class Account {
      */
     public void updateAccountStatus(boolean accountStatus) {
         this.accountStatus = accountStatus;
+    }
+
+    /**
+     * Setter method for the attribute PROFILE.
+     *
+     * @param profile of the instance of Account
+     */
+    public void updateAccountProfile(Profile profile) {
+        this.accountProfile = profile;
     }
 }
