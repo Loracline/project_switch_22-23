@@ -72,14 +72,15 @@ public class Repository {
      * @return instance of Account with given parameters if email is unique;
      * @return null if email already exists
      */
-    public Account registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
-        Account result = null;
+    public boolean registerAccount(String name, String email, long phoneNumber,
+                             BufferedImage photo) {
+        boolean result = false;
 
         if (!doesEmailExist(email)) {
-            result = new Account(name, email, phoneNumber, photo);
-            this.addAccount(result);
+            Account account = new Account(name, email, phoneNumber, photo);
+            this.addAccount(account);
+            result = true;
         }
-
         return result;
     }
 
