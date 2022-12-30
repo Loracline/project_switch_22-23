@@ -1,7 +1,6 @@
 
 @startuml
 
-
 actor "Administrator"
 participant ":ChangeStatusUI" as caUi
 participant ":ChangeStatusController" as cac
@@ -15,9 +14,9 @@ caUi --> Administrator: 1.1 requests data (e-mail, accountStatus)
 deactivate caUi
 Administrator -> caUi: 2. inserts requested data
 activate caUi
-caUi -> cac: 2.1 changeStatus(accountStatus)
+caUi -> cac: 2.1 changeStatus(e-mail, accountStatus)
 activate cac
-cac -> repository: 2.1.1 changeStatus(accountStatus)
+cac -> repository: 2.1.1 changeStatus(e-mail, accountStatus)
 activate repository
 repository -> repository: 2.1.1.1. doesEmailAccountExist(email)
 repository -> repository: 2.1.1.2. account = getAccount(e-mail)

@@ -52,13 +52,20 @@ public class Repository {
         boolean emailExistance = false;
         int index = 0;
         while (index < this.accountList.size()) {
-            if (accountList.get(index).getEmail().contains(email)) {
+            if (accountList.get(index).getEmail().equals(email)) {
                 emailExistance = true;
                 break;
             }
             index++;
         }
         return emailExistance;
+
+        //Possivel substituicao para ciclo while. (A aguardar validaçao do resto dos elementos)
+        /*for (int i = 0; i < this.accountList.size(); i++) {
+            if (accountList.get(i).getEmail().equals(email)) {
+                emailExistance = true;
+                break;
+        }*/
     }
 
     /**
@@ -69,18 +76,18 @@ public class Repository {
      * @param email       of the new account
      * @param phoneNumber of the new account
      * @param photo       of the new account
-     * @param status      of the new account
      * @return instance of Account with given parameters if email is unique;
      * @return null if email already exists
      */
-    public Account registerAccount(String name, String email, long phoneNumber, BufferedImage photo, boolean status) {
-        Account result = null;
+    public boolean registerAccount(String name, String email, long phoneNumber,
+                             BufferedImage photo) {
+        boolean result = false;
 
         if (!doesEmailExist(email)) {
-            result = new Account(name, email, phoneNumber, photo, status);
-            this.addAccount(result);
+            Account account = new Account(name, email, phoneNumber, photo);
+            this.addAccount(account);
+            result = true;
         }
-
         return result;
     }
 
@@ -92,5 +99,28 @@ public class Repository {
     private void addAccount(Account acc) {
         this.accountList.add(acc);
     }
+
+
+
+    public Account getAccount(String email) {
+        Account requestedAccount = null;
+        for (Account account : this.accountList) {
+            if (account.getEmail().equals(email)) {
+                requestedAccount = account;
+                break;
+            }
+        }
+        return requestedAccount;
+    }
+    //Possivel substituicao do teste Account getAccount (A aguardar validaçao do resto dos elementos)
+      /*  Account requestedAccount = null;
+        for (int i = 0; i < this.accountList.size() ; i++) {
+            if (accountList.get(i).getEmail().equals(email)) {
+                requestedAccount = accountList.get(i);
+                break;
+            }
+        }
+        return requestedAccount;
+    */
 
 }

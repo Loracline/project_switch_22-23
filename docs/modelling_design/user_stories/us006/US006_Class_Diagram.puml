@@ -10,8 +10,7 @@ class "Account"
 "Repository" "1  " -->"*" "Account"
 
 class "ChangeStatusController"{
--Account
-+changeStatus(status)
++changeStatus(e-mail, status)
 }
 class "Repository"{
 -accountsList

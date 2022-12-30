@@ -13,8 +13,8 @@ class RepositoryTest {
         Profile user = new Profile("User");
         Profile administrator = new Profile("Administrator");
         Profile manager = new Profile("Manager");
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null, true);
-        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null, true);
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null);
+        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null);
 
         List<Account> accountList = new ArrayList<>();
         accountList.add(user1);
@@ -36,48 +36,89 @@ class RepositoryTest {
     void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {
         //ARRANGE
         //create empty repository with empty accountList
-        Repository test = new Repository();
+        Repository repo = new Repository();
 
-        //add user1 to accountList
-        Account user1 = test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-
-        //register new user
-        Account user2 = test.registerAccount("Paulo", "paulo@mail.com", 23456789,null, true);
-
-        //create expected accountList
-        List<Account> expectedAccountList = new ArrayList<>();
-        expectedAccountList.add(user1);
-        expectedAccountList.add(user2);
+        //expected result; if account is registered, returns TRUE
+        boolean expected = true;
 
         //ACT
-        List<Account> resultAccountList = test.getAccountsList();
+        //add user to accountList
+        boolean result = repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
 
         //ASSERT
-        assertEquals(expectedAccountList, resultAccountList);
+        assertEquals(expected, result);
     }
 
     @Test
     void ensureThatNewAccountIsNotRegisteredIfEmailIsDuplicated() {
         //ARRANGE
-        //create empty repository with empty accountList
-        Repository test = new Repository();
+        //create profiles to initialize profileList
+        Profile user = new Profile("User");
+        Profile administrator = new Profile("Administrator");
+        Profile manager = new Profile("Manager");
+        //create accounts to initialize accountList
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null);
+        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null);
 
-        //add user1 to accountList
-        Account user1 = test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        List<Account> accountList = new ArrayList<>();
+        accountList.add(user1);
+        accountList.add(user2);
 
-        //register new user
-        test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        List<Profile> profileList = new ArrayList<>();
+        profileList.add(user);
+        profileList.add(administrator);
+        profileList.add(manager);
 
-        //create expected accountList
-        List<Account> expectedAccountList = new ArrayList<>();
-        expectedAccountList.add(user1);
+        //create repository with initialized account and profile lists
+        Repository repo = new Repository(accountList, profileList);
+
+        //expected result; if account is not registered, returns FALSE
+        boolean expected = false;
 
         //ACT
-        List<Account> resultAccountList = test.getAccountsList();
+        //add user to accountList
+        boolean result = repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
 
         //ASSERT
-        assertEquals(expectedAccountList, resultAccountList);
+        assertEquals(expected, result);
     }
 
+    @Test
+    void getAccount() {
+        //ARRANGE
+        //create empty repository with empty accountList
+        Repository repo = new Repository();
 
+        //register new user
+        repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
+        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
+        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null);
+
+        //Create account to compare with
+        Account expected = new Account("Ana", "ana@mail.com", 12345678, null);
+
+        //ACT
+        Account result = repo.getAccount("ana@mail.com");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatGetAccountReturnNull() {
+        //ARRANGE
+        //create empty repository with empty accountList
+        Repository repo = new Repository();
+
+        //register new user
+        repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
+        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
+        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null);
+
+        //ACT
+        Account result = repo.getAccount("anaPinho@mail.com");
+
+        //ASSERT
+        assertNull(result);
+    }
 }

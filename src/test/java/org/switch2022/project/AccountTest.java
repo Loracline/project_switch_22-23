@@ -10,7 +10,7 @@ class AccountTest {
      */
     @Test
     void newAccount_HappyPath() {
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
     }
 
     /**
@@ -19,32 +19,32 @@ class AccountTest {
     @Test
     void setAccountStatus_Active() {
         // Arrange
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, false);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
 
         // Act
         accountOne.updateAccountStatus(true);
 
         // Assert
-        assertTrue(accountOne.accountStatus());
+        assertTrue(accountOne.isAccountStatusActive());
     }
 
     @Test
     void setAccountStatus_Inactive() {
         // Arrange
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
 
         // Act
         accountOne.updateAccountStatus(false);
 
         // Assert
-        assertFalse(accountOne.accountStatus());
+        assertFalse(accountOne.isAccountStatusActive());
     }
 
     @Test
     void updateAccountProfile_HappyPath() {
         // Arrange
-        Account accountBeforeUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null, true); //Default Profile: User
-        Account accountAfterUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null, true); //Default Profile: User
+        Account accountBeforeUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null); //Default Profile: User
+        Account accountAfterUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null); //Default Profile: User
 
         //Create Manager profile
         Profile profileManagerOne = new Profile("Manager");

@@ -18,12 +18,10 @@ class RegisterAccountControllerTest {
         //ARRANGE
         //create empty controller
         RegisterAccountController test = new RegisterAccountController();
-
-        //create expected user
-        Account expected = new Account("Ana", "ana@mail.com", 12345678, null, true);
+        boolean expected= true;
 
         //ACT  register user with same information as expected
-        Account result = test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, null);
 
         //ASSERT compare expected user with the registered user
         assertEquals(expected, result);
@@ -38,18 +36,15 @@ class RegisterAccountControllerTest {
         List<Account> accountList = new ArrayList<>();
         List<Profile> profileList = new ArrayList<>();
 
-        RegisterAccountController test = new RegisterAccountController( accountList, profileList);
-
-        //create expected user
-        Account expected = new Account("Ana", "ana@mail.com", 12345678, null, true);
+        RegisterAccountController test = new RegisterAccountController(accountList, profileList);
+        boolean expected= true;
 
         //ACT  register user with same information as expected
-        Account result = test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, null);
 
         //ASSERT compare expected user with the registered user
         assertEquals(expected, result);
     }
-
 
     @Test
     void ensureThatNewAccountIsRegisteredWithInitializedConstructorWithPhoto() throws IOException {
@@ -61,25 +56,13 @@ class RegisterAccountControllerTest {
 
         BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/Domain_Model_v01_Dec14_2022.png"));
 
-        RegisterAccountController test = new RegisterAccountController( accountList, profileList);
-
-        //create expected user
-        Account expected = new Account("Ana", "ana@mail.com", 12345678, photo, true );
+        RegisterAccountController test = new RegisterAccountController(accountList, profileList);
+        boolean expected= true;
 
         //ACT  register user with same information as expected
-        Account result = test.registerAccount("Ana", "ana@mail.com", 12345678, photo, true);
+        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, photo);
 
         //ASSERT compare expected user with the registered user
         assertEquals(expected, result);
     }
-
-
-
-
-
-
-
-
-
-
 }
