@@ -10,7 +10,6 @@ class AccountTest {
      */
     @Test
     void newAccount_HappyPath() {
-        Profile accountProfile = new Profile ("User");
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
     }
 
@@ -44,16 +43,17 @@ class AccountTest {
     @Test
     void updateAccountProfile_HappyPath() {
         // Arrange
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Account accountBeforeUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null); //Default Profile: User
+        Account accountAfterUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null); //Default Profile: User
+
+        //Create Manager profile
         Profile profileManagerOne = new Profile("Manager");
-        Profile profileManagerTwo = new Profile("Manager");
 
         //Act
-        accountOne.updateAccountProfile(profileManagerOne);
-        accountTwo.updateAccountProfile(profileManagerTwo);
+        //Change Profile User (default) to Manager
+        accountAfterUpdate.updateAccountProfile(profileManagerOne);
 
         //Assert
-        assertEquals(accountOne, accountTwo);
+        assertNotEquals(accountBeforeUpdate, accountAfterUpdate);
     }
 }

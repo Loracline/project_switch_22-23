@@ -78,4 +78,43 @@ class RepositoryTest {
         //ASSERT
         assertEquals(expectedAccountList, resultAccountList);
     }
+
+    @Test
+    void getAccount() {
+        //ARRANGE
+        //create empty repository with empty accountList
+        Repository repo = new Repository();
+
+        //register new user
+        repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
+        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
+        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null);
+
+        //Create account to compare with
+        Account expected = new Account("Ana", "ana@mail.com", 12345678, null);
+
+        //ACT
+        Account result = repo.getAccount("ana@mail.com");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatGetAccountReturnNull() {
+        //ARRANGE
+        //create empty repository with empty accountList
+        Repository repo = new Repository();
+
+        //register new user
+        repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
+        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
+        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null);
+
+        //ACT
+        Account result = repo.getAccount("anaPinho@mail.com");
+
+        //ASSERT
+        assertNull(result);
+    }
 }

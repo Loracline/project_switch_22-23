@@ -52,13 +52,20 @@ public class Repository {
         boolean emailExistance = false;
         int index = 0;
         while (index < this.accountList.size()) {
-            if (accountList.get(index).getEmail().contains(email)) {
+            if (accountList.get(index).getEmail().equals(email)) {
                 emailExistance = true;
                 break;
             }
             index++;
         }
         return emailExistance;
+
+        //Possivel substituicao para ciclo while. (A aguardar validaçao do resto dos elementos)
+        /*for (int i = 0; i < this.accountList.size(); i++) {
+            if (accountList.get(i).getEmail().equals(email)) {
+                emailExistance = true;
+                break;
+        }*/
     }
 
     /**
@@ -104,16 +111,15 @@ public class Repository {
         }
         return requestedAccount;
     }
-
-    public Account getAccount(String email) {
-        Account requestedAccount = null;
-        for (int i = 0; i < this.accountList.size() +1 ; i++) {
+    //Possivel substituicao do teste Account getAccount (A aguardar validaçao do resto dos elementos)
+      /*  Account requestedAccount = null;
+        for (int i = 0; i < this.accountList.size() ; i++) {
             if (accountList.get(i).getEmail().equals(email)) {
                 requestedAccount = accountList.get(i);
                 break;
             }
         }
         return requestedAccount;
-    }
+    */
 
 }
