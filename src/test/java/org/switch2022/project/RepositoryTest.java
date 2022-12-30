@@ -13,8 +13,8 @@ class RepositoryTest {
         Profile user = new Profile("User");
         Profile administrator = new Profile("Administrator");
         Profile manager = new Profile("Manager");
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678);
-        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789);
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null);
+        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null);
 
         List<Account> accountList = new ArrayList<>();
         accountList.add(user1);
@@ -39,11 +39,10 @@ class RepositoryTest {
         Repository test = new Repository();
 
         //add user1 to accountList
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678);
-        test.addAccount(user1);
+        Account user1 = test.registerAccount("Ana", "ana@mail.com", 12345678, null);
 
         //register new user
-        Account user2 = test.registerAccount("Paulo", "paulo@mail.com", 23456789);
+        Account user2 = test.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
 
         //create expected accountList
         List<Account> expectedAccountList = new ArrayList<>();
@@ -64,11 +63,10 @@ class RepositoryTest {
         Repository test = new Repository();
 
         //add user1 to accountList
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678);
-        test.addAccount(user1);
+        Account user1 = test.registerAccount("Ana", "ana@mail.com", 12345678, null);
 
         //register new user
-        test.registerAccount("Paulo", "ana@mail.com", 23456789);
+        test.registerAccount("Ana", "ana@mail.com", 12345678, null);
 
         //create expected accountList
         List<Account> expectedAccountList = new ArrayList<>();
@@ -79,31 +77,5 @@ class RepositoryTest {
 
         //ASSERT
         assertEquals(expectedAccountList, resultAccountList);
-    }
-
-    @Test
-    void ensureThatNewAccountIsAddedToAccountList() {
-        //ARRANGE
-        //create account and account list
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678);
-        List<Account> accountList = new ArrayList<>();
-        accountList.add(user1);
-
-        //create empty test repository
-        Repository test = new Repository();
-
-        //register new account
-        Account acc = new Account("Ana", "ana@mail.com", 12345678);
-
-        //add new registered account to account list
-        test.addAccount(acc);
-
-        List<Account> expectedList = accountList;
-
-        //ACT
-        List<Account> resultList = test.getAccountsList();
-
-        //ASSERT
-        assertEquals(expectedList, resultList);
     }
 }

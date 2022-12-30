@@ -26,25 +26,32 @@ public class Account {
      * @param name        of the new account
      * @param email       of the new account
      * @param phoneNumber of the new account
+     * @param photo       of the new account
+     *
      */
-    public Account(String name, String email, long phoneNumber) {
+    public Account(String name, String email, long phoneNumber,BufferedImage photo) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.accountProfile = new Profile("User");
+
+        if(photo != null){
+            this.photo = photo;
+        }
     }
 
     /**
      * Method that checks if two instances of Account are equal by comparing
      * their e-mail addresses.
      *
+     * @param toCompare Account instance to compare with
+     * @return TRUE if the two have the same e-mail address, and FALSE otherwise
      */
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Account)) return false;
-        Account account = (Account) o;
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) return true;
+        if (!(toCompare instanceof Account)) return false;
+        Account account = (Account) toCompare;
         return phoneNumber == account.phoneNumber &&
                 accountStatus == account.accountStatus &&
                 name.equals(account.name) && email.equals(account.email) &&

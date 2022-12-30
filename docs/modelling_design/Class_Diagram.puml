@@ -27,18 +27,16 @@ class Repository{
 +saveProfile(profile)
 +validateProfile(profile)
 +addProfile(profile)
-+registerAccount(name, email, phoneNumber)
-+saveAccount(account)
-+validateAccount(account)
-+addAccount(account)
++registerAccount(name, email, phoneNumber,photo)
++doesEmailExist(email)
 +changeProfile(email, profileName)
 +isProfileValid(profileName)
 +getProfile(profileName)
-+isUserValid(email)
 +getAccount(email)
 +getListAllAccounts()
 +changeStatus(email, status)
 +isStatusValid(status)
+-addAccount(account)
 }
 hide Repository circle
 
@@ -56,7 +54,7 @@ class Account {
 -profile
 -status
 -photo
-+Account(name, email, phoneNumber)
++Account(name, email, phoneNumber,photo)
 +getEmail()
 +changeStatus(status)
 +updateProfile(profile)
@@ -76,8 +74,8 @@ hide AccountListController circle
 class RegisterAccountController {
 -repository
 +RegisterAccountController()
-+registerAccount(name, email, phoneNumber)
-+saveAccount(account)
++registerAccount(name, email, phoneNumber,photo)
+
 
 }
 hide RegisterAccountController circle
@@ -85,7 +83,7 @@ hide RegisterAccountController circle
 class ChangeProfileController {
 -repository
 +ChangeProfileController()
-+changeProfile(email,profileName)
++changeProfile(email,profileName,photo)
 }
 hide ChangeProfileController circle
 

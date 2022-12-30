@@ -10,7 +10,8 @@ class AccountTest {
      */
     @Test
     void newAccount_HappyPath() {
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678);
+        Profile accountProfile = new Profile ("User");
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
     }
 
     /**
@@ -19,8 +20,7 @@ class AccountTest {
     @Test
     void setAccountStatus_Active() {
         // Arrange
-        Profile accountProfile = new Profile("User");
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
 
         // Act
         accountOne.updateAccountStatus(true);
@@ -32,7 +32,7 @@ class AccountTest {
     @Test
     void setAccountStatus_Inactive() {
         // Arrange
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
 
         // Act
         accountOne.updateAccountStatus(false);
@@ -44,8 +44,8 @@ class AccountTest {
     @Test
     void updateAccountProfile_HappyPath() {
         // Arrange
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678);
-        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Profile profileManagerOne = new Profile("Manager");
         Profile profileManagerTwo = new Profile("Manager");
 
