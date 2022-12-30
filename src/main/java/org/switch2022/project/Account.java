@@ -27,13 +27,15 @@ public class Account {
      * @param email       of the new account
      * @param phoneNumber of the new account
      * @param photo       of the new account
+     * @param status      of the new account
      *
      */
-    public Account(String name, String email, long phoneNumber,BufferedImage photo) {
+    public Account(String name, String email, long phoneNumber,BufferedImage photo, boolean status) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.accountProfile = new Profile("User");
+        this.accountStatus = status;
 
         if(photo != null){
             this.photo = photo;
@@ -85,7 +87,7 @@ public class Account {
      * @return TRUE if the account status is "Active" and FALSE if the account
      * status is "Inactive"
      */
-    public boolean isAccountStatusActive() {
+    public boolean accountStatus() {
         return accountStatus;
     }
 
@@ -93,10 +95,10 @@ public class Account {
     /**
      * Setter method for the attribute ACCOUNT STATUS.
      *
-     * @param accountStatus TRUE = "ACTIVE" or FALSE = "INACTIVE"
+     * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
      */
-    public void updateAccountStatus(boolean accountStatus) {
-        this.accountStatus = accountStatus;
+    public void updateAccountStatus(boolean status) {
+        this.accountStatus = status;
     }
 
     /**
