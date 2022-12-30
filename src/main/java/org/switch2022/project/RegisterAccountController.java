@@ -42,7 +42,7 @@ public class RegisterAccountController {
      */
 
 
-    public Account registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
+    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
 
         return this.repository.registerAccount(name, email, phoneNumber, photo);
 
