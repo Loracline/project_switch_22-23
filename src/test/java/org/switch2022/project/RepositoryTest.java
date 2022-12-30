@@ -13,8 +13,8 @@ class RepositoryTest {
         Profile user = new Profile("User");
         Profile administrator = new Profile("Administrator");
         Profile manager = new Profile("Manager");
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null);
-        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null);
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null, true);
+        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null, true);
 
         List<Account> accountList = new ArrayList<>();
         accountList.add(user1);
@@ -43,7 +43,7 @@ class RepositoryTest {
 
         //ACT
         //add user to accountList
-        boolean result = repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
+        boolean result = repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
 
         //ASSERT
         assertEquals(expected, result);
@@ -57,8 +57,8 @@ class RepositoryTest {
         Profile administrator = new Profile("Administrator");
         Profile manager = new Profile("Manager");
         //create accounts to initialize accountList
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null);
-        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null);
+        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null, true);
+        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null, true);
 
         List<Account> accountList = new ArrayList<>();
         accountList.add(user1);
@@ -77,7 +77,7 @@ class RepositoryTest {
 
         //ACT
         //add user to accountList
-        boolean result = repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
+        boolean result = repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
 
         //ASSERT
         assertEquals(expected, result);
@@ -90,12 +90,12 @@ class RepositoryTest {
         Repository repo = new Repository();
 
         //register new user
-        repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
-        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
-        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null);
+        repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null, true);
+        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null, true);
 
         //Create account to compare with
-        Account expected = new Account("Ana", "ana@mail.com", 12345678, null);
+        Account expected = new Account("Ana", "ana@mail.com", 12345678, null, true);
 
         //ACT
         Account result = repo.getAccount("ana@mail.com");
@@ -111,9 +111,9 @@ class RepositoryTest {
         Repository repo = new Repository();
 
         //register new user
-        repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
-        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
-        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null);
+        repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null, true);
+        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null, true);
 
         //ACT
         Account result = repo.getAccount("anaPinho@mail.com");

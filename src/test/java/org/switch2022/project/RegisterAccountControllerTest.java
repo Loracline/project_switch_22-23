@@ -21,7 +21,7 @@ class RegisterAccountControllerTest {
         boolean expected= true;
 
         //ACT  register user with same information as expected
-        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, null);
+        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
 
         //ASSERT compare expected user with the registered user
         assertEquals(expected, result);
@@ -40,11 +40,12 @@ class RegisterAccountControllerTest {
         boolean expected= true;
 
         //ACT  register user with same information as expected
-        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, null);
+        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
 
         //ASSERT compare expected user with the registered user
         assertEquals(expected, result);
     }
+
 
     @Test
     void ensureThatNewAccountIsRegisteredWithInitializedConstructorWithPhoto() throws IOException {
@@ -60,7 +61,7 @@ class RegisterAccountControllerTest {
         boolean expected= true;
 
         //ACT  register user with same information as expected
-        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, photo);
+        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, photo, true);
 
         //ASSERT compare expected user with the registered user
         assertEquals(expected, result);
