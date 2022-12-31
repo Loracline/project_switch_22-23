@@ -6,6 +6,7 @@ import org.switch2022.project.Profile;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class Repository is built to create and manipulate lists of Accounts and
@@ -30,7 +31,9 @@ public class Repository {
         this.accountList = new ArrayList<Account>();
         this.profileList = new ArrayList<Profile>();
     }
-
+    public Repository(List<Profile> profilesList) {
+        this.profileList = profilesList;
+    }
     /**
      * Getter method for the attribute ACCOUNTS LIST.
      *
@@ -123,5 +126,45 @@ public class Repository {
         }
         return requestedAccount;
     */
+    /**
+     * This metod creates a Profile
+     *
+     * @return an object Profile
+     */
+    public Profile createProfile(String name) {
+        Profile newProfile = new Profile(name);
+        return newProfile;
+    }
 
+    /**
+     * This method validates if profile exits
+     *
+     * @param profileName
+     */
+    public boolean validateProfile(String profileName) {
+        Profile validateProfile = createProfile(profileName);
+
+        if (!this.profileList.contains(validateProfile)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * This method adds profile to profilesList
+     *
+     * @param toAddProfile
+     */
+    public boolean addProfileToProfilesList(Profile toAddProfile) {
+        boolean isAddedToList =  profileList.add(toAddProfile);
+        return isAddedToList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Repository)) return false;
+        Repository that = (Repository) o;
+        return Objects.equals(profileList, that.profileList);
+    }
 }
