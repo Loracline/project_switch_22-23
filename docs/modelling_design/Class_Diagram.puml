@@ -94,6 +94,7 @@ class AccountListController{
 }
 
 class ChangeStatusController{
+-account
 -repository
 +ChangeStatusController()
 +changeStatus(email, status)

@@ -1,6 +1,10 @@
 package org.switch2022.project;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,10 +14,16 @@ class ChangeStatusControllerTest {
   void changeStatusAccountToInactive() {
     // Arrange
     Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account);
+
+    List<Account> accountList = new ArrayList<>();
+    List<Profile> profileList = new ArrayList<>();
+    Repository listOfAccounts = new Repository(accountList, profileList);
+    accountList.add(0, account);
+
+    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
 
     // Act
-    accountStatusToBeChanged.changeStatus(false);
+    accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
 
     // Assert
     assertEquals(false, account.accountStatus());
@@ -23,10 +33,16 @@ class ChangeStatusControllerTest {
   void changeStatusAccountToActive() {
     // Arrange
     Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
-    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account);
+
+    List<Account> accountList = new ArrayList<>();
+    List<Profile> profileList = new ArrayList<>();
+    Repository listOfAccounts = new Repository(accountList, profileList);
+    accountList.add(0, account);
+
+    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
 
     // Act
-    accountStatusToBeChanged.changeStatus(true);
+    accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", true);
 
     // Assert
     assertEquals(true, account.accountStatus());
@@ -36,10 +52,16 @@ class ChangeStatusControllerTest {
   void statusPretendedIsEqualToActualStatusTrue() {
     // Arrange
     Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account);
+
+    List<Account> accountList = new ArrayList<>();
+    List<Profile> profileList = new ArrayList<>();
+    Repository listOfAccounts = new Repository(accountList, profileList);
+    accountList.add(0, account);
+
+    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
 
     // Act
-    accountStatusToBeChanged.changeStatus(true);
+    accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", true);
 
     // Assert
     assertEquals(true, account.accountStatus());
@@ -49,12 +71,61 @@ class ChangeStatusControllerTest {
   void statusPretendedIsEqualToActualStatusFalse() {
     // Arrange
     Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
-    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account);
+
+    List<Account> accountList = new ArrayList<>();
+    List<Profile> profileList = new ArrayList<>();
+    Repository listOfAccounts = new Repository(accountList, profileList);
+    accountList.add(0, account);
+
+    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
 
     // Act
-    accountStatusToBeChanged.changeStatus(false);
+    accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
 
     // Assert
     assertEquals(false, account.accountStatus());
+  }
+  @Test
+  void emailDoesNotExist() {
+    // Arrange
+    Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
+
+    List<Account> accountList = new ArrayList<>();
+    List<Profile> profileList = new ArrayList<>();
+    Repository listOfAccounts = new Repository(accountList, profileList);
+    accountList.add(0, account);
+
+    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
+
+    // Act
+    String expected = "E-mail does not exist";
+    IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
+            () -> {
+              accountStatusToBeChanged.changeStatus("paul@isep.ipp.pt", false);
+            });
+
+    Assertions.assertEquals(expected, result.getMessage());
+  }
+
+  @Test
+  void emailDoesNotExistTestTwo() {
+    // Arrange
+    Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
+
+    List<Account> accountList = new ArrayList<>();
+    List<Profile> profileList = new ArrayList<>();
+    Repository listOfAccounts = new Repository(accountList, profileList);
+    accountList.add(0, account);
+
+    ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
+
+    // Act
+    String expected = "E-mail does not exist";
+    IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
+            () -> {
+              accountStatusToBeChanged.changeStatus("mike@isep.ipp.com", false);
+            });
+
+    Assertions.assertEquals(expected, result.getMessage());
   }
 }
