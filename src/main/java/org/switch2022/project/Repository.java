@@ -104,8 +104,11 @@ public class Repository {
         this.accountList.add(acc);
     }
 
-
-
+    /**
+     * This method verify the existence of an account by email confirmation
+     *
+     * @return an object Account
+     */
     public Account getAccount(String email) {
         Account requestedAccount = null;
         for (Account account : this.accountList) {
@@ -127,7 +130,7 @@ public class Repository {
         return requestedAccount;
     */
     /**
-     * This metod creates a Profile
+     * This method creates a Profile
      *
      * @return an object Profile
      */
@@ -166,5 +169,32 @@ public class Repository {
         if (!(o instanceof Repository)) return false;
         Repository that = (Repository) o;
         return Objects.equals(profileList, that.profileList);
+    }
+
+    /**
+     * This method identifies the requested profile by indication of profileName
+     *
+     * @return an object Profile
+     */
+    public Profile getProfile(String profileName) {
+        Profile requestedProfile = null;
+        for (int i = 0; i < this.profileList.size() ; i++) {
+            if (profileList.get(i).getProfileName().equals(profileName)) {
+                requestedProfile = profileList.get(i);
+                break;
+            }
+        }
+        return requestedProfile;
+    }
+    /**
+     * This method changes/updates the accountProfile
+     *
+     * @return an object Account
+     */
+    public Account changeAccountProfile(String email, String profileName){
+        Profile profile = getProfile(profileName);
+        Account account = getAccount(email);
+        account.updateAccountProfile(profile);
+        return account;
     }
 }

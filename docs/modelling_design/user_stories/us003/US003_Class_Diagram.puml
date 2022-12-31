@@ -25,16 +25,16 @@ class Repository {
 +changeProfile(email, profileName)
 +doesEmailExist(email)
 +getAccount(email)
-+isProfileValid(profileName)
 +getProfile(profileName)
 }
 class Account{
 -name
 -email
 -phoneNumber
+-photo
 -profile
 -status
-+Account(name, email, phoneNumber)
++Account(name, email, phoneNumber, photo, status, profile)
 +getEmail()
 +changeStatus(status)
 +updateProfile(profile)
@@ -51,6 +51,5 @@ class Account{
 -profile
 + updateProfile (e-mail, profile)
 }
-
 
 @enduml
