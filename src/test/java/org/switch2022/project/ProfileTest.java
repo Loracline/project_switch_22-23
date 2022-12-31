@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProfileTest {
 
     @Test
-    void createProfileSucessfully() {
+    void createProfileSuccessfully() {
         String profileName = "Administrator";
         Profile profile = new Profile(profileName);
     }
