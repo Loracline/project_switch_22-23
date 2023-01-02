@@ -4,7 +4,7 @@ class "AccountListUI"{
 +getListAllAccounts()
 }
 class "AccountListController" {
-Repository
+-Repository
 +getListAllAccounts()
 }
 class "Repository"{

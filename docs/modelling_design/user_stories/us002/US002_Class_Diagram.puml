@@ -6,7 +6,7 @@ class "RegisterAccountUI"{
 
 class "RegisterAccountController" {
 +registerAccount(name, email, phoneNumber,photo, status)
--repository
+-Repository
 }
 
 class "Repository" {

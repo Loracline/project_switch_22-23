@@ -10,13 +10,13 @@ participant "account :Account" as account
 activate Administrator
 Administrator  -> caUi : 1. changes status in account
 activate caUi
-caUi --> Administrator: 1.1 requests data (e-mail, accountStatus)
+caUi --> Administrator: 1.1 requests data (email, status)
 deactivate caUi
 Administrator -> caUi: 2. inserts requested data
 activate caUi
-caUi -> cac: 2.1 changeStatus(accountStatus)
+caUi -> cac: 2.1 changeStatus(email, status)
 activate cac
-cac -> repository: 2.1.1 changeStatus(accountStatus)
+cac -> repository: 2.1.1 changeStatus(email, status)
 activate repository
 repository -> repository: 2.1.1.1. doesEmailAccountExist(email)
 repository -> repository: 2.1.1.2. account = getAccount(e-mail)

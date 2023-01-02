@@ -11,7 +11,8 @@ class "Account"
 
 class "ChangeStatusController"{
 -Account
-+changeStatus(status)
+-Repository
++changeStatus(email, status)
 }
 class "Repository"{
 -accountsList

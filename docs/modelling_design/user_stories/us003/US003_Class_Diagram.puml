@@ -14,7 +14,7 @@ Repository "1"-->"*" Profile
 class ChangeProfileUI {
 }
 class ChangeProfileController {
--repository
+-Repository
 +ChangeProfileController()
 +changeProfile(e-mail,profileName)
 }
