@@ -294,6 +294,66 @@ class RepositoryTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void getProfileHappy_Path() {
+        //ARRANGE
+        //create empty repository with empty accountList
+        Repository repository = new Repository();
 
+        //register new Profile
+        repository.registerProfile("User");
+        repository.registerProfile("Manager");
+
+        //Create profile to compare with
+        Profile expected = new Profile("Manager");
+
+        //ACT
+        Profile result = repository.getProfile("Manager");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatGetProfileReturnsNull() {
+        //ARRANGE
+        //create empty repository with empty accountList
+        Repository repository = new Repository();
+
+        //register new Profile
+        repository.registerProfile("User");
+        repository.registerProfile("Manager");
+
+        //ACT
+        Profile result = repository.getProfile("Administrator");
+
+        //ASSERT
+        assertNull(result);
+    }
+
+    @Test
+    void changeAccountProfileHappy_Path() {
+        //ARRANGE
+        //Create an account
+        Account account = new Account("Ana", "ana@mail.com", 12345678, null, true);
+        //Change Account Profile user to manager.
+        account.updateAccountProfile(new Profile("Manager"));
+        //Add account to accountListExpected
+        List<Account> accountListExpected = new ArrayList<>();
+        accountListExpected.add(account);
+
+        //Create a repository to change account profile
+        List<Account> accountListResult = new ArrayList<>();
+        List<Profile> profileList = new ArrayList<>();
+        Repository repository = new Repository(accountListResult, profileList);
+        repository.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        repository.registerProfile("Manager");
+
+        //ACT
+        repository.changeAccountProfile("ana@mail.com", "Manager");
+
+        //ASSERT
+        assertEquals(accountListExpected, accountListResult);
+    }
 
 }
