@@ -31,9 +31,11 @@ public class Repository {
         this.accountList = new ArrayList<Account>();
         this.profileList = new ArrayList<Profile>();
     }
+
     public Repository(List<Profile> profilesList) {
         this.profileList = profilesList;
     }
+
     /**
      * Getter method for the attribute ACCOUNTS LIST.
      *
@@ -129,6 +131,7 @@ public class Repository {
         }
         return requestedAccount;
     */
+
     /**
      * This method creates a Profile
      *
@@ -151,7 +154,17 @@ public class Repository {
             return true;
         }
         return false;
-    }
+    }// se o Profile nao estiver na ProfileList retorna true.
+
+   /* public boolean validateProfilee(String profileName) {
+        boolean profileListcontainsProfile = true;
+        Profile validateProfile = createProfile(profileName);
+
+        if (!this.profileList.contains(validateProfile)) {
+            profileListcontainsProfile = false;
+        }
+        return profileListcontainsProfile;
+    }*/
 
     /**
      * This method adds profile to profilesList
@@ -159,8 +172,16 @@ public class Repository {
      * @param toAddProfile
      */
     public boolean addProfileToProfilesList(Profile toAddProfile) {
-        boolean isAddedToList =  profileList.add(toAddProfile);
+        boolean isAddedToList = profileList.add(toAddProfile);
         return isAddedToList;
+    }
+
+    public void registerProfile(String profileName) {
+        String profileNameLowerCase = profileName.toLowerCase();
+        if (validateProfile(profileNameLowerCase)) {
+            Profile profile = new Profile(profileName);
+            addProfileToProfilesList(profile); // FUNDIR METODO addProfileToProfilesList AQUI.
+        }
     }
 
     @Override
@@ -177,24 +198,25 @@ public class Repository {
      * @return an object Profile
      */
     public Profile getProfile(String profileName) {
+        String profileNameLowerCase = profileName.toLowerCase();
         Profile requestedProfile = null;
-        for (int i = 0; i < this.profileList.size() ; i++) {
-            if (profileList.get(i).getProfileName().equals(profileName)) {
+        for (int i = 0; i < this.profileList.size(); i++) {
+            if (profileList.get(i).getProfileName().equals(profileNameLowerCase)) {
                 requestedProfile = profileList.get(i);
                 break;
             }
         }
         return requestedProfile;
     }
+
     /**
      * This method changes/updates the accountProfile
      *
      * @return an object Account
      */
-    public Account changeAccountProfile(String email, String profileName){
+    public void changeAccountProfile(String email, String profileName) {
         Profile profile = getProfile(profileName);
         Account account = getAccount(email);
         account.updateAccountProfile(profile);
-        return account;
     }
 }

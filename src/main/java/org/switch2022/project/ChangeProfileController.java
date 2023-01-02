@@ -13,7 +13,7 @@ public class ChangeProfileController{
     public ChangeProfileController(Repository repository) {
         this.repository = repository;
     }
-    public Account changeProfile(String email, String profileName) {
-        return this.repository.changeAccountProfile(email, profileName);
+    public void changeProfile(String email, String profileName) {
+        this.repository.changeAccountProfile(email, profileName);
     }
 }

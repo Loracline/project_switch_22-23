@@ -84,15 +84,15 @@ class RepositoryTest {
     }
 
     @Test
-    void getAccount() {
+    void getAccountHappy_Path() {
         //ARRANGE
         //create empty repository with empty accountList
         Repository repo = new Repository();
 
         //register new user
         repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null, true);
-        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null, true);
+        repo.registerAccount("Paulo", "paulo@mail.com", 23456789, null, true);
+        repo.registerAccount("Sofia", "sofia@mail.com", 232423423, null, true);
 
         //Create account to compare with
         Account expected = new Account("Ana", "ana@mail.com", 12345678, null, true);
@@ -105,15 +105,15 @@ class RepositoryTest {
     }
 
     @Test
-    void ensureThatGetAccountReturnNull() {
+    void ensureThatGetAccountReturnsNull() {
         //ARRANGE
         //create empty repository with empty accountList
         Repository repo = new Repository();
 
         //register new user
         repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-        repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null, true);
-        repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null, true);
+        repo.registerAccount("Paulo", "paulo@mail.com", 23456789, null, true);
+        repo.registerAccount("Sofia", "sofia@mail.com", 232423423, null, true);
 
         //ACT
         Account result = repo.getAccount("anaPinho@mail.com");
@@ -121,6 +121,7 @@ class RepositoryTest {
         //ASSERT
         assertNull(result);
     }
+
     @Test
     void createRepositorySucessfully() {
         List<Profile> profilesList = new ArrayList<>();
@@ -245,4 +246,54 @@ class RepositoryTest {
         boolean result = repository.addProfileToProfilesList(profile);
         assertEquals(expected, result);
     }
+
+    @Test
+    void registerProfileHappy_Path() {
+        //ARRANGE
+        Profile one = new Profile("User");
+        Profile two = new Profile("Manager");
+        Profile three = new Profile("Administrator");
+        List<Profile> profilesList = new ArrayList<>();
+        profilesList.add(one);
+        profilesList.add(two);
+        profilesList.add(three);
+        Repository expected = new Repository(profilesList);
+
+        //ACT
+        List<Profile> profilesListE = new ArrayList<>();
+        profilesListE.add(one);
+        profilesListE.add(two);
+        Repository result = new Repository(profilesListE);
+        result.registerProfile("Administrator");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void noRegisterProfile_ProfileAlreadyExist() {
+        //ARRANGE
+        Profile one = new Profile("User");
+        Profile two = new Profile("Manager");
+        Profile three = new Profile("Administrator");
+        List<Profile> profilesList = new ArrayList<>();
+        profilesList.add(one);
+        profilesList.add(two);
+        profilesList.add(three);
+        Repository expected = new Repository(profilesList);
+
+        //ACT
+        List<Profile> profilesListE = new ArrayList<>();
+        profilesListE.add(one);
+        profilesListE.add(two);
+        profilesListE.add(three);
+        Repository result = new Repository(profilesListE);
+        result.registerProfile("Administrator");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+
+
 }

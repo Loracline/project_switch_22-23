@@ -41,7 +41,7 @@ class AccountTest {
     }
 
     @Test
-    void updateAccountProfile_HappyPath() {
+    void setAccountProfile_HappyPath() {
         // Arrange
         Account accountBeforeUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null, true); //Default Profile: User
         Account accountAfterUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null, true); //Default Profile: User
