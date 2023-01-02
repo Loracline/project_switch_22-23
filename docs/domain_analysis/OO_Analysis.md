@@ -6,27 +6,27 @@
 
 
 ## Identifying potential conceptual classes
+**Candidate Conceptual Classes**
 
-| **Candidate Conceptual Classes**                                  || 
-|:------------------------------------------------------------------|:------------------------------------------------------------------------------------------| **Candidate Classes**                                                                                                                   | **Candidate Classes**                                                                     |
-| (Business) Transactions                                           ||
-| Transaction line items                                            ||
+| **Candidate Classes**                                             | **Candidate Classes**                                                                     |
+|:------------------------------------------------------------------|:------------------------------------------------------------------------------------------| 
+| (Business) Transactions                                           |                                                                                           |
+| Transaction line items                                            |                                                                                           |
 | Products or services related to a transaction or transaction line | Project, Task                                                                             |
 | Transaction records/registers                                     | KPI report, Report                                                                        |
-| Roles of people or organizations                                  | Account, User, Administrator, Profile, Manager, Role, Project Manager, Product Owner, Team |
+| Roles of people or organizations                                  | Account, User, Administrator, Profile, Manager, Role, Project Manager, Product Owner,Team |
 | Places                                                            | System                                                                                    |
-| Noteworthy events                                                 ||
-| Physical objects                                                  ||
+| Noteworthy events                                                 |                                                                                           |
+| Physical objects                                                  |                                                                                           |
 | Description of things                                             | Profile, User Story                                                                       |
-| Catalogs                                                          ||
+| Catalogs                                                          |                                                                                           |
 | Containers of things                                              | Product backlog, Sprint backlog, sprint                                                   |
 | Elements of containers                                            | Project, Account, User story, Sprint                                                      |
-| (Other) organizations                                             ||
+| (Other) organizations                                             |                                                                                           |
 | Other (external) systems                                          | Legacy platform                                                                           |
-| Records of finance, work, contracts, legal matters                ||
-| Financial instruments                                             ||
-| Documents mentioned/used to perform some work                     ||
-
+| Records of finance, work, contracts, legal matters                |                                                                                           |
+| Financial instruments                                             |                                                                                           |
+| Documents mentioned/used to perform some work                     |                                                                                           |
 
 ## Identifying attributes from potential conceptual classes
 
