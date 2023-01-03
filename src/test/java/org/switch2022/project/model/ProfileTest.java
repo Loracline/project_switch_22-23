@@ -1,6 +1,7 @@
-package org.switch2022.project;
+package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Profile;
 
 import static org.junit.jupiter.api.Assertions.*;
 

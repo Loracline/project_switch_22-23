@@ -1,7 +1,10 @@
-package org.switch2022.project;
+package org.switch2022.project.controller;
+
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.Company;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,18 +18,18 @@ public class RegisterAccountController {
      * Attributes of the class RegisterAccountController, according to the Class Diagram.
      */
 
-    private Repository repository;
+    private Company company;
 
     /**
      * RegisterAccountController constructor
      */
     public RegisterAccountController(List<Account> accountList, List<Profile> profileList) {
-        this.repository = new Repository(accountList, profileList);
+        this.company = new Company(accountList, profileList);
 
     }
 
     public RegisterAccountController() {
-        this.repository = new Repository();
+        this.company = new Company();
 
     }
 
@@ -45,7 +48,7 @@ public class RegisterAccountController {
 
     public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo, boolean status) {
 
-        return this.repository.registerAccount(name, email, phoneNumber, photo, status);
+        return this.company.registerAccount(name, email, phoneNumber, photo, status);
 
     }
 

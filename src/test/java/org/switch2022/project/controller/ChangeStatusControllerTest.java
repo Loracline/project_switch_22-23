@@ -1,7 +1,10 @@
-package org.switch2022.project;
+package org.switch2022.project.controller;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.Company;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,7 @@ class ChangeStatusControllerTest {
 
     List<Account> accountList = new ArrayList<>();
     List<Profile> profileList = new ArrayList<>();
-    Repository listOfAccounts = new Repository(accountList, profileList);
+    Company listOfAccounts = new Company(accountList, profileList);
     accountList.add(0, account);
 
     ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
@@ -36,7 +39,7 @@ class ChangeStatusControllerTest {
 
     List<Account> accountList = new ArrayList<>();
     List<Profile> profileList = new ArrayList<>();
-    Repository listOfAccounts = new Repository(accountList, profileList);
+    Company listOfAccounts = new Company(accountList, profileList);
     accountList.add(0, account);
 
     ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
@@ -55,7 +58,7 @@ class ChangeStatusControllerTest {
 
     List<Account> accountList = new ArrayList<>();
     List<Profile> profileList = new ArrayList<>();
-    Repository listOfAccounts = new Repository(accountList, profileList);
+    Company listOfAccounts = new Company(accountList, profileList);
     accountList.add(0, account);
 
     ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
@@ -74,7 +77,7 @@ class ChangeStatusControllerTest {
 
     List<Account> accountList = new ArrayList<>();
     List<Profile> profileList = new ArrayList<>();
-    Repository listOfAccounts = new Repository(accountList, profileList);
+    Company listOfAccounts = new Company(accountList, profileList);
     accountList.add(0, account);
 
     ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
@@ -92,7 +95,7 @@ class ChangeStatusControllerTest {
 
     List<Account> accountList = new ArrayList<>();
     List<Profile> profileList = new ArrayList<>();
-    Repository listOfAccounts = new Repository(accountList, profileList);
+    Company listOfAccounts = new Company(accountList, profileList);
     accountList.add(0, account);
 
     ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);
@@ -114,7 +117,7 @@ class ChangeStatusControllerTest {
 
     List<Account> accountList = new ArrayList<>();
     List<Profile> profileList = new ArrayList<>();
-    Repository listOfAccounts = new Repository(accountList, profileList);
+    Company listOfAccounts = new Company(accountList, profileList);
     accountList.add(0, account);
 
     ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(account, listOfAccounts);

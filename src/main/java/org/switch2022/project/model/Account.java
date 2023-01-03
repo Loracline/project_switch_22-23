@@ -1,4 +1,4 @@
-package org.switch2022.project;
+package org.switch2022.project.model;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 

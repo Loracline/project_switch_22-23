@@ -1,6 +1,9 @@
-package org.switch2022.project;
+package org.switch2022.project.controller;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.Company;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +25,10 @@ class ChangeProfileControllerTest {
         //Create a repository to change account profile
         List<Account> accountListResult = new ArrayList<>();
         List<Profile> profileList = new ArrayList<>();
-        Repository repository = new Repository(accountListResult, profileList);
-        repository.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-        repository.registerProfile("Manager");
-        ChangeProfileController controller = new ChangeProfileController(repository);
+        Company company = new Company(accountListResult, profileList);
+        company.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        company.registerProfile("Manager");
+        ChangeProfileController controller = new ChangeProfileController(company);
 
 
         //ACT

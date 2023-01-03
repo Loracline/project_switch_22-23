@@ -1,4 +1,7 @@
-package org.switch2022.project;
+package org.switch2022.project.controller;
+
+import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.Company;
 
 /**
  * Class CreateProfileController is built to allow access to register profile methods
@@ -11,14 +14,14 @@ public class CreateProfileController {
      * Attributes of the class CreateProfileController, according to the Class Diagram.
      */
 
-    private Repository repository;
+    private Company company;
 
     /**
      * CreateProfileController constructor
      */
 
-    public CreateProfileController(Repository repository) {
-        this.repository = repository;
+    public CreateProfileController(Company company) {
+        this.company = company;
     }
 
     /**
@@ -32,10 +35,10 @@ public class CreateProfileController {
 
     public boolean addNewProfile(String profileName) {
         boolean isAddedToList = false;
-        boolean isValidProfile = repository.validateProfile(profileName);
+        boolean isValidProfile = company.validateProfile(profileName);
         if (isValidProfile) {
-            Profile profile = repository.createProfile(profileName);
-            isAddedToList = repository.addProfileToProfilesList(profile);
+            Profile profile = company.createProfile(profileName);
+            isAddedToList = company.addProfileToProfilesList(profile);
         }
         return isAddedToList;
     }

@@ -1,6 +1,7 @@
-package org.switch2022.project;
+package org.switch2022.project.controller;
 
-import java.awt.image.BufferedImage;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Company;
 
 public class ChangeStatusController {
   /**
@@ -8,9 +9,9 @@ public class ChangeStatusController {
    * used in the constructors Account.
    */
   private Account account;
-  private Repository accountList;
+  private Company accountList;
 
-  public ChangeStatusController(Account account, Repository accountList) {
+  public ChangeStatusController(Account account, Company accountList) {
     this.account = account;
     this.accountList = accountList;
   }

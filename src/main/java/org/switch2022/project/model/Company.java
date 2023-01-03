@@ -1,7 +1,4 @@
-package org.switch2022.project;
-
-import org.switch2022.project.Account;
-import org.switch2022.project.Profile;
+package org.switch2022.project.model;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -12,7 +9,7 @@ import java.util.Objects;
  * Class Repository is built to create and manipulate lists of Accounts and
  * Profiles (to be updated...).
  */
-public class Repository {
+public class Company {
     /**
      * Attributes of the class Repository, according to the Class Diagram.
      */
@@ -22,17 +19,17 @@ public class Repository {
     /**
      * Repository constructor
      */
-    public Repository(List<Account> accountList, List<Profile> profileList) {
+    public Company(List<Account> accountList, List<Profile> profileList) {
         this.accountList = accountList;
         this.profileList = profileList;
     }
 
-    public Repository() {
+    public Company() {
         this.accountList = new ArrayList<Account>();
         this.profileList = new ArrayList<Profile>();
     }
 
-    public Repository(List<Profile> profilesList) {
+    public Company(List<Profile> profilesList) {
         this.profileList = profilesList;
     }
 
@@ -187,8 +184,8 @@ public class Repository {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Repository)) return false;
-        Repository that = (Repository) o;
+        if (!(o instanceof Company)) return false;
+        Company that = (Company) o;
         return Objects.equals(profileList, that.profileList);
     }
 

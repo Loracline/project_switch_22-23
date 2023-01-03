@@ -1,6 +1,9 @@
-package org.switch2022.project;
+package org.switch2022.project.controller;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.controller.RegisterAccountController;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Profile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
