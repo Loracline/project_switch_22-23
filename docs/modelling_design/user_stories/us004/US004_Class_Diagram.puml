@@ -1,21 +1,28 @@
 @startuml
 
-class "AccountListUI"{
-+getListAllAccounts()
+class "ListAccountUI"{
 }
-class "AccountListController" {
--Repository
-+getListAllAccounts()
+class "ListAccountController" {
+-Company
++ac=getAccountContainer()
++copy=getCopyAccountList()
 }
-class "Repository"{
-Account
-+getListAllAccounts()
-}
+class "Company"{
++ac=getAccountContainer()
 
-"AccountListUI" "1" --> "1" "AccountListController":request
-"AccountListController" "1" --> "1" "Repository":request
-hide "AccountListUI" circle
-hide "AccountListController" circle
-hide "Repository" circle
+}
+class "ac:AccountContainer"{
++copy=getCopyAccountList()
+}
+class "a:Account"{}
+hide "ListAccountUI" circle
+hide "ListAccountController" circle
+hide "Company" circle
+hide "ac:AccountContainer" circle
+hide "a:Account" circle
+
+"ListAccountUI" ..> "ListAccountController"
+"ListAccountController" ..> "Company"
+"ListAccountController" ..> "ac:AccountContainer"
 
 @enduml
