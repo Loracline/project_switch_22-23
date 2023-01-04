@@ -15,16 +15,16 @@ public class ChangeStatusController {
 
   /**
    * Method changeStatus used to change the existing account status.
-   *
+   * @param email
    * @param status
    * @return the new account status
    */
-  public int changeStatus(String email, boolean status) {
-    accountList.getAccountsList().getAccountWithEmail(email).setStatus(status);
+  public boolean changeStatus(String email, boolean status) {
+    accountList.getAccountsList().getAccountByEmail(email).setStatus(status);
     if (status) {
-      return 1;
+      return true;
     } else {
-      return 0;
+      return false;
     }
   }
 }
