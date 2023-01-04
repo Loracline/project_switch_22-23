@@ -1,32 +1,56 @@
 @startuml
 class ChangeProfileController
 class ChangeProfileUI
-class Repository
+class Company
+class ProfileContainer
+class AccountContainer
 hide ChangeProfileController circle
-hide Repository circle
+hide Company circle
 hide Account circle
 hide ChangeProfileUI circle
 hide Profile circle
+hide ProfileContainer circle
+hide AccountContainer circle
+
 ChangeProfileUI ..> ChangeProfileController: requests
-ChangeProfileController ..> Repository
-Repository "1" -->"*"Account
-Repository "1"-->"*" Profile
+ChangeProfileController ..> Company
+Company "1" -->"*"AccountContainer
+Company "1"-->"*" ProfileContainer
+AccountContainer "1"-->"*" Account
+ProfileContainer "1"-->"*" Profile
+
+
+
 class ChangeProfileUI {
 }
+
 class ChangeProfileController {
--Repository
+-company
 +ChangeProfileController()
-+changeProfile(e-mail,profileName)
++changeProfile(e-mail, profileName)
 }
-class Repository {
+
+class Company {
+-profileContainer
+-accountContainer
++Company()
++getProfileContainer()
++getAccountContainer()
+/'+doesEmailExist(email)'/
+}
+
+class ProfileContainer {
 -profileList
--accountList
-+Repository()
-+changeProfile(email, profileName)
-+doesEmailExist(email)
-+getAccount(email)
-+getProfile(profileName)
++ProfileContainer()
++getProfileByName(profileName)
 }
+
+class AccountContainer {
+-accountList
++AccountContainer()
++getAccountByEmail(email)
+}
+
 class Account{
 -name
 -email
@@ -36,20 +60,15 @@ class Account{
 -status
 +Account(name, email, phoneNumber, photo, status, profile)
 +getEmail()
-+changeStatus(status)
-+updateProfile(profile)
++accountStatus(status)
++updateAccountStatus(status)
++updateAccountProfile(profile)
++setProfile(profile)
 }
+
 class Profile{
 -profileName
 +Profile(profileName)
-+getProfile()
++getProfileName()
 }
-@enduml
-
-class Account{
--email
--profile
-+ updateProfile (e-mail, profile)
-}
-
 @enduml
