@@ -4,25 +4,28 @@ class "ListAccountUI"{
 }
 class "ListAccountController" {
 -Company
-+ac=getAccountContainer()
-+copy=getCopyAccountList()
++ListAllAccount()
 }
 class "Company"{
-+ac=getAccountContainer()
+-AccountContainer
+getAccountContainer()
+}
+class "AccountContainer"{
+-AccountList
+getCopyAccountList()
+}
+class "Account"{}
 
-}
-class "ac:AccountContainer"{
-+copy=getCopyAccountList()
-}
-class "a:Account"{}
 hide "ListAccountUI" circle
 hide "ListAccountController" circle
 hide "Company" circle
-hide "ac:AccountContainer" circle
-hide "a:Account" circle
+hide "AccountContainer" circle
+hide "Account" circle
+
 
 "ListAccountUI" ..> "ListAccountController"
 "ListAccountController" ..> "Company"
-"ListAccountController" ..> "ac:AccountContainer"
-
+"Company"->"AccountContainer"
+"ListAccountController"---> "AccountContainer"
+"AccountContainer"-->"Account"
 @enduml
