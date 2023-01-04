@@ -4,8 +4,8 @@ actor "Administrator" as admin
 participant ":ChangeStatusUI" as ui
 participant ":ChangeStatusController" as controller
 participant ":Company" as company
-participant "accCont:AccountContainer" as container
-participant "acc:Account" as account
+participant "accountContainer:AccountContainer" as container
+participant "account:Account" as account
 
 activate admin
 admin -> ui : Changes account status to "Active"
@@ -16,10 +16,10 @@ admin -> ui: Enters requested data
 activate ui
 ui -> controller: changeStatus(email, status)
 activate controller
-controller -> company: accCont = getAccountContainer()
+controller -> company: accountContainer = getAccountContainer()
 activate company
 deactivate company
-controller -> container: acc = getAccountByEmail(email)
+controller -> container: account = getAccountByEmail(email)
 activate container
 deactivate container
 controller -> account: setStatus(status)

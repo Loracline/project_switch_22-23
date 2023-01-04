@@ -2,30 +2,30 @@
 
 class "ListAccountUI"{
 }
+
 class "ListAccountController" {
--Company
-+ListAllAccount()
+-company
++listAllAccounts()
 }
+
 class "Company"{
--AccountContainer
-getAccountContainer()
+-accountContainer
++getAccountContainer()
+
 }
 class "AccountContainer"{
--AccountList
-getCopyAccountList()
+-accountList
++getAccountListCopy()
 }
-class "Account"{}
 
 hide "ListAccountUI" circle
 hide "ListAccountController" circle
 hide "Company" circle
 hide "AccountContainer" circle
-hide "Account" circle
-
 
 "ListAccountUI" ..> "ListAccountController"
 "ListAccountController" ..> "Company"
-"Company"->"AccountContainer"
-"ListAccountController"---> "AccountContainer"
-"AccountContainer"-->"Account"
+"ListAccountController" ..> "AccountContainer"
+"Company" "1"-->"1" "AccountContainer": has
+
 @enduml

@@ -1,0 +1,25 @@
+@startuml
+
+actor Administrator
+participant ":ListAccountUI" as ui
+participant ":ListAccountController" as controller
+participant ":Company" as company
+participant "accountContainer:AccountContainer" as container
+
+activate Administrator
+Administrator -> ui: Lists all accounts
+activate ui
+ui -> controller: listAllAccounts()
+activate controller
+controller -> company: accountContainer = getAccountContainer()
+activate company
+deactivate company
+controller -> container: getAccountListCopy()
+activate container
+deactivate container
+controller --> ui: return copy
+deactivate controller
+ui --> Administrator: return copy
+deactivate ui
+
+@enduml

@@ -1,27 +1,39 @@
 @startuml
 
 class "ChangeStatusUI" as CSUI
+class "ListAccountUI" as LAUI
 class "ChangeStatusController" as CSC
+class "ListAccountController" as LAC
 class "Company" as company
 class "AccountContainer" as container
 class "Account" as account
 
-"CSUI" ..> "CSC"
-"CSC"  ..> "company"
-"CSC" ..> "container"
-"CSC" ..> "account"
-"company" "1"-->"1" "container"
-"container" "1"-->"*" "account"
-
 hide "CSUI" circle
+hide "LAUI" circle
 hide "CSC" circle
+hide "LAC" circle
 hide "company" circle
 hide "container" circle
 hide "account" circle
 
+"CSUI" ..> "CSC"
+"LAUI" ..> "LAC"
+"CSC"  ..> "company"
+"LAC" ..> "company"
+"CSC" ..> "container"
+"LAC" ..> "container"
+"CSC" ..> "account"
+"company" "1"-->"1" "container": has
+"container" "1"-->"*" "account": contains
+
 class "CSC" {
 -company
 +changeStatus(email, status)
+}
+
+class "LAC" {
+-company
++listAllAccounts()
 }
 
 class "company" {
@@ -32,6 +44,7 @@ class "company" {
 class "container" {
 -accountList
 +getAccountByEmail(email)
++getAccountListCopy()
 }
 
 class "account" {
