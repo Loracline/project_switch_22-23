@@ -1,34 +1,43 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-class "Profile"{
--name
-+Profile(name)
-}
-
-class "CreateProfileController" {
--Repository
-+createNewProfile(name)
-}
 
 class "CreateProfileUI"{
 }
 
-class "Repository"{
+class "Profile"{
+-profileName
++createPofile(profileName)
+}
+
+class "CreateProfileController" {
+-Company
++createProfile(profileName)
+}
+
+
+class "Company"{
+-ProfileContainer
++getProfileContainer()
+
+
+}
+
+class "ProfileContainer"{
 -profileList
--accountList
-+validateProfile(profile)
-+saveProfile(profile)
--addProfile(profile)
++doesProfileNameExist(profileName)
++addProfile(P)
 }
 
 hide "Profile" circle
 hide "CreateProfileController" circle
 hide "CreateProfileUI" circle
-hide "Repository" circle
+hide "Company" circle
+hide "ProfileContainer" circle
 
 "CreateProfileUI" ..>  "CreateProfileController": requests
-"CreateProfileController" ..>  "Repository"
-"Repository" "1" --> "*" "Profile": creates
+"CreateProfileController" ..>  "Company"
+"CreateProfileController" ..>  "ProfileContainer"
+"ProfileContainer" "1" --> "*" "Profile": creates
 
 @enduml
