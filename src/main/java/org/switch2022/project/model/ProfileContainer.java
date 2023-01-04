@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,10 @@ public class ProfileContainer {
 
   public ProfileContainer(List<Profile> profileList){
     this.profileList = profileList;
+  }
+
+  public ProfileContainer(){
+    this.profileList = new ArrayList<Profile>();
   }
 
   @Override

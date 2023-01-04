@@ -2,6 +2,7 @@ package org.switch2022.project.model;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.ArrayList;
 
 public class AccountContainer {
   private List<Account> accountList;
@@ -10,6 +11,9 @@ public class AccountContainer {
     this.accountList = accountList;
   }
 
+  public AccountContainer(){
+    this.accountList = new ArrayList<Account>();
+  }
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
