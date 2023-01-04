@@ -7,24 +7,28 @@ class "CreateProfileUI"{
 
 class "Profile"{
 -profileName
-+createPofile(profileName)
++Profile(profileName)
 }
 
 class "CreateProfileController" {
 -Company
++CreateProfileController()
 +createProfile(profileName)
 }
 
 
 class "Company"{
 -ProfileContainer
++Company()
 +getProfileContainer()
+
 
 
 }
 
 class "ProfileContainer"{
 -profileList
++ProfileContainer()
 +doesProfileNameExist(profileName)
 +addProfile(P)
 }
@@ -37,7 +41,7 @@ hide "ProfileContainer" circle
 
 "CreateProfileUI" ..>  "CreateProfileController": requests
 "CreateProfileController" ..>  "Company"
-"CreateProfileController" ..>  "ProfileContainer"
+"Company" ..>  "ProfileContainer"
 "ProfileContainer" "1" --> "*" "Profile": creates
 
 @enduml

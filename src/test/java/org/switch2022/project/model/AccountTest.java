@@ -24,7 +24,7 @@ class AccountTest {
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, false);
 
         // Act
-        accountOne.updateAccountStatus(true);
+        accountOne.setStatus(true);
 
         // Assert
         assertTrue(accountOne.accountStatus());
@@ -36,7 +36,7 @@ class AccountTest {
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
 
         // Act
-        accountOne.updateAccountStatus(false);
+        accountOne.setStatus(false);
 
         // Assert
         assertFalse(accountOne.accountStatus());

@@ -1,6 +1,7 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.controller.ChangeStatusController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,26 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CompanyTest {
+  @Test
+  void getAccountsList() {
+    // Arrange
+    Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
+
+    List<Account> accountList = new ArrayList<>();
+    accountList.add(account);
+    AccountContainer listOfAccounts = new AccountContainer(accountList);
+
+    List<Profile> profileList = new ArrayList<>();
+    ProfileContainer listOfProfiles = new ProfileContainer(profileList);
+
+    Company company = new Company(listOfAccounts, listOfProfiles);
+    
+    // Act
+    AccountContainer result = company.getAccountsList();
+
+    // Assert
+    assertEquals(account, result);
+  }
     @Test
     void getListAllAccounts() {
         Profile user = new Profile("User");

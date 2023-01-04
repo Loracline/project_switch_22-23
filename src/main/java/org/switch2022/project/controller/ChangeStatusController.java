@@ -1,6 +1,5 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Company;
 
 public class ChangeStatusController {
@@ -8,11 +7,9 @@ public class ChangeStatusController {
    * Attributes of the class ChangeStatusController, needed to implement the methods
    * used in the constructors Account.
    */
-  private Account account;
   private Company accountList;
 
-  public ChangeStatusController(Account account, Company accountList) {
-    this.account = account;
+  public ChangeStatusController(Company accountList) {
     this.accountList = accountList;
   }
 
@@ -22,16 +19,12 @@ public class ChangeStatusController {
    * @param status
    * @return the new account status
    */
-  public void changeStatus(String email, boolean status) {
-    accountList.getAccountsList().contains(email);
-    if (this.accountList.doesEmailExist(email)) {
-      if (account.accountStatus() != status) {
-        account.updateAccountStatus(status);
-      } else {
-        account.accountStatus();
-      }
+  public int changeStatus(String email, boolean status) {
+    accountList.getAccountsList().getAccountWithEmail(email).setStatus(status);
+    if (status) {
+      return 1;
     } else {
-      throw new IllegalArgumentException("E-mail does not exist");
+      return 0;
     }
   }
 }

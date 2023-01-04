@@ -1,8 +1,6 @@
 package org.switch2022.project.model;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -10,35 +8,32 @@ import java.util.Objects;
  * Profiles (to be updated...).
  */
 public class Company {
-    /**
-     * Attributes of the class Repository, according to the Class Diagram.
-     */
-    private List<Account> accountList;
-    private List<Profile> profileList;
+  /**
+   * Attributes of the class Repository, according to the Class Diagram.
+   */
+  private AccountContainer accountList;
+  private ProfileContainer profileList;
 
-    /**
-     * Repository constructor
-     */
-    public Company(List<Account> accountList, List<Profile> profileList) {
-        this.accountList = accountList;
-        this.profileList = profileList;
-    }
+  /**
+   * Repository constructor
+   */
+  public Company(AccountContainer accountList, ProfileContainer profileList) {
+    this.accountList = accountList;
+    this.profileList = profileList;
+  }
 
     public Company() {
-        this.accountList = new ArrayList<Account>();
-        this.profileList = new ArrayList<Profile>();
+        this.accountList = new AccountContainer();
+        this.profileList = new ProfileContainer();
     }
 
-    public Company(List<Profile> profilesList) {
-        this.profileList = profilesList;
-    }
 
     /**
      * Getter method for the attribute ACCOUNTS LIST.
      *
      * @return the list of Accounts in the Repository
      */
-    public List<Account> getAccountsList() {
+    public AccountContainer getAccountsList() {
         return accountList;
     }
 
@@ -50,25 +45,7 @@ public class Company {
      * @param email that one must find out if exists in the Repository
      * @return TRUE if there is an account with given e-mail and FALSE otherwise
      */
-    public boolean doesEmailExist(String email) {
-        boolean emailExistance = false;
-        int index = 0;
-        while (index < this.accountList.size()) {
-            if (accountList.get(index).getEmail().equals(email)) {
-                emailExistance = true;
-                break;
-            }
-            index++;
-        }
-        return emailExistance;
 
-        //Possivel substituicao para ciclo while. (A aguardar validaçao do resto dos elementos)
-        /*for (int i = 0; i < this.accountList.size(); i++) {
-            if (accountList.get(i).getEmail().equals(email)) {
-                emailExistance = true;
-                break;
-        }*/
-    }
 
     /**
      * Register new account method. After validating email is unique, creates new
