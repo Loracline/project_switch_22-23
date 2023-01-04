@@ -1,6 +1,9 @@
-package org.switch2022.project;
+package org.switch2022.project.controller;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.Company;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,8 +15,8 @@ class CreateProfileControllerTest {
         List<Profile> profileList = new ArrayList<>();
         profileList.add(new Profile("Admin"));
         profileList.add(new Profile("User"));
-        Repository repository = new Repository(profileList);
-        CreateProfileController controller = new CreateProfileController(repository);
+        Company company = new Company(profileList);
+        CreateProfileController controller = new CreateProfileController(company);
     }
     @Test
     void addNewProfileSuccessfully(){
@@ -21,8 +24,8 @@ class CreateProfileControllerTest {
         List<Profile> profileList = new ArrayList<>();
         profileList.add(new Profile("Admin"));
         profileList.add(new Profile("User"));
-        Repository repository = new Repository(profileList);
-        CreateProfileController controller = new CreateProfileController(repository);
+        Company company = new Company(profileList);
+        CreateProfileController controller = new CreateProfileController(company);
         boolean result = controller.addNewProfile("Manager");
         assertEquals(expected,result);
     }
@@ -32,8 +35,8 @@ class CreateProfileControllerTest {
         List<Profile> profileList = new ArrayList<>();
         profileList.add(new Profile("Admin"));
         profileList.add(new Profile("User"));
-        Repository repository = new Repository(profileList);
-        CreateProfileController controller = new CreateProfileController(repository);
+        Company company = new Company(profileList);
+        CreateProfileController controller = new CreateProfileController(company);
         boolean result = controller.addNewProfile("admin");
         assertEquals(expected,result);
     }

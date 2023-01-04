@@ -1,6 +1,9 @@
-package org.switch2022.project;
+package org.switch2022.project.controller;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.Company;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +21,9 @@ class AccountListControllerTest {
         List<Account> accountList = new ArrayList<>();
         accountList.add(0, account);
 
-        Repository repositoryTest = new Repository(accountList, profileList);
+        Company companyTest = new Company(accountList, profileList);
 
-        AccountListController controller = new AccountListController(repositoryTest);
+        AccountListController controller = new AccountListController(companyTest);
     }
 
     @Test
@@ -33,8 +36,8 @@ class AccountListControllerTest {
         List<Account> accountList = new ArrayList<>();
         accountList.add(0, account);
 
-        Repository repositoryTest = new Repository(accountList, profileList);
-        AccountListController controller = new AccountListController(repositoryTest);
+        Company companyTest = new Company(accountList, profileList);
+        AccountListController controller = new AccountListController(companyTest);
         List<Account> expected = controller.requestAccountList();
 
         assertEquals(accountList, expected);
@@ -48,8 +51,8 @@ class AccountListControllerTest {
 
         List<Account> accountList = new ArrayList<>();
 
-        Repository repositoryTest = new Repository(accountList, profileList);
-        AccountListController controller = new AccountListController(repositoryTest);
+        Company companyTest = new Company(accountList, profileList);
+        AccountListController controller = new AccountListController(companyTest);
         List<Account> expected = controller.requestAccountList();
 
         assertEquals(accountList, expected);

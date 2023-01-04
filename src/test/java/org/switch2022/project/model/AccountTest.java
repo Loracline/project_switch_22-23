@@ -1,6 +1,8 @@
-package org.switch2022.project;
+package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Profile;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +24,7 @@ class AccountTest {
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, false);
 
         // Act
-        accountOne.updateAccountStatus(true);
+        accountOne.setStatus(true);
 
         // Assert
         assertTrue(accountOne.accountStatus());
@@ -34,7 +36,7 @@ class AccountTest {
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
 
         // Act
-        accountOne.updateAccountStatus(false);
+        accountOne.setStatus(false);
 
         // Assert
         assertFalse(accountOne.accountStatus());

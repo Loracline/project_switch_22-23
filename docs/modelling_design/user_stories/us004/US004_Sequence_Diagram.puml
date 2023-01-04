@@ -1,23 +1,26 @@
 @startuml
 
 skinparam sequenceMessageAlign center
-actor "Administrator"
-participant ":AccountListUI" as ui
-participant ":AccountListController" as cal
-participant ":Repository" as rp
+actor Administrator
+participant ListAccountUI as ui
+participant ":ListAccountController" as controller
+participant ":Company" as company
+participant "ac:AccountContainer" as acontainer
+participant "a:Account" as aaccount
 
-
-activate "Administrator"
-"Administrator" -> ui: 1: request list of all accounts
+activate Administrator
+Administrator -> ui: 1. Lists all accounts
 activate ui
-ui -> cal: 1.1: getListAllAccounts()
-activate cal
-cal -> rp: 1.1.1: getListAllAccounts()
-activate rp
-rp --> cal :returns list of all accounts
-deactivate rp
-cal --> ui :returns list of all accounts
-deactivate cal
-ui --> "Administrator": returns list of all accounts
-deactivate ui
+ui -> controller: 1.1 ListAllAccount()
+activate controller
+controller -> company: 1.1.1 ac=getAccountContainer()
+activate company
+deactivate company
+controller-> acontainer: 1.1.2 copy=getCopyAccountList()
+activate acontainer
+deactivate acontainer
+controller --> ui: ok
+deactivate controller
+ui --> Administrator: ok
+
 @enduml

@@ -1,4 +1,4 @@
-package org.switch2022.project;
+package org.switch2022.project.model;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
@@ -80,24 +80,12 @@ public class Account {
         return email;
     }
 
-
-    /**
-     * Getter method for the attribute ACCOUNT STATUS.
-     *
-     * @return TRUE if the account status is "Active" and FALSE if the account
-     * status is "Inactive"
-     */
-    public boolean accountStatus() {
-        return accountStatus;
-    }
-
-
     /**
      * Setter method for the attribute ACCOUNT STATUS.
      *
      * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
      */
-    public void updateAccountStatus(boolean status) {
+    public void setStatus(boolean status) {
         this.accountStatus = status;
     }
 

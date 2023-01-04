@@ -3,57 +3,34 @@
 actor Administrator
 participant ":CreateProfileUI" as cpu
 participant ":CreateProfileController" as cpc
-participant ":Repository" as Repository
-participant "prof:Profile" as Profile
+participant ":Company" as Company
+participant "pc:ProfileContainer" as ProfileContainer
+participant "p:Profile" as Profile
 activate Administrator
-Administrator -> cpu: 1. starts the definition of a new profile
+Administrator -> cpu: 1. creates profile
 activate cpu
-cpu --> Administrator: 1.1 requests data(name)
+cpu --> Administrator: 1.1 requests data(profileName)
 deactivate cpu
 Administrator -> cpu: 2. types requested data
 activate cpu
-cpu -> cpc: 2.1 createNewProfile(name)
+cpu -> cpc: 2.1 createProfile(profileName)
 activate cpc
-cpc -> Repository: 2.1.1 profile=createNewProfile(name)
-activate Repository
+cpc -> Company: 2.1.1 pc=getProfileContainer()
+activate Company
+deactivate Company
+cpc -> ProfileContainer: 2.1.2 doesProfileNameExist(profileName)
+activate ProfileContainer
+deactivate ProfileContainer
 create Profile
-Repository --> Profile: 2.1.1.1 create(name)
-deactivate Repository
-cpc -> Repository: 2.1.2 validateProfile(profile)
-activate Repository
+cpc -> Profile: 2.1.3 p=createProfile(profileName)
+deactivate Profile
+cpc -> ProfileContainer: 2.1.4 addProfile(p)
+activate ProfileContainer
+deactivate ProfileContainer
+cpc --> cpu: profile created
 deactivate cpc
-deactivate Repository
-cpu --> Administrator: 2.2 shows data and requests confirmation
-
-deactivate cpu
-Administrator -> cpu: 3. confirms
-activate cpu
-cpu -> cpc: 3.1 saveProfile()
-activate cpc
-cpc -> Repository: 3.1.1 saveProfile(profile)
-activate Repository
-Repository -> Repository: 3.1.1.1 addProfile(profile)
-deactivate Repository
-deactivate cpc
-cpu --> Administrator: 3.2 informs success
+cpu --> Administrator: informs profile created
 deactivate cpu
 
-
-/'
-actor Administrator as Admin
-participant ":Controller" as Cont
-participant ":Company" as Comp
-participant "prof:Profile" as Prof
-
-activate Cont
-Admin -> Cont: 1. createNewProfile(profileName)
-Cont -> Comp: 1.1 prof = createProfile(profileName)
-activate Comp
-create Prof
-Comp --> Prof: 1.1.1 createProfile(profileName)
-Comp -> Comp: 1.1.2 validateProfile(profileName)
-Comp -> Comp: 1.1.3 addProfile(profileName)
-'/
-@enduml
 
 @enduml

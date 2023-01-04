@@ -1,38 +1,39 @@
 @startuml
-'https://plantuml.com/class-diagram
-
 class "RegisterAccountUI"{
 }
-
 class "RegisterAccountController" {
-+registerAccount(name, email, phoneNumber,photo, status)
--Repository
+-company
++registerAccount(name, email, phoneNumber, photo, status)
 }
-
-class "Repository" {
-+registerAccount(name, email, phoneNumber,photo, status)
-+doesEmailExist(email)
+class "Company" {
+-accountContainer
+-profileContainer
++Company()
++getAccountContainer()
+}
+class "AccountContainer"{
 -accountList
--profileList
--addAccount(acc)
++AccountContainer()
++doesEmailExist(email)
++addAccount(account)
 }
-
 class "Account" {
 -name
 -email
 -phoneNumber
 -photo
 -status
-+Account(name,email,phoneNumber,photo, status)
++Account(name, email, phoneNumber, photo, status)
 }
-
 hide "Account" circle
 hide "RegisterAccountController" circle
 hide "RegisterAccountUI" circle
-hide "Repository" circle
-
+hide "Company" circle
+hide "AccountContainer" circle
 "RegisterAccountUI" ..>  "RegisterAccountController"
-"RegisterAccountController" ..>  "Repository"
-"Repository" "1" --> "*" "Account": registers
-
+"RegisterAccountController" ..>  "Company"
+"Company" --> "AccountContainer"
+"AccountContainer" --> "Account"
+"RegisterAccountController" "1" --> "*" "Account": registers
+"RegisterAccountController" "1" --> "*" "AccountContainer": manipulates
 @enduml

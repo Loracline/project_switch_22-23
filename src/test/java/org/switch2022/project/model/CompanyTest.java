@@ -1,13 +1,34 @@
-package org.switch2022.project;
+package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.controller.ChangeStatusController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RepositoryTest {
+class CompanyTest {
+  @Test
+  void getAccountsList() {
+    // Arrange
+    Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
+
+    List<Account> accountList = new ArrayList<>();
+    accountList.add(account);
+    AccountContainer listOfAccounts = new AccountContainer(accountList);
+
+    List<Profile> profileList = new ArrayList<>();
+    ProfileContainer listOfProfiles = new ProfileContainer(profileList);
+
+    Company company = new Company(listOfAccounts, listOfProfiles);
+    
+    // Act
+    AccountContainer result = company.getAccountsList();
+
+    // Assert
+    assertEquals(account, result);
+  }
     @Test
     void getListAllAccounts() {
         Profile user = new Profile("User");
@@ -24,7 +45,7 @@ class RepositoryTest {
         profileList.add(user);
         profileList.add(administrator);
         profileList.add(manager);
-        Repository test = new Repository(accountList, profileList);
+        Company test = new Company(accountList, profileList);
 
         List<Account> expected = accountList;
         List<Account> result = test.getAccountsList();
@@ -36,7 +57,7 @@ class RepositoryTest {
     void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {
         //ARRANGE
         //create empty repository with empty accountList
-        Repository repo = new Repository();
+        Company repo = new Company();
 
         //expected result; if account is registered, returns TRUE
         boolean expected = true;
@@ -70,7 +91,7 @@ class RepositoryTest {
         profileList.add(manager);
 
         //create repository with initialized account and profile lists
-        Repository repo = new Repository(accountList, profileList);
+        Company repo = new Company(accountList, profileList);
 
         //expected result; if account is not registered, returns FALSE
         boolean expected = false;
@@ -87,7 +108,7 @@ class RepositoryTest {
     void getAccountHappy_Path() {
         //ARRANGE
         //create empty repository with empty accountList
-        Repository repo = new Repository();
+        Company repo = new Company();
 
         //register new user
         repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
@@ -108,7 +129,7 @@ class RepositoryTest {
     void ensureThatGetAccountReturnsNull() {
         //ARRANGE
         //create empty repository with empty accountList
-        Repository repo = new Repository();
+        Company repo = new Company();
 
         //register new user
         repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
@@ -127,15 +148,15 @@ class RepositoryTest {
         List<Profile> profilesList = new ArrayList<>();
         profilesList.add(new Profile("Admin"));
         profilesList.add(new Profile("User"));
-        Repository test = new Repository(profilesList);
+        Company test = new Company(profilesList);
     }
 
     @Test
     void ensureSameObjectEqualsItself() {
         List<Profile> profilesList = new ArrayList<>();
         profilesList.add(new Profile("Admin"));
-        Repository reference = new Repository(profilesList);
-        Repository other = reference;
+        Company reference = new Company(profilesList);
+        Company other = reference;
         boolean expected = true;
 
         boolean result = reference.equals(other);
@@ -147,10 +168,10 @@ class RepositoryTest {
     void ensureTwoAccountsAreNotTheSame() {
         List<Profile> profilesList = new ArrayList<>();
         profilesList.add(new Profile("Admin"));
-        Repository reference = new Repository(profilesList);
+        Company reference = new Company(profilesList);
         List<Profile> profileList = new ArrayList<>();
         profilesList.add(new Profile("Manager"));
-        Repository other = new Repository(profileList);
+        Company other = new Company(profileList);
 
         boolean expected = false;
 
@@ -163,7 +184,7 @@ class RepositoryTest {
     void ensureObjectDoesNotEqualsOtherTypeOfObject() {
         List<Profile> profilesList = new ArrayList<>();
         profilesList.add(new Profile("Admin"));
-        Repository reference = new Repository(profilesList);
+        Company reference = new Company(profilesList);
         Profile other = new Profile("Admin");
         boolean expected = false;
 
@@ -176,8 +197,8 @@ class RepositoryTest {
     void createProfile() {
         Profile expected = new Profile("Joana");
         List<Profile> profilesList = new ArrayList<>();
-        Repository repository = new Repository(profilesList);
-        Profile result = repository.createProfile("Joana");
+        Company company = new Company(profilesList);
+        Profile result = company.createProfile("Joana");
         assertEquals(expected, result);
     }
 
@@ -185,10 +206,10 @@ class RepositoryTest {
     void validateProfileAsFalse() {
         boolean expected = false;
         List<Profile> profilesList = new ArrayList<>();
-        Repository repository = new Repository(profilesList);
+        Company company = new Company(profilesList);
         profilesList.add(new Profile("Admin"));
         profilesList.add(new Profile("User"));
-        boolean result = repository.validateProfile("User");
+        boolean result = company.validateProfile("User");
         assertEquals(expected, result);
     }
 
@@ -196,10 +217,10 @@ class RepositoryTest {
     void validateProfileAsTrue() {
         boolean expected = true;
         List<Profile> profilesList = new ArrayList<>();
-        Repository repository = new Repository(profilesList);
+        Company company = new Company(profilesList);
         profilesList.add(new Profile("Admin"));
         profilesList.add(new Profile("User"));
-        boolean result = repository.validateProfile("Manager");
+        boolean result = company.validateProfile("Manager");
         assertEquals(expected, result);
     }
 
@@ -207,10 +228,10 @@ class RepositoryTest {
     void validateProfileAsFalseCaseInsensitive() {
         boolean expected = false;
         List<Profile> profilesList = new ArrayList<>();
-        Repository repository = new Repository(profilesList);
+        Company company = new Company(profilesList);
         profilesList.add(new Profile("Admin"));
         profilesList.add(new Profile("User"));
-        boolean result = repository.validateProfile("user");
+        boolean result = company.validateProfile("user");
         assertEquals(expected, result);
     }
 
@@ -218,7 +239,7 @@ class RepositoryTest {
     void addProfileToProfilesList() {
         List<Profile> profilesListE = new ArrayList<>();
 
-        Repository expected = new Repository(profilesListE);
+        Company expected = new Company(profilesListE);
 
         profilesListE.add(new Profile("Admin"));
         profilesListE.add(new Profile("User"));
@@ -228,7 +249,7 @@ class RepositoryTest {
 
         List<Profile> profilesList = new ArrayList<>();
 
-        Repository result = new Repository(profilesList);
+        Company result = new Company(profilesList);
 
         profilesList.add(new Profile("Admin"));
         profilesList.add(new Profile("User"));
@@ -241,9 +262,9 @@ class RepositoryTest {
     void addProfileToProfilesListTrue() {
         boolean expected = true;
         List<Profile> profilesList = new ArrayList<>();
-        Repository repository = new Repository(profilesList);
+        Company company = new Company(profilesList);
         Profile profile = new Profile("Manager");
-        boolean result = repository.addProfileToProfilesList(profile);
+        boolean result = company.addProfileToProfilesList(profile);
         assertEquals(expected, result);
     }
 
@@ -257,13 +278,13 @@ class RepositoryTest {
         profilesList.add(one);
         profilesList.add(two);
         profilesList.add(three);
-        Repository expected = new Repository(profilesList);
+        Company expected = new Company(profilesList);
 
         //ACT
         List<Profile> profilesListE = new ArrayList<>();
         profilesListE.add(one);
         profilesListE.add(two);
-        Repository result = new Repository(profilesListE);
+        Company result = new Company(profilesListE);
         result.registerProfile("Administrator");
 
         //ASSERT
@@ -280,14 +301,14 @@ class RepositoryTest {
         profilesList.add(one);
         profilesList.add(two);
         profilesList.add(three);
-        Repository expected = new Repository(profilesList);
+        Company expected = new Company(profilesList);
 
         //ACT
         List<Profile> profilesListE = new ArrayList<>();
         profilesListE.add(one);
         profilesListE.add(two);
         profilesListE.add(three);
-        Repository result = new Repository(profilesListE);
+        Company result = new Company(profilesListE);
         result.registerProfile("Administrator");
 
         //ASSERT
@@ -298,17 +319,17 @@ class RepositoryTest {
     void getProfileHappy_Path() {
         //ARRANGE
         //create empty repository with empty accountList
-        Repository repository = new Repository();
+        Company company = new Company();
 
         //register new Profile
-        repository.registerProfile("User");
-        repository.registerProfile("Manager");
+        company.registerProfile("User");
+        company.registerProfile("Manager");
 
         //Create profile to compare with
         Profile expected = new Profile("Manager");
 
         //ACT
-        Profile result = repository.getProfile("Manager");
+        Profile result = company.getProfile("Manager");
 
         //ASSERT
         assertEquals(expected, result);
@@ -318,14 +339,14 @@ class RepositoryTest {
     void ensureThatGetProfileReturnsNull() {
         //ARRANGE
         //create empty repository with empty accountList
-        Repository repository = new Repository();
+        Company company = new Company();
 
         //register new Profile
-        repository.registerProfile("User");
-        repository.registerProfile("Manager");
+        company.registerProfile("User");
+        company.registerProfile("Manager");
 
         //ACT
-        Profile result = repository.getProfile("Administrator");
+        Profile result = company.getProfile("Administrator");
 
         //ASSERT
         assertNull(result);
@@ -345,12 +366,12 @@ class RepositoryTest {
         //Create a repository to change account profile
         List<Account> accountListResult = new ArrayList<>();
         List<Profile> profileList = new ArrayList<>();
-        Repository repository = new Repository(accountListResult, profileList);
-        repository.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-        repository.registerProfile("Manager");
+        Company company = new Company(accountListResult, profileList);
+        company.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        company.registerProfile("Manager");
 
         //ACT
-        repository.changeAccountProfile("ana@mail.com", "Manager");
+        company.changeAccountProfile("ana@mail.com", "Manager");
 
         //ASSERT
         assertEquals(accountListExpected, accountListResult);
