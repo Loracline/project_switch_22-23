@@ -10,8 +10,8 @@ class "Account" as account
 "CSC"  ..> "company"
 "CSC" ..> "container"
 "CSC" ..> "account"
-"company" "1"-->"1" "container"
-"container" "1"-->"*" "account"
+"company" "1"-->"1" "container": has
+"container" "1"-->"*" "account": contains
 
 hide "CSUI" circle
 hide "CSC" circle

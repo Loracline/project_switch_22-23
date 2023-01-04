@@ -1,0 +1,31 @@
+@startuml
+
+class "ListAccountUI"{
+}
+
+class "ListAccountController" {
+-company
++listAllAccounts()
+}
+
+class "Company"{
+-accountContainer
++getAccountContainer()
+
+}
+class "AccountContainer"{
+-accountList
++getAccountListCopy()
+}
+
+hide "ListAccountUI" circle
+hide "ListAccountController" circle
+hide "Company" circle
+hide "AccountContainer" circle
+
+"ListAccountUI" ..> "ListAccountController"
+"ListAccountController" ..> "Company"
+"ListAccountController" ..> "AccountContainer"
+"Company" "1"-->"1" "AccountContainer": has
+
+@enduml

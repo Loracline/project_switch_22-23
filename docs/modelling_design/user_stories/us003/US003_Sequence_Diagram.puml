@@ -12,8 +12,7 @@ activate Administrator
 Administrator -> ui: 1. changes account profile
 activate ui
 Administrator <-- ui: 1.1. requests data (e-mail, profileName)
-deactivate ui
-Administrator -> ui: 2.  enters account data
+deactivate ui -> ui: 2.  enters account data
 activate ui
 ui -> Controller: 2.1. changeProfile(e-mail, profileName)
 activate Controller
