@@ -36,7 +36,7 @@ public class Company {
      *
      * @return the list of Accounts in the Repository
      */
-    public List<Account> getAccountsList() {
+    public AccountContainer getAccountsList() {
         return accountList;
     }
 
