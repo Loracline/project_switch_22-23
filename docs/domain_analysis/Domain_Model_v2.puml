@@ -1,0 +1,86 @@
+@startuml
+Class Company{}
+hide Company circle
+Class Account{
+name
+email
+phoneNumber
+photo
+status
+}
+hide Account circle
+Class Profile{
+name
+}
+hide Profile circle
+Class Period{
+startDate
+endDate
+}
+hide Period circle
+Class User{}
+hide User circle
+Class Role{
+}
+hide Role circle
+Class Project{
+code
+name
+description
+numberOfSprints
+customer
+typology
+budget
+projectStatus
+}
+hide Project circle
+Class UserStory{
+number
+actor
+usText
+acceptanceCriteria
+}
+hide UserStory circle
+Class Task{
+name
+description
+userStory
+effortEstimate
+hoursSpent
+percentageExecution
+type
+status
+responsible
+}
+hide Task circle
+Class Sprint {
+totalEffort
+}
+hide Sprint circle
+Class ProductBacklog{
+}
+hide ProductBacklog circle
+Class SprintBacklog{
+}
+hide SprintBacklog circle
+
+Company "1" -- "*" Account : has >
+Account "*" -- "*" Profile: has >
+Profile -- Period: spans >
+User --|> Profile: is a
+User "*" -- "*" Role: has >
+Role -- Period: spans >
+Company -- Project: has >
+Project -- Period: spans >
+/'Project -- UserStory: contains >'/
+Project "1" -- "*" Sprint: is divided into >
+UserStory --|> Task: is a
+Task -- Period: spans >
+Sprint -- Period: spans >
+Sprint "1" -- "*" Task: has >
+Project "1" -- "1" ProductBacklog: has >
+ProductBacklog "1" -- "*" UserStory: contains >
+User "*" -- "*" Sprint: works in >
+Sprint "1" -- "1" SprintBacklog: has >
+SprintBacklog "*" -- "*" UserStory: contains >
+@enduml
