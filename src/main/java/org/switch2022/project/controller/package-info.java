@@ -1,4 +1,4 @@
 /**
- * Package location for Apllication Controllers concepts.
+ * Package location for Application Controllers concepts.
  */
 package org.switch2022.project.controller;
