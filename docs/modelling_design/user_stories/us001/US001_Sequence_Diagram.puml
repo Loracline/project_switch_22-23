@@ -1,35 +1,40 @@
 @startuml
 
+skinparam sequenceMessageAlign center
+title TO CREATE NEW PROFILE
+legend top
+US001 - As Administrator, I want to create user profiles.
+end legend
+autonumber
 actor Administrator
 participant ":CreateProfileUI" as cpu
 participant ":CreateProfileController" as cpc
 participant ":Company" as Company
-participant "pc:ProfileContainer" as ProfileContainer
-participant "p:Profile" as Profile
+participant "profileContainer:ProfileContainer" as ProfileContainer
+participant "profile:Profile" as Profile
 activate Administrator
-Administrator -> cpu: 1. creates profile
+Administrator -> cpu: Creates profile
 activate cpu
-cpu --> Administrator: 1.1 requests data(profileName)
+cpu --> Administrator: requests data(profileName)
 deactivate cpu
-Administrator -> cpu: 2. types requested data
+Administrator -> cpu: Types requested data
 activate cpu
-cpu -> cpc: 2.1 createProfile(profileName)
+cpu -> cpc: createProfile(profileName)
 activate cpc
-cpc -> Company: 2.1.1 pc=getProfileContainer()
+cpc -> Company: profileContainer = getProfileContainer()
 activate Company
 deactivate Company
-cpc -> ProfileContainer: 2.1.2 doesProfileNameExist(profileName)
-activate ProfileContainer
-deactivate ProfileContainer
 create Profile
-cpc -> Profile: 2.1.3 p=createProfile(profileName)
+cpc -> Profile: profile = createProfile(profileName)
 deactivate Profile
-cpc -> ProfileContainer: 2.1.4 addProfile(p)
+cpc -> ProfileContainer: addProfile(profile)
 activate ProfileContainer
+ProfileContainer -> ProfileContainer: doesProfileNameExist(profileName)
+
+cpc --> cpu: confirms
 deactivate ProfileContainer
-cpc --> cpu: profile created
 deactivate cpc
-cpu --> Administrator: informs profile created
+cpu --> Administrator: confirms
 deactivate cpu
 
 

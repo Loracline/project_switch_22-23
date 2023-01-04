@@ -1,6 +1,10 @@
 @startuml
 
-
+skinparam sequenceMessageAlign center
+title TO CHANGE PROFILE
+legend top
+US003 - As Administrator, I want to change the profile of a user account.
+end legend
 actor Administrator
 participant ":ChangeProfileUI" as ui
 participant ":ChangeProfileController" as controller

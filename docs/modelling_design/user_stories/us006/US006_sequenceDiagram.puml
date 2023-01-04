@@ -1,5 +1,11 @@
 @startuml
 
+legend top
+US006 - As Administrator, I want to activate a user account.
+end legend
+skinparam sequenceMessageAlign center
+title TO ACTIVATE USER ACCOUNT
+autonumber
 actor "Administrator" as admin
 participant ":ChangeStatusUI" as ui
 participant ":ChangeStatusController" as controller

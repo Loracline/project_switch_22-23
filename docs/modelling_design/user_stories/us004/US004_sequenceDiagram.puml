@@ -1,5 +1,9 @@
 @startuml
-
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS
+legend top
+US004 - As Administrator, I want to get a list of all user accounts and their status.
+end legend
 actor Administrator
 participant ":ListAccountUI" as ui
 participant ":ListAccountController" as controller

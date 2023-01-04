@@ -102,29 +102,9 @@ end note
 ":System" --> Administrator: returns list of accounts
 @enduml
 
-
 @startuml
 legend top
-US005 - As Administrator, I want to activate a user account.
-end legend
-skinparam sequenceMessageAlign center
-title TO ACTIVATE USER ACCOUNT
-actor Administrator
-autonumber
-Administrator -> ":System": Requests account info
-note left
-Account is authenticated.
-":System" grants access.
-end note
-":System" --> Administrator: returns account info
-Administrator -> ":System": Changes status to "Active"
-":System" --> Administrator: status updated
-@enduml
-
-
-@startuml
-legend top
-US006 - As Administrator, I want to inactivate a user account.
+US005 - As Administrator, I want to inactivate a user account.
 end legend
 skinparam sequenceMessageAlign center
 title TO INACTIVATE USER ACCOUNT
@@ -137,6 +117,25 @@ Account is authenticated.
 end note
 Administrator <-- ":System": returns account info
 Administrator -> ":System": Changes status to "Inactive"
+":System" --> Administrator: status updated
+@enduml
+
+
+@startuml
+legend top
+US006 - As Administrator, I want to activate a user account.
+end legend
+skinparam sequenceMessageAlign center
+title TO ACTIVATE USER ACCOUNT
+actor Administrator
+autonumber
+Administrator -> ":System": Requests account info
+note left
+Account is authenticated.
+":System" grants access.
+end note
+":System" --> Administrator: returns account info
+Administrator -> ":System": Changes status to "Active"
 ":System" --> Administrator: status updated
 @enduml
 

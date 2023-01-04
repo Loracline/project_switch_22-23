@@ -1,4 +1,9 @@
 @startuml
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW ACCOUNT
+legend top
+US002 - As Administrator, I want to register a user.
+end legend
 actor Administrator
 participant ":RegisterAccountUI" as ui
 participant ":RegisterAccountController" as controller

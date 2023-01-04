@@ -1,5 +1,10 @@
 @startuml
 
+legend top
+US005 - As Administrator, I want to inactivate a user account.
+end legend
+skinparam sequenceMessageAlign center
+title TO INACTIVATE USER ACCOUNT
 actor "Administrator" as admin
 participant ":ChangeStatusUI" as ui
 participant ":ChangeStatusController" as controller
