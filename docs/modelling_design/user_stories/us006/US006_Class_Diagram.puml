@@ -1,33 +1,43 @@
 @startuml
 
-class "ChangeStatusUI"
-class "ChangeStatusController"
-class "Repository"
-class "Account"
+class "ChangeStatusUI" as CSUI
+class "ChangeStatusController" as CSC
+class "Company" as company
+class "AccountContainer" as container
+class "Account" as account
 
-"ChangeStatusUI" ..> "ChangeStatusController"
-"ChangeStatusController"  ..> "Repository"
-"Repository" "1  " -->"*" "Account"
+"CSUI" ..> "CSC"
+"CSC"  ..> "company"
+"CSC" ..> "container"
+"CSC" ..> "account"
+"company" "1"-->"1" "container"
+"container" "1"-->"*" "account"
 
-class "ChangeStatusController"{
--Account
--Repository
+hide "CSUI" circle
+hide "CSC" circle
+hide "company" circle
+hide "container" circle
+hide "account" circle
+
+class "CSC" {
+-company
 +changeStatus(email, status)
 }
-class "Repository"{
--accountsList
-+doesEmailExist(email)
+
+class "company" {
+-accountContainer
++getAccountContainer()
 }
 
-class Account{
-- accountStatus
+class "container" {
+-accountList
++getAccountByEmail(email)
+}
+
+class "account" {
 -email
-+ updateStatus(accountStatus)
+-status
++setStatus(status)
 }
-
-hide "ChangeStatusUI" circle
-hide "ChangeStatusController" circle
-hide "Repository" circle
-hide "Account" circle
 
 @enduml
