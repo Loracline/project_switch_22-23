@@ -1,8 +1,6 @@
 package org.switch2022.project.model;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -10,19 +8,19 @@ import java.util.Objects;
  * Profiles (to be updated...).
  */
 public class Company {
-    /**
-     * Attributes of the class Repository, according to the Class Diagram.
-     */
-    private List<Account> accountList;
-    private List<Profile> profileList;
+  /**
+   * Attributes of the class Repository, according to the Class Diagram.
+   */
+  private AccountContainer accountList;
+  private ProfileContainer profileList;
 
-    /**
-     * Repository constructor
-     */
-    public Company(List<Account> accountList, List<Profile> profileList) {
-        this.accountList = accountList;
-        this.profileList = profileList;
-    }
+  /**
+   * Repository constructor
+   */
+  public Company(AccountContainer accountList, ProfileContainer profileList) {
+    this.accountList = accountList;
+    this.profileList = profileList;
+  }
 
     public Company() {
         this.accountList = new ArrayList<Account>();
@@ -38,7 +36,7 @@ public class Company {
      *
      * @return the list of Accounts in the Repository
      */
-    public List<Account> getAccountsList() {
+    public AccountContainer getAccountsList() {
         return accountList;
     }
 

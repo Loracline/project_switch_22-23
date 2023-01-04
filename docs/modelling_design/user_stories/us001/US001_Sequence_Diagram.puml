@@ -22,14 +22,14 @@ cpc -> ProfileContainer: 2.1.2 doesProfileNameExist(profileName)
 activate ProfileContainer
 deactivate ProfileContainer
 create Profile
-cpc -> Profile: 2.1.3 P=createProfile(profileName)
+cpc -> Profile: 2.1.3 p=createProfile(profileName)
 deactivate Profile
-cpc -> ProfileContainer: 2.1.4 addProfile(P)
+cpc -> ProfileContainer: 2.1.4 addProfile(p)
 activate ProfileContainer
 deactivate ProfileContainer
-cpc --> cpu: ok
+cpc --> cpu: profile created
 deactivate cpc
-cpu --> Administrator: ok
+cpu --> Administrator: informs profile created
 deactivate cpu
 
 
