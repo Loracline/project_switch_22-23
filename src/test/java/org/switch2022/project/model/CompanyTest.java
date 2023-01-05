@@ -12,74 +12,69 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CompanyTest {
 
-  /**
-   * Testing the constructor
-   */
-  @Test
-  void createContainer(){
-    AccountContainer container = new AccountContainer();
-  }
+    /**
+     * Testing the constructor
+     */
+    @Test
+    void createContainer() {
+        AccountContainer container = new AccountContainer();
+    }
 
-  /**
-   * BeforeEach and AfterEach executes common code before running the tests below.
-   */
+    /**
+     * BeforeEach and AfterEach executes common code before running the tests below.
+     */
 
-  Account accountOne, accountTwo;
-  AccountContainer accountContainer,accountContainerTwo;
-  ProfileContainer profileContainer;
-  Company company;
+    Account accountOne, accountTwo;
+    Profile profileOne, profileTwo;
+    AccountContainer accountContainer, accountContainerTwo;
+    ProfileContainer profileContainer;
+    Company company;
 
-  @BeforeEach
-  void setUp() {
-    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-    accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
-
-
-    List<Account> accounts = new ArrayList<>();
-    accountContainer = new AccountContainer(accounts);
-    accounts.add(accountOne);
-    List<Account> accountsTwo = new ArrayList<>();
-    accountContainerTwo = new AccountContainer(accountsTwo);
-    accountsTwo.add(accountOne);
-    accountsTwo.add(accountTwo);
-
-    List<Profile> profiles = new ArrayList<>();
-    profileContainer = new ProfileContainer(profiles);
-
-    company = new Company(accountContainer, profileContainer);
-  }
-
-  @AfterEach
-  void tearDown() {
-    accountOne = null;
-    accountTwo = null;
-    accountContainer = null;
-    accountContainerTwo = null;
-    profileContainer = null;
-    company = null;
-  }
-
-  /**
-   * The test getAccountsList and getAccountsListTwo, compare two lists contents.
-   */
-
-  @Test
-  void getAccountsList() {
-    AccountContainer expected = accountContainer;
-    AccountContainer result = company.getAccountContainer();
-    assertEquals(expected, result);
-  }
-
-  @Test
-  void getAccountsListTestTwo() {
-    AccountContainer expected = accountContainerTwo;
-    AccountContainer result = company.getAccountContainer();
-    assertNotEquals(expected, result);
-  }
+    @BeforeEach
+    void setUp() {
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
+        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
 
 
+        List<Account> accounts = new ArrayList<>();
+        accountContainer = new AccountContainer(accounts);
+        accounts.add(accountOne);
+        accounts.add(accountTwo);
+
+        profileOne = new Profile("Administrator");
+        profileTwo = new Profile("User");
 
 
+        List<Profile> profiles = new ArrayList<>();
+        profileContainer = new ProfileContainer(profiles);
+        profiles.add(profileOne);
+        profiles.add(profileTwo);
+
+        company = new Company(accountContainer, profileContainer);
+    }
+
+    @AfterEach
+    void tearDown() {
+        accountOne = null;
+        accountTwo = null;
+        profileOne = null;
+        profileTwo = null;
+        accountContainer = null;
+        accountContainerTwo = null;
+        profileContainer = null;
+        company = null;
+    }
+
+    /**
+     * The test getAccountsList and getAccountsListTwo, compare two lists contents.
+     */
+
+    @Test
+    void ensureItGetsAccountContainer() {
+        AccountContainer expected = accountContainer;
+        AccountContainer result = company.getAccountContainer();
+        assertEquals(expected, result);
+    }
 
     @Test
     void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {
@@ -169,131 +164,6 @@ class CompanyTest {
 
         //ASSERT
         assertNull(result);
-    }
-
-    @Test
-    void createRepositorySucessfully() {
-        List<Profile> profilesList = new ArrayList<>();
-        profilesList.add(new Profile("Admin"));
-        profilesList.add(new Profile("User"));
-        Company test = new Company(profilesList);
-    }
-
-    @Test
-    void ensureSameObjectEqualsItself() {
-        List<Profile> profilesList = new ArrayList<>();
-        profilesList.add(new Profile("Admin"));
-        Company reference = new Company(profilesList);
-        Company other = reference;
-        boolean expected = true;
-
-        boolean result = reference.equals(other);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureTwoAccountsAreNotTheSame() {
-        List<Profile> profilesList = new ArrayList<>();
-        profilesList.add(new Profile("Admin"));
-        Company reference = new Company(profilesList);
-        List<Profile> profileList = new ArrayList<>();
-        profilesList.add(new Profile("Manager"));
-        Company other = new Company(profileList);
-
-        boolean expected = false;
-
-        boolean result = reference.equals(other);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
-        List<Profile> profilesList = new ArrayList<>();
-        profilesList.add(new Profile("Admin"));
-        Company reference = new Company(profilesList);
-        Profile other = new Profile("Admin");
-        boolean expected = false;
-
-        boolean result = reference.equals(other);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void createProfile() {
-        Profile expected = new Profile("Joana");
-        List<Profile> profilesList = new ArrayList<>();
-        Company company = new Company(profilesList);
-        Profile result = company.createProfile("Joana");
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void validateProfileAsFalse() {
-        boolean expected = false;
-        List<Profile> profilesList = new ArrayList<>();
-        Company company = new Company(profilesList);
-        profilesList.add(new Profile("Admin"));
-        profilesList.add(new Profile("User"));
-        boolean result = company.validateProfile("User");
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void validateProfileAsTrue() {
-        boolean expected = true;
-        List<Profile> profilesList = new ArrayList<>();
-        Company company = new Company(profilesList);
-        profilesList.add(new Profile("Admin"));
-        profilesList.add(new Profile("User"));
-        boolean result = company.validateProfile("Manager");
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void validateProfileAsFalseCaseInsensitive() {
-        boolean expected = false;
-        List<Profile> profilesList = new ArrayList<>();
-        Company company = new Company(profilesList);
-        profilesList.add(new Profile("Admin"));
-        profilesList.add(new Profile("User"));
-        boolean result = company.validateProfile("user");
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void addProfileToProfilesList() {
-        List<Profile> profilesListE = new ArrayList<>();
-
-        Company expected = new Company(profilesListE);
-
-        profilesListE.add(new Profile("Admin"));
-        profilesListE.add(new Profile("User"));
-        profilesListE.add(new Profile("Manager"));
-
-        Profile profile = new Profile("Manager");
-
-        List<Profile> profilesList = new ArrayList<>();
-
-        Company result = new Company(profilesList);
-
-        profilesList.add(new Profile("Admin"));
-        profilesList.add(new Profile("User"));
-        result.addProfileToProfilesList(profile);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void addProfileToProfilesListTrue() {
-        boolean expected = true;
-        List<Profile> profilesList = new ArrayList<>();
-        Company company = new Company(profilesList);
-        Profile profile = new Profile("Manager");
-        boolean result = company.addProfileToProfilesList(profile);
-        assertEquals(expected, result);
     }
 
     @Test
