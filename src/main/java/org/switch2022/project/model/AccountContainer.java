@@ -22,11 +22,15 @@ public class AccountContainer {
     return Objects.equals(accountList, that.accountList);
   }
 
-  public Account getAccountWithEmail(String email) {
-    String accountEmail = email;
+  /**
+   * This method verify the existence of an account by email confirmation
+   *
+   * @return an object Account
+   */
+  public Account getAccountByEmail(String email) {
     Account requestedAccount = null;
     for (int i = 0; i < this.accountList.size(); i++) {
-      if (accountList.get(i).getEmail().equals(accountEmail)) {
+      if (accountList.get(i).getEmail().equals(email)) {
         requestedAccount = accountList.get(i);
         break;
       }

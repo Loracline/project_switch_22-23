@@ -1,41 +1,56 @@
 @startuml
 
-
+skinparam sequenceMessageAlign center
+title TO CHANGE PROFILE
+legend top
+US003 - As Administrator, I want to change the profile of a user account.
+end legend
+autonumber
 actor Administrator
 participant ":ChangeProfileUI" as ui
 participant ":ChangeProfileController" as controller
 participant ":Company" as company
 participant "profileContainer:ProfileContainer" as pcontainer
 participant "accountContainer:AccountContainer" as acontainer
-participant "a:Account" as account
-participant "p:Profile" as pprofile
+participant "profile:Profile" as pprofile
+participant "account:Account" as account
+
 
 activate Administrator
-Administrator -> ui: 1. Changes account profile
+Administrator -> ui: changes account profile
 activate ui
-Administrator <-- ui: 1.1. Requests data (e-mail, profileName)
+Administrator <<-- ui: requests data (e-mail, profileName)
 deactivate ui
-Administrator -> ui: 2.  Enters account data
+Administrator -> ui: enters account data
 activate ui
-ui -> controller: 2.1. changeProfile(e-mail, profileName)
+ui -> controller: changeProfile(e-mail, profileName)
 activate controller
-controller -> company: 2.1.1. profileContainer=getProfileContainer()
+controller -> company: profileContainer = getProfileContainer()
 activate company
+create pcontainer
+company -->> pcontainer : create
 deactivate company
-controller -> pcontainer: 2.1.2. profile=getProfileByName(profileName)
+controller -> pcontainer: profile = getProfileByName(profileName)
 activate pcontainer
+create pprofile
+pcontainer -->> pprofile: create
 deactivate pcontainer
-controller-> company: 2.1.3. accountContainer=getAccountContainer()
+controller-> company: accountContainer = getAccountContainer()
 activate company
+create acontainer
+company -->> acontainer: create
 deactivate company
-controller -> acontainer: 2.1.4. account=getAccountByEmail(e-mail)
+controller -> acontainer: account = getAccountByEmail(e-mail)
 activate acontainer
+create account
+acontainer -->> account: create
 deactivate acontainer
-controller -> account: 2.1.5. setProfile(profile)
+controller -> account: setProfile(profile)
 activate account
 deactivate account
-controller --> ui: Account profile updated
+controller -->> ui: account profile updated
 deactivate controller
-ui --> Administrator: Informs account profile update
+ui -->> Administrator: informs account profile updated
+
 
 @enduml

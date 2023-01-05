@@ -7,7 +7,7 @@ import java.util.Objects;
 public class ProfileContainer {
   private List<Profile> profileList;
 
-  public ProfileContainer(List<Profile> profileList){
+  public ProfileContainer(List<Profile> profileList) {
     this.profileList = profileList;
   }
 
@@ -21,5 +21,22 @@ public class ProfileContainer {
     if (!(o instanceof ProfileContainer)) return false;
     ProfileContainer that = (ProfileContainer) o;
     return Objects.equals(profileList, that.profileList);
+  }
+
+  /**
+   * This method identifies the requested profile by indication of profileName
+   *
+   * @return an object Profile
+   */
+  public Profile getProfileByName(String profileName) {
+    String profileNameLowerCase = profileName.toLowerCase();
+    Profile requestedProfile = null;
+    for (int i = 0; i < this.profileList.size(); i++) {
+      if (profileList.get(i).getProfileName().equals(profileNameLowerCase)) {
+        requestedProfile = profileList.get(i);
+        break;
+      }
+    }
+    return requestedProfile;
   }
 }

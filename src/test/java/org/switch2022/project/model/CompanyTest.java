@@ -1,7 +1,6 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.controller.ChangeStatusController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -119,7 +118,7 @@ class CompanyTest {
         Account expected = new Account("Ana", "ana@mail.com", 12345678, null, true);
 
         //ACT
-        Account result = repo.getAccount("ana@mail.com");
+        Account result = repo.getAccountByEmail("ana@mail.com");
 
         //ASSERT
         assertEquals(expected, result);
@@ -137,7 +136,7 @@ class CompanyTest {
         repo.registerAccount("Sofia", "sofia@mail.com", 232423423, null, true);
 
         //ACT
-        Account result = repo.getAccount("anaPinho@mail.com");
+        Account result = repo.getAccountByEmail("anaPinho@mail.com");
 
         //ASSERT
         assertNull(result);
@@ -329,7 +328,7 @@ class CompanyTest {
         Profile expected = new Profile("Manager");
 
         //ACT
-        Profile result = company.getProfile("Manager");
+        Profile result = company.getProfileByName("Manager");
 
         //ASSERT
         assertEquals(expected, result);
@@ -346,7 +345,7 @@ class CompanyTest {
         company.registerProfile("Manager");
 
         //ACT
-        Profile result = company.getProfile("Administrator");
+        Profile result = company.getProfileByName("Administrator");
 
         //ASSERT
         assertNull(result);

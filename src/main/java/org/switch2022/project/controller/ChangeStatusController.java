@@ -20,7 +20,7 @@ public class ChangeStatusController {
    * @return the new account status
    */
   public int changeStatus(String email, boolean status) {
-    accountList.getAccountsList().getAccountWithEmail(email).setStatus(status);
+    accountList.getAccountsList().getAccountByEmail(email).setStatus(status);
     if (status) {
       return 1;
     } else {

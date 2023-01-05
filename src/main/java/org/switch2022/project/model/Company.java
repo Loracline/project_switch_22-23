@@ -1,6 +1,8 @@
 package org.switch2022.project.model;
 
-import java.util.Arrays;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -60,7 +62,7 @@ public class Company {
      * @return null if email already exists
      */
     public boolean registerAccount(String name, String email, long phoneNumber,
-                             BufferedImage photo, boolean status) {
+                                   BufferedImage photo, boolean status) {
         boolean result = false;
 
         if (!doesEmailExist(email)) {
@@ -79,32 +81,6 @@ public class Company {
     private void addAccount(Account acc) {
         this.accountList.add(acc);
     }
-
-    /**
-     * This method verify the existence of an account by email confirmation
-     *
-     * @return an object Account
-     */
-    public Account getAccount(String email) {
-        Account requestedAccount = null;
-        for (Account account : this.accountList) {
-            if (account.getEmail().equals(email)) {
-                requestedAccount = account;
-                break;
-            }
-        }
-        return requestedAccount;
-    }
-    //Possivel substituicao do teste Account getAccount (A aguardar validaçao do resto dos elementos)
-      /*  Account requestedAccount = null;
-        for (int i = 0; i < this.accountList.size() ; i++) {
-            if (accountList.get(i).getEmail().equals(email)) {
-                requestedAccount = accountList.get(i);
-                break;
-            }
-        }
-        return requestedAccount;
-    */
 
     /**
      * This method creates a Profile
@@ -167,30 +143,13 @@ public class Company {
     }
 
     /**
-     * This method identifies the requested profile by indication of profileName
-     *
-     * @return an object Profile
-     */
-    public Profile getProfile(String profileName) {
-        String profileNameLowerCase = profileName.toLowerCase();
-        Profile requestedProfile = null;
-        for (int i = 0; i < this.profileList.size(); i++) {
-            if (profileList.get(i).getProfileName().equals(profileNameLowerCase)) {
-                requestedProfile = profileList.get(i);
-                break;
-            }
-        }
-        return requestedProfile;
-    }
-
-    /**
      * This method changes/updates the accountProfile
      *
      * @return an object Account
      */
     public void changeAccountProfile(String email, String profileName) {
-        Profile profile = getProfile(profileName);
-        Account account = getAccount(email);
+        Profile profile = getProfileByName(profileName);
+        Account account = getAccountByEmail(email);
         account.updateAccountProfile(profile);
     }
 }
