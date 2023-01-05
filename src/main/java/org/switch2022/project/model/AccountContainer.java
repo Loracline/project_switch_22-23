@@ -5,29 +5,37 @@ import java.util.Objects;
 import java.util.ArrayList;
 
 public class AccountContainer {
-  private List<Account> accountList;
+  /**
+   * AccountContainer contains a list of accounts
+   */
+  private List<Account> accounts;
 
-  public AccountContainer(List<Account> accountList) {
-    this.accountList = accountList;
+  /**
+   * @param accounts
+   *
+   * @return list of accounts
+   */
+  public AccountContainer(List<Account> accounts) {
+    this.accounts = accounts;
   }
 
   public AccountContainer(){
-    this.accountList = new ArrayList<Account>();
+    this.accounts = new ArrayList<Account>();
   }
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof AccountContainer)) return false;
     AccountContainer that = (AccountContainer) o;
-    return Objects.equals(accountList, that.accountList);
+    return Objects.equals(accounts, that.accounts);
   }
 
   public Account getAccountByEmail(String email) {
     String accountEmail = email;
     Account requestedAccount = null;
-    for (int i = 0; i < this.accountList.size(); i++) {
-      if (accountList.get(i).getEmail().equals(accountEmail)) {
-        requestedAccount = accountList.get(i);
+    for (int i = 0; i < this.accounts.size(); i++) {
+      if (accounts.get(i).getEmail().equals(accountEmail)) {
+        requestedAccount = accounts.get(i);
         break;
       }
     }
