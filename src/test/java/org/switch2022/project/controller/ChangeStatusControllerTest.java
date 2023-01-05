@@ -18,7 +18,7 @@ class ChangeStatusControllerTest {
    */
 
 
-  Account accountOne, accountTwo;
+  Account accountOne, accountTwo, accountThree, accountFour;
   Profile profileOne, profileTwo;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
@@ -28,15 +28,18 @@ class ChangeStatusControllerTest {
   @BeforeEach
   void setUp() {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-    accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
+    accountTwo = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
+    accountThree = new Account("Paul", "paul@isep.ipp.pt", 932755689, null, false);
+    accountFour = new Account("Paul", "paul@isep.ipp.pt", 932755689, null, true);
 
     List<Account> accountList = new ArrayList<>();
     accountContainer = new AccountContainer(accountList);
     accountList.add(accountOne);
     accountList.add(accountTwo);
+    accountList.add(accountThree);
+    accountList.add(accountFour);
 
     profileOne = new Profile("Administrator");
-    profileTwo = new Profile("User");
 
     List<Profile> profiles = new ArrayList<>();
     profileContainer = new ProfileContainer(profiles);
@@ -53,7 +56,6 @@ class ChangeStatusControllerTest {
     accountOne = null;
     accountTwo = null;
     profileOne = null;
-    profileTwo = null;
     accountContainer = null;
     profileContainer = null;
     company = null;
@@ -68,25 +70,17 @@ class ChangeStatusControllerTest {
 
   @Test
   void changeStatusAccountToInactive() {
-    boolean result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
-    assertEquals(false, result);
+    boolean expected = true;
+    accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
+    boolean result = accountOne.equals(accountTwo);
+    assertEquals(expected,result);
   }
 
   @Test
   void changeStatusAccountToActive() {
-    boolean result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", true);
-    assertEquals(true, result);
-  }
-
-  @Test
-  void statusPretendedIsEqualToActualStatusTrue() {
-    boolean result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", true);
-    assertEquals(true, result);
-  }
-
-  @Test
-  void statusPretendedIsEqualToActualStatusFalse() {
-    boolean result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
-    assertEquals(false, result);
+    boolean expected = true;
+    accountStatusToBeChanged.changeStatus("paul@isep.ipp.pt", true);
+    boolean result = accountThree.equals(accountFour);
+    assertEquals(expected,result);
   }
 }
