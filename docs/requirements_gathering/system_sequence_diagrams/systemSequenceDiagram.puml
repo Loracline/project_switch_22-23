@@ -4,16 +4,16 @@ title TO CREATE NEW PROFILE
 legend top
 US001 - As Administrator, I want to create user profiles.
 end legend
+autonumber
 actor Administrator
-Administrator  -> ":System": 1. Starts the definition of a new profile
+Administrator  -> ":System": Creates profile
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-":System" --> Administrator: 1.1 requests data
-Administrator -> ":System": 2. Types requested data
-Administrator -> ":System": 2.1 Create new profile
-":System" --> Administrator: 2.2 Shows data and requests confirmation
+":System" --> Administrator: requests data (profileName)
+Administrator -> ":System": Types requested data
+":System" --> Administrator: informs profile created
 @enduml
 
 
@@ -25,16 +25,14 @@ US002 - As Administrator, I want to register a user.
 end legend
 autonumber
 actor Administrator
-Administrator -> ":System": starts new account register
+Administrator -> ":System": Registers new account
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-Administrator <-- ":System": requests data(name, email, phoneNumber, photo, status)
+Administrator <-- ":System": requests data (name, email, \n phoneNumber, photo, status)
 Administrator  -> ":System": types requested data
-":System" --> Administrator: shows data and requests confirmation
-Administrator  -> ":System": confirms
-":System" --> Administrator: informs success
+":System" --> Administrator: informs account created
 @enduml
 
 
@@ -51,9 +49,9 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-":System" --> Administrator: requests data (email, profile)
+":System" --> Administrator: requests data (email, profileName)
 Administrator -> ":System": Enters account data
-":System" --> Administrator: profile is updated
+":System" --> Administrator: informs account profile updated
 @enduml
 
 
@@ -65,12 +63,12 @@ US004 - As Administrator, I want to get a list of all user accounts and their st
 end legend
 actor Administrator
 autonumber
-Administrator -> ":System": Requests list of all accounts and status
+Administrator -> ":System": Lists all accounts
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-":System" --> Administrator: returns data
+":System" --> Administrator: returns accounts
 @enduml
 
 
@@ -82,14 +80,14 @@ skinparam sequenceMessageAlign center
 title TO INACTIVATE USER ACCOUNT
 actor Administrator
 autonumber
-Administrator -> ":System": Requests account info
+Administrator -> ":System": Changes account status to "Inactive"
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-Administrator <-- ":System": returns account info
-Administrator -> ":System": Changes status to "Inactive"
-":System" --> Administrator: status updated
+Administrator <-- ":System": requests data (email, status)
+Administrator -> ":System": Enters requested data
+":System" --> Administrator: informs account status updated
 @enduml
 
 
@@ -101,14 +99,14 @@ skinparam sequenceMessageAlign center
 title TO ACTIVATE USER ACCOUNT
 actor Administrator
 autonumber
-Administrator -> ":System": Requests account info
+Administrator -> ":System": Changes account status to "Active"
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-":System" --> Administrator: returns account info
-Administrator -> ":System": Changes status to "Active"
-":System" --> Administrator: status updated
+":System" --> Administrator: requests data (email, status)
+Administrator -> ":System": Enters requested data
+":System" --> Administrator: informs account status updated
 @enduml
 
 
