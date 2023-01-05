@@ -73,7 +73,7 @@ class CompanyTest {
      */
 
     @Test
-    void ensureItGetsAccountContainer() {
+    void ensureAccountContainerIsRetrieved() {
         AccountContainer expected = accountContainer;
         AccountContainer result = company.getAccountContainer();
         assertEquals(expected, result);
