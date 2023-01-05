@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 /**
@@ -26,6 +27,14 @@ public class Company {
   }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Company)) return false;
+        Company that = (Company) o;
+        return Objects.equals(profileContainer, that.profileContainer) && Objects.equals(accountContainer, that.accountContainer);
+    }
+
   /**
    * Getter method for the attribute accounts.
    *
@@ -42,38 +51,6 @@ public class Company {
      */
     public ProfileContainer getProfileContainer() {
         return profileContainer;
-    }
-    /**
-     * This method checks if there is any account in the list that has the
-     * e-mail passed by parameter.
-     *
-     * @param email that one must find out if exists in the Repository
-     * @return TRUE if there is an account with given e-mail and FALSE otherwise
-     */
-
-
-    /**
-     * Register new account method. After validating email is unique, creates new
-     * account with given parameters and adds it to accountList
-     *
-     * @param name        of the new account
-     * @param email       of the new account
-     * @param phoneNumber of the new account
-     * @param photo       of the new account
-     * @param status      of the new account
-     * @return instance of Account with given parameters if email is unique;
-     * @return null if email already exists
-     */
-    public boolean registerAccount(String name, String email, long phoneNumber,
-                             BufferedImage photo, boolean status) {
-        boolean result = false;
-
-        if (!doesEmailExist(email)) {
-            Account account = new Account(name, email, phoneNumber, photo, status);
-            this.addAccount(account);
-            result = true;
-        }
-        return result;
     }
 
 

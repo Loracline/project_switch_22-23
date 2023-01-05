@@ -26,7 +26,9 @@ class CompanyTest {
 
     Account accountOne, accountTwo;
     Profile profileOne, profileTwo;
-    AccountContainer accountContainer, accountContainerTwo;
+    List<Account> accounts;
+    List<Profile> profiles;
+    AccountContainer accountContainer;
     ProfileContainer profileContainer;
     Company company;
 
@@ -36,7 +38,7 @@ class CompanyTest {
         accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
 
 
-        List<Account> accounts = new ArrayList<>();
+        accounts = new ArrayList<>();
         accountContainer = new AccountContainer(accounts);
         accounts.add(accountOne);
         accounts.add(accountTwo);
@@ -45,7 +47,7 @@ class CompanyTest {
         profileTwo = new Profile("User");
 
 
-        List<Profile> profiles = new ArrayList<>();
+        profiles = new ArrayList<>();
         profileContainer = new ProfileContainer(profiles);
         profiles.add(profileOne);
         profiles.add(profileTwo);
@@ -59,8 +61,9 @@ class CompanyTest {
         accountTwo = null;
         profileOne = null;
         profileTwo = null;
+        accounts.clear();
+        profiles.clear();
         accountContainer = null;
-        accountContainerTwo = null;
         profileContainer = null;
         company = null;
     }
@@ -74,96 +77,6 @@ class CompanyTest {
         AccountContainer expected = accountContainer;
         AccountContainer result = company.getAccountContainer();
         assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {
-        //ARRANGE
-        //create empty repository with empty accountList
-        Company repo = new Company();
-
-        //expected result; if account is registered, returns TRUE
-        boolean expected = true;
-
-        //ACT
-        //add user to accountList
-        boolean result = repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-
-        //ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatNewAccountIsNotRegisteredIfEmailIsDuplicated() {
-        //ARRANGE
-        //create profiles to initialize profileList
-        Profile user = new Profile("User");
-        Profile administrator = new Profile("Administrator");
-        Profile manager = new Profile("Manager");
-        //create accounts to initialize accountList
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null, true);
-        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null, true);
-
-        List<Account> accountList = new ArrayList<>();
-        accountList.add(user1);
-        accountList.add(user2);
-
-        List<Profile> profileList = new ArrayList<>();
-        profileList.add(user);
-        profileList.add(administrator);
-        profileList.add(manager);
-
-        //create repository with initialized account and profile lists
-        Company repo = new Company(accountList, profileList);
-
-        //expected result; if account is not registered, returns FALSE
-        boolean expected = false;
-
-        //ACT
-        //add user to accountList
-        boolean result = repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-
-        //ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void getAccountHappy_Path() {
-        //ARRANGE
-        //create empty repository with empty accountList
-        Company repo = new Company();
-
-        //register new user
-        repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-        repo.registerAccount("Paulo", "paulo@mail.com", 23456789, null, true);
-        repo.registerAccount("Sofia", "sofia@mail.com", 232423423, null, true);
-
-        //Create account to compare with
-        Account expected = new Account("Ana", "ana@mail.com", 12345678, null, true);
-
-        //ACT
-        Account result = repo.getAccount("ana@mail.com");
-
-        //ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatGetAccountReturnsNull() {
-        //ARRANGE
-        //create empty repository with empty accountList
-        Company repo = new Company();
-
-        //register new user
-        repo.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-        repo.registerAccount("Paulo", "paulo@mail.com", 23456789, null, true);
-        repo.registerAccount("Sofia", "sofia@mail.com", 232423423, null, true);
-
-        //ACT
-        Account result = repo.getAccount("anaPinho@mail.com");
-
-        //ASSERT
-        assertNull(result);
     }
 
     @Test
@@ -275,5 +188,42 @@ class CompanyTest {
         assertEquals(accountListExpected, accountListResult);
     }
 
+    @Test
+    void ensureSameObjectEqualsItself() {
+        //ARRANGE
+        //declare initialized company as reference
+        Company reference = this.company;
+        //initialized other company with the reference
+        Company other = reference;
+        boolean expected = true;
+        //ACT
+        boolean result = reference.equals(other);
+        //ASSERT
+        assertEquals(expected, result);
+    }
+    @Test
+    void ensureTwoAccountsAreNotTheSame() {
+        //ARRANGE
+        //declare initialized company as reference
+        Company reference = this.company;
+        //create other company to compare with
+        List<Account> otherAccounts = new ArrayList<>();
+        otherAccounts.add(accountOne);
+        otherAccounts.add(accountTwo);
+
+        AccountContainer otherAccountContainer =
+                new AccountContainer(otherAccounts);
+        Company otherCompany = new Company(otherAccountContainer,profileContainer);
+        boolean expected = false;
+        //ACT
+        boolean result = reference.equals(otherCompany);
+        assertEquals(expected, result);
+    }
+    @Test
+    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
+        boolean expected = false;
+        boolean result = this.company.equals(this.accountContainer);
+        assertEquals(expected, result);
+    }
 
 }
