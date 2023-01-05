@@ -1,5 +1,5 @@
 package org.switch2022.project.model;
-/*
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class CompanyTest {
     /**
      * Testing the constructor
      */
-  /*  @Test
+    @Test
     void createContainer() {
         AccountContainer container = new AccountContainer();
     }
@@ -23,7 +23,7 @@ class CompanyTest {
     /**
      * BeforeEach and AfterEach executes common code before running the tests below.
      */
-/*
+
     Account accountOne, accountTwo;
     Profile profileOne, profileTwo;
     List<Account> accounts;
@@ -71,7 +71,7 @@ class CompanyTest {
     /**
      * The test getAccountsList and getAccountsListTwo, compare two lists contents.
      */
-/*
+
     @Test
     void ensureAccountContainerIsRetrieved() {
         AccountContainer expected = accountContainer;
@@ -92,6 +92,7 @@ class CompanyTest {
         //ASSERT
         assertEquals(expected, result);
     }
+
     @Test
     void ensureTwoAccountsAreNotTheSame() {
         //ARRANGE
@@ -104,16 +105,17 @@ class CompanyTest {
 
         AccountContainer otherAccountContainer =
                 new AccountContainer(otherAccounts);
-        Company otherCompany = new Company(otherAccountContainer,profileContainer);
+        Company otherCompany = new Company(otherAccountContainer, profileContainer);
         boolean expected = false;
         //ACT
         boolean result = reference.equals(otherCompany);
         assertEquals(expected, result);
     }
+
     @Test
     void ensureObjectDoesNotEqualsOtherTypeOfObject() {
         boolean expected = false;
         boolean result = this.company.equals(this.accountContainer);
         assertEquals(expected, result);
     }
-*/
+}

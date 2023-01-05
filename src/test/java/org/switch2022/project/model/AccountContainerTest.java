@@ -9,7 +9,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-/*
+
 class AccountContainerTest {
   Account accountOne, accountTwo;
   Profile profileOne, profileTwo;
@@ -102,7 +102,7 @@ class AccountContainerTest {
     accountContainer = null;
   }
 
-  @Test
+ @Test
   void ensureSameObjectEqualsItself() {
     //ARRANGE
     //declare initialized account container as reference
@@ -191,8 +191,6 @@ class AccountContainerTest {
     assertEquals(expected, result);
   }
 
-
-
   @Test
   void ensureThatCopyOfAccountListIsSuccessfullyGenerated() {
     AccountContainer listOfAccounts = new AccountContainer(accounts);
@@ -222,43 +220,25 @@ class AccountContainerTest {
     assertNotEquals(copy, result);
   }
 
+
   @Test
   void getAccount_HappyPath() {
-    //ARRANGE
-    //create empty repository with empty accountList
-    Repository repo = new Repository();
-    //register new user
-    repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
-    repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
-    repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null);
-
     //Create account to compare with
-    Account expected = new Account("Ana", "ana@mail.com", 12345678, null);
+    //Account expected = new Account("Claire", "claire@isep.ipp.pt", 932755689, null, true);
 
     //ACT
-    Account result = repo.getAccount("ana@mail.com");
+    Account result = accountContainer.getAccountByEmail("claire@isep.ipp.pt");
 
     //ASSERT
-    assertEquals(expected, result);
+    assertEquals(accountOne, result);
   }
 
   @Test
   void ensureThatGetAccountReturnNull() {
-    //ARRANGE
-    //create empty repository with empty accountList
-    Repository repo = new Repository();
-
-    //register new user
-    repo.registerAccount("Ana", "ana@mail.com", 12345678, null);
-    repo.registerAccount("Paulo", "paulo@mail.com", 23456789,null);
-    repo.registerAccount("Sofia", "sofia@mail.com", 232423423,null);
-
     //ACT
-    Account result = repo.getAccount("anaPinho@mail.com");
-
+    Account result = accountContainer.getAccountByEmail("cclaire@isep.ipp.pt");
 
     //ASSERT
     assertNull(result);
   }
 }
-*/

@@ -27,7 +27,8 @@ public class ChangeProfileController{
         AccountContainer accountContainer = company.getAccountContainer();
         Account account = accountContainer.getAccountByEmail(email);
 
-        account.setProfile(profile);
-
+        if(account != null && profile != null){
+            account.setProfile(profile);
+        }
     }
 }
