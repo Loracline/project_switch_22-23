@@ -78,6 +78,12 @@ class CompanyTest {
         AccountContainer result = company.getAccountContainer();
         assertEquals(expected, result);
     }
+    @Test
+    void ensureProfileContainerIsRetrieved() {
+        ProfileContainer expected = profileContainer;
+        ProfileContainer result = company.getProfileContainer();
+        assertEquals(expected, result);
+    }
 
     @Test
     void ensureSameObjectEqualsItself() {
@@ -118,4 +124,5 @@ class CompanyTest {
         boolean result = this.company.equals(this.accountContainer);
         assertEquals(expected, result);
     }
+
 }

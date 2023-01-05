@@ -24,10 +24,6 @@ public class CreateProfileController {
     public CreateProfileController(Company company) {
         this.company = company;
     }
-    public ProfileContainer getProfileContainer() {
-        ProfileContainer pc =company.getProfileContainer();
-        return pc;
-    }
     /**
      *
      *
@@ -37,7 +33,7 @@ public class CreateProfileController {
      * @return false if profile isn't created successfully
      */
     public boolean addProfile(String profileName) {
-        ProfileContainer pc = getProfileContainer();
+        ProfileContainer pc = company.getProfileContainer();
         boolean isAddedToList = false;
         Profile profile = pc.createProfile(profileName);
         if (pc.addProfile(profile)){

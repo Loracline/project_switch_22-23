@@ -28,7 +28,8 @@ rectangle System {
   usecase "Register Account" as UC16
   usecase "Change Account Profile" as UC17
   usecase "Create Profile" as UC18
-  usecase "Change Account Status" as UC19
+  usecase "Activate Account" as UC19
+  usecase "Inactivate Account" as UC20
   usecase "Register Finished Task" as UC21
 }
 
@@ -58,6 +59,7 @@ admin -- UC16
 admin -- UC17
 admin -- UC18
 admin -- UC19
+admin -- UC20
 usr -- UC21
 
 @enduml

@@ -17,8 +17,8 @@ class ProfileContainerTest {
         ProfileContainer profileContainerReference;
 
 
-        @BeforeEach
-        void setUp() {
+    @BeforeEach
+    void setUp() {
 
             profileOne = new Profile("Administrator");
             profileTwo = new Profile("User");
@@ -105,7 +105,8 @@ class ProfileContainerTest {
             boolean result = profileContainerReference.addProfile(profileTwo);
             assertEquals(expected, result);
 
-        }
+    }
+
     @Test
     void ensureAddProfileToProfilesListUnsuccessfully() {
         boolean expected = false;
@@ -135,4 +136,4 @@ class ProfileContainerTest {
         assertNull(result);
     }
 
-    }
+}

@@ -34,10 +34,6 @@ class Account{
 +setProfile(profile)
 }
 
-class Profile{
--profileName
-+getProfileName(profileName)
-}
 
 ChangeProfileController ..> Company
 ChangeProfileController ..> ProfileContainer
@@ -46,6 +42,5 @@ ChangeProfileController ..> Account
 Company "1"-->"1" AccountContainer: has
 Company "1"-->"1" ProfileContainer: has
 AccountContainer "1"-->"*" Account: contains
-ProfileContainer "1"-->"*" Profile: contains
 
 @enduml

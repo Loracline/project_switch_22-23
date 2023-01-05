@@ -42,7 +42,6 @@ class "ProfileContainer"{
 class "Profile"{
 -profileName
 +Profile(profileName)
-+getProfileName(profileName)
 }
 
 class "AccountContainer"{
