@@ -1,0 +1,56 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO CHANGE PROFILE
+legend top
+US003 - As Administrator, I want to change the profile of a user account.
+end legend
+autonumber
+actor Administrator
+participant ":ChangeProfileUI" as ui
+participant ":ChangeProfileController" as controller
+participant ":Company" as company
+participant "profileContainer:ProfileContainer" as pcontainer
+participant "accountContainer:AccountContainer" as acontainer
+participant "profile:Profile" as pprofile
+participant "account:Account" as account
+
+
+activate Administrator
+Administrator -> ui: changes account profile
+activate ui
+Administrator <<-- ui: requests data (e-mail, profileName)
+deactivate ui
+Administrator -> ui: enters account data
+activate ui
+ui -> controller: changeProfile(e-mail, profileName)
+activate controller
+controller -> company: profileContainer = getProfileContainer()
+activate company
+create pcontainer
+company -->> pcontainer : create
+deactivate company
+controller -> pcontainer: profile = getProfileByName(profileName)
+activate pcontainer
+create pprofile
+pcontainer -->> pprofile: create
+deactivate pcontainer
+controller-> company: accountContainer = getAccountContainer()
+activate company
+create acontainer
+company -->> acontainer: create
+deactivate company
+controller -> acontainer: account = getAccountByEmail(e-mail)
+activate acontainer
+create account
+acontainer -->> account: create
+deactivate acontainer
+controller -> account: setProfile(profile)
+activate account
+deactivate account
+controller -->> ui: account profile updated
+deactivate controller
+ui -->> Administrator: informs account profile updated
+
+
+@enduml

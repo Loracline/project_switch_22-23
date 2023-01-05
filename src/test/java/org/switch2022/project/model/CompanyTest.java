@@ -140,7 +140,7 @@ class CompanyTest {
         Profile expected = new Profile("Manager");
 
         //ACT
-        Profile result = company.getProfile("Manager");
+        Profile result = company.getProfileByName("Manager");
 
         //ASSERT
         assertEquals(expected, result);
@@ -157,7 +157,7 @@ class CompanyTest {
         company.registerProfile("Manager");
 
         //ACT
-        Profile result = company.getProfile("Administrator");
+        Profile result = company.getProfileByName("Administrator");
 
         //ASSERT
         assertNull(result);

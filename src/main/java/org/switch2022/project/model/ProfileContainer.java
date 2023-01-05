@@ -58,4 +58,21 @@ public class ProfileContainer {
     return isAddedToList;
   }
 
+
+  /**
+   * This method identifies the requested profile by indication of profileName
+   *
+   * @return an object Profile
+   */
+  public Profile getProfileByName(String profileName) {
+    String profileNameLowerCase = profileName.toLowerCase();
+    Profile requestedProfile = null;
+    for (int i = 0; i < this.profileList.size(); i++) {
+      if (profileList.get(i).getProfileName().equals(profileNameLowerCase)) {
+        requestedProfile = profileList.get(i);
+        break;
+      }
+    }
+    return requestedProfile;
+  }
 }

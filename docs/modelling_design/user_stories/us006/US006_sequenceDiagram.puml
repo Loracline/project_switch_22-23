@@ -24,16 +24,20 @@ ui -> controller: changeStatus(email, status)
 activate controller
 controller -> company: accountContainer = getAccountContainer()
 activate company
+create container
+company -->> container: create
 deactivate company
 controller -> container: account = getAccountByEmail(email)
 activate container
+create account
+container -->> account: create
 deactivate container
 controller -> account: setStatus(status)
 activate account
 deactivate account
-controller --> ui: confirms
+controller --> ui: account status updated
 deactivate controller
-ui --> admin: confirms
+ui --> admin: informs account status updated
 deactivate ui
 
 @enduml

@@ -13,29 +13,28 @@ participant ":Company" as Company
 participant "profileContainer:ProfileContainer" as ProfileContainer
 participant "profile:Profile" as Profile
 activate Administrator
-Administrator -> cpu: creates profile
+Administrator -> cpu: Creates profile
 activate cpu
-cpu -->> Administrator: requests data (profileName)
+cpu --> Administrator: requests data(profileName)
 deactivate cpu
-Administrator -> cpu: types requested data
+Administrator -> cpu: Types requested data
 activate cpu
-cpu -> cpc: createProfile (profileName)
+cpu -> cpc: createProfile(profileName)
 activate cpc
 cpc -> Company: profileContainer = getProfileContainer()
 activate Company
-create ProfileContainer
-Company -->> ProfileContainer: create
 deactivate Company
 create Profile
-cpc -->> Profile: profileName
+cpc -> Profile: profile = createProfile(profileName)
 deactivate Profile
-cpc -> ProfileContainer: addProfile (profile)
+cpc -> ProfileContainer: addProfile(profile)
 activate ProfileContainer
 ProfileContainer -> ProfileContainer: doesProfileNameExist(profileName)
-cpc -->> cpu: profile created
+
+cpc --> cpu: confirms
 deactivate ProfileContainer
 deactivate cpc
-cpu -->> Administrator: informs profile created
+cpu --> Administrator: confirms
 deactivate cpu
 
 

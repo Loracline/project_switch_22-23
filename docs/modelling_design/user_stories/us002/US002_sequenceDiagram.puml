@@ -1,0 +1,38 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW ACCOUNT
+legend top
+US002 - As Administrator, I want to register a user.
+end legend
+autonumber
+actor Administrator
+participant ":RegisterAccountUI" as ui
+participant ":RegisterAccountController" as controller
+participant ":Company" as comp
+participant "accountContainer:AccountContainer" as AC
+participant "account:Account" as account
+activate Administrator
+Administrator -> ui: registers new account
+activate ui
+ui -->> Administrator: requests data (name, email, phoneNumber, photo, status)
+deactivate ui
+Administrator -> ui: types requested data
+activate ui
+ui -> controller: registerAccount (name, email, phoneNumber, photo, status)
+activate controller
+controller -> comp: accountContainer = getAccountContainer()
+activate comp
+create AC
+comp -->> AC: create
+deactivate comp
+create account
+controller -->> account: name, email, phoneNumber,photo, status
+controller -> AC: addAccount(account)
+activate AC
+AC -> AC: doesEmailExist(email)
+controller -->> ui: account created
+deactivate AC
+deactivate controller
+ui-->> Administrator: informs account created
+deactivate ui
+@enduml

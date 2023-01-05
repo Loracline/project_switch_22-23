@@ -1,56 +1,93 @@
 @startuml
 
-class "ChangeStatusUI" as CSUI
-class "ListAccountUI" as LAUI
-class "ChangeStatusController" as CSC
-class "ListAccountController" as LAC
-class "Company" as company
-class "AccountContainer" as container
-class "Account" as account
-
-hide "CSUI" circle
-hide "LAUI" circle
-hide "CSC" circle
-hide "LAC" circle
-hide "company" circle
-hide "container" circle
-hide "account" circle
-
-"CSUI" ..> "CSC"
-"LAUI" ..> "LAC"
-"CSC"  ..> "company"
-"LAC" ..> "company"
-"CSC" ..> "container"
-"LAC" ..> "container"
-"CSC" ..> "account"
-"company" "1"-->"1" "container": has
-"container" "1"-->"*" "account": contains
-
-class "CSC" {
+class "CreateProfileController" {
 -company
-+changeStatus(email, status)
++createProfile(profileName)
 }
 
-class "LAC" {
+class "RegisterAccountController" {
+-company
++registerAccount(name, email, phoneNumber, photo, status)
+}
+
+class ChangeProfileController {
+-company
++changeProfile(email, profileName)
+}
+
+class "ListAccountController" {
 -company
 +listAllAccounts()
 }
 
-class "company" {
+class "ChangeStatusController" {
+-company
++changeStatus(email, status)
+}
+
+class "Company" {
+-profileContainer
 -accountContainer
++getProfileContainer()
 +getAccountContainer()
 }
 
-class "container" {
--accountList
-+getAccountByEmail(email)
-+getAccountListCopy()
+class "ProfileContainer"{
+-profiles
++addProfile(profile)
++doesProfileNameExist(profileName)
++getProfileByName(profileName)
 }
 
-class "account" {
+class "Profile"{
+-profileName
++Profile(profileName)
++getProfileName(profileName)
+}
+
+class "AccountContainer"{
+-accounts
++addAccount(account)
++doesEmailExist(email)
++getAccountByEmail(email)
++getAccounts()
+}
+
+class "Account" {
+-name
 -email
+-phoneNumber
+-photo
 -status
+-profile
++Account(name, email, phoneNumber, photo, status)
++getEmail(email)
++setProfile(profile)
 +setStatus(status)
 }
+
+"CreateProfileController" ..>  "Company"
+"CreateProfileController" ..> "ProfileContainer"
+"CreateProfileController" ..> "Profile"
+"Company" "1"-->"1" "ProfileContainer": has
+"ProfileContainer" "1" --> "*" "Profile": contains
+
+"RegisterAccountController" ..>  "Company"
+"RegisterAccountController" ..> "Account"
+"RegisterAccountController" ..> "AccountContainer"
+"Company" "1"-->"1" "AccountContainer": has
+"AccountContainer" "1"-->"*" "Account": contains
+
+ChangeProfileController ..> Company
+ChangeProfileController ..> ProfileContainer
+ChangeProfileController ..> AccountContainer
+ChangeProfileController ..> Account
+
+"ListAccountController" ..> "Company"
+"ListAccountController" ..> "AccountContainer"
+
+"ChangeStatusController" ..> "Company"
+"ChangeStatusController" ..> "AccountContainer"
+"ChangeStatusController" ..> "Account"
 
 @enduml

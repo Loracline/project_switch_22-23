@@ -34,12 +34,16 @@ public class AccountContainer {
     return this.accounts;
   }
 
+  /**
+   * This method verify the existence of an account by email confirmation
+   *
+   * @return an object Account
+   */
   public Account getAccountByEmail(String email) {
-    String accountEmail = email;
     Account requestedAccount = null;
-    for (int i = 0; i < this.accounts.size(); i++) {
-      if (accounts.get(i).getEmail().equals(accountEmail)) {
-        requestedAccount = accounts.get(i);
+    for (int i = 0; i < this.accountList.size(); i++) {
+      if (accountList.get(i).getEmail().equals(email)) {
+        requestedAccount = accountList.get(i);
         break;
       }
     }
@@ -80,4 +84,6 @@ public class AccountContainer {
     }
     return isAccountAdded;
   }
+
+
 }

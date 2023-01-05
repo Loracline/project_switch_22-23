@@ -4,6 +4,7 @@ title TO LIST ALL ACCOUNTS
 legend top
 US004 - As Administrator, I want to get a list of all user accounts and their status.
 end legend
+autonumber
 actor Administrator
 participant ":ListAccountUI" as ui
 participant ":ListAccountController" as controller
@@ -17,13 +18,15 @@ ui -> controller: listAllAccounts()
 activate controller
 controller -> company: accountContainer = getAccountContainer()
 activate company
+create container
+company -->> container: create
 deactivate company
-controller -> container: getAccountListCopy()
+controller -> container: getAccounts()
 activate container
 deactivate container
-controller --> ui: return copy
+controller -->> ui: return accounts
 deactivate controller
-ui --> Administrator: return copy
+ui -->>Administrator: return accounts
 deactivate ui
 
 @enduml

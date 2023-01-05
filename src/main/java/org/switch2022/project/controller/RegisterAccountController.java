@@ -21,11 +21,6 @@ public class RegisterAccountController {
     /**
      * RegisterAccountController constructor
      */
-    public RegisterAccountController(AccountContainer accountContainer,
-                                     ProfileContainer profileContainer) {
-        this.company = new Company(accountContainer, profileContainer);
-
-    }
 
     public RegisterAccountController(Company company) {
         this.company = company;
@@ -40,8 +35,8 @@ public class RegisterAccountController {
      * @param phoneNumber of the new account
      * @param photo       of the new account
      * @param status      of the new account
-     * @return instance of Account with given parameters if email is unique;
-     * @return null if email already exists
+     * @return true if Account is added
+     * @return false if Account is not added
      */
 
 
