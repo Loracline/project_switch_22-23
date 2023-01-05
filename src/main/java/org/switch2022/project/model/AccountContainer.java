@@ -22,7 +22,7 @@ public class AccountContainer {
     return Objects.equals(accountList, that.accountList);
   }
 
-  public Account getAccountWithEmail(String email) {
+  public Account getAccountByEmail(String email) {
     String accountEmail = email;
     Account requestedAccount = null;
     for (int i = 0; i < this.accountList.size(); i++) {

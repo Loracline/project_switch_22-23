@@ -1,57 +1,44 @@
 package org.switch2022.project.model;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.controller.ChangeStatusController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CompanyTest {
-  @Test
-  void getAccountsList() {
-    // Arrange
-    Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
 
+  Account accountOne, accountTwo;
+  AccountContainer accountContainer;
+  Company company;
+
+  @BeforeEach
+  void setUp() {
+    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
+    accountTwo = new Account("Paulo", "paulo@mail.com", 23456789, null, true);
     List<Account> accountList = new ArrayList<>();
-    accountList.add(account);
-    AccountContainer listOfAccounts = new AccountContainer(accountList);
-
-    List<Profile> profileList = new ArrayList<>();
-    ProfileContainer listOfProfiles = new ProfileContainer(profileList);
-
-    Company company = new Company(listOfAccounts, listOfProfiles);
-    
-    // Act
-    AccountContainer result = company.getAccountsList();
-
-    // Assert
-    assertEquals(account, result);
+    accountContainer = new AccountContainer(accountList);
+    accountList.add(accountOne);
+    accountList.add(accountTwo);
   }
-    @Test
-    void getListAllAccounts() {
-        Profile user = new Profile("User");
-        Profile administrator = new Profile("Administrator");
-        Profile manager = new Profile("Manager");
-        Account user1 = new Account("Ana", "ana@mail.com", 12345678, null, true);
-        Account user2 = new Account("Paulo", "paulo@mail.com", 23456789, null, true);
 
-        List<Account> accountList = new ArrayList<>();
-        accountList.add(user1);
-        accountList.add(user2);
+  @AfterEach
+  void tearDown() {
+    accountOne = null;
+    accountTwo = null;
+    accountContainer = null;
+    company = null;
+  }
 
-        List<Profile> profileList = new ArrayList<>();
-        profileList.add(user);
-        profileList.add(administrator);
-        profileList.add(manager);
-        Company test = new Company(accountList, profileList);
-
-        List<Account> expected = accountList;
-        List<Account> result = test.getAccountsList();
-
-        assertEquals(expected, result);
-    }
+  @Test
+  void getListAllAccounts() {
+    AccountContainer expected = company.getAccountsList();
+    AccountContainer result = company.getAccountsList();
+    assertEquals(expected, result);
+  }
 
     @Test
     void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {

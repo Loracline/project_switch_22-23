@@ -19,7 +19,7 @@ class ChangeStatusControllerTest {
   ChangeStatusController accountStatusToBeChanged;
 
   @BeforeEach
-  void setUp(){
+  void setUp() {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
 
     List<Account> accountList = new ArrayList<>();
@@ -29,13 +29,13 @@ class ChangeStatusControllerTest {
     List<Profile> profileList = new ArrayList<>();
     profileContainer = new ProfileContainer(profileList);
 
-    company = new Company(accountContainer,profileContainer);
+    company = new Company(accountContainer, profileContainer);
 
     accountStatusToBeChanged = new ChangeStatusController(company);
   }
 
   @AfterEach
-  void tearDown(){
+  void tearDown() {
     accountOne = null;
     accountContainer = null;
     company = null;
@@ -44,89 +44,25 @@ class ChangeStatusControllerTest {
 
   @Test
   void changeStatusAccountToInactive() {
-    // Arrange
-    /*Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-
-    List<Account> accountList = new ArrayList<>();
-    accountList.add(account);
-    AccountContainer listOfAccounts = new AccountContainer(accountList);
-
-    List<Profile> profileList = new ArrayList<>();
-    ProfileContainer listOfProfiles = new ProfileContainer(profileList);
-
-    Company company = new Company(listOfAccounts, listOfProfiles);*/
-
-
-    // Act
-    int result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
-
-    // Assert
-    assertEquals(0, result);
+    boolean result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
+    assertEquals(false, result);
   }
 
   @Test
   void changeStatusAccountToActive() {
-    /*// Arrange
-    Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
-
-    List<Account> accountList = new ArrayList<>();
-    accountList.add(account);
-    AccountContainer listOfAccounts = new AccountContainer(accountList);
-
-    List<Profile> profileList = new ArrayList<>();
-    ProfileContainer listOfProfiles = new ProfileContainer(profileList);
-
-    Company company = new Company(listOfAccounts, listOfProfiles);*/
-
-    //ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(company);
-    // Act
-    int result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", true);
-
-    // Assert
-    assertEquals(1, result);
+    boolean result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", true);
+    assertEquals(true, result);
   }
 
   @Test
   void statusPretendedIsEqualToActualStatusTrue() {
-    /*// Arrange
-    Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-
-    List<Account> accountList = new ArrayList<>();
-    accountList.add(account);
-    AccountContainer listOfAccounts = new AccountContainer(accountList);
-
-    List<Profile> profileList = new ArrayList<>();
-    ProfileContainer listOfProfiles = new ProfileContainer(profileList);
-
-    Company company = new Company(listOfAccounts, listOfProfiles);*/
-
-    //ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(company);
-    // Act
-    int result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", true);
-
-    // Assert
-    assertEquals(1, result);
+    boolean result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", true);
+    assertEquals(true, result);
   }
 
   @Test
   void statusPretendedIsEqualToActualStatusFalse() {
-    /*// Arrange
-    Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
-
-    List<Account> accountList = new ArrayList<>();
-    accountList.add(account);
-    AccountContainer listOfAccounts = new AccountContainer(accountList);
-
-    List<Profile> profileList = new ArrayList<>();
-    ProfileContainer listOfProfiles = new ProfileContainer(profileList);
-
-    Company company = new Company(listOfAccounts, listOfProfiles);*/
-
-    //ChangeStatusController accountStatusToBeChanged = new ChangeStatusController(company);
-    // Act
-    int result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
-
-    // Assert
-    assertEquals(0, result);
+    boolean result = accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
+    assertEquals(false, result);
   }
 }
