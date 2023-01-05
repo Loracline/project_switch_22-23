@@ -7,6 +7,7 @@ email
 phoneNumber
 photo
 status
+password
 }
 hide Account circle
 Class Profile{
@@ -44,7 +45,6 @@ hide UserStory circle
 Class Task{
 name
 description
-userStory
 effortEstimate
 hoursSpent
 percentageExecution
@@ -54,33 +54,42 @@ responsible
 }
 hide Task circle
 Class Sprint {
-totalEffort
 }
 hide Sprint circle
+Class User_Sprint{}
+hide User_Sprint circle
 Class ProductBacklog{
 }
 hide ProductBacklog circle
 Class SprintBacklog{
 }
 hide SprintBacklog circle
+Class Report {}
+hide Report circle
+Class User_Project {}
+hide User_Project circle
 
 Company "1" -- "*" Account : has >
-Account "*" -- "*" Profile: has >
-Profile -- Period: spans >
-User --|> Profile: is a
-User "*" -- "*" Role: has >
-Role -- Period: spans >
-Company -- Project: has >
-Project -- Period: spans >
-/'Project -- UserStory: contains >'/
+Account "*" -- "1" Profile: has >
+Profile "*" -- "1" Period: spans >
+User "1"--|>"1" Profile: is a
+User_Sprint "*" -- "1" Role: has >
+Role "*" -- "1" Period: spans >
+Company "1"-- "*" Project: has >
+Project "*" -- "1" Period: spans >
 Project "1" -- "*" Sprint: is divided into >
-UserStory --|> Task: is a
-Task -- Period: spans >
-Sprint -- Period: spans >
+Task "*" -- "1" Period: spans >
+Sprint "*" -- "1" Period: spans >
 Sprint "1" -- "*" Task: has >
 Project "1" -- "1" ProductBacklog: has >
 ProductBacklog "1" -- "*" UserStory: contains >
-User "*" -- "*" Sprint: works in >
+User "1" -- "*" User_Sprint: is in a >
+User_Sprint "*" -- "1" Sprint: works in >
 Sprint "1" -- "1" SprintBacklog: has >
-SprintBacklog "*" -- "*" UserStory: contains >
+SprintBacklog "1"--"*" UserStory: has
+UserStory "1"-- "*" Task
+Project "1" -- "*" Report: generates >
+Project "1" -- "*" User_Project
+User_Project "*"-- "1" User
+User_Project "1"--"*" Report: generates >
 @enduml
