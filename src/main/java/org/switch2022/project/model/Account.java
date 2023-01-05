@@ -94,7 +94,7 @@ public class Account {
      *
      * @param profile of the instance of Account
      */
-    public void updateAccountProfile(Profile profile) {
+    public void setProfile(Profile profile) {
         this.accountProfile = profile;
     }
 }

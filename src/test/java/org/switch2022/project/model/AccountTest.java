@@ -1,8 +1,6 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Profile;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,9 +53,30 @@ class AccountTest {
 
         //Act
         //Change Profile User (default) to Manager
-        accountAfterUpdate.updateAccountProfile(profileManagerOne);
+        accountAfterUpdate.setProfile(profileManagerOne);
 
         //Assert
         assertNotEquals(accountBeforeUpdate, accountAfterUpdate);
+    }
+
+    @Test
+    void getEmail_HappyPath() {
+        // Arrange
+        Account account = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        String expected = "john@isep.ipp.pt";
+
+        //ACT
+        String result = account.getEmail();
+
+        //ASSERT
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void setProfile_HappyPath() {
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, true); //Default Profile: User
+        accountOne.setProfile(new Profile("Manager"));
+        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        assertNotEquals(accountOne, accountTwo);
     }
 }

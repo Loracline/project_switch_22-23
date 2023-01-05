@@ -169,7 +169,7 @@ class CompanyTest {
         //Create an account
         Account account = new Account("Ana", "ana@mail.com", 12345678, null, true);
         //Change Account Profile user to manager.
-        account.updateAccountProfile(new Profile("Manager"));
+        account.setProfile(new Profile("Manager"));
         //Add account to accountListExpected
         List<Account> accountListExpected = new ArrayList<>();
         accountListExpected.add(account);

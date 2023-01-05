@@ -7,12 +7,8 @@ import java.util.Objects;
 public class ProfileContainer {
   private List<Profile> profiles;
 
-  public ProfileContainer(List<Profile> profileList){
-    this.profiles = profileList;
-  }
-
-  public ProfileContainer(){
-    this.profiles = new ArrayList<Profile>();
+  public ProfileContainer(List<Profile> profiles){
+    this.profiles = profiles;
   }
 
   @Override
@@ -34,12 +30,12 @@ public class ProfileContainer {
   /**
    * This method validates if profile exits
    *
-   * @param profileName
+   * @param profile
    * @return true if profile exists in profile list
    */
-  public boolean doesProfileNameExists(Profile profileName) {
+  public boolean doesProfileNameExists(Profile profile) {
     boolean profileExits = false;
-    if (this.profiles.contains(profileName)) {
+    if (this.profiles.contains(profile)) {
       profileExits = true;
     }
     return profileExits;
@@ -64,12 +60,13 @@ public class ProfileContainer {
    *
    * @return an object Profile
    */
+
   public Profile getProfileByName(String profileName) {
-    String profileNameLowerCase = profileName.toLowerCase();
+    Profile profile = new Profile(profileName);
     Profile requestedProfile = null;
-    for (int i = 0; i < this.profileList.size(); i++) {
-      if (profileList.get(i).getProfileName().equals(profileNameLowerCase)) {
-        requestedProfile = profileList.get(i);
+    for (int i = 0; i < this.profiles.size(); i++) {
+      if (this.profiles.contains(profile)) {
+        requestedProfile = profiles.get(i);
         break;
       }
     }
