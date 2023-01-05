@@ -1,9 +1,10 @@
 package org.switch2022.project.controller;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.controller.RegisterAccountController;
-import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -16,57 +17,95 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RegisterAccountControllerTest {
 
+    Account accountOne, accountTwo, accountThree, accountFour;
+    Profile profileOne, profileTwo, profileThree;
+    List<Account> accounts;
+    List<Profile> profiles;
+    AccountContainer accountContainer;
+    ProfileContainer profileContainer;
+
+    Company company;
+
+    RegisterAccountController controller;
+
+    @BeforeEach
+    void setUp() {
+        //create users
+        accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null, true);
+        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null, false);
+        accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null, true);
+
+        //add users to accounts list
+        accounts = new ArrayList<>();
+        accounts.add(accountOne);
+        accounts.add(accountTwo);
+        accounts.add(accountThree);
+
+        //initialize account container with filled account list
+        accountContainer = new AccountContainer(accounts);
+
+        //create profiles
+        profileOne = new Profile("Manager");
+        profileTwo = new Profile("Administrator");
+        profileThree = new Profile("User");
+
+        //add profiles to profiles list
+        profiles = new ArrayList<>();
+        profiles.add(profileOne);
+        profiles.add(profileTwo);
+        profiles.add(profileThree);
+
+        //initialize profile container with filled profiles list
+        profileContainer = new ProfileContainer(profiles);
+
+        //initialize company with filled containers
+        company = new Company(accountContainer, profileContainer);
+
+        //initialize controller with company
+        controller = new RegisterAccountController(company);
+
+    }
+
+    @AfterEach
+    void tearDown() {
+        accountOne = null;
+        accountTwo = null;
+        accountThree = null;
+        profileOne = null;
+        profileTwo = null;
+        profileThree = null;
+
+        accounts.clear();
+        profiles.clear();
+
+        accountContainer = null;
+        profileContainer = null;
+        company = null;
+        controller = null;
+    }
     @Test
-    void ensureThatNewAccountIsRegisteredWithEmptyConstructor() {
+    void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {
         //ARRANGE
-        //create empty controller
-        RegisterAccountController test = new RegisterAccountController();
-        boolean expected= true;
+        boolean expected = true;
 
-        //ACT  register user with same information as expected
-        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
+        //ACT
+        boolean result = controller.registerAccount("Charlotte", "charlotte@isep.ipp.pt", 932755677, null,
+                true);
 
-        //ASSERT compare expected user with the registered user
+        //ASSERT
         assertEquals(expected, result);
     }
 
 
     @Test
-    void ensureThatNewAccountIsRegisteredWithInitializedConstructor() {
-
+    void ensureThatNewAccountIsNotRegisteredIfEmailIsDuplicated() {
         //ARRANGE
-        //create initialized controller
-        List<Account> accountList = new ArrayList<>();
-        List<Profile> profileList = new ArrayList<>();
+        boolean expected = false;
 
-        RegisterAccountController test = new RegisterAccountController(accountList, profileList);
-        boolean expected= true;
+        //ACT
+        boolean result = controller.registerAccount("Emma", "emma@isep.ipp.pt", 932755688, null, false);
 
-        //ACT  register user with same information as expected
-        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-
-        //ASSERT compare expected user with the registered user
-        assertEquals(expected, result);
-    }
-
-
-    @Test
-    void ensureThatNewAccountIsRegisteredWithInitializedConstructorWithPhoto() throws IOException {
-
-        //ARRANGE
-        //create initialized controller
-        List<Account> accountList = new ArrayList<>();
-        List<Profile> profileList = new ArrayList<>();
-
-        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/Domain_Model_v01_Dec14_2022.png"));
-
-        RegisterAccountController test = new RegisterAccountController(accountList, profileList);
-        boolean expected= true;
-
-        //ACT  register user with same information as expected
-        boolean result = test.registerAccount("Ana", "ana@mail.com", 12345678, photo, true);
-
-        //ASSERT compare expected user with the registered user
+        //ASSERT
         assertEquals(expected, result);
     }
 }
