@@ -21,11 +21,6 @@ public class RegisterAccountController {
     /**
      * RegisterAccountController constructor
      */
-    public RegisterAccountController(AccountContainer accountContainer,
-                                     ProfileContainer profileContainer) {
-        this.company = new Company(accountContainer, profileContainer);
-
-    }
 
     public RegisterAccountController(Company company) {
         this.company = company;
