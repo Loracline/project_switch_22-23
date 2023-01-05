@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CreateProfileControllerTest {
     @Test
-    void createCompanySuccessfully(){
+    void createProfileControllerSuccessfully(){
         ProfileContainer profileContainer = new ProfileContainer (new ArrayList<>());
         AccountContainer accountContainer = new AccountContainer(new  ArrayList<>());
         profileContainer.addProfile(new Profile("Admin"));

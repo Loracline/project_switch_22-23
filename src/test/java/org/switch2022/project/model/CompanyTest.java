@@ -80,6 +80,13 @@ class CompanyTest {
     }
 
     @Test
+    void ensureProfileContainerIsRetrieved() {
+        ProfileContainer expected = profileContainer;
+        ProfileContainer result = company.getProfileContainer();
+        assertEquals(expected, result);
+    }
+
+    @Test
     void registerProfileHappy_Path() {
         //ARRANGE
         Profile one = new Profile("User");
@@ -201,6 +208,7 @@ class CompanyTest {
         //ASSERT
         assertEquals(expected, result);
     }
+
     @Test
     void ensureTwoAccountsAreNotTheSame() {
         //ARRANGE
@@ -213,12 +221,13 @@ class CompanyTest {
 
         AccountContainer otherAccountContainer =
                 new AccountContainer(otherAccounts);
-        Company otherCompany = new Company(otherAccountContainer,profileContainer);
+        Company otherCompany = new Company(otherAccountContainer, profileContainer);
         boolean expected = false;
         //ACT
         boolean result = reference.equals(otherCompany);
         assertEquals(expected, result);
     }
+
     @Test
     void ensureObjectDoesNotEqualsOtherTypeOfObject() {
         boolean expected = false;
