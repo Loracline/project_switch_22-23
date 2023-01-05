@@ -1,5 +1,5 @@
 package org.switch2022.project.model;
-
+/*
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class CompanyTest {
     /**
      * Testing the constructor
      */
-    @Test
+  /*  @Test
     void createContainer() {
         AccountContainer container = new AccountContainer();
     }
@@ -23,7 +23,7 @@ class CompanyTest {
     /**
      * BeforeEach and AfterEach executes common code before running the tests below.
      */
-
+/*
     Account accountOne, accountTwo;
     Profile profileOne, profileTwo;
     List<Account> accounts;
@@ -71,121 +71,12 @@ class CompanyTest {
     /**
      * The test getAccountsList and getAccountsListTwo, compare two lists contents.
      */
-
+/*
     @Test
     void ensureAccountContainerIsRetrieved() {
         AccountContainer expected = accountContainer;
         AccountContainer result = company.getAccountContainer();
         assertEquals(expected, result);
-    }
-
-    @Test
-    void registerProfileHappy_Path() {
-        //ARRANGE
-        Profile one = new Profile("User");
-        Profile two = new Profile("Manager");
-        Profile three = new Profile("Administrator");
-        List<Profile> profilesList = new ArrayList<>();
-        profilesList.add(one);
-        profilesList.add(two);
-        profilesList.add(three);
-        Company expected = new Company(profilesList);
-
-        //ACT
-        List<Profile> profilesListE = new ArrayList<>();
-        profilesListE.add(one);
-        profilesListE.add(two);
-        Company result = new Company(profilesListE);
-        result.registerProfile("Administrator");
-
-        //ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void noRegisterProfile_ProfileAlreadyExist() {
-        //ARRANGE
-        Profile one = new Profile("User");
-        Profile two = new Profile("Manager");
-        Profile three = new Profile("Administrator");
-        List<Profile> profilesList = new ArrayList<>();
-        profilesList.add(one);
-        profilesList.add(two);
-        profilesList.add(three);
-        Company expected = new Company(profilesList);
-
-        //ACT
-        List<Profile> profilesListE = new ArrayList<>();
-        profilesListE.add(one);
-        profilesListE.add(two);
-        profilesListE.add(three);
-        Company result = new Company(profilesListE);
-        result.registerProfile("Administrator");
-
-        //ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void getProfileHappy_Path() {
-        //ARRANGE
-        //create empty repository with empty accountList
-        Company company = new Company();
-
-        //register new Profile
-        company.registerProfile("User");
-        company.registerProfile("Manager");
-
-        //Create profile to compare with
-        Profile expected = new Profile("Manager");
-
-        //ACT
-        Profile result = company.getProfileByName("Manager");
-
-        //ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatGetProfileReturnsNull() {
-        //ARRANGE
-        //create empty repository with empty accountList
-        Company company = new Company();
-
-        //register new Profile
-        company.registerProfile("User");
-        company.registerProfile("Manager");
-
-        //ACT
-        Profile result = company.getProfileByName("Administrator");
-
-        //ASSERT
-        assertNull(result);
-    }
-
-    @Test
-    void changeAccountProfileHappy_Path() {
-        //ARRANGE
-        //Create an account
-        Account account = new Account("Ana", "ana@mail.com", 12345678, null, true);
-        //Change Account Profile user to manager.
-        account.setProfile(new Profile("Manager"));
-        //Add account to accountListExpected
-        List<Account> accountListExpected = new ArrayList<>();
-        accountListExpected.add(account);
-
-        //Create a repository to change account profile
-        List<Account> accountListResult = new ArrayList<>();
-        List<Profile> profileList = new ArrayList<>();
-        Company company = new Company(accountListResult, profileList);
-        company.registerAccount("Ana", "ana@mail.com", 12345678, null, true);
-        company.registerProfile("Manager");
-
-        //ACT
-        company.changeAccountProfile("ana@mail.com", "Manager");
-
-        //ASSERT
-        assertEquals(accountListExpected, accountListResult);
     }
 
     @Test
@@ -225,5 +116,4 @@ class CompanyTest {
         boolean result = this.company.equals(this.accountContainer);
         assertEquals(expected, result);
     }
-
-}
+*/

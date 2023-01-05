@@ -13,21 +13,20 @@ class ProfileContainerTest {
 
 
         Profile profileOne, profileTwo;
-        AccountContainer accountContainer, accountContainerTwo;
+        List<Profile> profiles;
+        ProfileContainer profileContainerReference;
 
 
         @BeforeEach
         void setUp() {
 
-
-            List<Account> accounts = new ArrayList<>();
-            accountContainer = new AccountContainer(accounts);
-
-
             profileOne = new Profile("Administrator");
             profileTwo = new Profile("User");
 
+            profiles = new ArrayList<>();
+            profiles.add(profileOne);
 
+            profileContainerReference = new ProfileContainer(profiles);
 
         }
 
@@ -35,29 +34,25 @@ class ProfileContainerTest {
         void tearDown() {
             profileOne = null;
             profileTwo = null;
-            accountContainer = null;
-            accountContainerTwo = null;
+            profiles.clear();
+            profileContainerReference = null;
 
         }
 
-        @Test
+        /*@Test
         void createEmptyProfileContainerSuccessfully() {
-            List<Profile> profiles = new ArrayList<>();
             ProfileContainer profileContainerNew = new ProfileContainer();
-        }
+        }*/
 
-        @Test
+       /* @Test
         void createProfileContainerSuccessfully() {
             List<Profile> profiles = new ArrayList<>();
             profiles.add(profileOne);
             ProfileContainer profileContainerNew = new ProfileContainer(profiles);
-        }
+        }*/
 
         @Test
         void ensureSameObjectEqualsItself() {
-            List<Profile> profiles = new ArrayList<>();
-            profiles.add(profileOne);
-            ProfileContainer profileContainerReference = new ProfileContainer(profiles);
             ProfileContainer profileContainerNew = profileContainerReference;
             boolean expected = true;
             boolean result = profileContainerReference.equals(profileContainerNew);
@@ -65,9 +60,6 @@ class ProfileContainerTest {
         }
         @Test
         void ensureTwoProfilesAreNotTheSame() {
-            List<Profile> profiles = new ArrayList<>();
-            profiles.add(profileOne);
-            ProfileContainer profileContainerReference = new ProfileContainer(profiles);
             List<Profile> profilesOne = new ArrayList<>();
             profilesOne.add(profileTwo);
             ProfileContainer profileContainerNew = new ProfileContainer(profilesOne);
@@ -77,9 +69,6 @@ class ProfileContainerTest {
         }
         @Test
         void ensureObjectDoesNotEqualsOtherTypeOfObject() {
-            List<Profile> profiles = new ArrayList<>();
-            profiles.add(profileOne);
-            ProfileContainer profileContainerReference = new ProfileContainer(profiles);
             Profile other = new Profile("Admin");
             boolean expected = false;
             boolean result = profileContainerReference.equals(other);
@@ -87,9 +76,6 @@ class ProfileContainerTest {
         }
         @Test
         void createProfileSuccessfully() {
-            List<Profile> profiles = new ArrayList<>();
-            profiles.add(profileOne);
-            ProfileContainer profileContainerReference = new ProfileContainer(profiles);
             Profile expected = new Profile ("User");
             Profile result = profileContainerReference.createProfile("User");
             assertEquals(expected, result);
@@ -97,9 +83,6 @@ class ProfileContainerTest {
         @Test
         void ensureProfileExistSuccessfullyCaseInsensitive() {
             boolean expected = true;
-            List<Profile> profiles = new ArrayList<>();
-            profiles.add(profileOne);
-            ProfileContainer profileContainerReference = new ProfileContainer(profiles);
             Profile profileThree = new Profile("administrator");
             boolean result = profileContainerReference.doesProfileNameExists(profileThree);
             assertEquals(expected, result);
@@ -107,26 +90,17 @@ class ProfileContainerTest {
         @Test
         void ensureProfileDoesntExist() {
             boolean expected = false;
-            List<Profile> profiles = new ArrayList<>();
-            profiles.add(profileOne);
-            ProfileContainer profileContainerReference = new ProfileContainer(profiles);
             boolean result = profileContainerReference.doesProfileNameExists(profileTwo);
             assertEquals(expected, result);
         }
         @Test
         void ensureProfileExistSuccessfully() {
             boolean expected = true;
-            List<Profile> profiles = new ArrayList<>();
-            profiles.add(profileOne);
-            ProfileContainer profileContainerReference = new ProfileContainer(profiles);
             boolean result = profileContainerReference.doesProfileNameExists(profileOne);
             assertEquals(expected, result);
         }
         @Test
         void ensureAddProfileToProfilesListSuccessfully() {
-            List<Profile> profiles = new ArrayList<>();
-            profiles.add(profileOne);
-            ProfileContainer profileContainerReference = new ProfileContainer(profiles);
             boolean expected = true;
             boolean result = profileContainerReference.addProfile(profileTwo);
             assertEquals(expected, result);
@@ -134,14 +108,31 @@ class ProfileContainerTest {
         }
     @Test
     void ensureAddProfileToProfilesListUnsuccessfully() {
-        List<Profile> profiles = new ArrayList<>();
-        profiles.add(profileOne);
-        ProfileContainer profileContainerReference = new ProfileContainer(profiles);
         boolean expected = false;
         boolean result = profileContainerReference.addProfile(profileOne);
         assertEquals(expected, result);
 
     }
+    @Test
+    void getProfileByName_HappyPath() {
+        //ARRANGE
+        //Create profile to compare with
+        Profile expected = new Profile("Administrator");
 
+        //ACT
+        Profile result = profileContainerReference.getProfileByName("Administrator");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatGetProfileReturnsNull() {
+        //ACT
+        Profile result = profileContainerReference.getProfileByName("Manager");
+
+        //ASSERT
+        assertNull(result);
+    }
 
     }
