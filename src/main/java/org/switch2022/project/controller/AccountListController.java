@@ -1,7 +1,10 @@
 package org.switch2022.project.controller;
 
+import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountContainer;
 import org.switch2022.project.model.Company;
+
+import java.util.List;
 
 public class AccountListController {
     /**
@@ -13,7 +16,8 @@ public class AccountListController {
     public AccountListController (Company company) {
         this.company = company;
     }
-    public AccountContainer requestAccountList() {
-        return this.company.getAccountContainer();
+
+    public List<Account> listAllAccounts() {
+        return this.company.getAccountContainer().getAccounts();
     }
 }

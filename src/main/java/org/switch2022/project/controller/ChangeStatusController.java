@@ -2,15 +2,17 @@ package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Company;
 
+import java.util.Objects;
+
 public class ChangeStatusController {
   /**
    * Attributes of the class ChangeStatusController, needed to implement the methods
    * used in the constructors Account.
    */
-  private Company accountList;
+  private Company company;
 
-  public ChangeStatusController(Company accountList) {
-    this.accountList = accountList;
+  public ChangeStatusController(Company company) {
+    this.company = company;
   }
 
   /**
@@ -19,14 +21,16 @@ public class ChangeStatusController {
    * @param status
    * @return the new account status
    */
-  public boolean changeStatus(String email, boolean status) {
-    boolean finalStatus = false;
-    accountList.getAccountContainer().getAccountByEmail(email).setStatus(status);
-    if (status) {
-      finalStatus = true;
-    } else {
-      finalStatus = false;
-    }
-    return finalStatus;
+  public void changeStatus(String email, boolean status) {
+    company.getAccountContainer().getAccountByEmail(email).setStatus(status);
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof ChangeStatusController)) return false;
+    ChangeStatusController that = (ChangeStatusController) o;
+    return Objects.equals(company, that.company);
+  }
+
 }

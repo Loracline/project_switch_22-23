@@ -84,6 +84,7 @@ public class Account {
      * Setter method for the attribute ACCOUNT STATUS.
      *
      * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
+     * @return status
      */
     public void setStatus(boolean status) {
         this.accountStatus = status;

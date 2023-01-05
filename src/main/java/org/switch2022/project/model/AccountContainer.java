@@ -27,8 +27,9 @@ public class AccountContainer {
     return Objects.equals(accounts, that.accounts);
   }
 
-  public List<Account> getAccounts(){
-    return this.accounts;
+  public List<Account> getAccounts() {
+    List<Account> result = new ArrayList<>(List.copyOf(accounts));
+    return result;
   }
 
   /**
