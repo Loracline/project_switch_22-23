@@ -16,30 +16,32 @@ class AccountTest {
     }
 
     /**
-     * Testing the Setter Method for the attribute ACCOUNT STATUS
+     * Testing the Setter Method for the attribute ACCOUNT STATUS by comparing two accounts contents.
      */
     @Test
-    void setAccountStatus_Active() {
+    void setAccountStatusActive() {
         // Arrange
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, false);
+        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
 
         // Act
         accountOne.setStatus(true);
 
         // Assert
-        assertTrue(accountOne.accountStatus());
+        assertEquals(accountOne,accountTwo);
     }
 
     @Test
-    void setAccountStatus_Inactive() {
+    void setAccountStatusInactive() {
         // Arrange
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, false);
+        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
 
         // Act
-        accountOne.setStatus(false);
+        accountTwo.setStatus(false);
 
         // Assert
-        assertFalse(accountOne.accountStatus());
+        assertEquals(accountOne,accountTwo);
     }
 
     @Test

@@ -1,41 +1,39 @@
 package org.switch2022.project.model;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * Class Repository is built to create and manipulate lists of Accounts and
- * Profiles (to be updated...).
+ * Class Company is built to create and manipulate Containers.
  */
 public class Company {
   /**
-   * Attributes of the class Repository, according to the Class Diagram.
+   * Attributes of the class Company, according to the Class Diagram.
    */
-  private AccountContainer accountList;
-  private ProfileContainer profileList;
+  private AccountContainer accountContainer;
+  private ProfileContainer profileContainer;
 
   /**
-   * Repository constructor
+   * Company constructor
    */
-  public Company(AccountContainer accountList, ProfileContainer profileList) {
-    this.accountList = accountList;
-    this.profileList = profileList;
+  public Company(AccountContainer accountContainer, ProfileContainer profileContainer) {
+    this.accountContainer = accountContainer;
+    this.profileContainer = profileContainer;
   }
 
-    public Company() {
-        this.accountList = new AccountContainer();
-        this.profileList = new ProfileContainer();
-    }
+  public Company() {
+    this.accountContainer = new AccountContainer();
+    this.profileContainer = new ProfileContainer();
+  }
 
 
-    /**
-     * Getter method for the attribute ACCOUNTS LIST.
-     *
-     * @return the list of Accounts in the Repository
-     */
-    public AccountContainer getAccountsList() {
-        return accountList;
-    }
+  /**
+   * Getter method for the attribute accounts.
+   *
+   * @return the list of Accounts in the Company
+   */
+  public AccountContainer getAccountContainer() {
+    return accountContainer;
+  }
 
 
     /**
@@ -165,6 +163,14 @@ public class Company {
         Company that = (Company) o;
         return Objects.equals(profileList, that.profileList);
     }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Company)) return false;
+    Company that = (Company) o;
+    return Objects.equals(accountContainer, that.accountContainer);
+  }
 
     /**
      * This method identifies the requested profile by indication of profileName

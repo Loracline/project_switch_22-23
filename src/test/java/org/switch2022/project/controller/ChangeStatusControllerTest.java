@@ -12,6 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ChangeStatusControllerTest {
 
+  /**
+   * BeforeEach and AfterEach executes common code before running the tests below.
+   */
+
+
   Account accountOne;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;

@@ -8,21 +8,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CompanyTest {
 
+  /**
+   * Testing the constructor
+   */
+  @Test
+  void createContainer(){
+    AccountContainer container = new AccountContainer();
+  }
+
+  /**
+   * BeforeEach and AfterEach executes common code before running the tests below.
+   */
+
   Account accountOne, accountTwo;
-  AccountContainer accountContainer;
+  AccountContainer accountContainer,accountContainerTwo;
+  ProfileContainer profileContainer;
   Company company;
 
   @BeforeEach
   void setUp() {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-    accountTwo = new Account("Paulo", "paulo@mail.com", 23456789, null, true);
-    List<Account> accountList = new ArrayList<>();
-    accountContainer = new AccountContainer(accountList);
-    accountList.add(accountOne);
-    accountList.add(accountTwo);
+    accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
+
+
+    List<Account> accounts = new ArrayList<>();
+    accountContainer = new AccountContainer(accounts);
+    accounts.add(accountOne);
+    List<Account> accountsTwo = new ArrayList<>();
+    accountContainerTwo = new AccountContainer(accountsTwo);
+    accountsTwo.add(accountOne);
+    accountsTwo.add(accountTwo);
+
+    List<Profile> profiles = new ArrayList<>();
+    profileContainer = new ProfileContainer(profiles);
+
+    company = new Company(accountContainer, profileContainer);
   }
 
   @AfterEach
@@ -30,15 +54,32 @@ class CompanyTest {
     accountOne = null;
     accountTwo = null;
     accountContainer = null;
+    accountContainerTwo = null;
+    profileContainer = null;
     company = null;
   }
 
+  /**
+   * The test getAccountsList and getAccountsListTwo, compare two lists contents.
+   */
+
   @Test
-  void getListAllAccounts() {
-    AccountContainer expected = company.getAccountsList();
-    AccountContainer result = company.getAccountsList();
+  void getAccountsList() {
+    AccountContainer expected = accountContainer;
+    AccountContainer result = company.getAccountContainer();
     assertEquals(expected, result);
   }
+
+  @Test
+  void getAccountsListTestTwo() {
+    AccountContainer expected = accountContainerTwo;
+    AccountContainer result = company.getAccountContainer();
+    assertNotEquals(expected, result);
+  }
+
+
+
+
 
     @Test
     void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {
@@ -363,5 +404,6 @@ class CompanyTest {
         //ASSERT
         assertEquals(accountListExpected, accountListResult);
     }
+
 
 }

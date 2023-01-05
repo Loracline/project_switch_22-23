@@ -20,11 +20,13 @@ public class ChangeStatusController {
    * @return the new account status
    */
   public boolean changeStatus(String email, boolean status) {
-    accountList.getAccountsList().getAccountByEmail(email).setStatus(status);
+    boolean finalStatus = false;
+    accountList.getAccountContainer().getAccountByEmail(email).setStatus(status);
     if (status) {
-      return true;
+      finalStatus = true;
     } else {
-      return false;
+      finalStatus = false;
     }
+    return finalStatus;
   }
 }
