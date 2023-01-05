@@ -1,0 +1,40 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW ACCOUNT
+legend top
+US002 - As Administrator, I want to register a user.
+end legend
+
+class "RegisterAccountController" {
+-company
++registerAccount(name, email, phoneNumber, photo, status)
+}
+
+class "Company" {
+-accountContainer
++getAccountContainer()
+}
+
+class "AccountContainer"{
+-accounts
++addAccount(account)
++doesEmailExist(email)
+}
+
+class "Account" {
+-name
+-email
+-phoneNumber
+-photo
+-status
++Account(name, email, phoneNumber, photo, status)
+}
+
+"RegisterAccountController" ..>  "Company"
+"RegisterAccountController" ..> "Account"
+"RegisterAccountController" ..> "AccountContainer"
+"Company" "1"-->"1" "AccountContainer": has
+"AccountContainer" "1"-->"*" "Account": contains
+
+@enduml

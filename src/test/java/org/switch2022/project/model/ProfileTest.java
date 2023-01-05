@@ -21,7 +21,7 @@ class ProfileTest {
         assertEquals(expected, result);
     }
     @Test
-    void ensureTwoArraysAreNotTheSame() {
+    void ensureTwoProfilesAreNotTheSame() {
         Profile reference = new Profile("User");
         Profile other = new Profile("Manager");
         boolean expected = false;

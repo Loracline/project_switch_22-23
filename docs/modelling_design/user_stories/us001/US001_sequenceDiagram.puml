@@ -1,0 +1,41 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO CREATE NEW PROFILE
+legend top
+US001 - As Administrator, I want to create user profiles.
+end legend
+autonumber
+actor Administrator
+participant ":CreateProfileUI" as cpu
+participant ":CreateProfileController" as cpc
+participant ":Company" as Company
+participant "profileContainer:ProfileContainer" as ProfileContainer
+participant "profile:Profile" as Profile
+activate Administrator
+Administrator -> cpu: Creates profile
+activate cpu
+cpu --> Administrator: requests data(profileName)
+deactivate cpu
+Administrator -> cpu: Types requested data
+activate cpu
+cpu -> cpc: createProfile(profileName)
+activate cpc
+cpc -> Company: profileContainer = getProfileContainer()
+activate Company
+deactivate Company
+create Profile
+cpc -> Profile: profile = createProfile(profileName)
+deactivate Profile
+cpc -> ProfileContainer: addProfile(profile)
+activate ProfileContainer
+ProfileContainer -> ProfileContainer: doesProfileNameExist(profileName)
+
+cpc --> cpu: confirms
+deactivate ProfileContainer
+deactivate cpc
+cpu --> Administrator: confirms
+deactivate cpu
+
+
+@enduml

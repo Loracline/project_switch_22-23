@@ -1,8 +1,6 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Profile;
-import org.switch2022.project.model.Company;
+import org.switch2022.project.model.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -23,13 +21,14 @@ public class RegisterAccountController {
     /**
      * RegisterAccountController constructor
      */
-    public RegisterAccountController(List<Account> accountList, List<Profile> profileList) {
-        this.company = new Company(accountList, profileList);
+    public RegisterAccountController(AccountContainer accountContainer,
+                                     ProfileContainer profileContainer) {
+        this.company = new Company(accountContainer, profileContainer);
 
     }
 
-    public RegisterAccountController() {
-        this.company = new Company();
+    public RegisterAccountController(Company company) {
+        this.company = company;
 
     }
 
@@ -47,9 +46,14 @@ public class RegisterAccountController {
 
 
     public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo, boolean status) {
+        boolean isAccountRegistered = false;
 
-        return this.company.registerAccount(name, email, phoneNumber, photo, status);
-
+        AccountContainer accountContainer = this.company.getAccountContainer();
+        Account account = new Account(name, email, phoneNumber, photo, status);
+        if(accountContainer.addAccount(account)){
+            isAccountRegistered = true;
+        }
+        return isAccountRegistered;
     }
 
 }

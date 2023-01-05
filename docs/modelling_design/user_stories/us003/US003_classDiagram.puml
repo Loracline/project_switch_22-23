@@ -1,0 +1,51 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO CHANGE PROFILE
+legend top
+US003 - As Administrator, I want to change the profile of a user account.
+end legend
+
+class ChangeProfileController {
+-company
++changeProfile(email, profileName)
+}
+
+class Company {
+-profileContainer
+-accountContainer
++getProfileContainer()
++getAccountContainer()
+}
+
+class ProfileContainer {
+-profiles
++getProfileByName(profileName)
+}
+
+class AccountContainer {
+-accounts
++getAccountByEmail(email)
+}
+
+class Account{
+-email
++getEmail(email)
++setProfile(profile)
+}
+
+class Profile{
+-profileName
++getProfileName(profileName)
+}
+
+ChangeProfileController ..> Company
+ChangeProfileController ..> ProfileContainer
+ChangeProfileController ..> AccountContainer
+ChangeProfileController ..> Account
+Company "1"-->"1" AccountContainer: has
+Company "1"-->"1" ProfileContainer: has
+AccountContainer "1"-->"*" Account: contains
+ProfileContainer "1"-->"*" Profile: contains
+
+@enduml
