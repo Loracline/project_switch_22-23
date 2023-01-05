@@ -1,40 +1,33 @@
 @startuml
 
-class "ChangeStatusUI" as CSUI
-class "ChangeStatusController" as CSC
-class "Company" as company
-class "AccountContainer" as container
-class "Account" as account
+legend top
+US006 - As Administrator, I want to activate a user account.
+end legend
+skinparam sequenceMessageAlign center
+title TO ACTIVATE USER ACCOUNT
 
-"CSUI" ..> "CSC"
-"CSC"  ..> "company"
-"CSC" ..> "container"
-"CSC" ..> "account"
-"company" "1"-->"1" "container": has
-"container" "1"-->"*" "account": contains
+"ChangeStatusController" ..> "Company"
+"ChangeStatusController" ..> "AccountContainer"
+"ChangeStatusController" ..> "Account"
+"Company" "1"-->"1" "AccountContainer": has
+"AccountContainer" "1"-->"*" "Account": contains
 
-hide "CSUI" circle
-hide "CSC" circle
-hide "company" circle
-hide "container" circle
-hide "account" circle
-
-class "CSC" {
+class "ChangeStatusController" {
 -company
 +changeStatus(email, status)
 }
 
-class "company" {
+class "Company" {
 -accountContainer
 +getAccountContainer()
 }
 
-class "container" {
--accountList
+class "AccountContainer" {
+-accounts
 +getAccountByEmail(email)
 }
 
-class "account" {
+class "Account" {
 -email
 -status
 +setStatus(status)

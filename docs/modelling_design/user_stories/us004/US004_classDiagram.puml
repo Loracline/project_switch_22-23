@@ -1,7 +1,10 @@
 @startuml
 
-class "ListAccountUI"{
-}
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS
+legend top
+US004 - As Administrator, I want to get a list of all user accounts and their status.
+end legend
 
 class "ListAccountController" {
 -company
@@ -14,16 +17,10 @@ class "Company"{
 
 }
 class "AccountContainer"{
--accountList
-+getAccountListCopy()
+-accounts
++getAccounts()
 }
 
-hide "ListAccountUI" circle
-hide "ListAccountController" circle
-hide "Company" circle
-hide "AccountContainer" circle
-
-"ListAccountUI" ..> "ListAccountController"
 "ListAccountController" ..> "Company"
 "ListAccountController" ..> "AccountContainer"
 "Company" "1"-->"1" "AccountContainer": has
