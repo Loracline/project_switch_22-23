@@ -1,38 +1,40 @@
 package org.switch2022.project.model;
 
+import java.util.Objects;
+
 /**
- * Class Repository is built to create and manipulate lists of Accounts and
- * Profiles (to be updated...).
+ * Class Company is built to create and manipulate Containers.
  */
-public class  Company {
+public class Company {
   /**
-   * Attributes of the class Repository, according to the Class Diagram.
+   * Attributes of the class Company, according to the Class Diagram.
    */
   private AccountContainer accountContainer;
   private ProfileContainer profileContainer;
 
   /**
-   * Repository constructor
+   * Company constructor
    */
-  public Company(AccountContainer accountList, ProfileContainer profileContainer) {
-    this.accountContainer = accountList;
+  public Company(AccountContainer accountContainer, ProfileContainer profileContainer) {
+    this.accountContainer = accountContainer;
     this.profileContainer = profileContainer;
   }
 
-    public Company() {
-        this.accountContainer = new AccountContainer();
-        this.profileContainer = new ProfileContainer();
-    }
+  public Company() {
+    this.accountContainer = new AccountContainer();
+    this.profileContainer = new ProfileContainer();
+  }
 
 
-    /**
-     * Getter method for the attribute ACCOUNTS LIST.
-     *
-     * @return the list of Accounts in the Repository
-     */
-    public AccountContainer getAccountsList() {
-        return accountContainer;
-    }
+  /**
+   * Getter method for the attribute accounts.
+   *
+   * @return the list of Accounts in the Company
+   */
+  public AccountContainer getAccountContainer() {
+    return accountContainer;
+  }
+
     /**
      * Getter method for the attribute Profile Container.
      *
@@ -74,48 +76,6 @@ public class  Company {
         return result;
     }
 
-    /**
-     * Add account method to save registered accounts in the attribute ACCOUNTS LIST
-     *
-     * @param acc instance of Account to be added to accountList
-     */
-    private void addAccount(Account acc) {
-        this.accountContainer.add(acc);
-    }
-
-    /**
-     * This method verify the existence of an account by email confirmation
-     *
-     * @return an object Account
-     */
-    public Account getAccount(String email) {
-        Account requestedAccount = null;
-        for (Account account : this.accountContainer) {
-            if (account.getEmail().equals(email)) {
-                requestedAccount = account;
-                break;
-            }
-        }
-        return requestedAccount;
-    }
-    //Possivel substituicao do teste Account getAccount (A aguardar validaçao do resto dos elementos)
-      /*  Account requestedAccount = null;
-        for (int i = 0; i < this.accountList.size() ; i++) {
-            if (accountList.get(i).getEmail().equals(email)) {
-                requestedAccount = accountList.get(i);
-                break;
-            }
-        }
-        return requestedAccount;
-    */
-
-    public void registerProfile(String profileName) {
-        String profileNameLowerCase = profileName.toLowerCase();
-        if (validateProfile(profileNameLowerCase)) {
-            Profile profile = new Profile(profileName);
-            addProfileToProfilesList(profile); // FUNDIR METODO addProfileToProfilesList AQUI.
-        }
-    }
 
     /**
      * This method identifies the requested profile by indication of profileName
