@@ -1,6 +1,6 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.Company;
+import org.switch2022.project.model.*;
 
 /**
  * Class ChangeProfileController is built to allow access to change account methods
@@ -15,7 +15,19 @@ public class ChangeProfileController{
     public ChangeProfileController(Company company) {
         this.company = company;
     }
+    /**
+     * This method changes/updates the accountProfile
+     *
+     * @return an object Account
+     */
     public void changeProfile(String email, String profileName) {
-        this.company.changeAccountProfile(email, profileName);
+        ProfileContainer profileContainer = company.getProfileContainer();
+        Profile profile = profileContainer.getProfileByName(profileName);
+
+        AccountContainer accountContainer = company.getAccountContainer();
+        Account account = accountContainer.getAccountByEmail(email);
+
+        account.setProfile(profile);
+
     }
 }

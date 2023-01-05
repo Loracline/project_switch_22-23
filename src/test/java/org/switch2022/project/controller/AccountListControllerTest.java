@@ -1,9 +1,10 @@
 package org.switch2022.project.controller;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Profile;
-import org.switch2022.project.model.Company;
+import org.switch2022.project.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,50 +12,92 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountListControllerTest {
-    @Test
-    void createRepositorySuccessfully(){
-        List<Profile> profileList = new ArrayList<>();
-        profileList.add(new Profile("Admin"));
-        profileList.add(new Profile("User"));
+    Account accountOne, accountTwo;
+    Profile profileOne, profileTwo;
+    List<Account> accounts;
+    List<Profile> profiles;
+    AccountContainer accountContainer;
+    ProfileContainer profileContainer;
+    Company company;
 
-        Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-        List<Account> accountList = new ArrayList<>();
-        accountList.add(0, account);
+    @BeforeEach
+    void setUp() {
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
+        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
 
-        Company companyTest = new Company(accountList, profileList);
 
-        AccountListController controller = new AccountListController(companyTest);
+        accounts = new ArrayList<>();
+        accountContainer = new AccountContainer(accounts);
+        accounts.add(accountOne);
+        accounts.add(accountTwo);
+
+        profileOne = new Profile("Administrator");
+        profileTwo = new Profile("User");
+
+
+        profiles = new ArrayList<>();
+        profileContainer = new ProfileContainer(profiles);
+        profiles.add(profileOne);
+        profiles.add(profileTwo);
+
+        company = new Company(accountContainer, profileContainer);
+    }
+
+    @AfterEach
+    void tearDown() {
+        accountOne = null;
+        accountTwo = null;
+        profileOne = null;
+        profileTwo = null;
+        accounts.clear();
+        profiles.clear();
+        accountContainer = null;
+        profileContainer = null;
+        company = null;
     }
 
     @Test
-    void getListOfAccountSuccessfully(){
-        List<Profile> profileList = new ArrayList<>();
-        profileList.add(new Profile("Admin"));
-        profileList.add(new Profile("User"));
-
-        Account account = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-        List<Account> accountList = new ArrayList<>();
-        accountList.add(0, account);
-
-        Company companyTest = new Company(accountList, profileList);
-        AccountListController controller = new AccountListController(companyTest);
-        List<Account> expected = controller.requestAccountList();
-
-        assertEquals(accountList, expected);
+    void ensureAccountContainerIsSuccessfullyCreated(){
+        AccountListController controller = new AccountListController(company);
     }
 
     @Test
-    void getEmptyListOfAccount(){
-        List<Profile> profileList = new ArrayList<>();
-        profileList.add(new Profile("Admin"));
-        profileList.add(new Profile("User"));
-
-        List<Account> accountList = new ArrayList<>();
-
-        Company companyTest = new Company(accountList, profileList);
-        AccountListController controller = new AccountListController(companyTest);
-        List<Account> expected = controller.requestAccountList();
-
-        assertEquals(accountList, expected);
+    void ensureSameObjectEqualsItself() {
+        AccountListController reference = new AccountListController(company);
+        AccountListController other = reference;
+        boolean expected = true;
+        boolean result = reference.equals(other);
+        Assertions.assertEquals(expected, result);
     }
+
+    @Test
+    void ensureTwoAccountListControllersAreNotTheSame() {
+        AccountListController reference = new AccountListController(company);
+        Company newCompany = new Company();
+        AccountListController other = new AccountListController(newCompany);
+        boolean expected = false;
+        boolean result = reference.equals(other);
+    }
+
+    @Test
+    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
+        AccountListController reference = new AccountListController(company);
+        ProfileContainer other = new ProfileContainer(profiles);
+        boolean expected = false;
+        boolean result = reference.equals(other);
+        Assertions.assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureAllAccountsAreListedSuccessfully() {
+        List<Account> expected = accountContainer.getAccounts();
+        AccountListController newAccountListController = new AccountListController(company);
+
+        // Act
+        List<Account> result = newAccountListController.listAllAccounts();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
 }

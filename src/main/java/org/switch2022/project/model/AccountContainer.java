@@ -19,9 +19,6 @@ public class AccountContainer {
     this.accounts = accounts;
   }
 
-  public AccountContainer(){
-    this.accounts = new ArrayList<Account>();
-  }
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -30,8 +27,9 @@ public class AccountContainer {
     return Objects.equals(accounts, that.accounts);
   }
 
-  public List<Account> getAccounts(){
-    return this.accounts;
+  public List<Account> getAccounts() {
+    List<Account> result = new ArrayList<>(List.copyOf(accounts));
+    return result;
   }
 
   /**
@@ -41,9 +39,9 @@ public class AccountContainer {
    */
   public Account getAccountByEmail(String email) {
     Account requestedAccount = null;
-    for (int i = 0; i < this.accountList.size(); i++) {
-      if (accountList.get(i).getEmail().equals(email)) {
-        requestedAccount = accountList.get(i);
+    for (int i = 0; i < this.accounts.size(); i++) {
+      if (accounts.get(i).getEmail().equalsIgnoreCase(email)) {
+        requestedAccount = accounts.get(i);
         break;
       }
     }

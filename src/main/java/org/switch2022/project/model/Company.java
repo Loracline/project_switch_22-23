@@ -1,8 +1,5 @@
 package org.switch2022.project.model;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,10 +21,7 @@ public class Company {
   }
 
   public Company() {
-    this.accountContainer = new AccountContainer();
-    this.profileContainer = new ProfileContainer();
   }
-
 
     @Override
     public boolean equals(Object o) {
@@ -53,17 +47,5 @@ public class Company {
      */
     public ProfileContainer getProfileContainer() {
         return profileContainer;
-    }
-
-
-    /**
-     * This method changes/updates the accountProfile
-     *
-     * @return an object Account
-     */
-    public void changeAccountProfile(String email, String profileName) {
-        Profile profile = getProfileByName(profileName);
-        Account account = getAccountByEmail(email);
-        account.updateAccountProfile(profile);
     }
 }
