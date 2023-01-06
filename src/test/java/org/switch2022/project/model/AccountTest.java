@@ -7,7 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AccountTest {
     /**
@@ -24,7 +25,7 @@ class AccountTest {
         accountOne.setStatus(true);
 
         // Assert
-        assertEquals(accountOne,accountTwo);
+        assertEquals(accountOne, accountTwo);
     }
 
     @Test
@@ -37,7 +38,7 @@ class AccountTest {
         accountTwo.setStatus(false);
 
         // Assert
-        assertNotEquals(accountOne,accountTwo);
+        assertNotEquals(accountOne, accountTwo);
     }
 
     @Test
@@ -67,7 +68,7 @@ class AccountTest {
         String result = account.getEmail();
 
         //ASSERT
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -89,6 +90,76 @@ class AccountTest {
         //ACT
         accountOne.setPhoto(photo);
         //ASSERT
-        assertEquals(accountWithPhoto,accountOne);
+        assertEquals(accountWithPhoto, accountOne);
+    }
+
+    @Test
+    void ensureSameAccountEqualsItself() {
+        // Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Account other = reference;
+        boolean expected = true;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureTwoAccountsAreEqual() {
+        // Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Account other = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        boolean expected = true;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureTwoAccountsAreDifferent() {
+        // Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Account other = new Account("Mary", "john@isep.ipp.pt", 912345678, null);
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureAccountDoesNotEqualsNull() {
+        // Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Account other = null;
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureAccountDoesNotEqualOtherTypeOfObject() {
+        // Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Profile other = new Profile("John");
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected,result);
     }
 }

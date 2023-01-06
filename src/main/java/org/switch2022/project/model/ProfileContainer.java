@@ -6,68 +6,76 @@ import java.util.List;
  * Class ProfileContainer is built to allow access to class Profile.
  */
 public class ProfileContainer {
-  /**
-   * ProfileContainer contains profiles
-   */
-  private List<Profile> profiles;
+    /**
+     * ProfileContainer contains profiles
+     */
+    private List<Profile> profiles;
 
-  public ProfileContainer(List<Profile> profiles) {
-    this.profiles = profiles;
-  }
-
-  /**
-   * This method creates a Profile
-   *
-   * @return an object Profile
-   */
-  public Profile createProfile(String name) {
-    Profile newProfile = new Profile(name);
-    return newProfile;
-  }
-
-  /**
-   * This method validates if profile exits
-   *
-   * @param profile
-   * @return true if profile exists in profiles
-   */
-  public boolean doesProfileNameExist(Profile profile) {
-    boolean profileExits = false;
-    if (this.profiles.contains(profile)) {
-      profileExits = true;
+    public ProfileContainer(List<Profile> profiles) {
+        this.profiles = profiles;
     }
-    return profileExits;
-  }
 
-  /**
-   * This method adds profile to profiles
-   *
-   * @param profile
-   */
-  public boolean addProfile(Profile profile) {
-    boolean isAddedToList = false;
-    if (!doesProfileNameExist(profile)) {
-      profiles.add(profile);
-      isAddedToList = true;
+    /**
+     * Check if first is lower than second
+     *
+     * @param first  integer
+     * @param second integer
+     * @return True if first is lower than second, and False otherwise
+     */
+    public static boolean isLower(int first, int second) {
+        return first < second;
     }
-    return isAddedToList;
-  }
 
-  /**
-   * This method identifies the requested profile by indication of profileName
-   *
-   * @return an object Profile
-   */
-
-  public Profile getProfileByName(String profileName) {
-    Profile profile = new Profile(profileName);
-    Profile requestedProfile = null;
-    for (int i = 0; i < this.profiles.size(); i++) {
-      if (this.profiles.contains(profile)) {
-        requestedProfile = profiles.get(i);
-        break;
-      }
+    /**
+     * This method creates a Profile
+     *
+     * @return an object Profile
+     */
+    public Profile createProfile(String name) {
+        return new Profile(name);
     }
-    return requestedProfile;
-  }
+
+    /**
+     * This method validates if profile exits
+     *
+     * @param profile one must check
+     * @return true if profile exists in profiles
+     */
+    public boolean doesProfileNameExist(Profile profile) {
+        return this.profiles.contains(profile);
+    }
+
+    /**
+     * This method adds profile to profiles
+     *
+     * @param profile one must add
+     */
+    public boolean addProfile(Profile profile) {
+        boolean isAddedToList = false;
+        if (!doesProfileNameExist(profile)) {
+            profiles.add(profile);
+            isAddedToList = true;
+        }
+        return isAddedToList;
+    }
+
+    /**
+     * This method identifies the requested profile by indication of profileName
+     *
+     * @return an object Profile
+     */
+
+    public Profile getProfileByName(String profileName) {
+        Profile profile = new Profile(profileName);
+        Profile requestedProfile = null;
+        int i = 0;
+        while (isLower(i, this.profiles.size())) {
+            if (this.profiles.contains(profile)) {
+                requestedProfile = profiles.get(i);
+                break;
+            }
+            i++;
+        }
+        return requestedProfile;
+    }
 }
