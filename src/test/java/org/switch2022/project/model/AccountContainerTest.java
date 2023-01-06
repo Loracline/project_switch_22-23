@@ -158,6 +158,7 @@ class AccountContainerTest {
     List<Account> copy = new ArrayList<>();
     copy.add(accountOne);
     copy.add(accountTwo);
+    copy.add(accountThree);
 
     // Act
     List<Account> result = listOfAccounts.getAccounts();
