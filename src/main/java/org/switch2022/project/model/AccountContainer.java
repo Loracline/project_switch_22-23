@@ -19,6 +19,9 @@ public class AccountContainer {
     this.accounts = accounts;
   }
 
+  public AccountContainer() {
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

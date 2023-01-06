@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AccountContainerTest {
-  Account accountOne, accountTwo;
+  Account accountOne, accountTwo, accountThree, accountFour;
   Profile profileOne, profileTwo;
   List<Account> accounts;
   List<Profile> profiles;
@@ -21,31 +21,34 @@ class AccountContainerTest {
 
   @BeforeEach
   void setUp() {
-    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-    accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
+      accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null, true);
+      accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null, false);
+      accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null, true);
+      accountFour = new Account("Poppy", "poppy@isep.ipp.pt", 932755686, null, false);
+      accounts = new ArrayList<>();
+      accountContainer = new AccountContainer(accounts);
+      accounts.add(accountOne);
+      accounts.add(accountTwo);
+      accounts.add(accountThree);
+
+      profileOne = new Profile("Administrator");
+      profileTwo = new Profile("User");
 
 
-    accounts = new ArrayList<>();
-    accountContainer = new AccountContainer(accounts);
-    accounts.add(accountOne);
-    accounts.add(accountTwo);
+      profiles = new ArrayList<>();
+      profileContainer = new ProfileContainer(profiles);
+      profiles.add(profileOne);
+      profiles.add(profileTwo);
 
-    profileOne = new Profile("Administrator");
-    profileTwo = new Profile("User");
-
-
-    profiles = new ArrayList<>();
-    profileContainer = new ProfileContainer(profiles);
-    profiles.add(profileOne);
-    profiles.add(profileTwo);
-
-    company = new Company(accountContainer, profileContainer);
+      company = new Company(accountContainer, profileContainer);
   }
 
   @AfterEach
   void tearDown() {
     accountOne = null;
     accountTwo = null;
+    accountThree = null;
+    accountFour = null;
     profileOne = null;
     profileTwo = null;
     accounts.clear();
@@ -57,49 +60,6 @@ class AccountContainerTest {
   @Test
   void ensureAccountContainerIsSuccessfullyCreated(){
     AccountContainer controller = new AccountContainer(accounts);
-  }
-
-  @Test
-  void ensureSameObjectEqualsItself() {
-    AccountContainer reference = new AccountContainer(accounts);
-    AccountContainer other = reference;
-    boolean expected = true;
-    boolean result = reference.equals(other);
-    assertEquals(expected, result);
-  }
-  Account accountOne, accountTwo, accountThree, accountFour;
-  List<Account> accounts;
-  AccountContainer accountContainer;
-
-  @BeforeEach
-  void setUp() {
-    //create users
-    accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null, true);
-    accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null, false);
-    accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null, true);
-    accountFour = new Account("Poppy", "poppy@isep.ipp.pt", 932755686, null, false);
-
-
-    //add users to accounts list
-    accounts = new ArrayList<>();
-    accounts.add(accountOne);
-    accounts.add(accountTwo);
-    accounts.add(accountThree);
-
-    //initialize account container with filled account list
-    accountContainer = new AccountContainer(accounts);
-  }
-
-  @AfterEach
-  void tearDown() {
-    accountOne = null;
-    accountTwo = null;
-    accountThree = null;
-    accountFour = null;
-
-    accounts.clear();
-
-    accountContainer = null;
   }
 
  @Test
