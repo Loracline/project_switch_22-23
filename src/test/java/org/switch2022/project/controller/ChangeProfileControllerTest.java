@@ -12,26 +12,22 @@ class ChangeProfileControllerTest {
     @Test
     void ensureAccountProfileIsChangedSuccessfully() {
         //ARRANGE
-        //Create an account
+
+        //Create an arraylist to compare.
         Account account = new Account("Ana", "ana@mail.com", 12345678, null);
-        //Change Account Profile user to manager.
         account.setProfile(new Profile("Manager"));
-        //Add account to accountListExpected
         List<Account> accountsExpected = new ArrayList<>();
         accountsExpected.add(account);
 
         //Create a repository to change account profile
         List<Account> accountsResult = new ArrayList<>();
         List<Profile> profiles = new ArrayList<>();
-
         AccountContainer accountContainer = new AccountContainer(accountsResult);
         ProfileContainer profileContainer = new ProfileContainer(profiles);
-
         Company company = new Company(accountContainer, profileContainer);
+        ChangeProfileController controller = new ChangeProfileController(company);
         accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null));
         profileContainer.addProfile(new Profile("Manager"));
-
-        ChangeProfileController controller = new ChangeProfileController(company);
 
         //ACT
         controller.changeProfile("ana@mail.com", "Manager");
@@ -43,26 +39,22 @@ class ChangeProfileControllerTest {
     @Test
     void ensureAccountProfileIsNotChangedSuccessfully_ProfileNotFound() {
         //ARRANGE
-        //Create an account
+
+        //Create an arraylist to compare.
         Account account = new Account("Ana", "ana@mail.com", 12345678, null);
-        //Change Account Profile user to manager.
         account.setProfile(new Profile("Manager"));
-        //Add account to accountListExpected
         List<Account> accountsExpected = new ArrayList<>();
         accountsExpected.add(account);
 
         //Create a repository to change account profile
         List<Account> accountsResult = new ArrayList<>();
         List<Profile> profiles = new ArrayList<>();
-
         AccountContainer accountContainer = new AccountContainer(accountsResult);
         ProfileContainer profileContainer = new ProfileContainer(profiles);
-
         Company company = new Company(accountContainer, profileContainer);
+        ChangeProfileController controller = new ChangeProfileController(company);
         accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null));
         profileContainer.addProfile(new Profile("Manager"));
-
-        ChangeProfileController controller = new ChangeProfileController(company);
 
         //ACT
         controller.changeProfile("ana@mail.com", "Administrator");
@@ -74,26 +66,22 @@ class ChangeProfileControllerTest {
     @Test
     void ensureAccountProfileIsNotChangedSuccessfully_AccountNotFound() {
         //ARRANGE
-        //Create an account
+
+        //Create an arraylist to compare.
         Account account = new Account("Ana", "ana@mail.com", 12345678, null);
-        //Change Account Profile user to manager.
         account.setProfile(new Profile("Manager"));
-        //Add account to accountListExpected
         List<Account> accountsExpected = new ArrayList<>();
         accountsExpected.add(account);
 
         //Create a repository to change account profile
         List<Account> accountsResult = new ArrayList<>();
         List<Profile> profiles = new ArrayList<>();
-
         AccountContainer accountContainer = new AccountContainer(accountsResult);
         ProfileContainer profileContainer = new ProfileContainer(profiles);
-
         Company company = new Company(accountContainer, profileContainer);
+        ChangeProfileController controller = new ChangeProfileController(company);
         accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null));
         profileContainer.addProfile(new Profile("Manager"));
-
-        ChangeProfileController controller = new ChangeProfileController(company);
 
         //ACT
         controller.changeProfile("aana@mail.com", "Manager");
