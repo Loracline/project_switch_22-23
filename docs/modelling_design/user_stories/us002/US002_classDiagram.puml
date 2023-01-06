@@ -8,7 +8,7 @@ end legend
 
 class "RegisterAccountController" {
 -company
-+registerAccount(name, email, phoneNumber, photo, status)
++registerAccount(name, email, phoneNumber, photo)
 }
 
 class "Company" {
@@ -28,7 +28,7 @@ class "Account" {
 -phoneNumber
 -photo
 -status
-+Account(name, email, phoneNumber, photo, status)
++Account(name, email, phoneNumber, photo)
 }
 
 "RegisterAccountController" ..>  "Company"

@@ -7,7 +7,7 @@ class "CreateProfileController" {
 
 class "RegisterAccountController" {
 -company
-+registerAccount(name, email, phoneNumber, photo, status)
++registerAccount(name, email, phoneNumber, photo)
 }
 
 class ChangeProfileController {
@@ -35,7 +35,7 @@ class "Company" {
 class "ProfileContainer"{
 -profiles
 +addProfile(profile)
-+doesProfileNameExist(profileName)
++doesProfileNameExist(profile)
 +getProfileByName(profileName)
 }
 
@@ -59,7 +59,7 @@ class "Account" {
 -photo
 -status
 -profile
-+Account(name, email, phoneNumber, photo, status)
++Account(name, email, phoneNumber, photo)
 +getEmail(email)
 +setProfile(profile)
 +setStatus(status)

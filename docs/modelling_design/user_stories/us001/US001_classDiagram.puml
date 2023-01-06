@@ -19,7 +19,7 @@ class "Company" {
 class "ProfileContainer"{
 -profiles
 +addProfile(profile)
-+doesProfileNameExist(profileName)
++doesProfileNameExist(profile)
 }
 
 class "Profile"{

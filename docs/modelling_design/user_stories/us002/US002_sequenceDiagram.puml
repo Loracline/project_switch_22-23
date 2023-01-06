@@ -14,11 +14,11 @@ participant "account:Account" as account
 activate Administrator
 Administrator -> ui: registers new account
 activate ui
-ui -->> Administrator: requests data (name, email, phoneNumber, photo, status)
+ui -->> Administrator: requests data (name, email, phoneNumber, photo)
 deactivate ui
 Administrator -> ui: types requested data
 activate ui
-ui -> controller: registerAccount (name, email, phoneNumber, photo, status)
+ui -> controller: registerAccount (name, email, phoneNumber, photo)
 activate controller
 controller -> comp: accountContainer = getAccountContainer()
 activate comp
@@ -26,7 +26,7 @@ create AC
 comp -->> AC: create
 deactivate comp
 create account
-controller -->> account: name, email, phoneNumber,photo, status
+controller -->> account: name, email, phoneNumber, photo
 controller -> AC: addAccount(account)
 activate AC
 AC -> AC: doesEmailExist(email)

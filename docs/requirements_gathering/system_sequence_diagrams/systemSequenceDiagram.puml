@@ -30,7 +30,7 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-Administrator <-- ":System": requests data (name, email, \n phoneNumber, photo, status)
+Administrator <-- ":System": requests data (name, email, \n phoneNumber, photo)
 Administrator  -> ":System": types requested data
 ":System" --> Administrator: informs account created
 @enduml

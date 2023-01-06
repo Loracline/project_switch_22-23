@@ -31,7 +31,7 @@ cpc -->> Profile: profileName
 deactivate Profile
 cpc -> ProfileContainer: addProfile (profile)
 activate ProfileContainer
-ProfileContainer -> ProfileContainer: doesProfileNameExist(profileName)
+ProfileContainer -> ProfileContainer: doesProfileNameExist(profile)
 cpc -->> cpu: profile created
 deactivate ProfileContainer
 deactivate cpc
