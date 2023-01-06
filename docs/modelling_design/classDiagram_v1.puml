@@ -65,28 +65,30 @@ class "Account" {
 +setStatus(status)
 }
 
-"CreateProfileController" ..>  "Company"
+"CreateProfileController" -->  "Company"
 "CreateProfileController" ..> "ProfileContainer"
 "CreateProfileController" ..> "Profile"
 "Company" "1"-->"1" "ProfileContainer": has
 "ProfileContainer" "1" --> "*" "Profile": contains
 
-"RegisterAccountController" ..>  "Company"
+"RegisterAccountController" -->  "Company"
 "RegisterAccountController" ..> "Account"
 "RegisterAccountController" ..> "AccountContainer"
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" "1"-->"*" "Account": contains
 
-ChangeProfileController ..> Company
+ChangeProfileController --> Company
 ChangeProfileController ..> ProfileContainer
 ChangeProfileController ..> AccountContainer
 ChangeProfileController ..> Account
 
-"ListAccountController" ..> "Company"
+"ListAccountController" --> "Company"
 "ListAccountController" ..> "AccountContainer"
 
-"ChangeStatusController" ..> "Company"
+"ChangeStatusController" --> "Company"
 "ChangeStatusController" ..> "AccountContainer"
 "ChangeStatusController" ..> "Account"
+
+"Account" "*" --> "1" "Profile": has
 
 @enduml
