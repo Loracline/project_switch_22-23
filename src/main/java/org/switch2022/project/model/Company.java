@@ -3,7 +3,7 @@ package org.switch2022.project.model;
 import java.util.Objects;
 
 /**
- * Class Company is built to create and manipulate Containers.
+ * Class Company is built to create and manipulate AccountContainer and ProfileContainer.
  */
 public class Company {
   /**
@@ -18,9 +18,6 @@ public class Company {
   public Company(AccountContainer accountContainer, ProfileContainer profileContainer) {
     this.accountContainer = accountContainer;
     this.profileContainer = profileContainer;
-  }
-
-  public Company() {
   }
 
 

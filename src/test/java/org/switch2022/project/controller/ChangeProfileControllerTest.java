@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ChangeProfileControllerTest {
     @Test
-    void changeProfile_HappyPath() {
+    void ensureAccountProfileIsChangedSuccessfully() {
         //ARRANGE
         //Create an account
-        Account account = new Account("Ana", "ana@mail.com", 12345678, null, true);
+        Account account = new Account("Ana", "ana@mail.com", 12345678, null);
         //Change Account Profile user to manager.
         account.setProfile(new Profile("Manager"));
         //Add account to accountListExpected
@@ -28,7 +28,7 @@ class ChangeProfileControllerTest {
         ProfileContainer profileContainer = new ProfileContainer(profiles);
 
         Company company = new Company(accountContainer, profileContainer);
-        accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null, true));
+        accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null));
         profileContainer.addProfile(new Profile("Manager"));
 
         ChangeProfileController controller = new ChangeProfileController(company);
@@ -41,10 +41,10 @@ class ChangeProfileControllerTest {
     }
 
     @Test
-    void changeProfileUnsuccessfully_ProfileNotFound() {
+    void ensureAccountProfileIsNotChangedSuccessfully_ProfileNotFound() {
         //ARRANGE
         //Create an account
-        Account account = new Account("Ana", "ana@mail.com", 12345678, null, true);
+        Account account = new Account("Ana", "ana@mail.com", 12345678, null);
         //Change Account Profile user to manager.
         account.setProfile(new Profile("Manager"));
         //Add account to accountListExpected
@@ -59,7 +59,7 @@ class ChangeProfileControllerTest {
         ProfileContainer profileContainer = new ProfileContainer(profiles);
 
         Company company = new Company(accountContainer, profileContainer);
-        accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null, true));
+        accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null));
         profileContainer.addProfile(new Profile("Manager"));
 
         ChangeProfileController controller = new ChangeProfileController(company);
@@ -72,10 +72,10 @@ class ChangeProfileControllerTest {
     }
 
     @Test
-    void changeProfileUnsuccessfully_AccountNotFound() {
+    void ensureAccountProfileIsNotChangedSuccessfully_AccountNotFound() {
         //ARRANGE
         //Create an account
-        Account account = new Account("Ana", "ana@mail.com", 12345678, null, true);
+        Account account = new Account("Ana", "ana@mail.com", 12345678, null);
         //Change Account Profile user to manager.
         account.setProfile(new Profile("Manager"));
         //Add account to accountListExpected
@@ -90,7 +90,7 @@ class ChangeProfileControllerTest {
         ProfileContainer profileContainer = new ProfileContainer(profiles);
 
         Company company = new Company(accountContainer, profileContainer);
-        accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null, true));
+        accountContainer.addAccount(new Account("Ana", "ana@mail.com", 12345678, null));
         profileContainer.addProfile(new Profile("Manager"));
 
         ChangeProfileController controller = new ChangeProfileController(company);

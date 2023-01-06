@@ -1,4 +1,5 @@
 package org.switch2022.project.model;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,9 +9,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class AccountContainerTest {
+
+  /**
+   * BeforeEach and AfterEach executes common code before/after running the tests below.
+   */
+
   Account accountOne, accountTwo, accountThree, accountFour;
   Profile profileOne, profileTwo;
   List<Account> accounts;
@@ -21,26 +25,26 @@ class AccountContainerTest {
 
   @BeforeEach
   void setUp() {
-      accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null, true);
-      accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null, false);
-      accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null, true);
-      accountFour = new Account("Poppy", "poppy@isep.ipp.pt", 932755686, null, false);
-      accounts = new ArrayList<>();
-      accountContainer = new AccountContainer(accounts);
-      accounts.add(accountOne);
-      accounts.add(accountTwo);
-      accounts.add(accountThree);
+    accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null);
+    accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
+    accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
+    accountFour = new Account("Poppy", "poppy@isep.ipp.pt", 932755686, null);
+    accounts = new ArrayList<>();
+    accountContainer = new AccountContainer(accounts);
+    accounts.add(accountOne);
+    accounts.add(accountTwo);
+    accounts.add(accountThree);
 
-      profileOne = new Profile("Administrator");
-      profileTwo = new Profile("User");
+    profileOne = new Profile("Administrator");
+    profileTwo = new Profile("User");
 
 
-      profiles = new ArrayList<>();
-      profileContainer = new ProfileContainer(profiles);
-      profiles.add(profileOne);
-      profiles.add(profileTwo);
+    profiles = new ArrayList<>();
+    profileContainer = new ProfileContainer(profiles);
+    profiles.add(profileOne);
+    profiles.add(profileTwo);
 
-      company = new Company(accountContainer, profileContainer);
+    company = new Company(accountContainer, profileContainer);
   }
 
   @AfterEach
@@ -57,49 +61,34 @@ class AccountContainerTest {
     profileContainer = null;
     company = null;
   }
-  @Test
-  void ensureAccountContainerIsSuccessfullyCreated(){
-    AccountContainer controller = new AccountContainer(accounts);
-  }
 
   @Test
   void ensureThatAccountListIsRetrieved() {
-    //ARRANGE
-    //create reference list
     List<Account> expected = new ArrayList<>();
     expected.add(accountOne);
     expected.add(accountTwo);
     expected.add(accountThree);
 
-    //ACT
-    //get accounts list contained in account container
     List<Account> result = accountContainer.getAccounts();
 
-    //ASSERT
     assertEquals(expected, result);
   }
 
   @Test
   void ensureThatAccountIsAddedIfEmailIsUnique() {
-    //ARRANGE
     boolean expected = true;
 
-    //ACT
     boolean result = accountContainer.addAccount(accountFour);
 
-    //ASSERT
     assertEquals(expected, result);
   }
 
   @Test
   void ensureThatAccountIsNotAddedIfEmailIsDuplicated() {
-    //ARRANGE
     boolean expected = false;
 
-    //ACT
     boolean result = accountContainer.addAccount(accountThree);
 
-    //ASSERT
     assertEquals(expected, result);
   }
 
@@ -112,10 +101,8 @@ class AccountContainerTest {
     copy.add(accountTwo);
     copy.add(accountThree);
 
-    // Act
     List<Account> result = listOfAccounts.getAccounts();
 
-    // Assert
     assertEquals(copy, result);
   }
 
@@ -126,32 +113,23 @@ class AccountContainerTest {
     List<Account> copy = new ArrayList<>();
     copy.add(accountOne);
 
-    // Act
     List<Account> result = newAccountContainer.getAccounts();
 
-    // Assert
     assertNotEquals(copy, result);
   }
 
 
   @Test
-  void getAccount_HappyPath() {
-    //Create account to compare with
-    //Account expected = new Account("Claire", "claire@isep.ipp.pt", 932755689, null, true);
-
-    //ACT
+  void ensureAccountIsRetrievedSuccessfully() {
     Account result = accountContainer.getAccountByEmail("claire@isep.ipp.pt");
 
-    //ASSERT
     assertEquals(accountOne, result);
   }
 
   @Test
   void ensureThatGetAccountReturnNull() {
-    //ACT
     Account result = accountContainer.getAccountByEmail("cclaire@isep.ipp.pt");
 
-    //ASSERT
     assertNull(result);
   }
 }

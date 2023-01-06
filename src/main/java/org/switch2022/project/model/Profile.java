@@ -8,22 +8,22 @@ import java.util.Objects;
  */
 
 public class Profile {
-    private String profileName;
+  private String profileName;
 
 
-    /**
-     * Constructs a default User profile
-     */
-    public Profile(String name) {
-        this.profileName = name.toLowerCase();
-    }
+  /**
+   * Constructs a default User profile
+   */
+  public Profile(String profileName) {
+    this.profileName = profileName.toLowerCase();
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Profile)) return false;
-        Profile profile1 = (Profile) o;
-        return Objects.equals(profileName, profile1.profileName.toLowerCase());
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof Profile)) return false;
+    Profile profile1 = (Profile) o;
+    return Objects.equals(profileName, profile1.profileName.toLowerCase());
+  }
 }
 

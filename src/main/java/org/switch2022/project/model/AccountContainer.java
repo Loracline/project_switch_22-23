@@ -1,14 +1,13 @@
 package org.switch2022.project.model;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.ArrayList;
 /**
  * Class AccountContainer is built to allow access to class Account.
  */
 public class AccountContainer {
   /**
-   * AccountContainer contains a list of accounts
+   * AccountContainer contains accounts
    */
   private List<Account> accounts;
 
@@ -16,8 +15,6 @@ public class AccountContainer {
     this.accounts = accounts;
   }
 
-  public AccountContainer() {
-  }
 
   public List<Account> getAccounts() {
     List<Account> result = new ArrayList<>(List.copyOf(accounts));
@@ -44,7 +41,7 @@ public class AccountContainer {
    * This method checks if there is any account in the list that has the
    * e-mail passed by parameter.
    *
-   * @param email that one must find out if exists in the Repository
+   * @param email that one must find out if exists
    * @return TRUE if there is an account with given e-mail and FALSE otherwise
    */
 
@@ -60,16 +57,16 @@ public class AccountContainer {
   }
 
   /**
-   * Add account method to save registered accounts in the attribute ACCOUNTS LIST.
-   * It adds an account if the email doesn't exist in the accounts list.
+   * Add account method to save registered accounts in the attribute accounts.
+   * It adds an account if the email doesn't exist in accounts.
    *
-   * @param acc instance of Account to be added to accountList
+   * @param account instance of Account to be added to accounts
    */
-  public boolean addAccount(Account acc) {
+  public boolean addAccount(Account account) {
     boolean isAccountAdded = false;
-    String email = acc.getEmail();
+    String email = account.getEmail();
     if (!doesEmailExist(email)) {
-      this.accounts.add(acc);
+      this.accounts.add(account);
       isAccountAdded = true;
     }
     return isAccountAdded;

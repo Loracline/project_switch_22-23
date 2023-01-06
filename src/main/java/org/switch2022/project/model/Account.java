@@ -10,13 +10,14 @@ import java.util.Objects;
 public class Account {
     /**
      * Attributes of the class Account, according to the Class Diagram.
+     * @param status is true (active) or false (inactive)
      */
     private String name;
     private String email;
     private long phoneNumber;
     private BufferedImage photo;
-    private boolean accountStatus;
-    private Profile accountProfile;
+    private boolean status;
+    private Profile profile;
 
     /**
      * Constructor of the class Account.
@@ -26,15 +27,14 @@ public class Account {
      * @param email       of the new account
      * @param phoneNumber of the new account
      * @param photo       of the new account
-     * @param status      of the new account
      *
      */
-    public Account(String name, String email, long phoneNumber,BufferedImage photo, boolean status) {
+    public Account(String name, String email, long phoneNumber,BufferedImage photo) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.accountProfile = new Profile("User");
-        this.accountStatus = status;
+        this.profile = new Profile("User");
+        this.status = true;
 
         if(photo != null){
             this.photo = photo;
@@ -54,10 +54,10 @@ public class Account {
         if (!(toCompare instanceof Account)) return false;
         Account account = (Account) toCompare;
         return phoneNumber == account.phoneNumber &&
-                accountStatus == account.accountStatus &&
+                status == account.status &&
                 name.equals(account.name) && email.equals(account.email) &&
                 Objects.equals(photo, account.photo) &&
-                accountProfile.equals(account.accountProfile);
+                profile.equals(account.profile);
     }
 
     /**
@@ -85,7 +85,7 @@ public class Account {
      * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
      */
     public void setStatus(boolean status) {
-        this.accountStatus = status;
+        this.status = status;
     }
 
     /**
@@ -94,6 +94,6 @@ public class Account {
      * @param profile of the instance of Account
      */
     public void setProfile(Profile profile) {
-        this.accountProfile = profile;
+        this.profile = profile;
     }
 }

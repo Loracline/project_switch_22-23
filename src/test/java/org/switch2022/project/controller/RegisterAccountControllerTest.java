@@ -17,7 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RegisterAccountControllerTest {
 
-    Account accountOne, accountTwo, accountThree, accountFour;
+    /**
+     * BeforeEach and AfterEach executes common code before/after running the tests below.
+     */
+
+    Account accountOne, accountTwo, accountThree;
     Profile profileOne, profileTwo, profileThree;
     List<Account> accounts;
     List<Profile> profiles;
@@ -31,9 +35,9 @@ class RegisterAccountControllerTest {
     @BeforeEach
     void setUp() {
         //create users
-        accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null, true);
-        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null, false);
-        accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null, true);
+        accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null);
+        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
+        accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
 
         //add users to accounts list
         accounts = new ArrayList<>();
@@ -89,8 +93,7 @@ class RegisterAccountControllerTest {
         boolean expected = true;
 
         //ACT
-        boolean result = controller.registerAccount("Charlotte", "charlotte@isep.ipp.pt", 932755677, null,
-                true);
+        boolean result = controller.registerAccount("Charlotte", "charlotte@isep.ipp.pt", 932755677, null);
 
         //ASSERT
         assertEquals(expected, result);
@@ -103,7 +106,7 @@ class RegisterAccountControllerTest {
         boolean expected = false;
 
         //ACT
-        boolean result = controller.registerAccount("Emma", "emma@isep.ipp.pt", 932755688, null, false);
+        boolean result = controller.registerAccount("Emma", "emma@isep.ipp.pt", 932755688, null);
 
         //ASSERT
         assertEquals(expected, result);

@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
- * Class RegisterAccountController is built to allow access to register account methods
- * in repository Class.
+ * Class RegisterAccountController is built to allow access to AccountContainer
+ * in Company Class.
  */
 
 public class RegisterAccountController {
@@ -24,7 +24,6 @@ public class RegisterAccountController {
 
     public RegisterAccountController(Company company) {
         this.company = company;
-
     }
 
     /**
@@ -34,16 +33,15 @@ public class RegisterAccountController {
      * @param email       of the new account
      * @param phoneNumber of the new account
      * @param photo       of the new account
-     * @param status      of the new account
      *
      * @return true if Account is added
      * @return false if Account is not added
      */
-    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo, boolean status) {
+    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
         boolean isAccountRegistered = false;
 
         AccountContainer accountContainer = this.company.getAccountContainer();
-        Account account = new Account(name, email, phoneNumber, photo, status);
+        Account account = new Account(name, email, phoneNumber, photo);
         if(accountContainer.addAccount(account)){
             isAccountRegistered = true;
         }

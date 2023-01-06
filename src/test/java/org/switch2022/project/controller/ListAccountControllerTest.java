@@ -11,7 +11,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AccountListControllerTest {
+/**
+ * BeforeEach and AfterEach executes common code before/after running the tests below.
+ */
+
+class ListAccountControllerTest {
     Account accountOne, accountTwo;
     Profile profileOne, profileTwo;
     List<Account> accounts;
@@ -22,8 +26,8 @@ class AccountListControllerTest {
 
     @BeforeEach
     void setUp() {
-        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
 
 
         accounts = new ArrayList<>();
@@ -57,44 +61,12 @@ class AccountListControllerTest {
     }
 
     @Test
-    void ensureAccountContainerIsSuccessfullyCreated(){
-        AccountListController controller = new AccountListController(company);
-    }
-
-    @Test
-    void ensureSameObjectEqualsItself() {
-        AccountListController reference = new AccountListController(company);
-        AccountListController other = reference;
-        boolean expected = true;
-        boolean result = reference.equals(other);
-        Assertions.assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureTwoAccountListControllersAreNotTheSame() {
-        AccountListController reference = new AccountListController(company);
-        Company newCompany = new Company();
-        AccountListController other = new AccountListController(newCompany);
-        boolean expected = false;
-        boolean result = reference.equals(other);
-    }
-
-    @Test
-    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
-        AccountListController reference = new AccountListController(company);
-        ProfileContainer other = new ProfileContainer(profiles);
-        boolean expected = false;
-        boolean result = reference.equals(other);
-        Assertions.assertEquals(expected, result);
-    }
-
-    @Test
     void ensureAllAccountsAreListedSuccessfully() {
         List<Account> expected = accountContainer.getAccounts();
-        AccountListController newAccountListController = new AccountListController(company);
+        ListAccountController newListAccountController = new ListAccountController(company);
 
         // Act
-        List<Account> result = newAccountListController.listAllAccounts();
+        List<Account> result = newListAccountController.listAllAccounts();
 
         // Assert
         assertEquals(expected, result);

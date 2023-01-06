@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CompanyTest {
 
     /**
-     * BeforeEach and AfterEach executes common code before running the tests below.
+     * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
     Account accountOne, accountTwo, accountThree, accountFour;
@@ -23,20 +23,13 @@ class CompanyTest {
     ProfileContainer profileContainer;
     Company company;
 
-    /**
-     * Testing the constructor
-     */
-    @Test
-    void createContainer() {
-        AccountContainer container = new AccountContainer();
-    }
 
     @BeforeEach
     void setUp() {
-        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
-        accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null, true);
-        accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null, true);
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
+        accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
+        accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
 
         accounts = new ArrayList<>();
         accountContainer = new AccountContainer(accounts);
@@ -67,10 +60,6 @@ class CompanyTest {
         profileContainer = null;
         company = null;
     }
-
-    /**
-     * The test getAccountsList and getAccountsListTwo, compare two lists contents.
-     */
 
     @Test
     void ensureAccountContainerIsRetrieved() {

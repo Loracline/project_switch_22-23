@@ -1,18 +1,17 @@
 package org.switch2022.project.model;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
 /**
  * Class ProfileContainer is built to allow access to class Profile.
  */
 public class ProfileContainer {
   /**
-   * ProfileContainer contains a list of profiles
+   * ProfileContainer contains profiles
    */
   private List<Profile> profiles;
 
-  public ProfileContainer(List<Profile> profiles){
+  public ProfileContainer(List<Profile> profiles) {
     this.profiles = profiles;
   }
 
@@ -25,28 +24,30 @@ public class ProfileContainer {
     Profile newProfile = new Profile(name);
     return newProfile;
   }
+
   /**
    * This method validates if profile exits
    *
    * @param profile
-   * @return true if profile exists in profile list
+   * @return true if profile exists in profiles
    */
-  public boolean doesProfileNameExists(Profile profile) {
+  public boolean doesProfileNameExist(Profile profile) {
     boolean profileExits = false;
     if (this.profiles.contains(profile)) {
       profileExits = true;
     }
     return profileExits;
   }
+
   /**
-   * This method adds profile to profilesList
+   * This method adds profile to profiles
    *
-   * @param toAddProfile
+   * @param profile
    */
-  public boolean addProfile(Profile toAddProfile) {
+  public boolean addProfile(Profile profile) {
     boolean isAddedToList = false;
-    if (!doesProfileNameExists(toAddProfile)){
-      profiles.add(toAddProfile);
+    if (!doesProfileNameExist(profile)) {
+      profiles.add(profile);
       isAddedToList = true;
     }
     return isAddedToList;

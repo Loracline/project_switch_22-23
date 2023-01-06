@@ -14,7 +14,7 @@ class ChangeStatusControllerTest {
 
 
   /**
-   * BeforeEach and AfterEach executes common code before running the tests below.
+   * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
 
@@ -27,10 +27,10 @@ class ChangeStatusControllerTest {
 
   @BeforeEach
   void setUp() {
-    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
-    accountTwo = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, false);
-    accountThree = new Account("Paul", "paul@isep.ipp.pt", 932755689, null, false);
-    accountFour = new Account("Paul", "paul@isep.ipp.pt", 932755689, null, true);
+    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+    accountTwo = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+    accountThree = new Account("Paul", "paul@isep.ipp.pt", 932755689, null);
+    accountFour = new Account("Paul", "paul@isep.ipp.pt", 932755689, null);
 
     List<Account> accountList = new ArrayList<>();
     accountContainer = new AccountContainer(accountList);
@@ -62,22 +62,16 @@ class ChangeStatusControllerTest {
     accountStatusToBeChanged = null;
   }
 
-
   @Test
-  void createCompanySuccessfully() {
-    ChangeStatusController controller = new ChangeStatusController(company);
-  }
-
-  @Test
-  void changeStatusAccountToInactive() {
-    boolean expected = true;
+  void ensureAccountStatusIsChangedToInactive() {
+    boolean expected = false;
     accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
     boolean result = accountOne.equals(accountTwo);
     assertEquals(expected,result);
   }
 
   @Test
-  void changeStatusAccountToActive() {
+  void ensureAccountStatusIsChangedToActive() {
     boolean expected = true;
     accountStatusToBeChanged.changeStatus("paul@isep.ipp.pt", true);
     boolean result = accountThree.equals(accountFour);

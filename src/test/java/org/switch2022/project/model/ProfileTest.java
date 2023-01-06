@@ -1,17 +1,11 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.Profile;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProfileTest {
 
-    @Test
-    void createProfileSuccessfully() {
-        String profileName = "Administrator";
-        Profile profile = new Profile(profileName);
-    }
     @Test
     void ensureSameObjectEqualsItself() {
         Profile reference = new Profile("Admin");

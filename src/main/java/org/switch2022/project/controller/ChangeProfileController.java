@@ -3,8 +3,8 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.*;
 
 /**
- * Class ChangeProfileController is built to allow access to change account methods
- * in repository Class.
+ * Class ChangeProfileController is built to allow access to ProfileContainer and AccountContainer
+ * in Company Class.
  */
 public class ChangeProfileController {
   /**

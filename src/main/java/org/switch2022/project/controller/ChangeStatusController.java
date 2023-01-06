@@ -4,7 +4,7 @@ import org.switch2022.project.model.Company;
 
 import java.util.Objects;
 /**
- * Class ChangeStatusController is built to allow access to the account container.
+ * Class ChangeStatusController is built to allow access to the AccountContainer
  * in Company Class.
  **/
 public class ChangeStatusController {
@@ -21,6 +21,7 @@ public class ChangeStatusController {
 
   /**
    * Method changeStatus used to change the existing account status.
+   *
    * @param email
    * @param status
    */

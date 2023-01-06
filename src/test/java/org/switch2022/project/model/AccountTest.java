@@ -11,23 +11,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AccountTest {
     /**
-     * Testing the Constructor
-     */
-    @Test
-    void newAccount_HappyPath() {
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
-    }
-
-    /**
      * Testing the Setter Method for the attribute ACCOUNT STATUS by comparing two accounts contents.
      */
     @Test
-    void setAccountStatusActive() {
+    void ensureAccountStatusIsSetToActive() {
         // Arrange
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, false);
-        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null);
 
         // Act
+        accountOne.setStatus(false);
         accountOne.setStatus(true);
 
         // Assert
@@ -35,23 +28,23 @@ class AccountTest {
     }
 
     @Test
-    void setAccountStatusInactive() {
+    void ensureAccountStatusIsSetToInactive() {
         // Arrange
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, false);
-        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null);
 
         // Act
         accountTwo.setStatus(false);
 
         // Assert
-        assertEquals(accountOne,accountTwo);
+        assertNotEquals(accountOne,accountTwo);
     }
 
     @Test
-    void setAccountProfile_HappyPath() {
+    void ensureAccountProfileIsSetSuccessfully() {
         // Arrange
-        Account accountBeforeUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null, true); //Default Profile: User
-        Account accountAfterUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null, true); //Default Profile: User
+        Account accountBeforeUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null); //Default Profile: User
+        Account accountAfterUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null); //Default Profile: User
 
         //Create Manager profile
         Profile profileManagerOne = new Profile("Manager");
@@ -65,9 +58,9 @@ class AccountTest {
     }
 
     @Test
-    void getEmail_HappyPath() {
+    void ensureEmailIsRetrievedSuccessfully() {
         // Arrange
-        Account account = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        Account account = new Account("John", "john@isep.ipp.pt", 912345678, null);
         String expected = "john@isep.ipp.pt";
 
         //ACT
@@ -78,12 +71,11 @@ class AccountTest {
     }
 
     @Test
-    void setProfile_HappyPath() throws IOException {
+    void ensureProfileIsSetSuccessfully() throws IOException {
         BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/domainModel_v1_Jan05_2023.png"));
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, photo, true); //Default Profile: User
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, photo); //Default Profile: User
         accountOne.setProfile(new Profile("Manager"));
-        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, photo,
-                true);
+        Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, photo);
         assertNotEquals(accountOne, accountTwo);
     }
 
@@ -91,9 +83,9 @@ class AccountTest {
     void ensureThatPhotoIsSet() throws IOException {
         //ARRANGE
         BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/domainModel_v1_Jan05_2023.png"));
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null, true);
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account accountWithPhoto = new Account("John", "john@isep.ipp.pt", 912345678,
-                photo, true);
+                photo);
         //ACT
         accountOne.setPhoto(photo);
         //ASSERT
