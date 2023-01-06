@@ -5,13 +5,8 @@ import org.switch2022.project.model.Company;
 import org.switch2022.project.model.ProfileContainer;
 
 /**
- * Class CreateProfileController is built to allow access to register profile methods
- * in repository Class.
- */
-
-/**
- * Class CreateProfileController is built to allow access to register profile methods
- * in repository Class.
+ * Class CreateProfileController is built to allow access to ProfileContainer
+ * in Company Class.
  */
 public class CreateProfileController {
     /**
@@ -25,10 +20,9 @@ public class CreateProfileController {
         this.company = company;
     }
     /**
-     *
-     *
-     * @param profileName checks whether the profile already exists or not,
+     * Method profileName checks whether the profile already exists or not,
      *                    creates a new profile and adds it to the list of profiles.
+     *
      * @return true if profile is created
      * @return false if profile isn't created successfully
      */

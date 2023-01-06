@@ -3,18 +3,15 @@ package org.switch2022.project.model;
 import java.util.List;
 import java.util.Objects;
 import java.util.ArrayList;
-
+/**
+ * Class AccountContainer is built to allow access to class Account.
+ */
 public class AccountContainer {
   /**
    * AccountContainer contains a list of accounts
    */
   private List<Account> accounts;
 
-  /**
-   * @param accounts
-   *
-   * @return list of accounts
-   */
   public AccountContainer(List<Account> accounts) {
     this.accounts = accounts;
   }

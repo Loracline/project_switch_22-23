@@ -18,7 +18,6 @@ public class Account {
     private boolean accountStatus;
     private Profile accountProfile;
 
-
     /**
      * Constructor of the class Account.
      * New instance is created using as parameter the essential attributes.
@@ -84,7 +83,6 @@ public class Account {
      * Setter method for the attribute ACCOUNT STATUS.
      *
      * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
-     * @return status
      */
     public void setStatus(boolean status) {
         this.accountStatus = status;

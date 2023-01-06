@@ -3,8 +3,13 @@ package org.switch2022.project.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+/**
+ * Class ProfileContainer is built to allow access to class Profile.
+ */
 public class ProfileContainer {
+  /**
+   * ProfileContainer contains a list of profiles
+   */
   private List<Profile> profiles;
 
   public ProfileContainer(List<Profile> profiles){
@@ -46,7 +51,6 @@ public class ProfileContainer {
     }
     return isAddedToList;
   }
-
 
   /**
    * This method identifies the requested profile by indication of profileName
