@@ -25,12 +25,4 @@ public class ChangeStatusController {
     company.getAccountContainer().getAccountByEmail(email).setStatus(status);
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof ChangeStatusController)) return false;
-    ChangeStatusController that = (ChangeStatusController) o;
-    return Objects.equals(company, that.company);
-  }
-
 }

@@ -52,29 +52,6 @@ class ProfileContainerTest {
         }*/
 
         @Test
-        void ensureSameObjectEqualsItself() {
-            ProfileContainer profileContainerNew = profileContainerReference;
-            boolean expected = true;
-            boolean result = profileContainerReference.equals(profileContainerNew);
-            assertEquals(expected, result);
-        }
-        @Test
-        void ensureTwoProfilesAreNotTheSame() {
-            List<Profile> profilesOne = new ArrayList<>();
-            profilesOne.add(profileTwo);
-            ProfileContainer profileContainerNew = new ProfileContainer(profilesOne);
-            boolean expected = false;
-            boolean result = profileContainerReference.equals(profileContainerNew);
-            assertEquals(expected, result);
-        }
-        @Test
-        void ensureObjectDoesNotEqualsOtherTypeOfObject() {
-            Profile other = new Profile("Admin");
-            boolean expected = false;
-            boolean result = profileContainerReference.equals(other);
-            assertEquals(expected, result);
-        }
-        @Test
         void createProfileSuccessfully() {
             Profile expected = new Profile ("User");
             Profile result = profileContainerReference.createProfile("User");

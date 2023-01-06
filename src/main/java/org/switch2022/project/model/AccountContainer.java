@@ -22,14 +22,6 @@ public class AccountContainer {
   public AccountContainer() {
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof AccountContainer)) return false;
-    AccountContainer that = (AccountContainer) o;
-    return Objects.equals(accounts, that.accounts);
-  }
-
   public List<Account> getAccounts() {
     List<Account> result = new ArrayList<>(List.copyOf(accounts));
     return result;

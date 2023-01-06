@@ -8,9 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CompanyTest {
+
+    /**
+     * BeforeEach and AfterEach executes common code before running the tests below.
+     */
+
+    Account accountOne, accountTwo, accountThree, accountFour;
+    Profile profileOne, profileTwo;
+    List<Account> accounts;
+    List<Profile> profiles;
+    AccountContainer accountContainer;
+    ProfileContainer profileContainer;
+    Company company;
 
     /**
      * Testing the constructor
@@ -20,23 +31,12 @@ class CompanyTest {
         AccountContainer container = new AccountContainer();
     }
 
-    /**
-     * BeforeEach and AfterEach executes common code before running the tests below.
-     */
-
-    Account accountOne, accountTwo;
-    Profile profileOne, profileTwo;
-    List<Account> accounts;
-    List<Profile> profiles;
-    AccountContainer accountContainer;
-    ProfileContainer profileContainer;
-    Company company;
-
     @BeforeEach
     void setUp() {
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null, true);
         accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null, true);
-
+        accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null, true);
+        accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null, true);
 
         accounts = new ArrayList<>();
         accountContainer = new AccountContainer(accounts);
@@ -78,50 +78,11 @@ class CompanyTest {
         AccountContainer result = company.getAccountContainer();
         assertEquals(expected, result);
     }
+
     @Test
     void ensureProfileContainerIsRetrieved() {
         ProfileContainer expected = profileContainer;
         ProfileContainer result = company.getProfileContainer();
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureSameObjectEqualsItself() {
-        //ARRANGE
-        //declare initialized company as reference
-        Company reference = this.company;
-        //initialized other company with the reference
-        Company other = reference;
-        boolean expected = true;
-        //ACT
-        boolean result = reference.equals(other);
-        //ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureTwoAccountsAreNotTheSame() {
-        //ARRANGE
-        //declare initialized company as reference
-        Company reference = this.company;
-        //create other company to compare with
-        List<Account> otherAccounts = new ArrayList<>();
-        otherAccounts.add(accountOne);
-        otherAccounts.add(accountTwo);
-
-        AccountContainer otherAccountContainer =
-                new AccountContainer(otherAccounts);
-        Company otherCompany = new Company(otherAccountContainer, profileContainer);
-        boolean expected = false;
-        //ACT
-        boolean result = reference.equals(otherCompany);
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
-        boolean expected = false;
-        boolean result = this.company.equals(this.accountContainer);
         assertEquals(expected, result);
     }
 

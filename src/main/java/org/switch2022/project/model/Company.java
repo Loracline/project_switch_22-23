@@ -23,13 +23,6 @@ public class Company {
   public Company() {
   }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Company)) return false;
-        Company that = (Company) o;
-        return Objects.equals(profileContainer, that.profileContainer) && Objects.equals(accountContainer, that.accountContainer);
-    }
 
   /**
    * Getter method for the attribute accounts.

@@ -11,13 +11,6 @@ public class ProfileContainer {
     this.profiles = profiles;
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof ProfileContainer)) return false;
-    ProfileContainer that = (ProfileContainer) o;
-    return Objects.equals(profiles, that.profiles);
-  }
   /**
    * This method creates a Profile
    *

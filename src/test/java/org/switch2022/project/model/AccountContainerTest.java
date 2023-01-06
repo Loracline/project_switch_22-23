@@ -62,54 +62,6 @@ class AccountContainerTest {
     AccountContainer controller = new AccountContainer(accounts);
   }
 
- @Test
-  void ensureSameObjectEqualsItself() {
-    //ARRANGE
-    //declare initialized account container as reference
-    AccountContainer reference = this.accountContainer;
-    //initialized other company with the reference
-    AccountContainer other = reference;
-    boolean expected = true;
-    //ACT
-    boolean result = reference.equals(other);
-    //ASSERT
-    assertEquals(expected, result);
-  }
-  @Test
-  void ensureTwoAccountsAreNotTheSame() {
-    //ARRANGE
-    //declare initialized account container as reference
-    AccountContainer reference = this.accountContainer;
-    //create other account container to compare with
-    List<Account> otherAccounts = new ArrayList<>();
-    otherAccounts.add(accountOne);
-    otherAccounts.add(accountTwo);
-
-    AccountContainer other =
-            new AccountContainer(otherAccounts);
-
-    boolean expected = false;
-    //ACT
-    boolean result = reference.equals(other);
-    assertEquals(expected, result);
-  }
-  @Test
-  void ensureTwoProfilesAreNotTheSame() {
-    AccountContainer reference = new AccountContainer(accounts);
-    AccountContainer other = new AccountContainer();
-    boolean expected = false;
-    boolean result = reference.equals(other);
-  }
-
-  @Test
-  void ensureObjectDoesNotEqualsOtherTypeOfObject() {
-    AccountContainer reference = new AccountContainer(accounts);
-    ProfileContainer other = new ProfileContainer(profiles);
-    boolean expected = false;
-    boolean result = reference.equals(other);
-    assertEquals(expected, result);
-  }
-
   @Test
   void ensureThatAccountListIsRetrieved() {
     //ARRANGE
