@@ -1,0 +1,95 @@
+@startuml
+Class Account{
+name
+email
+phoneNumber
+photo
+status
+password
+}
+hide Account circle
+Class Profile{
+name
+startDate
+endDate
+}
+hide Profile circle
+Class Role{
+startDate
+endDate
+}
+hide Role circle
+Class Project{
+code
+name
+startDate
+endDate
+description
+numberOfSprints
+customer
+typology
+budget
+projectStatus
+}
+hide Project circle
+Class UserStory{
+number
+actor
+usText
+acceptanceCriteria
+}
+hide UserStory circle
+Class Task{
+name
+startDate
+endDate
+description
+effortEstimate
+hoursSpent
+percentageExecution
+type
+status
+responsible
+}
+hide Task circle
+Class Sprint {
+startDate
+endDate
+}
+hide Sprint circle
+Class ProductBacklog{
+}
+hide ProductBacklog circle
+Class SprintBacklog{
+}
+hide SprintBacklog circle
+Class Report {}
+hide Report circle
+Class Account_Project{
+startDate
+endDate
+}
+hide Account_Project circle
+
+class Profile
+note left: User\nManager\nAdministrator
+
+class Report
+note right: KPI\nAllocation
+
+class Role
+note right: Product Owner\nScrum Master\nProject Manager\nTask Master
+
+Account "1" -- "*" Account_Project: is involved in
+Account_Project "*" -- "1" Project: has
+Account "*" -- "1" Profile: has 
+Project "1" -- "*" Sprint: is divided into
+Sprint "1" -- "*" Task: has
+Project "1" -- "1" ProductBacklog: has
+ProductBacklog "1" -- "*" UserStory: contains
+Sprint "1" -- "1" SprintBacklog: has
+SprintBacklog "1"--"*" UserStory: has
+UserStory "1"-- "*" Task
+Project "1" -- "*" Report: generates
+Role "1" -- "*" Account_Project: has
+@enduml

@@ -43,7 +43,7 @@ public class ProfileContainer {
      */
     public boolean doesProfileNameExist(Profile profile) {
         return this.profiles.contains(profile);
-    }
+    } //alterar para privado
 
     /**
      * This method adds profile to profiles
