@@ -19,12 +19,16 @@ public class ChangeProfileController {
     this.company = company;
   }
   /**
-   * This method changes/updates the accountProfile
+   * This method updates the account Profile
    *
    * @param email
    * @param profileName
+   *
+   * @return true if account Profile is updated successfully
+   * @return false if account Profile isn't updated
    */
-  public void changeProfile(String email, String profileName) {
+  public boolean changeProfile(String email, String profileName) {
+    boolean wasAccountProfileUpdated = false;
     ProfileContainer profileContainer = company.getProfileContainer();
     Profile profile = profileContainer.getProfileByName(profileName);
 
@@ -33,6 +37,8 @@ public class ChangeProfileController {
 
     if (account != null && profile != null) {
       account.setProfile(profile);
+      wasAccountProfileUpdated = true;
     }
+    return wasAccountProfileUpdated;
   }
 }
