@@ -1,11 +1,28 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 
-autonumber
+legend top
+US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to.
+end legend
+skinparam sequenceMessageAlign center
+title LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+class "ListProjectController" {
+- company
++ listProjectsByAccount(e-mail)
+}
+class "Company" {
+- projectContainer
++ getProjectsByAccount(email)
+}
+class "ProjectContainer" {
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+}
+class "Projects" {
+
+}
+class "Account" {
+
+}
+
 @enduml
