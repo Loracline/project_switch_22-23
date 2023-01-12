@@ -1,11 +1,49 @@
 @startuml
-'https://plantuml.com/sequence-diagram
-
+skinparam sequenceMessageAlign center
+title TO LIST ALL PROJECTS
+legend top
+US015 - As a Manager, I want to get a list of all projects
+end legend
 autonumber
-
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor Manager
+participant ":ListProjectUI" as ui
+participant ":ListProjectController" as controller
+participant ":Company" as company
+participant ":ProjectContainer" as container
+participant ":ProjectMapper" as mapper
+participant "listAllProjectsDTO: List<ProjectDTO>" as list
+participant "projectDTO:projectDTO" as DTO
+activate Manager
+Manager -> ui: Lists all projects
+activate ui
+ui -> controller: listAllProjects()
+activate controller
+controller -> company: listAllProjects()
+activate company
+company -> container: listAllProjects()
+activate container
+container -->> company: listAllProjects
+deactivate container
+company -->> controller: listAllProjects
+deactivate company
+controller -> mapper: toDTO(listAllProjects)
+activate mapper
+create list
+mapper --> list: create ()
+loop for each project in projectContainer
+mapper -> container: project = get(i)
+activate container
+container --> mapper: project
+deactivate container
+mapper -> mapper : projectDTO = toDTO (project)
+create DTO
+mapper --> DTO : create()
+mapper ->list :add(projectDTO)
+end loop
+mapper --> controller :listAllProjectsDTO
+deactivate mapper
+controller -->> ui: listAllProjectsDTO
+deactivate controller
+ui -->>Manager: listAllProjectsDTO
+deactivate ui
 @enduml
