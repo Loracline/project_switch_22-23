@@ -12,7 +12,9 @@ class SetRoleController {
 }
 
 class Company {
--company
+-accountContainer
+-projectContainer
+-accountInProjectContainer
 +setRole(email, projectCode, role)
 }
 
