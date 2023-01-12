@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+skinparam sequenceMessageAlign center
+title CREATE A NEW PROJECT TYPOLOGY
+legend top
+US007 - As Administrator, I want to create a new project typology.
+end legend
+
+actor Administrator as a
+participant ":UI" as ui
+participant ":Controller" as ct
+participant ":Company" as c
+participant ":ProjectTypologyContainer" as pc
+participant "projectTypology:ProjectTypology" as pt
+
+activate a
+a -> ui: starts creating new project typology
+activate ui
+ui --> a: requests data (projectTypology)
+a -> ui: types requested data
+ui -> ct: createProjectTypology(projectTypology)
+activate ct
+ct -> c: createProjectTypology(projectTypology)
+activate c
+c -> pc: createProjectTypology(projectTypology)
+activate pc
+create pt
+pc -> pt: create()
+activate pt
+pt -> pt: addProjectTypology(projectTypology)
+pt --> pc: true
+deactivate pt
+pc --> c: true
+deactivate pc
+c --> ct: true
+deactivate c
+ct --> ui: true
+deactivate ct
+ui --> a: true
+deactivate ui
+deactivate a
+@enduml
+
