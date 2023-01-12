@@ -13,16 +13,15 @@ class "ListAccountController" {
 
 class "Company"{
 -accountContainer
-+getAccountContainer()
++listAllAccounts()
 
 }
 class "AccountContainer"{
 -accounts
-+getAccounts()
++listAllAccounts()
 }
 
 "ListAccountController" ..> "Company"
-"ListAccountController" ..> "AccountContainer"
 "Company" "1"-->"1" "AccountContainer": has
 
 @enduml
