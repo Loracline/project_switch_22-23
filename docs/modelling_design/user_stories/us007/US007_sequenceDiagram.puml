@@ -28,10 +28,8 @@ c -> pc: createProjectTypology(projectTypology)
 activate pc
 create pt
 pc -> pt: create()
-activate pt
-pt -> pt: addProjectTypology(projectTypology)
-pt --> pc: true
-deactivate pt
+pc -> pc: addProjectTypology(projectTypology)
+pc --> pc: true
 pc --> c: true
 deactivate pc
 c --> ct: true
