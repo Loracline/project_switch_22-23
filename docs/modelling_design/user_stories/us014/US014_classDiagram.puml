@@ -1,0 +1,10 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS IN A GIVEN PROJECT
+legend top
+US014 - As Manager, I want to get a list of all human resources in a project.
+end legend
+
+
+@enduml

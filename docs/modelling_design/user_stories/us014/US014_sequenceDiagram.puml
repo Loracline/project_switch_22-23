@@ -1,0 +1,73 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS IN A GIVEN PROJECT
+legend top
+US014 - As Manager, I want to get a list of all human resources in a project.
+end legend
+autonumber
+
+actor Manager
+participant ":ListAccountsInProjectUI" as ui
+participant ":ListAccountsInProjectController" as controller
+participant ":Company" as company
+participant ":ProjectContainer" as container
+participant ":AccountInProjectContainer" as aipc
+participant "accountInProject:AccountInProject" as aip
+participant "account:Account"
+participant "listAccounts: List<Account>" as list
+participant ":AccountMapper" as mapper
+participant "listAccountsInProjectDTO: List<AccountDTO>" as listDTO
+participant "accountDTO:AccountDTO" as DTO
+
+activate Manager
+Manager -> ui: lists all accounts of a given project
+activate ui
+ui -> controller: listAccountsByProject(projectCode)
+activate controller
+controller -> company: listAccountsByProject(projectCode)
+activate company
+company -> container: listAccountsByProject(projectCode)
+activate container
+container -> container: project = getProjectByCode(projectCode)
+container -> aipc: listAccountsByProject(project)
+create list
+aipc -> list :create()
+loop for each AccountInProject in AccountInProjectContainer
+aipc -> aip : getAccountByProject(project)
+activate aip
+aip --> aipc : accountInProject
+deactivate aip
+aipc -> list : addAccount(accountInProject)
+activate list
+list --> aipc: true
+deactivate list
+end loop
+activate aipc
+aipc --> container : accountsList
+deactivate aipc
+container--> company : accountsList
+deactivate container
+company --> controller : accountsList
+deactivate company
+controller --> ui: accountsList
+/'controller -> mapper: accountListToDTO(accountsList)
+activate mapper
+create listDTO
+mapper --> listDTO: create ()
+loop for each account in accountContainer
+mapper -> container: account = get(i)
+activate container
+container --> mapper: project
+deactivate container
+mapper -> mapper : projectDTO = toDTO (project)
+create DTO
+mapper --> DTO : create()
+mapper ->listDTO :add(projectDTO)
+end loop
+mapper --> controller :listAllProjectsDTO
+deactivate mapper
+controller -->> ui: listAllProjectsDTO
+deactivate controller
+ui --> Manager: return list of accounts'/
+deactivate ui
+@enduml
