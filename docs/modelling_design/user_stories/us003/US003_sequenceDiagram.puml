@@ -19,28 +19,28 @@ autonumber
 activate Administrator
 Administrator -> ui:  Changes account profile
 activate ui
-Administrator <-- ui:  Requests data (e-mail, profileName)
+Administrator <-- ui:  Requests data (email, profileName)
 deactivate ui
 Administrator -> ui:  Enters account data
 activate ui
-ui -> controller: changeProfile(e-mail, profileName)
+ui -> controller: changeProfile(email, profileName)
 activate controller
-controller -> company: profileContainer=getProfileContainer()
+controller -> company: changeProfile(email, profileName)
 activate company
-deactivate company
-controller -> pcontainer: profile=getProfileByName(profileName)
+company -> pcontainer: getProfileByName(profileName)
 activate pcontainer
+company <-- pcontainer: profile
 deactivate pcontainer
-controller-> company: accountContainer=getAccountContainer()
-activate company
-deactivate company
-controller -> acontainer: account=getAccountByEmail(e-mail)
+company -> acontainer: getAccountByEmail(email)
 activate acontainer
+company <-- acontainer: account
 deactivate acontainer
-controller -> account: setProfile(profile)
+company -> account: setProfile(profile)
 activate account
 deactivate account
-controller -->> ui: account profile updated
+controller <-- company: true
+deactivate company
+controller --> ui: true
 deactivate controller
 ui -->> Administrator: informs account profile updated
 
