@@ -1,11 +1,40 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
+skinparam sequenceMessageAlign center
+title TO LIST ALL PROJECTS
+legend top
+US015 - As a Manager, I want to get a list of all projects
+end legend
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+class "ListProjectController" {
+-company
+-projectMapper
++listAllProjects()
++listAllProjectsDTO()
+}
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+class "Company"{
+-projectContainer
++listAllProjects()
+}
+class "ProjectContainer"{
+-projects
++getProject()
+}
+
+class "ProjectMapper"{
+-projectDTO
++add(projectDTO)
++toDTO(project)
+}
+
+class "ProjectDTO" {
++createDTO(project)
+}
+"ListProjectController" ..> "Company"
+"ListProjectController" ..> "ProjectMapper"
+"Company" "1"-->"1" "ProjectContainer": has
+"ProjectMapper" --> "ProjectDTO"
+
+
 @enduml
