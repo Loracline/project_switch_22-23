@@ -16,17 +16,17 @@ Administrator -> ui: Lists all accounts
 activate ui
 ui -> controller: listAllAccounts()
 activate controller
-controller -> company: accountContainer = getAccountContainer()
+controller -> company: listAllAccounts()
 activate company
-create container
-company -->> container: create
-deactivate company
-controller -> container: getAccounts()
+company -> container: listAllAccounts()
 activate container
+container --> company: list
 deactivate container
-controller -->> ui: return accounts
+company --> controller: list
+deactivate company
+controller -->> ui: list
 deactivate controller
-ui -->>Administrator: return accounts
+ui -->>Administrator: list
 deactivate ui
 
 @enduml
