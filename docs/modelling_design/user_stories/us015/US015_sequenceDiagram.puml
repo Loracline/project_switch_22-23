@@ -14,7 +14,7 @@ participant ":ProjectMapper" as mapper
 participant "listAllProjectsDTO: List<ProjectDTO>" as list
 participant "projectDTO:projectDTO" as DTO
 activate Manager
-Manager -> ui: Lists all projects
+Manager -> ui: List all projects
 activate ui
 ui -> controller: listAllProjects()
 activate controller
@@ -44,6 +44,6 @@ mapper --> controller :listAllProjectsDTO
 deactivate mapper
 controller -->> ui: listAllProjectsDTO
 deactivate controller
-ui -->>Manager: listAllProjectsDTO
+ui -->>Manager: showListAllProjects
 deactivate ui
 @enduml
