@@ -28,17 +28,6 @@ public class ChangeProfileController {
    * @return false if account Profile isn't updated
    */
   public boolean changeProfile(String email, String profileName) {
-    boolean wasAccountProfileUpdated = false;
-    ProfileContainer profileContainer = company.getProfileContainer();
-    Profile profile = profileContainer.getProfileByName(profileName);
-
-    AccountContainer accountContainer = company.getAccountContainer();
-    Account account = accountContainer.getAccountByEmail(email);
-
-    if (account != null && profile != null) {
-      account.setProfile(profile);
-      wasAccountProfileUpdated = true;
-    }
-    return wasAccountProfileUpdated;
+    return company.changeProfile(email, profileName);
   }
 }

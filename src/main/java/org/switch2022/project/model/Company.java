@@ -47,5 +47,18 @@ public class Company {
     public boolean createProfile (String name){
         return profileContainer.createProfile(name);
     }
+
+    public boolean changeProfile(String email, String profileName) {
+        boolean wasAccountProfileUpdated = false;
+        Profile profile = profileContainer.getProfileByName(profileName);
+        Account account = accountContainer.getAccountByEmail(email);
+
+        if (account != null && profile != null) {
+            account.setProfile(profile);
+            wasAccountProfileUpdated = true;
+        }
+
+        return wasAccountProfileUpdated;
+    }
 }
 

@@ -52,37 +52,31 @@ class ChangeProfileControllerTest {
     }
     @Test
     void ensureAccountProfileIsChangedSuccessfully() {
-        //ARRANGE
+        //Arrange
         boolean expected = true;
-
-        //ACT
+        //Act
         boolean result = controller.changeProfile("mike@isep.ipp.pt", "Administrator");
-
-        //ASSERT
+        //Assert
         assertEquals(expected, result);
     }
 
     @Test
     void ensureAccountProfileIsNotChangedSuccessfully_ProfileNotFound() {
-        //ARRANGE
+        //Arrange
         boolean expected = false;
-
-        //ACT
+        //Act
         boolean result = controller.changeProfile("mike@isep.ipp.pt", "Manager");
-
-        //ASSERT
+        //Assert
         assertEquals(expected, result);
     }
 
     @Test
     void ensureAccountProfileIsNotChangedSuccessfully_AccountNotFound() {
-        //ARRANGE
+        //Arrange
         boolean expected = false;
-
-        //ACT
+        //Act
         boolean result = controller.changeProfile("mikke@isep.ipp.pt", "Administrator");
-
-        //ASSERT
+        //Assert
         assertEquals(expected, result);
     }
 }
