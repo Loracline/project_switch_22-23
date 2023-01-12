@@ -1,27 +1,29 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
+class AddBusinessSectorController {
+-company
++addBusinessSector(name)
 }
 
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
+class Company {
+-businessSectorContainer
++addBusinessSector(name)
 }
+
+class BusinessSectorContainer {
+-businessSectors
++addBusinessSector(name)
+-doesBusinessSectorExist(businessSector)
+}
+
+class BusinessSector {
+-name
++BusinessSector(name)
+}
+
+AddBusinessSectorController --> Company
+Company --> BusinessSectorContainer
+BusinessSectorContainer --> BusinessSector
 
 @enduml
