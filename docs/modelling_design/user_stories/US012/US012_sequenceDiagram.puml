@@ -1,0 +1,56 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO DEFINE THE PO OF A PROJECT
+legend top
+US012 - As Manager, I want to define the PO of a project
+end legend
+
+class SetRoleController {
+-company
++setRole(email, projectCode, role)
+}
+
+class Company {
+-company
++setRole(email, projectCode, role)
+}
+
+class AccountContainer {
+-email
++getAccountByEmail(email)
+
+}
+
+class ProjectContainer{
+-projectCode
++getProject(projectCode)
+}
+
+class AccountInProjectContainer{
+-account
+-project
+-role
++setRole(account, project,role)
++getAccountProject(account,project)
+}
+
+class AccountInProject{
+-role
++setRole(role)
+isRoleValid(role)
+}
+
+
+SetRoleController ..> Company
+Company "1       " --> "*"AccountContainer: has
+Company "1"--> "        *"ProjectContainer: has
+Company "1 "-->"*" AccountInProjectContainer: has
+AccountInProjectContainer "    1"--> "   *"AccountInProject: contains
+
+SetRoleController ..> AccountContainer
+SetRoleController ..> ProjectContainer
+SetRoleController ..> AccountInProjectContainer
+
+
+@enduml
