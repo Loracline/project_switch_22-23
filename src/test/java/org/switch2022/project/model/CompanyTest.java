@@ -74,5 +74,23 @@ class CompanyTest {
         ProfileContainer result = company.getProfileContainer();
         assertEquals(expected, result);
     }
+    @Test
+    void ensureProfileIsCreatedSuccessfuly(){
+        //Arrange
+        boolean expected= true;
+        //Act
+        boolean result= company.createProfile("manager");
+        //
+        assertEquals(expected,result);
+    }
+    @Test
+    void ensureProfileIsCreatedUnsuccessfuly(){
+        //Arrange
+        boolean expected= false;
+        //Act
+        boolean result= company.createProfile("user");
+        //
+        assertEquals(expected,result);
+    }
 
 }

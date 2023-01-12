@@ -27,33 +27,25 @@ public class ProfileContainer {
     }
 
     /**
-     * This method creates a Profile
-     *
-     * @return an object Profile
-     */
-    public Profile createProfile(String name) {
-        return new Profile(name);
-    }
-
-    /**
      * This method validates if profile exits
      *
      * @param profile one must check
      * @return true if profile exists in profiles
      */
-    public boolean doesProfileNameExist(Profile profile) {
+    private boolean doesProfileNameExist(Profile profile) {
         return this.profiles.contains(profile);
-    } //alterar para privado
+    }
 
     /**
-     * This method adds profile to profiles
+     * This method creates profile  and adds it to profiles
      *
-     * @param profile one must add
+     * @param name one must add
      */
-    public boolean addProfile(Profile profile) {
+    public boolean createProfile(String name) {
+        Profile newProfile =  new Profile(name);
         boolean isAddedToList = false;
-        if (!doesProfileNameExist(profile)) {
-            profiles.add(profile);
+        if (!doesProfileNameExist(newProfile)) {
+            profiles.add(newProfile);
             isAddedToList = true;
         }
         return isAddedToList;
