@@ -28,6 +28,7 @@ class ProfileContainerTest {
 
         profiles = new ArrayList<>();
         profiles.add(profileOne);
+        profiles.add(profileTwo);
 
         profileContainerReference = new ProfileContainer(profiles);
 
@@ -42,47 +43,36 @@ class ProfileContainerTest {
 
     }
 
-    @Test
-    void ensureProfileIsCreatedSuccessfully() {
-        Profile expected = new Profile("User");
-        Profile result = profileContainerReference.createProfile("User");
-        assertEquals(expected, result);
-    }
 
     @Test
-    void ensureProfileExistSuccessfullyCaseInsensitive() {
-        boolean expected = true;
-        Profile profileThree = new Profile("administrator");
-        boolean result = profileContainerReference.doesProfileNameExist(profileThree);
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureProfileDoesntExist() {
+    void ensureProfileIsntAddedSuccessfully_CaseInsensitive() {
+        //Arrange
         boolean expected = false;
-        boolean result = profileContainerReference.doesProfileNameExist(profileTwo);
+        //Act
+        boolean result = profileContainerReference.createProfile("administrator");
+        //Assert
         assertEquals(expected, result);
     }
 
-    @Test
-    void ensureProfileExistSuccessfully() {
-        boolean expected = true;
-        boolean result = profileContainerReference.doesProfileNameExist(profileOne);
-        assertEquals(expected, result);
-    }
 
     @Test
     void ensureAddProfileToProfilesListSuccessfully() {
+        //Arrange
         boolean expected = true;
-        boolean result = profileContainerReference.addProfile(profileTwo);
+        //Act
+        boolean result = profileContainerReference.createProfile("manager");
+        //Assert
         assertEquals(expected, result);
 
     }
 
     @Test
     void ensureAddProfileToProfilesListUnsuccessfully() {
+        //Arrange
         boolean expected = false;
-        boolean result = profileContainerReference.addProfile(profileOne);
+        //Act
+        boolean result = profileContainerReference.createProfile("user");
+        //Assert
         assertEquals(expected, result);
 
     }

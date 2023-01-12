@@ -20,19 +20,13 @@ public class CreateProfileController {
         this.company = company;
     }
     /**
-     * Method createProfile creates a new profile and adds it to the list of profiles.
+     * Method createProfile
      *
      * @return true if profile is created
      * @return false if profile isn't created successfully
      */
     public boolean createProfile(String profileName) {
-        ProfileContainer profileContainer = company.getProfileContainer();
-        boolean isAddedToList = false;
-        Profile profile = profileContainer.createProfile(profileName);
-        if (profileContainer.addProfile(profile)){
-            isAddedToList=true;
-        }
-        return isAddedToList;
+        return (company.createProfile(profileName));
     }
 }
 

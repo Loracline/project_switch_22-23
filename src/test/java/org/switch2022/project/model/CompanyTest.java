@@ -70,9 +70,59 @@ class CompanyTest {
 
     @Test
     void ensureProfileContainerIsRetrieved() {
+        //Arrange
         ProfileContainer expected = profileContainer;
+        //Act
         ProfileContainer result = company.getProfileContainer();
+        //Assert
+        assertEquals(expected, result);
+    }
+    @Test
+    void ensureProfileIsCreatedSuccessfuly(){
+        //Arrange
+        boolean expected= true;
+        //Act
+        boolean result= company.createProfile("manager");
+        //Assert
+        assertEquals(expected,result);
+    }
+    @Test
+    void ensureProfileIsCreatedUnsuccessfuly(){
+        //Arrange
+        boolean expected= false;
+        //Act
+        boolean result= company.createProfile("user");
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureAccountProfileIsChangedSuccessfully() {
+        //Arrange
+        boolean expected = true;
+        //Act
+        boolean result = company.changeProfile("mike@isep.ipp.pt", "Administrator");
+        //Assert
         assertEquals(expected, result);
     }
 
+    @Test
+    void ensureAccountProfileIsNotChangedSuccessfully_ProfileNotFound() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = company.changeProfile("mike@isep.ipp.pt", "Manager");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureAccountProfileIsNotChangedSuccessfully_AccountNotFound() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = company.changeProfile("mikke@isep.ipp.pt", "Administrator");
+        //Assert
+        assertEquals(expected, result);
+    }
 }
