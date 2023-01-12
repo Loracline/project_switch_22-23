@@ -9,26 +9,61 @@ actor User
 participant ":ListProjectUI" as ui
 participant ":ListProjectController" as controller
 participant ":Company" as company
-participant ":ProjectContainer" as container
-participant ":Projects" as project
-participant ":Account" as account
+participant ":AccountContainer" as container
+participant ":AccountInProjectContainer" as aipc
+participant ":AccountInProject" as aip
+participant "List<Project>"
+participant "proj:Project"
+participant "listProj: List<Project>" as list
+participant ":ProjectMapper" as mapper
+participant "projectDTO:projectDTO" as DTO
+participant "listProjectByAccountDTO: List<ProjectDTO>" as listdto
+
 
 activate User
 User -> ui: lists all projects the user is allocated to
 activate ui
-ui -> controller: listProjectsByAccount(e-mail)
+ui -> controller: listProjectByAccount(email)
 activate controller
-controller -> company: listProjectsByAccount(e-mail)
+controller -> company: listProjectByAccount(email)
 activate company
-company -> container: getProjectsByAccount(email)
+company -> container: listProjectByAccount(email)
 deactivate company
-controller -> container: listProjectsByAccount(e-mail)
-
 activate container
+container ->container: account= getAccountByEmail(email)
+container -> aipc: listProjectByAccount(account)
+create list
+aipc -> list :create()
+loop
+aipc -> aip : getProjectByAccount(account)
+aip --> aipc : project
+aipc -> list : addProject(proj)
+end loop
+activate aipc
+aipc --> container : listProjectByAccount
+container--> company : listProjectByAccount
 deactivate container
-controller -->> ui: return projects
+activate company
+company --> controller : listProjectByAccount
+deactivate company
+controller -> mapper: toDTO(listProjectByAccount)
+activate mapper
+create listdto
+mapper --> listdto : create ()
+loop for
+mapper -> container: project = get(i)
+activate container
+container --> mapper: project
+deactivate container
+mapper -> mapper : projectDTO = toDTO (project)
+create DTO
+mapper --> DTO : create()
+mapper ->listdto :add(projectDTO)
+end loop
+mapper --> controller :listProjectByAccountDTO
+deactivate mapper
+controller -->> ui: listProjectByAccountDTO
 deactivate controller
-ui -->>User: return projects
+ui -->> User: listProjectByAccountDTO
 deactivate ui
-
 @enduml

@@ -16,13 +16,19 @@ class "Company" {
 + getProjectsByAccount(email)
 }
 class "ProjectContainer" {
+-projects
 
 }
 class "Projects" {
+- account
 
 }
 class "Account" {
 
 }
+"ListProjectController"..>"Company"
+"Company"..>"ProjectContainer"
+"ProjectContainer"..>"Projects"
+"Projects"..>"Account"
 
 @enduml
