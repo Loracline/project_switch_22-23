@@ -20,6 +20,7 @@ class "Company"{
 }
 class "ProjectContainer"{
 -projects
+-doesCustomerExist(customer)
 +addCustomer()
 }
 

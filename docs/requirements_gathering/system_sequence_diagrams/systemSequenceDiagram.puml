@@ -404,3 +404,13 @@ adm <-- ":System": requests data (projectTypology)
 adm -> ":System": types requested data
 adm <-- ":System":project typology created
 @enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO ADD A CUSTOMER
+actor "Administrator" as adm
+adm -> ":System": starts adding new customer
+adm <-- ":System": requests data (customer)
+adm -> ":System": types requested data
+adm <-- ":System":project typology created
+@enduml
