@@ -30,7 +30,6 @@ controller -> mapper: toDTO(listAllProjects)
 activate mapper
 create list
 mapper --> list: create ()
-list --> mapper: listAllProjectsDTO
 loop for each project in projectContainer
 mapper -> container: project = get(i)
 activate container
@@ -39,7 +38,6 @@ deactivate container
 mapper -> mapper : projectDTO = toDTO (project)
 create DTO
 mapper --> DTO : create()
-DTO --> mapper : projectDTO
 mapper ->list :add(projectDTO)
 list --> mapper : true
 end loop
