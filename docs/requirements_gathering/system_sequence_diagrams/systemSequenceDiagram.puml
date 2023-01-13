@@ -140,17 +140,21 @@ end note
 
 @startuml
 skinparam sequenceMessageAlign center
-title TO CREATE PROJECT
+title TO REGISTER NEW PROJECT
+legend top
+US010 - As Manager, I want to register/create a new project.
+end legend
 autonumber
+
 actor "Manager"
-"Manager" -> ":System": Creates new project
+"Manager" -> ":System": register new project
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Manager" <-- ":System": requests data (name, description, etc.)
-"Manager" -> ":System":  Enters project data
-"Manager" <-- ":System": new project created
+"Manager" <-- ":System": requests data (code, name, ...)
+"Manager" -> ":System":  types requested data
+"Manager" <-- ":System": informs project created
 @enduml
 
 
