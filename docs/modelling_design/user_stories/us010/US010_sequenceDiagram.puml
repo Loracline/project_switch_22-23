@@ -1,0 +1,46 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW PROJECT
+legend top
+US010 - As Manager, I want to register/create a new project.
+end legend
+autonumber
+
+actor Manager as mg
+participant ":RegisterProjectUI" as ui
+participant ":RegisterProjectController" as controller
+participant ":Company" as comp
+participant ":ProjectContainer" as PC
+participant "project:Project" as project
+participant "projectDTO:ProjectDTO" as pdto
+
+activate mg
+mg ->ui : register new project
+activate ui
+ui -->> mg: requests data (code, name, ...)
+deactivate ui
+mg -> ui: types requested data
+activate ui
+ui -> controller: registerProject(code, name, ...)
+activate controller
+create pdto
+controller -> pdto : create (code, name, ...)
+controller -> comp: registerProject (projectDTO)
+activate comp
+comp -> PC : registerProject (projectDTO)
+activate PC
+create project
+PC -> project : create (project)
+PC -> PC : addProject(project)
+PC -->> comp : true
+deactivate PC
+comp -->>controller: true
+deactivate comp
+deactivate PC
+controller -->> ui : true
+deactivate controller
+ui -->> mg :  informs project created
+deactivate ui
+
+@enduml
