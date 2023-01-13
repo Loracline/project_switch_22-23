@@ -13,18 +13,18 @@ class "CreateProfileController" {
 
 class "Company" {
 -profileContainer
-+getProfileContainer()
++createProfile(profileName)
 }
 
 class "ProfileContainer"{
 -profiles
++createProfile(profileName)
 +addProfile(profile)
-+doesProfileNameExist(profile)
 }
 
 class "Profile"{
 -profileName
-+Profile(profileName)
++createProfile(name)
 }
 
 "CreateProfileController" ..>  "Company"

@@ -7,36 +7,42 @@ US001 - As Administrator, I want to create user profiles.
 end legend
 autonumber
 actor Administrator
-participant ":CreateProfileUI" as cpu
+participant ":CreateProfileUI" as cpui
 participant ":CreateProfileController" as cpc
 participant ":Company" as Company
 participant "profileContainer:ProfileContainer" as ProfileContainer
 participant "profile:Profile" as Profile
 activate Administrator
-Administrator -> cpu: creates profile
-activate cpu
-cpu -->> Administrator: requests data (profileName)
-deactivate cpu
-Administrator -> cpu: types requested data
-activate cpu
-cpu -> cpc: createProfile (profileName)
+Administrator -> cpui: creates profile
+activate cpui
+cpui -->> Administrator: requests data (profileName)
+deactivate cpui
+Administrator -> cpui: types requested data
+activate cpui
+cpui -> cpc: createProfile (profileName)
 activate cpc
-cpc -> Company: profileContainer = getProfileContainer()
+cpc -> Company: createProfile (profileName)
 activate Company
-create ProfileContainer
-Company -->> ProfileContainer: create
-deactivate Company
-create Profile
-cpc -->> Profile: profileName
-deactivate Profile
-cpc -> ProfileContainer: addProfile (profile)
+
+
+Company -->> ProfileContainer: createProfile (profileName)
 activate ProfileContainer
-ProfileContainer -> ProfileContainer: doesProfileNameExist(profile)
-cpc -->> cpu: profile created
+
+
+create Profile
+ProfileContainer -->> Profile: createProfile (name)
+
+ProfileContainer -> ProfileContainer: addProfile(profile)
+ProfileContainer -->> Company: true
 deactivate ProfileContainer
+
+Company -->> cpc: true
+deactivate ProfileContainer
+deactivate Company
+cpc -->> cpui: true
 deactivate cpc
-cpu -->> Administrator: informs profile created
-deactivate cpu
+cpui -->> Administrator: informs profile created
+deactivate cpui
 
 
 @enduml
