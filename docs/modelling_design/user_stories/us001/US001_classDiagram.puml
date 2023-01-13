@@ -19,7 +19,6 @@ class "Company" {
 class "ProfileContainer"{
 -profiles
 +createProfile(profileName)
-+addProfile(profile)
 }
 
 class "Profile"{
