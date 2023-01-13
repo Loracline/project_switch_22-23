@@ -28,8 +28,6 @@ class "Profile"{
 }
 
 "CreateProfileController" ..>  "Company"
-"CreateProfileController" ..> "ProfileContainer"
-"CreateProfileController" ..> "Profile"
 "Company" "1"-->"1" "ProfileContainer": has
 "ProfileContainer" "1" --> "*" "Profile": contains
 
