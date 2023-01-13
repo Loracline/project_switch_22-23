@@ -14,8 +14,7 @@ class ChangeProfileController {
 class Company {
 -profileContainer
 -accountContainer
-+getProfileContainer()
-+getAccountContainer()
++changeProfile(email, (profileName))
 }
 
 class ProfileContainer {
@@ -39,7 +38,7 @@ class Profile{
 }
 
 
-ChangeProfileController ..> Company
+ChangeProfileController --> Company
 Company "1"-->"1" AccountContainer: has
 Company "1"-->"1" ProfileContainer: has
 Company ..> Account

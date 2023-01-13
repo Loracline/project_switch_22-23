@@ -13,23 +13,21 @@ class "CreateProfileController" {
 
 class "Company" {
 -profileContainer
-+getProfileContainer()
++createProfile(profileName)
 }
 
 class "ProfileContainer"{
 -profiles
++createProfile(profileName)
 +addProfile(profile)
-+doesProfileNameExist(profile)
 }
 
 class "Profile"{
 -profileName
-+Profile(profileName)
++createProfile(name)
 }
 
 "CreateProfileController" ..>  "Company"
-"CreateProfileController" ..> "ProfileContainer"
-"CreateProfileController" ..> "Profile"
 "Company" "1"-->"1" "ProfileContainer": has
 "ProfileContainer" "1" --> "*" "Profile": contains
 

@@ -28,7 +28,6 @@ c -> pc: createProjectTypology(projectTypology)
 activate pc
 create pt
 pc -> pt: create()
-pt --> pc: projectTypology
 pc -> pc: addProjectTypology(projectTypology)
 pc --> pc: true
 pc --> c: true

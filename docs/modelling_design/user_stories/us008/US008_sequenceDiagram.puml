@@ -13,62 +13,23 @@ participant ":AddBusinessSectorUI" as absui
 participant ":AddBusinessSectorController" as absc
 participant ":Company" as c
 participant ":BusinessSectorContainer" as bsc
-participant "businessSectorDTO:BusinessSectorDTO" as bsdto
 participant "businessSector:BusinessSector" as bs
 
 activate a
 a -> absui: starts adding new business sector
-a <-- absui: requests data (businessSectorName)
+activate absui
+a <-- absui: requests data (name)
 a -> absui: types requested data
-activate absui
-absui -> absc: createBusinessSector(businessSectorName)
+absui -> absc: addBusinessSector(name)
 activate absc
-create bsdto
-absc -> bsdto: create(businessSectorName)
-activate bsdto
-note right
-  The businessSectorDTO has all
-  required data (businessSectorName).
-end note
-absc <-- bsdto: businessSectorDTO
-deactivate bsdto
-absc -> c: createBusinessSector(businessSectorDTO)
+absc -> c: addBusinessSector(name)
 activate c
-c -> bsc: createBusinessSector(businessSectorDTO)
+c -> bsc: addBusinessSector(name)
 activate bsc
-bsc -> bsdto: getBusinessSectorName()
-activate bsdto
-bsc <-- bsdto: businessSectorName
-deactivate bsdto
 create bs
-bsc -> bs: create(businessSectorName)
-activate bs
-bsc <-- bs: businessSector
-deactivate bs
-c <-- bsc: true
-deactivate bsc
-absc <-- c: true
-deactivate c
-absui <-- absc: true
-deactivate absc
-a <-- absui: shows data and requests confirmation
-deactivate absui
-a -> absui: confirms data
-activate absui
-absui -> absc: saveBusinessSector()
-activate absc
-absc -> c: saveBusinessSector()
-activate c
-c -> bsc: saveBusinessSector(businessSector)
-activate bsc
-bsc -> bsc: validateBusinessSector(businessSector)
-activate bsc
-bsc <-- bsc: true
-deactivate bsc
-bsc -> bsc: addBusinessSector(businessSector)
-activate bsc
-bsc <-- bsc: true
-deactivate bsc
+bsc -> bs: create(name)
+bsc -> bsc: add(businessSector)
+bsc --> bsc: true
 c <-- bsc: true
 deactivate bsc
 absc <-- c: true

@@ -1,11 +1,9 @@
-
-
 @startuml
 'https://plantuml.com/class-diagram
 skinparam sequenceMessageAlign center
-title TO DEFINE THE SCRUM MASTER OF A PROJECT
+title TO DEFINE THE PO OF A PROJECT
 legend top
-US013 - As Manager, I want to define the Scrum Master of a project.
+US012 - As Manager, I want to define the PO of a project
 end legend
 autonumber
 
@@ -37,7 +35,7 @@ company -> pcontainer: getProject(projectCode)
 activate pcontainer
 company <-- pcontainer: project
 deactivate pcontainer
-company -> accinprojcont: setRole(account,project,role)
+company -> accinprojcont: setRole(account, project,role)
 activate accinprojcont
 accinprojcont -> accinprojcont : getAccountInProject(account,project)
 accinprojcont -> accinproj: SetRole(role)
@@ -55,6 +53,5 @@ ui -->> Manager: informs Set Role
 
 
 @enduml
-
 
 

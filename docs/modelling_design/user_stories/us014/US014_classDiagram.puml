@@ -1,0 +1,65 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS IN A GIVEN PROJECT
+legend top
+US014 - As Manager, I want to get a list of all human resources in a project.
+end legend
+
+class "ListAccountsInProjectController" {
+-company
++listAccountsByProject(projectCode)
+}
+
+class "Company"{
+-projectContainer
++listAccountsByProject(projectCode)
+
+}
+class "ProjectContainer"{
+-projects
+-accountInProjectContainer
++getProjectByCode(customerName)
+}
+
+/'class "Project"{
+-code
+-name
+-customer
+-status
+-startDate
+-endDate
++Project(code, name, customer, status, startDate, endDate)
+}'/
+
+class "AccountInProjectContainer"{
+-accountsInProject
++listAccountsByProject(project)
+}
+
+class "AccountInProject"{
+-account
+-project
+-role
++AccountInProject(account, project, role)
++getAccountByProject(project)
+}
+
+class "AccountMapper"{
++accountsListToDTO(accountsList)
++accountToDTO(account)
+}
+
+class "AccountDTO"{
++AccountDTO(account)
+}
+
+"ListAccountsInProjectController" ..> "Company"
+"Company" "1"-->"1" "ProjectContainer": has
+/'"ProjectContainer" "1"-->"*" "Project": has'/
+"ProjectContainer" "1"-->"1" "AccountInProjectContainer": has
+"AccountInProjectContainer" "1"-->"*" "AccountInProject": has
+"AccountInProjectContainer" "1"-->"1" "AccountMapper": has
+"AccountMapper" "1" --> "*" "AccountDTO": creates
+
+@enduml

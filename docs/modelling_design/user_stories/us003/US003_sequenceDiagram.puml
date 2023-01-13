@@ -5,8 +5,8 @@ actor Administrator
 participant ":ChangeProfileUI" as ui
 participant ":ChangeProfileController" as controller
 participant ":Company" as company
-participant "profileContainer:ProfileContainer" as pcontainer
-participant "accountContainer:AccountContainer" as acontainer
+participant ":ProfileContainer" as pcontainer
+participant ":AccountContainer" as acontainer
 participant "account:Account" as account
 participant "profile:Profile" as pprofile
 

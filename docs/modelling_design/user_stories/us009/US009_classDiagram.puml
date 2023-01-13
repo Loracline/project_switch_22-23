@@ -1,0 +1,34 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO ADD A CUSTOMER
+legend top
+US009 - As Administrator, I want to add a customer
+end legend
+
+class "AddCustomerController" {
+-company
++addCustomer(customerName)
+}
+
+class "Company"{
+-customerContainer
++addCustomer(customerName)
+
+}
+class "CustomerContainer"{
+-customers
+-doesCustomerExist(customerName)
++addCustomer(customerName)
+}
+
+class "Customer"{
+-customerName
++Customer(customerName)
+}
+
+"AddCustomerController" ..> "Company"
+"Company" "1"-->"1" "CustomerContainer": has
+"CustomerContainer" "1"-->"*" "Customer": has
+
+@enduml

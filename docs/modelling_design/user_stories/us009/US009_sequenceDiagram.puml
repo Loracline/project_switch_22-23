@@ -1,0 +1,42 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO ADD A CUSTOMER
+legend top
+US009 - As Administrator, I want to add a customer
+end legend
+autonumber
+actor Administrator
+participant ":AddCustomerUI" as ui
+participant ":AddCustomerController" as controller
+participant ":Company" as company
+participant ":CustomerContainer" as container
+participant "customer:Customer" as customer
+
+activate Administrator
+Administrator -> ui: add a customer
+activate ui
+ui --> Administrator: requests data
+deactivate ui
+Administrator -> ui: sends data: customerName
+activate ui
+ui -> controller: createCustomer(customerName)
+activate controller
+
+controller -> company: adddCustomer(customerName)
+activate company
+company --> container: addCustomer(customerName)
+create customer
+activate container
+container ->> customer: create(customerName)
+container -> container: addCustomer(customer)
+container --> container: true
+container --> company: true
+deactivate container
+company --> controller: true
+deactivate company
+controller -->> ui: true
+deactivate controller
+ui -->>Administrator: true
+deactivate ui
+
+@enduml
