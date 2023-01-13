@@ -6,19 +6,18 @@ US016 - As Authenticated User, I want to get a list of all projects I'm currentl
 end legend
 autonumber
 actor User
-participant ":ListProjectUI" as ui
-participant ":ListProjectController" as controller
+participant ":ListAccountsInProjectUI" as ui
+participant ":ListAccountsInProjectController" as controller
 participant ":Company" as company
 participant ":AccountContainer" as container
 participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
-participant "List<Project>"
-participant "proj:Project"
 participant "listProj: List<Project>" as list
 participant ":ProjectMapper" as mapper
+participant "projectsListDTO: List<ProjectDTO>" as listdto
 participant "projectDTO:projectDTO" as DTO
-participant "listProjectByAccountDTO: List<ProjectDTO>" as listdto
-
+participant "account:Account"
+participant "project:Project"
 
 activate User
 User -> ui: lists all projects the user is allocated to
@@ -34,36 +33,35 @@ container ->container: account= getAccountByEmail(email)
 container -> aipc: listProjectByAccount(account)
 create list
 aipc -> list :create()
-loop
+loop for each AccountInProject in AccountInProjectContainer
 aipc -> aip : getProjectByAccount(account)
 aip --> aipc : project
 aipc -> list : addProject(proj)
 end loop
 activate aipc
-aipc --> container : listProjectByAccount
-container--> company : listProjectByAccount
+aipc --> container : projectsList
+container--> company : projectsList
 deactivate container
 activate company
-company --> controller : listProjectByAccount
+company --> controller : projectsList
 deactivate company
-controller -> mapper: toDTO(listProjectByAccount)
+controller -> mapper: projectsListToDTO(projectsList)
 activate mapper
 create listdto
 mapper --> listdto : create ()
-loop for
-mapper -> container: project = get(i)
-activate container
-container --> mapper: project
-deactivate container
-mapper -> mapper : projectDTO = toDTO (project)
+loop for each project in projectsList
+mapper -> list: project = get(i)
+list --> mapper: project
+deactivate aipc
+mapper -> mapper : projectDTO = projectToDTO(project)
 create DTO
 mapper --> DTO : create()
 mapper ->listdto :add(projectDTO)
 end loop
-mapper --> controller :listProjectByAccountDTO
+mapper --> controller :projectsListDTO
 deactivate mapper
-controller -->> ui: listProjectByAccountDTO
+controller -->> ui: projectsListDTO
 deactivate controller
-ui -->> User: listProjectByAccountDTO
+ui -->> User: projectsListDTO
 deactivate ui
 @enduml
