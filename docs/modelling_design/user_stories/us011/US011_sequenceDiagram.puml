@@ -1,0 +1,56 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO ASSOCIATE USER AS TEAM MEMBER
+legend top
+US011 - As Manager, I want to associate a User as Team Member of a project.
+end legend
+autonumber
+
+actor Manager
+participant ":AddUserInProjectUI" as ui
+participant ":AddUserInProjectController" as controller
+participant ":Company" as company
+participant ":AccountContainer" as acccontainer
+participant "projectContainer:ProjectContainer" as pcontainer
+participant "accountInProjectContainer:AccountInProjectContainer" as accinprojcont
+participant "accountInProject:AccountInProject" as accinproj
+
+
+Manager -> ui:  associate User as Team Member
+activate ui
+Manager <-- ui:  requests data (email,projCode, role)
+deactivate ui
+Manager -> ui:  enters data
+activate ui
+ui -> controller: addUserInProject(email, projCode, role)
+activate controller
+controller -> company: addUserInProject(email, projCode, role)
+activate company
+company -> acccontainer: getAccountByEmail(email)
+activate acccontainer
+company <-- acccontainer: account
+deactivate acccontainer
+company -> pcontainer: getProject(projCode)
+activate pcontainer
+company <-- pcontainer: project
+deactivate pcontainer
+
+'https://stackoverflow.com/questions/27001842/how-to-draw-calls-from-constructors-in-uml-sequence-diagrams
+create accinproj
+company -->> accinproj: <<create>>
+activate accinproj
+accinproj -> accinproj: AccountInProject(account, project, role)
+company --> accinprojcont: add(accountInProject)
+deactivate accinproj
+activate accinprojcont
+deactivate accinprojcont
+
+
+company --> controller : true
+deactivate company
+controller --> ui: true
+deactivate controller
+ui -->> Manager: informs successful association
+
+@enduml

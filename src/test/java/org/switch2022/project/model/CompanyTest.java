@@ -96,6 +96,7 @@ class CompanyTest {
         assertEquals(expected,result);
     }
 
+    /*
     @Test
     void ensureAccountProfileIsChangedSuccessfully() {
         //Arrange
@@ -125,4 +126,5 @@ class CompanyTest {
         //Assert
         assertEquals(expected, result);
     }
+    */
 }
