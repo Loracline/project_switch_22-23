@@ -1,3 +1,4 @@
+
 @startuml
 
 skinparam sequenceMessageAlign center
@@ -50,9 +51,7 @@ Company "1"--> "        *"ProjectContainer: has
 Company "1 "-->"*" AccountInProjectContainer: has
 AccountInProjectContainer "    1"--> "   *"AccountInProject: contains
 
-SetRoleController ..> AccountContainer
-SetRoleController ..> ProjectContainer
-SetRoleController ..> AccountInProjectContainer
+
 
 
 @enduml
