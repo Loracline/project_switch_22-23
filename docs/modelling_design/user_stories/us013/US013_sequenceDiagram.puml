@@ -19,7 +19,7 @@ participant ":AccountInProjectContainer" as accinprojcont
 participant ":AccountInProject" as accinproj
 
 
-Manager -> ui:  defines a PO of a project
+Manager -> ui:  defines a Scrum Master of a project
 activate ui
 Manager <-- ui:  requests data (email,projectCode, role)
 deactivate ui

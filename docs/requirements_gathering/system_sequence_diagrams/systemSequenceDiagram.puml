@@ -401,6 +401,19 @@ UIP <-- ":System": stops recording / keeps record
 
 @startuml
 skinparam sequenceMessageAlign center
+title TO SEARCH All PROJECTS BY MANAGER
+actor "Manager"
+autonumber
+"Manager" -> ":System": List all projects
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Manager" <-- ":System": ShowListAllProjects
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
 title CREATE A NEW PROJECT TYPOLOGY
 actor "Administrator" as adm
 adm -> ":System": starts creating new project typology

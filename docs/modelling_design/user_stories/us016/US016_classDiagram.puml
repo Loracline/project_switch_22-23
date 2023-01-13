@@ -9,26 +9,47 @@ title LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 
 class "ListProjectController" {
 - company
-+ listProjectsByAccount(e-mail)
+- projectMapper
++ listProjectByAccount(email)
 }
 class "Company" {
-- projectContainer
-+ getProjectsByAccount(email)
+- accountContainer
++ listProjectByAccount(email)
 }
-class "ProjectContainer" {
--projects
-
-}
-class "Projects" {
+class "AccountContainer"{
 - account
+- accountInProjectContainer
++ getAccountByEmail(email)
 
 }
-class "Account" {
-
+class "AccountInProjectContainer"{
+- accountInProject
++ listProjectByAccount(account)
 }
-"ListProjectController"..>"Company"
-"Company"..>"ProjectContainer"
-"ProjectContainer"..>"Projects"
-"Projects"..>"Account"
+
+class "AccountInProject"{
+- account
+- project
+-role
++ accountInProject(account, project, role)
++ getProjectbyAccount(account)
+}
+
+class "ProjectMapper"{
++projectListToDTO(projectList)
++projectToDTO(project)
+}
+
+class "ProjectDTO"{
++projectDTO(project)
+}
+
+"ListProjectController"-->"Company"
+"Company"-->"AccountContainer"
+"AccountContainer"--> "AccountInProjectContainer"
+"AccountInProjectContainer"--> "AccountInProject"
+"AccountInProjectContainer"--> "ProjectMapper"
+"ProjectMapper"..> "ProjectDTO" : create
+
 
 @enduml
