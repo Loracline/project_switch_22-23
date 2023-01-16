@@ -48,6 +48,10 @@ public class Company {
         return profileContainer.createProfile(name);
     }
 
+    public boolean changeStatus(String email, boolean status){
+        return accountContainer.changeStatus(email, status);
+    }
+
     public boolean changeProfile(String email, String profileName) {
         boolean wasAccountProfileUpdated = false;
         Profile profile = profileContainer.getProfileByName(profileName);

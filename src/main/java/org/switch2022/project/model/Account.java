@@ -84,8 +84,8 @@ public class Account {
      *
      * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
      */
-    public void setStatus(boolean status) {
-        this.status = status;
+    public boolean setStatus(boolean status) {
+        return this.status = status;
     }
 
     /**

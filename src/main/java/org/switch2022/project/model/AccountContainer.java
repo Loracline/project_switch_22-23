@@ -72,5 +72,12 @@ public class AccountContainer {
     return isAccountAdded;
   }
 
-
+  /**
+   * Setter method for the attribute ACCOUNT STATUS.
+   *
+   * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
+   */
+  public boolean changeStatus(String email, boolean status) {
+    return (getAccountByEmail(email).setStatus(status));
+  }
 }
