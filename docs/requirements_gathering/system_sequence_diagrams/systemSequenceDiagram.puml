@@ -455,3 +455,15 @@ Account is authenticated.
 end note
 "Manager" <-- ":System": informs set role
 @enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
+actor "User"
+"User" -> ":System": lists all projects the user is allocated to
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"User" <-- ":System": shows list of all projects the user is allocated
+@enduml
