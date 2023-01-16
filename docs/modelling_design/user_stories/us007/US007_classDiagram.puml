@@ -12,20 +12,20 @@ title CREATE A NEW PROJECT TYPOLOGY
 
 class "Company" {
 -projectContainer
-createProjectTypology(projectTypology)
++createProjectTypology(projectTypology)
 }
 class "Controller" {
 -company
-createProjectTypology(projectTypology)
++createProjectTypology(projectTypology)
 }
 class "ProjectTypologyContainer"{
 -typologies
-addProjectTypology(projectTypology)
-doesProjectTypologyExist(projectTypology)
++addProjectTypology(projectTypology)
++doesProjectTypologyExist(projectTypology)
 }
 class "ProjectTypology"{
 -projectTypology
-ProjectTypology(projectTypology)
++ProjectTypology(projectTypology)
 }
 
 

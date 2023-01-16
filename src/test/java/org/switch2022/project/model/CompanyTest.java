@@ -11,90 +11,109 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CompanyTest {
 
-    /**
-     * BeforeEach and AfterEach executes common code before/after running the tests below.
-     */
+  /**
+   * BeforeEach and AfterEach executes common code before/after running the tests below.
+   */
 
-    Account accountOne, accountTwo, accountThree, accountFour;
-    Profile profileOne, profileTwo;
-    List<Account> accounts;
-    List<Profile> profiles;
-    AccountContainer accountContainer;
-    ProfileContainer profileContainer;
-    Company company;
-
-
-    @BeforeEach
-    void setUp() {
-        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
-        accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
-        accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
-
-        accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
-
-        profileOne = new Profile("Administrator");
-        profileTwo = new Profile("User");
+  Account accountOne, accountTwo, accountThree, accountFour;
+  Profile profileOne, profileTwo;
+  List<Account> accounts;
+  List<Profile> profiles;
+  AccountContainer accountContainer;
+  ProfileContainer profileContainer;
+  Company company;
 
 
-        profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
+  @BeforeEach
+  void setUp() {
+    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+    accountTwo = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+    //accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
+    //accountFour = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
 
-        company = new Company(accountContainer, profileContainer);
-    }
+    accounts = new ArrayList<>();
+    accountContainer = new AccountContainer(accounts);
+    accounts.add(accountOne);
+    accounts.add(accountTwo);
 
-    @AfterEach
-    void tearDown() {
-        accountOne = null;
-        accountTwo = null;
-        profileOne = null;
-        profileTwo = null;
-        accounts.clear();
-        profiles.clear();
-        accountContainer = null;
-        profileContainer = null;
-        company = null;
-    }
+    profileOne = new Profile("Administrator");
+    profileTwo = new Profile("User");
 
-    @Test
-    void ensureAccountContainerIsRetrieved() {
-        AccountContainer expected = accountContainer;
-        AccountContainer result = company.getAccountContainer();
-        assertEquals(expected, result);
-    }
 
-    @Test
-    void ensureProfileContainerIsRetrieved() {
-        //Arrange
-        ProfileContainer expected = profileContainer;
-        //Act
-        ProfileContainer result = company.getProfileContainer();
-        //Assert
-        assertEquals(expected, result);
-    }
-    @Test
-    void ensureProfileIsCreatedSuccessfuly(){
-        //Arrange
-        boolean expected= true;
-        //Act
-        boolean result= company.createProfile("manager");
-        //Assert
-        assertEquals(expected,result);
-    }
-    @Test
-    void ensureProfileIsCreatedUnsuccessfuly(){
-        //Arrange
-        boolean expected= false;
-        //Act
-        boolean result= company.createProfile("user");
-        //Assert
-        assertEquals(expected,result);
-    }
+    profiles = new ArrayList<>();
+    profileContainer = new ProfileContainer(profiles);
+    profiles.add(profileOne);
+    profiles.add(profileTwo);
+
+    company = new Company(accountContainer, profileContainer);
+  }
+
+  @AfterEach
+  void tearDown() {
+    accountOne = null;
+    accountTwo = null;
+    profileOne = null;
+    profileTwo = null;
+    accounts.clear();
+    profiles.clear();
+    accountContainer = null;
+    profileContainer = null;
+    company = null;
+  }
+
+  @Test
+  void ensureAccountContainerIsRetrieved() {
+    AccountContainer expected = accountContainer;
+    AccountContainer result = company.getAccountContainer();
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureProfileContainerIsRetrieved() {
+    //Arrange
+    ProfileContainer expected = profileContainer;
+    //Act
+    ProfileContainer result = company.getProfileContainer();
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureProfileIsCreatedSuccessfuly() {
+    //Arrange
+    boolean expected = true;
+    //Act
+    boolean result = company.createProfile("manager");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureProfileIsCreatedUnsuccessfuly() {
+    //Arrange
+    boolean expected = false;
+    //Act
+    boolean result = company.createProfile("user");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureAccountStatusIsChangedToInactive() {
+    boolean expected = false;
+    accountContainer.changeStatus("mike@isep.ipp.pt", false);
+    boolean result = accountOne.equals(accountTwo);
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureAccountStatusIsChangedToActive() {
+    boolean expected = true;
+    accountContainer.changeStatus("mike@isep.ipp.pt", true);
+    boolean result = accountOne.equals(accountTwo);
+    assertEquals(expected, result);
+  }
+}
 
     /*
     @Test
@@ -127,4 +146,3 @@ class CompanyTest {
         assertEquals(expected, result);
     }
     */
-}
