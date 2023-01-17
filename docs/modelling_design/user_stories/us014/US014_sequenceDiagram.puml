@@ -9,28 +9,49 @@ autonumber
 actor Manager
 participant ":ListAccountsInProjectUI" as ui
 participant ":ListAccountsInProjectController" as controller
+participant ":Service" as ser
 participant ":Company" as company
+participant ":AccountContainer" as ac
+participant "account:Account" as a
 participant ":ProjectContainer" as container
 participant ":AccountInProjectContainer" as aipc
 participant "accountInProject:AccountInProject" as aip
-participant "listAccounts: List<Account>" as list
+participant "accounts: List<Account>" as list
 participant ":AccountMapper" as mapper
-participant "accountsListDTO: List<AccountDTO>" as listDTO
+participant "accountsDTO: List<AccountDTO>" as listDTO
 participant "accountDTO:AccountDTO" as DTO
-participant "account:Account"
+
+participant "profile:Profile"
 participant "project:Project"
+
 
 activate Manager
 Manager -> ui: lists all accounts of a given project
 activate ui
-ui -> controller: listAccountsByProject(projectCode)
+ui -> controller: listAccountsByProject(email, projectCode)
 activate controller
-controller -> company: listAccountsByProject(projectCode)
+controller -> ser: listAccountsByProject(email, projectCode)
+activate ser
+ ser -> company: validateManager(email)
+ activate company
+ company -> ac: validateManager(email)
+ activate ac
+ ac -> ac: account=getAccountByEmail(email)
+ ac -> a: isManager()
+ activate a
+ a -->> ac: true
+ deactivate a
+ ac -->> company: true
+ deactivate ac
+ company -->> ser: true
+ deactivate company
+ser -> company: listAccountsByProject(projectCode)
 activate company
 company -> container: listAccountsByProject(projectCode)
 activate container
 container -> container: project = getProjectByCode(projectCode)
 container -> aipc: listAccountsByProject(project)
+activate aipc
 create list
 aipc --> list :create()
 loop for each AccountInProject in AccountInProjectContainer
@@ -39,29 +60,36 @@ activate aip
 aip --> aipc : account
 deactivate aip
 aipc -> list : add(account)
+activate list
+deactivate list
 end loop
-activate aipc
-aipc --> container : accountsList
+aipc --> container : accounts
 deactivate aipc
-container--> company : accountsList
+container--> company : accounts
 deactivate container
-company --> controller : accountsList
+company --> ser: accounts
 deactivate company
-controller -> mapper: accountsListToDTO(accountsList)
+ser --> controller: accounts
+deactivate ser
+controller -> mapper: accountsToDTO(accounts)
 activate mapper
 create listDTO
 mapper --> listDTO: create ()
-loop for each account in accountsList
+loop for each account in accounts
 mapper -> list: account = get(i)
 list --> mapper: account
 mapper -> mapper : accountDTO = accountToDTO(account)
+activate mapper
 create DTO
 mapper --> DTO : create()
-mapper ->listDTO :add(accountDTO)
-end loop
-mapper --> controller :accountsListDTO
 deactivate mapper
-controller -->> ui: accountsListDTO
+mapper ->listDTO :add(accountDTO)
+activate listDTO
+deactivate listDTO
+end loop
+mapper --> controller :accountsDTO
+deactivate mapper
+controller -->> ui: accountsDTO
 deactivate controller
 ui --> Manager: return list of accounts
 deactivate ui

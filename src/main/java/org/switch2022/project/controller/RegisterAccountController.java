@@ -39,10 +39,6 @@ public class RegisterAccountController {
      * @return false if Account is not added
      */
     public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
-        boolean isAccountRegistered = false;
-
-        AccountContainer accountContainer = this.company.getAccountContainer();
-
-        return accountContainer.addAccount(name, email, phoneNumber, photo);
+         return this.company.registerAccount(name, email, phoneNumber, photo);
     }
 }

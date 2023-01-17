@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.ProfileContainer;
 
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 /**
@@ -49,6 +50,10 @@ public class Company {
      */
     public boolean createProfile (String name){
         return profileContainer.createProfile(name);
+    }
+
+    public boolean registerAccount (String name, String email, long phoneNumber, BufferedImage photo){
+        return accountContainer.addAccount(name, email, phoneNumber, photo);
     }
 
     public boolean changeStatus(String email, boolean status){

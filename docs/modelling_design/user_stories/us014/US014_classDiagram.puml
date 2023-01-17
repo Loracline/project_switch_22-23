@@ -7,30 +7,40 @@ US014 - As Manager, I want to get a list of all human resources in a project.
 end legend
 
 class "ListAccountsInProjectController" {
+-service
+-accountMapper
++listAccountsByProject(email, projectCode)
+}
+
+class "Service"{
 -company
-+listAccountsByProject(projectCode)
++listAccountsByProject(email, projectCode)
 }
 
 class "Company"{
 -projectContainer
+-accountContainer
++validateManager(email)
 +listAccountsByProject(projectCode)
-
 }
+
+class "AccountContainer"{
+-accounts
++getAccountByEmail(email)
+}
+
+class "Account"{
+-profile
++isManager()
+}
+
 class "ProjectContainer"{
 -projects
 -accountInProjectContainer
-+getProjectByCode(customerName)
++listAccountsByProject(projectCode)
++getProjectByCode(projectCode)
 }
 
-/'class "Project"{
--code
--name
--customer
--status
--startDate
--endDate
-+Project(code, name, customer, status, startDate, endDate)
-}'/
 
 class "AccountInProjectContainer"{
 -accountsInProject
@@ -41,25 +51,28 @@ class "AccountInProject"{
 -account
 -project
 -role
-+AccountInProject(account, project, role)
 +getAccountByProject(project)
 }
 
 class "AccountMapper"{
-+accountsListToDTO(accountsList)
++accountsToDTO(accounts)
 +accountToDTO(account)
 }
 
 class "AccountDTO"{
++name
++email
++phoneNumber
 +AccountDTO(account)
 }
 
-"ListAccountsInProjectController" ..> "Company"
+"ListAccountsInProjectController" --> "Service"
+"ListAccountsInProjectController" --> "AccountMapper"
+"Service" ..> "Company"
 "Company" "1"-->"1" "ProjectContainer": has
-/'"ProjectContainer" "1"-->"*" "Project": has'/
-"ProjectContainer" "1"-->"1" "AccountInProjectContainer": has
-"AccountInProjectContainer" "1"-->"*" "AccountInProject": has
-"AccountInProjectContainer" "1"-->"1" "AccountMapper": has
-"AccountMapper" "1" --> "*" "AccountDTO": creates
-
+"Company" "1"-->"1" "AccountContainer": has
+"AccountContainer" "1" --> "*" "Account"
+"AccountMapper" ..> "AccountDTO"
+"ProjectContainer" "1" --> "1" "AccountInProjectContainer": has
+"AccountInProjectContainer" "1" --> "*" "AccountInProject": has
 @enduml

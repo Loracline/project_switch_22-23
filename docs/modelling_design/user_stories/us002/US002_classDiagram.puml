@@ -13,13 +13,12 @@ class "RegisterAccountController" {
 
 class "Company" {
 -accountContainer
-+getAccountContainer()
++registerAccount(name, email, phoneNumber, photo)
 }
 
 class "AccountContainer"{
 -accounts
 +addAccount(account)
-+doesEmailExist(email)
 }
 
 class "Account" {
@@ -27,13 +26,9 @@ class "Account" {
 -email
 -phoneNumber
 -photo
--status
-+Account(name, email, phoneNumber, photo)
 }
 
-"RegisterAccountController" ..>  "Company"
-"RegisterAccountController" ..> "Account"
-"RegisterAccountController" ..> "AccountContainer"
+"RegisterAccountController" "1" --> "1" "Company": has
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" "1"-->"*" "Account": contains
 

@@ -20,18 +20,18 @@ Administrator -> ui: types requested data
 activate ui
 ui -> controller: registerAccount (name, email, phoneNumber, photo)
 activate controller
-controller -> comp: accountContainer = getAccountContainer()
+controller -> comp: registerAccount(name, email, phoneNumber, photo)
 activate comp
-create AC
-comp -->> AC: create
-deactivate comp
+comp -> AC: addAccount(name, email, phoneNumber, photo)
 create account
-controller -->> account: name, email, phoneNumber, photo
-controller -> AC: addAccount(account)
 activate AC
-AC -> AC: doesEmailExist(email)
-controller -->> ui: account created
+AC -->> account: create(name, email, phoneNumber, photo)
+AC -> AC: add(account)
+AC --> comp: true
 deactivate AC
+comp --> controller: true
+deactivate comp
+controller -->> ui: true
 deactivate controller
 ui-->> Administrator: informs account created
 deactivate ui
