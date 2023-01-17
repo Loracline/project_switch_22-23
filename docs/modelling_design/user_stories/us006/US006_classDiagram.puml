@@ -1,12 +1,12 @@
 @startuml
 
 legend top
-US006 - As Administrator, I want to activate a user account.
+US005 - As Administrator, I want to activate a user account.
 end legend
 skinparam sequenceMessageAlign center
 title TO ACTIVATE USER ACCOUNT
 
-"ChangeStatusController" ..> "Company"
+"ChangeStatusController"  ..> "Company"
 "ChangeStatusController" ..> "AccountContainer"
 "ChangeStatusController" ..> "Account"
 "Company" "1"-->"1" "AccountContainer": has
@@ -19,7 +19,7 @@ class "ChangeStatusController" {
 
 class "Company" {
 -accountContainer
-+getAccountContainer()
++changeStatus(email, status)
 }
 
 class "AccountContainer" {
@@ -28,7 +28,6 @@ class "AccountContainer" {
 }
 
 class "Account" {
--email
 -status
 +setStatus(status)
 }

@@ -21,20 +21,19 @@ admin -> ui: Enters requested data
 activate ui
 ui -> controller: changeStatus(email, status)
 activate controller
-controller -> company: accountContainer = getAccountContainer()
+controller -> company: changeStatus(email, status)
 activate company
-create container
-company -->> container: create
-deactivate company
-controller -> container: account = getAccountByEmail(email)
+company -> container: getAccountByEmail(email)
 activate container
-create account
-container -->> account: create
-deactivate container
-controller -> account: setStatus(status)
+container -> account: setStatus(status)
 activate account
+container <-- account: true
 deactivate account
-controller -->> ui: account status updated
+container --> company: true
+deactivate container
+company --> controller: true
+deactivate company
+controller -->> ui: true
 deactivate controller
 ui -->> admin: informs account status updated
 deactivate ui
