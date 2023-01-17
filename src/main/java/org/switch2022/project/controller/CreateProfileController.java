@@ -1,8 +1,6 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.Company;
-import org.switch2022.project.model.ProfileContainer;
 
 /**
  * Class CreateProfileController is built to allow access to ProfileContainer

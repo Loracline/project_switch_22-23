@@ -1,5 +1,8 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.ProfileContainer;
+
 import java.util.Objects;
 
 /**

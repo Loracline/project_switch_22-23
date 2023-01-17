@@ -19,7 +19,7 @@ class "ChangeStatusController" {
 
 class "Company" {
 -accountContainer
-+getAccountContainer()
++changeStatus(email, status)
 }
 
 class "AccountContainer" {
@@ -28,7 +28,6 @@ class "AccountContainer" {
 }
 
 class "Account" {
--email
 -status
 +setStatus(status)
 }
