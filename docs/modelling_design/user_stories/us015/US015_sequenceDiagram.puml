@@ -11,7 +11,7 @@ participant ":ListProjectController" as controller
 participant ":Service" as ser
 participant ":Company" as company
 participant ":AccountContainer" as ac
-participant "Account:Account" as a
+participant "account:Account" as a
 participant ":ProjectContainer" as container
 participant ":ProjectMapper" as mapper
 participant "listAllProjectsDTO: List<ProjectDTO>" as list
@@ -56,11 +56,15 @@ mapper -> container: project = get(i)
 activate container
 container --> mapper: project
 deactivate container
+activate mapper
 mapper -> mapper : projectDTO = toDTO (project)
 create DTO
 mapper --> DTO : create()
+deactivate mapper
 mapper ->list :add(projectDTO)
+activate list
 list --> mapper : true
+deactivate list
 end loop
 mapper --> controller :listAllProjectsDTO
 deactivate mapper

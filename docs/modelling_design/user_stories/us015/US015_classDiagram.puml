@@ -10,13 +10,11 @@ class "ListProjectController" {
 -service
 -projectMapper
 +listAllProjects(email)
-+listAllProjectsToDTO()
 }
 
 class "Service" {
 - company
-- validateManager(email)
-+ listAllProjects ()
++ listAllProjects (email)
 }
 
 class "Company"{
@@ -38,11 +36,11 @@ class "Account"{
 
 class "ProjectContainer"{
 -projects
-+getProjects()
++listAllProjects()
++getProject()
 }
 
 class "ProjectMapper"{
--projectDTO
 +add(projectDTO)
 +toDTO(project)
 }
@@ -50,7 +48,7 @@ class "ProjectMapper"{
 class "ProjectDTO" {
 +code
 +nameProject
-+client
++costumer
 +status
 +startDate
 +endDate
@@ -62,7 +60,7 @@ class "ProjectDTO" {
 "Company" "1"-->"1" "ProjectContainer": has
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" --> "Account"
-"ProjectMapper" --> "ProjectDTO"
+"ProjectMapper" ..> "ProjectDTO"
 
 
 @enduml
