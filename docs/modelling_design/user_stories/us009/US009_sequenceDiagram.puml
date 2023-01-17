@@ -26,12 +26,12 @@ ui -> controller: addCustomer(email, customerName)
 activate controller
 controller -> service: addCustomer(email, customerName)
 activate service
-service -> company: validateAdmin(email)
+service -> company: validateAdministrator(email)
 activate company
-company -> accContainer: validateAdmin(email)
+company -> accContainer: validateAdministrator(email)
 activate accContainer
 accContainer -> accContainer: acc = getAccountByEmail(email)
-accContainer -> acc: isAdmin(acc)
+accContainer -> acc: isAdministrator(acc)
 activate acc
 acc --> accContainer: true
 deactivate acc
