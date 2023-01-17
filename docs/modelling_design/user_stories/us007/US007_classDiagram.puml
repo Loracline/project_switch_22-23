@@ -6,27 +6,49 @@ end legend
 skinparam sequenceMessageAlign center
 title CREATE A NEW PROJECT TYPOLOGY
 
-"Controller" ..> "Company"
-"Company" ..> "ProjectTypologyContainer"
-"ProjectTypologyContainer" ..> "ProjectTypology"
+"Controller" ..> "Service"
+"Service" --> "Company"
+"Company" --> "ProjectTypologyContainer"
+"Company" --> "AccountContainer"
+"ProjectTypologyContainer" --> "ProjectTypology"
+"AccountContainer" --> "Account"
 
-class "Company" {
--projectContainer
-+createProjectTypology(projectTypology)
-}
 class "Controller" {
+-service
++createProjectTypology(email, projectTypology)
+}
+class "Service" {
 -company
++createProjectTypology(email, projectTypology)
+}
+class "Company" {
+-accountContainer
+-projectTypologyContainer
 +createProjectTypology(projectTypology)
++verifyIfIsAdministrator(email)
 }
 class "ProjectTypologyContainer"{
 -typologies
++createProjectTypology(projectTypology)
+}
+class "AccountContainer"{
+-accounts
++verifyIfIsAdministrator(email)
+}
+class "ProjectTypology"{
+-name
 +addProjectTypology(projectTypology)
 +doesProjectTypologyExist(projectTypology)
 }
-class "ProjectTypology"{
--projectTypology
-+ProjectTypology(projectTypology)
+
+class "Account"{
+-name
+-email
+-phoneNumber
+-profile
+-status
+-photo
++verifyIfIsAdministrator(email)
++getAccountByEmail(email)
 }
-
-
 @enduml
