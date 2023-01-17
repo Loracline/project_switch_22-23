@@ -25,16 +25,16 @@ class "Company" {
 -accountContainer
 -projectTypologyContainer
 +createProjectTypology(projectTypology)
-+verifyIfIsAdministrator(email)
++validateAdministrator(email)
 }
 class "ProjectTypologyContainer"{
 -typologies
-+addProjectTypology(projectTypology)
-+doesProjectTypologyExist(projectTypology)
++createProjectTypology(projectTypology)
+-doesProjectTypologyExist(projectTypology)
 }
 class "AccountContainer"{
 -accounts
-+verifyIfIsAdministrator(email)
++validateAdministrator(email)
 +getAccountByEmail(email)
 }
 class "ProjectTypology"{
@@ -49,6 +49,6 @@ class "Account"{
 -profile
 -status
 -photo
-+Account(name, email, phoneNumber, profile, status, photo)
++isAdministrator()
 }
 @enduml

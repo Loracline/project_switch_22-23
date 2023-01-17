@@ -28,12 +28,12 @@ ui -> ct: createProjectTypology(email, projectTypology)
 activate ct
 ct -> sv: createProjectTypology(email, projectTypology)
 activate sv
-sv -> c: verifyIfIsAdministrator(email)
+sv -> c: validateAdministrator(email)
 activate c
-c -> acc: verifyIfIsAdministrator(email)
+c -> acc: validateAdministrator(email)
 activate acc
 acc -> acc: account = getAccountByEmail(email)
-acc -> ac: verifyIfIsAdministrator
+acc -> ac: validateAdministrator
 activate ac
 ac --> acc: true
 deactivate ac

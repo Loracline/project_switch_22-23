@@ -8,11 +8,13 @@ end legend
 
 class "AddCustomerController" {
 -service
++AddCustomerController(service)
 +addCustomer(email,customerName)
 }
 
 class "Service"{
 -company
++Service(company)
 +addCustomer(email,customerName)
 }
 
