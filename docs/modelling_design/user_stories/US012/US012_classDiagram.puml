@@ -38,7 +38,7 @@ class AccountInProjectContainer{
 class AccountInProject{
 -role
 +setRole(role)
-isRoleValid(role)
++isRoleValid(role)
 }
 
 
@@ -47,10 +47,6 @@ Company "1       " --> "*"AccountContainer: has
 Company "1"--> "        *"ProjectContainer: has
 Company "1 "-->"*" AccountInProjectContainer: has
 AccountInProjectContainer "    1"--> "   *"AccountInProject: contains
-
-SetRoleController ..> AccountContainer
-SetRoleController ..> ProjectContainer
-SetRoleController ..> AccountInProjectContainer
 
 
 @enduml
