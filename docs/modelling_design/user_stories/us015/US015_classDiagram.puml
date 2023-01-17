@@ -7,16 +7,35 @@ US015 - As a Manager, I want to get a list of all projects
 end legend
 
 class "ListProjectController" {
--company
+-service
 -projectMapper
-+listAllProjects()
++listAllProjects(email)
 +listAllProjectsDTO()
+}
+
+class "Service" {
+- company
++ validateManager(email)
++ listAllProjects ()
 }
 
 class "Company"{
 -projectContainer
+-accountContainer
++ validateManager(email)
 +listAllProjects()
 }
+
+class "AccountContainer"{
+-accounts
++validateManager(email)
++getAccountByEmail(email)
+}
+
+class "Account"{
++validateManager(email)
+}
+
 class "ProjectContainer"{
 -projects
 +getProject()
@@ -31,9 +50,12 @@ class "ProjectMapper"{
 class "ProjectDTO" {
 +createDTO(project)
 }
-"ListProjectController" ..> "Company"
+"ListProjectController" ..> "Service"
+"Service" ..> "Company"
 "ListProjectController" ..> "ProjectMapper"
 "Company" "1"-->"1" "ProjectContainer": has
+"Company" "1"-->"1" "AccountContainer": has
+"AccountContainer" --> "Account"
 "ProjectMapper" --> "ProjectDTO"
 
 
