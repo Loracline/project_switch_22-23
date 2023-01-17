@@ -2,6 +2,7 @@ package org.switch2022.project.container;
 
 import org.switch2022.project.model.Account;
 
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.ArrayList;
 /**
@@ -59,14 +60,20 @@ public class AccountContainer {
   }
 
   /**
-   * Add account method to save registered accounts in the attribute accounts.
+   * Add account method to register and save accounts in the attribute accounts.
    * It adds an account if the email doesn't exist in accounts.
    *
-   * @param account instance of Account to be added to accounts
+   * @param name        of the new account
+   * @param email       of the new account
+   * @param phoneNumber of the new account
+   * @param photo       of the new account
+   * @return true if Account is added
+   * @return false if Account is not added
    */
-  public boolean addAccount(Account account) {
+  public boolean addAccount(String name, String email, long phoneNumber,
+                            BufferedImage photo) {
     boolean isAccountAdded = false;
-    String email = account.getEmail();
+    Account account = new Account(name, email, phoneNumber, photo);
     if (!doesEmailExist(email)) {
       this.accounts.add(account);
       isAccountAdded = true;

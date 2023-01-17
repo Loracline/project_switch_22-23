@@ -42,11 +42,7 @@ public class RegisterAccountController {
         boolean isAccountRegistered = false;
 
         AccountContainer accountContainer = this.company.getAccountContainer();
-        Account account = new Account(name, email, phoneNumber, photo);
-        if(accountContainer.addAccount(account)){
-            isAccountRegistered = true;
-        }
-        return isAccountRegistered;
-    }
 
+        return accountContainer.addAccount(name, email, phoneNumber, photo);
+    }
 }

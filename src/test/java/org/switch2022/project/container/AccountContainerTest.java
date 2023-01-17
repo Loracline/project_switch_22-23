@@ -81,7 +81,7 @@ class AccountContainerTest {
   void ensureThatAccountIsAddedIfEmailIsUnique() {
     boolean expected = true;
 
-    boolean result = accountContainer.addAccount(accountFour);
+    boolean result = accountContainer.addAccount("Poppy", "poppy@isep.ipp.pt", 932755686, null);
 
     assertEquals(expected, result);
   }
@@ -90,7 +90,7 @@ class AccountContainerTest {
   void ensureThatAccountIsNotAddedIfEmailIsDuplicated() {
     boolean expected = false;
 
-    boolean result = accountContainer.addAccount(accountThree);
+    boolean result = accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
 
     assertEquals(expected, result);
   }
