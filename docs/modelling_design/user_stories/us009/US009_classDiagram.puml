@@ -7,17 +7,45 @@ US009 - As Administrator, I want to add a customer
 end legend
 
 class "AddCustomerController" {
+-service
++AddCustomerController(service)
++addCustomer(email,customerName)
+}
+
+class "Service"{
 -company
-+addCustomer(customerName)
++Service(company)
++addCustomer(email,customerName)
 }
 
 class "Company"{
 -customerContainer
+-accountContainer
++Company(accountContainer, customerContainer)
+-validateAdmin(email)
 +addCustomer(customerName)
-
 }
+
+class "AccountContainer"{
+-accounts
++AccountContainer(accounts)
++validateAdmin(email)
+}
+
+class "Account"{
+-name
+-email
+-phoneNumber
+-photo
+-status
++Account(name, email, phoneNumber, photo)
++isAdmin(email)
++getAccountByEmail(email)
+}
+
 class "CustomerContainer"{
 -customers
++CustomerContainer(customers)
 -doesCustomerExist(customerName)
 +addCustomer(customerName)
 }
@@ -27,8 +55,11 @@ class "Customer"{
 +Customer(customerName)
 }
 
-"AddCustomerController" ..> "Company"
+"AddCustomerController" "1" ..> "1" "Service"
+"Service" "1" --> "1" "Company"
 "Company" "1"-->"1" "CustomerContainer": has
+"Company" "1"-->"1" "AccountContainer": has
 "CustomerContainer" "1"-->"*" "Customer": has
+"AccountContainer" "1" --> "*" "Account": has
 
 @enduml

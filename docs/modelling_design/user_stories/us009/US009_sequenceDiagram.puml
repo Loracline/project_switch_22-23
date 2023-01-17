@@ -8,7 +8,10 @@ autonumber
 actor Administrator
 participant ":AddCustomerUI" as ui
 participant ":AddCustomerController" as controller
+participant ":Service" as service
 participant ":Company" as company
+participant ":AccountContainer" as accContainer
+participant ":Account" as acc
 participant ":CustomerContainer" as container
 participant "customer:Customer" as customer
 
@@ -17,23 +20,38 @@ Administrator -> ui: add a customer
 activate ui
 ui --> Administrator: requests data
 deactivate ui
-Administrator -> ui: sends data: customerName
+Administrator -> ui: sends data: e-mail, customerName
 activate ui
-ui -> controller: createCustomer(customerName)
+ui -> controller: addCustomer(email, customerName)
 activate controller
-
-controller -> company: adddCustomer(customerName)
+controller -> service: addCustomer(email, customerName)
+activate service
+service -> company: validateAdmin(email)
 activate company
-company --> container: addCustomer(customerName)
+company -> accContainer: validateAdmin(email)
+activate accContainer
+accContainer -> accContainer: acc = getAccountByEmail(email)
+accContainer -> acc: isAdmin(acc)
+activate acc
+acc --> accContainer: true
+deactivate acc
+accContainer --> company: true
+deactivate accContainer
+company --> service: true
+deactivate company
+service -> company: addCustomer(customerName)
+activate company
+company -> container: addCustomer(customerName)
 create customer
 activate container
 container ->> customer: create(customerName)
 container -> container: addCustomer(customer)
-container --> container: true
 container --> company: true
 deactivate container
-company --> controller: true
+company --> service: true
 deactivate company
+service --> controller: true
+
 controller -->> ui: true
 deactivate controller
 ui -->>Administrator: true
