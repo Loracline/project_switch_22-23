@@ -1,5 +1,6 @@
 package org.switch2022.project.controller;
 
+import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.model.*;
 
 import java.awt.image.BufferedImage;
@@ -41,11 +42,7 @@ public class RegisterAccountController {
         boolean isAccountRegistered = false;
 
         AccountContainer accountContainer = this.company.getAccountContainer();
-        Account account = new Account(name, email, phoneNumber, photo);
-        if(accountContainer.addAccount(account)){
-            isAccountRegistered = true;
-        }
-        return isAccountRegistered;
-    }
 
+        return accountContainer.addAccount(name, email, phoneNumber, photo);
+    }
 }

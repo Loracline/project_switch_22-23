@@ -1,8 +1,11 @@
-package org.switch2022.project.model;
+package org.switch2022.project.container;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +47,7 @@ class AccountContainerTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    company = new Company(accountContainer, profileContainer);
+    company = new Company(accountContainer,profileContainer);
   }
 
   @AfterEach
@@ -78,7 +81,7 @@ class AccountContainerTest {
   void ensureThatAccountIsAddedIfEmailIsUnique() {
     boolean expected = true;
 
-    boolean result = accountContainer.addAccount(accountFour);
+    boolean result = accountContainer.addAccount("Poppy", "poppy@isep.ipp.pt", 932755686, null);
 
     assertEquals(expected, result);
   }
@@ -87,7 +90,7 @@ class AccountContainerTest {
   void ensureThatAccountIsNotAddedIfEmailIsDuplicated() {
     boolean expected = false;
 
-    boolean result = accountContainer.addAccount(accountThree);
+    boolean result = accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
 
     assertEquals(expected, result);
   }

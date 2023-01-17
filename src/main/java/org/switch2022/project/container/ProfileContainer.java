@@ -1,4 +1,6 @@
-package org.switch2022.project.model;
+package org.switch2022.project.container;
+
+import org.switch2022.project.model.Profile;
 
 import java.util.List;
 

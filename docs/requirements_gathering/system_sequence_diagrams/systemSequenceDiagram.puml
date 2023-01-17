@@ -444,6 +444,7 @@ end note
 "Manager" <-- ":System": informs successful association
 @enduml
 
+
 @startuml
 skinparam sequenceMessageAlign center
 title TO DEFINE THE SCRUM MASTER OF A PROJECT
@@ -466,4 +467,16 @@ Account is authenticated.
 ":System" grants access.
 end note
 "User" <-- ":System": shows list of all projects the user is allocated
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO DEFINE THE Product Owner OF A PROJECT
+actor "Manager"
+"Manager" -> ":System": defines a Scrum Master of a project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Manager" <-- ":System": informs set role
 @enduml
