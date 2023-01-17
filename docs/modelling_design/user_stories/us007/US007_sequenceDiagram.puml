@@ -9,34 +9,54 @@ US007 - As Administrator, I want to create a new project typology.
 end legend
 
 actor Administrator as a
-participant ":UI" as ui
-participant ":Controller" as ct
+participant ":UIProjectTypology" as ui
+participant ":ProjectTypologyController" as ct
+participant ":Service" as sv
 participant ":Company" as c
-participant ":ProjectTypologyContainer" as pc
-participant "projectTypology:ProjectTypology" as pt
+participant ":AccountContainer" as acc
+participant "account:Account" as ac
+participant "ProjectTypologyContainer" as ptc
+participant "pt:ProjectTypology" as pty
+
 
 activate a
 a -> ui: starts creating new project typology
 activate ui
 ui --> a: requests data (projectTypology)
 a -> ui: types requested data
-ui -> ct: createProjectTypology(projectTypology)
+ui -> ct: createProjectTypology(email, projectTypology)
 activate ct
-ct -> c: createProjectTypology(projectTypology)
+ct -> sv: createProjectTypology(email, projectTypology)
+activate sv
+sv -> c: validateAdministrator(email)
 activate c
-c -> pc: createProjectTypology(projectTypology)
-activate pc
-create pt
-pc -> pt: create()
-pc -> pc: addProjectTypology(projectTypology)
-pc --> pc: true
-pc --> c: true
-deactivate pc
-c --> ct: true
+c -> acc: validateAdministrator(email)
+activate acc
+acc -> acc: account = getAccountByEmail(email)
+acc -> ac: validateAdministrator
+activate ac
+ac --> acc: true
+deactivate ac
+acc --> c: true
+deactivate acc
+c --> sv: true
 deactivate c
+sv -> c: createProjectTypology(projectTypology)
+activate c
+c -> ptc: createProjectTypology(projectTypology)
+activate ptc
+create pty
+ptc -> pty: create()
+ptc -> ptc: addProjectTypology(pt)
+ptc --> c: true
+deactivate ptc
+c --> sv: true
+deactivate c
+sv --> ct: true
+deactivate sv
 ct --> ui: true
 deactivate ct
-ui --> a: true
+ui --> a: project typology created
 deactivate ui
 deactivate a
 @enduml
