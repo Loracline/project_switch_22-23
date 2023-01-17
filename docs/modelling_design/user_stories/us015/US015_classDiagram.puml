@@ -10,12 +10,12 @@ class "ListProjectController" {
 -service
 -projectMapper
 +listAllProjects(email)
-+listAllProjectsDTO()
++listAllProjectsToDTO()
 }
 
 class "Service" {
 - company
-+ validateManager(email)
+- validateManager(email)
 + listAllProjects ()
 }
 
@@ -38,7 +38,7 @@ class "Account"{
 
 class "ProjectContainer"{
 -projects
-+getProject()
++getProjects()
 }
 
 class "ProjectMapper"{
@@ -48,7 +48,13 @@ class "ProjectMapper"{
 }
 
 class "ProjectDTO" {
-+createDTO(project)
++code
++nameProject
++client
++status
++startDate
++endDate
++createDTO()
 }
 "ListProjectController" ..> "Service"
 "Service" ..> "Company"
