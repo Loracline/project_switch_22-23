@@ -1,4 +1,6 @@
-package org.switch2022.project.model;
+package org.switch2022.project.container;
+
+import org.switch2022.project.model.Account;
 
 import java.util.List;
 import java.util.ArrayList;
