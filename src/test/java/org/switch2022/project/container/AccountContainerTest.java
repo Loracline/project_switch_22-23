@@ -3,8 +3,6 @@ package org.switch2022.project.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Company;
 import org.switch2022.project.model.Profile;
@@ -49,7 +47,7 @@ class AccountContainerTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    company = new Company(accountContainer, profileContainer);
+    company = new Company(accountContainer,profileContainer);
   }
 
   @AfterEach
