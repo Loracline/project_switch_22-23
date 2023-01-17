@@ -29,16 +29,17 @@ class "Company" {
 }
 class "ProjectTypologyContainer"{
 -typologies
-+createProjectTypology(projectTypology)
++addProjectTypology(projectTypology)
++doesProjectTypologyExist(projectTypology)
 }
 class "AccountContainer"{
 -accounts
 +verifyIfIsAdministrator(email)
++getAccountByEmail(email)
 }
 class "ProjectTypology"{
 -name
-+addProjectTypology(projectTypology)
-+doesProjectTypologyExist(projectTypology)
++ProjectTypology(name)
 }
 
 class "Account"{
@@ -48,7 +49,6 @@ class "Account"{
 -profile
 -status
 -photo
-+verifyIfIsAdministrator(email)
-+getAccountByEmail(email)
++Account(name, email, phoneNumber, profile, status, photo)
 }
 @enduml
