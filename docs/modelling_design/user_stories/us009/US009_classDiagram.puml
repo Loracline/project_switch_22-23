@@ -21,15 +21,14 @@ class "Service"{
 class "Company"{
 -customerContainer
 -accountContainer
-+Company(accountContainer, customerContainer)
--validateAdmin(email)
+-validateAdministrator(email)
 +addCustomer(customerName)
 }
 
 class "AccountContainer"{
 -accounts
-+AccountContainer(accounts)
-+validateAdmin(email)
++getAccountByEmail(email)
++validateAdministrator(email)
 }
 
 class "Account"{
@@ -38,14 +37,11 @@ class "Account"{
 -phoneNumber
 -photo
 -status
-+Account(name, email, phoneNumber, photo)
-+isAdmin(email)
-+getAccountByEmail(email)
++isAdministrator()
 }
 
 class "CustomerContainer"{
 -customers
-+CustomerContainer(customers)
 -doesCustomerExist(customerName)
 +addCustomer(customerName)
 }

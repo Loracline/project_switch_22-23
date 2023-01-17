@@ -6,47 +6,61 @@ legend top
 US012 - As Manager, I want to define the PO of a project
 end legend
 
-class SetRoleController {
+class DefinesAProductOwnerController {
+-service
++definesAProductOwner(email, projectCode)
+}
+
+class Service {
 -company
-+setRole(email, projectCode, role)
++definesAProductOwner(email, projectCode)
 }
 
 class Company {
--company
-+setRole(email, projectCode, role)
+-accountContainer
+-projectContainer
+-accountInProjectContainer
++validateManager(email)
++getAccountByEmail(email)
 }
 
 class AccountContainer {
--email
+-account
++validateManager(email)
 +getAccountByEmail(email)
+}
 
+class Account {
+-email
++validateManager(email)
 }
 
 class ProjectContainer{
--projectCode
-+getProject(projectCode)
+-project
++getProject(project)
 }
 
 class AccountInProjectContainer{
--account
--project
--role
-+setRole(account, project,role)
-+getAccountProject(account,project)
+-accountInProject
++definesAProductOwner(account, project)
++addToContainer()
+-verifyIfAccountInProjectExists(accountInProject)
 }
 
 class AccountInProject{
+-account
+-project
 -role
-+setRole(role)
-+isRoleValid(role)
++definesAProductOwner(account, projectCode)
+
 }
 
-
-SetRoleController ..> Company
+AccountContainer --> Account
+DefinesAProductOwnerController ..> Service
+Service --> Company
 Company "1       " --> "*"AccountContainer: has
 Company "1"--> "        *"ProjectContainer: has
 Company "1 "-->"*" AccountInProjectContainer: has
 AccountInProjectContainer "    1"--> "   *"AccountInProject: contains
-
 
 @enduml

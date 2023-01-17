@@ -1,57 +1,68 @@
 @startuml
 'https://plantuml.com/class-diagram
 skinparam sequenceMessageAlign center
-title TO DEFINE THE PO OF A PROJECT
+title TO DEFINE THE PRODUCT OWNER OF A PROJECT
 legend top
-US012 - As Manager, I want to define the PO of a project
+US013 - As Manager, I want to define the Product Owner of a project
 end legend
 autonumber
-
 actor Manager
-participant ":SetRoleUI" as ui
-participant "SetRoleController" as controller
+participant ":DefinesAProductOwnerUI" as ui
+participant "DefinesAProductOwnerController" as controller
+participant "Service" as ser
 participant ":Company" as company
-participant ":AccountContainer" as acccontainer
-participant ":ProjectContainer" as pcontainer
+participant ":AccountContainer" as ac
+participant "account:Account" as a
+participant ":ProjectContainer" as pcpcontainer
 participant ":AccountInProjectContainer" as accinprojcont
-participant ":AccountInProject" as accinproj
-
-
-Manager -> ui:  defines a PO of a project
+participant "accountInProject:AccountInProject" as accinproj
+Manager -> ui:  defines a Product Owner of a project
 activate ui
 Manager <-- ui:  requests data (email,projectCode, role)
 deactivate ui
 Manager -> ui:  enters data
 activate ui
-ui -> controller: setRole(email, projectCode, role)
+ui -> controller: definesAProductOwner(email, projectCode)
 activate controller
-controller -> company: setRole (email, projectCode, role)
+controller -> ser: definesAProductOwner (email, projectCode)
+activate ser
+ser -> company: validateManager(email)
 activate company
-company -> acccontainer: getAccountByEmail(email)
-activate acccontainer
-company <-- acccontainer: account
-deactivate acccontainer
-company -> pcontainer: getProject(projectCode)
-activate pcontainer
-company <-- pcontainer: project
-deactivate pcontainer
-company -> accinprojcont: setRole(account, project,role)
+company -> ac: validateManager(email)
+activate ac
+ac -> ac: account=getAccountByEmail(email)
+ac -> a: validateManager(email)
+activate a
+a -->> ac: true
+deactivate a
+ac -->> company: true
+deactivate ac
+company -->> ser: true
+deactivate company
+ser -> company: getAccountByEmail(email)
+activate company
+company -> ac: getAccountByEmail(email)
+activate ac
+company <-- ac: account
+deactivate ac
+company -> pcpcontainer: getProject(projectCode)
+activate pcpcontainer
+company <-- pcpcontainer: project
+deactivate pcpcontainer
+company -> accinprojcont: definesAProductOwner(account,project)
 activate accinprojcont
-accinprojcont -> accinprojcont : getAccountInProject(account,project)
-accinprojcont -> accinproj: SetRole(role)
-activate accinproj
-accinproj --> accinprojcont: true
-
+create accinproj
+accinprojcont -> accinproj: definesAProductOwner(account, project)
+accinprojcont -> accinprojcont: addToContainer()
 deactivate accinproj
 accinprojcont --> company: true
 deactivate accinprojcont
-company --> controller : true
+company --> ser : true
 deactivate company
+ser --> controller: true
+deactivate ser
 controller --> ui: true
 deactivate controller
-ui -->> Manager: informs Set Role
-
-
+ui -->> Manager: informs set Role
+deactivate ui
 @enduml
-
-
