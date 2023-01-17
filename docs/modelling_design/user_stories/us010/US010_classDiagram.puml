@@ -7,20 +7,43 @@ US010 - As Manager, I want to register/create a new project.
 end legend
 
 class RegisterProjectController {
-- company
-+ registerProject(code, name, customer, status, startDate, endDate)
+- service
++ registerProject(DTO, email)
+}
+
+class Service {
+-company
++registerProject(DTO, email)
+
 }
 
 class Company {
 - projectContainer
-+ registerProject(projectDTO)
+- accountContainer
++ validateManager(email)
++ registerProject (DTO)
+}
+class AccountContainer {
++ validateManager(email)
+- Accounts
+}
+
+class Account {
++ isManager()
+- profile
+}
+
+class Profile {
+-profileName
 }
 
 class ProjectContainer {
 - projects
-+ registerProject(projectDTO)
-- doesProjectExist(code)
-+ addProject(project)
++ registerProject(DTO)
+}
+
+class ProjectMapper{
++ createProject(DTO)
 }
 
 class ProjectDTO{
@@ -30,12 +53,6 @@ class ProjectDTO{
 + status
 + startDate
 + endDate
-+ setCode(code)
-+ setName(name)
-+ setCustomer (customer)
-+ setStatus (status)
-+ setStartDate (startDate)
-+ setEndDate (endDate)
 }
 
 class Project{
@@ -45,12 +62,16 @@ class Project{
 - status
 - startDate
 - endDate
-+Project(code, name, customer, status, startDate, endDate)
+
 }
 
-RegisterProjectController --> Company
+RegisterProjectController --> Service
+Service "1"-->"1" Company: has
 Company "1"-->"1" ProjectContainer: has
-RegisterProjectController ..> ProjectDTO
+Company "1"-->"1" AccountContainer: has
+AccountContainer "1"-->"*" Account: contains
 ProjectContainer "1"-->"*" Project: contains
-
+Account "1"-->"1" Profile: has
+ProjectMapper ..> ProjectDTO
+ProjectContainer ..> ProjectMapper
 @enduml

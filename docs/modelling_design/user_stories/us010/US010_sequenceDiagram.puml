@@ -10,10 +10,15 @@ autonumber
 actor Manager as mg
 participant ":RegisterProjectUI" as ui
 participant ":RegisterProjectController" as controller
+participant ":Service" as ser
 participant ":Company" as comp
+participant ":AccountContainer" as ac
+participant "account:Account" as a
 participant ":ProjectContainer" as PC
+participant ":ProjectMapper" as mapper
 participant "project:Project" as project
-participant "projectDTO:ProjectDTO" as pdto
+participant ":ProjectDTO" as dto
+participant ":Profile" as pf
 
 activate mg
 mg ->ui : register new project
@@ -22,22 +27,40 @@ ui -->> mg: requests data (code, name, ...)
 deactivate ui
 mg -> ui: types requested data
 activate ui
-ui -> controller: registerProject(code, name, ...)
+ui -> controller: registerProject(DTO, email)
 activate controller
-create pdto
-controller -> pdto : create (code, name, ...)
-controller -> comp: registerProject (projectDTO)
+controller -> ser: registerProject(DTO, email)
+activate ser
+ser -> comp: validateManager(email)
 activate comp
-comp -> PC : registerProject (projectDTO)
+comp -> ac: validateManager(email)
+activate ac
+ac -> ac: account=getAccountByEmail(email)
+ac -> a: isManager()
+activate a
+a -->> ac: true
+deactivate a
+ac -->> comp: true
+deactivate ac
+comp -->> ser: true
+deactivate comp
+ser -> comp: registerProject(DTO)
+activate comp
+comp -> PC : registerProject(DTO)
 activate PC
+PC -> mapper: createProject(DTO)
+activate mapper
 create project
-PC -> project : create (project)
+mapper -> project : create (code, name, ...)
+mapper -->> PC: project
+deactivate mapper
 PC -> PC : addProject(project)
 PC -->> comp : true
 deactivate PC
-comp -->>controller: true
+comp -->>ser: true
 deactivate comp
-deactivate PC
+ser -->> controller: true
+deactivate ser
 controller -->> ui : true
 deactivate controller
 ui -->> mg :  informs project created
