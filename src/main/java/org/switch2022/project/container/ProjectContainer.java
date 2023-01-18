@@ -10,12 +10,6 @@ import java.util.List;
  */
 
 public class ProjectContainer {
-  /**
-   * ProjectContainer contains projects
-   */
-  private List<Project> projects;
 
-  public ProjectContainer(List<Project> projects) {
-    this.projects = projects;
-  }
+
 }
