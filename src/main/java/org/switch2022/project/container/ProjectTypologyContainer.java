@@ -26,7 +26,31 @@ public class ProjectTypologyContainer {
     return isAddedToList;
   }
 
+  /**
+   * This method returns a list of project typologies
+   *
+   * @return list
+   */
+
   public List<ProjectTypology> getTypologies() {
     return typologies;
+  }
+
+  /**
+   * This method returns a project typology from the list of project typologies
+   *
+   * @param typology
+   * @return project typology
+   */
+
+  public ProjectTypology getProjectTypology(String typology) {
+    ProjectTypology requestedTypology = null;
+    for (int i = 0; i < typologies.size(); i++) {
+      if (typologies.get(i).equals(typology)) {
+        requestedTypology = typologies.get(i);
+        break;
+      }
+    }
+    return requestedTypology;
   }
 }

@@ -2,6 +2,7 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.container.ProjectContainer;
 
 import java.awt.image.BufferedImage;
 import java.util.Objects;
@@ -15,6 +16,7 @@ public class Company {
      */
     private AccountContainer accountContainer;
     private ProfileContainer profileContainer;
+    private ProjectContainer projectContainer;
 
     /**
      * Company constructor
@@ -22,6 +24,7 @@ public class Company {
     public Company(AccountContainer accountContainer, ProfileContainer profileContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
+        this.projectContainer = projectContainer;
     }
 
 
@@ -42,6 +45,16 @@ public class Company {
     public ProfileContainer getProfileContainer() {
         return profileContainer;
     }
+
+    /**
+     * Getter method for the attribute Project Container.
+     *
+     * @return the container of projects
+     */
+    public ProjectContainer getProjectContainer() {
+        return projectContainer;
+    }
+
     /**
      * Method createProfile
      *
@@ -72,5 +85,11 @@ public class Company {
 
         return wasAccountProfileUpdated;
     }
+
+    /*public boolean registerProject(String dto, String email) {
+        method accountContainer.validateManager(email)
+        method projectContainer.registerProject(dto)
+        return false; //todo work to be done
+    }*/
 }
 

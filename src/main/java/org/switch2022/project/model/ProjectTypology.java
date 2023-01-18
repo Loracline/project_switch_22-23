@@ -7,7 +7,7 @@ public class ProjectTypology {
     private String projectTypology;
 
     public ProjectTypology(String projectTypology){
-        this.projectTypology=projectTypology;
+        this.projectTypology=projectTypology.toLowerCase();
     }
 
     @Override
