@@ -36,7 +36,7 @@ class "AccountInProject"{
 }
 
 class "ProjectMapper"{
-+projectListToDTO(projectList)
++projectsToDTO(projects)
 +projectToDTO(project)
 }
 
