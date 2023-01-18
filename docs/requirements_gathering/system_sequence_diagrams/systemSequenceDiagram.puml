@@ -459,6 +459,18 @@ end note
 
 @startuml
 skinparam sequenceMessageAlign center
+title AS A MANAGER, TO LIST ALL HUMAN RESOURCES IN A PROJECT
+actor "Manager"
+"Manager" -> ":System": lists all accounts of a fiven project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Manager" <-- ":System": returns list of accounts
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
 title TO LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 actor "User"
 "User" -> ":System": lists all projects the user is allocated to
