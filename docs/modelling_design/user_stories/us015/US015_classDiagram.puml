@@ -1,20 +1,15 @@
 @startuml
 
 skinparam sequenceMessageAlign center
-title TO LIST ALL PROJECTS
+title GET A LIST OF ALL PROJECTS
 legend top
 US015 - As a Manager, I want to get a list of all projects
 end legend
 
 class "ListProjectController" {
--service
+-company
 -projectMapper
 +listAllProjects(email)
-}
-
-class "Service" {
-- company
-+ listAllProjects (email)
 }
 
 class "Company"{
@@ -31,7 +26,9 @@ class "AccountContainer"{
 }
 
 class "Account"{
-+validateManager(email)
+-email
+-profile
++isManager()
 }
 
 class "ProjectContainer"{
@@ -54,13 +51,12 @@ class "ProjectDTO" {
 +endDate
 +createDTO()
 }
-"ListProjectController" ..> "Service"
-"Service" ..> "Company"
-"ListProjectController" ..> "ProjectMapper"
+
+"ListProjectController" --> "Company"
+"ListProjectController" --> "ProjectMapper"
 "Company" "1"-->"1" "ProjectContainer": has
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" --> "Account"
-"ProjectMapper" ..> "ProjectDTO"
-
+"ProjectMapper" --> "ProjectDTO"
 
 @enduml

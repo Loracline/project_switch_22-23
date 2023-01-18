@@ -6,56 +6,52 @@ US015 - As a Manager, I want to get a list of all projects
 end legend
 autonumber
 actor Manager
-participant ":ListProjectUI" as ui
-participant ":ListProjectController" as controller
-participant ":Service" as ser
+participant ":GetListOfProjectsUI" as ui
+participant ":GetListListOfProjectsController" as controller
 participant ":Company" as company
 participant ":AccountContainer" as ac
 participant "account:Account" as a
-participant ":ProjectContainer" as container
-participant ":ProjectMapper" as mapper
+participant ":ProjectContainer" as pc
+participant "projectMapper:ProjectMapper" as mapper
 participant "listAllProjectsDTO: List<ProjectDTO>" as list
 participant "projectDTO:projectDTO" as DTO
 
 activate Manager
-Manager -> ui: List all projects
+Manager -> ui: get list of all projects
 activate ui
 ui -> controller: listAllProjects(email)
 activate controller
-controller -> ser: listAllProjects (email)
-activate ser
- ser -> company: validateManager(email)
- activate company
- company -> ac: validateManager(email)
-  activate ac
- ac -> ac: account=getAccountByEmail(email)
- ac -> a: validateManager(email)
- activate a
- a -->> ac: true
- deactivate a
- ac -->> company: true
- deactivate ac
- company -->> ser: true
- deactivate company
-ser -> company: listAllProjects()
+controller -> company: listAllProjects(email)
+controller -> company: validateManager(email)
 activate company
-company -> container: listAllProjects()
-activate container
-container -->> company: listAllProjects
-deactivate container
-company -->> ser: listAllProjects
+company -> ac: validateManager(email)
+activate ac
+ac -> ac: getAccountByEmail(email)
+ac -> a: isManager()
+activate a
+a -->> ac: true
+deactivate a
+ac -->> company: true
+deactivate ac
+company -->> controller: true
 deactivate company
-ser -->> controller: listAllProjects
-deactivate ser
-controller -> mapper: toDTO(listAllProjects)
-activate mapper
+controller -> company: listAllProjects()
+activate company
+company -> pc: listAllProjects()
+activate pc
+pc -->> company: listAllProjects
+deactivate pc
+company -->> controller: listAllProjects
+deactivate company
+create mapper
+controller -> mapper: create(listAllProjects)
 create list
 mapper --> list: create ()
 loop for each project in projectContainer
-mapper -> container: project = get(i)
-activate container
-container --> mapper: project
-deactivate container
+mapper -> pc: project = get(i)
+activate pc
+pc --> mapper: project
+deactivate pc
 activate mapper
 mapper -> mapper : projectDTO = toDTO (project)
 create DTO
