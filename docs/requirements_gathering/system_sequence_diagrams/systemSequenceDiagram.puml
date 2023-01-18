@@ -492,3 +492,13 @@ Account is authenticated.
 end note
 "Manager" <-- ":System": informs set role
 @enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE A NEW BUSINESS SECTOR
+actor "Administrator" as adm
+adm -> ":System": starts adding new business sector
+adm <-- ":System": requests data (name)
+adm -> ":System": types requested data
+adm <-- ":System":informs operation success
+@enduml

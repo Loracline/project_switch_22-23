@@ -2,14 +2,10 @@
 'https://plantuml.com/class-diagram
 
 class AddBusinessSectorController {
--service
-+addBusinessSector(name, email)
-}
-
-class Service {
 -company
 +addBusinessSector(name, email)
 }
+
 
 class Company {
 -accountContainer
@@ -25,6 +21,8 @@ class AccountContainer {
 }
 
 class Account {
+-email
+-profile
 +isAdministrator()
 }
 
@@ -39,8 +37,7 @@ class BusinessSector {
 +BusinessSector(name)
 }
 
-AddBusinessSectorController --> Service
-Service --> Company
+AddBusinessSectorController --> Company
 Company --> AccountContainer
 AccountContainer --> Account
 Company --> BusinessSectorContainer
