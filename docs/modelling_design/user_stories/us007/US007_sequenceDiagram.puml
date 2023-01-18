@@ -11,7 +11,6 @@ end legend
 actor Administrator as a
 participant ":UIProjectTypology" as ui
 participant ":ProjectTypologyController" as ct
-participant ":Service" as sv
 participant ":Company" as c
 participant ":AccountContainer" as acc
 participant "account:Account" as ac
@@ -26,9 +25,7 @@ ui --> a: requests data (projectTypology)
 a -> ui: types requested data
 ui -> ct: createProjectTypology(email, projectTypology)
 activate ct
-ct -> sv: createProjectTypology(email, projectTypology)
-activate sv
-sv -> c: validateAdministrator(email)
+ct -> c: createProjectTypology(email, projectTypology)
 activate c
 c -> acc: validateAdministrator(email)
 activate acc
@@ -39,9 +36,9 @@ ac --> acc: true
 deactivate ac
 acc --> c: true
 deactivate acc
-c --> sv: true
+c --> ct: true
 deactivate c
-sv -> c: createProjectTypology(projectTypology)
+ct -> c: createProjectTypology(projectTypology)
 activate c
 c -> ptc: createProjectTypology(projectTypology)
 activate ptc
@@ -50,10 +47,8 @@ ptc -> pty: create()
 ptc -> ptc: addProjectTypology(pt)
 ptc --> c: true
 deactivate ptc
-c --> sv: true
+c --> ct: true
 deactivate c
-sv --> ct: true
-deactivate sv
 ct --> ui: true
 deactivate ct
 ui --> a: project typology created
