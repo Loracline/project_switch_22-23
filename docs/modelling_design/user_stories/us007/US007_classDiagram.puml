@@ -46,4 +46,5 @@ class "Account"{
 -photo
 +isAdministrator()
 }
+
 @enduml

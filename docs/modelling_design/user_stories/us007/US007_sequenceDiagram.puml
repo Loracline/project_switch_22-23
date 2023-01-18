@@ -53,6 +53,7 @@ ct --> ui: true
 deactivate ct
 ui --> a: project typology created
 deactivate ui
+
 deactivate a
 @enduml
 
