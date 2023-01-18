@@ -3,6 +3,10 @@ package org.switch2022.project.model;
 import java.util.Objects;
 
 public class BusinessSector {
+    /**
+     * Class BusinessSector is built to create and manage new businessSector.
+     * A businessSector is defined by a name.
+     */
     private String businessSectorName;
 
     public BusinessSector(String businessSectorName) {
