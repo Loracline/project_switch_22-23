@@ -11,7 +11,6 @@ end legend
 actor Administrator as a
 participant ":AddBusinessSectorUI" as absui
 participant ":AddBusinessSectorController" as absc
-participant ":Service" as s
 participant ":Company" as c
 participant ":AccountContainer" as ac
 participant "account:Account" as acc
@@ -25,22 +24,20 @@ a <-- absui: requests data (name)
 a -> absui: types requested data
 absui -> absc: addBusinessSector(name, email)
 activate absc
-absc -> s: addBusinessSector(name, email)
-activate s
-s -> c: validateAdministrator(email)
+absc -> c: addBusinessSector(name, email)
 activate c
 c -> ac: validateAdministrator(email)
 activate ac
-ac -> ac: account = getAccountByEmail(email)
+ac -> ac: getAccountByEmail(email)
 ac -> acc: validateAdministrator(email)
 activate acc
 ac <-- acc: true
 deactivate acc
 c <-- ac: true
 deactivate ac
-s <-- c: true
+absc <-- c: true
 deactivate c
-s -> c: addBusinessSector(name)
+absc -> c: addBusinessSector(name)
 activate c
 c -> bsc: addBusinessSector(name)
 activate bsc
@@ -49,10 +46,8 @@ bsc -> bs: create(name)
 bsc -> bsc: add(businessSector)
 c <-- bsc: true
 deactivate bsc
-s <-- c: true
+absc <-- c: true
 deactivate c
-absc <-- s: true
-deactivate s
 absui <-- absc: true
 deactivate absc
 a <-- absui: informs operation success
