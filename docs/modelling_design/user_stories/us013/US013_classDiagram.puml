@@ -7,51 +7,51 @@ legend top
 As Manager, I want to define the Scrum Master of a project.
 end legend
 
-class SetRoleController {
--company
-+setRole(email, projectCode, role)
+class DefinesAScrumMasterController {
+-service
++definesAScrumMaster(email, projectCode)
 }
-
+class Service {
+-company
++definesAScrumMaster(email, projectCode)
+}
 class Company {
 -accountContainer
 -projectContainer
 -accountInProjectContainer
-+setRole(email, projectCode, role)
-}
-
-class AccountContainer {
--email
++validateManager(email)
 +getAccountByEmail(email)
-
 }
-
+class AccountContainer {
+-account
++validateManager(email)
++getAccountByEmail(email)
+}
+class Account {
+-email
++validateManager(email)
+}
 class ProjectContainer{
--projectCode
-+getProject(projectCode)
+-project
++getProject(project)
 }
-
 class AccountInProjectContainer{
+-accountInProject
++definesAScrumMaster(account, project)
++addToContainer()
+-verifyIfAccountInProjectExists(accountInProject)
+}
+class AccountInProject{
 -account
 -project
 -role
-+setRole(account, project,role)
-+getAccountProject(account,project)
++definesAScrumMaster(account, project)
 }
-
-class AccountInProject{
--role
-+setRole(role)
-+isRoleValid(role)
-}
-
-
-SetRoleController ..> Company
+AccountContainer --> Account
+DefinesAScrumMasterController ..> Service
+Service --> Company
 Company "1       " --> "*"AccountContainer: has
 Company "1"--> "        *"ProjectContainer: has
 Company "1 "-->"*" AccountInProjectContainer: has
 AccountInProjectContainer "    1"--> "   *"AccountInProject: contains
-
-
-
-
 @enduml

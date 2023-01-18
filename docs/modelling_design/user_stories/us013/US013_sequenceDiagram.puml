@@ -10,11 +10,13 @@ end legend
 autonumber
 
 actor Manager
-participant ":SetRoleUI" as ui
-participant "SetRoleController" as controller
+participant ":DefinesAScrumMasterUI" as ui
+participant "DefinesAScrumMasterController" as controller
+participant "Service" as ser
 participant ":Company" as company
-participant ":AccountContainer" as acccontainer
-participant ":ProjectContainer" as pcontainer
+participant ":AccountContainer" as ac
+participant "account:Account" as a
+participant ":ProjectContainer" as pcpcontainer
 participant ":AccountInProjectContainer" as accinprojcont
 participant ":AccountInProject" as accinproj
 
@@ -25,36 +27,48 @@ Manager <-- ui:  requests data (email,projectCode, role)
 deactivate ui
 Manager -> ui:  enters data
 activate ui
-ui -> controller: setRole(email, projectCode, role)
+ui -> controller: definesAScrumMaster(email, projectCode)
 activate controller
-controller -> company: setRole (email, projectCode, role)
+controller -> ser: definesAScrumMaster (email, projectCode)
+activate ser
+ser -> company: validateManager(email)
 activate company
-company -> acccontainer: getAccountByEmail(email)
-activate acccontainer
-company <-- acccontainer: account
-deactivate acccontainer
-company -> pcontainer: getProject(projectCode)
-activate pcontainer
-company <-- pcontainer: project
-deactivate pcontainer
-company -> accinprojcont: setRole(account,project,role)
+company -> ac: validateManager(email)
+activate ac
+ac -> ac: account=getAccountByEmail(email)
+ac -> a: validateManager(email)
+activate a
+a -->> ac: true
+deactivate a
+ac -->> company: true
+deactivate ac
+company -->> ser: true
+deactivate company
+ser -> company: getAccountByEmail(email)
+activate company
+company -> ac: getAccountByEmail(email)
+activate ac
+company <-- ac: account
+deactivate ac
+company -> pcpcontainer: getProject(projectCode)
+activate pcpcontainer
+company <-- pcpcontainer: project
+deactivate pcpcontainer
+company -> accinprojcont: definesAScrumMaster(account,project)
 activate accinprojcont
-accinprojcont -> accinprojcont : getAccountInProject(account,project)
-accinprojcont -> accinproj: SetRole(role)
-activate accinproj
-accinproj --> accinprojcont: true
-
+create accinproj
+accinprojcont -> accinproj: definesAScrumMaster(account, project)
+accinprojcont -> accinprojcont: addToContainer()
 deactivate accinproj
 accinprojcont --> company: true
 deactivate accinprojcont
-company --> controller : true
+company --> ser : true
 deactivate company
+ser --> controller: true
+deactivate ser
 controller --> ui: true
 deactivate controller
-ui -->> Manager: informs Set Role
-
-
+ui -->> Manager: informs set Role
+deactivate ui
 @enduml
-
-
 
