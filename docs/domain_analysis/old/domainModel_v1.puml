@@ -1,95 +1,83 @@
 @startuml
-Class Company{}
-hide Company circle
-Class Account{
+title Domain model v.01 \n Dec 14, 2022
+hide empty member
+hide Account circle
+hide Profile circle
+hide UserStory circle
+hide UserInProject circle
+hide Sprint circle
+hide Task circle
+hide Project circle
+hide Role circle
+
+Class Account {
 name
 email
-phoneNumber
-photo
-status
 password
+status
+photo
 }
-hide Account circle
-Class Profile{
-name
-}
-hide Profile circle
-Class Period{
-startDate
-endDate
-}
-hide Period circle
-Class User{}
-hide User circle
-Class Role{
-}
-hide Role circle
-Class Project{
+
+Class Profile
+
+Class UserInProject
+
+Class Role
+
+Class Project {
 code
 name
 description
+startingDate
+sprintDuration
 numberOfSprints
+endingDate
 customer
 typology
 budget
+projectManager
+productOwner
+scrumMaster
+projectTeam
 projectStatus
 }
-hide Project circle
-Class UserStory{
+
+Class Sprint {
+effort
+}
+
+Class UserStory {
 number
 actor
-usText
+userStoryText
 acceptanceCriteria
 }
-hide UserStory circle
-Class Task{
+
+Class Task {
 name
 description
-effortEstimate
+userStory
+startingDate
+endingDate
 hoursSpent
-percentageExecution
+effortEstimate
+percentExecution
 type
 status
 responsible
 }
-hide Task circle
-Class Sprint {
-}
-hide Sprint circle
-Class User_Sprint{}
-hide User_Sprint circle
-Class ProductBacklog{
-}
-hide ProductBacklog circle
-Class SprintBacklog{
-}
-hide SprintBacklog circle
-Class Report {}
-hide Report circle
-Class User_Project {}
-hide User_Project circle
 
-Company "1" -- "*" Account : has >
-Account "*" -- "1" Profile: has >
-Profile "*" -- "1" Period: spans >
-User "1"--|>"1" Profile: is a
-User_Sprint "*" -- "1" Role: has >
-Role "*" -- "1" Period: spans >
-Company "1"-- "*" Project: has >
-Project "*" -- "1" Period: spans >
-Project "1" -- "*" Sprint: is divided into >
-Task "*" -- "1" Period: spans >
-Sprint "*" -- "1" Period: spans >
-Sprint "1" -- "*" Task: has >
-Project "1" -- "1" ProductBacklog: has >
-ProductBacklog "1" -- "*" UserStory: contains >
-User "1" -- "*" User_Sprint: is in a >
-User_Sprint "*" -- "1" Sprint: works in >
-Sprint "1" -- "1" SprintBacklog: has >
-SprintBacklog "1"--"*" UserStory: has
-UserStory "1"-- "*" Task
-Project "1" -- "*" Report: generates >
-Project "1" -- "*" User_Project
-User_Project "*"-- "1" User
-User_Project "1"--"*" Report: generates >
+Account "*"--"1" Profile : has >
+note left: Administrator \nUser \nManager
+Account "1"--"*" UserInProject : is a >
+UserInProject "*"--"1" Role : has >
+note left: Project Manager \nProduct Owner \nScrum Master \nTeam Member
+UserInProject "*"--"1" Project : works in >
+Project "1"--"*" Sprint : comprises >
+Project "1"--"*" UserStory : contains >
+Sprint "1"--"*" Task : contains >
+Sprint "1"--"*" UserStory : works in >
+
+
+
 @enduml

@@ -1,16 +1,15 @@
 # Glossary
 
 ### Revision History
-
 | **Version** | **Date**     | **Description**                                               | **Author**         |
 |-------------|--------------|---------------------------------------------------------------|--------------------|
 | v.01        | Dec 06, 2022 | First draft. To be refined.                                   | DevTeam            |
 | v.02        | Dec 13, 2022 | Removal of non-ambiguous terms and removal of repeated terms. | Margarida Ferreira |
-| v.03        | Dec 23, 2022 | Revision                                                      | Mariana Zancheta   |
-| v.04        | Jan 05, 2023 | Revision                                                      | Ana Sofia Oliveira |
+| v.03        | Dec 23, 2022 | Revision #1                                                   | Mariana Zancheta   |
+| v.04        | Jan 05, 2023 | Revision #2                                                   | Ana Sofia Oliveira |
+
 
 ## Definitions
-
 | **Term or expression (EN)**        | **Definition and Information**                                                                                                                                                                                                                                          | **Aliases**              |
 |------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------|
 | Acceptance criteria                | A set of accepted conditions or business rules which the functionality or feature should satisfy and meet, in order to be accepted by the Product Owner/Stakeholders. Used to assure than the User Story to be marked as complete.                                      ||

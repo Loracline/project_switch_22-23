@@ -73,7 +73,7 @@ class AccountTest {
 
     @Test
     void ensureProfileIsSetSuccessfully() throws IOException {
-        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v1_Jan05_2023.png"));
+        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, photo); //Default Profile: User
         accountOne.setProfile(new Profile("Manager"));
         Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, photo);
@@ -83,7 +83,7 @@ class AccountTest {
     @Test
     void ensureThatPhotoIsSet() throws IOException {
         //ARRANGE
-        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v1_Jan05_2023.png"));
+        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account accountWithPhoto = new Account("John", "john@isep.ipp.pt", 912345678,
                 photo);
