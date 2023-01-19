@@ -101,4 +101,19 @@ public class AccountContainer {
       }
     return isManager;
   }
+  public boolean validateUser(String email){
+    boolean isUser=false;
+    for (int i = 0; i < this.accounts.size(); i++) {
+      if (accounts.get(i).checkAccountFromEmail(email)){
+        Account account= accounts.get(i);
+        if (account.IsUser()){
+          isUser=true;
+
+        }
+      }
+      break;
+    }
+    return isUser;
+  }
+
 }

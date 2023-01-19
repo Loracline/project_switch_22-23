@@ -18,7 +18,7 @@ class CompanyTest {
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
-  Account accountOne, accountTwo;
+  Account accountOne, accountTwo, accountFive;
   Profile profileOne, profileTwo, profileThree;
 
   List<Account> accounts;
@@ -36,6 +36,7 @@ class CompanyTest {
   void setUp() {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
     accountTwo = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+    accountFive = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
 
     accounts = new ArrayList<>();
     accountContainer = new AccountContainer(accounts);
@@ -160,6 +161,28 @@ class CompanyTest {
     //Assert
     assertEquals(expected, result);
   }
+
+  @Test
+  void ensureThatAccountHasProfileUserUnsuccessfully() {
+    //Arrange
+    boolean expected= false;
+    accountOne.setProfile(profileThree);
+    //Act
+    boolean result= company.validateUser("mike@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+  @Test
+  void ensureThatAccountHasProfileUserSuccessfully() {
+    //Arrange
+    boolean expected= true;
+    //Act
+    boolean result= company.validateUser("mike@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+
 }
 
     /*

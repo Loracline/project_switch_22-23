@@ -34,5 +34,18 @@ public class Profile {
         Profile profile1 = (Profile) o;
         return Objects.equals(profileName, profile1.profileName.toLowerCase());
     }
+
+    public boolean isUser() {
+        Profile profile = new Profile("User");
+        boolean isUser = false;
+        if (this.profileName.equals(profile.profileName)) {
+            isUser = true;
+        }
+        return isUser;
+    }
+
+
+
+
 }
 
