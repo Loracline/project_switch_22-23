@@ -140,4 +140,13 @@ public class Account {
         }
         return isManager;
     }
+
+    public boolean IsUser() {
+        boolean isUser = false;
+        if (this.profile.isUser()){
+            isUser=true;
+        }
+        return isUser;
+    }
+
 }

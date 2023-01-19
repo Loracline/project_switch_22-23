@@ -169,4 +169,27 @@ class AccountContainerTest {
         //Assert
         assertEquals(expected, result);
     }
+
+
+
+    @Test
+    void ensureThatAccountHasProfileUserUnsuccessfully() {
+        //Arrange
+        accountOne.setProfile(profileTwo);
+        boolean expected = false;
+        //Act
+        boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatAccountHasProfileUserSuccessfully() {
+        //Arrange
+        boolean expected = true;
+        //Act
+        boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
 }

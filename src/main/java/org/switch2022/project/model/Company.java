@@ -1,6 +1,7 @@
 package org.switch2022.project.model;
 
 import org.switch2022.project.DTO.ProjectDTO;
+import org.switch2022.project.container.*;
 import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
@@ -8,6 +9,8 @@ import org.switch2022.project.container.ProjectContainer;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -21,6 +24,7 @@ public class Company {
     private ProfileContainer profileContainer;
     private ProjectContainer projectContainer;
     private BusinessSectorContainer businessSectorContainer;
+
 
     /**
      * Company constructor
@@ -121,5 +125,10 @@ public class Company {
     public List<Account> listAccountsByProject(String projectCode) {
         return projectContainer.listAccountsByProject(projectCode);
     }
+
+    public boolean validateUser(String email){
+        return accountContainer.validateUser(email);
+    }
+
 }
 
