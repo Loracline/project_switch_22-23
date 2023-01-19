@@ -1,0 +1,36 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title AS A MANAGER I WANT AUTHORIZATION
+
+class "Controller"{
+-company
++validateManager(email)
+}
+
+class "Company"{
+-accountContainer
++ validateManager(email)
+}
+
+class "AccountContainer"{
+-accounts
++validateManager(email)
+}
+
+class "Account"{
+-email
+-profile
++checkAccountFromEmail(email)
++isManager()
+}
+
+class "Profile"{
+-profileName
++isManager()
+}
+"Controller" --> "Company"
+"Company" "1"-->"1" "AccountContainer": has
+"AccountContainer" --> "Account"
+"Account" --> "Profile"
+@enduml
