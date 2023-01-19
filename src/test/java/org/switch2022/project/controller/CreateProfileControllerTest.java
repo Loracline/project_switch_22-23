@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.model.*;
 
@@ -25,6 +26,9 @@ class CreateProfileControllerTest {
     List<Profile> profiles;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
+    BusinessSector businessSector;
+    List<BusinessSector> businessSectors;
+    BusinessSectorContainer businessSectorContainer;
     Company company;
 
     CreateProfileController createProfileController;
@@ -51,7 +55,13 @@ class CreateProfileControllerTest {
         profiles.add(profileOne);
         profiles.add(profileTwo);
 
-        company = new Company(accountContainer, profileContainer);
+        businessSector = new BusinessSector("fishing");
+
+        businessSectors = new ArrayList<>();
+        businessSectorContainer= new BusinessSectorContainer(businessSectors);
+        businessSectors.add(businessSector);
+
+        company = new Company(accountContainer, profileContainer,businessSectorContainer);
 
         createProfileController = new CreateProfileController(company);
     }
@@ -66,6 +76,9 @@ class CreateProfileControllerTest {
         profiles.clear();
         accountContainer = null;
         profileContainer = null;
+        businessSector=null;
+        businessSectors.clear();
+        businessSectorContainer=null;
         company = null;
         createProfileController = null;
     }

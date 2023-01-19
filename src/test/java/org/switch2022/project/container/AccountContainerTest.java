@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.Account;
+import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.Company;
 import org.switch2022.project.model.Profile;
 
@@ -24,6 +25,9 @@ class AccountContainerTest {
   List<Profile> profiles;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
+  BusinessSector businessSector;
+  List<BusinessSector> businessSectors;
+  BusinessSectorContainer businessSectorContainer;
   Company company;
 
   @BeforeEach
@@ -47,7 +51,13 @@ class AccountContainerTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    company = new Company(accountContainer,profileContainer);
+    businessSector = new BusinessSector("fishing");
+
+    businessSectors = new ArrayList<>();
+    businessSectorContainer= new BusinessSectorContainer(businessSectors);
+    businessSectors.add(businessSector);
+
+    company = new Company(accountContainer, profileContainer,businessSectorContainer);
   }
 
   @AfterEach
@@ -62,6 +72,9 @@ class AccountContainerTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
+    businessSector=null;
+    businessSectors.clear();
+    businessSectorContainer=null;
     company = null;
   }
 

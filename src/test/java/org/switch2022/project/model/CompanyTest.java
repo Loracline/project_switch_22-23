@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
 
 import java.util.ArrayList;
@@ -17,12 +18,17 @@ class CompanyTest {
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
-  Account accountOne, accountTwo, accountThree, accountFour;
+  Account accountOne, accountTwo;
   Profile profileOne, profileTwo;
+
   List<Account> accounts;
   List<Profile> profiles;
+  BusinessSector businessSector;
+  List<BusinessSector> businessSectors;
+  BusinessSectorContainer businessSectorContainer;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
+
   Company company;
 
 
@@ -30,8 +36,6 @@ class CompanyTest {
   void setUp() {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
     accountTwo = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-    //accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
-    //accountFour = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
 
     accounts = new ArrayList<>();
     accountContainer = new AccountContainer(accounts);
@@ -47,7 +51,13 @@ class CompanyTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    company = new Company(accountContainer, profileContainer);
+    businessSector = new BusinessSector("fishing");
+
+    businessSectors = new ArrayList<>();
+    businessSectorContainer= new BusinessSectorContainer(businessSectors);
+    businessSectors.add(businessSector);
+
+    company = new Company(accountContainer, profileContainer,businessSectorContainer);
   }
 
   @AfterEach
@@ -60,6 +70,9 @@ class CompanyTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
+    businessSector=null;
+    businessSectors.clear();
+    businessSectorContainer=null;
     company = null;
   }
 
@@ -70,15 +83,6 @@ class CompanyTest {
     assertEquals(expected, result);
   }
 
-  @Test
-  void ensureProfileContainerIsRetrieved() {
-    //Arrange
-    ProfileContainer expected = profileContainer;
-    //Act
-    ProfileContainer result = company.getProfileContainer();
-    //Assert
-    assertEquals(expected, result);
-  }
 
   @Test
   void ensureProfileIsCreatedSuccessfuly() {
@@ -113,6 +117,25 @@ class CompanyTest {
     boolean expected = true;
     accountContainer.changeStatus("mike@isep.ipp.pt", true);
     boolean result = accountOne.equals(accountTwo);
+    assertEquals(expected, result);
+  }
+  @Test
+  void ensureBusinessSectorIsCreatedSuccessfuly() {
+    //Arrange
+    boolean expected = true;
+    //Act
+    boolean result = company.addBusinessSector("mining");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureBusinessSectorIsCreatedUnsuccessfuly() {
+    //Arrange
+    boolean expected = false;
+    //Act
+    boolean result = company.addBusinessSector("fishing");
+    //Assert
     assertEquals(expected, result);
   }
 }

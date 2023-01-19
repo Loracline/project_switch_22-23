@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.model.*;
 import java.util.ArrayList;
@@ -17,10 +18,13 @@ class ChangeProfileControllerTest {
 
     Account accountOne;
     Profile profileOne;
+    BusinessSector businessSector;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
+    BusinessSectorContainer businessSectorContainer;
     Company company;
     ChangeProfileController controller;
+    List<BusinessSector> businessSectors;
     List<Account> accounts;
     List<Profile> profiles;
 
@@ -37,7 +41,13 @@ class ChangeProfileControllerTest {
         profileOne = new Profile("Administrator");
         profiles.add(profileOne);
 
-        company = new Company(accountContainer, profileContainer);
+        businessSector = new BusinessSector("fishing");
+
+        businessSectors = new ArrayList<>();
+        businessSectorContainer= new BusinessSectorContainer(businessSectors);
+        businessSectors.add(businessSector);
+
+        company = new Company(accountContainer, profileContainer,businessSectorContainer);
         controller = new ChangeProfileController(company);
     }
 
@@ -51,6 +61,9 @@ class ChangeProfileControllerTest {
         controller = null;
         accounts.clear();
         profiles.clear();
+        businessSector=null;
+        businessSectors.clear();
+        businessSectorContainer=null;
     }
     @Test
     void ensureAccountProfileIsChangedSuccessfully() {

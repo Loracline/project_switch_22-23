@@ -1,11 +1,11 @@
 package org.switch2022.project.model;
 
 import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.container.ProjectContainer;
 
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 /**
  * Class Company is built to create and manipulate AccountContainer and ProfileContainer.
@@ -17,14 +17,16 @@ public class Company {
     private AccountContainer accountContainer;
     private ProfileContainer profileContainer;
     private ProjectContainer projectContainer;
+    private BusinessSectorContainer businessSectorContainer;
 
     /**
      * Company constructor
      */
-    public Company(AccountContainer accountContainer, ProfileContainer profileContainer) {
+    public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer businessSectorContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
+        this.businessSectorContainer = businessSectorContainer;
     }
 
 
@@ -42,15 +44,6 @@ public class Company {
      *
      * @return the container of profiles
      */
-    public ProfileContainer getProfileContainer() {
-        return profileContainer;
-    }
-
-    /**
-     * Getter method for the attribute Project Container.
-     *
-     * @return the container of projects
-     */
     public ProjectContainer getProjectContainer() {
         return projectContainer;
     }
@@ -59,17 +52,16 @@ public class Company {
      * Method createProfile
      *
      * @return true if profile is created
-     * @return false if profile isn't created successfully
      */
-    public boolean createProfile (String name){
+    public boolean createProfile(String name) {
         return profileContainer.createProfile(name);
     }
 
-    public boolean registerAccount (String name, String email, long phoneNumber, BufferedImage photo){
+    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
         return accountContainer.addAccount(name, email, phoneNumber, photo);
     }
 
-    public boolean changeStatus(String email, boolean status){
+    public boolean changeStatus(String email, boolean status) {
         return accountContainer.changeStatus(email, status);
     }
 
@@ -91,5 +83,14 @@ public class Company {
         method projectContainer.registerProject(dto)
         return false; //todo work to be done
     }*/
+    /**
+     * Method addBusinessSector
+     *
+     * @return true if businessSector is created
+     * @return false if businessSector isn't created successfully
+     */
+    public boolean addBusinessSector(String businessSector) {
+        return businessSectorContainer.createBusinessSector(businessSector);
+    }
 }
 
