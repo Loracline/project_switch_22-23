@@ -79,6 +79,25 @@ public class Account {
     public String getEmail() {
         return email;
     }
+    public String getName() {
+        return name;
+    }
+
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public BufferedImage getPhoto() {
+        return photo;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
 
     /**
      * Setter method for the attribute ACCOUNT STATUS.

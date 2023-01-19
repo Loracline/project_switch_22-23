@@ -8,6 +8,8 @@ import org.switch2022.project.container.ProjectContainer;
 import org.switch2022.project.mapper.ProjectMapper;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Class Company is built to create and manipulate AccountContainer and ProfileContainer.
@@ -21,14 +23,6 @@ public class Company {
     private ProjectContainer projectContainer;
     private BusinessSectorContainer businessSectorContainer;
 
-  /**
-   * Company constructor
-   */
-  public Company(AccountContainer accountContainer, ProfileContainer profileContainer) {
-    this.accountContainer = accountContainer;
-    this.profileContainer = profileContainer;
-    this.projectContainer = projectContainer;
-  }
     /**
      * Company constructor
      */
@@ -106,5 +100,22 @@ public class Company {
     }
     return projectRegistered;
   }
+    /**
+     * Method addBusinessSector
+     *
+     * @return true if businessSector is created
+     * @return false if businessSector isn't created successfully
+     */
+    public boolean addBusinessSector(String businessSector) {
+        return businessSectorContainer.createBusinessSector(businessSector);
+    }
+
+    public boolean validateManager(String email) {
+        return accountContainer.validateManager(email);
+    }
+
+    public List<Account> listAccountsByProject(String projectCode) {
+        return projectContainer.listAccountsByProject(projectCode);
+    }
 }
 

@@ -21,6 +21,7 @@ public class Project {
   private ProjectTypology projectTypology;
   private BusinessSector businessSector;
 
+
   /**
    * Constructor of the class Project.
    * New instance is created using as parameter the essential attributes.
@@ -105,4 +106,9 @@ public class Project {
   public BusinessSector getBusinessSector() {
     return this.businessSector;
   }
+
+  public String getProjectCode() {
+    return code;
+  }
+
 }

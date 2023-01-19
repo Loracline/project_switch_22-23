@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.BusinessSector;
+import org.switch2022.project.model.Project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ class BusinessSectorContainerTest {
         BusinessSector businessSectorOne, businessSectorTwo;
         List<BusinessSector> businessSectors;
         BusinessSectorContainer businessSectorContainer;
+        Project project;
 
 
         @BeforeEach
@@ -32,7 +34,6 @@ class BusinessSectorContainerTest {
             businessSectors.add(businessSectorTwo);
 
             businessSectorContainer = new BusinessSectorContainer(businessSectors);
-
         }
 
         @AfterEach

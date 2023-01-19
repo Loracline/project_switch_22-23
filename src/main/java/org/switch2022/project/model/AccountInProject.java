@@ -26,4 +26,8 @@ public class AccountInProject {
         this.project = project;
         this.role = role;
     }
+
+    public Account getAccountByProject(Project project) {
+        return account;
+    }
 }

@@ -9,6 +9,13 @@ import java.util.List;
 public class ListAccountsInProjectController {
     private Company company;
 
-
-
+    public List<AccountDTO> listAccountsByProject(String email, String projectCode) {
+        List<AccountDTO> accountsDTO = new ArrayList<>();
+        if (company.validateManager(email)) {
+            List<Account> accounts = company.listAccountsByProject(projectCode);
+            AccountMapper accountMapper = new AccountMapper();
+            accountsDTO = accountMapper.accountsToDTO(accounts);
+        }
+        return accountsDTO;
+    }
 }
