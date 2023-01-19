@@ -89,4 +89,16 @@ public class AccountContainer {
   public boolean changeStatus(String email, boolean status) {
     return (getAccountByEmail(email).setStatus(status));
   }
+  public boolean validateManager(String email){
+    boolean isManager=false;
+    for (int i = 0; i < this.accounts.size(); i++) {
+      if (accounts.get(i).checkAccountFromEmail(email)){
+        Account account= accounts.get(i);
+        if (account.IsManager()){
+          isManager=true;
+        }
+        }
+      }
+    return isManager;
+  }
 }

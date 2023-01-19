@@ -1,4 +1,5 @@
 package org.switch2022.project.model;
+
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ import java.util.Objects;
 public class Account {
     /**
      * Attributes of the class Account, according to the Class Diagram.
+     *
      * @param status is true (active) or false (inactive)
      */
     private String name;
@@ -27,16 +29,15 @@ public class Account {
      * @param email       of the new account
      * @param phoneNumber of the new account
      * @param photo       of the new account
-     *
      */
-    public Account(String name, String email, long phoneNumber,BufferedImage photo) {
+    public Account(String name, String email, long phoneNumber, BufferedImage photo) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.profile = new Profile("User");
         this.status = true;
 
-        if(photo != null){
+        if (photo != null) {
             this.photo = photo;
         }
     }
@@ -95,5 +96,21 @@ public class Account {
      */
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    public boolean checkAccountFromEmail(String email) {
+        boolean account = false;
+        if (this.email.equals(email)) {
+            account = true;
+        }
+        return account;
+    }
+
+    public boolean IsManager() {
+        boolean isManager = false;
+        if (this.profile.isManager()){
+            isManager=true;
+        }
+        return isManager;
     }
 }

@@ -19,7 +19,7 @@ class CompanyTest {
    */
 
   Account accountOne, accountTwo;
-  Profile profileOne, profileTwo;
+  Profile profileOne, profileTwo, profileThree;
 
   List<Account> accounts;
   List<Profile> profiles;
@@ -44,6 +44,7 @@ class CompanyTest {
 
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
+    profileThree= new Profile ("Manager");
 
 
     profiles = new ArrayList<>();
@@ -66,6 +67,7 @@ class CompanyTest {
     accountTwo = null;
     profileOne = null;
     profileTwo = null;
+    profileThree=null;
     accounts.clear();
     profiles.clear();
     accountContainer = null;
@@ -135,6 +137,26 @@ class CompanyTest {
     boolean expected = false;
     //Act
     boolean result = company.addBusinessSector("fishing");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+    @Test
+    void ensureThatAccountHasProfileManagerSuccessfully() {
+    //Arrange
+      boolean expected= true;
+      accountOne.setProfile(profileThree);
+      //Act
+      boolean result= company.validateManager("mike@isep.ipp.pt");
+      //Assert
+      assertEquals(expected, result);
+    }
+  @Test
+  void ensureThatAccountHasProfileManagerUnsuccessfully() {
+    //Arrange
+    boolean expected= false;
+    //Act
+    boolean result= company.validateManager("mike@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }

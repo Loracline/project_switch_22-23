@@ -92,5 +92,8 @@ public class Company {
     public boolean addBusinessSector(String businessSector) {
         return businessSectorContainer.createBusinessSector(businessSector);
     }
+    public boolean validateManager(String email){
+        return accountContainer.validateManager(email);
+    }
 }
 
