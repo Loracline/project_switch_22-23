@@ -9,7 +9,6 @@ autonumber
 actor Manager
 participant ":ListAccountsInProjectUI" as ui
 participant ":ListAccountsInProjectController" as controller
-participant ":Service" as ser
 participant ":Company" as company
 participant ":AccountContainer" as ac
 participant "account:Account" as a
@@ -17,11 +16,10 @@ participant ":ProjectContainer" as container
 participant ":AccountInProjectContainer" as aipc
 participant "accountInProject:AccountInProject" as aip
 participant "accounts: List<Account>" as list
-participant ":AccountMapper" as mapper
+participant "accountMapper:AccountMapper" as mapper
 participant "accountsDTO: List<AccountDTO>" as listDTO
 participant "accountDTO:AccountDTO" as DTO
-
-participant "profile:Profile"
+participant "profile:Profile" as pf
 participant "project:Project"
 
 
@@ -30,22 +28,22 @@ Manager -> ui: lists all accounts of a given project
 activate ui
 ui -> controller: listAccountsByProject(email, projectCode)
 activate controller
-controller -> ser: listAccountsByProject(email, projectCode)
-activate ser
- ser -> company: validateManager(email)
- activate company
- company -> ac: validateManager(email)
- activate ac
- ac -> ac: account=getAccountByEmail(email)
- ac -> a: isManager()
- activate a
- a -->> ac: true
- deactivate a
- ac -->> company: true
- deactivate ac
- company -->> ser: true
- deactivate company
-ser -> company: listAccountsByProject(projectCode)
+controller -> company: validateManager(email)
+activate company
+company -> ac: validateManager(email)
+activate ac
+ac -> a: isManager()
+activate a
+a -> pf : getProfileByName()
+activate pf
+a -->> ac: true
+deactivate pf
+deactivate a
+ac -->> company: true
+deactivate ac
+company -->> controller: true
+deactivate company
+controller -> company: listAccountsByProject(projectCode)
 activate company
 company -> container: listAccountsByProject(projectCode)
 activate container
@@ -67,26 +65,26 @@ aipc --> container : accounts
 deactivate aipc
 container--> company : accounts
 deactivate container
-company --> ser: accounts
+company --> controller: accounts
 deactivate company
-ser --> controller: accounts
-deactivate ser
-controller -> mapper: accountsToDTO(accounts)
-activate mapper
+create mapper
+controller -> mapper: create( )
 create listDTO
+
+activate mapper
 mapper --> listDTO: create ()
 loop for each account in accounts
 mapper -> list: account = get(i)
 list --> mapper: account
-mapper -> mapper : accountDTO = accountToDTO(account)
 activate mapper
+mapper -> mapper : accountDTO = accountToDTO(account)
 create DTO
 mapper --> DTO : create()
-deactivate mapper
 mapper ->listDTO :add(accountDTO)
+deactivate mapper
 activate listDTO
-deactivate listDTO
 end loop
+deactivate listDTO
 mapper --> controller :accountsDTO
 deactivate mapper
 controller -->> ui: accountsDTO
