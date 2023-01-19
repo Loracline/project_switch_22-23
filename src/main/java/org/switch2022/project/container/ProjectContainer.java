@@ -1,6 +1,8 @@
 package org.switch2022.project.container;
 
-import org.switch2022.project.model.Project;
+import org.switch2022.project.DTO.ProjectDTO;
+import org.switch2022.project.mapper.ProjectMapper;
+import org.switch2022.project.model.*;
 
 import java.util.List;
 
@@ -18,13 +20,21 @@ public class ProjectContainer {
     this.projects = projects;
   }
 
-  /**
-   * This method returns list of projects
-   *
-   * @return list
-   */
+  public boolean registerProject(ProjectDTO dto) {
+    ProjectMapper projectMapper = new ProjectMapper();
+    Project project = projectMapper.fromDTO(dto);
+    boolean projectRegistered = false;
+      if (doesProjectExist(project)){
+        projects.add(project);
+      }
+    return projectRegistered;
+  }
 
-  public List<Project> getProjectsList() {
-    return projects;
+  private boolean doesProjectExist(Project project) {
+    boolean projectExistance = false;
+    if(projects.contains(project)){
+      projectExistance = true;
+    }
+    return projectExistance;
   }
 }

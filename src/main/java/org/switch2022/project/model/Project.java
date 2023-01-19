@@ -14,12 +14,12 @@ public class Project {
    * Attributes of the class Project, according to the Class Diagram.
    */
 
-  public String code;
-  public String name;
-  public Customer customer;
-  public String status;
-  public ProjectTypology projectTypology;
-  public BusinessSector businessSector;
+  private String code;
+  private String name;
+  private Customer customer;
+  private String status;
+  private ProjectTypology projectTypology;
+  private BusinessSector businessSector;
 
   /**
    * Constructor of the class Project.
@@ -80,5 +80,29 @@ public class Project {
     if (!(o instanceof Project)) return false;
     Project project = (Project) o;
     return Objects.equals(code, project.code) && Objects.equals(name, project.name) && Objects.equals(customer, project.customer) && Objects.equals(status, project.status) && Objects.equals(projectTypology, project.projectTypology) && Objects.equals(businessSector, project.businessSector);
+  }
+
+  public String getCode() {
+    return this.code;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public Customer getCustomer() {
+    return this.customer;
+  }
+
+  public String getStatus() {
+    return this.status;
+  }
+
+  public ProjectTypology getProjectTypology() {
+    return this.projectTypology;
+  }
+
+  public BusinessSector getBusinessSector() {
+    return this.businessSector;
   }
 }

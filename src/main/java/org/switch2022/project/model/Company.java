@@ -1,9 +1,11 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.DTO.ProjectDTO;
 import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.container.ProjectContainer;
+import org.switch2022.project.mapper.ProjectMapper;
 
 import java.awt.image.BufferedImage;
 
@@ -19,6 +21,14 @@ public class Company {
     private ProjectContainer projectContainer;
     private BusinessSectorContainer businessSectorContainer;
 
+  /**
+   * Company constructor
+   */
+  public Company(AccountContainer accountContainer, ProfileContainer profileContainer) {
+    this.accountContainer = accountContainer;
+    this.profileContainer = profileContainer;
+    this.projectContainer = projectContainer;
+  }
     /**
      * Company constructor
      */
@@ -78,22 +88,23 @@ public class Company {
         return wasAccountProfileUpdated;
     }
 
-    /*public boolean registerProject(String dto, String email) {
-        method accountContainer.validateManager(email)
-        method projectContainer.registerProject(dto)
-        return false; //todo work to be done
-    }*/
-    /**
-     * Method addBusinessSector
-     *
-     * @return true if businessSector is created
-     * @return false if businessSector isn't created successfully
-     */
-    public boolean addBusinessSector(String businessSector) {
-        return businessSectorContainer.createBusinessSector(businessSector);
+  /**
+   * This method registers projects
+   *
+   * @param projectDTO
+   * @param email
+   * @return true if project was registered and false if the project was not registered
+   */
+  public boolean registerProject(ProjectDTO projectDTO, String email) {
+    boolean projectRegistered = false;
+    if (accountContainer.validateManager(email)) {
+      if (projectContainer.registerProject(projectDTO)) {
+        projectRegistered = true;
+      } else {
+        projectRegistered = false;
+      }
     }
-    public boolean validateManager(String email){
-        return accountContainer.validateManager(email);
-    }
+    return projectRegistered;
+  }
 }
 

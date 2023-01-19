@@ -1,29 +1,24 @@
 package org.switch2022.project.mapper;
 
 import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.model.ProjectTypology;
 
 public class ProjectMapper {
   public ProjectDTO toDTO(Project project) {
     ProjectDTO projectDTO = new ProjectDTO();
-
-    //projectDTO.setCode(project.code);
-    projectDTO.setName(project.name);
-    //.setCustomer(project.customer.getName());
-    //projectDTO.setStatus(project.status);
-    //projectDTO.setProjectTypology(project.projectTypology.getName());
-    //projectDTO.setBusinessSector(project.businessSector.getName());
+    projectDTO.code = project.getCode();
+    projectDTO.name = project.getName();
+    projectDTO.customer = project.getCustomer();
+    projectDTO.status = project.getStatus();
+    projectDTO.projectTypology = project.getProjectTypology();
+    projectDTO.businessSector = project.getBusinessSector();
     return projectDTO;
   }
 
-  /*public Project fromDTO(ProjectDTO projectDTO, Customer customer, ProjectTypology projectTypology, BusinessSector businessSector) {
-    Project project = new Project(projectDTO.getCode(), projectDTO.getName(), customer, projectTypology, businessSector);
+  public Project fromDTO(ProjectDTO projectDTO) {
+    Project project = new Project(projectDTO.code, projectDTO.name, projectDTO.customer,
+            projectDTO.projectTypology, projectDTO.businessSector);
     return project;
-  }*/ //todo
-
-
+  }
 }
 
