@@ -30,5 +30,44 @@ class ProfileTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+
+    @Test
+    void validateIfIsManagerSuccessfully() {
+        //Arrange
+        Profile reference = new Profile("Manager");
+        boolean expected = true;
+        //Act
+        boolean result = reference.isManager();
+        assertEquals(expected, result);
+    }
+    @Test
+    void validateIfIsManagerUnsuccessfully() {
+        //Arrange
+        Profile reference = new Profile("Administrator");
+        boolean expected = false;
+        //Act
+        boolean result = reference.isManager();
+        assertEquals(expected, result);
+    }
+    @Test
+    void validateIfIsUserSuccessfully() {
+        //Arrange
+        Profile reference = new Profile("User");
+        boolean expected = true;
+        //Act
+        boolean result = reference.isUser();
+        assertEquals(expected, result);
+    }
+    @Test
+    void validateIfIsUserUnsuccessfully() {
+        //Arrange
+        Profile reference = new Profile("Administrator");
+        boolean expected = false;
+        //Act
+        boolean result = reference.isUser();
+        assertEquals(expected, result);
+    }
+
+
 }
 

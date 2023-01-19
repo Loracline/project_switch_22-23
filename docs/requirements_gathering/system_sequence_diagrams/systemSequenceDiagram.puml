@@ -17,6 +17,7 @@ Administrator -> ":System": Types requested data
 @enduml
 
 
+
 @startuml
 skinparam sequenceMessageAlign center
 title TO REGISTER NEW ACCOUNT
@@ -34,6 +35,7 @@ Administrator <-- ":System": requests data (name, email, \n phoneNumber, photo)
 Administrator  -> ":System": types requested data
 ":System" --> Administrator: informs account created
 @enduml
+
 
 
 @startuml
@@ -55,6 +57,7 @@ Administrator -> ":System": Enters account data
 @enduml
 
 
+
 @startuml
 skinparam sequenceMessageAlign center
 title TO LIST ALL ACCOUNTS
@@ -70,6 +73,7 @@ Account is authenticated.
 end note
 ":System" --> Administrator: returns accounts
 @enduml
+
 
 
 @startuml
@@ -91,6 +95,7 @@ Administrator -> ":System": Enters requested data
 @enduml
 
 
+
 @startuml
 legend top
 US006 - As Administrator, I want to activate a user account.
@@ -108,6 +113,30 @@ end note
 Administrator -> ":System": Enters requested data
 ":System" --> Administrator: informs account status updated
 @enduml
+
+
+
+@startuml
+autonumber
+skinparam sequenceMessageAlign center
+title TO DEFINE SCRUM MASTER OF PROJECT
+legend top
+US0013 - As Manager, I want to define the SM of a project.
+end legend
+actor "Manager"
+"Manager" -> ":System": Starts the definition \nof SM of a project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Manager" <-- ":System": returns list of possible projects / accounts
+"Manager" -> ":System": Selects project / account
+"Manager" <-- ":System": informs success
+@enduml
+
+
+
+
 
 
 @startuml
@@ -145,15 +174,14 @@ legend top
 US010 - As Manager, I want to register/create a new project.
 end legend
 autonumber
-
 actor "Manager"
-"Manager" -> ":System": register new project
+"Manager" -> ":System": Registers new project
 note left
 Account is authenticated.
 ":System" grants access.
 end note
 "Manager" <-- ":System": requests data (code, name, ...)
-"Manager" -> ":System":  types requested data
+"Manager" -> ":System":  Types requested data
 "Manager" <-- ":System": informs project created
 @enduml
 
@@ -445,23 +473,16 @@ end note
 @enduml
 
 
-@startuml
-skinparam sequenceMessageAlign center
-title TO DEFINE THE SCRUM MASTER OF A PROJECT
-actor "Manager"
-"Manager" -> ":System": defines a Scrum Master of a project
-note left
-Account is authenticated.
-":System" grants access.
-end note
-"Manager" <-- ":System": informs set role
-@enduml
+
+
+
+
 
 @startuml
 skinparam sequenceMessageAlign center
 title AS A MANAGER, TO LIST ALL HUMAN RESOURCES IN A PROJECT
 actor "Manager"
-"Manager" -> ":System": lists all accounts of a fiven project
+"Manager" -> ":System": lists all accounts of a given project
 note left
 Account is authenticated.
 ":System" grants access.

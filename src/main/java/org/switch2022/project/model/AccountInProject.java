@@ -65,4 +65,8 @@ public class AccountInProject {
                 return false;
         }
     }
+
+    public Account getAccountByProject(Project project) {
+        return account;
+    }
 }

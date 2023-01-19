@@ -73,7 +73,7 @@ class AccountTest {
 
     @Test
     void ensureProfileIsSetSuccessfully() throws IOException {
-        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v1_Jan05_2023.png"));
+        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, photo); //Default Profile: User
         accountOne.setProfile(new Profile("Manager"));
         Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, photo);
@@ -83,7 +83,7 @@ class AccountTest {
     @Test
     void ensureThatPhotoIsSet() throws IOException {
         //ARRANGE
-        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v1_Jan05_2023.png"));
+        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account accountWithPhoto = new Account("John", "john@isep.ipp.pt", 912345678,
                 photo);
@@ -162,4 +162,75 @@ class AccountTest {
         // Assert
         assertEquals(expected,result);
     }
+
+    @Test
+    void checkAccountFromEmailSuccessfully() {
+        //Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        boolean expected = true;
+        //Act
+        boolean result = reference.checkAccountFromEmail("john@isep.ipp.pt");
+        //Assert
+        assertEquals(expected,result);
+    }
+    @Test
+    void checkAccountFromEmailUnsuccessfully() {
+        //Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        boolean expected = false;
+        //Act
+        boolean result = reference.checkAccountFromEmail("antonio@isep.ipp.pt");
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void verifyIsManagerSuccessfully() {
+        //Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Profile profile = new Profile("Manager");
+        reference.setProfile(profile);
+        boolean expected = true;
+        //Act
+        boolean result= reference.IsManager();
+        //Assert
+        assertEquals(expected,result);
+    }
+    @Test
+    void verifyIsManagerUnsuccessfully() {
+        //Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        boolean expected = false;
+        //Act
+        boolean result= reference.IsManager();
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void verifyIsUserUnsuccessfully() {
+        //Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Profile profile = new Profile("Manager");
+        reference.setProfile(profile);
+        boolean expected = false;
+        //Act
+        boolean result= reference.IsUser();
+        //Assert
+        assertEquals(expected,result);
+    }
+    @Test
+    void verifyIsUserSuccessfully() {
+        //Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        boolean expected = true;
+        //Act
+        boolean result= reference.IsUser();
+        //Assert
+        assertEquals(expected,result);
+    }
+
+
+
+
 }

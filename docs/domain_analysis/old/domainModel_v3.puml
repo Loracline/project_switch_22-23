@@ -8,17 +8,24 @@ status
 password
 }
 hide Account circle
+
 Class Profile{
 name
 startDate
 endDate
 }
 hide Profile circle
+class Profile
+note left: User\nManager\nAdministrator
+
 Class Role{
 startDate
 endDate
 }
 hide Role circle
+class Role
+note right: Product Owner\nScrum Master\nProject Manager\nTeam Member
+
 Class Project{
 code
 name
@@ -32,6 +39,7 @@ budget
 projectStatus
 }
 hide Project circle
+
 Class UserStory{
 number
 actor
@@ -39,6 +47,7 @@ usText
 acceptanceCriteria
 }
 hide UserStory circle
+
 Class Task{
 name
 startDate
@@ -52,33 +61,31 @@ status
 responsible
 }
 hide Task circle
+
 Class Sprint {
 startDate
 endDate
 }
 hide Sprint circle
+
 Class ProductBacklog{
 }
 hide ProductBacklog circle
+
 Class SprintBacklog{
 }
 hide SprintBacklog circle
+
 Class Report {}
 hide Report circle
+class Report
+note right: KPI\nAllocation
+
 Class Account_Project{
 startDate
 endDate
 }
 hide Account_Project circle
-
-class Profile
-note left: User\nManager\nAdministrator
-
-class Report
-note right: KPI\nAllocation
-
-class Role
-note right: Product Owner\nScrum Master\nProject Manager\nTask Master
 
 Account "1" -- "*" Account_Project: is involved in
 Account_Project "*" -- "1" Project: has

@@ -9,18 +9,11 @@ public class ProjectDTO {
    * Attributes of the class ProjectDTO, according to the Class Diagram.
    */
 
-  private String code;
-  private String name;
-  private Customer customer;
-  private String status;
-  private ProjectTypology projectTypology;
-  private BusinessSector businessSector;
+  public String code;
+  public String name;
+  public Customer customer;
+  public String status;
+  public ProjectTypology projectTypology;
+  public BusinessSector businessSector;
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
 }

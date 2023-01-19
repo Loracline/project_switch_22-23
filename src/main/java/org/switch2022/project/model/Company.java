@@ -1,11 +1,12 @@
 package org.switch2022.project.model;
 
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.container.ProjectContainer;
+import org.switch2022.project.DTO.ProjectDTO;
+import org.switch2022.project.container.*;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Class Company is built to create and manipulate AccountContainer and ProfileContainer.
@@ -18,6 +19,7 @@ public class Company {
     private ProfileContainer profileContainer;
     private ProjectContainer projectContainer;
     private BusinessSectorContainer businessSectorContainer;
+
 
     /**
      * Company constructor
@@ -78,11 +80,24 @@ public class Company {
         return wasAccountProfileUpdated;
     }
 
-    /*public boolean registerProject(String dto, String email) {
-        method accountContainer.validateManager(email)
-        method projectContainer.registerProject(dto)
-        return false; //todo work to be done
-    }*/
+  /**
+   * This method registers projects
+   *
+   * @param projectDTO
+   * @param email
+   * @return true if project was registered and false if the project was not registered
+   */
+  public boolean registerProject(ProjectDTO projectDTO, String email) {
+    boolean projectRegistered = false;
+    if (accountContainer.validateManager(email)) {
+      if (projectContainer.registerProject(projectDTO)) {
+        projectRegistered = true;
+      } else {
+        projectRegistered = false;
+      }
+    }
+    return projectRegistered;
+  }
     /**
      * Method addBusinessSector
      *
@@ -92,5 +107,18 @@ public class Company {
     public boolean addBusinessSector(String businessSector) {
         return businessSectorContainer.createBusinessSector(businessSector);
     }
+
+    public boolean validateManager(String email) {
+        return accountContainer.validateManager(email);
+    }
+
+    public List<Account> listAccountsByProject(String projectCode) {
+        return projectContainer.listAccountsByProject(projectCode);
+    }
+
+    public boolean validateUser(String email){
+        return accountContainer.validateUser(email);
+    }
+
 }
 

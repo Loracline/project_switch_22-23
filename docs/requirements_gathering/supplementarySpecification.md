@@ -6,9 +6,10 @@
 | v.02    | Dec 12, 2022 | Update and refine.          | Caroline Dantas, Jussara Oliveira                                                   |
 
 
+
 ### Introduction
 
-This document lists the non-functional requirements of the software management product.
+This document lists the Non-Functional Requirements of the software management product.
 
 ## Functionality
 

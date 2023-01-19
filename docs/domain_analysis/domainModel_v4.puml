@@ -1,0 +1,154 @@
+@startuml
+
+Class Account{
+account_name
+email
+phoneNumber
+photo
+account_status
+password
+}
+hide Account circle
+
+
+
+Class Profile{
+profile_name
+}
+hide Profile circle
+class Profile
+note left: Can be:\n- User\n- Manager\n- Administrator
+
+
+
+Class Role{
+role_name
+role_startDate
+role_endDate
+}
+hide Role circle
+class Role
+note right: Can be:\n- Product Owner\n- Scrum Master\n- Project Manager\n- Team Member
+
+
+
+Class Project{
+code
+project_name
+project_description
+project_startDate
+sprint_duration
+numberOf_sprints
+project_endDate
+project_status
+budget
+}
+hide Project circle
+
+
+
+Class Typology{
+typology_name
+}
+hide Typology circle
+class Typology
+note right: Can be:\n- Fixed Cost\n- Time and Materials
+
+
+
+Class BusinessSector{
+businessSector_name
+}
+hide BusinessSector circle
+
+
+
+Class Customer{
+customer_name
+}
+hide Customer circle
+
+
+
+Class UserStory{
+usNumber
+actor
+usText
+acceptance_Criteria
+}
+hide UserStory circle
+
+
+
+Class Task{
+task_name
+task_startDate
+task_endDate
+task_description
+task_effortEstimate
+hoursSpent
+percentageOf_execution
+type
+task_status
+responsible
+}
+hide Task circle
+
+
+
+Class Sprint {
+sprint_startDate
+sprint_endDate
+}
+hide Sprint circle
+
+
+
+Class ProductBacklog{
+}
+hide ProductBacklog circle
+
+
+
+Class SprintBacklog{
+}
+hide SprintBacklog circle
+
+
+
+Class Report {
+report_type
+date
+}
+hide Report circle
+class Report
+note right: Can be:\n- KPI\n- Allocation
+
+
+
+Class Account_Project{
+costPerHour
+percentageOf_allocation
+}
+hide Account_Project circle
+class Account_Project
+note right: Account must have\n"User" profile
+
+
+Account "1" -- "*" Account_Project: works in
+Account_Project "*" -- "1" Project: associates
+Account "*" -- "1" Profile: has 
+Project "1" -- "*" Sprint: is divided into
+Sprint "1" -- "*" Task: has
+Project "1" -- "1" ProductBacklog: has
+Project "*" -- "1" Typology: has
+Project "*" -- "1" Customer: has
+Project "*" -- "1" BusinessSector: has
+ProductBacklog "1" -- "*" UserStory: contains
+Sprint "1" -- "1" SprintBacklog: has
+SprintBacklog "1"--"*" UserStory: contains
+UserStory "1"-- "*" Task: contains
+Account_Project "1" -- "*" Report: is generated of
+Role "1" -- "*" Account_Project: has
+
+@enduml
