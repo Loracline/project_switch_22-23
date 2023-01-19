@@ -17,7 +17,10 @@ public class Profile {
     public Profile(String profileName) {
         this.profileName = profileName.toLowerCase();
     }
-
+    /**
+     * method to check if Profile is a Manager
+     *
+     */
     public boolean isManager() {
         Profile profile = new Profile("Manager");
         boolean isManager = false;

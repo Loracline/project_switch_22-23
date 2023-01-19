@@ -5,11 +5,10 @@ import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.container.ProjectContainer;
-import org.switch2022.project.mapper.ProjectMapper;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Objects;
+
 
 /**
  * Class Company is built to create and manipulate AccountContainer and ProfileContainer.
@@ -109,7 +108,12 @@ public class Company {
     public boolean addBusinessSector(String businessSector) {
         return businessSectorContainer.createBusinessSector(businessSector);
     }
-
+    /**
+     * method to check if email corresponds to an account that is a Manager
+     *
+     * @param email
+     *
+     */
     public boolean validateManager(String email) {
         return accountContainer.validateManager(email);
     }

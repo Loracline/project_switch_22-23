@@ -116,7 +116,12 @@ public class Account {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
-
+    /**
+     * method to check if email corresponds to an account
+     *
+     * @param email
+     *
+     */
     public boolean checkAccountFromEmail(String email) {
         boolean account = false;
         if (this.email.equals(email)) {
@@ -124,7 +129,10 @@ public class Account {
         }
         return account;
     }
-
+    /**
+     * method to check if Profile is a Manager
+     *
+     */
     public boolean IsManager() {
         boolean isManager = false;
         if (this.profile.isManager()){
