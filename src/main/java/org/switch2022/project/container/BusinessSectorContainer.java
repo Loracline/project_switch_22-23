@@ -26,6 +26,22 @@ public class BusinessSectorContainer {
   private boolean doesBusinessSectorExist(BusinessSector businessSector) {
     return this.businessSectors.contains(businessSector);
   }
+  /**
+   * This method creates businessSector  and adds it to businessSectors
+   *
+   * @param businessSectorName
+   * @return true if businessSector is added to list
+   */
+
+  public boolean createBusinessSector(String businessSectorName){
+    BusinessSector businessSector= new BusinessSector(businessSectorName);
+    boolean isAddedToList= false;
+    if(!doesBusinessSectorExist(businessSector)){
+      businessSectors.add(businessSector);
+      isAddedToList= true;
+    }
+    return isAddedToList;
+  }
 
   /**
    * This method returns a list of business sectors

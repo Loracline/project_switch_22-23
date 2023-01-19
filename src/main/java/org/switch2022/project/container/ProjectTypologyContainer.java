@@ -27,16 +27,6 @@ public class ProjectTypologyContainer {
   }
 
   /**
-   * This method returns a list of project typologies
-   *
-   * @return list
-   */
-
-  public List<ProjectTypology> getTypologies() {
-    return typologies;
-  }
-
-  /**
    * This method returns a project typology from the list of project typologies
    *
    * @param typology

@@ -1,3 +1,4 @@
+
 @startuml
 
 skinparam sequenceMessageAlign center
@@ -7,21 +8,16 @@ US009 - As Administrator, I want to add a customer
 end legend
 
 class "AddCustomerController" {
--service
-+AddCustomerController(service)
-+addCustomer(email,customerName)
-}
-
-class "Service"{
 -company
-+Service(company)
 +addCustomer(email,customerName)
+
+
 }
 
 class "Company"{
--customerContainer
 -accountContainer
--validateAdministrator(email)
+-customerContainer
++validateAdministrator(email)
 +addCustomer(customerName)
 }
 
@@ -32,18 +28,15 @@ class "AccountContainer"{
 }
 
 class "Account"{
--name
 -email
--phoneNumber
--photo
--status
+- profile
 +isAdministrator()
 }
 
 class "CustomerContainer"{
 -customers
--doesCustomerExist(customerName)
 +addCustomer(customerName)
+-doesCustomerExist(customerName)
 }
 
 class "Customer"{
@@ -51,8 +44,7 @@ class "Customer"{
 +Customer(customerName)
 }
 
-"AddCustomerController" "1" ..> "1" "Service"
-"Service" "1" --> "1" "Company"
+"AddCustomerController"  --> "Company"
 "Company" "1"-->"1" "CustomerContainer": has
 "Company" "1"-->"1" "AccountContainer": has
 "CustomerContainer" "1"-->"*" "Customer": has

@@ -7,59 +7,39 @@ US011 - As Manager, I want to associate a User as Team Member of a project.
 end legend
 
 class AddUserInProjectController {
--service
-+addUserInProject(projectCode, email, role)
-}
-
-class Service {
-- company
-+addUserInProject(projectCode, email, role)
+-company
++addTeamMemberToProject(emailManager)
++addTeamMemberToProject(allocationDTO)
 }
 
 class Company {
--accountContainer
 -accountInProjectContainer
--projectContainer
-+ validateManager(email)
-+addUserInProject(projectCode, email, role)
++addTeamMemberToProject(allocationDTO)
 }
 
 class AccountInProject{
 -account
 -project
+-costPerHour
+-percentageAllocation
 -role
+-startDate
+-endDate
 +createAccountInProject(account, project, role)
 }
 
-class Account{
--email
-+isManager()
-}
-
-class AccountContainer {
--accounts
-+ validateManager(email)
-+getAccountByEmail(email)
-+isAccountValid(email)
-}
-
-class ProjectContainer{
--projets
-+getProject(projectCode)
-+isProjectValid(projectCode)
-}
-
 class AccountInProjectContainer{
--accountInProjects
-+addAccountInProject(accountInProject)
+-accountsInProjects
++addTeamMemberToProject(accountInProject)
 }
 
+class AllocationMapper {
++addTeamMemberToProject(account, project...)
+}
 
-AddUserInProjectController --> Service
-Service --> Company
-Company "1"-->"1" AccountContainer: has
+AddUserInProjectController --> Company
 Company "1"-->"1" AccountInProjectContainer: has
-Company "1"-->"1" ProjectContainer: has
-AccountInProjectContainer "1"-->"*" AccountInProject: contains
-AccountContainer "1"-->"*" Account: contains
+AccountInProjectContainer "1"..>"1" AllocationMapper
+AllocationMapper "1"..> "*"AccountInProject: creates
+AccountInProjectContainer "1"--> "*" AccountInProject: has
 @enduml

@@ -4,14 +4,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.controller.RegisterAccountController;
 import org.switch2022.project.model.*;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +26,9 @@ class RegisterAccountControllerTest {
     List<Profile> profiles;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
+    BusinessSector businessSector;
+    List<BusinessSector> businessSectors;
+    BusinessSectorContainer businessSectorContainer;
 
     Company company;
 
@@ -64,8 +64,15 @@ class RegisterAccountControllerTest {
         //initialize profile container with filled profiles list
         profileContainer = new ProfileContainer(profiles);
 
+
+        businessSector = new BusinessSector("fishing");
+
+        businessSectors = new ArrayList<>();
+        businessSectorContainer= new BusinessSectorContainer(businessSectors);
+        businessSectors.add(businessSector);
+
         //initialize company with filled containers
-        company = new Company(accountContainer, profileContainer);
+        company = new Company(accountContainer, profileContainer,businessSectorContainer);
 
         //initialize controller with company
         controller = new RegisterAccountController(company);
@@ -86,6 +93,9 @@ class RegisterAccountControllerTest {
 
         accountContainer = null;
         profileContainer = null;
+        businessSector=null;
+        businessSectors.clear();
+        businessSectorContainer=null;
         company = null;
         controller = null;
     }

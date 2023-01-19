@@ -17,7 +17,7 @@ participant ":ProjectContainer" as PC
 participant ":ProjectMapper" as mapper
 participant "project:Project" as project
 participant ":projectDTO:ProjectDTO" as dto
-participant ":Profile" as pf
+participant "profile:Profile" as pf
 
 activate mg
 mg ->ui : register new project

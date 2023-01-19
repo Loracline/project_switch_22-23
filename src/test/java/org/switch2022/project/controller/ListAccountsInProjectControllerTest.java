@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.container.ProjectContainer;
 import org.switch2022.project.model.*;
 
 import java.util.ArrayList;
@@ -13,25 +14,36 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//class ListAccountsInProjectControllerTest {
 
-
-class CreateProfileControllerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
-
+/*
     Account accountOne, accountTwo, accountThree, accountFour;
     Profile profileOne, profileTwo;
     List<Account> accounts;
     List<Profile> profiles;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
-    BusinessSector businessSector;
+
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
     Company company;
 
-    CreateProfileController createProfileController;
+    AddBusinessSectorController addBusinessSectorController;
+
+    Project project;
+    Customer customer;
+    ProjectTypology projectTypology;
+    BusinessSector businessSector;
+
+    ProjectContainer projectContainer;
+
+    List<Project> projects;
+
+
+
 
 
     @BeforeEach
@@ -58,12 +70,23 @@ class CreateProfileControllerTest {
         businessSector = new BusinessSector("fishing");
 
         businessSectors = new ArrayList<>();
-        businessSectorContainer= new BusinessSectorContainer(businessSectors);
+        businessSectorContainer = new BusinessSectorContainer(businessSectors);
         businessSectors.add(businessSector);
 
-        company = new Company(accountContainer, profileContainer,businessSectorContainer);
+        company = new Company(accountContainer, profileContainer, businessSectorContainer);
 
-        createProfileController = new CreateProfileController(company);
+        addBusinessSectorController = new AddBusinessSectorController(company);
+
+
+        customer = new Customer("IT Customer");
+        projectTypology = new ProjectTypology("fixed cost");
+        businessSector = new BusinessSector("fishing");
+        project = new Project("1A", "project One", customer, projectTypology, businessSector);
+        projects = new ArrayList<>();
+        projects.add(project);
+        projectContainer = new ProjectContainer(projects);
+
+
     }
 
     @AfterEach
@@ -76,28 +99,15 @@ class CreateProfileControllerTest {
         profiles.clear();
         accountContainer = null;
         profileContainer = null;
-        businessSector=null;
+        businessSector = null;
         businessSectors.clear();
-        businessSectorContainer=null;
+        businessSectorContainer = null;
         company = null;
-        createProfileController = null;
+        addBusinessSectorController = null;
     }
+
     @Test
-    void addNewProfileSuccessfully(){
-        //Arrange
-        boolean expected = true;
-        //Act
-        boolean result = createProfileController.createProfile("Manager");
-        //Assert
-        assertEquals(expected,result);
+    void listAccountsByProject() {
+
     }
-    @Test
-    void addNewProfileUnsuccessfullyInvalidName(){
-        //Arrange
-        boolean expected = false;
-        //Act
-        boolean result = createProfileController.createProfile("User");
-        //Assert
-        assertEquals(expected,result);
-    }
-}
+}*/

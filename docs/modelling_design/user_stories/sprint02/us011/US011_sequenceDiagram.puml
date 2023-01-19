@@ -10,58 +10,63 @@ autonumber
 actor Manager
 participant ":AddUserInProjectUI" as ui
 participant ":AddUserInProjectController" as controller
-participant ":Service" as ser
 participant ":Company" as company
-participant ":AccountContainer" as acccontainer
-participant ":account:Account" as acc
-participant "projectContainer:ProjectContainer" as pcontainer
 participant "accountInProjectContainer:AccountInProjectContainer" as accinprojcont
+participant ":AllocationMapper" as mapper
 participant "accountInProject:AccountInProject" as accinproj
 
-
-Manager -> ui:  associate User as Team Member
+Manager -> ui: starts the association of a Team Member to a project
 activate ui
-Manager <-- ui:  requests data (email,projectCode, role)
-deactivate ui
-Manager -> ui:  enters data
-activate ui
-ui -> controller: addUserInProject(email, projectCode, role)
+/'Manager <-- ui:  requests data (email,projectCode, role)'/
+ui -> controller: addTeamMemberToProject(emailManager)
 activate controller
-controller -> ser: addUserInProject(email, projectCode, role)
-activate ser
-company <- ser: validateManager(email)
+controller -> company: validateManager((emailManager)
 activate company
-company <- ser: addUserInProject(email, projectCode, role)
-company -> acccontainer: validateManager(email)
-activate acccontainer
-acccontainer -> acccontainer: account=getAccountByEmail(email)
-acccontainer -> acc: isManager()
-activate acc
-acccontainer <-- acc: true
-deactivate acc
-acccontainer --> company: true
-company --> ser: true
-deactivate acccontainer
-ser -> company: getProject(projectCode)
-company -> pcontainer:getProject(projectCode)
-activate pcontainer
-company <-- pcontainer: project
-deactivate pcontainer
-ser <-- company: project
-accinprojcont <- company: createAccountInProject(account, project, role)
-activate accinprojcont
-create accinproj
-accinprojcont -> accinproj: create(account, project, role)
-'https://stackoverflow.com/questions/27001842/how-to-draw-calls-from-constructors-in-uml-sequence-diagrams
+ref over company: validateManager_sequenceDiagram
+company --> controller: true
+deactivate company
+controller -> company: listAllUsers()
+activate company
+ref over company: listAllUSers_sequenceDiagram
+company --> controller: users
+deactivate company
+controller -> company: listAllProjects()
+activate company
+ref over company: US015_sequenceDiagram
+company --> controller: projects
+deactivate company
+controller --> ui: userAccountsDTO
+controller --> ui: projectsDTO
+deactivate controller
+ui --> Manager: list of all Users/projects
 
+deactivate ui
+
+Manager -> ui: selects user/project
+activate ui
+Manager -> ui: sends data (costPerHour, percentageAllocation, startDate )
+ui -> controller: addTeamMemberToProject(allocationDTO)
+activate controller
+controller -> company: addTeamMemberToProject(allocationDTO)
+activate company
+company -> accinprojcont: addTeamMemberToProject(allocationDTO)
+activate accinprojcont
+accinprojcont -> mapper: addTeamMemberToProject(allocationDTO)
+activate mapper
+create accinproj
+mapper -> accinproj: create(account, project...)
+mapper --> accinprojcont: aacountInProject
+deactivate mapper
 accinprojcont -> accinprojcont: add(accountInProject)
 accinprojcont --> company: true
 deactivate accinprojcont
-company --> ser: true
+company --> controller: true
 deactivate company
-ser --> controller: true
-deactivate ser
 controller --> ui: true
 deactivate controller
-ui -->> Manager: informs successful association
+ui --> Manager: informs team member allocated
+deactivate ui
+
+
 @enduml
+
