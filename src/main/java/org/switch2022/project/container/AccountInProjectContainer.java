@@ -1,5 +1,7 @@
 package org.switch2022.project.container;
 
+import org.switch2022.project.DTO.AllocationDTO;
+import org.switch2022.project.mapper.AllocationMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.model.Project;
@@ -29,9 +31,20 @@ public class AccountInProjectContainer {
 
     private boolean doesAccountExist(AccountInProject accountInProject) {
         boolean result = false;
-        if (!this.accountsInProject.contains(accountInProject)) {
+        if (this.accountsInProject.contains(accountInProject)) {
             result = true;
         }
         return result;
+    }
+
+    public boolean addTeamMemberToProject(AllocationDTO accountDTO) {
+        boolean accountAdded = false;
+        AllocationMapper mapper = new AllocationMapper();
+        AccountInProject account = mapper.addTeamMemberToProject(accountDTO);
+        if (!doesAccountExist(account)) {
+            accountsInProject.add(account);
+            accountAdded = true;
+        }
+        return accountAdded;
     }
 }
