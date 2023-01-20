@@ -7,7 +7,7 @@ end legend
 autonumber
 actor User
 participant ":ListAccountsInProjectUI" as ui
-participant ":ListAccountsInProjectController" as controller
+participant ":ListProjectsInAccountController" as controller
 participant ":Company" as company
 participant ":AccountContainer" as container
 
