@@ -46,9 +46,10 @@ public class ProjectContainer {
   private boolean doesProjectExist(Project project) {
     boolean projectExistence = false;
     for (int i = 0; i < projects.size(); i++) {
-      if (projects.get(i).getProjectCode().equals(project.getProjectCode()))
+      if (projects.get(i).getProjectCode().equals(project.getProjectCode())){
         projectExistence = true;
-      break;
+        break;
+      }
     }
     return projectExistence;
   }

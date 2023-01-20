@@ -1,4 +1,3 @@
-/*
 package org.switch2022.project.mapper;
 
 import org.junit.jupiter.api.AfterEach;
@@ -6,22 +5,28 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.DTO.ProjectDTO;
 import org.switch2022.project.container.*;
+import org.switch2022.project.controller.RegisterProjectController;
 import org.switch2022.project.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ProjectMapperTest {
 
-  */
-/**
-   * BeforeEach and AfterEach executes common code before/after running the tests below.
-   *//*
 
+  /**
+   * BeforeEach and AfterEach executes common code before/after running the tests below.
+   */
 
   Account accountOne, accountTwo, accountThree;
   Profile profileOne, profileTwo, profileThree;
-  ProjectTypology projectTypologyOne, projectTypologyTwo;
+  float costPerHour;
+  float percentageAllocation;
+  LocalDate startDate;
+  ProjectTypology projectTypologyOne, projectTypologyTwo, projectTypology;
   Project projectOne, projectTwo, projectThree;
   Customer customer;
   List<Account> accounts;
@@ -34,10 +39,18 @@ class ProjectMapperTest {
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   ProjectTypologyContainer projectTypologyContainer;
-  Project project;
   ProjectContainer projectContainer;
   ProjectDTO projectOneDTO, projectTwoDTO;
+
+  AccountInProject accountInProject;
+
+  List<AccountInProject> accountsInProject;
+
+  AccountInProjectContainer accountInProjectContainer;
   Company company;
+  RegisterProjectController registerProjectController;
+
+  ProjectMapper projectMapper;
 
   @BeforeEach
   void setUp() {
@@ -63,10 +76,6 @@ class ProjectMapperTest {
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
 
-    projects = new ArrayList<>();
-    projectContainer = new ProjectContainer(projects);
-    projects.add(project);
-
     projectTypologyOne = new ProjectTypology("Fixed Cost");
     projectTypologyTwo = new ProjectTypology("Fixed time and materials");
     typologies = new ArrayList<>();
@@ -74,27 +83,42 @@ class ProjectMapperTest {
     typologies.add(projectTypologyOne);
     typologies.add(projectTypologyTwo);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
+    projectTypology = new ProjectTypology("fixed cost");
 
-    customer = new Customer("ISEP");
+    costPerHour = 7.5f;
+    percentageAllocation = 45.0f;
+    startDate = LocalDate.of(2023, 01, 19);
+    accountInProject = new AccountInProject(accountOne, projectOne,
+            costPerHour, percentageAllocation, startDate);
+    accountInProject.setRole("team member");
+    accountsInProject = new ArrayList<>();
+    accountsInProject.add(accountInProject);
+    accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
-    projectOne = new Project("AA001", "software development management", customer, projectTypologyOne,
+    customer = new Customer("John");
+
+
+    projectOne = new Project("AA001", "Aptoide", customer, projectTypologyOne,
             businessSector);
     projectTwo = new Project("AA002", "project software", customer, projectTypologyTwo, businessSector);
     projectThree = new Project("AA003", "motor software", customer, projectTypologyTwo, businessSector);
-
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
-    projects.add(projectThree);
     projectContainer = new ProjectContainer(projects);
 
     projectOneDTO = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+            new ProjectTypology("Fixed cost"), new BusinessSector("fishing"));
     projectTwoDTO = new ProjectDTO("AA004", "Aptoide", new Customer("John"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer);
+
+    registerProjectController = new RegisterProjectController(company);
+
+    projectMapper = new ProjectMapper();
+
   }
 
   @AfterEach
@@ -116,7 +140,6 @@ class ProjectMapperTest {
     projectTypologyTwo = null;
     typologies.clear();
     projectTypologyContainer = null;
-    project = null;
     projects.clear();
     projectContainer = null;
     projectOneDTO = null;
@@ -125,11 +148,34 @@ class ProjectMapperTest {
   }
 
   @Test
-  void createProjectDTO() {
-  //ProjectDTO reference = new ProjectDTO();
+  void creationOfProjectDTOSuccessful() {
+    ProjectDTO reference = projectMapper.toDTO(projectOne);
+    boolean expected = true;
+    boolean result = reference.equals(projectOneDTO);
+    assertEquals(expected,result);
   }
 
   @Test
-  void createProject() {
+  void creationOfProjectDTONotSuccessful() {
+    ProjectDTO reference = projectMapper.toDTO(projectTwo);
+    boolean expected = false;
+    boolean result = reference.equals(projectOneDTO);
+    assertEquals(expected,result);
   }
-}*/
+
+  @Test
+  void creationOfProjectSuccessful() {
+    Project reference = projectMapper.fromDTO(projectOneDTO);
+    boolean expected = true;
+    boolean result = reference.equals(projectOne);
+    assertEquals(expected,result);
+  }
+
+  @Test
+  void creationOfProjectNotSuccessful() {
+    Project reference = projectMapper.fromDTO(projectTwoDTO);
+    boolean expected = false;
+    boolean result = reference.equals(projectOne);
+    assertEquals(expected,result);
+  }
+}

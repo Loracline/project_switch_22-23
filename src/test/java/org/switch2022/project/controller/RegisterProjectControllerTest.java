@@ -19,7 +19,7 @@ class RegisterProjectControllerTest {
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
-  Account accountOne, accountTwo, accountThree, account, account2;
+  Account accountOne, accountTwo, accountThree;
   Profile profileOne, profileTwo, profileThree;
   float costPerHour;
   float percentageAllocation;
@@ -37,7 +37,6 @@ class RegisterProjectControllerTest {
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   ProjectTypologyContainer projectTypologyContainer;
-  Project project;
   ProjectContainer projectContainer;
   ProjectDTO projectOneDTO, projectTwoDTO;
 
@@ -47,6 +46,7 @@ class RegisterProjectControllerTest {
 
   AccountInProjectContainer accountInProjectContainer;
   Company company;
+  RegisterProjectController registerProjectController;
 
   @BeforeEach
   void setUp() {
@@ -72,10 +72,6 @@ class RegisterProjectControllerTest {
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
 
-    projects = new ArrayList<>();
-    projectContainer = new ProjectContainer(projects);
-    projects.add(project);
-
     projectTypologyOne = new ProjectTypology("Fixed Cost");
     projectTypologyTwo = new ProjectTypology("Fixed time and materials");
     typologies = new ArrayList<>();
@@ -84,35 +80,28 @@ class RegisterProjectControllerTest {
     typologies.add(projectTypologyTwo);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    account = new Account("John", "john@isep.ipp.pt", 912345678, null);
-    account2 = new Account("Anna", "anna@isep.ipp.pt", 912345679, null);
     customer = new Customer("IT Customer");
-
     projectTypology = new ProjectTypology("fixed cost");
     businessSector = new BusinessSector("IT Sector");
-    project = new Project("1A", "project One", customer, projectTypology,
-            businessSector);
     costPerHour = 7.5f;
     percentageAllocation = 45.0f;
     startDate = LocalDate.of(2023,01,19);
-    accountInProject = new AccountInProject(account, project,
+    accountInProject = new AccountInProject(accountOne, projectOne,
             costPerHour, percentageAllocation, startDate);
     accountInProject.setRole("team member");
     accountsInProject = new ArrayList<>();
     accountsInProject.add(accountInProject);
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
-
     customer = new Customer("ISEP");
+
 
     projectOne = new Project("AA001", "software development management", customer, projectTypologyOne,
             businessSector);
     projectTwo = new Project("AA002", "project software", customer, projectTypologyTwo, businessSector);
     projectThree = new Project("AA003", "motor software", customer, projectTypologyTwo, businessSector);
-
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
-    projects.add(projectThree);
     projectContainer = new ProjectContainer(projects);
 
     projectOneDTO = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
@@ -122,6 +111,8 @@ class RegisterProjectControllerTest {
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
             projectContainer, projectTypologyContainer, accountInProjectContainer);
+
+    registerProjectController = new RegisterProjectController(company);
   }
 
   @AfterEach
@@ -143,7 +134,6 @@ class RegisterProjectControllerTest {
     projectTypologyTwo = null;
     typologies.clear();
     projectTypologyContainer = null;
-    project = null;
     projects.clear();
     projectContainer = null;
     projectOneDTO = null;
@@ -152,10 +142,10 @@ class RegisterProjectControllerTest {
   }
 
   @Test
-  void registerProject() {
+  void projectRegistered() {
     accountOne.setProfile(profileThree);
     boolean expected = true;
-    boolean result = company.registerProject(projectTwoDTO,accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectThree, accountOne.getEmail());
     assertEquals(expected, result);
   }
 
@@ -163,7 +153,7 @@ class RegisterProjectControllerTest {
   void projectNotRegistered() {
     accountOne.setProfile(profileThree);
     boolean expected = false;
-    boolean result = company.registerProject(projectOneDTO, accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectTwo, accountOne.getEmail());
     assertEquals(expected, result);
   }
 
@@ -171,7 +161,7 @@ class RegisterProjectControllerTest {
   void managerNotValid() {
     accountOne.setProfile(profileTwo);
     boolean expected = false;
-    boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectThree, accountOne.getEmail());
     assertEquals(expected, result);
   }
 }

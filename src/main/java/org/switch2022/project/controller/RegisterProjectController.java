@@ -11,7 +11,6 @@ import org.switch2022.project.model.Project;
 
 public class RegisterProjectController {
   private Company company;
-  private ProjectMapper dto;
 
   /**
    * RegisterProjectController constructor
@@ -19,7 +18,6 @@ public class RegisterProjectController {
    */
   public RegisterProjectController(Company company) {
     this.company = company;
-    this.dto = dto;
   }
 
   /**
