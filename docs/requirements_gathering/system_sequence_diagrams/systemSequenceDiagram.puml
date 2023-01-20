@@ -476,12 +476,6 @@ end note
 "Manager" <-- ":System": informs successful association
 @enduml
 
-
-
-
-
-
-
 @startuml
 skinparam sequenceMessageAlign center
 title AS A MANAGER, TO LIST ALL HUMAN RESOURCES IN A PROJECT
