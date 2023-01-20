@@ -1,7 +1,7 @@
-package org.switch2022.project.controller;
+package org.switch2022.project.mapper;
 
+import org.switch2022.project.DTO.AccountDTO;
 import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Profile;
 
 import java.util.ArrayList;
 import java.util.List;

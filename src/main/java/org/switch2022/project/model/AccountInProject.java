@@ -2,6 +2,8 @@ package org.switch2022.project.model;
 
 
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
+
 /**
  * Class AccountInProject is built to associate a certain account with a specific role to a project.
  * An accountInProject is defined by an account, a project and a role.
@@ -67,15 +69,14 @@ public class AccountInProject {
     }
 
     /**
-     * This method returns an Accounts Allocated To a Project.
+     * This method returns an Account Allocated To a Project.
      *
-     * @param project one must check.
-     *
+     * @param projectCode
      * @return an Account.
      */
-    public Account getAccountByProject(Project project) {
+    public Account getAccountByProject(String projectCode) {
         Account requestedAccount = null;
-        if (isAccountAllocatedToProject(project)) {
+        if (isAccountAllocatedToProject(projectCode)) {
             requestedAccount = this.account;
         }
         return requestedAccount;
@@ -84,15 +85,14 @@ public class AccountInProject {
     /**
      * This method checks if an account is allocated to a Project.
      *
-     * @param project one must check.
-     *
+     * @param projectCode one must check.
      * @return TRUE if there is an account allocated to a Project and FALSE otherwise.
      */
-    private boolean isAccountAllocatedToProject(Project project) {
-        boolean accountWorksInProject = false;
-        if (this.project.equals(project)) {
-            accountWorksInProject = true;
+    private boolean isAccountAllocatedToProject(String projectCode) {
+        boolean isAllocated = false;
+        if (this.project.getProjectCode().equals(projectCode)) {
+            isAllocated = true;
         }
-        return accountWorksInProject;
+        return isAllocated;
     }
 }

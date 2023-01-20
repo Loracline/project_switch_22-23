@@ -7,6 +7,7 @@ import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.container.ProjectContainer;
 import org.switch2022.project.DTO.ProjectDTO;
 import org.switch2022.project.container.*;
+
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class Company {
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
-        this.projectTypologyContainer= projectTypologyContainer;
+        this.projectTypologyContainer = projectTypologyContainer;
     }
 
 
@@ -78,24 +79,25 @@ public class Company {
         return wasAccountProfileUpdated;
     }
 
-  /**
-   * This method registers projects
-   *
-   * @param projectDTO
-   * @param email
-   * @return true if project was registered and false if the project was not registered
-   */
-  public boolean registerProject(ProjectDTO projectDTO, String email) {
-    boolean projectRegistered = false;
-    if (accountContainer.validateManager(email)) {
-      if (projectContainer.registerProject(projectDTO)) {
-        projectRegistered = true;
-      } else {
-        projectRegistered = false;
-      }
+    /**
+     * This method registers projects
+     *
+     * @param projectDTO
+     * @param email
+     * @return true if project was registered and false if the project was not registered
+     */
+    public boolean registerProject(ProjectDTO projectDTO, String email) {
+        boolean projectRegistered = false;
+        if (accountContainer.validateManager(email)) {
+            if (projectContainer.registerProject(projectDTO)) {
+                projectRegistered = true;
+            } else {
+                projectRegistered = false;
+            }
+        }
+        return projectRegistered;
     }
-    return projectRegistered;
-  }
+
     /**
      * Method addBusinessSector
      *
@@ -109,24 +111,27 @@ public class Company {
     public boolean validateManager(String email) {
         return accountContainer.validateManager(email);
     }
+
     /**
      * This method returns a list of Accounts Allocated To a Project
      *
      * @return a list of Accounts
      */
     public List<Account> listAccountsByProject(String projectCode) {
-        return projectContainer.listAccountsByProject(projectCode);
+        return accountInProjectContainer.listAccountsByProject(projectCode);
     }
 
-    public boolean validateUser(String email){
+    public boolean validateUser(String email) {
         return accountContainer.validateUser(email);
     }
+
     public boolean validateAdministrator(String email) {
         return accountContainer.validateAdministrator(email);
     }
-    public boolean createProjectTypology(String email, String projectTypology){
-        boolean projectTypologyCreated= false;
-        if(accountContainer.validateAdministrator(email)){
+
+    public boolean createProjectTypology(String email, String projectTypology) {
+        boolean projectTypologyCreated = false;
+        if (accountContainer.validateAdministrator(email)) {
             projectTypologyCreated = projectTypologyContainer.createProjectTypology(projectTypology);
         }
         return projectTypologyCreated;

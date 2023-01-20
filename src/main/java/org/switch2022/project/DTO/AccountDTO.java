@@ -1,4 +1,4 @@
-package org.switch2022.project.controller;
+package org.switch2022.project.DTO;
 
 import org.switch2022.project.model.Profile;
 

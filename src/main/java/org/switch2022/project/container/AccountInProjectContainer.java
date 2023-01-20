@@ -24,10 +24,10 @@ public class AccountInProjectContainer {
      *
      * @return a list of Accounts
      */
-    public List<Account> listAccountsByProject(Project project) {
+    public List<Account> listAccountsByProject(String projectCode) {
         List<Account> accounts = new ArrayList<>();
         for (int i = 0; i < accounts.size(); i++) {
-            Account requestedAccount = accountsInProject.get(i).getAccountByProject(project);
+            Account requestedAccount = accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
                 accounts.add(requestedAccount);
             }
