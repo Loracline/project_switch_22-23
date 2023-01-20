@@ -109,7 +109,11 @@ public class Company {
     public boolean validateManager(String email) {
         return accountContainer.validateManager(email);
     }
-
+    /**
+     * This method returns a list of Accounts Allocated To a Project
+     *
+     * @return a list of Accounts
+     */
     public List<Account> listAccountsByProject(String projectCode) {
         return projectContainer.listAccountsByProject(projectCode);
     }
