@@ -4,9 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
 
 import java.util.ArrayList;
@@ -21,10 +19,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class ListAccountControllerTest {
     Account accountOne, accountTwo;
     Profile profileOne, profileTwo;
+    ProjectTypology projectTypology;
+    Project project;
+    Customer customer;
     List<Account> accounts;
     List<Profile> profiles;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
+    ProjectTypologyContainer projectTypologyContainer;
+    ProjectContainer projectContainer;
     BusinessSector businessSector;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
@@ -56,7 +59,22 @@ class ListAccountControllerTest {
         businessSectorContainer= new BusinessSectorContainer(businessSectors);
         businessSectors.add(businessSector);
 
-        company = new Company(accountContainer, profileContainer,businessSectorContainer);
+        projectTypology = new ProjectTypology("Fixed Cost");
+
+        List<ProjectTypology> typologies = new ArrayList<>();
+        typologies.add(projectTypology);
+        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+
+        customer = new Customer("ISEP");
+        project = new Project("proj001", "software development management", customer,
+                projectTypology, businessSector);
+
+        List<Project> projects = new ArrayList<>();
+        projects.add(project);
+        projectContainer = new ProjectContainer(projects);
+
+        company = new Company(accountContainer, profileContainer, businessSectorContainer,
+                projectContainer, projectTypologyContainer);
     }
 
     @AfterEach

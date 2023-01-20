@@ -3,10 +3,7 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.container.ProjectTypologyContainer;
+import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +19,8 @@ class ProjectTypologyControllerTest {
     Account accountOne, accountTwo, accountThree;
     Profile profileOne, profileTwo, profileThree;
     ProjectTypology projectTypologyOne, projectTypologyTwo;
+    Project project;
+    Customer customer;
     List<Account> accounts;
     List<Profile> profiles;
     BusinessSector businessSector;
@@ -30,6 +29,7 @@ class ProjectTypologyControllerTest {
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
+    ProjectContainer projectContainer;
     List<ProjectTypology> typologies;
     Company company;
 
@@ -68,10 +68,21 @@ class ProjectTypologyControllerTest {
         projectTypologyTwo= new ProjectTypology("Fixed time and materials");
 
         typologies = new ArrayList<>();
-        projectTypologyContainer= new ProjectTypologyContainer(typologies);
         typologies.add(projectTypologyOne);
         typologies.add(projectTypologyTwo);
-        company = new Company(accountContainer, profileContainer,businessSectorContainer);
+        projectTypologyContainer= new ProjectTypologyContainer(typologies);
+
+        customer = new Customer("ISEP");
+        project = new Project("proj001", "software development management", customer,
+                projectTypologyOne, businessSector);
+
+        List<Project> projects = new ArrayList<>();
+        projects.add(project);
+        projectContainer = new ProjectContainer(projects);
+
+        company = new Company(accountContainer, profileContainer, businessSectorContainer,
+                projectContainer, projectTypologyContainer);
+
         projectTypologyController = new ProjectTypologyController(company);
     }
 

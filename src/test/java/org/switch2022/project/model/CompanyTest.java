@@ -3,10 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.container.ProjectTypologyContainer;
+import org.switch2022.project.container.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +19,19 @@ class CompanyTest {
   Account accountOne, accountTwo, accountThree;
   Profile profileOne, profileTwo, profileThree;
   ProjectTypology projectTypologyOne, projectTypologyTwo;
+  Project projectOne, projectTwo, projectThree;
+  Customer customer;
   List<Account> accounts;
   List<Profile> profiles;
+  List<Project> projects;
+  List<ProjectTypology> typologies;
   BusinessSector businessSector;
   List<BusinessSector> businessSectors;
   BusinessSectorContainer businessSectorContainer;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   ProjectTypologyContainer projectTypologyContainer;
-  List<ProjectTypology> typologies;
+  ProjectContainer projectContainer;
   Company company;
 
 
@@ -48,7 +49,7 @@ class CompanyTest {
 
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
-    profileThree= new Profile ("Manager");
+    profileThree = new Profile("Manager");
 
 
     profiles = new ArrayList<>();
@@ -59,40 +60,56 @@ class CompanyTest {
     businessSector = new BusinessSector("fishing");
 
     businessSectors = new ArrayList<>();
-    businessSectorContainer= new BusinessSectorContainer(businessSectors);
+    businessSectorContainer = new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
 
-    company = new Company(accountContainer, profileContainer,businessSectorContainer);
-
     projectTypologyOne = new ProjectTypology("Fixed Cost");
-    projectTypologyTwo= new ProjectTypology("Fixed time and materials");
+    projectTypologyTwo = new ProjectTypology("Fixed time and materials");
 
     typologies = new ArrayList<>();
-    projectTypologyContainer= new ProjectTypologyContainer(typologies);
     typologies.add(projectTypologyOne);
     typologies.add(projectTypologyTwo);
+    projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
+    customer = new Customer("ISEP");
+
+    projectOne = new Project("proj001", "software development management", customer,
+            projectTypologyOne,
+            businessSector);
+    projectTwo = new Project("proj002", "project software", customer, projectTypologyTwo,
+            businessSector);
+    projectThree = new Project("proj003", "motor software", customer, projectTypologyTwo,
+            businessSector);
+
+    projects = new ArrayList<>();
+    projects.add(projectOne);
+    projects.add(projectTwo);
+    projects.add(projectThree);
+    projectContainer = new ProjectContainer(projects);
+
+    company = new Company(accountContainer, profileContainer, businessSectorContainer,
+            projectContainer, projectTypologyContainer);
   }
 
   @AfterEach
   void tearDown() {
     accountOne = null;
     accountTwo = null;
-    accountThree= null;
+    accountThree = null;
     profileOne = null;
     profileTwo = null;
-    profileThree=null;
+    profileThree = null;
     accounts.clear();
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector=null;
+    businessSector = null;
     businessSectors.clear();
-    businessSectorContainer=null;
-    projectTypologyOne= null;
-    projectTypologyTwo= null;
+    businessSectorContainer = null;
+    projectTypologyOne = null;
+    projectTypologyTwo = null;
     typologies.clear();
-    projectTypologyContainer=null;
+    projectTypologyContainer = null;
 
     company = null;
   }
@@ -140,6 +157,7 @@ class CompanyTest {
     boolean result = accountOne.equals(accountTwo);
     assertEquals(expected, result);
   }
+
   @Test
   void ensureBusinessSectorIsCreatedSuccessfully() {
     //Arrange
@@ -160,41 +178,44 @@ class CompanyTest {
     assertEquals(expected, result);
   }
 
-    @Test
-    void ensureThatAccountHasProfileManagerSuccessfully() {
+  @Test
+  void ensureThatAccountHasProfileManagerSuccessfully() {
     //Arrange
-      boolean expected= true;
-      accountOne.setProfile(profileThree);
-      //Act
-      boolean result= company.validateManager("mike@isep.ipp.pt");
-      //Assert
-      assertEquals(expected, result);
-    }
+    boolean expected = true;
+    accountOne.setProfile(profileThree);
+    //Act
+    boolean result = company.validateManager("mike@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+
   @Test
   void ensureThatAccountHasProfileManagerUnsuccessfully() {
     //Arrange
-    boolean expected= false;
+    boolean expected = false;
     //Act
-    boolean result= company.validateManager("mike@isep.ipp.pt");
+    boolean result = company.validateManager("mike@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }
+
   @Test
   void ensureThatAccountHasProfileAdministratorSuccessfully() {
     //Arrange
-    boolean expected= true;
+    boolean expected = true;
     accountOne.setProfile(profileOne);
     //Act
-    boolean result= company.validateAdministrator("mike@isep.ipp.pt");
+    boolean result = company.validateAdministrator("mike@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }
+
   @Test
   void ensureThatAccountHasProfileAdministratorUnsuccessfully() {
     //Arrange
-    boolean expected= false;
+    boolean expected = false;
     //Act
-    boolean result= company.validateAdministrator("mike@isep.ipp.pt");
+    boolean result = company.validateAdministrator("mike@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }
@@ -202,19 +223,20 @@ class CompanyTest {
   @Test
   void ensureThatAccountHasProfileUserUnsuccessfully() {
     //Arrange
-    boolean expected= false;
+    boolean expected = false;
     accountOne.setProfile(profileThree);
     //Act
-    boolean result= company.validateUser("mike@isep.ipp.pt");
+    boolean result = company.validateUser("mike@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }
+
   @Test
   void ensureThatAccountHasProfileUserSuccessfully() {
     //Arrange
-    boolean expected= true;
+    boolean expected = true;
     //Act
-    boolean result= company.validateUser("mike@isep.ipp.pt");
+    boolean result = company.validateUser("mike@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }
@@ -249,8 +271,6 @@ class CompanyTest {
     assertEquals(expected, result);
   }*/
 
-}
-
     /*
     @Test
     void ensureAccountProfileIsChangedSuccessfully() {
@@ -282,3 +302,15 @@ class CompanyTest {
         assertEquals(expected, result);
     }
     */
+
+  @Test
+  void ensureAllProjectsAreListedSuccessfully() {
+    List<Project> expected = projectContainer.getProjectsList();
+
+    // Act
+    List<Project> result = company.getListAllProjects();
+
+    // Assert
+    assertEquals(expected, result);
+  }
+}

@@ -3,9 +3,7 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
 
 
@@ -22,6 +20,9 @@ class RegisterAccountControllerTest {
 
     Account accountOne, accountTwo, accountThree;
     Profile profileOne, profileTwo, profileThree;
+    ProjectTypology projectTypology;
+    Project project;
+    Customer customer;
     List<Account> accounts;
     List<Profile> profiles;
     AccountContainer accountContainer;
@@ -29,6 +30,8 @@ class RegisterAccountControllerTest {
     BusinessSector businessSector;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
+    ProjectTypologyContainer projectTypologyContainer;
+    ProjectContainer projectContainer;
 
     Company company;
 
@@ -71,8 +74,23 @@ class RegisterAccountControllerTest {
         businessSectorContainer= new BusinessSectorContainer(businessSectors);
         businessSectors.add(businessSector);
 
+        projectTypology = new ProjectTypology("Fixed Cost");
+
+        List<ProjectTypology> typologies = new ArrayList<>();
+        typologies.add(projectTypology);
+        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+
+        customer = new Customer("ISEP");
+        project = new Project("proj001", "software development management", customer,
+                projectTypology, businessSector);
+
+        List<Project> projects = new ArrayList<>();
+        projects.add(project);
+        projectContainer = new ProjectContainer(projects);
+
         //initialize company with filled containers
-        company = new Company(accountContainer, profileContainer,businessSectorContainer);
+        company = new Company(accountContainer, profileContainer, businessSectorContainer,
+                projectContainer, projectTypologyContainer);
 
         //initialize controller with company
         controller = new RegisterAccountController(company);

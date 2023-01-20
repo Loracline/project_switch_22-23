@@ -25,7 +25,9 @@ public class Company {
     /**
      * Company constructor
      */
-    public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer businessSectorContainer) {
+    public Company(AccountContainer accountContainer, ProfileContainer profileContainer,
+                   BusinessSectorContainer businessSectorContainer, ProjectContainer projectContainer,
+                   ProjectTypologyContainer projectTypologyContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
@@ -130,6 +132,15 @@ public class Company {
             projectTypologyCreated = projectTypologyContainer.createProjectTypology(projectTypology);
         }
         return projectTypologyCreated;
+    }
+
+    /**
+     * This method returns list of projects
+     *
+     * @return list of projects
+     */
+    public List<Project> getListAllProjects() {
+        return projectContainer.getProjectsList();
     }
 }
 
