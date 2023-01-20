@@ -66,8 +66,34 @@ public class AccountInProject {
         }
     }
 
+    /**
+     * This method returns an Accounts Allocated To a Project.
+     *
+     * @param project one must check.
+     *
+     * @return an Account.
+     */
     public Account getAccountByProject(Project project) {
-        return account;
+        Account requestedAccount = null;
+        if (isAccountAllocatedToProject(project)) {
+            requestedAccount = this.account;
+        }
+        return requestedAccount;
+    }
+
+    /**
+     * This method checks if an account is allocated to a Project.
+     *
+     * @param project one must check.
+     *
+     * @return TRUE if there is an account allocated to a Project and FALSE otherwise.
+     */
+    private boolean isAccountAllocatedToProject(Project project) {
+        boolean accountWorksInProject = false;
+        if (this.project.equals(project)) {
+            accountWorksInProject = true;
+        }
+        return accountWorksInProject;
     }
 
 

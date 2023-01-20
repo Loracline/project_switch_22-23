@@ -55,7 +55,7 @@ accinprojcont -> mapper: addTeamMemberToProject(allocationDTO)
 activate mapper
 create accinproj
 mapper -> accinproj: create(account, project...)
-mapper --> accinprojcont: aacountInProject
+mapper --> accinprojcont: acountInProject
 deactivate mapper
 accinprojcont -> accinprojcont: add(accountInProject)
 accinprojcont --> company: true

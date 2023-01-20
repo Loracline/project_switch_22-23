@@ -443,6 +443,10 @@ end note
 @startuml
 skinparam sequenceMessageAlign center
 title CREATE A NEW PROJECT TYPOLOGY
+legend top
+US007 - As Administrator, I want to create a new Project Typology.
+end legend
+autonumber
 actor "Administrator" as adm
 adm -> ":System": starts creating new project typology
 adm <-- ":System": requests data (projectTypology)
@@ -471,12 +475,6 @@ Account is authenticated.
 end note
 "Manager" <-- ":System": informs successful association
 @enduml
-
-
-
-
-
-
 
 @startuml
 skinparam sequenceMessageAlign center

@@ -8,6 +8,7 @@ import org.switch2022.project.model.Project;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Class ProjectContainer is built to allow access to class Project.
@@ -28,7 +29,6 @@ public class ProjectContainer {
    *
    * @return list
    */
-
   public List<Project> getProjectsList() {
     return projects;
   }
@@ -49,6 +49,13 @@ public class ProjectContainer {
     }
     return projectExistance;
   }
+
+  /**
+   * This method verify the existence of a project by projectCode confirmation
+   *
+   * @return an object Project if Project exist.
+   * @return null if Project does not exist.
+   */
   private Project getProjectByCode(String projectCode) {
     Project requestedProject = null;
     for (int i = 0; i < this.projects.size(); i++) {
@@ -59,9 +66,17 @@ public class ProjectContainer {
     }
     return requestedProject;
   }
-
+  /**
+   * This method returns a list of Accounts Allocated To a Project
+   *
+   * @return a list of Accounts if Project with projectCode exist.
+   * @return NoSuchElementException if Project with projectCode does not exist.
+   */
   public List<Account> listAccountsByProject(String projectCode) {
     Project project = getProjectByCode(projectCode);
+    if (project == null){
+      throw new NoSuchElementException("Unable to locate element " + projectCode);
+    }
     return accountInProjectContainer.listAccountsByProject(project);
   }
 }

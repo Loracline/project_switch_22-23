@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,12 @@ class ProjectTypologyControllerTest {
     List<ProjectTypology> typologies;
     List<Project> projects;
     ProjectContainer projectContainer;
+    float costPerHour;
+    float percentageAllocation;
+    LocalDate startDate;
+    AccountInProject accountInProject1, accountInProject2;
+    List<AccountInProject> accountsInProject;
+    AccountInProjectContainer accountInProjectContainer;
     Company company;
 
     ProjectTypologyController projectTypologyController;
@@ -76,7 +84,7 @@ class ProjectTypologyControllerTest {
         projectTypologyContainer= new ProjectTypologyContainer(typologies);
         typologies.add(projectTypologyOne);
         typologies.add(projectTypologyTwo);
-        company = new Company(accountContainer, profileContainer,businessSectorContainer, projectContainer, projectTypologyContainer);
+
         projectTypologyContainer= new ProjectTypologyContainer(typologies);
 
         customer = new Customer("ISEP");
@@ -87,10 +95,22 @@ class ProjectTypologyControllerTest {
         projects.add(project);
         projectContainer = new ProjectContainer(projects);
 
+        accountInProject1 = new AccountInProject(accountOne, project,
+                costPerHour, percentageAllocation, startDate);
+        accountInProject2 = new AccountInProject(accountTwo, project,
+                costPerHour, percentageAllocation, startDate);
+        accountInProject1.setRole("team member");
+        accountInProject2.setRole("team member");
+        accountsInProject = new ArrayList<>();
+        accountsInProject.add(accountInProject1);
+        accountsInProject.add(accountInProject2);
+        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer);
+                projectContainer, projectTypologyContainer, accountInProjectContainer);
 
         projectTypologyController = new ProjectTypologyController(company);
+
     }
 
     @AfterEach
@@ -119,8 +139,8 @@ class ProjectTypologyControllerTest {
 
         company = null;
     }
-    /*@Test
-    void addNewprojectTypologySuccessfully(){
+    @Test
+    void addNewProjectTypologySuccessfully(){
         //Arrange
         boolean expected = true;
         accountOne.setProfile(profileOne);
@@ -128,5 +148,25 @@ class ProjectTypologyControllerTest {
         boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
         //Assert
         assertEquals(expected,result);
-    }*/
+    }
+    @Test
+    void addNewProjectTypologyUnsuccessfully_projectTypologyExist(){
+        //Arrange
+        boolean expected = false;
+        accountOne.setProfile(profileOne);
+        //Act
+        boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed Cost");
+        //Assert
+        assertEquals(expected,result);
+    }
+    @Test
+    void addNewProjectTypologyUnsuccessfully_profileNotAdministrator(){
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
+        //Assert
+        assertEquals(expected,result);
+    }
+
 }
