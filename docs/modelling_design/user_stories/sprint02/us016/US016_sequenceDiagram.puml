@@ -15,7 +15,7 @@ participant "account:Account" as acc
 participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
 participant "Projects: List<Project>" as list
-participant ":ProjectMapper" as mapper
+participant "projectMapper:ProjectMapper" as mapper
 participant "projectsDTO: List<ProjectDTO>" as listdto
 participant "projectDTO:ProjectDTO" as DTO
 participant "profile:Profile" as pf

@@ -12,6 +12,15 @@ public class ListProjectsInAccountController {
 
     private Company company;
 
+    /**
+     * This method first verifies if User has permission to generate a list of projects
+     * and then returns a list of Projects allocated to that USer
+     *
+     * @param email
+     * @return
+     */
+
+
 
     public List<ProjectDTO> listProjectsByAccount(String email) {
         List <ProjectDTO> projectsDTO = new ArrayList<>();

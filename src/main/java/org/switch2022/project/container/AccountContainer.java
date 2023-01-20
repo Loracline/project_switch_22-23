@@ -6,6 +6,8 @@ import org.switch2022.project.model.Project;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
 /**
  * Class AccountContainer is built to allow access to class Account.
  */
@@ -133,8 +135,6 @@ public class AccountContainer {
     Account account = getAccountByEmail(email);
     return accountInProjectContainer.listProjectsByAccount(account);
   }
-
-
 
 
 }

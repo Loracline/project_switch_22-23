@@ -27,12 +27,13 @@ public class ProjectMapper {
   }
 
   public List<ProjectDTO> projectsToDTO(List<Project> projects) {
-    List<ProjectDTO> projectsDto = new ArrayList<>();
+    List<ProjectDTO> projectsDTO = new ArrayList<>();
     for (int i = 0; i < projects.size(); i++) {
-      ProjectDTO projectDTO = toDTO(projects.get(i));
-      projectsDto.add(projectDTO);
+      Project project = projects.get(i);
+      ProjectDTO projectDTO = toDTO(project);
+      projectsDTO.add(projectDTO);
     }
-    return projectsDto;
+    return projectsDTO;
   }
 
 
