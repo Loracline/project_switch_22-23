@@ -27,7 +27,8 @@ public class RegisterProjectController {
    * @param email
    * @return true if the project is registered
    */
-  public boolean registerProject(ProjectDTO dto, String email){
+ /* public boolean registerProject(ProjectDTO dto, String email){
     return company.registerProject(dto,email);
   }
+*/
 }

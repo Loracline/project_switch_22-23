@@ -8,6 +8,7 @@ import java.util.List;
 
 public class AccountInProjectContainer {
 
+
     private AccountInProject accountInProject;
 
     /**
@@ -34,4 +35,31 @@ public class AccountInProjectContainer {
         }
         return result;
     }
+
+
+    public List<Project> listProjectsByAccount(Account account) {
+        List<Project> projects = new ArrayList<>();
+        for (int i = 0; i < projects.size();i++) {
+            projects.add(accountInProject.getProjectsByAccount(account));
+        }
+        return projects;
+    }
+
+   /* public List<Project> listProjectByAccount(Account account) {
+        List<Project> projects = new ArrayList<Project>();
+        for (AccountInProject accountInProject : getAccounts()) {
+            Project project = accountInProject.getProjectsByAccount(account);
+            projects.add(project);
+        }
+        return projects;
+    }
+    public List<AccountInProject> getAccounts() {
+        // code to retrieve all accounts in the container
+        return accounts;
+    }
 }
+*/
+
+}
+
+

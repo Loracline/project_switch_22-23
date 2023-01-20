@@ -1,6 +1,7 @@
 package org.switch2022.project.container;
 
 import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Project;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -13,7 +14,7 @@ public class AccountContainer {
    * AccountContainer contains accounts
    */
   private List<Account> accounts;
-
+  private AccountInProjectContainer accountInProjectContainer;
   public AccountContainer(List<Account> accounts) {
     this.accounts = accounts;
   }
@@ -127,5 +128,13 @@ public class AccountContainer {
     }
     return isUser;
   }
+
+  public List<Project> listProjectsByAccount(String email) {
+    Account account = getAccountByEmail(email);
+    return accountInProjectContainer.listProjectsByAccount(account);
+  }
+
+
+
 
 }

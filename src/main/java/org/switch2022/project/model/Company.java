@@ -110,6 +110,10 @@ public class Company {
         return projectContainer.listAccountsByProject(projectCode);
     }
 
+    public List<Project> listProjectsByAccount(String email) {
+        return accountContainer.listProjectsByAccount(email);
+    }
+
     public boolean validateUser(String email){
         return accountContainer.validateUser(email);
     }

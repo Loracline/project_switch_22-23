@@ -69,4 +69,15 @@ public class AccountInProject {
     public Account getAccountByProject(Project project) {
         return account;
     }
+
+
+    public Project getProjectsByAccount(Account account) {
+        // code to retrieve project by account email
+        return project;
+    }
+
+
+
+
+
 }

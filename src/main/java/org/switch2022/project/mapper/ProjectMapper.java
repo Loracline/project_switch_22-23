@@ -1,7 +1,12 @@
 package org.switch2022.project.mapper;
 
 import org.switch2022.project.DTO.ProjectDTO;
+import org.switch2022.project.controller.AccountDTO;
+import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Project;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectMapper {
   public ProjectDTO toDTO(Project project) {
@@ -20,5 +25,20 @@ public class ProjectMapper {
             projectDTO.projectTypology, projectDTO.businessSector);
     return project;
   }
+
+  public List<ProjectDTO> projectsToDTO(List<Project> projects) {
+    List<ProjectDTO> projectsDto = new ArrayList<>();
+    for (int i = 0; i < projects.size(); i++) {
+      ProjectDTO projectDTO = toDTO(projects.get(i));
+      projectsDto.add(projectDTO);
+    }
+    return projectsDto;
+  }
+
+
+
+
+
+
 }
 
