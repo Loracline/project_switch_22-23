@@ -3,6 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.DTO.ProjectDTO;
 import org.switch2022.project.mapper.ProjectMapper;
 import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Project;
 
 /**
  * Class RegisterProjectController is built to register projects.
@@ -27,7 +28,9 @@ public class RegisterProjectController {
    * @param email
    * @return true if the project is registered
    */
-  public boolean registerProject(ProjectDTO dto, String email){
-    return company.registerProject(dto,email);
+  public boolean registerProject(Project dto, String email){
+    ProjectMapper projectMapper = new ProjectMapper();
+    ProjectDTO projectDTO = projectMapper.toDTO(dto);
+    return company.registerProject(projectDTO,email);
   }
 }

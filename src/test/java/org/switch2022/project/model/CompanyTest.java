@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.DTO.ProjectDTO;
 import org.switch2022.project.container.*;
 
 import java.time.LocalDate;
@@ -34,6 +35,7 @@ class CompanyTest {
   ProjectTypologyContainer projectTypologyContainer;
   Project project;
   ProjectContainer projectContainer;
+  ProjectDTO projectOneDTO, projectTwoDTO;
 
   float costPerHour;
   float percentageAllocation;
@@ -58,8 +60,7 @@ class CompanyTest {
 
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
-    profileThree= new Profile ("Manager");
-
+    profileThree = new Profile("Manager");
 
     profiles = new ArrayList<>();
     profileContainer = new ProfileContainer(profiles);
@@ -67,9 +68,8 @@ class CompanyTest {
     profiles.add(profileTwo);
 
     businessSector = new BusinessSector("fishing");
-
     businessSectors = new ArrayList<>();
-    businessSectorContainer= new BusinessSectorContainer(businessSectors);
+    businessSectorContainer = new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
 
     projects = new ArrayList<>();
@@ -77,9 +77,9 @@ class CompanyTest {
     projects.add(project);
 
     projectTypologyOne = new ProjectTypology("Fixed Cost");
-    projectTypologyTwo= new ProjectTypology("Fixed time and materials");
+    projectTypologyTwo = new ProjectTypology("Fixed time and materials");
     typologies = new ArrayList<>();
-    projectTypologyContainer= new ProjectTypologyContainer(typologies);
+    projectTypologyContainer = new ProjectTypologyContainer(typologies);
     typologies.add(projectTypologyOne);
     typologies.add(projectTypologyTwo);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
@@ -96,6 +96,11 @@ class CompanyTest {
     projects.add(projectTwo);
     projects.add(projectThree);
     projectContainer = new ProjectContainer(projects);
+
+    projectOneDTO = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
+            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", new Customer("John"),
+            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
     accountInProject1 = new AccountInProject(accountOne, project,
             costPerHour, percentageAllocation, startDate);
@@ -116,25 +121,26 @@ class CompanyTest {
   void tearDown() {
     accountOne = null;
     accountTwo = null;
-    accountThree= null;
+    accountThree = null;
     profileOne = null;
     profileTwo = null;
-    profileThree=null;
+    profileThree = null;
     accounts.clear();
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector=null;
+    businessSector = null;
     businessSectors.clear();
-    businessSectorContainer=null;
-    projectTypologyOne= null;
-    projectTypologyTwo= null;
+    businessSectorContainer = null;
+    projectTypologyOne = null;
+    projectTypologyTwo = null;
     typologies.clear();
-    projectTypologyContainer=null;
+    projectTypologyContainer = null;
     project = null;
     projects.clear();
     projectContainer = null;
-
+    projectOneDTO = null;
+    projectTwoDTO = null;
     company = null;
   }
 
@@ -334,6 +340,30 @@ class CompanyTest {
     List<Project> result = company.getListAllProjects();
 
     // Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void projectRegistered() {
+    accountOne.setProfile(profileThree);
+    boolean expected = true;
+    boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void projectNotRegistered() {
+    accountOne.setProfile(profileThree);
+    boolean expected = false;
+    boolean result = company.registerProject(projectOneDTO, accountOne.getEmail());
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void managerNotValidated() {
+    accountOne.setProfile(profileOne);
+    boolean expected = false;
+    boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
     assertEquals(expected, result);
   }
 }
