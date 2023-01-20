@@ -19,9 +19,8 @@ participant "projectDTO:projectDTO" as DTO
 activate Manager
 Manager -> ui: get list of all projects
 activate ui
-ui -> controller: listAllProjects(email)
+ui -> controller: getListOfProjects(email)
 activate controller
-controller -> company: listAllProjects(email)
 controller -> company: validateManager(email)
 activate company
 company -> ac: validateManager(email)
@@ -29,22 +28,22 @@ activate ac
 ac -> ac: getAccountByEmail(email)
 ac -> a: isManager()
 activate a
-a -->> ac: true
+a --> ac: true
 deactivate a
-ac -->> company: true
+ac --> company: true
 deactivate ac
-company -->> controller: true
+company --> controller: true
 deactivate company
-controller -> company: listAllProjects()
+controller -> company: getListAllProjects()
 activate company
-company -> pc: listAllProjects()
+company -> pc: getListAllProjects()
 activate pc
-pc -->> company: listAllProjects
+pc --> company: projects
 deactivate pc
-company -->> controller: listAllProjects
+company --> controller: projects
 deactivate company
 create mapper
-controller -> mapper: create(listAllProjects)
+controller -> mapper: create(projects)
 create list
 mapper --> list: create ()
 loop for each project in projectContainer
@@ -53,7 +52,7 @@ activate pc
 pc --> mapper: project
 deactivate pc
 activate mapper
-mapper -> mapper : projectDTO = toDTO (project)
+mapper -> mapper : toDTO(project)
 create DTO
 mapper --> DTO : create()
 deactivate mapper
@@ -64,8 +63,8 @@ deactivate list
 end loop
 mapper --> controller :listAllProjectsDTO
 deactivate mapper
-controller -->> ui: listAllProjectsDTO
+controller --> ui: listAllProjectsDTO
 deactivate controller
-ui -->>Manager: showListAllProjects
+ui --> Manager: showListAllProjects
 deactivate ui
 @enduml

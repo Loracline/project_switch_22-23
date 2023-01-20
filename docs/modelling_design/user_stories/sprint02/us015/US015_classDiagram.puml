@@ -9,14 +9,14 @@ end legend
 class "ListProjectController" {
 -company
 -projectMapper
-+listAllProjects(email)
++getListOfProjects(email)
 }
 
 class "Company"{
 -projectContainer
 -accountContainer
-+ validateManager(email)
-+listAllProjects()
++validateManager(email)
++getListAllProjects()
 }
 
 class "AccountContainer"{
@@ -33,7 +33,7 @@ class "Account"{
 
 class "ProjectContainer"{
 -projects
-+listAllProjects()
++getListOfProjects()
 +getProject()
 }
 
@@ -58,5 +58,4 @@ class "ProjectDTO" {
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" --> "Account"
 "ProjectMapper" --> "ProjectDTO"
-
 @enduml
