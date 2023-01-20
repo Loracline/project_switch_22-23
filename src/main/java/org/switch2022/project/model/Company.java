@@ -25,14 +25,13 @@ public class Company {
     /**
      * Company constructor
      */
-    public Company(AccountContainer accountContainer, ProfileContainer profileContainer,
-                   BusinessSectorContainer businessSectorContainer, ProjectContainer projectContainer,
-                   ProjectTypologyContainer projectTypologyContainer) {
+    public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer
+            businessSectorContainer, ProjectContainer projectContainer, ProjectTypologyContainer projectTypologyContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
-        this.projectTypologyContainer= projectTypologyContainer;
+        this.projectTypologyContainer= this.projectTypologyContainer;
     }
 
 
@@ -43,15 +42,6 @@ public class Company {
      */
     public AccountContainer getAccountContainer() {
         return accountContainer;
-    }
-
-    /**
-     * Getter method for the attribute Profile Container.
-     *
-     * @return the container of profiles
-     */
-    public ProjectContainer getProjectContainer() {
-        return projectContainer;
     }
 
     /**

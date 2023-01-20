@@ -5,111 +5,123 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ChangeProfileControllerTest {
-    /**
-     * BeforeEach and AfterEach executes common code before/after running the tests below.
-     */
+  /**
+   * BeforeEach and AfterEach executes common code before/after running the tests below.
+   */
 
-    Account accountOne;
-    Profile profileOne;
-    BusinessSector businessSector;
-    ProjectTypology projectTypology;
-    Project project;
-    Customer customer;
-    AccountContainer accountContainer;
-    ProfileContainer profileContainer;
-    BusinessSectorContainer businessSectorContainer;
-    ProjectTypologyContainer projectTypologyContainer;
-    ProjectContainer projectContainer;
-    Company company;
-    ChangeProfileController controller;
-    List<BusinessSector> businessSectors;
-    List<Account> accounts;
-    List<Profile> profiles;
+  Account accountOne;
+  Profile profileOne;
+  BusinessSector businessSector;
+  ProjectTypology projectTypology;
+  Project project;
+  Customer customer;
+  AccountContainer accountContainer;
+  ProfileContainer profileContainer;
+  BusinessSectorContainer businessSectorContainer;
+  ProjectTypologyContainer projectTypologyContainer;
+  ProjectContainer projectContainer;
+  Company company;
+  ChangeProfileController controller;
+  List<BusinessSector> businessSectors;
+  List<Account> accounts;
+  List<Profile> profiles;
+  List<Project> projects;
 
-    @BeforeEach
-    void setUp() {
 
-        accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
-        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accounts.add(accountOne);
+  @BeforeEach
+  void setUp() {
 
-        profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
-        profileOne = new Profile("Administrator");
-        profiles.add(profileOne);
+    accounts = new ArrayList<>();
+    accountContainer = new AccountContainer(accounts);
+    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+    accounts.add(accountOne);
 
-        businessSector = new BusinessSector("fishing");
+    profiles = new ArrayList<>();
+    profileContainer = new ProfileContainer(profiles);
+    profileOne = new Profile("Administrator");
+    profiles.add(profileOne);
 
-        businessSectors = new ArrayList<>();
-        businessSectorContainer= new BusinessSectorContainer(businessSectors);
-        businessSectors.add(businessSector);
+    projects = new ArrayList<>();
+    projectContainer = new ProjectContainer(projects);
+    projects.add(project);
 
-        projectTypology = new ProjectTypology("Fixed Cost");
+    businessSector = new BusinessSector("fishing");
 
-        List<ProjectTypology> typologies = new ArrayList<>();
-        typologies.add(projectTypology);
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+    businessSectors = new ArrayList<>();
+    businessSectorContainer = new BusinessSectorContainer(businessSectors);
+    businessSectors.add(businessSector);
 
-        customer = new Customer("ISEP");
-        project = new Project("proj001", "software development management", customer,
-                projectTypology, businessSector);
+    projectTypology = new ProjectTypology("Fixed Cost");
 
-        List<Project> projects = new ArrayList<>();
-        projects.add(project);
-        projectContainer = new ProjectContainer(projects);
+    List<ProjectTypology> typologies = new ArrayList<>();
+    typologies.add(projectTypology);
+    projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer);
-        controller = new ChangeProfileController(company);
-    }
+    customer = new Customer("ISEP");
+    project = new Project("proj001", "software development management", customer,
+            projectTypology, businessSector);
 
-    @AfterEach
-    void tearDown() {
-        accountOne = null;
-        profileOne = null;
-        accountContainer = null;
-        profileContainer = null;
-        company = null;
-        controller = null;
-        accounts.clear();
-        profiles.clear();
-        businessSector=null;
-        businessSectors.clear();
-        businessSectorContainer=null;
-    }
-    @Test
-    void ensureAccountProfileIsChangedSuccessfully() {
-        //Arrange
-        boolean expected = true;
-        //Act
-        boolean result = controller.changeProfile("mike@isep.ipp.pt", "Administrator");
-        //Assert
-        assertEquals(expected, result);
-    }
+    List<Project> projects = new ArrayList<>();
+    projects.add(project);
+    projectContainer = new ProjectContainer(projects);
 
-    @Test
-    void ensureAccountProfileIsNotChangedSuccessfully_ProfileNotFound() {
-        //Arrange
-        boolean expected = false;
-        //Act
-        boolean result = controller.changeProfile("mike@isep.ipp.pt", "Manager");
-        //Assert
-        assertEquals(expected, result);
-    }
+    company = new Company(accountContainer, profileContainer, businessSectorContainer,
+            projectContainer, projectTypologyContainer);
+    controller = new ChangeProfileController(company);
+  }
 
-    @Test
-    void ensureAccountProfileIsNotChangedSuccessfully_AccountNotFound() {
-        //Arrange
-        boolean expected = false;
-        //Act
-        boolean result = controller.changeProfile("mikke@isep.ipp.pt", "Administrator");
-        //Assert
-        assertEquals(expected, result);
-    }
+  @AfterEach
+  void tearDown() {
+    accountOne = null;
+    profileOne = null;
+    accountContainer = null;
+    profileContainer = null;
+    company = null;
+    controller = null;
+    accounts.clear();
+    profiles.clear();
+    project = null;
+    projects.clear();
+    projectContainer = null;
+    businessSector = null;
+    businessSectors.clear();
+    businessSectorContainer = null;
+  }
+
+  @Test
+  void ensureAccountProfileIsChangedSuccessfully() {
+    //Arrange
+    boolean expected = true;
+    //Act
+    boolean result = controller.changeProfile("mike@isep.ipp.pt", "Administrator");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureAccountProfileIsNotChangedSuccessfully_ProfileNotFound() {
+    //Arrange
+    boolean expected = false;
+    //Act
+    boolean result = controller.changeProfile("mike@isep.ipp.pt", "Manager");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureAccountProfileIsNotChangedSuccessfully_AccountNotFound() {
+    //Arrange
+    boolean expected = false;
+    //Act
+    boolean result = controller.changeProfile("mikke@isep.ipp.pt", "Administrator");
+    //Assert
+    assertEquals(expected, result);
+  }
 }

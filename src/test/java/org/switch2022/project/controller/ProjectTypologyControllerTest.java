@@ -29,8 +29,9 @@ class ProjectTypologyControllerTest {
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
-    ProjectContainer projectContainer;
     List<ProjectTypology> typologies;
+    List<Project> projects;
+    ProjectContainer projectContainer;
     Company company;
 
     ProjectTypologyController projectTypologyController;
@@ -58,6 +59,10 @@ class ProjectTypologyControllerTest {
         profiles.add(profileOne);
         profiles.add(profileTwo);
 
+        projects = new ArrayList<>();
+        projectContainer = new ProjectContainer(projects);
+        projects.add(project);
+
         businessSector = new BusinessSector("fishing");
 
         businessSectors = new ArrayList<>();
@@ -68,8 +73,10 @@ class ProjectTypologyControllerTest {
         projectTypologyTwo= new ProjectTypology("Fixed time and materials");
 
         typologies = new ArrayList<>();
+        projectTypologyContainer= new ProjectTypologyContainer(typologies);
         typologies.add(projectTypologyOne);
         typologies.add(projectTypologyTwo);
+        company = new Company(accountContainer, profileContainer,businessSectorContainer, projectContainer, projectTypologyContainer);
         projectTypologyContainer= new ProjectTypologyContainer(typologies);
 
         customer = new Customer("ISEP");
@@ -98,6 +105,9 @@ class ProjectTypologyControllerTest {
         profiles.clear();
         accountContainer = null;
         profileContainer = null;
+        project = null;
+        projects.clear();
+        projectContainer = null;
         businessSector=null;
         businessSectors.clear();
         businessSectorContainer=null;

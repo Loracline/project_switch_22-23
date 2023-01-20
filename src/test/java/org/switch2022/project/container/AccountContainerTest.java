@@ -12,220 +12,225 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AccountContainerTest {
 
-    /**
-     * BeforeEach and AfterEach executes common code before/after running the tests below.
-     */
+  /**
+   * BeforeEach and AfterEach executes common code before/after running the tests below.
+   */
 
-    Account accountOne, accountTwo, accountThree, accountFour;
-    Profile profileOne, profileTwo, profileThree;
-    ProjectTypology projectTypology;
-    Project project;
-    Customer customer;
-    List<Account> accounts;
-    List<Profile> profiles;
-    AccountContainer accountContainer;
-    ProfileContainer profileContainer;
-    ProjectTypologyContainer projectTypologyContainer;
-    ProjectContainer projectContainer;
-    BusinessSector businessSector;
-    List<BusinessSector> businessSectors;
-    BusinessSectorContainer businessSectorContainer;
-    Company company;
+  Account accountOne, accountTwo, accountThree, accountFour;
+  Profile profileOne, profileTwo, profileThree;
+  ProjectTypology projectTypology;
+  Project project;
+  Customer customer;
+  List<Account> accounts;
+  List<Profile> profiles;
+  List<Project> projects;
+  AccountContainer accountContainer;
+  ProfileContainer profileContainer;
+  ProjectTypologyContainer projectTypologyContainer;
+  ProjectContainer projectContainer;
+  BusinessSector businessSector;
+  List<BusinessSector> businessSectors;
+  BusinessSectorContainer businessSectorContainer;
+  Company company;
 
-    @BeforeEach
-    void setUp() {
-        accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null);
-        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
-        accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
-        accountFour = new Account("Poppy", "poppy@isep.ipp.pt", 932755686, null);
-        accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
-        accounts.add(accountThree);
+  @BeforeEach
+  void setUp() {
+    accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null);
+    accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
+    accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
+    accountFour = new Account("Poppy", "poppy@isep.ipp.pt", 932755686, null);
+    accounts = new ArrayList<>();
+    accountContainer = new AccountContainer(accounts);
+    accounts.add(accountOne);
+    accounts.add(accountTwo);
+    accounts.add(accountThree);
 
-        profileOne = new Profile("Administrator");
-        profileTwo = new Profile("Manager");
-        profileThree = new Profile("Administrator");
-
-
-        profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
-        profiles.add(profileThree);
-
-        businessSector = new BusinessSector("fishing");
-
-        businessSectors = new ArrayList<>();
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
-        businessSectors.add(businessSector);
-
-        projectTypology = new ProjectTypology("Fixed Cost");
-
-        List<ProjectTypology> typologies = new ArrayList<>();
-        typologies.add(projectTypology);
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
-
-        customer = new Customer("ISEP");
-        project = new Project("proj001", "software development management", customer,
-                projectTypology, businessSector);
-
-        List<Project> projects = new ArrayList<>();
-        projects.add(project);
-        projectContainer = new ProjectContainer(projects);
-
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer);
-    }
-
-    @AfterEach
-    void tearDown() {
-        accountOne = null;
-        accountTwo = null;
-        accountThree = null;
-        accountFour = null;
-        profileOne = null;
-        profileTwo = null;
-        accounts.clear();
-        profiles.clear();
-        accountContainer = null;
-        profileContainer = null;
-        businessSector = null;
-        businessSectors.clear();
-        businessSectorContainer = null;
-        company = null;
-    }
-
-    @Test
-    void ensureThatAccountListIsRetrieved() {
-        List<Account> expected = new ArrayList<>();
-        expected.add(accountOne);
-        expected.add(accountTwo);
-        expected.add(accountThree);
-
-        List<Account> result = accountContainer.getAccounts();
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatAccountIsAddedIfEmailIsUnique() {
-        boolean expected = true;
-
-        boolean result = accountContainer.addAccount("Poppy", "poppy@isep.ipp.pt", 932755686, null);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatAccountIsNotAddedIfEmailIsDuplicated() {
-        boolean expected = false;
-
-        boolean result = accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatCopyOfAccountListIsSuccessfullyGenerated() {
-        AccountContainer listOfAccounts = new AccountContainer(accounts);
-
-        List<Account> copy = new ArrayList<>();
-        copy.add(accountOne);
-        copy.add(accountTwo);
-        copy.add(accountThree);
-
-        List<Account> result = listOfAccounts.getAccounts();
-
-        assertEquals(copy, result);
-    }
-
-    @Test
-    void ensureThatModifiedCopyDoesNotEqualOriginal() {
-        AccountContainer newAccountContainer = new AccountContainer(accounts);
-
-        List<Account> copy = new ArrayList<>();
-        copy.add(accountOne);
-
-        List<Account> result = newAccountContainer.getAccounts();
-
-        assertNotEquals(copy, result);
-    }
+    profileOne = new Profile("Administrator");
+    profileTwo = new Profile("Manager");
+    profileThree = new Profile("Administrator");
 
 
-    @Test
-    void ensureAccountIsRetrievedSuccessfully() {
-        Account result = accountContainer.getAccountByEmail("claire@isep.ipp.pt");
+    profiles = new ArrayList<>();
+    profileContainer = new ProfileContainer(profiles);
+    profiles.add(profileOne);
+    profiles.add(profileTwo);
+    profiles.add(profileThree);
 
-        assertEquals(accountOne, result);
-    }
+    businessSector = new BusinessSector("fishing");
 
-    @Test
-    void ensureThatGetAccountReturnNull() {
-        Account result = accountContainer.getAccountByEmail("cclaire@isep.ipp.pt");
+    businessSectors = new ArrayList<>();
+    businessSectorContainer = new BusinessSectorContainer(businessSectors);
+    businessSectors.add(businessSector);
 
-        assertNull(result);
-    }
+    projectTypology = new ProjectTypology("Fixed Cost");
 
-    @Test
-    void ensureThatAccountHasProfileManagerSuccessfully() {
-        //Arrange
-        accountOne.setProfile(profileTwo);
-        boolean expected = true;
-        //Act
-        boolean result = accountContainer.validateManager("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
+    List<ProjectTypology> typologies = new ArrayList<>();
+    typologies.add(projectTypology);
+    projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    @Test
-    void ensureThatAccountHasProfileManagerUnsuccessfully() {
-        //Arrange
-        boolean expected = false;
-        //Act
-        boolean result = accountContainer.validateManager("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
-    @Test
-    void ensureThatAccountHasProfileAdministratorSuccessfully() {
-        //Arrange
-        accountOne.setProfile(profileThree);
-        boolean expected = true;
-        //Act
-        boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
-    @Test
-    void ensureThatAccountHasProfileAdministratorUnsuccessfully() {
-        //Arrange
-        boolean expected = false;
-        //Act
-        boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
+    customer = new Customer("ISEP");
+    project = new Project("proj001", "software development management", customer,
+            projectTypology, businessSector);
 
-    @Test
-    void ensureThatAccountHasProfileUserUnsuccessfully() {
-        //Arrange
-        accountOne.setProfile(profileTwo);
-        boolean expected = false;
-        //Act
-        boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
+    projects = new ArrayList<>();
+    projectContainer = new ProjectContainer(projects);
+    projects.add(project);
 
-    @Test
-    void ensureThatAccountHasProfileUserSuccessfully() {
-        //Arrange
-        boolean expected = true;
-        //Act
-        boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
+    company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer);
+  }
+
+  @AfterEach
+  void tearDown() {
+    accountOne = null;
+    accountTwo = null;
+    accountThree = null;
+    accountFour = null;
+    profileOne = null;
+    profileTwo = null;
+    accounts.clear();
+    profiles.clear();
+    accountContainer = null;
+    profileContainer = null;
+    businessSector = null;
+    businessSectors.clear();
+    businessSectorContainer = null;
+    project = null;
+    projects.clear();
+    projectContainer = null;
+    company = null;
+  }
+
+  @Test
+  void ensureThatAccountListIsRetrieved() {
+    List<Account> expected = new ArrayList<>();
+    expected.add(accountOne);
+    expected.add(accountTwo);
+    expected.add(accountThree);
+
+    List<Account> result = accountContainer.getAccounts();
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureThatAccountIsAddedIfEmailIsUnique() {
+    boolean expected = true;
+
+    boolean result = accountContainer.addAccount("Poppy", "poppy@isep.ipp.pt", 932755686, null);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureThatAccountIsNotAddedIfEmailIsDuplicated() {
+    boolean expected = false;
+
+    boolean result = accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
+
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureThatCopyOfAccountListIsSuccessfullyGenerated() {
+    AccountContainer listOfAccounts = new AccountContainer(accounts);
+
+    List<Account> copy = new ArrayList<>();
+    copy.add(accountOne);
+    copy.add(accountTwo);
+    copy.add(accountThree);
+
+    List<Account> result = listOfAccounts.getAccounts();
+
+    assertEquals(copy, result);
+  }
+
+  @Test
+  void ensureThatModifiedCopyDoesNotEqualOriginal() {
+    AccountContainer newAccountContainer = new AccountContainer(accounts);
+
+    List<Account> copy = new ArrayList<>();
+    copy.add(accountOne);
+
+    List<Account> result = newAccountContainer.getAccounts();
+
+    assertNotEquals(copy, result);
+  }
+
+
+  @Test
+  void ensureAccountIsRetrievedSuccessfully() {
+    Account result = accountContainer.getAccountByEmail("claire@isep.ipp.pt");
+
+    assertEquals(accountOne, result);
+  }
+
+  @Test
+  void ensureThatGetAccountReturnNull() {
+    Account result = accountContainer.getAccountByEmail("cclaire@isep.ipp.pt");
+
+    assertNull(result);
+  }
+
+  @Test
+  void ensureThatAccountHasProfileManagerSuccessfully() {
+    //Arrange
+    accountOne.setProfile(profileTwo);
+    boolean expected = true;
+    //Act
+    boolean result = accountContainer.validateManager("claire@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureThatAccountHasProfileManagerUnsuccessfully() {
+    //Arrange
+    boolean expected = false;
+    //Act
+    boolean result = accountContainer.validateManager("claire@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureThatAccountHasProfileAdministratorSuccessfully() {
+    //Arrange
+    accountOne.setProfile(profileThree);
+    boolean expected = true;
+    //Act
+    boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureThatAccountHasProfileAdministratorUnsuccessfully() {
+    //Arrange
+    boolean expected = false;
+    //Act
+    boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureThatAccountHasProfileUserUnsuccessfully() {
+    //Arrange
+    accountOne.setProfile(profileTwo);
+    boolean expected = false;
+    //Act
+    boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureThatAccountHasProfileUserSuccessfully() {
+    //Arrange
+    boolean expected = true;
+    //Act
+    boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
 }
