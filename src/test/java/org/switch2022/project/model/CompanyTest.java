@@ -31,6 +31,7 @@ class CompanyTest {
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   ProjectTypologyContainer projectTypologyContainer;
+  Project project;
   ProjectContainer projectContainer;
   Company company;
 
@@ -49,7 +50,7 @@ class CompanyTest {
 
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
-    profileThree = new Profile("Manager");
+    profileThree= new Profile ("Manager");
 
 
     profiles = new ArrayList<>();
@@ -60,13 +61,20 @@ class CompanyTest {
     businessSector = new BusinessSector("fishing");
 
     businessSectors = new ArrayList<>();
-    businessSectorContainer = new BusinessSectorContainer(businessSectors);
+    businessSectorContainer= new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
 
+    projects = new ArrayList<>();
+    projectContainer = new ProjectContainer(projects);
+    projects.add(project);
+
+    company = new Company(accountContainer, profileContainer,businessSectorContainer, projectContainer, projectTypologyContainer);
+
     projectTypologyOne = new ProjectTypology("Fixed Cost");
-    projectTypologyTwo = new ProjectTypology("Fixed time and materials");
+    projectTypologyTwo= new ProjectTypology("Fixed time and materials");
 
     typologies = new ArrayList<>();
+    projectTypologyContainer= new ProjectTypologyContainer(typologies);
     typologies.add(projectTypologyOne);
     typologies.add(projectTypologyTwo);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
@@ -95,21 +103,24 @@ class CompanyTest {
   void tearDown() {
     accountOne = null;
     accountTwo = null;
-    accountThree = null;
+    accountThree= null;
     profileOne = null;
     profileTwo = null;
-    profileThree = null;
+    profileThree=null;
     accounts.clear();
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector = null;
+    businessSector=null;
     businessSectors.clear();
-    businessSectorContainer = null;
-    projectTypologyOne = null;
-    projectTypologyTwo = null;
+    businessSectorContainer=null;
+    projectTypologyOne= null;
+    projectTypologyTwo= null;
     typologies.clear();
-    projectTypologyContainer = null;
+    projectTypologyContainer=null;
+    project = null;
+    projects.clear();
+    projectContainer = null;
 
     company = null;
   }
@@ -270,6 +281,8 @@ class CompanyTest {
     //Assert
     assertEquals(expected, result);
   }*/
+
+
 
     /*
     @Test

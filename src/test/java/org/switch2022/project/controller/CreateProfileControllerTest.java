@@ -3,6 +3,10 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.BusinessSectorContainer;
+import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.container.ProjectContainer;
 import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
 
@@ -25,6 +29,7 @@ class CreateProfileControllerTest {
     Customer customer;
     List<Account> accounts;
     List<Profile> profiles;
+    List<Project> projects;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
@@ -58,12 +63,17 @@ class CreateProfileControllerTest {
         profiles.add(profileOne);
         profiles.add(profileTwo);
 
+        projects = new ArrayList<>();
+        projectContainer = new ProjectContainer(projects);
+        projects.add(project);
+
         businessSector = new BusinessSector("fishing");
 
         businessSectors = new ArrayList<>();
         businessSectorContainer= new BusinessSectorContainer(businessSectors);
         businessSectors.add(businessSector);
 
+        company = new Company(accountContainer, profileContainer,businessSectorContainer,projectContainer, projectTypologyContainer);
         projectTypology = new ProjectTypology("Fixed Cost");
 
         List<ProjectTypology> typologies = new ArrayList<>();
@@ -97,6 +107,9 @@ class CreateProfileControllerTest {
         businessSector=null;
         businessSectors.clear();
         businessSectorContainer=null;
+        project = null;
+        projects.clear();
+        projectContainer = null;
         company = null;
         createProfileController = null;
     }
