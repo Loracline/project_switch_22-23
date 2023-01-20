@@ -30,6 +30,7 @@ class AccountInProject{
 
 class AccountInProjectContainer{
 -accountsInProjects
+-doesAccountExist(accountInProject)
 +addTeamMemberToProject(accountInProject)
 }
 

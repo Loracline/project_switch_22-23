@@ -3,6 +3,7 @@ package org.switch2022.project.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.ProjectTypology;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,15 +33,27 @@ class ProjectTypologyContainerTest {
         projectTypologyContainerReference= null;
     }
     @Test
-    void ensureProjectTypologyCreatedSuccessfuly(){
+    void ensureProjectTypologyCreatedSuccessfully(){
         boolean expected= true;
         boolean result=projectTypologyContainerReference.createProjectTypology("Fixed new typology");
         assertEquals(expected, result);
     }
     @Test
-    void ensureProjectTypologyCreatedUnsuccessfuly_CaseInsensitive(){
+    void ensureProjectTypologyCreatedUnsuccessfully(){
+        boolean expected= false;
+        boolean result=projectTypologyContainerReference.createProjectTypology("Fixed Cost");
+        assertEquals(expected, result);
+    }
+    @Test
+    void ensureProjectTypologyCreatedUnsuccessfully_CaseInsensitive(){
         boolean expected= false;
         boolean result=projectTypologyContainerReference.createProjectTypology("fixed cost");
+        assertEquals(expected, result);
+    }
+    @Test
+    void ensureProjectTypologyCreatedSuccessfully_CaseInsensitive(){
+        boolean expected= true;
+        boolean result=projectTypologyContainerReference.createProjectTypology("fIxEd new typology");
         assertEquals(expected, result);
     }
 }

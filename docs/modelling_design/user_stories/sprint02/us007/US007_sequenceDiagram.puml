@@ -30,7 +30,7 @@ activate c
 c -> acc: validateAdministrator(email)
 activate acc
 acc -> acc: account = getAccountByEmail(email)
-acc -> ac: validateAdministrator
+acc -> ac: isAdministrator()
 activate ac
 ac --> acc: true
 deactivate ac
