@@ -25,7 +25,7 @@ User -> ui: Lists all projects the user is allocated to
 activate ui
 ui -> controller: listProjectByAccount(email)
 activate controller
-controller -> company: valideUser(email)
+controller -> company: validateUser(email)
 activate company
 
 company -> container: validateUser(email)
