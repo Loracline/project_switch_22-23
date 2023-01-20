@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.DTO.AllocationDTO;
 import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
@@ -22,11 +23,14 @@ public class Company {
     private BusinessSectorContainer businessSectorContainer;
     private ProjectTypologyContainer projectTypologyContainer;
 
+    private AccountInProjectContainer accountInProjectContainer;
+
     /**
      * Company constructor
      */
     public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer
-            businessSectorContainer, ProjectContainer projectContainer, ProjectTypologyContainer projectTypologyContainer) {
+            businessSectorContainer, ProjectContainer projectContainer, ProjectTypologyContainer projectTypologyContainer,
+                   AccountInProjectContainer accountInProjectContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
@@ -131,6 +135,10 @@ public class Company {
      */
     public List<Project> getListAllProjects() {
         return projectContainer.getProjectsList();
+    }
+
+    public boolean addTeamMemberToProject(AllocationDTO allocationDTO) {
+        return this.accountInProjectContainer.addTeamMemberToProject(allocationDTO);
     }
 }
 

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,13 @@ class CompanyTest {
   ProjectTypologyContainer projectTypologyContainer;
   Project project;
   ProjectContainer projectContainer;
+
+  float costPerHour;
+  float percentageAllocation;
+  LocalDate startDate;
+  AccountInProject accountInProject1, accountInProject2;
+  List<AccountInProject> accountsInProject;
+  AccountInProjectContainer accountInProjectContainer;
   Company company;
 
 
@@ -68,7 +76,7 @@ class CompanyTest {
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
 
-    company = new Company(accountContainer, profileContainer,businessSectorContainer, projectContainer, projectTypologyContainer);
+    //company = new Company(accountContainer, profileContainer,businessSectorContainer, projectContainer, projectTypologyContainer);
 
     projectTypologyOne = new ProjectTypology("Fixed Cost");
     projectTypologyTwo= new ProjectTypology("Fixed time and materials");
@@ -95,8 +103,19 @@ class CompanyTest {
     projects.add(projectThree);
     projectContainer = new ProjectContainer(projects);
 
+    accountInProject1 = new AccountInProject(accountOne, project,
+            costPerHour, percentageAllocation, startDate);
+    accountInProject2 = new AccountInProject(accountTwo, project,
+            costPerHour, percentageAllocation, startDate);
+    accountInProject1.setRole("team member");
+    accountInProject2.setRole("team member");
+    accountsInProject = new ArrayList<>();
+    accountsInProject.add(accountInProject1);
+    accountsInProject.add(accountInProject2);
+    accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer);
   }
 
   @AfterEach

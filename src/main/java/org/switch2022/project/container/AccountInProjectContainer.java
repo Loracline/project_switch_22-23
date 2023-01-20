@@ -37,10 +37,10 @@ public class AccountInProjectContainer {
         return result;
     }
 
-    public boolean addTeamMemberToProject(AllocationDTO accountDTO) {
+    public boolean addTeamMemberToProject(AllocationDTO allocationDTO) {
         boolean accountAdded = false;
         AllocationMapper mapper = new AllocationMapper();
-        AccountInProject account = mapper.addTeamMemberToProject(accountDTO);
+        AccountInProject account = mapper.addTeamMemberToProject(allocationDTO);
         if (!doesAccountExist(account)) {
             accountsInProject.add(account);
             accountAdded = true;

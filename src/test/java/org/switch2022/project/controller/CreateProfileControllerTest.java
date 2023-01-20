@@ -10,6 +10,7 @@ import org.switch2022.project.container.ProjectContainer;
 import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,13 @@ class CreateProfileControllerTest {
     BusinessSector businessSector;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
+
+    float costPerHour;
+    float percentageAllocation;
+    LocalDate startDate;
+    AccountInProject accountInProject1, accountInProject2;
+    List<AccountInProject> accountsInProject;
+    AccountInProjectContainer accountInProjectContainer;
     Company company;
 
     CreateProfileController createProfileController;
@@ -73,7 +81,6 @@ class CreateProfileControllerTest {
         businessSectorContainer= new BusinessSectorContainer(businessSectors);
         businessSectors.add(businessSector);
 
-        company = new Company(accountContainer, profileContainer,businessSectorContainer,projectContainer, projectTypologyContainer);
         projectTypology = new ProjectTypology("Fixed Cost");
 
         List<ProjectTypology> typologies = new ArrayList<>();
@@ -88,8 +95,19 @@ class CreateProfileControllerTest {
         projects.add(project);
         projectContainer = new ProjectContainer(projects);
 
+        accountInProject1 = new AccountInProject(accountOne, project,
+                costPerHour, percentageAllocation, startDate);
+        accountInProject2 = new AccountInProject(accountTwo, project,
+                costPerHour, percentageAllocation, startDate);
+        accountInProject1.setRole("team member");
+        accountInProject2.setRole("team member");
+        accountsInProject = new ArrayList<>();
+        accountsInProject.add(accountInProject1);
+        accountsInProject.add(accountInProject2);
+        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer);
+                projectContainer, projectTypologyContainer, accountInProjectContainer);
 
         createProfileController = new CreateProfileController(company);
     }
