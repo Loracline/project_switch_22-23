@@ -119,8 +119,8 @@ class ProjectTypologyControllerTest {
 
         company = null;
     }
-    /*@Test
-    void addNewprojectTypologySuccessfully(){
+    @Test
+    void addNewProjectTypologySuccessfully(){
         //Arrange
         boolean expected = true;
         accountOne.setProfile(profileOne);
@@ -128,5 +128,25 @@ class ProjectTypologyControllerTest {
         boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
         //Assert
         assertEquals(expected,result);
-    }*/
+    }
+    @Test
+    void addNewProjectTypologyUnsuccessfully_projectTypologyExist(){
+        //Arrange
+        boolean expected = false;
+        accountOne.setProfile(profileOne);
+        //Act
+        boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed Cost");
+        //Assert
+        assertEquals(expected,result);
+    }
+    @Test
+    void addNewProjectTypologyUnsuccessfully_profileNotAdministrator(){
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
+        //Assert
+        assertEquals(expected,result);
+    }
+
 }

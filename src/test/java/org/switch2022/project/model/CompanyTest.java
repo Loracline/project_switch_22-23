@@ -251,7 +251,7 @@ class CompanyTest {
     //Assert
     assertEquals(expected, result);
   }
-  /*@Test
+  @Test
   void ensureProjectTypologyIsCreatedSuccessfully() {
     //Arrange
     boolean expected = true;
@@ -260,7 +260,7 @@ class CompanyTest {
     boolean result = company.createProjectTypology("jane@isep.ipp.pt", "Fixed new typology");
     //Assert
     assertEquals(expected, result);
-  }*/
+  }
 
   @Test
   void ensureProjectTypologyIsCreatedUnsuccessfully_NotAdministrator() {
@@ -271,7 +271,7 @@ class CompanyTest {
     //Assert
     assertEquals(expected, result);
   }
-/*  @Test
+  @Test
   void ensureProjectTypologyIsCreatedUnsuccessfuly_TheTypologyAlreadyExists() {
     //Arrange
     boolean expected = false;
@@ -280,10 +280,7 @@ class CompanyTest {
     boolean result = company.createProjectTypology("mike@isep.ipp.pt", "Fixed Cost");
     //Assert
     assertEquals(expected, result);
-  }*/
-
-
-
+  }
     /*
     @Test
     void ensureAccountProfileIsChangedSuccessfully() {

@@ -31,7 +31,7 @@ public class Company {
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
-        this.projectTypologyContainer= this.projectTypologyContainer;
+        this.projectTypologyContainer= projectTypologyContainer;
     }
 
 
