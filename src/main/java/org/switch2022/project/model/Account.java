@@ -132,6 +132,13 @@ public class Account {
         }
         return isManager;
     }
+    public boolean IsAdministrator() {
+        boolean isAdministrator = false;
+        if(this.profile.isAdministrator()){
+            isAdministrator=true;
+        }
+        return isAdministrator;
+    }
 
     public boolean IsUser() {
         boolean isUser = false;

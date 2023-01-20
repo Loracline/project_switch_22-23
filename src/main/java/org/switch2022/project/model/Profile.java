@@ -21,10 +21,18 @@ public class Profile {
     public boolean isManager() {
         Profile profile = new Profile("Manager");
         boolean isManager = false;
-        if (this.profileName.equals(profile.profileName)) {
+        if(this.profileName.equals(profile.profileName)) {
             isManager = true;
         }
         return isManager;
+    }
+    public boolean isAdministrator() {
+        Profile profile = new Profile("Administrator");
+        boolean isAdministrator = false;
+        if(this.profileName.equals(profile.profileName)) {
+            isAdministrator = true;
+        }
+        return isAdministrator;
     }
 
     @Override

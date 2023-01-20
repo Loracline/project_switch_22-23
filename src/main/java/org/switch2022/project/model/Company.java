@@ -1,12 +1,13 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.BusinessSectorContainer;
+import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.container.ProjectContainer;
 import org.switch2022.project.DTO.ProjectDTO;
 import org.switch2022.project.container.*;
-
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * Class Company is built to create and manipulate AccountContainer and ProfileContainer.
@@ -19,7 +20,7 @@ public class Company {
     private ProfileContainer profileContainer;
     private ProjectContainer projectContainer;
     private BusinessSectorContainer businessSectorContainer;
-
+    private ProjectTypologyContainer projectTypologyContainer;
 
     /**
      * Company constructor
@@ -29,6 +30,7 @@ public class Company {
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
+        this.projectTypologyContainer= projectTypologyContainer;
     }
 
 
@@ -119,6 +121,15 @@ public class Company {
     public boolean validateUser(String email){
         return accountContainer.validateUser(email);
     }
-
+    public boolean validateAdministrator(String email) {
+        return accountContainer.validateAdministrator(email);
+    }
+    public boolean createProjectTypology(String email, String projectTypology){
+        boolean projectTypologyCreated= false;
+        if(accountContainer.validateAdministrator(email)){
+            projectTypologyCreated = projectTypologyContainer.createProjectTypology(projectTypology);
+        }
+        return projectTypologyCreated;
+    }
 }
 

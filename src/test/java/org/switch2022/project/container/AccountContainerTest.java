@@ -20,7 +20,7 @@ class AccountContainerTest {
      */
 
     Account accountOne, accountTwo, accountThree, accountFour;
-    Profile profileOne, profileTwo;
+    Profile profileOne, profileTwo, profileThree;
     List<Account> accounts;
     List<Profile> profiles;
     AccountContainer accountContainer;
@@ -44,12 +44,14 @@ class AccountContainerTest {
 
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("Manager");
+        profileThree = new Profile("Administrator");
 
 
         profiles = new ArrayList<>();
         profileContainer = new ProfileContainer(profiles);
         profiles.add(profileOne);
         profiles.add(profileTwo);
+        profiles.add(profileThree);
 
         businessSector = new BusinessSector("fishing");
 
@@ -169,8 +171,25 @@ class AccountContainerTest {
         //Assert
         assertEquals(expected, result);
     }
-
-
+    @Test
+    void ensureThatAccountHasProfileAdministratorSuccessfully() {
+        //Arrange
+        accountOne.setProfile(profileThree);
+        boolean expected = true;
+        //Act
+        boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
+    @Test
+    void ensureThatAccountHasProfileAdministratorUnsuccessfully() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
 
     @Test
     void ensureThatAccountHasProfileUserUnsuccessfully() {

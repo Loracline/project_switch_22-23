@@ -206,6 +206,28 @@ class AccountTest {
         //Assert
         assertEquals(expected,result);
     }
+    @Test
+    void verifyIsAdministratorSuccessfully() {
+        //Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        Profile profile = new Profile("Administrator");
+        reference.setProfile(profile);
+        boolean expected = true;
+        //Act
+        boolean result= reference.IsAdministrator();
+        //Assert
+        assertEquals(expected,result);
+    }
+    @Test
+    void verifyIsAdministratorUnsuccessfully() {
+        //Arrange
+        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        boolean expected = false;
+        //Act
+        boolean result= reference.IsManager();
+        //Assert
+        assertEquals(expected,result);
+    }
 
     @Test
     void verifyIsUserUnsuccessfully() {

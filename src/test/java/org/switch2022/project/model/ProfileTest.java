@@ -50,6 +50,24 @@ class ProfileTest {
         assertEquals(expected, result);
     }
     @Test
+    void validateIfIsAdministratorSuccessfully() {
+        //Arrange
+        Profile reference = new Profile("Administrator");
+        boolean expected = true;
+        //Act
+        boolean result = reference.isAdministrator();
+        assertEquals(expected, result);
+    }
+    @Test
+    void validateIfIsAdministratorUnsuccessfully() {
+        //Arrange
+        Profile reference = new Profile("Manager");
+        boolean expected = false;
+        //Act
+        boolean result = reference.isAdministrator();
+        assertEquals(expected, result);
+    }
+    @Test
     void validateIfIsUserSuccessfully() {
         //Arrange
         Profile reference = new Profile("User");
