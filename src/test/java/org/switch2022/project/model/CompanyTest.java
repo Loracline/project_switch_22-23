@@ -41,7 +41,6 @@ class CompanyTest {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
     accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
     accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
-
     accounts = new ArrayList<>();
     accountContainer = new AccountContainer(accounts);
     accounts.add(accountOne);
@@ -51,15 +50,12 @@ class CompanyTest {
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
     profileThree= new Profile ("Manager");
-
-
     profiles = new ArrayList<>();
     profileContainer = new ProfileContainer(profiles);
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
     businessSector = new BusinessSector("fishing");
-
     businessSectors = new ArrayList<>();
     businessSectorContainer= new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
@@ -68,11 +64,8 @@ class CompanyTest {
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
 
-    company = new Company(accountContainer, profileContainer,businessSectorContainer, projectContainer, projectTypologyContainer);
-
     projectTypologyOne = new ProjectTypology("Fixed Cost");
     projectTypologyTwo= new ProjectTypology("Fixed time and materials");
-
     typologies = new ArrayList<>();
     projectTypologyContainer= new ProjectTypologyContainer(typologies);
     typologies.add(projectTypologyOne);
@@ -81,13 +74,10 @@ class CompanyTest {
 
     customer = new Customer("ISEP");
 
-    projectOne = new Project("proj001", "software development management", customer,
-            projectTypologyOne,
+    projectOne = new Project("AA001", "software development management", customer, projectTypologyOne,
             businessSector);
-    projectTwo = new Project("proj002", "project software", customer, projectTypologyTwo,
-            businessSector);
-    projectThree = new Project("proj003", "motor software", customer, projectTypologyTwo,
-            businessSector);
+    projectTwo = new Project("AA002", "project software", customer, projectTypologyTwo, businessSector);
+    projectThree = new Project("AA003", "motor software", customer, projectTypologyTwo, businessSector);
 
     projects = new ArrayList<>();
     projects.add(projectOne);
@@ -325,5 +315,9 @@ class CompanyTest {
 
     // Assert
     assertEquals(expected, result);
+  }
+
+  @Test
+  void registerProject() {
   }
 }

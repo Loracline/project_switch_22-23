@@ -42,39 +42,6 @@ public class Project {
     this.businessSector = businessSector;
   }
 
-  /**
-   * This method sets a project typology
-   *
-   * @param projectTypology
-   * @return project typology
-   */
-
-  public void setProjectTypology(ProjectTypology projectTypology) {
-    this.projectTypology = projectTypology;
-  }
-
-  /**
-   * This method sets a business sector
-   *
-   * @param businessSector
-   * @return business sector
-   */
-
-  public void setBusinessSector(BusinessSector businessSector) {
-    this.businessSector = businessSector;
-  }
-
-  /**
-   * This method sets a customer
-   *
-   * @param customer
-   * @return customer
-   */
-
-  public void setCustomer(Customer customer) {
-    this.customer = customer;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -83,7 +50,7 @@ public class Project {
     return Objects.equals(code, project.code) && Objects.equals(name, project.name) && Objects.equals(customer, project.customer) && Objects.equals(status, project.status) && Objects.equals(projectTypology, project.projectTypology) && Objects.equals(businessSector, project.businessSector);
   }
 
-  public String getCode() {
+  public String getProjectCode() {
     return this.code;
   }
 
@@ -105,10 +72,6 @@ public class Project {
 
   public BusinessSector getBusinessSector() {
     return this.businessSector;
-  }
-
-  public String getProjectCode() {
-    return code;
   }
 
 }

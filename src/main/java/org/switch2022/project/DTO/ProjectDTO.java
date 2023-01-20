@@ -16,4 +16,13 @@ public class ProjectDTO {
   public ProjectTypology projectTypology;
   public BusinessSector businessSector;
 
+  public ProjectDTO(String code, String name, Customer customer, ProjectTypology projectTypology,
+                    BusinessSector businessSector) {
+    this.code = code;
+    this.name = name;
+    this.customer = customer;
+    this.status = "planned";
+    this.projectTypology = projectTypology;
+    this.businessSector = businessSector;
+  }
 }

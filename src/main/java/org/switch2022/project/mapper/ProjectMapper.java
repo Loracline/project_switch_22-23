@@ -5,13 +5,8 @@ import org.switch2022.project.model.Project;
 
 public class ProjectMapper {
   public ProjectDTO toDTO(Project project) {
-    ProjectDTO projectDTO = new ProjectDTO();
-    projectDTO.code = project.getCode();
-    projectDTO.name = project.getName();
-    projectDTO.customer = project.getCustomer();
-    projectDTO.status = project.getStatus();
-    projectDTO.projectTypology = project.getProjectTypology();
-    projectDTO.businessSector = project.getBusinessSector();
+    ProjectDTO projectDTO = new ProjectDTO(project.getProjectCode(), project.getName(),
+            project.getCustomer(),project.getProjectTypology(),project.getBusinessSector());
     return projectDTO;
   }
 
