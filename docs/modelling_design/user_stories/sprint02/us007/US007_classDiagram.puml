@@ -13,7 +13,6 @@ title CREATE A NEW PROJECT TYPOLOGY
 "AccountContainer" --> "Account"
 
 class "Controller" {
--service
 +createProjectTypology(email, projectTypology)
 }
 class "Company" {
