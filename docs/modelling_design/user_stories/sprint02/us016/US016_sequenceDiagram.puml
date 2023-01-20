@@ -8,9 +8,9 @@ autonumber
 actor User
 participant ":ListAccountsInProjectUI" as ui
 participant ":ListAccountsInProjectController" as controller
-participant ":Service" as svc
 participant ":Company" as company
 participant ":AccountContainer" as container
+
 participant "account:Account" as acc
 participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
@@ -18,29 +18,35 @@ participant "Projects: List<Project>" as list
 participant ":ProjectMapper" as mapper
 participant "projectsDTO: List<ProjectDTO>" as listdto
 participant "projectDTO:ProjectDTO" as DTO
-participant "project:Project" as pp
+participant "profile:Profile" as pf
 
 activate User
 User -> ui: Lists all projects the user is allocated to
 activate ui
 ui -> controller: listProjectByAccount(email)
 activate controller
-activate svc
-controller -> svc: listProjectByAccount(email)
-svc -> company: validateUser(email)
+controller -> company: valideUser(email)
 activate company
-activate container
+
 company -> container: validateUser(email)
-container ->container: account= getAccountByEmail(email)
+activate container
 container -> acc: validateUser(email)
 activate acc
+acc -> pf: getProfileByName()
 acc-->container : true
 deactivate acc
 container--> company: true
-company--> svc:true
+deactivate container
+company --> controller: true
+deactivate company
+controller -> company: listProjectByAccount(email)
+activate company
+company -> container : listProjectByAccount(email)
+activate container
+container -> container : account= getAccountByEmail(email)
+container -> aipc : listProjectByAccount(account)
 activate aipc
-svc -> aipc: listProjectByAccount(account)
-deactivate svc
+
 create list
 aipc -> list :create()
 loop for each AccountInProject in AccountInProjectContainer
@@ -49,12 +55,15 @@ aip --> aipc : project
 aipc -> list : addProject(project)
 end loop
 aipc --> container : projects
-container--> company : projects
 deactivate aipc
+container --> company : projects
+deactivate container
+
 deactivate container
 
 company --> controller : projects
 deactivate company
+create mapper
 controller -> mapper: projectsToDTO(projects)
 deactivate company
 activate mapper
