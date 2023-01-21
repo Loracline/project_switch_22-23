@@ -1,12 +1,9 @@
 package org.switch2022.project.model;
 
-import org.switch2022.project.DTO.AllocationDTO;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.container.ProjectContainer;
+import org.switch2022.project.DTO.AccountInProjectDTO;
 import org.switch2022.project.DTO.ProjectDTO;
 import org.switch2022.project.container.*;
+
 import java.awt.image.BufferedImage;
 import java.util.List;
 
@@ -22,20 +19,22 @@ public class Company {
     private ProjectContainer projectContainer;
     private BusinessSectorContainer businessSectorContainer;
     private ProjectTypologyContainer projectTypologyContainer;
-
     private AccountInProjectContainer accountInProjectContainer;
 
     /**
      * Company constructor
      */
-    public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer
-            businessSectorContainer, ProjectContainer projectContainer, ProjectTypologyContainer projectTypologyContainer,
+    public Company(AccountContainer accountContainer, ProfileContainer profileContainer
+            , BusinessSectorContainer
+            businessSectorContainer, ProjectContainer projectContainer,
+                   ProjectTypologyContainer projectTypologyContainer,
                    AccountInProjectContainer accountInProjectContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
-        this.projectTypologyContainer= projectTypologyContainer;
+        this.projectTypologyContainer = projectTypologyContainer;
+        this.accountInProjectContainer = accountInProjectContainer;
     }
 
 
@@ -57,7 +56,8 @@ public class Company {
         return profileContainer.createProfile(name);
     }
 
-    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
+    public boolean registerAccount(String name, String email, long phoneNumber,
+                                   BufferedImage photo) {
         return accountContainer.addAccount(name, email, phoneNumber, photo);
     }
 
@@ -78,24 +78,25 @@ public class Company {
         return wasAccountProfileUpdated;
     }
 
-  /**
-   * This method registers projects
-   *
-   * @param projectDTO
-   * @param email
-   * @return true if project was registered and false if the project was not registered
-   */
-  public boolean registerProject(ProjectDTO projectDTO, String email) {
-    boolean projectRegistered = false;
-    if (accountContainer.validateManager(email)) {
-      if (projectContainer.registerProject(projectDTO)) {
-        projectRegistered = true;
-      } else {
-        projectRegistered = false;
-      }
+    /**
+     * This method registers projects
+     *
+     * @param projectDTO
+     * @param email
+     * @return true if project was registered and false if the project was not registered
+     */
+    public boolean registerProject(ProjectDTO projectDTO, String email) {
+        boolean projectRegistered = false;
+        if (accountContainer.validateManager(email)) {
+            if (projectContainer.registerProject(projectDTO)) {
+                projectRegistered = true;
+            } else {
+                projectRegistered = false;
+            }
+        }
+        return projectRegistered;
     }
-    return projectRegistered;
-  }
+
     /**
      * Method addBusinessSector
      *
@@ -114,16 +115,19 @@ public class Company {
         return projectContainer.listAccountsByProject(projectCode);
     }
 
-    public boolean validateUser(String email){
+    public boolean validateUser(String email) {
         return accountContainer.validateUser(email);
     }
+
     public boolean validateAdministrator(String email) {
         return accountContainer.validateAdministrator(email);
     }
-    public boolean createProjectTypology(String email, String projectTypology){
-        boolean projectTypologyCreated= false;
-        if(accountContainer.validateAdministrator(email)){
-            projectTypologyCreated = projectTypologyContainer.createProjectTypology(projectTypology);
+
+    public boolean createProjectTypology(String email, String projectTypology) {
+        boolean projectTypologyCreated = false;
+        if (accountContainer.validateAdministrator(email)) {
+            projectTypologyCreated =
+                    projectTypologyContainer.createProjectTypology(projectTypology);
         }
         return projectTypologyCreated;
     }
@@ -137,8 +141,13 @@ public class Company {
         return projectContainer.getProjectsList();
     }
 
-    public boolean addTeamMemberToProject(AllocationDTO allocationDTO) {
-        return this.accountInProjectContainer.addTeamMemberToProject(allocationDTO);
+    /**
+     * This method associates a user account to a project with a role
+     *
+     * @return true if user account is succesfully associated to a project
+     */
+    public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
+        return this.accountInProjectContainer.addUserToProject(accountInProjectDTO);
     }
 }
 

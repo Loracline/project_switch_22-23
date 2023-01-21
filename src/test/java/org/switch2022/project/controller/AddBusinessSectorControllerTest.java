@@ -95,12 +95,10 @@ class AddBusinessSectorControllerTest {
     projects.add(project);
     projectContainer = new ProjectContainer(projects);
 
-    accountInProject1 = new AccountInProject(accountOne, project,
+    accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
-    accountInProject2 = new AccountInProject(accountTwo, project,
+    accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
-    accountInProject1.setRole("team member");
-    accountInProject2.setRole("team member");
     accountsInProject = new ArrayList<>();
     accountsInProject.add(accountInProject1);
     accountsInProject.add(accountInProject2);

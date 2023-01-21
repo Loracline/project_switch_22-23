@@ -1,7 +1,7 @@
 @startuml
 
 skinparam sequenceMessageAlign center
-title TO DEFINE THE PRODCUT OWNER OF A PROJECT
+title TO DEFINE THE PRODUCT OWNER OF A PROJECT
 legend top
 US012 - As Manager, I want to define the Product Owner of a project
 end legend
@@ -25,7 +25,7 @@ class AccountInProject{
 -role
 -startDate
 -endDate
-+createAccountInProject(account, project, role)
++AccountInProject(account, project, costPerHour, percentageAllocation, startDate, role)
 }
 
 class AccountInProjectContainer{
@@ -37,7 +37,7 @@ class AllocationMapper {
 +addProductOwnerToProject(account, project...)
 }
 
-AddUserInProjectController --> Company
+DefineProductOwnerController --> Company
 Company "1"-->"1" AccountInProjectContainer: has
 AccountInProjectContainer "1"..>"1" AllocationMapper
 AllocationMapper "1"..> "*"AccountInProject: creates
