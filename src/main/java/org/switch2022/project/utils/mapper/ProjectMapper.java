@@ -1,12 +1,12 @@
-package org.switch2022.project.mapper;
+package org.switch2022.project.utils.mapper;
 
-import org.switch2022.project.DTO.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTO;
 import org.switch2022.project.model.Project;
 
 public class ProjectMapper {
 
   public ProjectDTO toDTO(Project project) {
-    ProjectDTO projectDTO = new ProjectDTO(project.getProjectCode(), project.getName(),
+    ProjectDTO projectDTO = new ProjectDTO(project.getProjectCode(), project.getProjectName(),
             project.getCustomer(),project.getProjectTypology(),project.getBusinessSector());
     return projectDTO;
   }

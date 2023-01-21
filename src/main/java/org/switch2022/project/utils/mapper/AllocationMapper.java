@@ -1,6 +1,6 @@
-package org.switch2022.project.mapper;
+package org.switch2022.project.utils.mapper;
 
-import org.switch2022.project.DTO.AllocationDTO;
+import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.model.Project;

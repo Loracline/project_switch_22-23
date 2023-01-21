@@ -1,12 +1,10 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.mapper.ProjectMapper;
-import org.switch2022.project.model.Account;
+import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.mapper.ProjectMapper;
 import org.switch2022.project.model.Project;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Class ProjectContainer is built to allow access to class Project.

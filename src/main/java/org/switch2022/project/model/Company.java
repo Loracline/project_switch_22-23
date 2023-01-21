@@ -1,13 +1,9 @@
 package org.switch2022.project.model;
 
-import org.switch2022.project.DTO.AllocationDTO;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.container.ProjectContainer;
-import org.switch2022.project.container.CustomerContainer;
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.container.*;
+import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.AllocationDTO;
+import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.model.container.ProjectContainer.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;

@@ -1,9 +1,10 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.DTO.AllocationDTO;
+import org.switch2022.project.model.container.AccountInProjectContainer;
+import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.model.*;
 
 import java.time.LocalDate;

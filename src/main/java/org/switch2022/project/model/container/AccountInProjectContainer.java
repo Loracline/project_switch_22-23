@@ -1,10 +1,10 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
-import org.switch2022.project.DTO.AllocationDTO;
-import org.switch2022.project.mapper.AllocationMapper;
+import org.switch2022.project.utils.dto.AllocationDTO;
+import org.switch2022.project.utils.mapper.AllocationMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
-import org.switch2022.project.model.Project;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.switch2022.project.DTO;
+package org.switch2022.project.utils.dto;
 
 import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.Customer;

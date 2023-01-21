@@ -1,10 +1,11 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.ProjectTypology;
+import org.switch2022.project.model.container.ProjectTypologyContainer;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;

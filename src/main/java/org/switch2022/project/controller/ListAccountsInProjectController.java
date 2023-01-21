@@ -1,7 +1,7 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.DTO.AccountDTO;
-import org.switch2022.project.mapper.AccountMapper;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.mapper.AccountMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Company;
 

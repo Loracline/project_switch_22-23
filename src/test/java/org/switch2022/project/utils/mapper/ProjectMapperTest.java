@@ -1,12 +1,13 @@
-package org.switch2022.project.mapper;
+package org.switch2022.project.utils.mapper;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.container.*;
+import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.ProjectDTO;
 import org.switch2022.project.controller.RegisterProjectController;
 import org.switch2022.project.model.*;
+import org.switch2022.project.utils.mapper.ProjectMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

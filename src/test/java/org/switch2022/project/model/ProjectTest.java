@@ -3,9 +3,6 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.ProjectContainer;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -65,14 +62,14 @@ public class ProjectTest {
   @Test
   void ensureProjectNameIsEqual() {
     String expected = "Aptoide";
-    String result = projectOne.getName();
+    String result = projectOne.getProjectName();
     assertEquals(expected, result);
   }
 
   @Test
   void ensureProjectNameIsNotEqual() {
     String expected = "Aptoido";
-    String result = projectOne.getName();
+    String result = projectOne.getProjectName();
     assertNotEquals(expected, result);
   }
 
@@ -93,14 +90,14 @@ public class ProjectTest {
   @Test
   void ensureStatusIsEqual() {
     String expected = "planned";
-    String result = projectOne.getStatus();
+    String result = projectOne.getProjectStatus();
     assertEquals(expected, result);
   }
 
   @Test
   void ensureStatusIsNotEqual() {
     String expected = "finished";
-    String result = projectOne.getStatus();
+    String result = projectOne.getProjectStatus();
     assertNotEquals(expected, result);
   }
 

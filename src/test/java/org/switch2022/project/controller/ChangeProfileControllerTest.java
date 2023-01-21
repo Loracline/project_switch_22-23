@@ -3,8 +3,8 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.container.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

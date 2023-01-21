@@ -1,4 +1,4 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Account;
 
@@ -94,7 +94,7 @@ public class AccountContainer {
     for (int i = 0; i < this.accounts.size(); i++) {
       if (accounts.get(i).checkAccountFromEmail(email)){
         Account account= accounts.get(i);
-        if (account.IsManager()){
+        if (account.isManager()){
           isManager=true;
         }
         }
@@ -106,7 +106,7 @@ public class AccountContainer {
     for (int i = 0; i < this.accounts.size(); i++) {
       if (accounts.get(i).checkAccountFromEmail(email)){
         Account account= accounts.get(i);
-        if (account.IsAdministrator()){
+        if (account.isAdministrator()){
           isAdministrator=true;
         }
       }
@@ -118,7 +118,7 @@ public class AccountContainer {
     for (int i = 0; i < this.accounts.size(); i++) {
       if (accounts.get(i).checkAccountFromEmail(email)){
         Account account= accounts.get(i);
-        if (account.IsUser()){
+        if (account.isUser()){
           isUser=true;
 
         }
