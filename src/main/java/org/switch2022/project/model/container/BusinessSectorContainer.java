@@ -5,68 +5,78 @@ import org.switch2022.project.model.BusinessSector;
 import java.util.List;
 
 /**
- * Class BusinessSectorContainer is built to allow access to class BusinessSector.
+ * Class BusinessSectorContainer is built to access and manipulate the set of
+ * business sectors of the projects of this company.
  */
 public class BusinessSectorContainer {
-  /**
-   * BussinessSectorContainer contains business sectors
-   */
-  private List<BusinessSector> businessSectors;
+    /**
+     * Attributes
+     */
+    private final List<BusinessSector> businessSectors;
 
-  public BusinessSectorContainer(List<BusinessSector> businessSectors) {
-    this.businessSectors = businessSectors;
-  }
-
-  /**
-   * This method validates if businessSector exits
-   *
-   * @param businessSector one must check
-   * @return true if businessSector exists in businessSectors
-   */
-  private boolean doesBusinessSectorExist(BusinessSector businessSector) {
-    return this.businessSectors.contains(businessSector);
-  }
-  /**
-   * This method creates businessSector  and adds it to businessSectors
-   *
-   * @param businessSectorName
-   * @return true if businessSector is added to list
-   */
-
-  public boolean createBusinessSector(String businessSectorName){
-    BusinessSector businessSector= new BusinessSector(businessSectorName);
-    boolean isAddedToList= false;
-    if(!doesBusinessSectorExist(businessSector)){
-      businessSectors.add(businessSector);
-      isAddedToList= true;
+    /**
+     * Constructor
+     */
+    public BusinessSectorContainer(List<BusinessSector> businessSectors) {
+        this.businessSectors = businessSectors;
     }
-    return isAddedToList;
-  }
 
-  /**
-   * This method returns a list of business sectors
-   *
-   * @return list
-   */
-  public List<BusinessSector> getBusinessSectors() {
-    return businessSectors;
-  }
-
-  /**
-   * This method returns a business sector from the list of business sectors
-   *
-   * @param businessSector
-   * @return business sector
-   */
-
-  public BusinessSector getBusinessSector(String businessSector) {
-    BusinessSector requestedBusinessSector = null;
-    for (int i = 0; i < businessSectors.size(); i++) {
-      if (businessSectors.get(i).equals(businessSector)) {
-        requestedBusinessSector = businessSectors.get(i);
-        break;
-      }
+    /**
+     * This method validates if business sector already exists in the container.
+     *
+     * @param businessSector one must check.
+     * @return TRUE if exists and FALSE otherwise.
+     */
+    private boolean doesBusinessSectorExist(BusinessSector businessSector) {
+        return this.businessSectors.contains(businessSector);
     }
-    return requestedBusinessSector;
-  }
+
+    /**
+     * This method creates a new business sector and adds it to the container
+     * if it doesn't already exist.
+     *
+     * @param businessSectorName one intend to add.
+     * @return TRUE if added and FALSE otherwise.
+     */
+    public boolean createBusinessSector(String businessSectorName) {
+        BusinessSector businessSector = new BusinessSector(businessSectorName);
+        boolean isAddedToList = false;
+        if (!doesBusinessSectorExist(businessSector)) {
+            businessSectors.add(businessSector);
+            isAddedToList = true;
+        }
+        return isAddedToList;
+    }
+
+    /**
+     * Getter method for the attribute: businessSectors.
+     *
+     * @return a list of all the business sectors in the container.
+     */
+    public List<BusinessSector> getBusinessSectors() {
+        return businessSectors;
+    }
+
+
+
+
+
+    /**
+     * This method returns a business sector from the list of business sectors
+     *
+     * @param businessSector
+     * @return business sector
+     */
+    public BusinessSector getBusinessSector(String businessSector) {
+        BusinessSector requestedBusinessSector = null;
+        int i = 0;
+        while (i < businessSectors.size()) {
+            if (businessSectors.get(i).equals(businessSector)) {
+                requestedBusinessSector = businessSectors.get(i);
+                break;
+            }
+            i++;
+        }
+        return requestedBusinessSector;
+    }
 }

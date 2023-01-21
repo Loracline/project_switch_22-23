@@ -4,104 +4,93 @@ import org.switch2022.project.model.Customer;
 
 import java.util.List;
 
+import static org.switch2022.project.utils.Helper.isLower;
+
 /**
- * Class CustomerContainer is built to allow access to class Customer.
+ * Class CustomerContainer is built to access and manipulate set of customers
+ * of the projects of this company.
  */
-
 public class CustomerContainer {
+    /**
+     * Attributes
+     */
+    private final List<Customer> customers;
 
-  /**
-   * CustomerContainer contains customers
-   */
-
-  private List<Customer> customers;
-
-  public CustomerContainer(List<Customer> customers) {
-    this.customers = customers;
-  }
-
-  /**
-   * This method returns a list of customers
-   *
-   * @return list
-   */
-  public List<Customer> getCustomers() {
-    return customers;
-  }
-
-  /**
-   * This method returns a customer from the list of customers
-   *
-   * @param customer
-   * @return customer
-   */
-
-  public Customer getCustomerSector(String customer) {
-    Customer requestedCustomer = null;
-    for (int i = 0; i < customers.size(); i++) {
-      if (customers.get(i).equals(customer)) {
-        requestedCustomer = customers.get(i);
-        break;
-      }
+    /**
+     * Constructor
+     */
+    public CustomerContainer(List<Customer> customers) {
+        this.customers = customers;
     }
-    return requestedCustomer;
-  }
 
-  /**
-   * Check if first is lower than second
-   *
-   * @param first  integer
-   * @param second integer
-   * @return True if first is lower than second, and False otherwise
-   */
-  public static boolean isLower(int first, int second) {
-    return first < second;
-  }
-
-  /**
-   * This method validates if customer exits
-   *
-   * @param customerName one must check
-   * @return true if customer exists in customers
-   */
-  private boolean doesCustomerExist(Customer customerName) {
-    return this.customers.contains(customerName);
-  }
-
-  /**
-   * This method creates customer and adds it to customers
-   *
-   * @param customerName one must add
-   */
-
-  public boolean addCustomer(String customerName) {
-    Customer newCustomer = new Customer(customerName);
-    boolean isAddedToList = false;
-    if (customerName != null && !customerName.isEmpty() && !doesCustomerExist(newCustomer)) {
-      customers.add(new Customer(customerName));
-      isAddedToList = true;
+    /**
+     * Getter method for the attribute: customers.
+     *
+     * @return list of all the customers in the container.
+     */
+    public List<Customer> getCustomers() {
+        return customers;
     }
-    return isAddedToList;
-  }
 
-  /**
-   * This method identifies the requested customer by indication of customerName
-   *
-   * @return an object Customer
-   */
-
-  public Customer getCustomerByName(String customerName) {
-    Customer customer = new Customer(customerName);
-    Customer requestedCustomer = null;
-    int i = 0;
-    while (isLower(i, this.customers.size())) {
-      if (this.customers.contains(customer)) {
-        requestedCustomer = customers.get(i);
-        break;
-      }
-      i++;
+    /**
+     * This method validates if customer already exists by checking the name.
+     *
+     * @param customerName of the intended costumer.
+     * @return TRUE if exists and FALSE otherwise.
+     */
+    private boolean doesCustomerExist(Customer customerName) {
+        return this.customers.contains(customerName);
     }
-    return requestedCustomer;
-  }
 
+    /**
+     * This method creates a new costumer and adds to the container if one
+     * doesn't already exist.
+     *
+     * @param customerName of the costumer to add.
+     * @return TRUE if costumer is added and FALSE otherwise.
+     */
+    public boolean addCustomer(String customerName) {
+        Customer newCustomer = new Customer(customerName);
+        boolean isAddedToList = false;
+        if (!customerName.isEmpty() && !doesCustomerExist(newCustomer)) {
+            customers.add(new Customer(customerName));
+            isAddedToList = true;
+        }
+        return isAddedToList;
+    }
+
+    /**
+     * This method searches for a customer with given name.
+     *
+     * @param customerName of the intended customer.
+     * @return costumer with given name.
+     */
+    public Customer getCustomerByName(String customerName) {
+        Customer customer = new Customer(customerName);
+        Customer requestedCustomer = null;
+        int i = 0;
+        while (isLower(i, this.customers.size())) {
+            if (this.customers.contains(customer)) {
+                requestedCustomer = customers.get(i);
+                break;
+            }
+            i++;
+        }
+        return requestedCustomer;
+    }
+
+
+
+    public Customer getCustomerSector(String customer) {
+        Customer requestedCustomer = null;
+        int i = 0;
+        while (i < customers.size()) {
+            if (customers.get(i).equals(customer)) {
+                requestedCustomer = customers.get(i);
+                break;
+            }
+            i++;
+        }
+        return requestedCustomer;
+    }
 }

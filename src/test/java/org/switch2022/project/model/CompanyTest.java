@@ -346,7 +346,7 @@ class CompanyTest {
 
   @Test
   void ensureAllProjectsAreListedSuccessfully() {
-    List<Project> expected = projectContainer.getProjectsList();
+    List<Project> expected = projectContainer.getProjects();
 
     // Act
     List<Project> result = company.getListAllProjects();

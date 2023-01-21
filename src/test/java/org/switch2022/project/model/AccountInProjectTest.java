@@ -20,6 +20,10 @@ public class AccountInProjectTest {
     LocalDate startDate;
     AccountInProject accountInProject;
 
+    /**
+     * BeforeEach and AfterEach execute common code before/after running the
+     * tests below.
+     */
     @BeforeEach
     void setUp() {
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
@@ -30,7 +34,7 @@ public class AccountInProjectTest {
                 businessSector);
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
-        startDate = LocalDate.of(2023,01,19);
+        startDate = LocalDate.of(2023, 1, 19);
         accountInProject = new AccountInProject(account, project,
                 costPerHour, percentageAllocation, startDate);
         accountInProject.setRole("team member");
@@ -46,7 +50,68 @@ public class AccountInProjectTest {
         accountInProject = null;
     }
 
+    /**
+     * Testing the equals() method.
+     */
+    @Test
+    void ensureSameAccountInProjectEqualsItself() {
+        // Arrange
+        AccountInProject clone = accountInProject;
+        boolean expected = true;
+        // Act
+        boolean result = accountInProject.equals(clone);
+        // Assert
+        assertEquals(expected, result);
+    }
 
+    @Test
+    void ensureTwoAccountsInProjectAreEqual() {
+        // Arrange
+        AccountInProject copy = new AccountInProject(account, project,
+                costPerHour, percentageAllocation, startDate);
+        copy.setRole("team member");
+        boolean expected = true;
+        // Act
+        boolean result = accountInProject.equals(copy);
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureTwoAccountsInProjectAreDifferent() {
+        // Arrange
+        accountInProject.setRole("team member");
+        AccountInProject other = new AccountInProject(account, project,
+                costPerHour, percentageAllocation, startDate);
+        other.setRole("product owner");
+        boolean expected = false;
+        // Act
+        boolean result = accountInProject.equals(other);
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureAccountInProjectDoesNotEqualsNull() {
+        // Assert
+        assertNotNull(accountInProject);
+    }
+
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
+    @Test
+    void ensureAccountInProjectDoesNotEqualOtherTypeOfObject() {
+        // Arrange
+        boolean expected = false;
+        // Act
+        boolean result = accountInProject.equals(account);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Testing if role is set to the account in project.
+     */
     @Test
     void ensureThatTeamMemberIsAdded() {
         //Arrange
@@ -105,60 +170,5 @@ public class AccountInProjectTest {
 
         //Assert
         assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureSameAccountInProjectEqualsItself() {
-        // Arrange
-        AccountInProject clone = accountInProject;
-        boolean expected = true;
-        // Act
-        boolean result = accountInProject.equals(clone);
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureTwoAccountsInProjectAreEqual() {
-        // Arrange
-        AccountInProject copy = new AccountInProject(account, project,
-                costPerHour, percentageAllocation, startDate);
-        copy.setRole("team member");
-        boolean expected = true;
-        // Act
-        boolean result = accountInProject.equals(copy);
-        // Assert
-        assertEquals(expected,result);
-    }
-
-    @Test
-    void ensureTwoAccountsInProjectAreDifferent() {
-        // Arrange
-        accountInProject.setRole("team member");
-        AccountInProject other = new AccountInProject(account, project,
-                costPerHour, percentageAllocation, startDate);
-        other.setRole("product owner");
-        boolean expected = false;
-        // Act
-        boolean result = accountInProject.equals(other);
-        // Assert
-        assertEquals(expected,result);
-    }
-
-    @Test
-    void ensureAccountInProjectDoesNotEqualsNull() {
-        // Assert
-        assertNotNull(accountInProject);
-    }
-
-    @Test
-    void ensureAccountInProjectDoesNotEqualOtherTypeOfObject() {
-        // Arrange
-        boolean expected = false;
-        // Act
-        boolean result = accountInProject.equals(account);
-
-        // Assert
-        assertEquals(expected,result);
     }
 }

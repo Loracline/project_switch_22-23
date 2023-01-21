@@ -3,37 +3,42 @@ package org.switch2022.project.model.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.container.ProfileContainer;
 import org.switch2022.project.model.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class ProfileContainerTest {
-
     /**
-     * BeforeEach and AfterEach executes common code before/after running the tests below.
+     * BeforeEach and AfterEach executes common code before/after running the
+     * tests below.
      */
-
     Profile profileOne, profileTwo;
     List<Profile> profiles;
     ProfileContainer profileContainerReference;
 
-
     @BeforeEach
     void setUp() {
-
+        /*
+          Profiles created.
+         */
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("User");
 
+        /*
+          Container of profiles created.
+         */
         profiles = new ArrayList<>();
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
-
         profileContainerReference = new ProfileContainer(profiles);
 
+        /*
+          Profiles added to the Container.
+         */
+        profiles.add(profileOne);
+        profiles.add(profileTwo);
     }
 
     @AfterEach
@@ -42,12 +47,13 @@ class ProfileContainerTest {
         profileTwo = null;
         profiles.clear();
         profileContainerReference = null;
-
     }
 
-
+    /**
+     * Testing if profile is created and added to the container.
+     */
     @Test
-    void ensureProfileIsntAddedSuccessfully_CaseInsensitive() {
+    void ensureProfileIsNotAddedSuccessfully_CaseInsensitive() {
         //Arrange
         boolean expected = false;
         //Act
@@ -55,7 +61,6 @@ class ProfileContainerTest {
         //Assert
         assertEquals(expected, result);
     }
-
 
     @Test
     void ensureAddProfileToProfilesListSuccessfully() {
@@ -79,6 +84,9 @@ class ProfileContainerTest {
 
     }
 
+    /**
+     * Testing if intended profile is retrieved by giving name.
+     */
     @Test
     void ensureProfileIsRetrievedSuccessfully() {
         //ARRANGE
@@ -99,20 +107,5 @@ class ProfileContainerTest {
 
         //ASSERT
         assertNull(result);
-    }
-
-    @Test
-    void ensureFirstIndexIsLowerThanSecond() {
-        assertTrue(ProfileContainer.isLower(1,2));
-    }
-
-    @Test
-    void ensureSecondIndexIsNotLowerThanFirst() {
-        assertFalse(ProfileContainer.isLower(2,1));
-    }
-
-    @Test
-    void ensureSecondIndexIsNotLowerThanSecond() {
-        assertFalse(ProfileContainer.isLower(2,2));
     }
 }

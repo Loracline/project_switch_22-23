@@ -1,32 +1,27 @@
 package org.switch2022.project.model;
 
-
 import java.time.LocalDate;
-import java.util.NoSuchElementException;
 
 /**
- * Class AccountInProject is built to associate a certain account with a specific role to a project.
- * An accountInProject is defined by an account, a project and a role.
+ * Class AccountInProject is built to associate a certain account with a
+ * specific role to a project.
+ * An account in project is defined by account, project, role, cost per hour,
+ * percentage of allocation, start and end date.
  */
 public class AccountInProject {
     /**
-     * Attributes of the class AccountInProject, according to the Class Diagram.
+     * Attributes
      */
-    private Account account;
-    private Project project;
+    private final Account account;
+    private final Project project;
+    private final float costPerHour;
+    private final float percentageAllocation;
+    private final LocalDate startDate;
     private String role;
-    private float costPerHour;
-    private float percentageAllocation;
-    private LocalDate startDate;
     private String endDate;
 
-
     /**
-     * Constructor of the class AccountInProject.
-     * New instance is created using as parameter the essential attributes.
-     *
-     * @param account of the new account
-     * @param project of the new account
+     * Constructor
      */
     public AccountInProject(Account account, Project project, float costPerHour,
                             float percentageAllocation, LocalDate startDate) {
@@ -37,18 +32,31 @@ public class AccountInProject {
         this.startDate = startDate;
     }
 
+    /**
+     * This method checks if two instances of AccountInProject are equal by
+     * comparing their attributes.
+     *
+     * @param toCompare AccountInProject instance to compare with
+     * @return TRUE if the two have the same attributes, and FALSE otherwise
+     */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (toCompare == null || getClass() != toCompare.getClass()) {
             return false;
         }
-        AccountInProject that = (AccountInProject) o;
+        AccountInProject that = (AccountInProject) toCompare;
         return account.equals(that.account) && project.equals(that.project) && role.equals(that.role) && startDate.isEqual(that.startDate);
     }
 
+    /**
+     * Setter method for the attribute: role.
+     *
+     * @param role of the account in designed project.
+     * @return TRUE if role is set and FALSE otherwise.
+     */
     public boolean setRole(String role) {
         switch (role) {
             case "team member":
@@ -67,6 +75,10 @@ public class AccountInProject {
                 return false;
         }
     }
+
+
+
+
 
     /**
      * This method returns an Account Allocated To a Project.

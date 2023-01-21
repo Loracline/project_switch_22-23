@@ -3,25 +3,27 @@ package org.switch2022.project.model;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
-import org.switch2022.project.model.container.ProjectContainer.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
- * Class Company is built to create and manipulate AccountContainer and ProfileContainer.
+ * Class Company is built to create and manipulate the containers.
+ * Containers: Accounts, Profiles, Projects, Business Sectors, Project Typologies,
+ * Customers and Accounts in Projects.
+ *
  */
 public class Company {
     /**
-     * Attributes of the class Company, according to the Class Diagram.
+     * Attributes
      */
-    private AccountContainer accountContainer;
-    private ProfileContainer profileContainer;
-    private ProjectContainer projectContainer;
-    private BusinessSectorContainer businessSectorContainer;
-    private ProjectTypologyContainer projectTypologyContainer;
-    private AccountInProjectContainer accountInProjectContainer;
-    private CustomerContainer customerContainer;
+    private final AccountContainer accountContainer;
+    private final ProfileContainer profileContainer;
+    private final ProjectContainer projectContainer;
+    private final BusinessSectorContainer businessSectorContainer;
+    private final ProjectTypologyContainer projectTypologyContainer;
+    private final AccountInProjectContainer accountInProjectContainer;
+    private final CustomerContainer customerContainer;
 
     /**
      * Company constructor
@@ -35,6 +37,7 @@ public class Company {
         this.businessSectorContainer = businessSectorContainer;
         this.projectTypologyContainer = projectTypologyContainer;
         this.customerContainer = customerContainer;
+        this.accountInProjectContainer = accountInProjectContainer;
     }
 
 
@@ -100,7 +103,6 @@ public class Company {
      * Method addBusinessSector
      *
      * @return true if businessSector is created
-     * @return false if businessSector isn't created successfully
      */
     public boolean addBusinessSector(String businessSector) {
         return businessSectorContainer.createBusinessSector(businessSector);
@@ -141,7 +143,7 @@ public class Company {
      * @return list of projects
      */
     public List<Project> getListAllProjects() {
-        return projectContainer.getProjectsList();
+        return projectContainer.getProjects();
     }
 
     public boolean addTeamMemberToProject(AllocationDTO allocationDTO) {
@@ -164,7 +166,6 @@ public class Company {
      * Method addCustomer
      *
      * @return true if customer is added
-     * @return false if customer isn't added successfully
      */
     public boolean addCustomer (String customerName){
         return customerContainer.addCustomer(customerName);
