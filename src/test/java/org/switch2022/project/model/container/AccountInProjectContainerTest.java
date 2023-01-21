@@ -3,9 +3,13 @@ package org.switch2022.project.model.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.utils.dto.*;
+import org.switch2022.project.model.AccountInProject;
+import org.switch2022.project.model.BusinessSector;
+import org.switch2022.project.model.Customer;
+import org.switch2022.project.model.ProjectTypology;
+import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AccountInProjectDTO;
-import org.switch2022.project.model.*;
+import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AccountInProjectContainerTest {
+    /**
+     * BeforeEach and AfterEach executes common code before/after running the
+     * tests below.
+     */
     AccountDTO accountDTO, accountDTO2;
     ProjectDTO projectDTO;
     AccountInProjectDTO accountInProjectDTOPO, accountInProjectDTOInvalid;
@@ -23,7 +31,7 @@ class AccountInProjectContainerTest {
 
     @BeforeEach
     void setUp() {
-        //set up accounts
+        // AccountDTOs created.
         accountDTO = new AccountDTO();
         accountDTO.name = "John";
         accountDTO.email = "john@isep.ipp.pt";
@@ -36,16 +44,14 @@ class AccountInProjectContainerTest {
         accountDTO2.phoneNumber = 912345679;
         accountDTO2.photo = null;
 
-        //set up projects
+        // ProjectDTO created.
         Customer customer = new Customer("IT Customer");
         ProjectTypology projectTypology = new ProjectTypology("fixed cost");
         BusinessSector businessSector = new BusinessSector("IT Sector");
-        projectDTO = new ProjectDTO("id001","Test",customer,projectTypology, businessSector);
+        projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
 
-        //set up accounts in project list
+        // Container of accounts in project created.
         accountsInProject = new ArrayList<>();
-
-        //set up account in project container
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
     }
 
@@ -59,6 +65,9 @@ class AccountInProjectContainerTest {
         accountInProjectContainer = null;
     }
 
+    /**
+     * Testing if one is able to add account to project with valid role.
+     */
     @Test
     void ensureThatProductOwnerIsAddedToAccountsInProjects() {
         //Assert
@@ -68,11 +77,10 @@ class AccountInProjectContainerTest {
         accountInProjectDTOPO.role = "Product Owner";
         accountInProjectDTOPO.costPerHour = 7.5f;
         accountInProjectDTOPO.percentageAllocation = 45.0f;
-        accountInProjectDTOPO.startDate = LocalDate.of(2023, 01, 19);
-        accountInProjectDTOPO.endDate = LocalDate.of(2023, 01, 22);
+        accountInProjectDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        accountInProjectDTOPO.endDate = LocalDate.of(2023, 1, 22);
         //Act
-        boolean result =
-                accountInProjectContainer.addUserToProject(accountInProjectDTOPO);
+        boolean result = accountInProjectContainer.addUserToProject(accountInProjectDTOPO);
         //Assert
         assertTrue(result);
     }
@@ -86,17 +94,21 @@ class AccountInProjectContainerTest {
         accountInProjectDTOInvalid.role = "Product Visionary";
         accountInProjectDTOInvalid.costPerHour = 7.5f;
         accountInProjectDTOInvalid.percentageAllocation = 45.0f;
-        accountInProjectDTOInvalid.startDate = LocalDate.of(2023, 01, 15);
-        accountInProjectDTOInvalid.endDate = LocalDate.of(2023, 01, 22);
+        accountInProjectDTOInvalid.startDate = LocalDate.of(2023, 1, 15);
+        accountInProjectDTOInvalid.endDate = LocalDate.of(2023, 1, 22);
         //Act
-        boolean result =
-                accountInProjectContainer.addUserToProject(accountInProjectDTOInvalid);
+        boolean result = accountInProjectContainer.addUserToProject(accountInProjectDTOInvalid);
         //Assert
         assertFalse(result);
     }
 
 
-    /*@Test
+
+
+
+
+    /*
+    @Test
     void ensureThatTeamMemberIsAddedToAccountsInProjects() {
         // Arrange
         AccountInProjectDTO dto = new AccountInProjectDTO();

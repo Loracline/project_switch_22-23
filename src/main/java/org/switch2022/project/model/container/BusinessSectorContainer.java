@@ -1,6 +1,7 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.BusinessSector;
+import org.switch2022.project.utils.Helper;
 
 import java.util.List;
 
@@ -57,21 +58,17 @@ public class BusinessSectorContainer {
         return businessSectors;
     }
 
-
-
-
-
     /**
-     * This method returns a business sector from the list of business sectors
+     * This method searches for a business sector with given name.
      *
-     * @param businessSector
-     * @return business sector
+     * @param businessSectorName of the business sector.
+     * @return the intended business sector.
      */
-    public BusinessSector getBusinessSector(String businessSector) {
+    public BusinessSector getBusinessSectorByName(String businessSectorName) {
         BusinessSector requestedBusinessSector = null;
         int i = 0;
-        while (i < businessSectors.size()) {
-            if (businessSectors.get(i).equals(businessSector)) {
+        while (Helper.isLower(i, businessSectors.size())) {
+            if (businessSectors.get(i).getBusinessSectorName().equalsIgnoreCase(businessSectorName)) {
                 requestedBusinessSector = businessSectors.get(i);
                 break;
             }

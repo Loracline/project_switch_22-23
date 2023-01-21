@@ -78,19 +78,4 @@ public class CustomerContainer {
         }
         return requestedCustomer;
     }
-
-
-
-    public Customer getCustomerSector(String customer) {
-        Customer requestedCustomer = null;
-        int i = 0;
-        while (i < customers.size()) {
-            if (customers.get(i).equals(customer)) {
-                requestedCustomer = customers.get(i);
-                break;
-            }
-            i++;
-        }
-        return requestedCustomer;
-    }
 }

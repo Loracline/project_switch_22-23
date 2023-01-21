@@ -1,51 +1,42 @@
 package org.switch2022.project.model;
 
-
 import java.time.LocalDate;
-import java.util.NoSuchElementException;
+
 /**
- * Class AccountInProject is built to associate a certain account with a specific role
- * to a specific project.
- * An accountInProject is defined by an account, a project, a role, a cost per hour, a
- * percentage of allocation, a start date and an end date.
+ * Class AccountInProject is built to associate a certain account with a role to
+ * a specific project.
+ * An accountInProject is defined by an account, project, role, cost per hour,
+ * percentage of allocation, start and end date.
  */
 public class AccountInProject {
-    private final static String PRODUCT_OWNER = "Product Owner";
-    private final static String SCRUM_MASTER = "Scrum Master";
-    private final static String TEAM_MEMBER = "Team Member";
     /**
-     * Attributes of the class AccountInProject, according to the Class Diagram.
+     * Attributes
      */
-    private Account account;
-    private Project project;
-    private String role;
+    private final Account account;
+    private final Project project;
+    private final String role;
+    private final LocalDate startDate;
     private float costPerHour;
     private float percentageAllocation;
-    private LocalDate startDate;
     private LocalDate endDate;
 
-
     /**
-     * Constructor of the class AccountInProject.
-     * New instance is created using as parameter the essential attributes.
-     *
-     * @param account of the new account
-     * @param project of the new account
+     * Constructor
      */
     public AccountInProject(Account account, Project project, String role,
                             float costPerHour,
                             float percentageAllocation, LocalDate startDate) {
         this.account = account;
         this.project = project;
-        this.role = role;
+        this.role = role.toLowerCase();
         this.costPerHour = costPerHour;
         this.percentageAllocation = percentageAllocation;
         this.startDate = startDate;
     }
 
     /**
-     * Method that checks if two instances of AccountInProject are equal by comparing
-     * the account, project, role and startDate attributes.
+     * Method that checks if two instances of AccountInProject are equal by
+     * comparing the account, project, role and startDate attributes.
      *
      * @param objectToCompare AccountInProject instance to compare with
      * @return TRUE if two instances of AccountInProject have the same account,
@@ -64,20 +55,29 @@ public class AccountInProject {
     }
 
     /**
-     * Method that verifies if the role is valid.
+     * This method validates the role of the instance of AccountInProject class.
      *
-     * @return TRUE if role is valid, and FALSE otherwise
+     * @return TRUE if is a valid role, and FALSE otherwise.
      */
     public boolean isRoleValid() {
+        final String PRODUCT_OWNER = "product owner";
+        final String SCRUM_MASTER = "scrum master";
+        final String TEAM_MEMBER = "team member";
+        final String PROJECT_MANAGER = "project manager";
         switch (this.role) {
             case TEAM_MEMBER:
             case PRODUCT_OWNER:
             case SCRUM_MASTER:
+            case PROJECT_MANAGER:
                 return true;
             default:
                 return false;
         }
     }
+
+
+
+
 
     /**
      * This method returns an Account Allocated To a Project.
@@ -99,7 +99,7 @@ public class AccountInProject {
      * @param projectCode one must check.
      * @return TRUE if there is an account allocated to a Project and FALSE otherwise.
      */
-    private boolean isAccountAllocatedToProject(String projectCode) {
+    public boolean isAccountAllocatedToProject(String projectCode) {
         boolean isAllocated = false;
         if (this.project.getProjectCode().equals(projectCode)) {
             isAllocated = true;

@@ -15,54 +15,55 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * BeforeEach and AfterEach executes common code before/after running the tests below.
+ * BeforeEach and AfterEach executes common code before/after running the tests
+ * below.
  */
 
 public class ProjectContainerTest {
 
-  Project projectOne, projectTwo;
-  List<Project> projects;
-  ProjectContainer projectContainer;
-  ProjectTypology projectTypology;
-  Customer customer;
-  BusinessSector businessSector;
-  ProjectDTO projectOneDTO, projectTwoDTO;
+    Project projectOne, projectTwo;
+    List<Project> projects;
+    ProjectContainer projectContainer;
+    ProjectTypology projectTypology;
+    Customer customer;
+    BusinessSector businessSector;
+    ProjectDTO projectOneDTO, projectTwoDTO;
 
 
-  @BeforeEach
-  void setUp() {
-    //typologies = new ArrayList<>();
-    projectTypology = new ProjectTypology("Fixed cost");
+    @BeforeEach
+    void setUp() {
+        //typologies = new ArrayList<>();
+        projectTypology = new ProjectTypology("Fixed cost");
 
-    customer = new Customer("John");
+        customer = new Customer("John");
 
-    businessSector = new BusinessSector("Hunting");
+        businessSector = new BusinessSector("Hunting");
 
-    projectOne = new Project("AA001", "Aptoide", customer,
-            projectTypology, businessSector);
-    projectTwo = new Project("AA002", "Aptoide", customer, projectTypology,
-            businessSector);
-    projects = new ArrayList<>();
-    projects.add(projectOne);
-    projects.add(projectTwo);
-    projectContainer = new ProjectContainer(projects);
-    projectOneDTO = new ProjectDTO("AA001", "Aptoide", customer,
-            projectTypology, businessSector);
-    projectTwoDTO = new ProjectDTO("AA003", "Aptoide", customer,
-            projectTypology, businessSector);
+        projectOne = new Project("AA001", "Aptoide", customer,
+                projectTypology, businessSector);
+        projectTwo = new Project("AA002", "Aptoide", customer, projectTypology,
+                businessSector);
+        projects = new ArrayList<>();
+        projects.add(projectOne);
+        projects.add(projectTwo);
+        projectContainer = new ProjectContainer(projects);
+        projectOneDTO = new ProjectDTO("AA001", "Aptoide", customer,
+                projectTypology, businessSector);
+        projectTwoDTO = new ProjectDTO("AA003", "Aptoide", customer,
+                projectTypology, businessSector);
 
-  }
+    }
 
-  @AfterEach
-  void tearDown() {
-    projectOne = null;
-    projectTwo = null;
-    projectOneDTO = null;
-    projectTwoDTO = null;
-    projectTypology = null;
-    customer = null;
-    businessSector = null;
-  }
+    @AfterEach
+    void tearDown() {
+        projectOne = null;
+        projectTwo = null;
+        projectOneDTO = null;
+        projectTwoDTO = null;
+        projectTypology = null;
+        customer = null;
+        businessSector = null;
+    }
 
     /**
      * Testing if one is able to register a new project and add it to the

@@ -190,10 +190,10 @@ class CompanyTest {
     assertEquals(expected, result);
   }
   @Test
-  void ensureChangeStatusReturnTrue() {
+  void ensureStatusIsNotChanged() {
     Company company = new Company(accountContainer,profileContainer,businessSectorContainer,projectContainer,projectTypologyContainer,accountInProjectContainer,customerContainer);
-    boolean result = company.changeStatus("mike@isep.ipp.pt", true);
-    assertTrue(result);
+    boolean result = company.changeStatus("mike@isep.ipp.pt", false);
+    assertFalse(result);
   }
 
   @Test

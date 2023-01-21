@@ -20,6 +20,15 @@ public class BusinessSector {
     }
 
     /**
+     * Getter method for the attribute: businessSectorName.
+     *
+     * @return the name of the business sector.
+     */
+    public String getBusinessSectorName() {
+        return businessSectorName;
+    }
+
+    /**
      * This method checks if two instances of BusinessSector are equal by
      * comparing its names.
      *

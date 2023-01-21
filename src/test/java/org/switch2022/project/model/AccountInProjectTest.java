@@ -21,6 +21,9 @@ public class AccountInProjectTest {
 
     @BeforeEach
     void setUp() {
+        /*
+          Account in project created.
+         */
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
         customer = new Customer("IT Customer");
         projectTypology = new ProjectTypology("fixed cost");
@@ -29,7 +32,7 @@ public class AccountInProjectTest {
                 businessSector);
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
-        startDate = LocalDate.of(2023, 01, 19);
+        startDate = LocalDate.of(2023, 1, 19);
         accountInProject = new AccountInProject(account, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
     }
@@ -44,6 +47,9 @@ public class AccountInProjectTest {
         accountInProject = null;
     }
 
+    /**
+     * Testing the equals() method.
+     */
     @Test
     void ensureSameAccountInProjectEqualsItself() {
         // Arrange
@@ -85,6 +91,7 @@ public class AccountInProjectTest {
         assertNotNull(accountInProject);
     }
 
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     void ensureAccountInProjectDoesNotEqualOtherTypeOfObject() {
         // Arrange
@@ -96,6 +103,9 @@ public class AccountInProjectTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Testing if one is able to validate the role of the account in project.
+     */
     @Test
     void ensureProductOwnerIsAValidRole() {
         //Arrange
@@ -130,10 +140,21 @@ public class AccountInProjectTest {
     }
 
     @Test
+    void ensureProjectManagerIsAValidRole() {
+        //Arrange
+        AccountInProject accountInProject = new AccountInProject(account, project,
+                "Project Manager", costPerHour, percentageAllocation, startDate);
+        //Act
+        boolean result = accountInProject.isRoleValid();
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
     void ensureAnyOtherRoleIsInvalid() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
-                "Product Visionary",costPerHour,percentageAllocation,startDate);
+                "Product Visionary", costPerHour, percentageAllocation, startDate);
         //Act
         boolean result = accountInProject.isRoleValid();
         //Assert
