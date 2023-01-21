@@ -3,15 +3,15 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.ProjectDTO;
-import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RegisterProjectControllerTest {
 
@@ -26,26 +26,23 @@ class RegisterProjectControllerTest {
   LocalDate startDate;
   ProjectTypology projectTypologyOne, projectTypologyTwo, projectTypology;
   Project projectOne, projectTwo, projectThree;
+  BusinessSector businessSectorOne, businessSectorTwo;
+  ProjectDTO projectOneDTO, projectTwoDTO;
+  Customer customerOne, customerTwo, customerThree;
+  AccountInProject accountInProject;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
   List<ProjectTypology> typologies;
-  BusinessSector businessSector;
   List<BusinessSector> businessSectors;
+  List<Customer> customers;
+  List<AccountInProject> accountsInProject;
   BusinessSectorContainer businessSectorContainer;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   ProjectTypologyContainer projectTypologyContainer;
   ProjectContainer projectContainer;
-  ProjectDTO projectOneDTO, projectTwoDTO;
-  Customer customerOne, customerTwo;
   CustomerContainer customerContainer;
-  List<Customer> customers;
-
-  AccountInProject accountInProject;
-
-  List<AccountInProject> accountsInProject;
-
   AccountInProjectContainer accountInProjectContainer;
   Company company;
   RegisterProjectController registerProjectController;
@@ -69,10 +66,11 @@ class RegisterProjectControllerTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    businessSector = new BusinessSector("fishing");
+    businessSectorOne = new BusinessSector("fishing");
+    businessSectorTwo = new BusinessSector("Hunting");
     businessSectors = new ArrayList<>();
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
+    businessSectors.add(businessSectorOne);
 
     projectTypologyOne = new ProjectTypology("Fixed Cost");
     projectTypologyTwo = new ProjectTypology("Fixed time and materials");
@@ -84,17 +82,16 @@ class RegisterProjectControllerTest {
 
     customerOne = new Customer("ISEP");
     customerTwo = new Customer("PortoTech");
-
+    customerThree = new Customer("John");
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer(customers);
     customers.add(customerOne);
     customers.add(customerTwo);
 
-    projectTypology = new ProjectTypology("fixed cost");
-    businessSector = new BusinessSector("IT Sector");
+    businessSectorOne = new BusinessSector("IT Sector");
     costPerHour = 7.5f;
     percentageAllocation = 45.0f;
-    startDate = LocalDate.of(2023,01,19);
+    startDate = LocalDate.of(2023, 01, 19);
     accountInProject = new AccountInProject(accountOne, projectOne,
             costPerHour, percentageAllocation, startDate);
     accountInProject.setRole("team member");
@@ -103,18 +100,18 @@ class RegisterProjectControllerTest {
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
     projectOne = new Project("AA001", "software development management", customerOne, projectTypologyOne,
-            businessSector);
-    projectTwo = new Project("AA002", "project software", customerTwo, projectTypologyTwo, businessSector);
-    projectThree = new Project("AA003", "motor software", customerTwo, projectTypologyTwo, businessSector);
+            businessSectorOne);
+    projectTwo = new Project("AA002", "project software", customerTwo, projectTypologyTwo, businessSectorOne);
+    projectThree = new Project("AA003", "motor software", customerTwo, projectTypologyTwo, businessSectorOne);
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
     projectContainer = new ProjectContainer(projects);
 
-    projectOneDTO = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    projectOneDTO = new ProjectDTO("AA001", "Aptoide", customerThree,
+            projectTypologyOne, businessSectorTwo);
+    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", customerThree,
+            projectTypologyOne, businessSectorTwo);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
             projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
@@ -134,7 +131,7 @@ class RegisterProjectControllerTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector = null;
+    businessSectorOne = null;
     businessSectors.clear();
     businessSectorContainer = null;
     projectTypologyOne = null;
