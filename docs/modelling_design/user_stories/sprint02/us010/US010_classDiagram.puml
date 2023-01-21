@@ -8,20 +8,15 @@ end legend
 
 class RegisterProjectController {
 - service
-+ registerProject(DTO, email)
++ registerProject(dto, email)
 }
 
-class Service {
--company
-+registerProject(DTO, email)
-
-}
 
 class Company {
 - projectContainer
 - accountContainer
 + validateManager(email)
-+ registerProject (DTO)
++ registerProject(dto)
 }
 class AccountContainer {
 + validateManager(email)
@@ -39,39 +34,42 @@ class Profile {
 
 class ProjectContainer {
 - projects
-+ registerProject(DTO)
++ registerProject(dto)
 }
 
 class ProjectMapper{
-+ createProject(DTO)
++ toDTO(project)
++ fromDTO(projectDTO)
 }
 
 class ProjectDTO{
 + code
 + name
-+ customer
 + status
-+ startDate
-+ endDate
++ customer
++ projectTypology
++ businessSector
 }
 
 class Project{
 - code
 - name
-- customer
 - status
-- startDate
-- endDate
-
+- customer
+- projectTypology
+- businessSector
 }
 
-RegisterProjectController --> Service
-Service "1"-->"1" Company: has
+RegisterProjectController "1"-->"1" Company: has
 Company "1"-->"1" ProjectContainer: has
 Company "1"-->"1" AccountContainer: has
 AccountContainer "1"-->"*" Account: contains
-ProjectContainer "1"-->"*" Project: contains
 Account "1"-->"1" Profile: has
 ProjectMapper ..> ProjectDTO
 ProjectContainer ..> ProjectMapper
+RegisterProjectController ..> ProjectMapper
+Company ..> ProjectDTO
+ProjectContainer..> ProjectDTO
+ProjectMapper ..> Project
+ProjectContainer "1" -left-> "*" Project: contains
 @enduml
