@@ -38,11 +38,11 @@ public class ProjectTest {
   }
 
   @Test
-  void ensureTwoProjectsAreNotEqual() {
-    Project projectTwo = projectOne;
+  void ensureObjectsAreFromDifferentClasses() {
+    Object projectObject = new Object();
     boolean expected = false;
-    boolean result = projectOne.equals(projectTwo);
-    assertNotEquals(expected, result);
+    boolean result = projectOne.equals(projectObject);
+    assertEquals(expected, result);
   }
 
   @Test

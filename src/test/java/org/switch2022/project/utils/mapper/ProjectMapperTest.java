@@ -3,11 +3,10 @@ package org.switch2022.project.utils.mapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ProjectDTO;
 import org.switch2022.project.controller.RegisterProjectController;
 import org.switch2022.project.model.*;
-import org.switch2022.project.utils.mapper.ProjectMapper;
+import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,36 +23,31 @@ class ProjectMapperTest {
 
   Account accountOne, accountTwo, accountThree;
   Profile profileOne, profileTwo, profileThree;
+  ProjectTypology projectTypologyOne, projectTypologyTwo, projectTypology;
+  Project projectOne, projectTwo, projectThree;
+  BusinessSector businessSectorOne, businessSectorTwo;
+  Customer customerOne, customerTwo;
+  ProjectDTO projectOneDTO, projectTwoDTO;
+  AccountInProject accountInProject;
   float costPerHour;
   float percentageAllocation;
   LocalDate startDate;
-  ProjectTypology projectTypologyOne, projectTypologyTwo, projectTypology;
-  Project projectOne, projectTwo, projectThree;
-  Customer customer;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
   List<ProjectTypology> typologies;
-  BusinessSector businessSector;
   List<BusinessSector> businessSectors;
+  List<AccountInProject> accountsInProject;
+  List<Customer> customers;
   BusinessSectorContainer businessSectorContainer;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   ProjectTypologyContainer projectTypologyContainer;
   ProjectContainer projectContainer;
-  ProjectDTO projectOneDTO, projectTwoDTO;
-
-  AccountInProject accountInProject;
-
-  List<AccountInProject> accountsInProject;
-
   AccountInProjectContainer accountInProjectContainer;
+  CustomerContainer customerContainer;
   Company company;
   RegisterProjectController registerProjectController;
-  Customer customerOne, customerTwo;
-  CustomerContainer customerContainer;
-  List<Customer> customers;
-
   ProjectMapper projectMapper;
 
   @BeforeEach
@@ -75,19 +69,18 @@ class ProjectMapperTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    businessSector = new BusinessSector("fishing");
+    businessSectorOne = new BusinessSector("fishing");
+    businessSectorTwo = new BusinessSector("hunting");
     businessSectors = new ArrayList<>();
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
+    businessSectors.add(businessSectorOne);
 
     projectTypologyOne = new ProjectTypology("Fixed Cost");
     projectTypologyTwo = new ProjectTypology("Fixed time and materials");
     typologies = new ArrayList<>();
-    projectTypologyContainer = new ProjectTypologyContainer(typologies);
     typologies.add(projectTypologyOne);
     typologies.add(projectTypologyTwo);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
-    projectTypology = new ProjectTypology("fixed cost");
 
     costPerHour = 7.5f;
     percentageAllocation = 45.0f;
@@ -100,7 +93,6 @@ class ProjectMapperTest {
 
     customerOne = new Customer("ISEP");
     customerTwo = new Customer("PortoTech");
-
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer(customers);
     customers.add(customerOne);
@@ -108,18 +100,17 @@ class ProjectMapperTest {
 
 
     projectOne = new Project("AA001", "Aptoide", customerOne, projectTypologyOne,
-            businessSector);
-    projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSector);
-    projectThree = new Project("AA003", "motor software", customerOne, projectTypologyTwo, businessSector);
+            businessSectorOne);
+    projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSectorOne);
+    projectThree = new Project("AA003", "motor software", customerOne, projectTypologyTwo, businessSectorOne);
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
     projectContainer = new ProjectContainer(projects);
 
-    projectOneDTO = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("fishing"));
-    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    projectOneDTO = new ProjectDTO("AA001", "Aptoide", customerOne, projectTypologyOne, businessSectorOne);
+    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", customerTwo,
+            projectTypologyTwo, businessSectorTwo);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
             projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
@@ -142,7 +133,7 @@ class ProjectMapperTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector = null;
+    businessSectorOne = null;
     businessSectors.clear();
     businessSectorContainer = null;
     projectTypologyOne = null;
@@ -159,36 +150,36 @@ class ProjectMapperTest {
     customerContainer = null;
     company = null;
   }
-/*
+
   @Test
   void creationOfProjectDTOSuccessful() {
     ProjectDTO reference = projectMapper.toDTO(projectOne);
     boolean expected = true;
     boolean result = reference.equals(projectOneDTO);
-    assertEquals(expected,result);
-  }*/
+    assertEquals(expected, result);
+  }
 
   @Test
   void creationOfProjectDTONotSuccessful() {
     ProjectDTO reference = projectMapper.toDTO(projectTwo);
     boolean expected = false;
     boolean result = reference.equals(projectOneDTO);
-    assertEquals(expected,result);
+    assertEquals(expected, result);
   }
-/*
+
   @Test
   void creationOfProjectSuccessful() {
     Project reference = projectMapper.fromDTO(projectOneDTO);
     boolean expected = true;
     boolean result = reference.equals(projectOne);
-    assertEquals(expected,result);
-  }*/
+    assertEquals(expected, result);
+  }
 
   @Test
   void creationOfProjectNotSuccessful() {
     Project reference = projectMapper.fromDTO(projectTwoDTO);
     boolean expected = false;
     boolean result = reference.equals(projectOne);
-    assertEquals(expected,result);
+    assertEquals(expected, result);
   }
 }

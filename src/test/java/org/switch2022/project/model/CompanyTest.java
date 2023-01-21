@@ -13,8 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CompanyTest {
 
@@ -22,7 +21,7 @@ class CompanyTest {
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
-  Account accountOne, accountTwo, accountThree;
+  Account accountOne, accountTwo, accountThree, accountFour;
   Profile profileOne, profileTwo, profileThree;
   ProjectTypology projectTypologyOne, projectTypologyTwo;
   Project projectOne, projectTwo, projectThree;
@@ -30,7 +29,7 @@ class CompanyTest {
   List<Profile> profiles;
   List<Project> projects;
   List<ProjectTypology> typologies;
-  BusinessSector businessSector;
+  BusinessSector businessSectorOne, businessSectorTwo;
   List<BusinessSector> businessSectors;
   BusinessSectorContainer businessSectorContainer;
   AccountContainer accountContainer;
@@ -39,7 +38,7 @@ class CompanyTest {
   Project project;
   ProjectContainer projectContainer;
   ProjectDTO projectOneDTO, projectTwoDTO;
-  Customer customerOne, customerTwo;
+  Customer customerOne, customerTwo, customerThree;
   CustomerContainer customerContainer;
   List<Customer> customers;
 
@@ -57,6 +56,7 @@ class CompanyTest {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
     accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
     accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
+    accountFour = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
 
     accounts = new ArrayList<>();
     accountContainer = new AccountContainer(accounts);
@@ -73,10 +73,11 @@ class CompanyTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    businessSector = new BusinessSector("fishing");
+    businessSectorOne = new BusinessSector("fishing");
+    businessSectorTwo = new BusinessSector("hunting");
     businessSectors = new ArrayList<>();
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
+    businessSectors.add(businessSectorOne);
 
     projects = new ArrayList<>();
     projectContainer = new ProjectContainer(projects);
@@ -92,6 +93,7 @@ class CompanyTest {
 
     customerOne = new Customer("ISEP");
     customerTwo = new Customer("PortoTech");
+    customerThree = new Customer("John");
 
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer(customers);
@@ -99,9 +101,9 @@ class CompanyTest {
     customers.add(customerTwo);
 
     projectOne = new Project("AA001", "software development management", customerOne, projectTypologyOne,
-            businessSector);
-    projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSector);
-    projectThree = new Project("AA003", "motor software", customerOne, projectTypologyTwo, businessSector);
+            businessSectorOne);
+    projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSectorOne);
+    projectThree = new Project("AA003", "motor software", customerOne, projectTypologyTwo, businessSectorOne);
 
     projects = new ArrayList<>();
     projects.add(projectOne);
@@ -109,10 +111,8 @@ class CompanyTest {
     projects.add(projectThree);
     projectContainer = new ProjectContainer(projects);
 
-    projectOneDTO = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    projectOneDTO = new ProjectDTO("AA001", "Aptoide", customerThree, projectTypologyOne, businessSectorTwo);
+    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", customerThree, projectTypologyOne, businessSectorTwo);
 
     accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
@@ -139,7 +139,7 @@ class CompanyTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector = null;
+    businessSectorOne = null;
     businessSectors.clear();
     businessSectorContainer = null;
     projectTypologyOne = null;
@@ -189,21 +189,18 @@ class CompanyTest {
     //Assert
     assertEquals(expected, result);
   }
-
   @Test
-  void ensureAccountStatusIsChangedToInactive() {
-    boolean expected = false;
-    accountContainer.changeStatus("mike@isep.ipp.pt", false);
-    boolean result = accountOne.equals(accountTwo);
-    assertEquals(expected, result);
+  void ensureChangeStatusReturnTrue() {
+    Company company = new Company(accountContainer,profileContainer,businessSectorContainer,projectContainer,projectTypologyContainer,accountInProjectContainer,customerContainer);
+    boolean result = company.changeStatus("mike@isep.ipp.pt", true);
+    assertTrue(result);
   }
 
   @Test
-  void ensureAccountStatusIsChangedToActive() {
-    boolean expected = false;
-    accountContainer.changeStatus("mike@isep.ipp.pt", true);
-    boolean result = accountOne.equals(accountTwo);
-    assertEquals(expected, result);
+  void ensureChangeStatusReturnFalse() {
+    Company company = new Company(accountContainer,profileContainer,businessSectorContainer,projectContainer,projectTypologyContainer,accountInProjectContainer,customerContainer);
+    boolean result = company.changeStatus("mike@isep.ipp.pt", false);
+    assertFalse(result);
   }
 
   @Test
