@@ -151,31 +151,14 @@ class AccountContainerTest {
          */
         projects.add(project);
 
-        /*
-          Accounts in Project created.
-         */
-        accountInProject1 = new AccountInProject(accountOne, project,
-                costPerHour, percentageAllocation, startDate);
-        accountInProject2 = new AccountInProject(accountTwo, project,
-                costPerHour, percentageAllocation, startDate);
-
-        /*
-          Role set to the accounts in project.
-         */
-        accountInProject1.setRole("team member");
-        accountInProject2.setRole("team member");
-
-        /*
-          Account in project container created.
-         */
-        accountsInProject = new ArrayList<>();
-        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
-
-        /*
-          Accounts in project added to the Container.
-         */
-        accountsInProject.add(accountInProject1);
-        accountsInProject.add(accountInProject2);
+    accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
+            costPerHour, percentageAllocation, startDate);
+    accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
+            costPerHour, percentageAllocation, startDate);
+    accountsInProject = new ArrayList<>();
+    accountsInProject.add(accountInProject1);
+    accountsInProject.add(accountInProject2);
+    accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
         /*
           Company created.

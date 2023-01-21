@@ -18,6 +18,19 @@ public class AccountMapper {
         return accountDTO;
     }
 
+    /**
+     * Method that transforms an AccountDTO into an instance of Account
+     * @param accountDTO
+     * @return new instance of account
+     */
+    public Account accountFromDTO(AccountDTO accountDTO) {
+        Account account = new Account(accountDTO.name, accountDTO.email,
+                accountDTO.phoneNumber, accountDTO.photo);
+        account.setProfile(accountDTO.profile);
+        account.setStatus(accountDTO.status);
+        return account;
+    }
+
     public List<AccountDTO> accountsToDTO(List<Account> accounts) {
         List<AccountDTO> accountsDto = new ArrayList<>();
         for (int i = 0; i < accounts.size(); i++) {

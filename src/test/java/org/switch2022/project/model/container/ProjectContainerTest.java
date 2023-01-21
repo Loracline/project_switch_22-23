@@ -14,54 +14,55 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * BeforeEach and AfterEach executes common code before/after running the tests below.
+ */
+
 public class ProjectContainerTest {
-    /**
-     * BeforeEach and AfterEach executes common code before/after running the
-     * tests below.
-     */
-    Project projectOne, projectTwo;
-    List<Project> projects;
-    ProjectContainer projectContainer;
-    ProjectDTO projectOneDTO, projectTwoDTO;
 
-    @BeforeEach
-    void setUp() {
-        /*
-          Projects created.
-         */
-        projectOne = new Project("AA001", "Aptoide", new Customer("John"),
-                new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-        projectTwo = new Project("AA002", "Aptoide", new Customer("John"),
-                new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+  Project projectOne, projectTwo;
+  List<Project> projects;
+  ProjectContainer projectContainer;
+  ProjectTypology projectTypology;
+  Customer customer;
+  BusinessSector businessSector;
+  ProjectDTO projectOneDTO, projectTwoDTO;
 
-        /*
-          Container of projects created.
-         */
-        projects = new ArrayList<>();
-        projectContainer = new ProjectContainer(projects);
 
-        /*
-          Project is added to the container.
-         */
-        projects.add(projectOne);
-        projects.add(projectTwo);
+  @BeforeEach
+  void setUp() {
+    //typologies = new ArrayList<>();
+    projectTypology = new ProjectTypology("Fixed cost");
 
-        /*
-          Project DTOs created.
-         */
-        projectOneDTO = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
-                new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-        projectTwoDTO = new ProjectDTO("AA003", "Aptoide", new Customer("John"),
-                new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    }
+    customer = new Customer("John");
 
-    @AfterEach
-    void tearDown() {
-        projectOne = null;
-        projectTwo = null;
-        projectOneDTO = null;
-        projectTwoDTO = null;
-    }
+    businessSector = new BusinessSector("Hunting");
+
+    projectOne = new Project("AA001", "Aptoide", customer,
+            projectTypology, businessSector);
+    projectTwo = new Project("AA002", "Aptoide", customer, projectTypology,
+            businessSector);
+    projects = new ArrayList<>();
+    projects.add(projectOne);
+    projects.add(projectTwo);
+    projectContainer = new ProjectContainer(projects);
+    projectOneDTO = new ProjectDTO("AA001", "Aptoide", customer,
+            projectTypology, businessSector);
+    projectTwoDTO = new ProjectDTO("AA003", "Aptoide", customer,
+            projectTypology, businessSector);
+
+  }
+
+  @AfterEach
+  void tearDown() {
+    projectOne = null;
+    projectTwo = null;
+    projectOneDTO = null;
+    projectTwoDTO = null;
+    projectTypology = null;
+    customer = null;
+    businessSector = null;
+  }
 
     /**
      * Testing if one is able to register a new project and add it to the

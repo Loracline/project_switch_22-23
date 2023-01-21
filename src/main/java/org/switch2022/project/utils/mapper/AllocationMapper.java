@@ -22,8 +22,8 @@ public class AllocationMapper {
         float percentageAllocation = dto.percentageAllocation;
         LocalDate startDate = dto.startDate;
 
-        AccountInProject newAccount = new AccountInProject(account, project, costPerHour,percentageAllocation, startDate);
-        newAccount.setRole("team member");
+        AccountInProject newAccount = new AccountInProject(account, project,
+         "Team Member", costPerHour,percentageAllocation, startDate);
         return newAccount;
     }
 
