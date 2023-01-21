@@ -4,7 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -111,12 +114,10 @@ class CompanyTest {
     projectOneDTO = new ProjectDTO("AA001", "Aptoide", customerThree, projectTypologyOne, businessSectorTwo);
     projectTwoDTO = new ProjectDTO("AA004", "Aptoide", customerThree, projectTypologyOne, businessSectorTwo);
 
-    accountInProject1 = new AccountInProject(accountOne, project,
+    accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
-    accountInProject2 = new AccountInProject(accountTwo, project,
+    accountInProject2 = new AccountInProject(accountTwo, project,  "Team Member",
             costPerHour, percentageAllocation, startDate);
-    accountInProject1.setRole("team member");
-    accountInProject2.setRole("team member");
     accountsInProject = new ArrayList<>();
     accountsInProject.add(accountInProject1);
     accountsInProject.add(accountInProject2);
@@ -154,6 +155,10 @@ class CompanyTest {
     customerTwo = null;
     customers.clear();
     customerContainer = null;
+    accountInProject1 = null;
+    accountInProject2 = null;
+    accountsInProject.clear();
+    accountInProjectContainer = null;
     company = null;
   }
 
@@ -375,5 +380,35 @@ class CompanyTest {
     boolean expected = false;
     boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
     assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureProductOwnerIsSuccessfullyAssociatedToAProject() {
+    //Arrange
+    //accountDTO
+    AccountDTO accountDTO = new AccountDTO();
+    accountDTO.name = "John";
+    accountDTO.email = "john@isep.ipp.pt";
+    accountDTO.phoneNumber = 912345678;
+    accountDTO.photo = null;
+    //projectDTO
+    Customer customer = new Customer("IT Customer");
+    ProjectTypology projectTypology = new ProjectTypology("fixed cost");
+    BusinessSector businessSector = new BusinessSector("IT Sector");
+    ProjectDTO projectDTO = new ProjectDTO("id001","Test",customer,projectTypology, businessSector);
+
+    //account in project dto - product owner
+    AccountInProjectDTO accountInProjectDTOPO = new AccountInProjectDTO();
+    accountInProjectDTOPO.accountDTO = accountDTO;
+    accountInProjectDTOPO.projectDTO = projectDTO;
+    accountInProjectDTOPO.role = "Product Owner";
+    accountInProjectDTOPO.costPerHour = 7.5f;
+    accountInProjectDTOPO.percentageAllocation = 45.0f;
+    accountInProjectDTOPO.startDate = LocalDate.of(2023, 01, 19);
+    accountInProjectDTOPO.endDate = LocalDate.of(2023, 01, 22);
+    //Act
+    boolean result = company.addUserToProject(accountInProjectDTOPO);
+    //Assert
+    assertTrue(result);
   }
 }

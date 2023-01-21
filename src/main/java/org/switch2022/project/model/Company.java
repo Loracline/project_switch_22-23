@@ -1,9 +1,9 @@
 package org.switch2022.project.model;
 
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.AllocationDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
-import org.switch2022.project.model.container.ProjectContainer.*;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.*;
+
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -35,6 +35,7 @@ public class Company {
         this.businessSectorContainer = businessSectorContainer;
         this.projectTypologyContainer = projectTypologyContainer;
         this.customerContainer = customerContainer;
+        this.accountInProjectContainer = accountInProjectContainer;
     }
 
 
@@ -56,7 +57,8 @@ public class Company {
         return profileContainer.createProfile(name);
     }
 
-    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
+    public boolean registerAccount(String name, String email, long phoneNumber,
+                                   BufferedImage photo) {
         return accountContainer.addAccount(name, email, phoneNumber, photo);
     }
 
@@ -144,8 +146,13 @@ public class Company {
         return projectContainer.getProjectsList();
     }
 
-    public boolean addTeamMemberToProject(AllocationDTO allocationDTO) {
-        return this.accountInProjectContainer.addTeamMemberToProject(allocationDTO);
+    /**
+     * This method associates a user account to a project with a role
+     *
+     * @return true if user account is succesfully associated to a project
+     */
+    public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
+        return this.accountInProjectContainer.addUserToProject(accountInProjectDTO);
     }
 
 

@@ -91,10 +91,9 @@ class RegisterProjectControllerTest {
     businessSectorOne = new BusinessSector("IT Sector");
     costPerHour = 7.5f;
     percentageAllocation = 45.0f;
-    startDate = LocalDate.of(2023, 01, 19);
-    accountInProject = new AccountInProject(accountOne, projectOne,
+    startDate = LocalDate.of(2023,01,19);
+    accountInProject = new AccountInProject(accountOne, projectOne, "Team Member",
             costPerHour, percentageAllocation, startDate);
-    accountInProject.setRole("team member");
     accountsInProject = new ArrayList<>();
     accountsInProject.add(accountInProject);
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
