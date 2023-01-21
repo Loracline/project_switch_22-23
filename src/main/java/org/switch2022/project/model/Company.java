@@ -5,6 +5,7 @@ import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.container.ProjectContainer;
+import org.switch2022.project.container.CustomerContainer;
 import org.switch2022.project.DTO.ProjectDTO;
 import org.switch2022.project.container.*;
 
@@ -23,20 +24,21 @@ public class Company {
     private ProjectContainer projectContainer;
     private BusinessSectorContainer businessSectorContainer;
     private ProjectTypologyContainer projectTypologyContainer;
-
     private AccountInProjectContainer accountInProjectContainer;
+    private CustomerContainer customerContainer;
 
     /**
      * Company constructor
      */
     public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer
             businessSectorContainer, ProjectContainer projectContainer, ProjectTypologyContainer projectTypologyContainer,
-                   AccountInProjectContainer accountInProjectContainer) {
+                   AccountInProjectContainer accountInProjectContainer, CustomerContainer customerContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
         this.projectTypologyContainer = projectTypologyContainer;
+        this.customerContainer = customerContainer;
     }
 
 
@@ -149,5 +151,29 @@ public class Company {
     public boolean addTeamMemberToProject(AllocationDTO allocationDTO) {
         return this.accountInProjectContainer.addTeamMemberToProject(allocationDTO);
     }
+
+
+
+    /**
+     * Getter method for the attribute Customer Container.
+     *
+     * @return the container of customers
+     */
+
+    public CustomerContainer getCustomerContainer() {
+        return customerContainer;
+    }
+
+    /**
+     * Method addCustomer
+     *
+     * @return true if customer is added
+     * @return false if customer isn't added successfully
+     */
+    public boolean addCustomer (String customerName){
+        return customerContainer.addCustomer(customerName);
+    }
+
+
 }
 

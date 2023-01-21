@@ -18,13 +18,11 @@ class ChangeProfileControllerTest {
    */
 
   Account accountOne;
-
   Account accountTwo;
   Profile profileOne;
   BusinessSector businessSector;
   ProjectTypology projectTypology;
   Project project;
-  Customer customer;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   BusinessSectorContainer businessSectorContainer;
@@ -36,6 +34,9 @@ class ChangeProfileControllerTest {
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
 
   float costPerHour;
   float percentageAllocation;
@@ -74,8 +75,15 @@ class ChangeProfileControllerTest {
     typologies.add(projectTypology);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    customer = new Customer("ISEP");
-    project = new Project("proj001", "software development management", customer,
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
+
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+
+    project = new Project("proj001", "software development management", customerOne,
             projectTypology, businessSector);
 
     List<Project> projects = new ArrayList<>();
@@ -94,7 +102,7 @@ class ChangeProfileControllerTest {
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
     controller = new ChangeProfileController(company);
   }
@@ -115,6 +123,10 @@ class ChangeProfileControllerTest {
     businessSector = null;
     businessSectors.clear();
     businessSectorContainer = null;
+    customerOne = null;
+    customerTwo = null;
+    customers.clear();
+    customerContainer = null;
   }
 
   @Test

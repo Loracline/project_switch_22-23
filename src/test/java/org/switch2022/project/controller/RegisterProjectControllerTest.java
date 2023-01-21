@@ -26,7 +26,6 @@ class RegisterProjectControllerTest {
   LocalDate startDate;
   ProjectTypology projectTypologyOne, projectTypologyTwo, projectTypology;
   Project projectOne, projectTwo, projectThree;
-  Customer customer;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
@@ -39,6 +38,9 @@ class RegisterProjectControllerTest {
   ProjectTypologyContainer projectTypologyContainer;
   ProjectContainer projectContainer;
   ProjectDTO projectOneDTO, projectTwoDTO;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
 
   AccountInProject accountInProject;
 
@@ -80,7 +82,14 @@ class RegisterProjectControllerTest {
     typologies.add(projectTypologyTwo);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    customer = new Customer("IT Customer");
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
+
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+
     projectTypology = new ProjectTypology("fixed cost");
     businessSector = new BusinessSector("IT Sector");
     costPerHour = 7.5f;
@@ -92,13 +101,11 @@ class RegisterProjectControllerTest {
     accountsInProject = new ArrayList<>();
     accountsInProject.add(accountInProject);
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
-    customer = new Customer("ISEP");
 
-
-    projectOne = new Project("AA001", "software development management", customer, projectTypologyOne,
+    projectOne = new Project("AA001", "software development management", customerOne, projectTypologyOne,
             businessSector);
-    projectTwo = new Project("AA002", "project software", customer, projectTypologyTwo, businessSector);
-    projectThree = new Project("AA003", "motor software", customer, projectTypologyTwo, businessSector);
+    projectTwo = new Project("AA002", "project software", customerTwo, projectTypologyTwo, businessSector);
+    projectThree = new Project("AA003", "motor software", customerTwo, projectTypologyTwo, businessSector);
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
@@ -110,7 +117,7 @@ class RegisterProjectControllerTest {
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
     registerProjectController = new RegisterProjectController(company);
   }
@@ -138,6 +145,10 @@ class RegisterProjectControllerTest {
     projectContainer = null;
     projectOneDTO = null;
     projectTwoDTO = null;
+    customerOne = null;
+    customerTwo = null;
+    customers.clear();
+    customerContainer = null;
     company = null;
   }
 

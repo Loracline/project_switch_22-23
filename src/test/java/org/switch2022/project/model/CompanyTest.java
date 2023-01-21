@@ -22,7 +22,6 @@ class CompanyTest {
   Profile profileOne, profileTwo, profileThree;
   ProjectTypology projectTypologyOne, projectTypologyTwo;
   Project projectOne, projectTwo, projectThree;
-  Customer customer;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
@@ -36,6 +35,9 @@ class CompanyTest {
   Project project;
   ProjectContainer projectContainer;
   ProjectDTO projectOneDTO, projectTwoDTO;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
 
   float costPerHour;
   float percentageAllocation;
@@ -84,12 +86,18 @@ class CompanyTest {
     typologies.add(projectTypologyTwo);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    customer = new Customer("ISEP");
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
 
-    projectOne = new Project("AA001", "software development management", customer, projectTypologyOne,
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+
+    projectOne = new Project("AA001", "software development management", customerOne, projectTypologyOne,
             businessSector);
-    projectTwo = new Project("AA002", "project software", customer, projectTypologyTwo, businessSector);
-    projectThree = new Project("AA003", "motor software", customer, projectTypologyTwo, businessSector);
+    projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSector);
+    projectThree = new Project("AA003", "motor software", customerOne, projectTypologyTwo, businessSector);
 
     projects = new ArrayList<>();
     projects.add(projectOne);
@@ -114,7 +122,7 @@ class CompanyTest {
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
   }
 
   @AfterEach
@@ -141,6 +149,10 @@ class CompanyTest {
     projectContainer = null;
     projectOneDTO = null;
     projectTwoDTO = null;
+    customerOne = null;
+    customerTwo = null;
+    customers.clear();
+    customerContainer = null;
     company = null;
   }
 

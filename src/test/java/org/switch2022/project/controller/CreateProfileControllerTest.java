@@ -27,7 +27,6 @@ class CreateProfileControllerTest {
     Profile profileOne, profileTwo;
     ProjectTypology projectTypology;
     Project project;
-    Customer customer;
     List<Account> accounts;
     List<Profile> profiles;
     List<Project> projects;
@@ -38,6 +37,9 @@ class CreateProfileControllerTest {
     BusinessSector businessSector;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
+    Customer customerOne, customerTwo;
+    CustomerContainer customerContainer;
+    List<Customer> customers;
 
     float costPerHour;
     float percentageAllocation;
@@ -87,8 +89,15 @@ class CreateProfileControllerTest {
         typologies.add(projectTypology);
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-        customer = new Customer("ISEP");
-        project = new Project("proj001", "software development management", customer,
+        customerOne = new Customer("ISEP");
+        customerTwo = new Customer("PortoTech");
+
+        customers = new ArrayList<>();
+        customerContainer = new CustomerContainer(customers);
+        customers.add(customerOne);
+        customers.add(customerTwo);
+
+        project = new Project("proj001", "software development management", customerOne,
                 projectTypology, businessSector);
 
         List<Project> projects = new ArrayList<>();
@@ -107,7 +116,7 @@ class CreateProfileControllerTest {
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer);
+                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
         createProfileController = new CreateProfileController(company);
     }
@@ -128,6 +137,10 @@ class CreateProfileControllerTest {
         project = null;
         projects.clear();
         projectContainer = null;
+        customerOne = null;
+        customerTwo = null;
+        customers.clear();
+        customerContainer = null;
         company = null;
         createProfileController = null;
     }
