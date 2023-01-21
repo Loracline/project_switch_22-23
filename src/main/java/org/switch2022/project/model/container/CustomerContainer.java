@@ -1,4 +1,4 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Customer;
 

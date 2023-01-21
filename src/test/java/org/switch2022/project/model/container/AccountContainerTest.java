@@ -1,9 +1,10 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.container.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ class AccountContainerTest {
   Profile profileOne, profileTwo, profileThree;
   ProjectTypology projectTypology;
   Project project;
-  Customer customer;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
@@ -32,6 +32,9 @@ class AccountContainerTest {
   BusinessSector businessSector;
   List<BusinessSector> businessSectors;
   BusinessSectorContainer businessSectorContainer;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
 
   float costPerHour;
   float percentageAllocation;
@@ -76,8 +79,15 @@ class AccountContainerTest {
     typologies.add(projectTypology);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    customer = new Customer("ISEP");
-    project = new Project("proj001", "software development management", customer,
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
+
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+
+    project = new Project("proj001", "software development management", customerOne,
             projectTypology, businessSector);
 
     projects = new ArrayList<>();
@@ -94,7 +104,7 @@ class AccountContainerTest {
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
     //company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer);
   }
 
@@ -116,6 +126,10 @@ class AccountContainerTest {
     project = null;
     projects.clear();
     projectContainer = null;
+    customerOne = null;
+    customerTwo = null;
+    customers.clear();
+    customerContainer = null;
     company = null;
   }
 

@@ -1,8 +1,4 @@
-package org.switch2022.project.DTO;
-
-import org.switch2022.project.controller.AccountDTO;
-import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Project;
+package org.switch2022.project.utils.dto;
 
 import java.time.LocalDate;
 

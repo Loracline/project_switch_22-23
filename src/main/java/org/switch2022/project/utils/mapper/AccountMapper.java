@@ -1,7 +1,7 @@
-package org.switch2022.project.controller;
+package org.switch2022.project.utils.mapper;
 
+import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +9,11 @@ import java.util.List;
 public class AccountMapper {
     public AccountDTO accountToDTO(Account account) {
         AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = account.getName();
+        accountDTO.name = account.getAccountName();
         accountDTO.email = account.getEmail();
         accountDTO.phoneNumber = account.getPhoneNumber();
         accountDTO.profile = account.getProfile();
-        accountDTO.status = account.getStatus();
+        accountDTO.status = account.getAccountStatus();
         accountDTO.photo = account.getPhoto();
         return accountDTO;
     }

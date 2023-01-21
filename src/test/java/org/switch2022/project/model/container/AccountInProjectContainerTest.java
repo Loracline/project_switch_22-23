@@ -1,15 +1,11 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.DTO.AccountInProjectDTO;
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.controller.AccountDTO;
-import org.switch2022.project.model.AccountInProject;
-import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
-import org.switch2022.project.model.ProjectTypology;
+import org.switch2022.project.utils.dto.*;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,8 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class AccountInProjectContainerTest {
     AccountDTO accountDTO, accountDTO2;
     ProjectDTO projectDTO;
-    AccountInProjectDTO accountInProjectDTOPO,
-            accountInProjectDTOInvalid;
+    AccountInProjectDTO accountInProjectDTOPO, accountInProjectDTOInvalid;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
 
@@ -42,14 +37,10 @@ class AccountInProjectContainerTest {
         accountDTO2.photo = null;
 
         //set up projects
-        projectDTO = new ProjectDTO();
-        projectDTO.customer = new Customer("IT Customer");
-        projectDTO.code = "id001";
-        projectDTO.projectTypology = new ProjectTypology("fixed cost");
-        ;
-        projectDTO.name = "Test";
-        projectDTO.status = "planned";
-        projectDTO.businessSector = new BusinessSector("IT Sector");
+        Customer customer = new Customer("IT Customer");
+        ProjectTypology projectTypology = new ProjectTypology("fixed cost");
+        BusinessSector businessSector = new BusinessSector("IT Sector");
+        projectDTO = new ProjectDTO("id001","Test",customer,projectTypology, businessSector);
 
         //set up accounts in project list
         accountsInProject = new ArrayList<>();

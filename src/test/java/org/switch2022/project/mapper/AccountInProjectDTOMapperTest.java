@@ -3,10 +3,10 @@ package org.switch2022.project.mapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.DTO.AccountInProjectDTO;
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.controller.AccountDTO;
 import org.switch2022.project.model.*;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.time.LocalDate;
 
@@ -33,16 +33,11 @@ class AccountInProjectDTOMapperTest {
         accountDTO.profile = new Profile("User");
         accountDTO.status = true;
 
-
         //set up project dto
-        projectDTO = new ProjectDTO();
-        projectDTO.customer = new Customer("IT Customer");
-        projectDTO.code = "id001";
-        projectDTO.projectTypology = new ProjectTypology("fixed cost");
-        projectDTO.name = "Test";
-        projectDTO.status = "planned";
-        projectDTO.businessSector = new BusinessSector("IT Sector");
-
+        Customer customer = new Customer("IT Customer");
+        ProjectTypology projectTypology = new ProjectTypology("fixed cost");
+        BusinessSector businessSector = new BusinessSector("IT Sector");
+        projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
         //set up account in project dto
         accountInProjectDTOPO = new AccountInProjectDTO();
         accountInProjectDTOPO.accountDTO = accountDTO;

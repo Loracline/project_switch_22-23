@@ -3,12 +3,7 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.container.ProjectContainer;
-import org.switch2022.project.model.*;
-import org.switch2022.project.container.*;
+import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
@@ -37,9 +32,10 @@ class AddBusinessSectorControllerTest {
   ProjectContainer projectContainer;
   Company company;
   ProjectTypology projectTypology;
-  Customer customer;
   ProjectTypologyContainer projectTypologyContainer;
-
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
   AddBusinessSectorController addBusinessSectorController;
 
   float costPerHour;
@@ -87,8 +83,15 @@ class AddBusinessSectorControllerTest {
     typologies.add(projectTypology);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    customer = new Customer("ISEP");
-    project = new Project("proj001", "software development management", customer,
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
+
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+
+    project = new Project("proj001", "software development management", customerOne,
             projectTypology, businessSector);
 
     List<Project> projects = new ArrayList<>();
@@ -105,7 +108,7 @@ class AddBusinessSectorControllerTest {
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer,customerContainer);
 
     addBusinessSectorController = new AddBusinessSectorController(company);
   }

@@ -10,32 +10,34 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-
-class CreateProfileControllerTest {
+class AddCustomerControllerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
     Account accountOne, accountTwo, accountThree, accountFour;
     Profile profileOne, profileTwo;
-    ProjectTypology projectTypology;
-    Project project;
     List<Account> accounts;
     List<Profile> profiles;
-    List<Project> projects;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
-    ProjectTypologyContainer projectTypologyContainer;
-    ProjectContainer projectContainer;
     BusinessSector businessSector;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
+    Project project;
+    List<Project> projects;
+    ProjectContainer projectContainer;
+    Company company;
+    ProjectTypology projectTypology;
+    ProjectTypologyContainer projectTypologyContainer;
     Customer customerOne, customerTwo;
     CustomerContainer customerContainer;
     List<Customer> customers;
+    AddBusinessSectorController addBusinessSectorController;
+    AddCustomerController addCustomerController;
 
     float costPerHour;
     float percentageAllocation;
@@ -43,9 +45,6 @@ class CreateProfileControllerTest {
     AccountInProject accountInProject1, accountInProject2;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
-    Company company;
-
-    CreateProfileController createProfileController;
 
 
     @BeforeEach
@@ -76,7 +75,7 @@ class CreateProfileControllerTest {
         businessSector = new BusinessSector("fishing");
 
         businessSectors = new ArrayList<>();
-        businessSectorContainer= new BusinessSectorContainer(businessSectors);
+        businessSectorContainer = new BusinessSectorContainer(businessSectors);
         businessSectors.add(businessSector);
 
         projectTypology = new ProjectTypology("Fixed Cost");
@@ -110,9 +109,10 @@ class CreateProfileControllerTest {
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+                projectContainer, projectTypologyContainer, accountInProjectContainer,customerContainer);
 
-        createProfileController = new CreateProfileController(company);
+        addBusinessSectorController = new AddBusinessSectorController(company);
+        addCustomerController = new AddCustomerController(company);
     }
 
     @AfterEach
@@ -125,35 +125,46 @@ class CreateProfileControllerTest {
         profiles.clear();
         accountContainer = null;
         profileContainer = null;
-        businessSector=null;
+        businessSector = null;
         businessSectors.clear();
-        businessSectorContainer=null;
+        businessSectorContainer = null;
         project = null;
         projects.clear();
         projectContainer = null;
-        customerOne = null;
-        customerTwo = null;
-        customers.clear();
-        customerContainer = null;
         company = null;
-        createProfileController = null;
+        addBusinessSectorController = null;
+        addCustomerController = null;
     }
     @Test
-    void addNewProfileSuccessfully(){
+    void addNewCustomerSuccessfully(){
         //Arrange
         boolean expected = true;
         //Act
-        boolean result = createProfileController.createProfile("Manager");
+        boolean result = addCustomerController.addCustomer("Critical");
         //Assert
         assertEquals(expected,result);
     }
     @Test
-    void addNewProfileUnsuccessfullyInvalidName(){
+    void addNewCustomerUnsuccessfullyInvalidName(){
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = createProfileController.createProfile("User");
+        boolean result = addCustomerController.addCustomer("ISEP");
         //Assert
         assertEquals(expected,result);
     }
+
+
+
+    @Test
+    void addNewCustomerUnsuccessfullyEmptyName() {
+        // Arrange
+        boolean expected = false;
+        // Act
+        boolean result = addCustomerController.addCustomer("");
+        // Assert
+        assertEquals(expected, result);
+    }
+
+
 }

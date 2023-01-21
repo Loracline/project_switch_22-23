@@ -1,17 +1,14 @@
-package org.switch2022.project.container;
+package org.switch2022.project.model.container;
 
-import org.switch2022.project.DTO.AccountInProjectDTO;
 import org.switch2022.project.mapper.AccountInProjectDTOMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
-import org.switch2022.project.model.Project;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountInProjectContainer {
-
-    private AccountInProject accountInProject;
 
     /**
      * AccountInProjectContainer contains accounts in projects
@@ -28,10 +25,18 @@ public class AccountInProjectContainer {
         this.accountsInProject = accountsInProject;
     }
 
-    public List<Account> listAccountsByProject(Project project) {
-        List<Account> accounts = new ArrayList<Account>();
+    /**
+     * This method returns a list of Accounts Allocated To a Project
+     *
+     * @return a list of Accounts
+     */
+    public List<Account> listAccountsByProject(String projectCode) {
+        List<Account> accounts = new ArrayList<>();
         for (int i = 0; i < accounts.size(); i++) {
-            accounts.add(accountInProject.getAccountByProject(project));
+            Account requestedAccount = accountsInProject.get(i).getAccountByProject(projectCode);
+            if (requestedAccount != null) {
+                accounts.add(requestedAccount);
+            }
         }
         return accounts;
     }

@@ -15,7 +15,7 @@ participant ":CustomerContainer" as container
 participant "customer:Customer" as customer
 
 activate Administrator
-Administrator -> ui: add a customer
+Administrator -> ui: starting adding new customer
 activate ui
 ui --> Administrator: requests data (customerName)
 deactivate ui

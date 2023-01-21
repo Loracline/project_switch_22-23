@@ -3,10 +3,11 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.DTO.AccountInProjectDTO;
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,9 +29,12 @@ class AddUserToProjectControllerTest {
     Profile profileOne, profileTwo, profileThree;
     List<Profile> profiles;
     ProfileContainer profileContainer;
+    //customers
+    Customer customerOne, customerTwo;
+    List<Customer> customers;
+    CustomerContainer customerContainer;
     //projects
-    Customer customer;
-    Project projectOne, projectTwo, projectThree;
+    Project projectOne, projectTwo;
     List<Project> projects;
     ProjectContainer projectContainer;
     //project typologies
@@ -86,12 +90,21 @@ class AddUserToProjectControllerTest {
         typologies.add(projectTypologyOne);
         typologies.add(projectTypologyTwo);
 
+        //customers
+        customerOne = new Customer("ISEP");
+        customerTwo = new Customer("PortoTech");
+
+        customers = new ArrayList<>();
+        customerContainer = new CustomerContainer(customers);
+        customers.add(customerOne);
+        customers.add(customerTwo);
+
         //projects
-        customer = new Customer("ISEP");
-        projectOne = new Project("proj001", "software development management", customer,
+        projectOne = new Project("proj001", "software development management",
+                customerOne,
                 projectTypologyOne,
                 businessSector);
-        projectTwo = new Project("proj002", "project software", customer,
+        projectTwo = new Project("proj002", "project software", customerTwo,
                 projectTypologyTwo,
                 businessSector);
         projects = new ArrayList<>();
@@ -112,7 +125,8 @@ class AddUserToProjectControllerTest {
 
         //company
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer);
+                projectContainer, projectTypologyContainer, accountInProjectContainer,
+                customerContainer);
     }
 
     @AfterEach
@@ -138,8 +152,12 @@ class AddUserToProjectControllerTest {
         projectTypologyTwo = null;
         typologies.clear();
         projectTypologyContainer = null;
+        //customers
+        customerOne = null;
+        customerTwo = null;
+        customers.clear();
+        customerContainer = null;
         //projects
-        customer = null;
         projectOne = null;
         projectTwo = null;
         projects.clear();
@@ -163,10 +181,10 @@ class AddUserToProjectControllerTest {
         accountDTO.phoneNumber = 912345678;
         accountDTO.photo = null;
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO();
-        projectDTO.customer = new Customer("IT Customer");
-        projectDTO.code = "id001";
-        projectDTO.projectTypology = new ProjectTypology("fixed cost");
+        ProjectDTO projectDTO = new ProjectDTO("id001","Test",customerOne,
+                projectTypologyOne
+                , businessSector);
+
         projectDTO.name = "Test";
         projectDTO.status = "planned";
         projectDTO.businessSector = new BusinessSector("IT Sector");

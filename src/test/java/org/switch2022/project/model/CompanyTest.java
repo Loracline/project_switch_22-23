@@ -3,10 +3,11 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.DTO.AccountInProjectDTO;
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.container.*;
-import org.switch2022.project.controller.AccountDTO;
+import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTO;
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ class CompanyTest {
   Profile profileOne, profileTwo, profileThree;
   ProjectTypology projectTypologyOne, projectTypologyTwo;
   Project projectOne, projectTwo, projectThree;
-  Customer customer;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
@@ -38,6 +38,10 @@ class CompanyTest {
   ProjectTypologyContainer projectTypologyContainer;
   Project project;
   ProjectContainer projectContainer;
+  ProjectDTO projectOneDTO, projectTwoDTO;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
 
   float costPerHour;
   float percentageAllocation;
@@ -62,8 +66,7 @@ class CompanyTest {
 
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
-    profileThree= new Profile ("Manager");
-
+    profileThree = new Profile("Manager");
 
     profiles = new ArrayList<>();
     profileContainer = new ProfileContainer(profiles);
@@ -71,41 +74,45 @@ class CompanyTest {
     profiles.add(profileTwo);
 
     businessSector = new BusinessSector("fishing");
-
     businessSectors = new ArrayList<>();
-    businessSectorContainer= new BusinessSectorContainer(businessSectors);
+    businessSectorContainer = new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
 
     projects = new ArrayList<>();
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
 
-    //company = new Company(accountContainer, profileContainer,businessSectorContainer, projectContainer, projectTypologyContainer);
-
     projectTypologyOne = new ProjectTypology("Fixed Cost");
-    projectTypologyTwo= new ProjectTypology("Fixed time and materials");
-
+    projectTypologyTwo = new ProjectTypology("Fixed time and materials");
     typologies = new ArrayList<>();
-    projectTypologyContainer= new ProjectTypologyContainer(typologies);
+    projectTypologyContainer = new ProjectTypologyContainer(typologies);
     typologies.add(projectTypologyOne);
     typologies.add(projectTypologyTwo);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    customer = new Customer("ISEP");
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
 
-    projectOne = new Project("proj001", "software development management", customer,
-            projectTypologyOne,
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+
+    projectOne = new Project("AA001", "software development management", customerOne, projectTypologyOne,
             businessSector);
-    projectTwo = new Project("proj002", "project software", customer, projectTypologyTwo,
-            businessSector);
-    projectThree = new Project("proj003", "motor software", customer, projectTypologyTwo,
-            businessSector);
+    projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSector);
+    projectThree = new Project("AA003", "motor software", customerOne, projectTypologyTwo, businessSector);
 
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
     projects.add(projectThree);
     projectContainer = new ProjectContainer(projects);
+
+    projectOneDTO = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
+            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", new Customer("John"),
+            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
     accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
@@ -117,31 +124,37 @@ class CompanyTest {
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
   }
 
   @AfterEach
   void tearDown() {
     accountOne = null;
     accountTwo = null;
-    accountThree= null;
+    accountThree = null;
     profileOne = null;
     profileTwo = null;
-    profileThree=null;
+    profileThree = null;
     accounts.clear();
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector=null;
+    businessSector = null;
     businessSectors.clear();
-    businessSectorContainer=null;
-    projectTypologyOne= null;
-    projectTypologyTwo= null;
+    businessSectorContainer = null;
+    projectTypologyOne = null;
+    projectTypologyTwo = null;
     typologies.clear();
-    projectTypologyContainer=null;
+    projectTypologyContainer = null;
     project = null;
     projects.clear();
     projectContainer = null;
+    projectOneDTO = null;
+    projectTwoDTO = null;
+    customerOne = null;
+    customerTwo = null;
+    customers.clear();
+    customerContainer = null;
     accountInProject1 = null;
     accountInProject2 = null;
     accountsInProject.clear();
@@ -349,6 +362,30 @@ class CompanyTest {
   }
 
   @Test
+  void projectRegistered() {
+    accountOne.setProfile(profileThree);
+    boolean expected = true;
+    boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void projectNotRegistered() {
+    accountOne.setProfile(profileThree);
+    boolean expected = false;
+    boolean result = company.registerProject(projectOneDTO, accountOne.getEmail());
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void managerNotValidated() {
+    accountOne.setProfile(profileOne);
+    boolean expected = false;
+    boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
+    assertEquals(expected, result);
+  }
+
+  @Test
   void ensureProductOwnerIsSuccessfullyAssociatedToAProject() {
     //Arrange
     //accountDTO
@@ -358,13 +395,11 @@ class CompanyTest {
     accountDTO.phoneNumber = 912345678;
     accountDTO.photo = null;
     //projectDTO
-    ProjectDTO projectDTO = new ProjectDTO();
-    projectDTO.customer = new Customer("IT Customer");
-    projectDTO.code = "id001";
-    projectDTO.projectTypology = new ProjectTypology("fixed cost");
-    projectDTO.name = "Test";
-    projectDTO.status = "planned";
-    projectDTO.businessSector = new BusinessSector("IT Sector");
+    Customer customer = new Customer("IT Customer");
+    ProjectTypology projectTypology = new ProjectTypology("fixed cost");
+    BusinessSector businessSector = new BusinessSector("IT Sector");
+    ProjectDTO projectDTO = new ProjectDTO("id001","Test",customer,projectTypology, businessSector);
+
     //account in project dto - product owner
     AccountInProjectDTO accountInProjectDTOPO = new AccountInProjectDTO();
     accountInProjectDTOPO.accountDTO = accountDTO;

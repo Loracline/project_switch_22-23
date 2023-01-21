@@ -1,10 +1,11 @@
 package org.switch2022.project.mapper;
 
-import org.switch2022.project.DTO.AccountInProjectDTO;
-import org.switch2022.project.controller.AccountMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.model.Project;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.mapper.AccountMapper;
+import org.switch2022.project.utils.mapper.ProjectMapper;
 
 import java.time.LocalDate;
 

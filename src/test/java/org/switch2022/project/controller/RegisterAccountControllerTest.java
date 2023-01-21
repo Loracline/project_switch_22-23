@@ -3,8 +3,8 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.container.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ class RegisterAccountControllerTest {
   Profile profileOne, profileTwo, profileThree;
   ProjectTypology projectTypology;
   Project project;
-  Customer customer;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
@@ -39,6 +38,9 @@ class RegisterAccountControllerTest {
   AccountInProject accountInProject1, accountInProject2;
   List<AccountInProject> accountsInProject;
   AccountInProjectContainer accountInProjectContainer;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
 
   Company company;
 
@@ -90,8 +92,15 @@ class RegisterAccountControllerTest {
     typologies.add(projectTypology);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    customer = new Customer("ISEP");
-    project = new Project("proj001", "software development management", customer,
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
+
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+    ;
+    project = new Project("proj001", "software development management", customerOne,
             projectTypology, businessSector);
 
     List<Project> projects = new ArrayList<>();
@@ -108,7 +117,7 @@ class RegisterAccountControllerTest {
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
     //initialize company with filled containers
 
     //initialize controller with company
@@ -135,6 +144,10 @@ class RegisterAccountControllerTest {
     projects.clear();
     projectContainer = null;
     company = null;
+    customerOne = null;
+    customerTwo = null;
+    customers.clear();
+    customerContainer = null;
     controller = null;
   }
 

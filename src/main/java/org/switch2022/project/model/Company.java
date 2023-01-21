@@ -1,8 +1,9 @@
 package org.switch2022.project.model;
 
-import org.switch2022.project.DTO.AccountInProjectDTO;
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.container.*;
+import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.*;
+
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -20,20 +21,20 @@ public class Company {
     private BusinessSectorContainer businessSectorContainer;
     private ProjectTypologyContainer projectTypologyContainer;
     private AccountInProjectContainer accountInProjectContainer;
+    private CustomerContainer customerContainer;
 
     /**
      * Company constructor
      */
-    public Company(AccountContainer accountContainer, ProfileContainer profileContainer
-            , BusinessSectorContainer
-            businessSectorContainer, ProjectContainer projectContainer,
-                   ProjectTypologyContainer projectTypologyContainer,
-                   AccountInProjectContainer accountInProjectContainer) {
+    public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer
+            businessSectorContainer, ProjectContainer projectContainer, ProjectTypologyContainer projectTypologyContainer,
+                   AccountInProjectContainer accountInProjectContainer, CustomerContainer customerContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
         this.projectTypologyContainer = projectTypologyContainer;
+        this.customerContainer = customerContainer;
         this.accountInProjectContainer = accountInProjectContainer;
     }
 
@@ -111,8 +112,13 @@ public class Company {
         return accountContainer.validateManager(email);
     }
 
+    /**
+     * This method returns a list of Accounts Allocated To a Project
+     *
+     * @return a list of Accounts
+     */
     public List<Account> listAccountsByProject(String projectCode) {
-        return projectContainer.listAccountsByProject(projectCode);
+        return accountInProjectContainer.listAccountsByProject(projectCode);
     }
 
     public boolean validateUser(String email) {
@@ -126,8 +132,7 @@ public class Company {
     public boolean createProjectTypology(String email, String projectTypology) {
         boolean projectTypologyCreated = false;
         if (accountContainer.validateAdministrator(email)) {
-            projectTypologyCreated =
-                    projectTypologyContainer.createProjectTypology(projectTypology);
+            projectTypologyCreated = projectTypologyContainer.createProjectTypology(projectTypology);
         }
         return projectTypologyCreated;
     }
@@ -149,5 +154,29 @@ public class Company {
     public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
         return this.accountInProjectContainer.addUserToProject(accountInProjectDTO);
     }
+
+
+
+    /**
+     * Getter method for the attribute Customer Container.
+     *
+     * @return the container of customers
+     */
+
+    public CustomerContainer getCustomerContainer() {
+        return customerContainer;
+    }
+
+    /**
+     * Method addCustomer
+     *
+     * @return true if customer is added
+     * @return false if customer isn't added successfully
+     */
+    public boolean addCustomer (String customerName){
+        return customerContainer.addCustomer(customerName);
+    }
+
+
 }
 
