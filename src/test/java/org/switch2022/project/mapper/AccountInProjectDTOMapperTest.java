@@ -7,6 +7,7 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AccountInProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
 
 import java.time.LocalDate;
 
@@ -18,7 +19,6 @@ class AccountInProjectDTOMapperTest {
     AccountDTO accountDTO;
     ProjectDTO projectDTO;
     AccountInProjectDTO accountInProjectDTOPO;
-    AccountInProject accountInProject;
     Project project;
     Account account;
 
@@ -45,8 +45,8 @@ class AccountInProjectDTOMapperTest {
         accountInProjectDTOPO.role = "Product Owner";
         accountInProjectDTOPO.costPerHour = 7.5f;
         accountInProjectDTOPO.percentageAllocation = 45.0f;
-        accountInProjectDTOPO.startDate = LocalDate.of(2023, 01, 19);
-        accountInProjectDTOPO.endDate = LocalDate.of(2023, 01, 22);
+        accountInProjectDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        accountInProjectDTOPO.endDate = LocalDate.of(2023, 1, 22);
     }
 
     @AfterEach
@@ -104,7 +104,7 @@ class AccountInProjectDTOMapperTest {
                 projectDTO.projectTypology, projectDTO.businessSector);
 
         AccountInProject expected = new AccountInProject(account, project, "Product " +
-                "Owner", 7.5f, 45.0f, LocalDate.of(2023, 01, 19));
+                "Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19));
 
         mapper = new AccountInProjectDTOMapper();
 

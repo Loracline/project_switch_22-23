@@ -1,11 +1,9 @@
-package org.switch2022.project.mapper;
+package org.switch2022.project.utils.mapper;
 
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.dto.AccountInProjectDTO;
-import org.switch2022.project.utils.mapper.AccountMapper;
-import org.switch2022.project.utils.mapper.ProjectMapper;
 
 import java.time.LocalDate;
 
@@ -23,7 +21,7 @@ public class AccountInProjectDTOMapper {
         AccountMapper accountMapper = new AccountMapper();
 
 
-        Account account = accountMapper.accountFromDTO(dto.accountDTO);
+        Account account = accountMapper.getAccountFromDTO(dto.accountDTO);
         Project project = projectMapper.fromDTO(dto.projectDTO);
 
         float costPerHour = dto.costPerHour;

@@ -24,6 +24,7 @@ public class Company {
     private final AccountInProjectContainer accountInProjectContainer;
     private final CustomerContainer customerContainer;
 
+
     /**
      * Constructor
      */
@@ -38,6 +39,9 @@ public class Company {
         this.customerContainer = customerContainer;
         this.accountInProjectContainer = accountInProjectContainer;
     }
+
+
+    // "GETTERS"
 
     /**
      * Getter method for the attribute: accountContainer.
@@ -57,6 +61,43 @@ public class Company {
         return customerContainer;
     }
 
+
+    // ACTOR VALIDATION METHODS
+
+    /**
+     * This method validates if the actor is an account with profile "Manager".
+     *
+     * @param email of the actor's account.
+     * @return TRUE if "Manager" and FALSE otherwise.
+     */
+    public boolean validateManager(String email) {
+        return accountContainer.validateManager(email);
+    }
+
+    /**
+     * This method validates if the actor is an account with profile "User".
+     *
+     * @param email of the actor's account.
+     * @return TRUE if "User" and FALSE otherwise.
+     */
+    public boolean validateUser(String email) {
+        return accountContainer.validateUser(email);
+    }
+
+    /**
+     * This method validates if the actor is an account with profile
+     * "Administrator".
+     *
+     * @param email of the actor's account.
+     * @return TRUE if "Administrator" and FALSE otherwise.
+     */
+    public boolean validateAdministrator(String email) {
+        return accountContainer.validateAdministrator(email);
+    }
+
+
+    // PROFILE METHODS
+
     /**
      * This method creates a new profile and adds it to the container.
      *
@@ -66,6 +107,37 @@ public class Company {
     public boolean createProfile(String profileName) {
         return profileContainer.createProfile(profileName);
     }
+
+    /**
+     * This method changes the profile of existing account in the container.
+     *
+     * @param email       of account.
+     * @param profileName of the profile one intend to change to.
+     * @return TRUE if changed, and FALSE otherwise.
+     */
+    public boolean changeProfile(String email, String profileName) {
+        boolean wasAccountProfileUpdated = false;
+        Profile profile = profileContainer.getProfileByName(profileName);
+        Account account = accountContainer.getAccountByEmail(email);
+        if (account != null && profile != null) {
+            account.setProfile(profile);
+            wasAccountProfileUpdated = true;
+        }
+        return wasAccountProfileUpdated;
+    }
+
+    /**
+     * This method lists the accounts in the container that have the profile
+     * "User".
+     *
+     * @return a list of accounts with the profile "User".
+     */
+    public List<Account> listAllUsers() {
+        return accountContainer.listAllUsers();
+    }
+
+
+    // ACCOUNT METHODS
 
     /**
      * This method registers a new account and adds it to the container.
@@ -92,23 +164,8 @@ public class Company {
         return accountContainer.changeStatus(email, status);
     }
 
-    /**
-     * This method changes the profile of existing account in the container.
-     *
-     * @param email       of account.
-     * @param profileName of the profile one intend to change to.
-     * @return TRUE if changed, and FALSE otherwise.
-     */
-    public boolean changeProfile(String email, String profileName) {
-        boolean wasAccountProfileUpdated = false;
-        Profile profile = profileContainer.getProfileByName(profileName);
-        Account account = accountContainer.getAccountByEmail(email);
-        if (account != null && profile != null) {
-            account.setProfile(profile);
-            wasAccountProfileUpdated = true;
-        }
-        return wasAccountProfileUpdated;
-    }
+
+    // PROJECT METHODS
 
     /**
      * This method registers a new project and adds it to the container.
@@ -128,6 +185,18 @@ public class Company {
     }
 
     /**
+     * This method lists all projects in the container.
+     *
+     * @return a list of all projects.
+     */
+    public List<Project> listAllProjects() {
+        return projectContainer.getProjects();
+    }
+
+
+    // BUSINESS SECTOR METHODS
+
+    /**
      * This method adds a new business sector to the container.
      *
      * @param businessSectorName of the business sector one intend to add.
@@ -136,6 +205,9 @@ public class Company {
     public boolean addBusinessSector(String businessSectorName) {
         return businessSectorContainer.createBusinessSector(businessSectorName);
     }
+
+
+    // CUSTOMER METHODS
 
     /**
      * This method adds a new customer to the container.
@@ -148,33 +220,15 @@ public class Company {
     }
 
 
-
-
-
-
-
-
-    public boolean validateManager(String email) {
-        return accountContainer.validateManager(email);
-    }
+    // PROJECT TYPOLOGY METHODS
 
     /**
-     * This method returns a list of Accounts Allocated To a Project
+     * This method adds a new typology of project to the container.
      *
-     * @return a list of Accounts
+     * @param email           of the actor.
+     * @param projectTypology of project one intend to create.
+     * @return TRUE if added, and FALSE otherwise.
      */
-    public List<Account> listAccountsByProject(String projectCode) {
-        return accountInProjectContainer.listAccountsByProject(projectCode);
-    }
-
-    public boolean validateUser(String email) {
-        return accountContainer.validateUser(email);
-    }
-
-    public boolean validateAdministrator(String email) {
-        return accountContainer.validateAdministrator(email);
-    }
-
     public boolean createProjectTypology(String email, String projectTypology) {
         boolean projectTypologyCreated = false;
         if (accountContainer.validateAdministrator(email)) {
@@ -183,24 +237,28 @@ public class Company {
         return projectTypologyCreated;
     }
 
-    /**
-     * This method returns list of projects
-     *
-     * @return list of projects
-     */
-    public List<Project> getListAllProjects() {
-        return projectContainer.getProjects();
-    }
+
+    // ACCOUNT IN PROJECT METHODS
 
     /**
-     * This method associates a user account to a project with a role
+     * This method adds an account to a project with a specific role.
      *
-     * @return true if user account is successfully associated to a project
+     * @param accountInProjectDTO data transfer object gathering the information
+     *                            needed.
+     * @return TRUE if added, and FALSE otherwise.
      */
     public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
         return this.accountInProjectContainer.addUserToProject(accountInProjectDTO);
     }
 
-
+    /**
+     * This method lists the accounts working in a specific project.
+     *
+     * @param projectCode of the project one searches for.
+     * @return list of accounts involved in this project.
+     */
+    public List<Account> listAccountsByProject(String projectCode) {
+        return accountInProjectContainer.listAccountsByProject(projectCode);
+    }
 }
 

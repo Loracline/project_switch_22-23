@@ -1,6 +1,7 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Account;
+import org.switch2022.project.utils.Helper;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -16,12 +17,18 @@ public class AccountContainer {
      */
     private final List<Account> accounts;
 
+
+
     /**
      * Constructor
      */
     public AccountContainer(List<Account> accounts) {
         this.accounts = accounts;
     }
+
+
+
+    // "GETTERS"
 
     /**
      * Getter method for the attribute: accounts
@@ -50,46 +57,9 @@ public class AccountContainer {
         return requestedAccount;
     }
 
-    /**
-     * This method checks if there is any account in the list that has the
-     * e-mail passed by parameter.
-     *
-     * @param email that one must find out if exists
-     * @return TRUE if there is an account with given e-mail and FALSE otherwise
-     */
-    public boolean doesEmailExist(String email) {
-        boolean emailExists = false;
-        int i = 0;
-        while (i < this.accounts.size()) {
-            if (accounts.get(i).getEmail().equals(email)) {
-                emailExists = true;
-                break;
-            }
-            i++;
-        }
-        return emailExists;
-    }
 
-    /**
-     * This method adds new account to the container of accounts after validating
-     * if an account with given e-mail doesn't already exist.
-     *
-     * @param name        of the new account
-     * @param email       of the new account
-     * @param phoneNumber of the new account
-     * @param photo       of the new account
-     * @return TRUE if account is added to container and FALSE otherwise.
-     */
-    public boolean addAccount(String name, String email, long phoneNumber,
-                              BufferedImage photo) {
-        boolean isAccountAdded = false;
-        Account account = new Account(name, email, phoneNumber, photo);
-        if (!doesEmailExist(email)) {
-            this.accounts.add(account);
-            isAccountAdded = true;
-        }
-        return isAccountAdded;
-    }
+
+    // VALIDATE ACTORS
 
     /**
      * This method validates if account with given e-mail has the "Manager"
@@ -156,6 +126,59 @@ public class AccountContainer {
         return isUser;
     }
 
+
+
+    // VALIDATE INSTANCE IN CONTAINER
+
+    /**
+     * This method checks if there is any account in the list that has the
+     * e-mail passed by parameter.
+     *
+     * @param email that one must find out if exists
+     * @return TRUE if there is an account with given e-mail and FALSE otherwise
+     */
+    public boolean doesEmailExist(String email) {
+        boolean emailExists = false;
+        int i = 0;
+        while (i < this.accounts.size()) {
+            if (accounts.get(i).getEmail().equals(email)) {
+                emailExists = true;
+                break;
+            }
+            i++;
+        }
+        return emailExists;
+    }
+
+
+
+    // ADD TO CONTAINER
+
+    /**
+     * This method adds new account to the container of accounts after validating
+     * if an account with given e-mail doesn't already exist.
+     *
+     * @param name        of the new account
+     * @param email       of the new account
+     * @param phoneNumber of the new account
+     * @param photo       of the new account
+     * @return TRUE if account is added to container and FALSE otherwise.
+     */
+    public boolean addAccount(String name, String email, long phoneNumber,
+                              BufferedImage photo) {
+        boolean isAccountAdded = false;
+        Account account = new Account(name, email, phoneNumber, photo);
+        if (!doesEmailExist(email)) {
+            this.accounts.add(account);
+            isAccountAdded = true;
+        }
+        return isAccountAdded;
+    }
+
+
+
+    // CHANGE INSTANCE IN CONTAINER
+
     /**
      * This method changes the status of account stored in the container.
      *
@@ -165,14 +188,35 @@ public class AccountContainer {
      */
     public boolean changeStatus(String email, boolean status) {
         boolean isChanged = false;
-        if(doesEmailExist(email)) {
+        if (doesEmailExist(email)) {
             Account account = getAccountByEmail(email);
-            Account copyAccount = getAccountByEmail(email);
+            Account copyAccount = new Account(account);
             copyAccount.setStatus(status);
             if (account.getAccountStatus() != copyAccount.getAccountStatus()) {
                 isChanged = true;
             }
         }
         return isChanged;
+    }
+
+
+
+    // LIST IN CONTAINER
+
+    /**
+     * This method lists all accounts that have the profile "User".
+     *
+     * @return a list of accounts with profile "User".
+     */
+    public List<Account> listAllUsers() {
+        List<Account> users = new ArrayList<>();
+        int i = 0;
+        while (Helper.isLower(i, accounts.size())) {
+            if (accounts.get(i).isUser()) {
+                users.add(accounts.get(i));
+            }
+            i++;
+        }
+        return users;
     }
 }

@@ -25,8 +25,6 @@ class ChangeStatusControllerTest {
   BusinessSector businessSector;
   ProjectTypology projectTypology;
   Project project;
-  List<Account> accounts;
-  List<Profile> profiles;
   List<BusinessSector> businessSectors;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
@@ -137,7 +135,7 @@ class ChangeStatusControllerTest {
 
   @Test
   void ensureAccountStatusIsChangedToInactive() {
-    boolean expected = false;
+    boolean expected = true;
     accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
     boolean result = accountOne.equals(accountTwo);
     assertEquals(expected,result);

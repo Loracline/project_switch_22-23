@@ -40,6 +40,16 @@ public class Account {
         }
     }
 
+    // Copy constructor
+    public Account(Account other) {
+        this.accountName = other.accountName;
+        this.email = other.email;
+        this.phoneNumber = other.phoneNumber;
+        this.profile = other.profile;
+        this.accountStatus = other.accountStatus;
+        this.photo = other.photo;
+    }
+
     /**
      * This method checks if two instances of Account are equal by comparing
      * all their attributes.

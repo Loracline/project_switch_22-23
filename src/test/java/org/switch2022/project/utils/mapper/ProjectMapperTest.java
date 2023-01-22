@@ -16,14 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ProjectMapperTest {
 
-
   /**
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
   Account accountOne, accountTwo, accountThree;
   Profile profileOne, profileTwo, profileThree;
-  ProjectTypology projectTypologyOne, projectTypologyTwo, projectTypology;
+  ProjectTypology projectTypologyOne, projectTypologyTwo;
   Project projectOne, projectTwo, projectThree;
   BusinessSector businessSectorOne, businessSectorTwo;
   Customer customerOne, customerTwo;
@@ -84,7 +83,7 @@ class ProjectMapperTest {
 
     costPerHour = 7.5f;
     percentageAllocation = 45.0f;
-    startDate = LocalDate.of(2023, 01, 19);
+    startDate = LocalDate.of(2023, 1, 19);
     accountInProject = new AccountInProject(accountOne, projectOne, "Team Member",
             costPerHour, percentageAllocation, startDate);
     accountsInProject = new ArrayList<>();

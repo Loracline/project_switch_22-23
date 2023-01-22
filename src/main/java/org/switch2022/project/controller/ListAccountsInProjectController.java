@@ -27,7 +27,7 @@ public class ListAccountsInProjectController {
         if (company.validateManager(email)) {
             List<Account> accounts = company.listAccountsByProject(projectCode);
             AccountMapper accountMapper = new AccountMapper();
-            accountsDTO = accountMapper.accountsToDTO(accounts);
+            accountsDTO = accountMapper.getListDTOFromAccounts(accounts);
         }
         return accountsDTO;
     }

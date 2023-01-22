@@ -1,13 +1,22 @@
 package org.switch2022.project.utils.mapper;
 
-import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.model.Account;
+import org.switch2022.project.utils.Helper;
+import org.switch2022.project.utils.dto.AccountDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountMapper {
-    public AccountDTO accountToDTO(Account account) {
+    // DTO -> ACCOUNT
+
+    /**
+     * This method converts an account into a DTO.
+     *
+     * @param account one must convert.
+     * @return DTO carrying data.
+     */
+    public AccountDTO getDTOFromAccount(Account account) {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = account.getAccountName();
         accountDTO.email = account.getEmail();
@@ -18,12 +27,17 @@ public class AccountMapper {
         return accountDTO;
     }
 
+
+
+    // ACCOUNT -> DTO
+
     /**
-     * Method that transforms an AccountDTO into an instance of Account
-     * @param accountDTO
-     * @return new instance of account
+     * This method extracts data from DTO to an account.
+     *
+     * @param accountDTO data transfer object carrying data needed.
+     * @return an account.
      */
-    public Account accountFromDTO(AccountDTO accountDTO) {
+    public Account getAccountFromDTO(AccountDTO accountDTO) {
         Account account = new Account(accountDTO.name, accountDTO.email,
                 accountDTO.phoneNumber, accountDTO.photo);
         account.setProfile(accountDTO.profile);
@@ -31,13 +45,25 @@ public class AccountMapper {
         return account;
     }
 
-    public List<AccountDTO> accountsToDTO(List<Account> accounts) {
-        List<AccountDTO> accountsDto = new ArrayList<>();
-        for (int i = 0; i < accounts.size(); i++) {
-            AccountDTO accountDTO = accountToDTO(accounts.get(i));
-            accountsDto.add(accountDTO);
+
+
+    // LIST OF ACCOUNTS -> LIST OF DTO
+
+    /**
+     * This method converts a list of accounts into a list of accountDTOs.
+     *
+     * @param accounts list one must convert in DTO
+     * @return a list of accountDTOs.
+     */
+    public List<AccountDTO> getListDTOFromAccounts(List<Account> accounts) {
+        List<AccountDTO> accountsDTO = new ArrayList<>();
+        int i = 0;
+        while (Helper.isLower(i, accounts.size())) {
+            AccountDTO accountDTO = getDTOFromAccount(accounts.get(i));
+            accountsDTO.add(accountDTO);
+            i++;
         }
-        return accountsDto;
+        return accountsDTO;
     }
 }
 

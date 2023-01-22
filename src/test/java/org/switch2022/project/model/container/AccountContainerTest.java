@@ -16,7 +16,8 @@ class AccountContainerTest {
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
-    Account accountOne, accountTwo, accountThree, accountFour;
+    Account accountOne, accountTwo, accountThree, accountFour, accountFive,
+            accountSix, accountSeven;
     Profile profileOne, profileTwo, profileThree;
     ProjectTypology projectTypology;
     Project project;
@@ -41,142 +42,106 @@ class AccountContainerTest {
     AccountInProjectContainer accountInProjectContainer;
     Company company;
 
+
     @BeforeEach
     void setUp() {
-        /*
-          Accounts created.
-         */
+        // Accounts created.
         accountOne = new Account("Claire", "claire@isep.ipp.pt", 932755689, null);
         accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
         accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
         accountFour = new Account("Poppy", "poppy@isep.ipp.pt", 932755686, null);
+        accountFive = new Account("John", "john@isep.ipp.pt", 951753258, null);
+        accountSix = new Account("Tess", "tess@isep.ipp.pt", 753159852, null);
+        accountSeven = new Account("Hans", "hans@isep.ipp.pt", 357159852, null);
 
-        /*
-          Container of accounts created.
-         */
+        // Container of accounts created.
         accounts = new ArrayList<>();
         accountContainer = new AccountContainer(accounts);
 
-        /*
-          Accounts added to the Container.
-         */
+        // Accounts added to the Container.
         accounts.add(accountOne);
         accounts.add(accountTwo);
         accounts.add(accountThree);
+        accounts.add(accountFive);
+        accounts.add(accountSix);
+        accounts.add(accountSeven);
 
-        /*
-          Profiles created.
-         */
+        // Profiles created.
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("Manager");
         profileThree = new Profile("Administrator");
 
-        /*
-          Container of profiles created.
-         */
+        // Container of profiles created.
         profiles = new ArrayList<>();
         profileContainer = new ProfileContainer(profiles);
 
-        /*
-          Profiles added to the Container.
-         */
+        // Profiles added to the Container.
         profiles.add(profileOne);
         profiles.add(profileTwo);
         profiles.add(profileThree);
 
-        /*
-          Business sectors created.
-         */
+        // Business sectors created.
         businessSector = new BusinessSector("fishing");
 
-        /*
-          Business sectors container created.
-         */
+        // Business sectors container created.
         businessSectors = new ArrayList<>();
         businessSectorContainer = new BusinessSectorContainer(businessSectors);
 
-        /*
-          Business sector added to the Container.
-         */
+        // Business sector added to the Container.
         businessSectors.add(businessSector);
 
-        /*
-          Project typologies created.
-         */
+        // Project typologies created.
         projectTypology = new ProjectTypology("Fixed Cost");
 
-        /*
-          Project typologies container created.
-         */
+        // Project typologies container created.
         List<ProjectTypology> typologies = new ArrayList<>();
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-        /*
-          Project typologies added to the Container.
-         */
+        // Project typologies added to the Container.
         typologies.add(projectTypology);
 
-        /*
-          Customers created.
-         */
+        // Customers created.
         customerOne = new Customer("ISEP");
         customerTwo = new Customer("PortoTech");
 
-        /*
-          Customers container created.
-         */
+        // Customers container created.
         customers = new ArrayList<>();
         customerContainer = new CustomerContainer(customers);
 
-        /*
-          Customers added to the Container.
-         */
+        // Customers added to the Container.
         customers.add(customerOne);
         customers.add(customerTwo);
 
-        /*
-          Projects created.
-         */
+        // Projects created.
         project = new Project("proj001", "software development management", customerOne,
                 projectTypology, businessSector);
 
-        /*
-          Project container created.
-         */
+        // Project container created.
         projects = new ArrayList<>();
         projectContainer = new ProjectContainer(projects);
 
-        /*
-          Projects added to the Container.
-         */
+        // Projects added to the Container.
         projects.add(project);
 
-        /*
-          Accounts in project created.
-         */
+        // Accounts in project created.
         accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
         accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
 
-        /*
-          Container of accounts in project created.
-         */
+        // Container of accounts in project created.
         accountsInProject = new ArrayList<>();
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
-        /*
-          Accounts in project added to the Container.
-         */
+        // Accounts in project added to the Container.
         accountsInProject.add(accountInProject1);
         accountsInProject.add(accountInProject2);
 
-        /*
-          Company created.
-         */
+        // Company created.
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
     }
+
 
     @AfterEach
     void tearDown() {
@@ -203,8 +168,9 @@ class AccountContainerTest {
         company = null;
     }
 
+
     /**
-     * Testing if one can get all accounts in container.
+     * getAccounts()
      */
     @Test
     void ensureThatAccountListIsRetrieved() {
@@ -212,6 +178,9 @@ class AccountContainerTest {
         expected.add(accountOne);
         expected.add(accountTwo);
         expected.add(accountThree);
+        expected.add(accountFive);
+        expected.add(accountSix);
+        expected.add(accountSeven);
 
         List<Account> result = accountContainer.getAccounts();
 
@@ -226,6 +195,9 @@ class AccountContainerTest {
         copy.add(accountOne);
         copy.add(accountTwo);
         copy.add(accountThree);
+        copy.add(accountFive);
+        copy.add(accountSix);
+        copy.add(accountSeven);
 
         List<Account> result = listOfAccounts.getAccounts();
 
@@ -244,8 +216,9 @@ class AccountContainerTest {
         assertNotEquals(copy, result);
     }
 
+
     /**
-     * Testing if one can get account by giving e-mail as parameter.
+     * getAccountByEmail(String email)
      */
     @Test
     void ensureAccountIsRetrievedSuccessfully() {
@@ -261,29 +234,11 @@ class AccountContainerTest {
         assertNull(result);
     }
 
-    /**
-     * Testing if one can add account to the container.
-     */
-    @Test
-    void ensureThatAccountIsAddedIfEmailIsUnique() {
-        boolean expected = true;
-
-        boolean result = accountContainer.addAccount("Poppy", "poppy@isep.ipp.pt", 932755686, null);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatAccountIsNotAddedIfEmailIsDuplicated() {
-        boolean expected = false;
-
-        boolean result = accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
-
-        assertEquals(expected, result);
-    }
 
     /**
-     * Testing if one can validate profiles' account.
+     * validateManager(String email)
+     * validateAdministrator(String email)
+     * validateUser(String email)
      */
     @Test
     void ensureThatAccountHasProfileManagerSuccessfully() {
@@ -345,6 +300,79 @@ class AccountContainerTest {
         //Act
         boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
         //Assert
+        assertEquals(expected, result);
+    }
+
+
+    /**
+     * addAccount(String name, String email, long phoneNumber, BufferedImage photo)
+     */
+    @Test
+    void ensureThatAccountIsAddedIfEmailIsUnique() {
+        boolean expected = true;
+
+        boolean result = accountContainer.addAccount("Poppy", "poppy@isep.ipp.pt", 932755686, null);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatAccountIsNotAddedIfEmailIsDuplicated() {
+        boolean expected = false;
+
+        boolean result = accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
+
+        assertEquals(expected, result);
+    }
+
+
+    /**
+     * changeStatus(String email, boolean status)
+     */
+    @Test
+    void ensureStatusIsChangedSuccessfully() {
+        // ARRANGE
+        boolean expected = true;
+
+        // ACT
+        boolean result = accountContainer.changeStatus("claire@isep.ipp.pt", false);
+
+        // ASSERT
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureStatusIsNotChanged() {
+        // ARRANGE
+        boolean expected = false;
+
+        // ACT
+        boolean result = accountContainer.changeStatus("claire@isep.ipp.pt", true);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+
+    /**
+     * listAllUsers()
+     */
+    @Test
+    void ensureListIsRetrievedSuccessfully() {
+        // Arrange
+        accountOne.setProfile(profileOne);
+        accountTwo.setProfile(profileTwo);
+        accountThree.setProfile(profileThree);
+
+        List<Account> expected = new ArrayList<>();
+        expected.add(accountFive);
+        expected.add(accountSix);
+        expected.add(accountSeven);
+
+        // Act
+        List<Account> result = accountContainer.listAllUsers();
+
+        // Assert
         assertEquals(expected, result);
     }
 }

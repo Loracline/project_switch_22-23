@@ -1,6 +1,6 @@
 package org.switch2022.project.model.container;
 
-import org.switch2022.project.mapper.AccountInProjectDTOMapper;
+import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.utils.Helper;
