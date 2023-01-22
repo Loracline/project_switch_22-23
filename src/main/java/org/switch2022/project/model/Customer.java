@@ -19,6 +19,10 @@ public class Customer {
         this.customerName = customerName.toLowerCase();
     }
 
+    public String getCustomerName() {
+        return this.customerName;
+    }
+
     /**
      * This method checks if two instances of Customer are equal by comparing
      * its names.
