@@ -19,6 +19,10 @@ public class ProjectTypology {
         this.projectTypologyName = projectTypologyName.toLowerCase();
     }
 
+    public String getProjectTypology() {
+        return this.projectTypologyName;
+    }
+
     /**
      * This method checks if two instances of ProjectTypology are equal by
      * comparing its names.
