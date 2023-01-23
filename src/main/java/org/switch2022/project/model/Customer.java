@@ -41,4 +41,9 @@ public class Customer {
         Customer customer1 = (Customer) toCompare;
         return Objects.equals(customerName, customer1.customerName);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerName);
+    }
 }
