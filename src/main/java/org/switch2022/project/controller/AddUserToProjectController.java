@@ -7,6 +7,10 @@ public class AddUserToProjectController {
 
     Company company;
 
+    public AddUserToProjectController (Company company) {
+        this.company = company;
+    }
+
     public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO){
         return this.company.addUserToProject(accountInProjectDTO);
     }

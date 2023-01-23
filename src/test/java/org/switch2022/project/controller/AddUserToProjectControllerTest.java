@@ -197,9 +197,10 @@ class AddUserToProjectControllerTest {
         accountInProjectDTOPO.percentageAllocation = 45.0f;
         accountInProjectDTOPO.startDate = LocalDate.of(2023, 01, 19);
         accountInProjectDTOPO.endDate = LocalDate.of(2023, 01, 22);
+        AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = company.addUserToProject(accountInProjectDTOPO);
+        boolean result = controller.addUserToProject(accountInProjectDTOPO);
 
         //Assert
         assertTrue(result);
@@ -223,7 +224,7 @@ class AddUserToProjectControllerTest {
         projectDTO.name = "Test";
         projectDTO.status = "planned";
         projectDTO.businessSector = new BusinessSector("IT Sector");
-        //account in project dto - product owner
+        //account in project dto - team member
         AccountInProjectDTO accountInProjectDTOTM = new AccountInProjectDTO();
         accountInProjectDTOTM.accountDTO = accountDTO;
         accountInProjectDTOTM.projectDTO = projectDTO;
@@ -232,13 +233,13 @@ class AddUserToProjectControllerTest {
         accountInProjectDTOTM.percentageAllocation = 45.0f;
         accountInProjectDTOTM.startDate = LocalDate.of(2023, 01, 19);
         accountInProjectDTOTM.endDate = LocalDate.of(2023, 01, 22);
+        AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = company.addUserToProject(accountInProjectDTOTM);
+        boolean result = controller.addUserToProject(accountInProjectDTOTM);
 
         //Assert
         assertTrue(result);
-
     }
 
 }
