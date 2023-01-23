@@ -18,6 +18,11 @@ public class ProjectDTO {
   public ProjectTypology projectTypology;
   public BusinessSector businessSector;
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(code, name, customer, status, projectTypology, businessSector);
+  }
+
   public ProjectDTO(String code, String name, Customer customer, ProjectTypology projectTypology,
                     BusinessSector businessSector) {
     this.code = code;

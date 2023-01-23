@@ -30,6 +30,11 @@ public class Project {
         this.businessSector = businessSector;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectCode, projectName, customer, projectTypology, businessSector, projectStatus);
+    }
+
     /**
      * This method checks if two instances of Project are equal by comparing
      * all their attributes.

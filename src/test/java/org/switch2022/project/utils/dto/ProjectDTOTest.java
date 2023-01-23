@@ -55,4 +55,6 @@ class ProjectDTOTest {
     boolean result = projectDTOOne.equals(projectObject);
     assertEquals(expected, result);
   }
+
+  //todo hashcode test
 }
