@@ -89,12 +89,6 @@ public class AccountContainer {
   public boolean changeStatus(String email, boolean status) {
     return (getAccountByEmail(email).setStatus(status));
   }
-  /**
-   * method to check if email corresponds to an account that is a Manager
-   *
-   * @param email
-   *
-   */
   public boolean validateManager(String email){
     boolean isManager=false;
     for (int i = 0; i < this.accounts.size(); i++) {

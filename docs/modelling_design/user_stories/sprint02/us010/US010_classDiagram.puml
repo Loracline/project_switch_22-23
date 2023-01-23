@@ -1,0 +1,75 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW PROJECT
+legend top
+US010 - As Manager, I want to register/create a new project.
+end legend
+
+class RegisterProjectController {
+- service
++ registerProject(dto, email)
+}
+
+
+class Company {
+- projectContainer
+- accountContainer
++ validateManager(email)
++ registerProject(dto)
+}
+class AccountContainer {
++ validateManager(email)
+- Accounts
+}
+
+class Account {
++ isManager()
+- profile
+}
+
+class Profile {
+-profileName
+}
+
+class ProjectContainer {
+- projects
++ registerProject(dto)
+}
+
+class ProjectMapper{
++ toDTO(project)
++ fromDTO(projectDTO)
+}
+
+class ProjectDTO{
++ code
++ name
++ status
++ customer
++ projectTypology
++ businessSector
+}
+
+class Project{
+- code
+- name
+- status
+- customer
+- projectTypology
+- businessSector
+}
+
+RegisterProjectController "1"-->"1" Company: has
+Company "1"-->"1" ProjectContainer: has
+Company "1"-->"1" AccountContainer: has
+AccountContainer "1"-->"*" Account: contains
+Account "1"-->"1" Profile: has
+ProjectMapper ..> ProjectDTO
+ProjectContainer ..> ProjectMapper
+RegisterProjectController ..> ProjectMapper
+Company ..> ProjectDTO
+ProjectContainer..> ProjectDTO
+ProjectMapper ..> Project
+ProjectContainer "1" -left-> "*" Project: contains
+@enduml

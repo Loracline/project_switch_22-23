@@ -2,9 +2,12 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ProjectTypologyTest {
+    /**
+     * Testing the equals() method.
+     */
     @Test
     void ensureSameObjectEqualsItself() {
         ProjectTypology reference = new ProjectTypology("Fixed Cost");
@@ -13,6 +16,7 @@ class ProjectTypologyTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+
     @Test
     void ensureTwoProfilesAreNotTheSame() {
         ProjectTypology reference = new ProjectTypology("Fixed Cost");
@@ -21,13 +25,14 @@ class ProjectTypologyTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     void ensureObjectDoesNotEqualsOtherTypeOfObject() {
         ProjectTypology reference = new ProjectTypology("Fixed Cost");
-        String other = new String("Fixed Cost");
+        String other = "Fixed Cost";
         boolean expected = false;
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
-
 }

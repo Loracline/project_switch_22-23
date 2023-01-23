@@ -1,0 +1,70 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO LIST ALL PROJECTS
+legend top
+US015 - As a Manager, I want to get a list of all projects
+end legend
+autonumber
+actor Manager
+participant ":GetListOfProjectsUI" as ui
+participant ":GetListListOfProjectsController" as controller
+participant ":Company" as company
+participant ":AccountContainer" as ac
+participant "account:Account" as a
+participant ":ProjectContainer" as pc
+participant "projectMapper:ProjectMapper" as mapper
+participant "listAllProjectsDTO: List<ProjectDTO>" as list
+participant "projectDTO:projectDTO" as DTO
+
+activate Manager
+Manager -> ui: get list of all projects
+activate ui
+ui -> controller: getListOfProjects(email)
+activate controller
+controller -> company: validateManager(email)
+activate company
+company -> ac: validateManager(email)
+activate ac
+ac -> ac: getAccountByEmail(email)
+ac -> a: isManager()
+activate a
+a --> ac: true
+deactivate a
+ac --> company: true
+deactivate ac
+company --> controller: true
+deactivate company
+controller -> company: getListAllProjects()
+activate company
+company -> pc: getListAllProjects()
+activate pc
+pc --> company: projects
+deactivate pc
+company --> controller: projects
+deactivate company
+create mapper
+controller -> mapper: create(projects)
+create list
+mapper --> list: create ()
+loop for each project in projectContainer
+mapper -> pc: project = get(i)
+activate pc
+pc --> mapper: project
+deactivate pc
+activate mapper
+mapper -> mapper : toDTO(project)
+create DTO
+mapper --> DTO : create()
+deactivate mapper
+mapper ->list :add(projectDTO)
+activate list
+list --> mapper : true
+deactivate list
+end loop
+mapper --> controller :listAllProjectsDTO
+deactivate mapper
+controller --> ui: listAllProjectsDTO
+deactivate controller
+ui --> Manager: showListAllProjects
+deactivate ui
+@enduml

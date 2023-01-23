@@ -2,20 +2,43 @@ package org.switch2022.project.model;
 
 import java.util.Objects;
 
+/**
+ * Class ProjectTypology is built to create and manage new project typologies.
+ * A project typology is defined by name.
+ */
 public class ProjectTypology {
+    /**
+     * Attributes
+     */
+    private final String projectTypologyName;
 
-    private String projectTypology;
-
-    public ProjectTypology(String projectTypology){
-        this.projectTypology=projectTypology.toLowerCase();
+    /**
+     * Constructor
+     */
+    public ProjectTypology(String projectTypologyName) {
+        this.projectTypologyName = projectTypologyName.toLowerCase();
     }
 
+    public String getProjectTypology() {
+        return this.projectTypologyName;
+    }
+
+    /**
+     * This method checks if two instances of ProjectTypology are equal by
+     * comparing its names.
+     *
+     * @param toCompare ProjectTypology instance to compare with.
+     * @return TRUE if the two have the same typology name, and FALSE otherwise.
+     */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProjectTypology)) return false;
-        ProjectTypology that = (ProjectTypology) o;
-        return Objects.equals(projectTypology, that.projectTypology);
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) {
+            return true;
+        }
+        if (!(toCompare instanceof ProjectTypology)) {
+            return false;
+        }
+        ProjectTypology that = (ProjectTypology) toCompare;
+        return Objects.equals(projectTypologyName, that.projectTypologyName);
     }
-
 }

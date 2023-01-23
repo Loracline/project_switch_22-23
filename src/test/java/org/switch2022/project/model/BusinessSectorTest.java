@@ -2,9 +2,12 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BusinessSectorTest {
+    /**
+     * Testing the equals() method.
+     */
     @Test
     void ensureSameObjectEqualsItself() {
         BusinessSector reference = new BusinessSector("fishing");
@@ -13,6 +16,7 @@ class BusinessSectorTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+
     @Test
     void ensureTwoBusinessSectorsAreNotTheSame() {
         BusinessSector reference = new BusinessSector("mining");
@@ -21,10 +25,12 @@ class BusinessSectorTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     void ensureObjectDoesNotEqualsOtherTypeOfObject() {
         BusinessSector reference = new BusinessSector("mining");
-        String other = new String("mining");
+        String other = "mining";
         boolean expected = false;
         boolean result = reference.equals(other);
         assertEquals(expected, result);

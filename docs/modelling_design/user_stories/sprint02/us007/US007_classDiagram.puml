@@ -1,0 +1,50 @@
+@startuml
+
+legend top
+US007 -  As Administrator, I want to create a new project typology.
+end legend
+skinparam sequenceMessageAlign center
+title CREATE A NEW PROJECT TYPOLOGY
+
+"Controller" --> "Company"
+"Company" --> "ProjectTypologyContainer"
+"Company" --> "AccountContainer"
+"ProjectTypologyContainer" --> "ProjectTypology"
+"AccountContainer" --> "Account"
+
+class "Controller" {
+- company
++createProjectTypology(email, projectTypology)
+}
+class "Company" {
+-accountContainer
+-projectTypologyContainer
++createProjectTypology(projectTypology)
++validateAdministrator(email)
+}
+class "ProjectTypologyContainer"{
+-typologies
++createProjectTypology(projectTypology)
+-doesProjectTypologyExist(projectTypology)
+}
+class "AccountContainer"{
+-accounts
++validateAdministrator(email)
++getAccountByEmail(email)
+}
+class "ProjectTypology"{
+-name
++ProjectTypology(name)
+}
+
+class "Account"{
+-name
+-email
+-phoneNumber
+-profile
+-status
+-photo
++isAdministrator()
+}
+
+@enduml

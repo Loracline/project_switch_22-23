@@ -3,11 +3,10 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +23,27 @@ class ChangeStatusControllerTest {
   Account accountOne, accountTwo, accountThree, accountFour;
   Profile profileOne, profileTwo;
   BusinessSector businessSector;
-  List<Account> accounts;
-  List<Profile> profiles;
-
+  ProjectTypology projectTypology;
+  Project project;
   List<BusinessSector> businessSectors;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   BusinessSectorContainer businessSectorContainer;
+  ProjectTypologyContainer projectTypologyContainer;
+  ProjectContainer projectContainer;
   Company company;
   ChangeStatusController accountStatusToBeChanged;
+
+  List<Project> projects;
+  float costPerHour;
+  float percentageAllocation;
+  LocalDate startDate;
+  AccountInProject accountInProject1, accountInProject2;
+  List<AccountInProject> accountsInProject;
+  AccountInProjectContainer accountInProjectContainer;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
 
   @BeforeEach
   void setUp() {
@@ -55,14 +66,48 @@ class ChangeStatusControllerTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
+    projects = new ArrayList<>();
+    projectContainer = new ProjectContainer(projects);
+    projects.add(project);
+
     businessSector = new BusinessSector("fishing");
 
     businessSectors = new ArrayList<>();
     businessSectorContainer= new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
 
-    company = new Company(accountContainer, profileContainer,businessSectorContainer);
+    projectTypology = new ProjectTypology("Fixed Cost");
 
+    List<ProjectTypology> typologies = new ArrayList<>();
+    typologies.add(projectTypology);
+    projectTypologyContainer = new ProjectTypologyContainer(typologies);
+
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
+
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+
+    project = new Project("proj001", "software development management", customerOne,
+            projectTypology, businessSector);
+
+    List<Project> projects = new ArrayList<>();
+    projects.add(project);
+    projectContainer = new ProjectContainer(projects);
+
+    accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
+            costPerHour, percentageAllocation, startDate);
+    accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
+            costPerHour, percentageAllocation, startDate);
+    accountsInProject = new ArrayList<>();
+    accountsInProject.add(accountInProject1);
+    accountsInProject.add(accountInProject2);
+    accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+
+    company = new Company(accountContainer, profileContainer, businessSectorContainer,
+            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
     accountStatusToBeChanged = new ChangeStatusController(company);
   }
 
@@ -76,13 +121,21 @@ class ChangeStatusControllerTest {
     businessSector=null;
     businessSectors.clear();
     businessSectorContainer=null;
+    project = null;
+    projects.clear();
+    projectContainer = null;
     company = null;
     accountStatusToBeChanged = null;
+    customerOne = null;
+    customerTwo = null;
+    customers.clear();
+    customerContainer = null;
+    company = null;
   }
 
   @Test
   void ensureAccountStatusIsChangedToInactive() {
-    boolean expected = false;
+    boolean expected = true;
     accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
     boolean result = accountOne.equals(accountTwo);
     assertEquals(expected,result);
