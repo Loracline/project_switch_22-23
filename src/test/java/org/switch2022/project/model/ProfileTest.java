@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ProfileTest {
     /**
@@ -103,6 +104,19 @@ class ProfileTest {
         //Act
         boolean result = reference.isUser();
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void testHashCodeProfile() {
+        Profile obj1 = new Profile("manager");
+        Profile obj2 = new Profile("manager");
+        Profile obj3 = new Profile("user");
+
+        // Check that equal objects have the same hash code
+        assertEquals(obj1.hashCode(), obj2.hashCode());
+
+        // Check that unequal objects have different hash codes
+        assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
 }
 

@@ -58,6 +58,7 @@ class AddBusinessSectorControllerTest {
     accounts.add(accountOne);
     accounts.add(accountTwo);
 
+
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
 
@@ -137,8 +138,9 @@ class AddBusinessSectorControllerTest {
   void addNewBusinessSectorSuccessfully() {
     //Arrange
     boolean expected = true;
+    accountOne.setProfile(profileOne);
     //Act
-    boolean result = addBusinessSectorController.addBusinessSector("mining");
+    boolean result = addBusinessSectorController.addBusinessSector("mining", "mike@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }
@@ -147,8 +149,19 @@ class AddBusinessSectorControllerTest {
   void addNewBusinessSectorUnsuccessfullyInvalidName() {
     //Arrange
     boolean expected = false;
+    accountOne.setProfile(profileOne);
     //Act
-    boolean result = addBusinessSectorController.addBusinessSector("fishing");
+    boolean result = addBusinessSectorController.addBusinessSector("fishing", "mike@isep.ipp.pt");
+    //Assert
+    assertEquals(expected, result);
+  }
+  @Test
+  void addNewBusinessSectorUnsuccessfullyInvalidProfile() {
+    //Arrange
+    boolean expected = false;
+    accountTwo.setProfile(profileTwo);
+    //Act
+    boolean result = addBusinessSectorController.addBusinessSector("mining", "paul@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }

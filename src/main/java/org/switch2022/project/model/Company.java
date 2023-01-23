@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountInProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
@@ -218,8 +219,6 @@ public class Company {
     public boolean addCustomer(String customerName) {
         return customerContainer.addCustomer(customerName);
     }
-
-
     // PROJECT TYPOLOGY METHODS
 
     /**

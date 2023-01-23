@@ -144,6 +144,12 @@ public class Account {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
+    /**
+     * method to check if email corresponds to an account
+     *
+     * @param email
+     *
+     */
 
     /**
      * Setter method for the attribute: status.
