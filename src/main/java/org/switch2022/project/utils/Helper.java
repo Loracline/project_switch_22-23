@@ -5,6 +5,20 @@ package org.switch2022.project.utils;
  * from another class of the project that needs it.
  */
 public class Helper {
+
+    /**
+     * PRIVATE CONSTRUCTOR
+     * Utility classes, which are collections of static
+     * members, are not meant to be instantiated.
+     * Java adds an implicit public constructor to every class which does not
+     * define at least one explicitly. Hence, at least one non-public
+     * constructor should be defined.
+     */
+    private Helper() {
+        throw new IllegalStateException("Utility class");
+    }
+
+
     /**
      * This static method checks if first number is lower than the second.
      *

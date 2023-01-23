@@ -2,8 +2,7 @@ package org.switch2022.project.utils;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class HelperTest {
     /**
@@ -11,16 +10,43 @@ class HelperTest {
      */
     @Test
     void ensureFirstIndexIsLowerThanSecond() {
-        assertTrue(Helper.isLower(1, 2));
+        // ARRANGE
+        int first = 1;
+        int second = 2;
+        boolean expected = true;
+
+        // ACT
+        boolean result = Helper.isLower(first, second);
+
+        // ASSERT
+        assertEquals(expected, result);
     }
 
     @Test
     void ensureSecondIndexIsNotLowerThanFirst() {
-        assertFalse(Helper.isLower(2, 1));
+        // ARRANGE
+        int first = 2;
+        int second = 1;
+        boolean expected = false;
+
+        // ACT
+        boolean result = Helper.isLower(first, second);
+
+        // ASSERT
+        assertEquals(expected, result);
     }
 
     @Test
     void ensureSecondIndexIsNotLowerThanSecond() {
-        assertFalse(Helper.isLower(2, 2));
+        // ARRANGE
+        int first = 2;
+        int second = 2;
+        boolean expected = false;
+
+        // ACT
+        boolean result = Helper.isLower(first, second);
+
+        // ASSERT
+        assertEquals(expected, result);
     }
 }

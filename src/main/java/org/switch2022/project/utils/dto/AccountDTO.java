@@ -17,8 +17,11 @@ public class AccountDTO {
     public Profile profile;
 
     /**
-     * This method determines whether two accountDTOs are equal in terms of
-     * their content.
+     * The equals() method is used to determine whether two objects are equal in
+     * terms of their content.
+     * The default implementation of the equals() method compares the memory
+     * addresses of the two objects, which means that two objects are considered
+     * equal only if they are the same object in memory.
      *
      * @param toCompare accountDTO to compare to.
      * @return TRUE if equal, and FALSE otherwise.
@@ -33,5 +36,16 @@ public class AccountDTO {
         }
         AccountDTO that = (AccountDTO) toCompare;
         return phoneNumber == that.phoneNumber && status == that.status && name.equals(that.name) && email.equals(that.email) && Objects.equals(photo, that.photo) && profile.equals(that.profile);
+    }
+
+    /**
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, email, phoneNumber, photo, status, profile);
     }
 }
