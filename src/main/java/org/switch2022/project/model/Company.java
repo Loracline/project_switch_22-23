@@ -53,16 +53,6 @@ public class Company {
         return accountContainer;
     }
 
-    /**
-     * Getter method for the attribute: customerContainer.
-     *
-     * @return the container of costumers of this company.
-     */
-    public CustomerContainer getCustomerContainer() {
-        return customerContainer;
-    }
-
-
     // ACTOR VALIDATION METHODS
 
     /**

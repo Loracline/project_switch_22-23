@@ -24,15 +24,6 @@ public class CustomerContainer {
     }
 
     /**
-     * Getter method for the attribute: customers.
-     *
-     * @return list of all the customers in the container.
-     */
-    public List<Customer> getCustomers() {
-        return customers;
-    }
-
-    /**
      * This method validates if customer already exists by checking the name.
      *
      * @param customerName of the intended costumer.

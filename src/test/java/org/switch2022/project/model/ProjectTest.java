@@ -40,6 +40,14 @@ public class ProjectTest {
     }
 
     @Test
+    void ensureObjectsAreFromDifferentClasses() {
+        Object projectObject = new Object();
+        boolean expected = false;
+        boolean result = projectOne.equals(projectObject);
+        assertEquals(expected, result);
+    }
+
+    @Test
     void ensureTwoProjectsAreNotEqual() {
         Project projectTwo = projectOne;
         boolean expected = false;
