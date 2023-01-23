@@ -20,17 +20,32 @@ class AccountMapperTest {
      * tests below.
      */
 
+    // accounts
     Account accountOne, accountTwo, accountThree;
-    Profile profileOne, profileTwo, profileThree;
     List<Account> accounts;
-    List<Profile> profiles;
     AccountContainer accountContainer;
+
+    // profiles
+    Profile profileOne, profileTwo, profileThree;
+    List<Profile> profiles;
     ProfileContainer profileContainer;
+
+    // project typologies
     ProjectTypologyContainer projectTypologyContainer;
+
+    // projects
     ProjectContainer projectContainer;
+
+    // accounts in project
     AccountInProjectContainer accountInProjectContainer;
+
+    // customers
     CustomerContainer customerContainer;
+
+    // business sectors
     BusinessSectorContainer businessSectorContainer;
+
+    // company
     Company company;
 
 
@@ -117,6 +132,56 @@ class AccountMapperTest {
      * getAccountFromDTO(AccountDTO accountDTO)
      */
     @Test
+    void getAccountFromDTOSuccessfullyByComparingTwoAccounts() {
+        // ARRANGE
+        AccountMapper mapper = new AccountMapper();
+        AccountDTO accountOneDTO = new AccountDTO();
+        accountOneDTO.name = "Mike";
+        accountOneDTO.email = "mike@isep.ipp.pt";
+        accountOneDTO.phoneNumber = 932755689;
+        accountOneDTO.photo = null;
+        accountOneDTO.profile = profileThree;
+        accountOneDTO.status = false;
+
+        accountOne.setProfile(profileThree);
+        accountOne.setStatus(false);
+
+        boolean expected = true;
+
+        // ACT
+        Account accountOneAfterMapping = mapper.getAccountFromDTO(accountOneDTO);
+        boolean result = accountOne.equals(accountOneAfterMapping);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void getAccountFromDTOUnSuccessfullyByComparingTwoAccounts() {
+        // ARRANGE
+        AccountMapper mapper = new AccountMapper();
+        AccountDTO accountOneDTO = new AccountDTO();
+        accountOneDTO.name = "Mike";
+        accountOneDTO.email = "mike@isep.ipp.pt";
+        accountOneDTO.phoneNumber = 932755689;
+        accountOneDTO.photo = null;
+        accountOneDTO.profile = profileThree;
+        accountOneDTO.status = false;
+
+        accountOne.setProfile(profileTwo);
+        accountOne.setStatus(true);
+
+        boolean expected = false;
+
+        // ACT
+        Account accountOneAfterMapping = mapper.getAccountFromDTO(accountOneDTO);
+        boolean result = accountOne.equals(accountOneAfterMapping);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
     void getAccountFromDTOSuccessfully() {
         // ARRANGE
         AccountMapper mapper = new AccountMapper();
@@ -128,10 +193,8 @@ class AccountMapperTest {
         accountOneDTO.profile = profileTwo;
         accountOneDTO.status = true;
         Account expected = accountOne;
-
         // ACT
         Account result = mapper.getAccountFromDTO(accountOneDTO);
-
         // ASSERT
         assertEquals(expected, result);
     }
