@@ -1,4 +1,4 @@
-package org.switch2022.project.mapper;
+package org.switch2022.project.utils.mapper;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +7,6 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AccountInProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
-import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
 
 import java.time.LocalDate;
 

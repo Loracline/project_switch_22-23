@@ -25,7 +25,7 @@ class AccountInProjectContainerTest {
      */
     AccountDTO accountDTO, accountDTO2;
     ProjectDTO projectDTO;
-    AccountInProjectDTO accountInProjectDTOPO, accountInProjectDTOInvalid;
+    AccountInProjectDTO accountInProjectDTOPO, accountInProjectDTOTM, accountInProjectDTOInvalid;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
 
@@ -102,10 +102,22 @@ class AccountInProjectContainerTest {
         assertFalse(result);
     }
 
-
-
-
-
+    @Test
+    void ensureThatTeamMemberIsAddedToAccountsInProjects() {
+        //Assert
+        accountInProjectDTOTM = new AccountInProjectDTO();
+        accountInProjectDTOTM.accountDTO = accountDTO2;
+        accountInProjectDTOTM.projectDTO = projectDTO;
+        accountInProjectDTOTM.role = "Team Member";
+        accountInProjectDTOTM.costPerHour = 6.5f;
+        accountInProjectDTOTM.percentageAllocation = 45.0f;
+        accountInProjectDTOTM.startDate = LocalDate.of(2023, 1, 19);
+        accountInProjectDTOTM.endDate = LocalDate.of(2023, 1, 22);
+        //Act
+        boolean result = accountInProjectContainer.addUserToProject(accountInProjectDTOTM);
+        //Assert
+        assertTrue(result);
+    }
 
     /*
     @Test

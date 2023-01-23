@@ -206,4 +206,39 @@ class AddUserToProjectControllerTest {
 
     }
 
+    @Test
+    void ensureTeamMemberIsSuccessfullyAssociatedToAProject() {
+        //Arrange
+        //accountDTO
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.name = "Anna";
+        accountDTO.email = "anna@isep.ipp.pt";
+        accountDTO.phoneNumber = 912345688;
+        accountDTO.photo = null;
+        //projectDTO
+        ProjectDTO projectDTO = new ProjectDTO("id001","Test",customerOne,
+                projectTypologyOne
+                , businessSector);
+
+        projectDTO.name = "Test";
+        projectDTO.status = "planned";
+        projectDTO.businessSector = new BusinessSector("IT Sector");
+        //account in project dto - product owner
+        AccountInProjectDTO accountInProjectDTOTM = new AccountInProjectDTO();
+        accountInProjectDTOTM.accountDTO = accountDTO;
+        accountInProjectDTOTM.projectDTO = projectDTO;
+        accountInProjectDTOTM.role = "Team Member";
+        accountInProjectDTOTM.costPerHour = 7.5f;
+        accountInProjectDTOTM.percentageAllocation = 45.0f;
+        accountInProjectDTOTM.startDate = LocalDate.of(2023, 01, 19);
+        accountInProjectDTOTM.endDate = LocalDate.of(2023, 01, 22);
+
+        //Act
+        boolean result = company.addUserToProject(accountInProjectDTOTM);
+
+        //Assert
+        assertTrue(result);
+
+    }
+
 }
