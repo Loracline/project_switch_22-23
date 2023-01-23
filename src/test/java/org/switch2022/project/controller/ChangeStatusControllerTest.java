@@ -3,8 +3,8 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.container.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,140 +12,175 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * This class tests the implementation of the following US:
+ * US005 - As Administrator, I want to inactivate a user account.
+ * US006 - As Administrator, I want to activate a user account.
+ */
 class ChangeStatusControllerTest {
+    /**
+     * BeforeEach and AfterEach executes common code before/after running the
+     * tests below.
+     */
 
+    // accounts
+    Account accountOne, accountTwo, accountThree, accountFour;
+    AccountContainer accountContainer;
 
-  /**
-   * BeforeEach and AfterEach executes common code before/after running the tests below.
-   */
+    // profiles
+    Profile profileOne, profileTwo;
+    ProfileContainer profileContainer;
 
+    // business sectors
+    BusinessSector businessSector;
+    List<BusinessSector> businessSectors;
+    BusinessSectorContainer businessSectorContainer;
 
-  Account accountOne, accountTwo, accountThree, accountFour;
-  Profile profileOne, profileTwo;
-  BusinessSector businessSector;
-  ProjectTypology projectTypology;
-  Project project;
-  List<BusinessSector> businessSectors;
-  AccountContainer accountContainer;
-  ProfileContainer profileContainer;
-  BusinessSectorContainer businessSectorContainer;
-  ProjectTypologyContainer projectTypologyContainer;
-  ProjectContainer projectContainer;
-  Company company;
-  ChangeStatusController accountStatusToBeChanged;
+    // customers
+    Customer customerOne, customerTwo;
+    CustomerContainer customerContainer;
+    List<Customer> customers;
 
-  List<Project> projects;
-  float costPerHour;
-  float percentageAllocation;
-  LocalDate startDate;
-  AccountInProject accountInProject1, accountInProject2;
-  List<AccountInProject> accountsInProject;
-  AccountInProjectContainer accountInProjectContainer;
-  Customer customerOne, customerTwo;
-  CustomerContainer customerContainer;
-  List<Customer> customers;
+    // project typologies
+    ProjectTypology projectTypology;
+    ProjectTypologyContainer projectTypologyContainer;
 
-  @BeforeEach
-  void setUp() {
-    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-    accountTwo = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-    accountThree = new Account("Paul", "paul@isep.ipp.pt", 932755689, null);
-    accountFour = new Account("Paul", "paul@isep.ipp.pt", 932755689, null);
+    // projects
+    Project project;
+    ProjectContainer projectContainer;
 
-    List<Account> accountList = new ArrayList<>();
-    accountContainer = new AccountContainer(accountList);
-    accountList.add(accountOne);
-    accountList.add(accountTwo);
-    accountList.add(accountThree);
-    accountList.add(accountFour);
+    // accounts in project
+    float costPerHour;
+    float percentageAllocation;
+    LocalDate startDate;
+    AccountInProject accountInProject1, accountInProject2;
+    List<AccountInProject> accountsInProject;
+    AccountInProjectContainer accountInProjectContainer;
 
-    profileOne = new Profile("Administrator");
+    // company
+    Company company;
 
-    List<Profile> profiles = new ArrayList<>();
-    profileContainer = new ProfileContainer(profiles);
-    profiles.add(profileOne);
-    profiles.add(profileTwo);
+    // controller
+    ChangeStatusController changeStatusController;
 
-    projects = new ArrayList<>();
-    projectContainer = new ProjectContainer(projects);
-    projects.add(project);
+    @BeforeEach
+    void setUp() {
+        // accounts
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountTwo = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountThree = new Account("Paul", "paul@isep.ipp.pt", 932755689, null);
+        accountFour = new Account("Paul", "paul@isep.ipp.pt", 932755689, null);
 
-    businessSector = new BusinessSector("fishing");
+        List<Account> accountList = new ArrayList<>();
+        accountContainer = new AccountContainer(accountList);
+        accountList.add(accountOne);
+        accountList.add(accountTwo);
+        accountList.add(accountThree);
+        accountList.add(accountFour);
 
-    businessSectors = new ArrayList<>();
-    businessSectorContainer= new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
+        // profiles
+        profileOne = new Profile("Administrator");
 
-    projectTypology = new ProjectTypology("Fixed Cost");
+        List<Profile> profiles = new ArrayList<>();
+        profileContainer = new ProfileContainer(profiles);
+        profiles.add(profileOne);
+        profiles.add(profileTwo);
 
-    List<ProjectTypology> typologies = new ArrayList<>();
-    typologies.add(projectTypology);
-    projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        // projects
+        project = new Project("proj001", "software development management", customerOne,
+                projectTypology, businessSector);
 
-    customerOne = new Customer("ISEP");
-    customerTwo = new Customer("PortoTech");
+        List<Project> projects = new ArrayList<>();
+        projectContainer = new ProjectContainer(projects);
+        projects.add(project);
 
-    customers = new ArrayList<>();
-    customerContainer = new CustomerContainer(customers);
-    customers.add(customerOne);
-    customers.add(customerTwo);
+        // business sectors
+        businessSector = new BusinessSector("fishing");
 
-    project = new Project("proj001", "software development management", customerOne,
-            projectTypology, businessSector);
+        businessSectors = new ArrayList<>();
+        businessSectorContainer = new BusinessSectorContainer(businessSectors);
+        businessSectors.add(businessSector);
 
-    List<Project> projects = new ArrayList<>();
-    projects.add(project);
-    projectContainer = new ProjectContainer(projects);
+        // project typologies
+        projectTypology = new ProjectTypology("Fixed Cost");
 
-    accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
-            costPerHour, percentageAllocation, startDate);
-    accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
-            costPerHour, percentageAllocation, startDate);
-    accountsInProject = new ArrayList<>();
-    accountsInProject.add(accountInProject1);
-    accountsInProject.add(accountInProject2);
-    accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+        List<ProjectTypology> typologies = new ArrayList<>();
+        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        typologies.add(projectTypology);
 
-    company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
-    accountStatusToBeChanged = new ChangeStatusController(company);
-  }
+        // customers
+        customerOne = new Customer("ISEP");
+        customerTwo = new Customer("PortoTech");
 
-  @AfterEach
-  void tearDown() {
-    accountOne = null;
-    accountTwo = null;
-    profileOne = null;
-    accountContainer = null;
-    profileContainer = null;
-    businessSector=null;
-    businessSectors.clear();
-    businessSectorContainer=null;
-    project = null;
-    projects.clear();
-    projectContainer = null;
-    company = null;
-    accountStatusToBeChanged = null;
-    customerOne = null;
-    customerTwo = null;
-    customers.clear();
-    customerContainer = null;
-    company = null;
-  }
+        customers = new ArrayList<>();
+        customerContainer = new CustomerContainer(customers);
+        customers.add(customerOne);
+        customers.add(customerTwo);
 
-  @Test
-  void ensureAccountStatusIsChangedToInactive() {
-    boolean expected = true;
-    accountStatusToBeChanged.changeStatus("mike@isep.ipp.pt", false);
-    boolean result = accountOne.equals(accountTwo);
-    assertEquals(expected,result);
-  }
+        // accounts in project
+        accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+        accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
 
-  @Test
-  void ensureAccountStatusIsChangedToActive() {
-    boolean expected = true;
-    accountStatusToBeChanged.changeStatus("paul@isep.ipp.pt", true);
-    boolean result = accountThree.equals(accountFour);
-    assertEquals(expected,result);
-  }
+        accountsInProject = new ArrayList<>();
+        accountsInProject.add(accountInProject1);
+        accountsInProject.add(accountInProject2);
+        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+
+        // company
+        company = new Company(accountContainer, profileContainer, businessSectorContainer,
+                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+
+        // controller
+        changeStatusController = new ChangeStatusController(company);
+    }
+
+    @AfterEach
+    void tearDown() {
+        accountOne = null;
+        accountTwo = null;
+        profileOne = null;
+        accountContainer = null;
+        profileContainer = null;
+        businessSector = null;
+        businessSectors.clear();
+        businessSectorContainer = null;
+        project = null;
+        projectContainer = null;
+        company = null;
+        changeStatusController = null;
+        customerOne = null;
+        customerTwo = null;
+        customers.clear();
+        customerContainer = null;
+        company = null;
+    }
+
+    /**
+     * changeStatus(String email, boolean status)
+     */
+    @Test
+    void ensureAccountStatusIsChangedToInactive() {
+        // ARRANGE
+        boolean expected = true;
+
+        // ACT
+        boolean result = changeStatusController.changeStatus(accountOne.getEmail(), false);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureAccountStatusIsNotChangedStillActive() {
+        // ARRANGE
+        boolean expected = false;
+
+        // ACT
+        boolean result = changeStatusController.changeStatus(accountOne.getEmail(), true);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
 }

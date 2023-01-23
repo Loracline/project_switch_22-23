@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AccountTest {
     /**
-     * Testing the equals() method.
+     * equals()
      */
     @Test
     void ensureSameAccountEqualsItself() {
@@ -85,8 +85,41 @@ class AccountTest {
         assertEquals(expected, result);
     }
 
+
     /**
-     * Testing if one can get e-mail from given account.
+     * hashCode()
+     */
+    @Test
+    void ensureAccountsHaveSameHashCode() {
+        // ARRANGE
+        Account reference = new Account("John", "john@isep.ipp.pt", 951357852, null);
+        Account other = new Account("John", "john@isep.ipp.pt", 951357852, null);
+
+        // ACT
+        int hashCodeReference = reference.hashCode();
+        int hashCodeOther = other.hashCode();
+
+        // ASSERT
+        assertEquals(hashCodeOther, hashCodeReference);
+    }
+
+    @Test
+    void ensureAccountsHaveDifferentHashCode() {
+        // ARRANGE
+        Account reference = new Account("John", "john@isep.ipp.pt", 951357852, null);
+        Account other = new Account("John", "john@isep.ipp.pt", 951357853, null);
+
+        // ACT
+        int hashCodeReference = reference.hashCode();
+        int hashCodeOther = other.hashCode();
+
+        // ASSERT
+        assertNotEquals(hashCodeOther, hashCodeReference);
+    }
+
+
+    /**
+     * GETTER methods
      */
     @Test
     void ensureEmailIsRetrievedSuccessfully() {
@@ -101,11 +134,23 @@ class AccountTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void ensureGetPhotoRetrievesNonNullValue() throws IOException {
+        // ARRANGE
+        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
+        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        accountOne.setPhoto(photo);
+
+        // ACT
+        BufferedImage result = accountOne.getPhoto();
+
+        // RESULT
+        assertEquals(photo, result);
+    }
+
+
     /**
-     * Testing if photo is set/changed successfully.
-     *
-     * @throws IOException if attempting to access a photo that does not exist at
-     *                     the specified location
+     * SETTER methods
      */
     @Test
     void ensureThatPhotoIsSet() throws IOException {
@@ -120,12 +165,6 @@ class AccountTest {
         assertEquals(accountWithPhoto, accountOne);
     }
 
-    /**
-     * Testing if profile is set/changed successfully.
-     *
-     * @throws IOException if attempting to access a photo that does not exist at
-     *                     the specified location.
-     */
     @Test
     void ensureProfileIsSetSuccessfully() throws IOException {
         BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
@@ -152,10 +191,6 @@ class AccountTest {
         assertNotEquals(accountBeforeUpdate, accountAfterUpdate);
     }
 
-    /**
-     * Testing if status is set/changed successfully (by comparing two account's
-     * contents).
-     */
     @Test
     void ensureAccountStatusIsSetToActive() {
         // Arrange
@@ -183,8 +218,9 @@ class AccountTest {
         assertNotEquals(accountOne, accountTwo);
     }
 
+
     /**
-     * Testing if one can validate it's intended account by given e-mail.
+     * checkAccountFromEmail(String email)
      */
     @Test
     void checkAccountFromEmailSuccessfully() {
@@ -209,7 +245,7 @@ class AccountTest {
     }
 
     /**
-     * Testing if one can validate if profile is "Manager".
+     * isManager()
      */
     @Test
     void verifyIsManagerSuccessfully() {
@@ -236,7 +272,7 @@ class AccountTest {
     }
 
     /**
-     * Testing if one can validate if profile is "Administrator".
+     * isAdministrator()
      */
     @Test
     void verifyIsAdministratorSuccessfully() {
@@ -263,7 +299,7 @@ class AccountTest {
     }
 
     /**
-     * Testing if one can validate if profile is "User".
+     * isUser()
      */
     @Test
     void verifyIsUserUnsuccessfully() {

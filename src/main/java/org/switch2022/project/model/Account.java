@@ -20,13 +20,9 @@ public class Account {
     private BufferedImage photo;
     private boolean accountStatus;
 
+
     /**
      * Constructor
-     *
-     * @param name        of the new account
-     * @param email       of the new account
-     * @param phoneNumber of the new account
-     * @param photo       of the new account
      */
     public Account(String name, String email, long phoneNumber, BufferedImage photo) {
         this.accountName = name;
@@ -40,7 +36,11 @@ public class Account {
         }
     }
 
-    // Copy constructor
+    /**
+     * Copy Constructor
+     * Provides a way to create a new object with the same state as an existing
+     * object, without modifying the existing object.
+     */
     public Account(Account other) {
         this.accountName = other.accountName;
         this.email = other.email;
@@ -49,6 +49,7 @@ public class Account {
         this.accountStatus = other.accountStatus;
         this.photo = other.photo;
     }
+
 
     /**
      * This method checks if two instances of Account are equal by comparing
@@ -72,6 +73,20 @@ public class Account {
                 Objects.equals(photo, account.photo) &&
                 profile.equals(account.profile);
     }
+
+    /**
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountName, email, phoneNumber, profile, photo, accountStatus);
+    }
+
+
+    // "GETTERS"
 
     /**
      * Getter method for the attribute: e-mail.
@@ -110,15 +125,6 @@ public class Account {
     }
 
     /**
-     * Setter method for the attribute: photo.
-     *
-     * @param photo of the account.
-     */
-    public void setPhoto(BufferedImage photo) {
-        this.photo = photo;
-    }
-
-    /**
      * Getter method for the attribute: status.
      *
      * @return status of the account.
@@ -136,6 +142,18 @@ public class Account {
         return profile;
     }
 
+
+    // "SETTERS"
+
+    /**
+     * Setter method for the attribute: photo.
+     *
+     * @param photo of the account.
+     */
+    public void setPhoto(BufferedImage photo) {
+        this.photo = photo;
+    }
+
     /**
      * Setter method for the attribute: profile.
      *
@@ -144,12 +162,6 @@ public class Account {
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
-    /**
-     * method to check if email corresponds to an account
-     *
-     * @param email
-     *
-     */
 
     /**
      * Setter method for the attribute: status.
@@ -160,6 +172,9 @@ public class Account {
         this.accountStatus = status;
     }
 
+
+    // VALIDATION
+
     /**
      * This method verifies if account is the one intended through its e-mail.
      *
@@ -169,6 +184,7 @@ public class Account {
     public boolean checkAccountFromEmail(String email) {
         return this.email.equals(email);
     }
+
 
     /**
      * This method checks if account's profile is "Manager".
