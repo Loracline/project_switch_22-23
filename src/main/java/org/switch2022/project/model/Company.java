@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountInProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
@@ -217,17 +218,7 @@ public class Company {
      */
     public boolean addCustomer(String customerName) {
         return customerContainer.addCustomer(customerName);
-    /**
-     * method to check if email corresponds to an account that is a Manager
-     *
-     * @param email
-     *
-     */
-    public boolean validateManager(String email) {
-        return accountContainer.validateManager(email);
     }
-
-
     // PROJECT TYPOLOGY METHODS
 
     /**
