@@ -37,7 +37,7 @@ public class GetListOfProjectsController {
     public List<GetProjectDTO> getListOfProjects(String email) {
         List<GetProjectDTO> listOfProjectsDTO = new ArrayList<>();
         if (company.validateManager(email)) {
-            List<Project> projects = company.getListAllProjects();
+            List<Project> projects = company.listAllProjects();
             listOfProjectsDTO = mapper.toDTO(projects);
         }
         return listOfProjectsDTO;
