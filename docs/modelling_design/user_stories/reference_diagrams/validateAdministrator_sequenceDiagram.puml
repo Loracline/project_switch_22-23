@@ -4,12 +4,12 @@
 autonumber
 
 skinparam sequenceMessageAlign center
-title MANAGER AUTHORIZATION
+title ADMINISTRATOR AUTHORIZATION
 legend top
-As a Manager, I want authorization
+As an Administrator, I want authorization
 end legend
 autonumber
-actor Manager
+actor Administrator
 participant ":SomeUI" as ui
 participant ":SomeController" as controller
 participant ":Company" as company
@@ -17,20 +17,20 @@ participant ":AccountContainer" as ac
 participant "account:Account" as a
 participant "profile:Profile" as p
 
-activate Manager
-Manager -> ui: doSomething
+activate Administrator
+Administrator -> ui: doSomething
 activate ui
 ui -> controller: doSomething(email)
 activate controller
-controller -> company: validateManager(email)
+controller -> company: validateAdministrator(email)
 activate company
-company -> ac: validateManager(email)
+company -> ac: validateAdministrator(email)
 activate ac
 ac -> a: checkAccountfromEmail(email)
 activate a
 a-->>ac: true
-ac -> a: isManager()
-a-> p: isManager()
+ac -> a: isAdministrator()
+a-> p: isAdministrator()
 activate p
 p-->> a:true
 deactivate p
