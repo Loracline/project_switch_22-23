@@ -82,4 +82,14 @@ class BusinessSectorContainerTest {
         assertEquals(expected, result);
 
     }
+    @Test
+    void ensureAddBusinessSectorToBusinessSectorsListUnsuccessfully_emptyBusinessSectorName() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = businessSectorContainer.createBusinessSector("");
+        //Assert
+        assertEquals(expected, result);
+
+    }
 }

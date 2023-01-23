@@ -10,7 +10,7 @@ public class AddBusinessSectorController {
     /**
      * Attributes of the class AddBusinessSectorController, according to the Class Diagram.
      */
-    private Company company;
+    private final Company company;
 
     /**
      * CreateAddBusinessSectorController constructor
@@ -25,12 +25,7 @@ public class AddBusinessSectorController {
      * @return true if businessSector is created
      */
     public boolean addBusinessSector(String businessSectorName, String email) {
-        boolean addBusinessSector = false;
-        if (company.validateAdministrator(email)) {
-            if (company.addBusinessSector(businessSectorName)) {
-                addBusinessSector = true;
-            }
-        }
+        boolean addBusinessSector = company.validateAdministrator(email) && company.addBusinessSector(businessSectorName);
         return addBusinessSector;
     }
 }

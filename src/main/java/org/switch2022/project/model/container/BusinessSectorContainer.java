@@ -42,7 +42,7 @@ public class BusinessSectorContainer {
     public boolean createBusinessSector(String businessSectorName) {
         BusinessSector businessSector = new BusinessSector(businessSectorName);
         boolean isAddedToList = false;
-        if (!doesBusinessSectorExist(businessSector)) {
+        if (!businessSectorName.isEmpty() && !doesBusinessSectorExist(businessSector)) {
             businessSectors.add(businessSector);
             isAddedToList = true;
         }
