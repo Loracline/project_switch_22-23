@@ -47,4 +47,9 @@ public class BusinessSector {
         BusinessSector that = (BusinessSector) toCompare;
         return Objects.equals(businessSectorName, that.businessSectorName.toLowerCase());
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(businessSectorName);
+    }
 }

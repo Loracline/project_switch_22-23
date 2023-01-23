@@ -19,6 +19,11 @@ public class Profile {
         this.profileName = profileName.toLowerCase();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(profileName);
+    }
+
     /**
      * This method checks if two instances of Profile are equal by comparing its
      * names.
