@@ -39,6 +39,6 @@ public class Customer {
             return false;
         }
         Customer customer1 = (Customer) toCompare;
-        return Objects.equals(customerName, customer1.customerName);
+        return Objects.equals(customerName, customer1.customerName.toLowerCase());
     }
 }

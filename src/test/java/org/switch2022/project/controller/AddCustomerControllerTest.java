@@ -139,8 +139,9 @@ class AddCustomerControllerTest {
     void addNewCustomerSuccessfully(){
         //Arrange
         boolean expected = true;
+        accountOne.setProfile(profileOne);
         //Act
-        boolean result = addCustomerController.addCustomer("Critical");
+        boolean result = addCustomerController.addCustomer("Critical", "mike@isep.ipp.pt");
         //Assert
         assertEquals(expected,result);
     }
@@ -148,8 +149,9 @@ class AddCustomerControllerTest {
     void addNewCustomerUnsuccessfullyInvalidName(){
         //Arrange
         boolean expected = false;
+        accountOne.setProfile(profileOne);
         //Act
-        boolean result = addCustomerController.addCustomer("ISEP");
+        boolean result = addCustomerController.addCustomer("ISEP", "mike@isep.ipp.pt");
         //Assert
         assertEquals(expected,result);
     }
@@ -160,8 +162,9 @@ class AddCustomerControllerTest {
     void addNewCustomerUnsuccessfullyEmptyName() {
         // Arrange
         boolean expected = false;
+        accountOne.setProfile(profileOne);
         // Act
-        boolean result = addCustomerController.addCustomer("");
+        boolean result = addCustomerController.addCustomer("", "mike@isep.ipp.pt");
         // Assert
         assertEquals(expected, result);
     }
