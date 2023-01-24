@@ -1,0 +1,51 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO ASSOCIATE/DEFINE TEAM MEMBER/PRODUCT OWNER/SCRUM MASTER OF A PROJECT
+legend top
+US011 - As Manager, I want to associate a User as Team Member of a project.
+US012 - As Manager, I want to define the Product Owner of a project
+US013 - As Manager, I want to define the Scrum Master of a project.
+end legend
+
+class AddUserToProjectController {
+-company
++addUserToProject(emailManager, accountInProjectDTO)
+}
+
+class Company {
+-accountInProjectContainer
++validateManager(emailManager)
++addUserToProject(accountInProjectDTO)
+}
+
+class AccountInProject{
+-account
+-project
+-costPerHour
+-percentageAllocation
+-role
+-startDate
+-endDate
++AccountInProject(account, project, costPerHour, percentageAllocation, startDate, role)
+}
+
+class AccountInProjectContainer{
+-accountsInProject
++addUserToProject(accountInProjectDTO)
+}
+
+class AccountInProjectDTOMapper {
++accountInProjectFromDTO(accountInProjectDTO)
+}
+
+AddUserToProjectController --> Company
+Company "1"-->"1" AccountInProjectContainer: has
+AccountInProjectContainer "1"..>"1" AccountInProjectDTOMapper
+AccountInProjectDTOMapper "1"..> "*"AccountInProject: creates
+AccountInProjectContainer "1"--> "*" AccountInProject: has
+
+@enduml
+
+
+

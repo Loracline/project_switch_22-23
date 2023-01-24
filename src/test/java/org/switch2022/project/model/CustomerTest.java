@@ -19,7 +19,6 @@ class CustomerTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
-    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     void ensureTwoCustomersAreNotTheSame() {
         Customer reference = new Customer("ISEP");
