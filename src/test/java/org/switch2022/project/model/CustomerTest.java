@@ -1,45 +1,48 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-class ProjectTypologyTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class CustomerTest {
+
     /**
      * Testing the equals() method.
      */
     @Test
     void ensureSameObjectEqualsItself() {
-        ProjectTypology reference = new ProjectTypology("Fixed Cost");
+        Customer reference = new Customer("ISEP");
+        Customer other = reference;
         boolean expected = true;
-        boolean result = reference.equals(reference);
+        boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
-
     @Test
-    void ensureTwoProfilesAreNotTheSame() {
-        ProjectTypology reference = new ProjectTypology("Fixed Cost");
-        ProjectTypology other = new ProjectTypology("Fixed time and materials");
+    void ensureTwoCustomersAreNotTheSame() {
+        Customer reference = new Customer("ISEP");
+        Customer other = new Customer("Michael Brown Corp.");
         boolean expected = false;
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
 
-    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
-    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
-        ProjectTypology reference = new ProjectTypology("Fixed Cost");
-        String other = "Fixed Cost";
+    void ensureDifferentObjectsNotEqual() {
+        Customer reference = new Customer("ISEP");
+        Object other = new Object();
         boolean expected = false;
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+
+
     @Test
-    public void testHashCodeProjectTypology() {
-        ProjectTypology obj1 = new ProjectTypology("Fixed Cost");
-        ProjectTypology obj2 = new ProjectTypology("Fixed Cost");
-        ProjectTypology obj3 = new ProjectTypology("Fixed time and materials");
+    public void testHashCodeCustomer() {
+        Customer obj1 = new Customer("Critical");
+        Customer obj2 = new Customer("Critical");
+        Customer obj3 = new Customer("PortoTech");
 
         // Check that equal objects have the same hash code
         assertEquals(obj1.hashCode(), obj2.hashCode());
@@ -49,3 +52,7 @@ class ProjectTypologyTest {
     }
 
 }
+
+
+
+
