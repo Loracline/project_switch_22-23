@@ -8,8 +8,8 @@ public class Helper {
 
     /**
      * PRIVATE CONSTRUCTOR
-     * Utility classes, which are collections of static
-     * members, are not meant to be instantiated.
+     * Utility classes, which are collections of static members, are not meant
+     * to be instantiated.
      * Java adds an implicit public constructor to every class which does not
      * define at least one explicitly. Hence, at least one non-public
      * constructor should be defined.
