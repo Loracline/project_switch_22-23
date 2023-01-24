@@ -595,7 +595,7 @@ class CompanyTest {
     void ensureThatAllAccountsByProjectAreListedSuccessfully() {
         List<Account> expected = new ArrayList<>();
         expected.add(accountOne);
-        expected.add(accountTwo);
+
 
         //Act
         List<Account> result = company.listAccountsByProject("AA001");

@@ -138,8 +138,8 @@ public class Account {
      *
      * @return profile of the account.
      */
-    public String getProfile() {
-        return profile.getProfileName();
+    public Profile getProfile() {
+        return profile;
     }
 
 

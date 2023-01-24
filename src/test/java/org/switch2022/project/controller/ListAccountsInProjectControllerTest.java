@@ -3,13 +3,15 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.DTO.AccountDTO;
-import org.switch2022.project.container.*;
-import org.switch2022.project.mapper.AccountMapper;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.mapper.AccountMapper;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ListAccountsInProjectControllerTest {
@@ -44,6 +46,8 @@ class ListAccountsInProjectControllerTest {
     AccountInProjectContainer accountInProjectContainer;
     Company company;
     ListAccountsInProjectController listAccountsInProjectController;
+    CustomerContainer customerContainer;
+    List<Customer> customers;
 
     @BeforeEach
     void setUp() {
@@ -85,6 +89,9 @@ class ListAccountsInProjectControllerTest {
         //customer
         customerOne = new Customer("Genius Software");
         customerTwo = new Customer("Delta Software");
+        customers = new ArrayList<>();
+        customers.add(customerOne);
+        customers.add(customerTwo);
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -104,16 +111,11 @@ class ListAccountsInProjectControllerTest {
         projects.add(projectTwo);
 
         //accountInProject
-        accountInProjectOne = new AccountInProject(accountOne, projectOne, costPerHour, percentageAllocation, startDate);
-        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, costPerHour, percentageAllocation, startDate);
-        accountInProjectThree = new AccountInProject(accountThree, projectOne, costPerHour, percentageAllocation, startDate);
-        accountInProjectFour = new AccountInProject(accountThree, projectTwo, costPerHour, percentageAllocation, startDate);
-        accountInProjectFive = new AccountInProject(accountOne, projectTwo, costPerHour, percentageAllocation, startDate);
-        accountInProjectOne.setRole("Team Member");
-        accountInProjectTwo.setRole("Team Member");
-        accountInProjectThree.setRole("Product Owner");
-        accountInProjectFour.setRole("Scrum Master");
-        accountInProjectFive.setRole("Team Member");
+        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);
+        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);
+        accountInProjectThree = new AccountInProject(accountThree, projectOne, "Product Owner", costPerHour, percentageAllocation, startDate);
+        accountInProjectFour = new AccountInProject(accountThree, projectTwo, "Scrum Master", costPerHour, percentageAllocation, startDate);
+        accountInProjectFive = new AccountInProject(accountOne, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate);
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProjectOne);
         accountsInProject.add(accountInProjectTwo);
@@ -128,10 +130,11 @@ class ListAccountsInProjectControllerTest {
         projectContainer = new ProjectContainer(projects);
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+        customerContainer = new CustomerContainer(customers);
 
         //company
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer);
+                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
         //controller
         listAccountsInProjectController = new ListAccountsInProjectController();
@@ -173,6 +176,7 @@ class ListAccountsInProjectControllerTest {
         businessSectors.clear();
         projects.clear();
         accountsInProject.clear();
+        customers.clear();
         accountContainer = null;
         profileContainer = null;
         businessSectorContainer = null;
@@ -181,6 +185,7 @@ class ListAccountsInProjectControllerTest {
         accountInProjectContainer = null;
         company = null;
         listAccountsInProjectController = null;
+        customerContainer = null;
     }
 
     @Test
@@ -189,7 +194,7 @@ class ListAccountsInProjectControllerTest {
         List<AccountDTO> expected = accountsDTOOne;
 
         //Act
-        List<AccountDTO> result  = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
+        List<AccountDTO> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
 
         //Assert
         assertEquals(expected, result);

@@ -121,7 +121,7 @@ class AccountMapperTest {
         expected.status = true;
 
         // ACT
-        AccountDTO result = mapper.getDTOFromAccount(accountOne);
+        AccountDTO result = mapper.accountToDTO(accountOne);
 
         // ASSERT
         assertEquals(expected, result);

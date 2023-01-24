@@ -51,10 +51,6 @@ public class AccountInProjectContainer {
     }
 
 
-
-
-
-
     /**
      * This method returns a list of Accounts Allocated To a Project
      *
