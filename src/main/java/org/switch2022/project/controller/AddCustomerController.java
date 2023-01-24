@@ -25,11 +25,8 @@ public class AddCustomerController {
      */
 
     public boolean addCustomer(String customerName, String email) {
-        boolean addCustomer = false;
-        if (company.validateAdministrator(email)) {
-            addCustomer = company.addCustomer(customerName);
-        }
-        return addCustomer;
+
+        return company.validateAdministrator(email) && company.addCustomer(customerName);
     }
 }
 

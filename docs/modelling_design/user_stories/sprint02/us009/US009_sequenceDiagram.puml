@@ -9,8 +9,6 @@ actor Administrator
 participant ":AddCustomerUI" as ui
 participant ":AddCustomerController" as controller
 participant ":Company" as company
-participant ":AccountContainer" as accContainer
-participant "account :Account" as acc
 participant ":CustomerContainer" as container
 participant "customer:Customer" as customer
 
@@ -23,16 +21,11 @@ Administrator -> ui: sends requested data
 activate ui
 ui -> controller: addCustomer(email, customerName)
 activate controller
-controller -> company: addCustomer(email, customerName)
+controller -> company: validateAdministrator(email)
 activate company
-company -> accContainer: validateAdministrator(email)
-activate accContainer
-accContainer -> accContainer: getAccountByEmail(email)
-accContainer -> acc: validadeAdministrator(email)
-activate acc
-acc --> accContainer: true
-deactivate acc
-accContainer --> company: true
+
+ref over company: validateAdministrator_sequenceDiagram
+
 deactivate accContainer
 company --> controller: true
 deactivate company
