@@ -61,7 +61,7 @@ public class ProfileContainer {
         Profile requestedProfile = null;
         int i = 0;
         while (isLower(i, this.profiles.size())) {
-            if (this.profiles.contains(profile)) {
+            if (this.profiles.get(i).equals(profile)) {
                 requestedProfile = profiles.get(i);
                 break;
             }

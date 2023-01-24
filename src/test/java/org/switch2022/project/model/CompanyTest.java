@@ -309,7 +309,7 @@ class CompanyTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = company.changeProfile("mike@isep.ipp.pt", "Manager");
+        boolean result = company.changeProfile("mike@isep.ipp.pt", "Director");
         //Assert
         assertEquals(expected, result);
     }
@@ -321,6 +321,39 @@ class CompanyTest {
         //Act
         boolean result = company.changeProfile("mikke@isep.ipp.pt", "Administrator");
         //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureProfileIsNotChangedByComparingAccountAndCopyAccount() {
+        // ARRANGE
+        Account copyAccountTwo = new Account(accountTwo);
+        accountTwo.setProfile(profileTwo);
+        copyAccountTwo.setProfile(profileTwo);
+        boolean expected = true;
+
+        // ACT
+        company.changeProfile(accountTwo.getEmail(), "User");
+        boolean result = accountTwo.getProfile().equals(copyAccountTwo.getProfile());
+
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureProfileIsChangedByComparingAccountAndCopyAccount() {
+        // ARRANGE
+        Account copyAccountTwo = new Account(accountTwo);
+        copyAccountTwo.setProfile(profileTwo);
+        boolean expected = false;
+
+        // ACT
+        company.changeProfile(accountTwo.getEmail(), "Administrator");
+        boolean result = accountTwo.getProfile().equals(copyAccountTwo.getProfile());
+
+
+        // ASSERT
         assertEquals(expected, result);
     }
 
@@ -340,7 +373,7 @@ class CompanyTest {
         List<Account> result = company.listAllUsers();
 
         // ASSERT
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -355,7 +388,7 @@ class CompanyTest {
         List<Account> result = company.listAllUsers();
 
         // ASSERT
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
 
@@ -383,7 +416,7 @@ class CompanyTest {
         boolean expected = true;
 
         // ACT
-        boolean result = company.changeStatus(accountOne.getEmail(),false);
+        boolean result = company.changeStatus(accountOne.getEmail(), false);
 
         // ASSERT
         assertEquals(expected, result);
