@@ -129,7 +129,7 @@ class AccountContainerTest {
     expected.add(accountThree);
 
     List<Account> result = accountContainer.getAccounts();
-
+    result.get(1).setStatus(false);
     assertEquals(expected, result);
   }
 

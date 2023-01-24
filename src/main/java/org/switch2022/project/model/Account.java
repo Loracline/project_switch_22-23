@@ -95,8 +95,8 @@ public class Account {
         return status;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public String getProfile() {
+        return profile.getProfileName();
     }
 
     /**

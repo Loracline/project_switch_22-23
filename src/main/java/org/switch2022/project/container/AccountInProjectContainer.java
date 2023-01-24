@@ -26,7 +26,7 @@ public class AccountInProjectContainer {
      */
     public List<Account> listAccountsByProject(String projectCode) {
         List<Account> accounts = new ArrayList<>();
-        for (int i = 0; i < accounts.size(); i++) {
+        for (int i = 0; i < accountsInProject.size(); i++) {
             Account requestedAccount = accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
                 accounts.add(requestedAccount);

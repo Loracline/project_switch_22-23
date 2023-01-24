@@ -11,6 +11,10 @@ public class Profile {
     private String profileName;
 
 
+    public String getProfileName() {
+        return profileName;
+    }
+
     /**
      * Constructs a default User profile
      */

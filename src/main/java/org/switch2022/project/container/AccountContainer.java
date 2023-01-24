@@ -5,6 +5,8 @@ import org.switch2022.project.model.Account;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
+
 /**
  * Class AccountContainer is built to allow access to class Account.
  */
@@ -127,5 +129,4 @@ public class AccountContainer {
     }
     return isUser;
   }
-
 }

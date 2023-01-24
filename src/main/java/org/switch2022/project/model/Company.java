@@ -23,7 +23,6 @@ public class Company {
     private ProjectContainer projectContainer;
     private BusinessSectorContainer businessSectorContainer;
     private ProjectTypologyContainer projectTypologyContainer;
-
     private AccountInProjectContainer accountInProjectContainer;
 
     /**
@@ -37,6 +36,7 @@ public class Company {
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
         this.projectTypologyContainer = projectTypologyContainer;
+        this.accountInProjectContainer = accountInProjectContainer;
     }
 
 
@@ -149,5 +149,7 @@ public class Company {
     public boolean addTeamMemberToProject(AllocationDTO allocationDTO) {
         return this.accountInProjectContainer.addTeamMemberToProject(allocationDTO);
     }
+
 }
+
 
