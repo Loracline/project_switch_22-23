@@ -12,8 +12,6 @@ actor Administrator as a
 participant ":AddBusinessSectorUI" as absui
 participant ":AddBusinessSectorController" as absc
 participant ":Company" as c
-participant ":AccountContainer" as ac
-participant "account:Account" as acc
 participant ":BusinessSectorContainer" as bsc
 participant "businessSector:BusinessSector" as bs
 
@@ -24,18 +22,10 @@ a <-- absui: requests data (name)
 a -> absui: types requested data
 absui -> absc: addBusinessSector(name, email)
 activate absc
-absc -> c: addBusinessSector(name, email)
+absc -> c: validateAdministrator(email)
 activate c
-c -> ac: validateAdministrator(email)
-activate ac
-ac -> ac: getAccountByEmail(email)
-ac -> acc: validateAdministrator(email)
-activate acc
-ac <-- acc: true
-deactivate acc
-c <-- ac: true
-deactivate ac
-absc <-- c: true
+ref over c: validateAdministrator_sequenceDiagram
+c --> absc: true
 deactivate c
 absc -> c: addBusinessSector(name)
 activate c

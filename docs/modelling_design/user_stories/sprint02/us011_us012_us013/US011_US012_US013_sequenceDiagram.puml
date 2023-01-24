@@ -1,0 +1,73 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO ASSOCIATE/DEFINE TEAM MEMBER/PRODUCT OWNER/SCRUM MASTER OF A PROJECT
+legend top
+US011 - As Manager, I want to associate a User as Team Member of a project.
+US012 - As Manager, I want to define the Product Owner of a project.
+US013 - As Manager, I want to define the Scrum Master of a project.
+end legend
+autonumber
+
+
+actor Manager
+participant ":AddUserToProjectUI" as ui
+participant ":ListAllUsersController" as usersController
+participant ":ListAllProjectsController" as projectsController
+participant ":AddUserToProjectController" as controller
+participant ":Company" as company
+participant "accountInProjectContainer:AccountInProjectContainer" as accinprojcont
+participant "accountInProjectDTOMapper:AccountInProjectDTOMapper" as mapper
+participant "accountInProject:AccountInProject" as accinproj
+
+Manager -> ui: requests list of all User accounts
+activate ui
+ui -> usersController: listAllUsers(emailManager)
+activate usersController
+ref over usersController: listAllUsers_sequenceDiagram
+usersController --> ui: userAccountsDTO
+deactivate usersController
+ui --> Manager: requests to select User account
+Manager -> ui: selects User account
+deactivate ui
+Manager -> ui: requests list of all projects
+activate ui
+ui -> projectsController: listAllProjects(emailManager)
+activate projectsController
+ref over projectsController: US015_sequenceDiagram
+projectsController --> ui: projectsDTO
+deactivate projectsController
+ui --> Manager: requests to select project
+Manager -> ui: selects project
+deactivate ui
+
+
+Manager -> ui: starts the association of the selected User as the Product Owner of the selected project
+activate ui
+ui --> Manager: requests data
+Manager -> ui: sends data (role, costPerHour, percentageAllocation, startDate)
+ui -> controller: addUserToProject(emailManager, accountInProjectDTO)
+activate controller
+controller -> company: validateManager(emailManager)
+ref over company: validateManager_sequenceDiagram
+company --> controller: true
+controller -> company: addUserToProject(accountInProjectDTO)
+activate company
+company -> accinprojcont: addUserToProject(accountInProjectDTO)
+activate accinprojcont
+create mapper
+accinprojcont -> mapper: accountInProjectFromDTO(accountInProjectDTO)
+activate mapper
+create accinproj
+mapper -> accinproj: create(account, project...)
+mapper --> accinprojcont: acountInProject
+deactivate mapper
+accinprojcont -> accinprojcont: add(accountInProject)
+accinprojcont --> company: true
+deactivate accinprojcont
+company --> controller: true
+deactivate company
+controller --> ui: true
+deactivate controller
+ui --> Manager: informs team member/product owner/scrum master associated/defined
+deactivate ui
+@enduml

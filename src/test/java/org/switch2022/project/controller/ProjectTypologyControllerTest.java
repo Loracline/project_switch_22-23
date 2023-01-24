@@ -3,8 +3,8 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.container.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ class ProjectTypologyControllerTest {
     Profile profileOne, profileTwo, profileThree;
     ProjectTypology projectTypologyOne, projectTypologyTwo;
     Project project;
-    Customer customer;
     List<Account> accounts;
     List<Profile> profiles;
     BusinessSector businessSector;
@@ -40,6 +39,9 @@ class ProjectTypologyControllerTest {
     AccountInProject accountInProject1, accountInProject2;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
+    Customer customerOne, customerTwo;
+    CustomerContainer customerContainer;
+    List<Customer> customers;
     Company company;
 
     ProjectTypologyController projectTypologyController;
@@ -87,27 +89,32 @@ class ProjectTypologyControllerTest {
 
         projectTypologyContainer= new ProjectTypologyContainer(typologies);
 
-        customer = new Customer("ISEP");
-        project = new Project("proj001", "software development management", customer,
+        customerOne = new Customer("ISEP");
+        customerTwo = new Customer("PortoTech");
+
+        customers = new ArrayList<>();
+        customerContainer = new CustomerContainer(customers);
+        customers.add(customerOne);
+        customers.add(customerTwo);
+
+        project = new Project("proj001", "software development management", customerOne,
                 projectTypologyOne, businessSector);
 
         List<Project> projects = new ArrayList<>();
         projects.add(project);
         projectContainer = new ProjectContainer(projects);
 
-        accountInProject1 = new AccountInProject(accountOne, project,
+        accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
-        accountInProject2 = new AccountInProject(accountTwo, project,
+        accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
-        accountInProject1.setRole("team member");
-        accountInProject2.setRole("team member");
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProject1);
         accountsInProject.add(accountInProject2);
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer);
+                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
         projectTypologyController = new ProjectTypologyController(company);
 
@@ -136,6 +143,10 @@ class ProjectTypologyControllerTest {
         typologies.clear();
         projectTypologyContainer=null;
         projectTypologyController=null;
+        customerOne = null;
+        customerTwo = null;
+        customers.clear();
+        customerContainer = null;;
 
         company = null;
     }

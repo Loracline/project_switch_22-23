@@ -11,13 +11,10 @@ actor Manager as mg
 participant ":RegisterProjectUI" as ui
 participant ":RegisterProjectController" as controller
 participant ":Company" as comp
-participant ":AccountContainer" as ac
-participant "account:Account" as a
 participant ":ProjectContainer" as PC
 participant ":ProjectMapper" as mapper
 participant "project:Project" as project
-participant ":projectDTO:ProjectDTO" as dto
-participant "profile:Profile" as pf
+participant ":dto:ProjectDTO" as dto
 
 activate mg
 mg ->ui : register new project
@@ -28,30 +25,19 @@ mg -> ui: types requested data
 activate ui
 create dto
 ui -> dto: create (code, name, ...)
-ui -> controller: registerProject(projectDTO, email)
+ui -> controller: registerProject(dto, email)
 activate controller
 
-
 controller -> comp: validateManager(email)
+ref over comp: validateManager_sequenceDiagram
 activate comp
-comp -> ac: validateManager(email)
-activate ac
-ac -> a: isManager()
-activate a
-a -> pf : getProfileName()
-activate pf
-a -->> ac: true
-deactivate pf
-deactivate a
-ac -->> comp: true
-deactivate ac
 comp -->> controller: true
 deactivate comp
-controller -> comp: registerProject(projectDTO)
+controller -> comp: registerProject(dto)
 activate comp
-comp -> PC : registerProject(projectDTO)
+comp -> PC : registerProject(dto)
 activate PC
-PC -> mapper: createProject(projectDTO)
+PC -> mapper: createProject(dto)
 activate mapper
 create project
 mapper -> project : create (code, name, ...)

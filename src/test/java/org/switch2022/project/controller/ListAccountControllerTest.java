@@ -3,11 +3,7 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.container.ProjectContainer;
-import org.switch2022.project.container.*;
+import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
@@ -35,7 +31,9 @@ class ListAccountControllerTest {
   ProjectContainer projectContainer;
   Company company;
   ProjectTypology projectTypology;
-  Customer customer;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
   ProjectTypologyContainer projectTypologyContainer;
   List<ProjectTypology> typologies = new ArrayList<>();
 
@@ -76,19 +74,25 @@ class ListAccountControllerTest {
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
     businessSectors.add(businessSector);
 
-    accountInProject1 = new AccountInProject(accountOne, project,
+    customerOne = new Customer("ISEP");
+    customerTwo = new Customer("PortoTech");
+
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
+
+    accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
-    accountInProject2 = new AccountInProject(accountTwo, project,
+    accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
-    accountInProject1.setRole("team member");
-    accountInProject2.setRole("team member");
     accountsInProject = new ArrayList<>();
     accountsInProject.add(accountInProject1);
     accountsInProject.add(accountInProject2);
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer);
+            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
   }
 
 
@@ -109,6 +113,10 @@ class ListAccountControllerTest {
     project = null;
     projects.clear();
     projectContainer = null;
+    customerOne = null;
+    customerTwo = null;
+    customers.clear();
+    customerContainer = null;
     company = null;
   }
 
