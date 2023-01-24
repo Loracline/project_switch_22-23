@@ -41,4 +41,14 @@ public class ProjectTypology {
         ProjectTypology that = (ProjectTypology) toCompare;
         return Objects.equals(projectTypologyName, that.projectTypologyName);
     }
+    /**
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectTypologyName);
+    }
 }
