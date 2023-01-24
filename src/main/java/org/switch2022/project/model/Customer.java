@@ -47,8 +47,4 @@ public class Customer {
         return Objects.hash(customerName);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(customerName);
-    }
 }

@@ -11,7 +11,12 @@ public class AddUserToProjectController {
         this.company = company;
     }
 
-    public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO){
-        return this.company.addUserToProject(accountInProjectDTO);
+    public boolean addUserToProject(String emailManager,
+                                    AccountInProjectDTO accountInProjectDTO){
+        boolean result = false;
+        if(company.validateManager(emailManager)){
+            result = this.company.addUserToProject(accountInProjectDTO);
+        }
+        return result;
     }
 }
