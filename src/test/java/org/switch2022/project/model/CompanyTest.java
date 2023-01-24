@@ -23,12 +23,12 @@ class CompanyTest {
     Account accountOne, accountTwo, accountThree, accountFour;
     Profile profileOne, profileTwo, profileThree;
     ProjectTypology projectTypologyOne, projectTypologyTwo;
-    Project projectOne, projectTwo, projectThree;
+    Project projectOne, projectTwo, projectThree, project;
     List<Account> accounts;
     List<Profile> profiles;
     List<Project> projects;
     List<ProjectTypology> typologies;
-    BusinessSector businessSectorOne, businessSectorTwo;
+    BusinessSector businessSectorOne, businessSectorTwo, businessSector;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
@@ -36,7 +36,7 @@ class CompanyTest {
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
     ProjectDTO projectOneDTO, projectTwoDTO;
-    Customer customerOne, customerTwo, customerThree;
+    Customer customerOne, customerTwo, customerThree, customer;
     CustomerContainer customerContainer;
     List<Customer> customers;
     float costPerHour;
@@ -90,6 +90,8 @@ class CompanyTest {
         businessSectors.add(businessSectorOne);
 
         // Projects created.
+        project = new Project("AA001", "software development management", customer, projectTypologyOne,
+                businessSector);
         projectOne = new Project("AA001", "software development management", customerOne, projectTypologyOne,
                 businessSectorOne);
         projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSectorOne);
@@ -162,11 +164,13 @@ class CompanyTest {
         profileThree = null;
         accounts.clear();
         profiles.clear();
+        project = null;
         accountContainer = null;
         profileContainer = null;
         businessSectorOne = null;
         businessSectors.clear();
         businessSectorContainer = null;
+        businessSector = null;
         projectTypologyOne = null;
         projectTypologyTwo = null;
         typologies.clear();
@@ -587,4 +591,28 @@ class CompanyTest {
         //Assert
         assertTrue(result);
     }
+    @Test
+    void ensureThatAllAccountsByProjectAreListedSuccessfully() {
+        List<Account> expected = new ArrayList<>();
+        expected.add(accountOne);
+
+
+        //Act
+        List<Account> result = company.listAccountsByProject("AA001");
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatListAccountsByProjectIsEmpty_NoProject() {
+        List<Account> expected = new ArrayList<>();
+
+        //Act
+        List<Account> result = company.listAccountsByProject("AA0099");
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }
+

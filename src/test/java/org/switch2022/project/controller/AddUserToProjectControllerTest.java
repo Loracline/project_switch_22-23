@@ -92,6 +92,7 @@ class AddUserToProjectControllerTest {
         profileContainer = new ProfileContainer(profiles);
         profiles.add(profileOne);
         profiles.add(profileTwo);
+        profiles.add(profileThree);
 
         //business sectors
         businessSector = new BusinessSector("fishing");
@@ -207,6 +208,9 @@ class AddUserToProjectControllerTest {
     @Test
     void ensureProductOwnerIsSuccessfullyAssociatedToAProject() {
         //Arrange
+        //email manager
+        accountThree.setProfile(profileThree);
+        String emailManager = "jane@isep.ipp.pt";
         //accountDTO
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = "John";
@@ -233,7 +237,7 @@ class AddUserToProjectControllerTest {
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(accountInProjectDTOPO);
+        boolean result = controller.addUserToProject(emailManager, accountInProjectDTOPO);
 
         //Assert
         assertTrue(result);
@@ -246,6 +250,9 @@ class AddUserToProjectControllerTest {
     @Test
     void ensureTeamMemberIsSuccessfullyAssociatedToAProject() {
         //Arrange
+        //email manager
+        accountThree.setProfile(profileThree);
+        String emailManager = "jane@isep.ipp.pt";
         //accountDTO
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = "Anna";
@@ -272,7 +279,7 @@ class AddUserToProjectControllerTest {
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(accountInProjectDTOTM);
+        boolean result = controller.addUserToProject(emailManager, accountInProjectDTOTM);
 
         //Assert
         assertTrue(result);
@@ -284,6 +291,9 @@ class AddUserToProjectControllerTest {
     @Test
     void ensureScrumMasterIsSuccessfullyAssociatedToAProject() {
         //Arrange
+        //email manager
+        accountThree.setProfile(profileThree);
+        String emailManager = "jane@isep.ipp.pt";
         //accountDTO
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = "Mary";
@@ -310,7 +320,7 @@ class AddUserToProjectControllerTest {
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(accountInProjectDTOSM);
+        boolean result = controller.addUserToProject(emailManager, accountInProjectDTOSM);
 
         //Assert
         assertTrue(result);
@@ -319,6 +329,9 @@ class AddUserToProjectControllerTest {
     @Test
     void ensureAllocationFailsBecauseRoleIsNotValid() {
         //Arrange
+        //email manager
+        accountThree.setProfile(profileThree);
+        String emailManager = "jane@isep.ipp.pt";
         //accountDTO
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = "Peter";
@@ -345,7 +358,46 @@ class AddUserToProjectControllerTest {
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(accountInProjectDTOSM);
+        boolean result = controller.addUserToProject(emailManager,accountInProjectDTOSM);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void ensureAllocationFailsBecauseProfileIsNotManager() {
+        //Arrange
+        //email manager
+        accountThree.setProfile(profileThree);
+        String emailManagerInvalid = "emma@isep.ipp.pt";
+        //accountDTO
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.name = "Peter";
+        accountDTO.email = "peter@isep.ipp.pt";
+        accountDTO.phoneNumber = 564897231;
+        accountDTO.photo = null;
+        //projectDTO
+        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customerOne,
+                projectTypologyOne
+                , businessSector);
+
+        projectDTO.name = "Test";
+        projectDTO.status = "planned";
+        projectDTO.businessSector = new BusinessSector("IT Sector");
+        //account in project dto - scrum master
+        AccountInProjectDTO accountInProjectDTOSM = new AccountInProjectDTO();
+        accountInProjectDTOSM.accountDTO = accountDTO;
+        accountInProjectDTOSM.projectDTO = projectDTO;
+        accountInProjectDTOSM.role = "Product Owner";
+        accountInProjectDTOSM.costPerHour = 7.5f;
+        accountInProjectDTOSM.percentageAllocation = 45.0f;
+        accountInProjectDTOSM.startDate = LocalDate.of(2023, 1, 19);
+        accountInProjectDTOSM.endDate = LocalDate.of(2023, 1, 22);
+        AddUserToProjectController controller = new AddUserToProjectController(company);
+
+        //Act
+        boolean result = controller.addUserToProject(emailManagerInvalid,
+                accountInProjectDTOSM);
 
         //Assert
         assertFalse(result);
