@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+skinparam sequenceMessageAlign center
+title USER AUTHORIZATION
+legend top
+As a User, I want authorization
+end legend
+autonumber
+actor User
+participant ":SomeUI" as ui
+participant ":SomeController" as controller
+participant ":Company" as company
+participant ":AccountContainer" as ac
+participant "account:Account" as a
+participant "profile:Profile" as p
+
+activate User
+User -> ui: doSomething
+activate ui
+ui -> controller: doSomething(email)
+activate controller
+controller -> company: validateUser(email)
+activate company
+company -> ac: validateUser(email)
+activate ac
+ac -> a: checkAccountfromEmail(email)
+activate a
+a-->>ac: true
+ac -> a: isUser()
+a-> p: isUser()
+activate p
+p-->> a:true
+deactivate p
+a -->> ac: true
+deactivate a
+ac -->> company: true
+deactivate ac
+company-->> controller: true
+@enduml

@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+skinparam sequenceMessageAlign center
+title ADMINISTRATOR AUTHORIZATION
+legend top
+As an Administrator, I want authorization
+end legend
+autonumber
+actor Administrator
+participant ":SomeUI" as ui
+participant ":SomeController" as controller
+participant ":Company" as company
+participant ":AccountContainer" as ac
+participant "account:Account" as a
+participant "profile:Profile" as p
+
+activate Administrator
+Administrator -> ui: doSomething
+activate ui
+ui -> controller: doSomething(email)
+activate controller
+controller -> company: validateAdministrator(email)
+activate company
+company -> ac: validateAdministrator(email)
+activate ac
+ac -> a: checkAccountfromEmail(email)
+activate a
+a-->>ac: true
+ac -> a: isAdministrator()
+a-> p: isAdministrator()
+activate p
+p-->> a:true
+deactivate p
+a -->> ac: true
+deactivate a
+ac -->> company: true
+deactivate ac
+company-->> controller: true
+@enduml

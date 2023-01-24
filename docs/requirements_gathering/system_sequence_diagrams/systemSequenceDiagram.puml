@@ -459,9 +459,13 @@ skinparam sequenceMessageAlign center
 title TO ADD A CUSTOMER
 actor "Administrator" as adm
 adm -> ":System": starts adding new customer
-adm <-- ":System": requests data (customer)
+note left
+Account is authenticated.
+":System" grants access.
+end note
+adm <-- ":System": requests data (customerName)
 adm -> ":System": types requested data
-adm <-- ":System":project typology created
+adm <-- ":System":informs operation success
 @enduml
 
 @startuml

@@ -1,0 +1,63 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO LIST ALL USERS
+autonumber
+
+actor Manager
+participant ":ListAllUsersUI" as ui
+participant ":ListAllUsersController" as controller
+participant ":Company" as company
+participant ":AccountContainer" as container
+participant ":account:Account" as acc
+participant "users: List<Account>" as list
+participant "accountMapper:AccountMapper" as mapper
+participant "accountsDTO: List<AccountDTO>" as dtolist
+participant "accountDTO:AccountDTO" as dto
+
+Manager -> ui: list all User accounts
+activate ui
+ui -> controller: listAllUsers()
+activate controller
+ref over controller: validateManager_sequenceDiagram
+controller -> company: listAllUsers()
+activate company
+company -> container: listAllUsers()
+activate container
+create list
+container --> list: create()
+loop for each account in accountContainer
+container -> acc : isUser()
+activate acc
+acc --> container: userAccount
+deactivate acc
+container -> list: add(userAccount)
+end loop
+container --> company: users
+deactivate container
+company --> controller: users
+deactivate company
+create mapper
+controller -> mapper: getListDTOFromAccounts(users)
+create dtolist
+mapper --> dtolist: create()
+loop for each user in users
+mapper -> list: user = get(i)
+activate list
+list --> mapper: user
+deactivate list
+mapper -> mapper: getDTOFromAccount(user)
+activate mapper
+create dto
+mapper --> dto: create()
+deactivate mapper
+mapper -> dtolist: add(accountDTO)
+activate dtolist
+deactivate dtolist
+end loop
+mapper --> controller: userAccountsDTO
+controller --> ui: userAccountsDTO
+deactivate controller
+ui --> Manager: return list of Users
+deactivate ui
+@enduml

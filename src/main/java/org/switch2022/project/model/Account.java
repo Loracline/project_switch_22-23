@@ -5,37 +5,31 @@ import java.util.Objects;
 
 /**
  * Class Account is built to create and manage new accounts.
- * An account is defined by a name, an email, a phone number, a profile, an
- * account status and a photo (optional).
+ * An account is defined by: name, email, phone number, profile, status and photo
+ * (optional).
+ * Status is "True" if ACTIVE and "False" if INACTIVE.
  */
 public class Account {
     /**
-     * Attributes of the class Account, according to the Class Diagram.
-     *
-     * @param status is true (active) or false (inactive)
+     * Attributes
      */
-    private String name;
-    private String email;
-    private long phoneNumber;
-    private BufferedImage photo;
-    private boolean status;
+    private final String accountName;
+    private final String email;
+    private final long phoneNumber;
     private Profile profile;
+    private BufferedImage photo;
+    private boolean accountStatus;
+
 
     /**
-     * Constructor of the class Account.
-     * New instance is created using as parameter the essential attributes.
-     *
-     * @param name        of the new account
-     * @param email       of the new account
-     * @param phoneNumber of the new account
-     * @param photo       of the new account
+     * Constructor
      */
     public Account(String name, String email, long phoneNumber, BufferedImage photo) {
-        this.name = name;
+        this.accountName = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.profile = new Profile("User");
-        this.status = true;
+        this.accountStatus = true;
 
         if (photo != null) {
             this.photo = photo;
@@ -43,109 +37,179 @@ public class Account {
     }
 
     /**
-     * Method that checks if two instances of Account are equal by comparing
-     * their e-mail addresses.
+     * Copy Constructor
+     * Provides a way to create a new object with the same state as an existing
+     * object, without modifying the existing object.
+     */
+    public Account(Account other) {
+        this.accountName = other.accountName;
+        this.email = other.email;
+        this.phoneNumber = other.phoneNumber;
+        this.profile = other.profile;
+        this.accountStatus = other.accountStatus;
+        this.photo = other.photo;
+    }
+
+
+    /**
+     * This method checks if two instances of Account are equal by comparing
+     * all their attributes.
      *
      * @param toCompare Account instance to compare with
-     * @return TRUE if the two have the same e-mail address, and FALSE otherwise
+     * @return TRUE if the two have the same attributes, and FALSE otherwise
      */
     @Override
     public boolean equals(Object toCompare) {
-        if (this == toCompare) return true;
-        if (!(toCompare instanceof Account)) return false;
+        if (this == toCompare) {
+            return true;
+        }
+        if (!(toCompare instanceof Account)) {
+            return false;
+        }
         Account account = (Account) toCompare;
         return phoneNumber == account.phoneNumber &&
-                status == account.status &&
-                name.equals(account.name) && email.equals(account.email) &&
+                accountStatus == account.accountStatus &&
+                accountName.equals(account.accountName) && email.equals(account.email) &&
                 Objects.equals(photo, account.photo) &&
                 profile.equals(account.profile);
     }
 
     /**
-     * Setter method for the attribute PHOTO.
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
      *
-     * @param photo of the instance of Account
+     * @return a unique value that represents the object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountName, email, phoneNumber, profile, photo, accountStatus);
+    }
+
+
+    // "GETTERS"
+
+    /**
+     * Getter method for the attribute: e-mail.
+     *
+     * @return e-mail of the account.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Getter method for the attribute: name.
+     *
+     * @return name of the account.
+     */
+    public String getAccountName() {
+        return accountName;
+    }
+
+    /**
+     * Getter method for the attribute: phone number.
+     *
+     * @return phone number of the account.
+     */
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     * Getter method for the attribute: photo.
+     *
+     * @return photo of the account.
+     */
+    public BufferedImage getPhoto() {
+        return photo;
+    }
+
+    /**
+     * Getter method for the attribute: status.
+     *
+     * @return status of the account.
+     */
+    public boolean getAccountStatus() {
+        return accountStatus;
+    }
+
+    /**
+     * Getter method for the attribute: profile.
+     *
+     * @return profile of the account.
+     */
+    public String getProfile() {
+        return profile.getProfileName();
+    }
+
+
+    // "SETTERS"
+
+    /**
+     * Setter method for the attribute: photo.
+     *
+     * @param photo of the account.
      */
     public void setPhoto(BufferedImage photo) {
         this.photo = photo;
     }
 
-
     /**
-     * Getter method for the attribute E-MAIL.
+     * Setter method for the attribute: profile.
      *
-     * @return the email of the account
-     */
-    public String getEmail() {
-        return email;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public BufferedImage getPhoto() {
-        return photo;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
-
-    public String getProfile() {
-        return profile.getProfileName();
-    }
-
-    /**
-     * Setter method for the attribute ACCOUNT STATUS.
-     *
-     * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
-     */
-    public boolean setStatus(boolean status) {
-        return this.status = status;
-    }
-
-    /**
-     * Setter method for the attribute PROFILE.
-     *
-     * @param profile of the instance of Account
+     * @param profile of the account.
      */
     public void setProfile(Profile profile) {
         this.profile = profile;
     }
 
+    /**
+     * Setter method for the attribute: status.
+     *
+     * @param status TRUE = "ACTIVE" or FALSE = "INACTIVE"
+     */
+    public void setStatus(boolean status) {
+        this.accountStatus = status;
+    }
+
+
+    // VALIDATION
+
+    /**
+     * This method verifies if account is the one intended through its e-mail.
+     *
+     * @param email of the seeked account
+     * @return TRUE if account has given e-mail, and FALSE otherwise.
+     */
     public boolean checkAccountFromEmail(String email) {
-        boolean account = false;
-        if (this.email.equals(email)) {
-            account = true;
-        }
-        return account;
+        return this.email.equals(email);
     }
 
-    public boolean IsManager() {
-        boolean isManager = false;
-        if (this.profile.isManager()){
-            isManager=true;
-        }
-        return isManager;
-    }
-    public boolean IsAdministrator() {
-        boolean isAdministrator = false;
-        if(this.profile.isAdministrator()){
-            isAdministrator=true;
-        }
-        return isAdministrator;
+
+    /**
+     * This method checks if account's profile is "Manager".
+     *
+     * @return TRUE if "Manager" and FALSE otherwise.
+     */
+    public boolean isManager() {
+        return this.profile.isManager();
     }
 
-    public boolean IsUser() {
-        boolean isUser = false;
-        if (this.profile.isUser()){
-            isUser=true;
-        }
-        return isUser;
+    /**
+     * This method checks if account's profile is "Administrator".
+     *
+     * @return TRUE if "Administrator" and FALSE otherwise.
+     */
+    public boolean isAdministrator() {
+        return this.profile.isAdministrator();
     }
 
+    /**
+     * This method checks if account's profile is "User".
+     *
+     * @return TRUE if "User" and FALSE otherwise.
+     */
+    public boolean isUser() {
+        return this.profile.isUser();
+    }
 }

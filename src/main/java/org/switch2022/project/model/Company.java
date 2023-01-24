@@ -1,134 +1,223 @@
 package org.switch2022.project.model;
 
-import org.switch2022.project.DTO.AllocationDTO;
-import org.switch2022.project.container.AccountContainer;
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.container.ProjectContainer;
-import org.switch2022.project.DTO.ProjectDTO;
-import org.switch2022.project.container.*;
+
+import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 /**
- * Class Company is built to create and manipulate AccountContainer and ProfileContainer.
+ * Class Company is built to create and manipulate the containers.
+ * Containers: Accounts, Profiles, Projects, Business Sectors, Project Typologies,
+ * Customers and Accounts in Projects.
  */
 public class Company {
     /**
-     * Attributes of the class Company, according to the Class Diagram.
+     * Attributes
      */
-    private AccountContainer accountContainer;
-    private ProfileContainer profileContainer;
-    private ProjectContainer projectContainer;
-    private BusinessSectorContainer businessSectorContainer;
-    private ProjectTypologyContainer projectTypologyContainer;
-    private AccountInProjectContainer accountInProjectContainer;
+    private final AccountContainer accountContainer;
+    private final ProfileContainer profileContainer;
+    private final ProjectContainer projectContainer;
+    private final BusinessSectorContainer businessSectorContainer;
+    private final ProjectTypologyContainer projectTypologyContainer;
+    private final AccountInProjectContainer accountInProjectContainer;
+    private final CustomerContainer customerContainer;
+
 
     /**
-     * Company constructor
+     * Constructor
      */
     public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer
             businessSectorContainer, ProjectContainer projectContainer, ProjectTypologyContainer projectTypologyContainer,
-                   AccountInProjectContainer accountInProjectContainer) {
+                   AccountInProjectContainer accountInProjectContainer, CustomerContainer customerContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
         this.projectContainer = projectContainer;
         this.businessSectorContainer = businessSectorContainer;
         this.projectTypologyContainer = projectTypologyContainer;
+        this.customerContainer = customerContainer;
         this.accountInProjectContainer = accountInProjectContainer;
     }
 
 
+    // "GETTERS"
+
     /**
-     * Getter method for the attribute accounts.
+     * Getter method for the attribute: accountContainer.
      *
-     * @return the list of Accounts in the Company
+     * @return the container of accounts of this company.
      */
     public AccountContainer getAccountContainer() {
         return accountContainer;
     }
 
-    /**
-     * Method createProfile
-     *
-     * @return true if profile is created
-     */
-    public boolean createProfile(String name) {
-        return profileContainer.createProfile(name);
-    }
-
-    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
-        return accountContainer.addAccount(name, email, phoneNumber, photo);
-    }
-
-    public boolean changeStatus(String email, boolean status) {
-        return accountContainer.changeStatus(email, status);
-    }
-
-    public boolean changeProfile(String email, String profileName) {
-        boolean wasAccountProfileUpdated = false;
-        Profile profile = profileContainer.getProfileByName(profileName);
-        Account account = accountContainer.getAccountByEmail(email);
-
-        if (account != null && profile != null) {
-            account.setProfile(profile);
-            wasAccountProfileUpdated = true;
-        }
-
-        return wasAccountProfileUpdated;
-    }
+    // ACTOR VALIDATION METHODS
 
     /**
-     * This method registers projects
+     * This method validates if the actor is an account with profile "Manager".
      *
-     * @param projectDTO
-     * @param email
-     * @return true if project was registered and false if the project was not registered
+     * @param email of the actor's account.
+     * @return TRUE if "Manager" and FALSE otherwise.
      */
-    public boolean registerProject(ProjectDTO projectDTO, String email) {
-        boolean projectRegistered = false;
-        if (accountContainer.validateManager(email)) {
-            if (projectContainer.registerProject(projectDTO)) {
-                projectRegistered = true;
-            } else {
-                projectRegistered = false;
-            }
-        }
-        return projectRegistered;
-    }
-
-    /**
-     * Method addBusinessSector
-     *
-     * @return true if businessSector is created
-     * @return false if businessSector isn't created successfully
-     */
-    public boolean addBusinessSector(String businessSector) {
-        return businessSectorContainer.createBusinessSector(businessSector);
-    }
-
     public boolean validateManager(String email) {
         return accountContainer.validateManager(email);
     }
 
     /**
-     * This method returns a list of Accounts Allocated To a Project
+     * This method validates if the actor is an account with profile "User".
      *
-     * @return a list of Accounts
+     * @param email of the actor's account.
+     * @return TRUE if "User" and FALSE otherwise.
      */
-    public List<Account> listAccountsByProject(String projectCode) {
-        return accountInProjectContainer.listAccountsByProject(projectCode);
-    }
-
     public boolean validateUser(String email) {
         return accountContainer.validateUser(email);
     }
 
+    /**
+     * This method validates if the actor is an account with profile
+     * "Administrator".
+     *
+     * @param email of the actor's account.
+     * @return TRUE if "Administrator" and FALSE otherwise.
+     */
     public boolean validateAdministrator(String email) {
         return accountContainer.validateAdministrator(email);
     }
 
+
+    // PROFILE METHODS
+
+    /**
+     * This method creates a new profile and adds it to the container.
+     *
+     * @param profileName of the intended profile.
+     * @return TRUE if profile is created and FALSE otherwise.
+     */
+    public boolean createProfile(String profileName) {
+        return profileContainer.createProfile(profileName);
+    }
+
+    /**
+     * This method changes the profile of existing account in the container.
+     *
+     * @param email       of account.
+     * @param profileName of the profile one intend to change to.
+     * @return TRUE if changed, and FALSE otherwise.
+     */
+    public boolean changeProfile(String email, String profileName) {
+        boolean wasAccountProfileUpdated = false;
+        Profile profile = profileContainer.getProfileByName(profileName);
+        Account account = accountContainer.getAccountByEmail(email);
+        if (account != null && profile != null) {
+            account.setProfile(profile);
+            wasAccountProfileUpdated = true;
+        }
+        return wasAccountProfileUpdated;
+    }
+
+    /**
+     * This method lists the accounts in the container that have the profile
+     * "User".
+     *
+     * @return a list of accounts with the profile "User".
+     */
+    public List<Account> listAllUsers() {
+        return accountContainer.listAllUsers();
+    }
+
+
+    // ACCOUNT METHODS
+
+    /**
+     * This method registers a new account and adds it to the container.
+     *
+     * @param accountName of the account.
+     * @param email       of the account.
+     * @param phoneNumber of the account.
+     * @param photo       of the account.
+     * @return TRUE if account is registered and FALSE otherwise.
+     */
+    public boolean registerAccount(String accountName, String email, long phoneNumber,
+                                   BufferedImage photo) {
+        return accountContainer.addAccount(accountName, email, phoneNumber, photo);
+    }
+
+    /**
+     * This method changes the status of an existing account in the container.
+     *
+     * @param email  of account.
+     * @param status one intend to change to (TRUE - Active, FALSE - Inactive).
+     * @return TRUE if changed, and FALSE otherwise.
+     */
+    public boolean changeStatus(String email, boolean status) {
+        return accountContainer.changeStatus(email, status);
+    }
+
+
+    // PROJECT METHODS
+
+    /**
+     * This method registers a new project and adds it to the container.
+     *
+     * @param projectDTO data transfer object of projects information.
+     * @param email      of the actor performing the task.
+     * @return TRUE if registered, and FALSE otherwise.
+     */
+    public boolean registerProject(ProjectDTO projectDTO, String email) {
+        boolean isProjectRegistered = false;
+        if (accountContainer.validateManager(email)) {
+            if (projectContainer.registerProject(projectDTO)) {
+                isProjectRegistered = true;
+            }
+        }
+        return isProjectRegistered;
+    }
+
+    /**
+     * This method lists all projects in the container.
+     *
+     * @return a list of all projects.
+     */
+    public List<Project> listAllProjects() {
+        return projectContainer.getProjects();
+    }
+
+
+    // BUSINESS SECTOR METHODS
+
+    /**
+     * This method adds a new business sector to the container.
+     *
+     * @param businessSectorName of the business sector one intend to add.
+     * @return TRUE if added and FALSE otherwise.
+     */
+    public boolean addBusinessSector(String businessSectorName) {
+        return businessSectorContainer.createBusinessSector(businessSectorName);
+    }
+
+
+    // CUSTOMER METHODS
+
+    /**
+     * This method adds a new customer to the container.
+     *
+     * @param customerName of the customer one intends to add.
+     * @return TRUE if added and FALSE otherwise.
+     */
+    public boolean addCustomer(String customerName) {
+        return customerContainer.addCustomer(customerName);
+    }
+    // PROJECT TYPOLOGY METHODS
+
+    /**
+     * This method adds a new typology of project to the container.
+     *
+     * @param email           of the actor.
+     * @param projectTypology of project one intend to create.
+     * @return TRUE if added, and FALSE otherwise.
+     */
     public boolean createProjectTypology(String email, String projectTypology) {
         boolean projectTypologyCreated = false;
         if (accountContainer.validateAdministrator(email)) {
@@ -137,19 +226,28 @@ public class Company {
         return projectTypologyCreated;
     }
 
+
+    // ACCOUNT IN PROJECT METHODS
+
     /**
-     * This method returns list of projects
+     * This method adds an account to a project with a specific role.
      *
-     * @return list of projects
+     * @param accountInProjectDTO data transfer object gathering the information
+     *                            needed.
+     * @return TRUE if added, and FALSE otherwise.
      */
-    public List<Project> getListAllProjects() {
-        return projectContainer.getProjectsList();
+    public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
+        return this.accountInProjectContainer.addUserToProject(accountInProjectDTO);
     }
 
-    public boolean addTeamMemberToProject(AllocationDTO allocationDTO) {
-        return this.accountInProjectContainer.addTeamMemberToProject(allocationDTO);
+    /**
+     * This method lists the accounts working in a specific project.
+     *
+     * @param projectCode of the project one searches for.
+     * @return list of accounts involved in this project.
+     */
+    public List<Account> listAccountsByProject(String projectCode) {
+        return accountInProjectContainer.listAccountsByProject(projectCode);
     }
-
 }
-
 

@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountInProjectTest {
     Account account;
@@ -22,6 +21,9 @@ public class AccountInProjectTest {
 
     @BeforeEach
     void setUp() {
+        /*
+          Account in project created.
+         */
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
         customer = new Customer("IT Customer");
         projectTypology = new ProjectTypology("fixed cost");
@@ -30,10 +32,9 @@ public class AccountInProjectTest {
                 businessSector);
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
-        startDate = LocalDate.of(2023,01,19);
-        accountInProject = new AccountInProject(account, project,
+        startDate = LocalDate.of(2023, 1, 19);
+        accountInProject = new AccountInProject(account, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
-        accountInProject.setRole("team member");
     }
 
     @AfterEach
@@ -46,67 +47,9 @@ public class AccountInProjectTest {
         accountInProject = null;
     }
 
-
-    @Test
-    void ensureThatTeamMemberIsAdded() {
-        //Arrange
-        boolean expected = true;
-
-        //Act
-        boolean result = accountInProject.setRole("team member");
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatProductOwnerIsAdded() {
-        //Arrange
-        boolean expected = true;
-
-        //Act
-        boolean result = accountInProject.setRole("product owner");
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatProjectManagerIsAdded() {
-        //Arrange
-        boolean expected = true;
-
-        //Act
-        boolean result = accountInProject.setRole("project manager");
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatScrumMasterIsAdded() {
-        //Arrange
-        boolean expected = true;
-
-        //Act
-        boolean result = accountInProject.setRole("scrum master");
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatInvalidRoleIsNotAdded() {
-        //Arrange
-        boolean expected = false;
-
-        //Act
-        boolean result = accountInProject.setRole("human resources manager");
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
+    /**
+     * Testing the equals() method.
+     */
     @Test
     void ensureSameAccountInProjectEqualsItself() {
         // Arrange
@@ -121,28 +64,25 @@ public class AccountInProjectTest {
     @Test
     void ensureTwoAccountsInProjectAreEqual() {
         // Arrange
-        AccountInProject copy = new AccountInProject(account, project,
+        AccountInProject copy = new AccountInProject(account, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
-        copy.setRole("team member");
         boolean expected = true;
         // Act
         boolean result = accountInProject.equals(copy);
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     @Test
     void ensureTwoAccountsInProjectAreDifferent() {
         // Arrange
-        accountInProject.setRole("team member");
-        AccountInProject other = new AccountInProject(account, project,
+        AccountInProject other = new AccountInProject(account, project, "Product Owner",
                 costPerHour, percentageAllocation, startDate);
-        other.setRole("product owner");
         boolean expected = false;
         // Act
         boolean result = accountInProject.equals(other);
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -151,6 +91,7 @@ public class AccountInProjectTest {
         assertNotNull(accountInProject);
     }
 
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     void ensureAccountInProjectDoesNotEqualOtherTypeOfObject() {
         // Arrange
@@ -159,6 +100,99 @@ public class AccountInProjectTest {
         boolean result = accountInProject.equals(account);
 
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
+    }
+
+    /**
+     * hashCode()
+     */
+    @Test
+    void ensureAccountsInProjectHaveSameHashCode() {
+        // ARRANGE
+        AccountInProject reference = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+        AccountInProject other = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+
+        // ACT
+        int hashCodeReference = reference.hashCode();
+        int hashCodeOther = other.hashCode();
+
+        // ASSERT
+        assertEquals(hashCodeOther, hashCodeReference);
+    }
+
+    @Test
+    void ensureAccountsInProjectHaveDifferentHashCode() {
+        // ARRANGE
+        AccountInProject reference = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+        AccountInProject other = new AccountInProject(account, project, "Team Member",
+                7.0f, percentageAllocation, startDate);
+
+        // ACT
+        int hashCodeReference = reference.hashCode();
+        int hashCodeOther = other.hashCode();
+
+        // ASSERT
+        assertNotEquals(hashCodeOther, hashCodeReference);
+    }
+
+    /**
+     * Testing if one is able to validate the role of the account in project.
+     */
+    @Test
+    void ensureProductOwnerIsAValidRole() {
+        //Arrange
+        AccountInProject accountInProject = new AccountInProject(account, project,
+                "Product Owner", costPerHour, percentageAllocation, startDate);
+        //Act
+        boolean result = accountInProject.isRoleValid();
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureTeamMemberIsAValidRole() {
+        //Arrange
+        AccountInProject accountInProject = new AccountInProject(account, project,
+                "Team Member", costPerHour, percentageAllocation, startDate);
+        //Act
+        boolean result = accountInProject.isRoleValid();
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureScrumMasterIsAValidRole() {
+        //Arrange
+        AccountInProject accountInProject = new AccountInProject(account, project,
+                "Scrum Master", costPerHour, percentageAllocation, startDate);
+        //Act
+        boolean result = accountInProject.isRoleValid();
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureProjectManagerIsAValidRole() {
+        //Arrange
+        AccountInProject accountInProject = new AccountInProject(account, project,
+                "Project Manager", costPerHour, percentageAllocation, startDate);
+        //Act
+        boolean result = accountInProject.isRoleValid();
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureAnyOtherRoleIsInvalid() {
+        //Arrange
+        AccountInProject accountInProject = new AccountInProject(account, project,
+                "Product Visionary", costPerHour, percentageAllocation, startDate);
+        //Act
+        boolean result = accountInProject.isRoleValid();
+        //Assert
+        assertFalse(result);
     }
 }
