@@ -59,7 +59,7 @@ public class ProjectTest {
 
   @Test
   void ensureTwoProjectsAreEqual() {
-    Project project = new Project("AA001", "Aptoide", new Customer("John","228674498"),
+    Project project = new Project("AA001", "Aptoide", new Customer("john","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
     boolean expected = true;
     boolean result = project.equals(projectOne);
@@ -105,7 +105,7 @@ public class ProjectTest {
    */
   @Test
   void ensureCustomerIsEqual() {
-    Customer expected = new Customer("John","228674498");
+    Customer expected = new Customer("john","228674498");
     Customer result = projectOne.getCustomer();
     assertEquals(expected, result);
   }
