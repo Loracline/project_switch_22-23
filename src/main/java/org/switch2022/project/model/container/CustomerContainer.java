@@ -4,7 +4,7 @@ import org.switch2022.project.model.Customer;
 
 import java.util.List;
 
-import static org.switch2022.project.utils.Helper.isLower;
+import static org.switch2022.project.utils.Util.isLower;
 
 /**
  * Class CustomerContainer is built to access and manipulate set of customers
@@ -24,7 +24,7 @@ public class CustomerContainer {
     }
 
     /**
-     * This method validates if customer already exists by checking the name.
+     * This method validates if customer already exists by checking the NIF.
      *
      * @param customerNIF of the intended costumer.
      * @return TRUE if exists and FALSE otherwise.

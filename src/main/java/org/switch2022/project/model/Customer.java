@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Class Customer is built to create and manage new customers.
- * A customer is defined by name.
+ * A customer is defined by name and NIF.
  */
 public class Customer {
     /**
@@ -35,7 +35,7 @@ public class Customer {
         if (this == toCompare) return true;
         if (!(toCompare instanceof Customer)) return false;
         Customer customer = (Customer) toCompare;
-        return Objects.equals(customerName, customer.customerName) && Objects.equals(customerNIF, customer.customerNIF);
+        return Objects.equals(customerName, customer.customerName.toLowerCase()) && Objects.equals(customerNIF, customer.customerNIF);
     }
 
     @Override

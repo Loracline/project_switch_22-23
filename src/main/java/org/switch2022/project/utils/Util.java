@@ -4,7 +4,7 @@ package org.switch2022.project.utils;
  * The class contains all the utility generic static methods that can be called
  * from another class of the project that needs it.
  */
-public class Helper {
+public final class Util {
 
     /**
      * PRIVATE CONSTRUCTOR
@@ -14,7 +14,7 @@ public class Helper {
      * define at least one explicitly. Hence, at least one non-public
      * constructor should be defined.
      */
-    private Helper() {
+    private Util() {
         throw new IllegalStateException("Utility class");
     }
 
