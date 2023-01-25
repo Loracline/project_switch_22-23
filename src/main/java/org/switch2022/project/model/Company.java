@@ -162,12 +162,11 @@ public class Company {
      * This method registers a new project and adds it to the container.
      *
      * @param projectDTO data transfer object of projects information.
-     * @param email      of the actor performing the task.
      * @return TRUE if registered, and FALSE otherwise.
      */
-    public boolean registerProject(ProjectDTO projectDTO, String email) {
+    public boolean registerProject(ProjectDTO projectDTO) {
         boolean isProjectRegistered = false;
-        if (accountContainer.validateManager(email) & projectContainer.registerProject(projectDTO)) {
+        if (projectContainer.registerProject(projectDTO)) {
                 isProjectRegistered = true;
             }
         return isProjectRegistered;

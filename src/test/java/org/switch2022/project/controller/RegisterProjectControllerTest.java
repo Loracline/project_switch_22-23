@@ -19,16 +19,16 @@ class RegisterProjectControllerTest {
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
-  Account accountOne, accountTwo, accountThree;
+  Account accountOne;
   Profile profileOne, profileTwo, profileThree;
   float costPerHour;
   float percentageAllocation;
   LocalDate startDate;
-  ProjectTypology projectTypologyOne, projectTypologyTwo, projectTypology;
+  ProjectTypology projectTypologyOne, projectTypologyTwo;
   Project projectOne, projectTwo, projectThree;
-  BusinessSector businessSectorOne, businessSectorTwo;
+  BusinessSector businessSectorOne;
   ProjectDTO projectOneDTO, projectTwoDTO;
-  Customer customerOne, customerTwo, customerThree;
+  Customer customerOne, customerTwo;
   AccountInProject accountInProject;
   List<Account> accounts;
   List<Profile> profiles;
@@ -50,13 +50,9 @@ class RegisterProjectControllerTest {
   @BeforeEach
   void setUp() {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-    accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
-    accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
     accounts = new ArrayList<>();
     accountContainer = new AccountContainer(accounts);
     accounts.add(accountOne);
-    accounts.add(accountTwo);
-    accounts.add(accountThree);
 
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
@@ -110,8 +106,6 @@ class RegisterProjectControllerTest {
   @AfterEach
   void tearDown() {
     accountOne = null;
-    accountTwo = null;
-    accountThree = null;
     profileOne = null;
     profileTwo = null;
     profileThree = null;
