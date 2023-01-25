@@ -90,14 +90,14 @@ class CompanyTest {
         businessSectors.add(businessSectorOne);
 
         // Projects created.
-        project = new Project("AA002", "software development management", "John",
-                "Fixed cost", "Hunting");
-        projectOne = new Project("AA001", "software development management", "John",
-                "Fixed cost", "Hunting");
-        projectTwo = new Project("AA002", "project software", "John",
-                "Fixed cost", "Hunting");
-        projectThree = new Project("AA001", "Aptoide", "John","Fixed cost",
-                "Hunting");
+        project = new Project("AA002", "software development management", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+        projectOne = new Project("AA001", "software development management", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+        projectTwo = new Project("AA002", "project software", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+        projectThree = new Project("AA001", "Aptoide", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
 
         // Container of projects created.
         projects = new ArrayList<>();
