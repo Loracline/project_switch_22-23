@@ -94,6 +94,8 @@ class AddCustomerControllerTest {
 
         project = new Project("proj001", "software development management", "222333444",
                 "Fixed Cost", "fishing");
+        project = new Project("proj001", "software development management", new Customer("ISEP"),
+                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
 
         List<Project> projects = new ArrayList<>();
         projects.add(project);

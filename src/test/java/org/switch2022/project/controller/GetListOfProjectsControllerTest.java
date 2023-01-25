@@ -33,10 +33,10 @@ public class GetListOfProjectsControllerTest {
         ProjectTypology projectTypology = new ProjectTypology("Fixed cost");
         BusinessSector businessSector = new BusinessSector("fishing");
 
-        Project projectOne = new Project("AA001", "software development management",
-                "ISEP", "Fixed cost", "fishing");
-        Project projectTwo = new Project("AA002", "project software", "ISEP",
-                "Fixed cost", "fishing");
+        Project projectOne = new Project("AA001", "software development management", new Customer("ISEP"),
+                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
+        Project projectTwo = new Project("AA002", "project software", new Customer("ISEP"),
+                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
 
         List<Project> projects = new ArrayList<>();
         projects.add(projectOne);
@@ -55,9 +55,9 @@ public class GetListOfProjectsControllerTest {
     void ensureAllProjectsAreListedWhenRequestedByManager() {
         // Arrange
         GetProjectDTO projectDTOOne = new GetProjectDTO("AA001", "software development management",
-                "ISEP", "planned", "Fixed cost", "fishing");
-        GetProjectDTO projectDTOTwo = new GetProjectDTO("AA002", "project software", "ISEP", "planned",
-            "Fixed cost", "fishing");
+                "isep", "planned", "fixed cost", "fishing");
+        GetProjectDTO projectDTOTwo = new GetProjectDTO("AA002", "project software", "isep", "planned",
+            "fixed cost", "fishing");
 
         List<GetProjectDTO> expectDTOs = new ArrayList<>();
         expectDTOs.add(projectDTOOne);

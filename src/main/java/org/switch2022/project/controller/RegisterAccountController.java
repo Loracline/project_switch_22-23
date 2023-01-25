@@ -15,7 +15,7 @@ public class RegisterAccountController {
      * Attributes of the class RegisterAccountController, according to the Class Diagram.
      */
 
-    private Company company;
+    private final Company company;
 
     /**
      * RegisterAccountController constructor

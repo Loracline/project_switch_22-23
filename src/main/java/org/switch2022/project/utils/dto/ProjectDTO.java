@@ -1,12 +1,9 @@
 package org.switch2022.project.utils.dto;
 
-import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
-import org.switch2022.project.model.ProjectTypology;
-
 import java.util.Objects;
 
 public class ProjectDTO {
+
   /**
    * Attributes of the class ProjectDTO, according to the Class Diagram.
    */
@@ -31,10 +28,10 @@ public class ProjectDTO {
                     String projectTypology, String businessSector) {
     this.code = code;
     this.name = name;
-    this.customer = customer;
+    this.customer = customer.toLowerCase();
     this.status = "planned";
-    this.projectTypology = projectTypology;
-    this.businessSector = businessSector;
+    this.projectTypology = projectTypology.toLowerCase();
+    this.businessSector = businessSector.toLowerCase();
   }
 
   @Override

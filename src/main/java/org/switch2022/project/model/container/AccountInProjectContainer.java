@@ -34,7 +34,7 @@ public class AccountInProjectContainer {
      * @param accountInProjectDTO data transfer object with allocation information.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
+  /*  public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
         boolean accountInProjectAdded = false;
         AccountInProjectDTOMapper mapper = new AccountInProjectDTOMapper();
         AccountInProject accountInProject =
@@ -48,7 +48,7 @@ public class AccountInProjectContainer {
             accountInProjectAdded = true;
         }
         return accountInProjectAdded;
-    }
+    }*/
 
 
     /**

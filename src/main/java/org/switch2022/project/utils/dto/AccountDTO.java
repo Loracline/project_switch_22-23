@@ -11,10 +11,8 @@ public class AccountDTO {
      */
     public String name;
     public String email;
-    public long phoneNumber;
-    public BufferedImage photo;
-    public boolean status;
-    public Profile profile;
+    public static boolean status;
+
 
     /**
      * The equals() method is used to determine whether two objects are equal in
@@ -35,7 +33,7 @@ public class AccountDTO {
             return false;
         }
         AccountDTO that = (AccountDTO) toCompare;
-        return phoneNumber == that.phoneNumber && status == that.status && name.equals(that.name) && email.equals(that.email) && Objects.equals(photo, that.photo) && profile.equals(that.profile);
+        return  status == that.status && name.equals(that.name) && email.equals(that.email);
     }
 
     /**
@@ -46,6 +44,6 @@ public class AccountDTO {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, phoneNumber, photo, status, profile);
+        return Objects.hash(name, email, status);
     }
 }

@@ -229,9 +229,9 @@ public class Company {
      *                            needed.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
+  /*  public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
         return this.accountInProjectContainer.addUserToProject(accountInProjectDTO);
-    }
+    }*/
 
     /**
      * This method lists the accounts working in a specific project.
