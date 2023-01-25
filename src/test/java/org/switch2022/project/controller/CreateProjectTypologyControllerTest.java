@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.mapper.AccountMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,161 +20,164 @@ class CreateProjectTypologyControllerTest {
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
-    Account accountOne, accountTwo, accountThree;
-    Profile profileOne, profileTwo, profileThree;
-    ProjectTypology projectTypologyOne, projectTypologyTwo;
-    Project project;
+    Account accountOne, accountTwo;
+    AccountDTO accountDTOOne;
+    Profile profileOne, profileTwo;
+    Customer customerOne;
+    ProjectTypology projectTypologyOne;
+    BusinessSector businessSectorOne;
+    Project projectOne;
+    AccountInProject accountInProjectOne;
     List<Account> accounts;
+    List<AccountDTO> accountsDTOOne;
     List<Profile> profiles;
-    BusinessSector businessSector;
+    List<ProjectTypology> typologies;
     List<BusinessSector> businessSectors;
-    BusinessSectorContainer businessSectorContainer;
+    List<Project> projects;
+    List<Customer> customers;
+    List<AccountInProject> accountsInProject;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
-    ProjectTypologyContainer projectTypologyContainer;
-    List<ProjectTypology> typologies;
-    List<Project> projects;
+    BusinessSectorContainer businessSectorContainer;
     ProjectContainer projectContainer;
-    float costPerHour;
-    float percentageAllocation;
-    LocalDate startDate;
-    AccountInProject accountInProject1, accountInProject2;
-    List<AccountInProject> accountsInProject;
-    AccountInProjectContainer accountInProjectContainer;
-    Customer customerOne, customerTwo;
     CustomerContainer customerContainer;
-    List<Customer> customers;
+    ProjectTypologyContainer projectTypologyContainer;
+    AccountInProjectContainer accountInProjectContainer;
     Company company;
-
     CreateProjectTypologyController createProjectTypologyController;
-
 
     @BeforeEach
     void setUp() {
+        //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
-        accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
-
+        accountTwo = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
         accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
         accounts.add(accountOne);
         accounts.add(accountTwo);
-        accounts.add(accountThree);
 
+        //accountDTO
+        accountDTOOne = AccountMapper.accountToDTO(accountOne);
+        accountsDTOOne = new ArrayList<>();
+        accountsDTOOne.add(accountDTOOne);
+
+        //profile
         profileOne = new Profile("Administrator");
-        profileTwo = new Profile("User");
-        profileThree= new Profile ("Manager");
-
-
+        profileTwo = new Profile("Manager");
         profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
         profiles.add(profileOne);
         profiles.add(profileTwo);
 
-        projects = new ArrayList<>();
-        projectContainer = new ProjectContainer(projects);
-        projects.add(project);
-
-        businessSector = new BusinessSector("fishing");
-
-        businessSectors = new ArrayList<>();
-        businessSectorContainer= new BusinessSectorContainer(businessSectors);
-        businessSectors.add(businessSector);
-
-        projectTypologyOne = new ProjectTypology("Fixed Cost");
-        projectTypologyTwo= new ProjectTypology("Fixed time and materials");
-
-        typologies = new ArrayList<>();
-        projectTypologyContainer= new ProjectTypologyContainer(typologies);
-        typologies.add(projectTypologyOne);
-        typologies.add(projectTypologyTwo);
-
-        projectTypologyContainer= new ProjectTypologyContainer(typologies);
-
-        customerOne = new Customer("ISEP", "222333444");
-        customerTwo = new Customer("PortoTech", "222333445");
-
+        //customer
+        customerOne = new Customer("Genius Software", "234567890");
         customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
         customers.add(customerOne);
-        customers.add(customerTwo);
 
-        project = new Project("proj001", "software development management",
-                new Customer("ISEP", "228674498"),
-                new ProjectTypology("Fixed cost"), new BusinessSector("fishing"));
+        //projectTypology
+        projectTypologyOne = new ProjectTypology("Fixed Cost");
+        typologies = new ArrayList<>();
+        typologies.add(projectTypologyOne);
 
-        List<Project> projects = new ArrayList<>();
-        projects.add(project);
-        projectContainer = new ProjectContainer(projects);
+        //businessSector
+        businessSectorOne = new BusinessSector("Fishing");
+        businessSectors = new ArrayList<>();
+        businessSectors.add(businessSectorOne);
 
-        accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
-        accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+        //project
+        projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
+        projects = new ArrayList<>();
+        projects.add(projectOne);
+
+        //accountInProject
+        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", 1,
+                34f, LocalDate.of(2020, 1, 8));
         accountsInProject = new ArrayList<>();
-        accountsInProject.add(accountInProject1);
-        accountsInProject.add(accountInProject2);
-        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+        accountsInProject.add(accountInProjectOne);
 
+        //containers
+        accountContainer = new AccountContainer(accounts);
+        profileContainer = new ProfileContainer(profiles);
+        businessSectorContainer = new BusinessSectorContainer(businessSectors);
+        projectContainer = new ProjectContainer(projects);
+        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+        customerContainer = new CustomerContainer(customers);
+
+        //company
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
+        //controller
         createProjectTypologyController = new CreateProjectTypologyController(company);
-
+        accountTwo.setProfile(profileTwo);
     }
 
     @AfterEach
     void tearDown() {
         accountOne = null;
         accountTwo = null;
-        accountThree= null;
+        accountDTOOne = null;
         profileOne = null;
         profileTwo = null;
-        profileThree=null;
+        customerOne = null;
+        projectTypologyOne = null;
+        businessSectorOne = null;
+        projectOne = null;
+        accountInProjectOne = null;
         accounts.clear();
+        accountsDTOOne.clear();
         profiles.clear();
+        typologies.clear();
+        businessSectors.clear();
+        projects.clear();
+        accountsInProject.clear();
+        customers.clear();
         accountContainer = null;
         profileContainer = null;
-        project = null;
-        projects.clear();
+        businessSectorContainer = null;
         projectContainer = null;
-        businessSector=null;
-        businessSectors.clear();
-        businessSectorContainer=null;
-        projectTypologyOne= null;
-        projectTypologyTwo= null;
-        typologies.clear();
-        projectTypologyContainer=null;
-        createProjectTypologyController =null;
-        customerOne = null;
-        customerTwo = null;
-        customers.clear();
-        customerContainer = null;
-
+        projectTypologyContainer = null;
+        accountInProjectContainer = null;
         company = null;
+        createProjectTypologyController = null;
+        customerContainer = null;
     }
+
+    /**
+     * Test to verify if a project typology is successfully created.
+     */
+
     @Test
-    void addNewProjectTypologySuccessfully(){
+    void ensureThatNewProjectTypologyIsSuccessfullyAdded(){
         //Arrange
-        boolean expected = true;
         accountOne.setProfile(profileOne);
+        boolean expected = true;
         //Act
         boolean result = createProjectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
         //Assert
         assertEquals(expected,result);
     }
+
+    /**
+     * Test if the desired typology already exists. If it does, new typology is not created.
+     */
+
     @Test
-    void addNewProjectTypologyUnsuccessfully_projectTypologyExist(){
+    void ensureThatNewProjectTypologyIsNotCreatedIfItAlreadyExists(){
         //Arrange
-        boolean expected = false;
         accountOne.setProfile(profileOne);
+        boolean expected = false;
         //Act
         boolean result = createProjectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed Cost");
         //Assert
         assertEquals(expected,result);
     }
+
+    /**
+     * Test to verify that project typology is not added if account doesn't have authorization.
+     */
+
     @Test
-    void addNewProjectTypologyUnsuccessfully_profileNotAdministrator(){
+    void ensureThatNewProjectTypologyIsNotCreatedIfItAccountIsNotAuthorized(){
         //Arrange
         boolean expected = false;
         //Act
