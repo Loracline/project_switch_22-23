@@ -81,11 +81,12 @@ class RegisterProjectControllerTest {
     accountsInProject.add(accountInProject);
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
-    projectOne = new Project("AA001", "software development management", new Customer("Peter"),
+    projectOne = new Project("AA001", "software development management", new Customer(
+            "Peter","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Fishing"));
-    projectTwo = new Project("AA002", "project software", new Customer("John"),
+    projectTwo = new Project("AA002", "project software", new Customer("John","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Fishing"));
-    projectThree = new Project("AA00", "motor software", new Customer("John"),
+    projectThree = new Project("AA00", "motor software", new Customer("John","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Fishing"));
     projects = new ArrayList<>();
     projects.add(projectOne);

@@ -77,9 +77,9 @@ class ProjectMapperTest {
     accountsInProject.add(accountInProject);
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
-    projectOne = new Project("AA001", "Aptoide", new Customer("ISEP"),
+    projectOne = new Project("AA001", "Aptoide", new Customer("ISEP","228674498"),
             new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
-    projectTwo = new Project("AA002", "Aptoide", new Customer("PortoTech"),
+    projectTwo = new Project("AA002", "Aptoide", new Customer("PortoTech","228674498"),
             new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
     projects = new ArrayList<>();
     projects.add(projectOne);
