@@ -5,10 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.mapper.AccountMapper;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,28 +17,19 @@ class CreateProjectTypologyControllerTest {
      */
 
     Account accountOne, accountTwo;
-    AccountDTO accountDTOOne;
     Profile profileOne, profileTwo;
     Customer customerOne;
     ProjectTypology projectTypologyOne;
-    BusinessSector businessSectorOne;
     Project projectOne;
-    AccountInProject accountInProjectOne;
+    BusinessSector businessSectorOne;
     List<Account> accounts;
-    List<AccountDTO> accountsDTOOne;
     List<Profile> profiles;
     List<ProjectTypology> typologies;
-    List<BusinessSector> businessSectors;
     List<Project> projects;
-    List<Customer> customers;
-    List<AccountInProject> accountsInProject;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
-    BusinessSectorContainer businessSectorContainer;
     ProjectContainer projectContainer;
-    CustomerContainer customerContainer;
     ProjectTypologyContainer projectTypologyContainer;
-    AccountInProjectContainer accountInProjectContainer;
     Company company;
     CreateProjectTypologyController createProjectTypologyController;
 
@@ -55,11 +42,6 @@ class CreateProjectTypologyControllerTest {
         accounts.add(accountOne);
         accounts.add(accountTwo);
 
-        //accountDTO
-        accountDTOOne = AccountMapper.accountToDTO(accountOne);
-        accountsDTOOne = new ArrayList<>();
-        accountsDTOOne.add(accountDTOOne);
-
         //profile
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("Manager");
@@ -69,8 +51,6 @@ class CreateProjectTypologyControllerTest {
 
         //customer
         customerOne = new Customer("Genius Software", "234567890");
-        customers = new ArrayList<>();
-        customers.add(customerOne);
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -79,32 +59,20 @@ class CreateProjectTypologyControllerTest {
 
         //businessSector
         businessSectorOne = new BusinessSector("Fishing");
-        businessSectors = new ArrayList<>();
-        businessSectors.add(businessSectorOne);
 
         //project
         projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
         projects = new ArrayList<>();
         projects.add(projectOne);
 
-        //accountInProject
-        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", 1,
-                34f, LocalDate.of(2020, 1, 8));
-        accountsInProject = new ArrayList<>();
-        accountsInProject.add(accountInProjectOne);
-
         //containers
         accountContainer = new AccountContainer(accounts);
         profileContainer = new ProfileContainer(profiles);
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
-        projectContainer = new ProjectContainer(projects);
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
-        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
-        customerContainer = new CustomerContainer(customers);
 
         //company
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+        company = new Company(accountContainer, profileContainer, null,
+                null, projectTypologyContainer, null, null);
 
         //controller
         createProjectTypologyController = new CreateProjectTypologyController(company);
@@ -115,31 +83,21 @@ class CreateProjectTypologyControllerTest {
     void tearDown() {
         accountOne = null;
         accountTwo = null;
-        accountDTOOne = null;
         profileOne = null;
         profileTwo = null;
         customerOne = null;
         projectTypologyOne = null;
-        businessSectorOne = null;
         projectOne = null;
-        accountInProjectOne = null;
         accounts.clear();
-        accountsDTOOne.clear();
         profiles.clear();
         typologies.clear();
-        businessSectors.clear();
         projects.clear();
-        accountsInProject.clear();
-        customers.clear();
         accountContainer = null;
         profileContainer = null;
-        businessSectorContainer = null;
         projectContainer = null;
         projectTypologyContainer = null;
-        accountInProjectContainer = null;
         company = null;
         createProjectTypologyController = null;
-        customerContainer = null;
     }
 
     /**
