@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-class ProjectTypologyControllerTest {
+class CreateProjectTypologyControllerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
@@ -44,7 +44,7 @@ class ProjectTypologyControllerTest {
     List<Customer> customers;
     Company company;
 
-    ProjectTypologyController projectTypologyController;
+    CreateProjectTypologyController createProjectTypologyController;
 
 
     @BeforeEach
@@ -116,7 +116,7 @@ class ProjectTypologyControllerTest {
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
-        projectTypologyController = new ProjectTypologyController(company);
+        createProjectTypologyController = new CreateProjectTypologyController(company);
 
     }
 
@@ -142,11 +142,11 @@ class ProjectTypologyControllerTest {
         projectTypologyTwo= null;
         typologies.clear();
         projectTypologyContainer=null;
-        projectTypologyController=null;
+        createProjectTypologyController =null;
         customerOne = null;
         customerTwo = null;
         customers.clear();
-        customerContainer = null;;
+        customerContainer = null;
 
         company = null;
     }
@@ -156,7 +156,7 @@ class ProjectTypologyControllerTest {
         boolean expected = true;
         accountOne.setProfile(profileOne);
         //Act
-        boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
+        boolean result = createProjectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
         //Assert
         assertEquals(expected,result);
     }
@@ -166,7 +166,7 @@ class ProjectTypologyControllerTest {
         boolean expected = false;
         accountOne.setProfile(profileOne);
         //Act
-        boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed Cost");
+        boolean result = createProjectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed Cost");
         //Assert
         assertEquals(expected,result);
     }
@@ -175,7 +175,7 @@ class ProjectTypologyControllerTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = projectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
+        boolean result = createProjectTypologyController.createProjectTypology("mike@isep.ipp.pt","Fixed new typology");
         //Assert
         assertEquals(expected,result);
     }
