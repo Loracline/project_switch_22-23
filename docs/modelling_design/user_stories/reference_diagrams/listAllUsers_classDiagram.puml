@@ -1,0 +1,44 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS WITH USER PROFILE
+
+class ListAllUsersController {
+-company
++listAllUsers()
+}
+
+class Company {
+-accountContainer
++listAllUsers()
+}
+
+class AccountContainer {
+-accounts
++listAllUsers()
+}
+
+class Account {
++isUser()
+}
+
+class AccountMapper {
++getDTOFromAccount(user)
+}
+
+class AccountDTO{
++name
++email
++phoneNumber
++photo
++status
++profile
+}
+
+ListAllUsersController --> Company
+ListAllUsersController --> AccountMapper
+Company "1"-->"1" AccountContainer: has
+AccountContainer "1" --> "*" Account : has
+AccountMapper "1"..> "*"AccountDTO: creates
+
+@enduml

@@ -41,7 +41,7 @@ Manager -> ui: selects project
 deactivate ui
 
 
-Manager -> ui: starts the association of the selected User as the Product Owner of the selected project
+Manager -> ui: starts the association of the selected User as the Product Owner/Team Member/Scrum Master of the selected project
 activate ui
 ui --> Manager: requests data
 Manager -> ui: sends data (role, costPerHour, percentageAllocation, startDate)
