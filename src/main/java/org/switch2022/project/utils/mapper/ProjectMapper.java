@@ -16,7 +16,7 @@ public class ProjectMapper {
   }
 
   public Project getProjectFromDTO(ProjectDTO projectDTO) {
-    Customer customer= new Customer(projectDTO.customer);
+    Customer customer= new Customer(projectDTO.customer,null);
     ProjectTypology projectTypology= new ProjectTypology(projectDTO.projectTypology);
     BusinessSector businessSector= new BusinessSector(projectDTO.customer);
     Project project = new Project(projectDTO.code, projectDTO.name, customer,
