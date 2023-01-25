@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HelperTest {
+class UtilTest {
     /**
      * Testing the isLower() method.
      */
@@ -16,7 +16,7 @@ class HelperTest {
         boolean expected = true;
 
         // ACT
-        boolean result = Helper.isLower(first, second);
+        boolean result = Util.isLower(first, second);
 
         // ASSERT
         assertEquals(expected, result);
@@ -30,7 +30,7 @@ class HelperTest {
         boolean expected = false;
 
         // ACT
-        boolean result = Helper.isLower(first, second);
+        boolean result = Util.isLower(first, second);
 
         // ASSERT
         assertEquals(expected, result);
@@ -44,7 +44,7 @@ class HelperTest {
         boolean expected = false;
 
         // ACT
-        boolean result = Helper.isLower(first, second);
+        boolean result = Util.isLower(first, second);
 
         // ASSERT
         assertEquals(expected, result);

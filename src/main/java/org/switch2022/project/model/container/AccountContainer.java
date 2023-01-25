@@ -1,7 +1,7 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Account;
-import org.switch2022.project.utils.Helper;
+import org.switch2022.project.utils.Util;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -211,7 +211,7 @@ public class AccountContainer {
     public List<Account> listAllUsers() {
         List<Account> users = new ArrayList<>();
         int i = 0;
-        while (Helper.isLower(i, accounts.size())) {
+        while (Util.isLower(i, accounts.size())) {
             if (accounts.get(i).isUser()) {
                 users.add(accounts.get(i));
             }

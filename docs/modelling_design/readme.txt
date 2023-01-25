@@ -1,12 +1,15 @@
 All artifacts related to domain modelling and the overall project, including architecture.
 
 List of all user stories (to be updated...):
+Sprint #1:
 US001 - As Administrator, I want to create user profiles.
 US002 - As Administrator, I want to register a user.
 US003 - As Administrator, I want to change the profile of a user account.
 US004 - As Administrator, I want to get a list of all user accounts and their status.
 US005 - As Administrator, I want to inactivate a user account.
 US006 - As Administrator, I want to activate a user account.
+
+Sprint #2:
 US007 - As Administrator, I want to create a new project typology.
 US008 - As Administrator, I want to add a business sector.
 US009 - As Administrator, I want to add a customer.
