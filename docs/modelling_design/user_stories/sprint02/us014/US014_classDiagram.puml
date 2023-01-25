@@ -1,78 +1,77 @@
 @startuml
-
 skinparam sequenceMessageAlign center
 title TO LIST ALL ACCOUNTS IN A GIVEN PROJECT
 legend top
 US014 - As Manager, I want to get a list of all human resources in a project.
 end legend
-
 class "ListAccountsInProjectController" {
--service
--accountMapper
-+listAccountsByProject(email, projectCode)
-}
-
-class "Service"{
 -company
 +listAccountsByProject(email, projectCode)
 }
 
 class "Company"{
--projectContainer
+-accountsInProjectContainer
 -accountContainer
 +validateManager(email)
 +listAccountsByProject(projectCode)
 }
 
-class "AccountContainer"{
--accounts
-+getAccountByEmail(email)
-}
-
-class "Account"{
--profile
-+isManager()
-}
-
-class "ProjectContainer"{
--projects
--accountInProjectContainer
-+listAccountsByProject(projectCode)
-+getProjectByCode(projectCode)
-}
-
-
 class "AccountInProjectContainer"{
 -accountsInProject
-+listAccountsByProject(project)
++listAccountsByProject(projectCode)
 }
 
 class "AccountInProject"{
 -account
 -project
 -role
-+getAccountByProject(project)
+-startDate
+-costPerHour
+-percentageAllocation
+-endDate
++getAccountByProject(projectCode)
+-isAccountAllocatedToProject(projectCode))
+}
+
+class "AccountContainer" {
+-accounts
++validateManager(email)
+}
+
+class "Account" {
+-email
+-profile
+-status
++checkAccountFromEmail(email)
++isManager()
++getAccountName()
++getEmail()
++getAccountStatus()
+}
+
+class "Profile"{
+-profileName
++isManager()
 }
 
 class "AccountMapper"{
-+accountsToDTO(accounts)
++listAccountsToDTO(accounts)
 +accountToDTO(account)
 }
 
 class "AccountDTO"{
 +name
 +email
-+phoneNumber
-+AccountDTO(account)
++status
 }
 
-"ListAccountsInProjectController" --> "Service"
-"ListAccountsInProjectController" --> "AccountMapper"
-"Service" ..> "Company"
-"Company" "1"-->"1" "ProjectContainer": has
-"Company" "1"-->"1" "AccountContainer": has
-"AccountContainer" "1" --> "*" "Account"
+"ListAccountsInProjectController" --> "Company"
+"ListAccountsInProjectController" ..> "AccountMapper"
+"Company" "1"-->"1" "AccountInProjectContainer": has
+"Company" "1" --> "1" "AccountContainer": has
+"AccountContainer" "1" --> "*" "Account": has
+"Account" "1" --> "1""Profile": has
 "AccountMapper" ..> "AccountDTO"
-"ProjectContainer" "1" --> "1" "AccountInProjectContainer": has
 "AccountInProjectContainer" "1" --> "*" "AccountInProject": has
+"AccountMapper"..>"Account"
 @enduml

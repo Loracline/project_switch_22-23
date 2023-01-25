@@ -116,8 +116,8 @@ class AddUserToProjectControllerTest {
         typologies.add(projectTypologyTwo);
 
         //customers
-        customerOne = new Customer("ISEP");
-        customerTwo = new Customer("PortoTech");
+        customerOne = new Customer("ISEP", "222333444");
+        customerTwo = new Customer("PortoTech", "222333445");
 
         customers = new ArrayList<>();
         customerContainer = new CustomerContainer(customers);
@@ -125,10 +125,10 @@ class AddUserToProjectControllerTest {
         customers.add(customerTwo);
 
         //projects
-        projectOne = new Project("proj001", "software development", "John",
-                "Fixed cost", "Hunting");
-        projectTwo = new Project("proj002", "project software", "John",
-                "Fixed cost", "Hunting");
+        projectOne = new Project("proj001", "software development", new Customer ("John"),new ProjectTypology("Fixed cost")
+                , new BusinessSector( "Hunting"));
+        projectTwo = new Project("proj002", "project software", new Customer ("John"),new ProjectTypology("Fixed cost")
+                , new BusinessSector( "Hunting"));
 
         projects = new ArrayList<>();
         projects.add(projectOne);
@@ -219,8 +219,6 @@ class AddUserToProjectControllerTest {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = "Emma";
         accountDTO.email = "emma@isep.ipp.pt";
-        accountDTO.phoneNumber = 932755688;
-        accountDTO.photo = null;
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
                 "Fixed cost", "Hunting");
@@ -254,8 +252,6 @@ class AddUserToProjectControllerTest {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = "Emma";
         accountDTO.email = "emma@isep.ipp.pt";
-        accountDTO.phoneNumber = 932755688;
-        accountDTO.photo = null;
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
                 "Fixed cost", "Hunting");

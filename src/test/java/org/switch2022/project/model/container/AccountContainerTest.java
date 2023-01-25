@@ -90,8 +90,8 @@ class AccountContainerTest {
         customerContainer = new CustomerContainer(customers);
 
         // Projects created.
-        project = new Project("proj001", "software development manager", "John",
-                "Fixed cost", "Hunting");
+        project = new Project("proj001", "software development manager",new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
 
         // Project container created.
         projects = new ArrayList<>();

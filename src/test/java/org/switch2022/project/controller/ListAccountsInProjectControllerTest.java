@@ -87,8 +87,8 @@ class ListAccountsInProjectControllerTest {
         profiles.add(profileThree);
 
         //customer
-        customerOne = new Customer("Genius Software");
-        customerTwo = new Customer("Delta Software");
+        customerOne = new Customer("Genius Software", "234567890");
+        customerTwo = new Customer("Delta Software", "245567789");
         customers = new ArrayList<>();
         customers.add(customerOne);
         customers.add(customerTwo);
@@ -104,8 +104,8 @@ class ListAccountsInProjectControllerTest {
         businessSectors.add(businessSectorOne);
 
         //project
-        projectOne = new Project("1A", "Mobile Software", "Genius Software", "Fixed Cost", "Fishing");
-        projectTwo = new Project("2B", "Software Development Management", "Delta Software", "Fixed Cost", "Fishing");
+        projectOne = new Project("1A", "Mobile Software", new Customer("Genious Software"), new ProjectTypology("Fixed Cost"), new BusinessSector("Fishing") );
+        projectTwo = new Project("2B", "Software Development Management", new Customer("Delta Software"), new ProjectTypology("Fixed Cost"),new BusinessSector("Fishing"));
         projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);

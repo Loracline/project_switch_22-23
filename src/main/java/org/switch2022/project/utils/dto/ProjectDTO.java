@@ -28,10 +28,10 @@ public class ProjectDTO {
                     String projectTypology, String businessSector) {
     this.code = code;
     this.name = name;
-    this.customer = customer;
+    this.customer = customer.toLowerCase();
     this.status = "planned";
-    this.projectTypology = projectTypology;
-    this.businessSector = businessSector;
+    this.projectTypology = projectTypology.toLowerCase();
+    this.businessSector = businessSector.toLowerCase();
   }
 
   @Override

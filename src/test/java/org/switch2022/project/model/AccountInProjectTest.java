@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,8 +23,8 @@ public class AccountInProjectTest {
         //Account in project created.
 
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        project = new Project("1A", "project code", "John",
-                "fixed cost", "IT Sector");
+        project = new Project("1A", "project code", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
         startDate = LocalDate.of(2023, 1, 19);
@@ -185,7 +187,6 @@ public class AccountInProjectTest {
         //Assert
         assertFalse(result);
     }
-
     @Test
     void ensureEndDateIsRetrieved() {
         //Arrange
@@ -197,5 +198,23 @@ public class AccountInProjectTest {
         LocalDate result = accountInProject.getEndDate();
         //Assert
         assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureAccountIsRetrievedSuccessfully() {
+        //Arrange
+        Account expected = account;
+        //Act
+        Account result = accountInProject.getAccountByProject("1A");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatGetAccountByProjectReturnsNull() {
+        //Act
+        Account result = accountInProject.getAccountByProject("AA001");
+        //Assert
+        assertNull(result);
     }
 }

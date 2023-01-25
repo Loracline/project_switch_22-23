@@ -144,7 +144,7 @@ public class AccountInProject {
      * @param projectCode one must check.
      * @return TRUE if there is an account allocated to a Project and FALSE otherwise.
      */
-    public boolean isAccountAllocatedToProject(String projectCode) {
+    private boolean isAccountAllocatedToProject(String projectCode) {
         boolean isAllocated = false;
         if (this.project.getProjectCode().equals(projectCode)) {
             isAllocated = true;

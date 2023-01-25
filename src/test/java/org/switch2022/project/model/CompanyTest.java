@@ -91,14 +91,14 @@ class CompanyTest {
         businessSectors.add(businessSectorOne);
 
         // Projects created.
-        project = new Project("AA002", "software development management", "John",
-                "Fixed cost", "Hunting");
-        projectOne = new Project("AA001", "software development management", "John",
-                "Fixed cost", "Hunting");
-        projectTwo = new Project("AA002", "project software", "John",
-                "Fixed cost", "Hunting");
-        projectThree = new Project("AA001", "Aptoide", "John", "Fixed cost",
-                "Hunting");
+        project = new Project("AA002", "software development management", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+        projectOne = new Project("AA001", "software development management", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+        projectTwo = new Project("AA002", "project software", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+        projectThree = new Project("AA001", "Aptoide", new Customer("John"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
 
         // Container of projects created.
         projects = new ArrayList<>();
@@ -122,9 +122,9 @@ class CompanyTest {
         typologies.add(projectTypologyTwo);
 
         // Customers created.
-        customerOne = new Customer("ISEP");
-        customerTwo = new Customer("PortoTech");
-        customerThree = new Customer("John");
+        customerOne = new Customer("ISEP", "222333444");
+        customerTwo = new Customer("PortoTech", "222333445");
+        customerThree = new Customer("John", "222333555");
 
         // Container of customers created.
         customers = new ArrayList<>();
@@ -170,17 +170,18 @@ class CompanyTest {
         profileThree = null;
         accounts.clear();
         profiles.clear();
+        project = null;
         accountContainer = null;
         profileContainer = null;
         businessSectorOne = null;
         businessSectors.clear();
         businessSectorContainer = null;
+        //businessSector = null;
         projectTypologyOne = null;
         projectTypologyTwo = null;
         typologies.clear();
         projectTypologyContainer = null;
         projects.clear();
-        project = null;
         projectContainer = null;
         projectOneDTO = null;
         projectTwoDTO = null;
@@ -533,8 +534,6 @@ class CompanyTest {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = "Emma";
         accountDTO.email = "emma@isep.ipp.pt";
-        accountDTO.phoneNumber = 932755688;
-        accountDTO.photo = null;
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("AA002", "software development management", "John",
                 "Fixed cost", "Hunting");
@@ -559,8 +558,6 @@ class CompanyTest {
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.name = "Emma";
         accountDTO.email = "emma@isep.ipp.pt";
-        accountDTO.phoneNumber = 932755688;
-        accountDTO.photo = null;
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("AA056", "software development " +
                 "management", "John",

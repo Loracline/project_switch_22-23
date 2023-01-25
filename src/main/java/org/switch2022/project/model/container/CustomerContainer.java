@@ -26,47 +26,49 @@ public class CustomerContainer {
     /**
      * This method validates if customer already exists by checking the name.
      *
-     * @param customerName of the intended costumer.
+     * @param customerNIF of the intended costumer.
      * @return TRUE if exists and FALSE otherwise.
      */
-    private boolean doesCustomerExist(Customer customerName) {
-        return this.customers.contains(customerName);
+    private boolean doesCustomerNIFExist(String customerNIF) {
+        return this.customers.contains(customerNIF);
     }
 
     /**
      * This method creates a new costumer and adds to the container if one
      * doesn't already exist.
      *
-     * @param customerName of the costumer to add.
+     * @param customerNIF of the costumer to add.
      * @return TRUE if costumer is added and FALSE otherwise.
      */
-    public boolean addCustomer(String customerName) {
-        Customer newCustomer = new Customer(customerName);
+    public boolean addCustomer(String customerName, String customerNIF) {
+        Customer newCustomer = new Customer(customerName, customerNIF);
         boolean isAddedToList = false;
-        if (!customerName.isEmpty() && !doesCustomerExist(newCustomer)) {
-            customers.add(new Customer(customerName));
+        if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerNIFExist(customerNIF)) {
+            customers.add(newCustomer);
             isAddedToList = true;
         }
         return isAddedToList;
     }
 
     /**
-     * This method searches for a customer with given name.
+     * This method Checks if the NIF has the correct length (9 digits) and checks if
+     * the NIF contains only digits.
      *
-     * @param customerName of the intended customer.
-     * @return costumer with given name.
+     * @param customerNIF of the costumer to add.
+     * @return TRUE if costumerNIF has the correct length and contains only digits and FALSE otherwise.
      */
-    public Customer getCustomerByName(String customerName) {
-        Customer customer = new Customer(customerName);
-        Customer requestedCustomer = null;
-        int i = 0;
-        while (isLower(i, this.customers.size())) {
-            if (this.customers.contains(customer)) {
-                requestedCustomer = customers.get(i);
-                break;
+    private boolean isValidNIF(String customerNIF) {
+        boolean isvalidNIF = false;
+        if (customerNIF.length() == 9) {
+            isvalidNIF = true;
+            for (int i = 0; i < customerNIF.length(); i++) {
+                if (!Character.isDigit(customerNIF.charAt(i))) {
+                    isvalidNIF = false;
+                }
             }
-            i++;
         }
-        return requestedCustomer;
+        return isvalidNIF;
     }
+
 }
+
