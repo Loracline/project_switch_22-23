@@ -4,7 +4,6 @@ import org.switch2022.project.model.Customer;
 
 import java.util.List;
 
-import static org.switch2022.project.utils.Util.isLower;
 
 /**
  * Class CustomerContainer is built to access and manipulate set of customers
@@ -58,16 +57,16 @@ public class CustomerContainer {
      * @return TRUE if costumerNIF has the correct length and contains only digits and FALSE otherwise.
      */
     private boolean isValidNIF(String customerNIF) {
-        boolean isvalidNIF = false;
+        boolean isValidNIF = false;
         if (customerNIF.length() == 9) {
-            isvalidNIF = true;
+            isValidNIF = true;
             for (int i = 0; i < customerNIF.length(); i++) {
                 if (!Character.isDigit(customerNIF.charAt(i))) {
-                    isvalidNIF = false;
+                    isValidNIF = false;
                 }
             }
         }
-        return isvalidNIF;
+        return isValidNIF;
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+
 
 class CustomerContainerTest {
     /**
@@ -68,6 +68,16 @@ class CustomerContainerTest {
         boolean expected = false;
         //Act
         boolean result = customerContainerReference.addCustomer("critical","2223334488" );
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureCustomerIsNotAddedSuccessfullyNifWithCharacters() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = customerContainerReference.addCustomer("critical","22233344@");
         //Assert
         assertEquals(expected, result);
     }
