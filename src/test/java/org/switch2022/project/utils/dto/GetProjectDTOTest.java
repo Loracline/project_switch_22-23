@@ -16,7 +16,7 @@ public class GetProjectDTOTest {
     @BeforeEach
     void setUp() {
         projectDTO = new GetProjectDTO("AA001", "software development management",
-                "isep", "planned", "fixed cost", "fishing");
+                "isep",  "planned" ,"fixed cost", "fishing");
     }
 
     @Test

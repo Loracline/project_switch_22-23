@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AccountInProjectDTOMapperTest {
+class AccountInProjectMapperTest {
 
     AccountInProjectDTOMapper mapper;
     AccountDTO accountDTO;
@@ -33,10 +33,8 @@ class AccountInProjectDTOMapperTest {
         accountDTO.status = true;
 
         //set up project dto
-        Customer customer = new Customer("IT Customer");
-        ProjectTypology projectTypology = new ProjectTypology("fixed cost");
-        BusinessSector businessSector = new BusinessSector("IT Sector");
-        projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
+        projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
         //set up account in project dto
         accountInProjectDTOPO = new AccountInProjectDTO();
         accountInProjectDTOPO.accountDTO = accountDTO;

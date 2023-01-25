@@ -10,9 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountInProjectTest {
     Account account;
-    Customer customer;
-    ProjectTypology projectTypology;
-    BusinessSector businessSector;
     Project project;
     float costPerHour;
     float percentageAllocation;
@@ -25,11 +22,8 @@ public class AccountInProjectTest {
           Account in project created.
          */
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        customer = new Customer("IT Customer");
-        projectTypology = new ProjectTypology("fixed cost");
-        businessSector = new BusinessSector("IT Sector");
-        project = new Project("1A", "project One", customer, projectTypology,
-                businessSector);
+        project = new Project("1A", "project code", "John",
+                "fixed cost", "IT Sector");
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
         startDate = LocalDate.of(2023, 1, 19);
@@ -40,9 +34,6 @@ public class AccountInProjectTest {
     @AfterEach
     void tearDown() {
         account = null;
-        customer = null;
-        projectTypology = null;
-        businessSector = null;
         project = null;
         accountInProject = null;
     }
@@ -101,6 +92,41 @@ public class AccountInProjectTest {
 
         // Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * hashCode()
+     */
+    @Test
+    void ensureAccountsInProjectHaveSameHashCode() {
+        // ARRANGE
+        AccountInProject reference = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+        AccountInProject other = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+
+        // ACT
+        int hashCodeReference = reference.hashCode();
+        int hashCodeOther = other.hashCode();
+
+        // ASSERT
+        assertEquals(hashCodeOther, hashCodeReference);
+    }
+
+    @Test
+    void ensureAccountsInProjectHaveDifferentHashCode() {
+        // ARRANGE
+        AccountInProject reference = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+        AccountInProject other = new AccountInProject(account, project, "Team Member",
+                7.0f, percentageAllocation, startDate);
+
+        // ACT
+        int hashCodeReference = reference.hashCode();
+        int hashCodeOther = other.hashCode();
+
+        // ASSERT
+        assertNotEquals(hashCodeOther, hashCodeReference);
     }
 
     /**

@@ -103,7 +103,7 @@ class ListAllUsersControllerTest {
     void listAllUsersSuccessfully() {
         // ARRANGE
         ListAllUsersController controller = new ListAllUsersController(company);
-        AccountDTO accountTwoDTO = accountMapper.getDTOFromAccount(accountTwo);
+        AccountDTO accountTwoDTO = accountMapper.accountToDTO(accountTwo);
         List<AccountDTO> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
 
@@ -118,7 +118,7 @@ class ListAllUsersControllerTest {
     void listAllUsersUnsuccessfully_NotAManager() {
         // ARRANGE
         ListAllUsersController controller = new ListAllUsersController(company);
-        AccountDTO accountTwoDTO = accountMapper.getDTOFromAccount(accountTwo);
+        AccountDTO accountTwoDTO = accountMapper.accountToDTO(accountTwo);
         List<AccountDTO> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
 

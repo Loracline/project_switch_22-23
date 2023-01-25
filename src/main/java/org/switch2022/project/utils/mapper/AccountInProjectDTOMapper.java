@@ -22,7 +22,7 @@ public class AccountInProjectDTOMapper {
 
 
         Account account = accountMapper.getAccountFromDTO(dto.accountDTO);
-        Project project = projectMapper.fromDTO(dto.projectDTO);
+        Project project = projectMapper.getProjectFromDTO(dto.projectDTO);
 
         float costPerHour = dto.costPerHour;
         float percentageAllocation = dto.percentageAllocation;

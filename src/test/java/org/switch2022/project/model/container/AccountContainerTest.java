@@ -19,7 +19,6 @@ class AccountContainerTest {
     Account accountOne, accountTwo, accountThree, accountFour, accountFive,
             accountSix, accountSeven;
     Profile profileOne, profileTwo, profileThree;
-    ProjectTypology projectTypology;
     Project project;
     List<Account> accounts;
     List<Profile> profiles;
@@ -28,10 +27,8 @@ class AccountContainerTest {
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
-    BusinessSector businessSector;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
-    Customer customerOne, customerTwo;
     CustomerContainer customerContainer;
     List<Customer> customers;
     float costPerHour;
@@ -80,41 +77,21 @@ class AccountContainerTest {
         profiles.add(profileTwo);
         profiles.add(profileThree);
 
-        // Business sectors created.
-        businessSector = new BusinessSector("fishing");
-
         // Business sectors container created.
         businessSectors = new ArrayList<>();
         businessSectorContainer = new BusinessSectorContainer(businessSectors);
-
-        // Business sector added to the Container.
-        businessSectors.add(businessSector);
-
-        // Project typologies created.
-        projectTypology = new ProjectTypology("Fixed Cost");
 
         // Project typologies container created.
         List<ProjectTypology> typologies = new ArrayList<>();
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-        // Project typologies added to the Container.
-        typologies.add(projectTypology);
-
-        // Customers created.
-        customerOne = new Customer("ISEP");
-        customerTwo = new Customer("PortoTech");
-
         // Customers container created.
         customers = new ArrayList<>();
         customerContainer = new CustomerContainer(customers);
 
-        // Customers added to the Container.
-        customers.add(customerOne);
-        customers.add(customerTwo);
-
         // Projects created.
-        project = new Project("proj001", "software development management", customerOne,
-                projectTypology, businessSector);
+        project = new Project("proj001", "software development manager", "John",
+                "Fixed cost", "Hunting");
 
         // Project container created.
         projects = new ArrayList<>();
@@ -155,14 +132,11 @@ class AccountContainerTest {
         profiles.clear();
         accountContainer = null;
         profileContainer = null;
-        businessSector = null;
         businessSectors.clear();
         businessSectorContainer = null;
         project = null;
         projects.clear();
         projectContainer = null;
-        customerOne = null;
-        customerTwo = null;
         customers.clear();
         customerContainer = null;
         company = null;

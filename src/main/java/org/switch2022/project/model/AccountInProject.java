@@ -1,6 +1,7 @@
 package org.switch2022.project.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Class AccountInProject is built to associate a certain account with a role to
@@ -16,8 +17,8 @@ public class AccountInProject {
     private final Project project;
     private final String role;
     private final LocalDate startDate;
-    private float costPerHour;
-    private float percentageAllocation;
+    private final float costPerHour;
+    private final float percentageAllocation;
     private LocalDate endDate;
 
     /**
@@ -55,6 +56,18 @@ public class AccountInProject {
     }
 
     /**
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(account, project, role, startDate, costPerHour,
+                percentageAllocation, endDate);
+    }
+
+    /**
      * This method validates the role of the instance of AccountInProject class.
      *
      * @return TRUE if is a valid role, and FALSE otherwise.
@@ -74,9 +87,6 @@ public class AccountInProject {
                 return false;
         }
     }
-
-
-
 
 
     /**

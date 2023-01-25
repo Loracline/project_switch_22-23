@@ -10,7 +10,7 @@ import org.switch2022.project.model.Project;
  */
 
 public class RegisterProjectController {
-  private Company company;
+  private final Company company;
 
   /**
    * RegisterProjectController constructor
@@ -28,7 +28,7 @@ public class RegisterProjectController {
    */
   public boolean registerProject(Project dto, String email){
     ProjectMapper projectMapper = new ProjectMapper();
-    ProjectDTO projectDTO = projectMapper.toDTO(dto);
+    ProjectDTO projectDTO = projectMapper.getDTOFromProject(dto);
     return company.registerProject(projectDTO,email);
   }
 }
