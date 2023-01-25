@@ -118,14 +118,14 @@ skinparam sequenceMessageAlign center
 title TO CREATE NEW PROJECT TYPOLOGY
 actor Administrator
 autonumber
-Administrator -> "System": starts creating new project typology
+Administrator -> ":System": starts creating new project typology
 note left
 Account is authenticated.
-"System" grants access.
+":System" grants access.
 end note
-System -> "Administrator": requests data (projectTypology)
-Administrator -> "System": types requested data
-Administrator <-- "System":project typology created
+":System" --> "Administrator": requests data (projectTypology)
+Administrator -> ":System": types requested data
+Administrator <-- ":System":project typology created
 @enduml
 
 
