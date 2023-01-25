@@ -167,11 +167,9 @@ public class Company {
      */
     public boolean registerProject(ProjectDTO projectDTO, String email) {
         boolean isProjectRegistered = false;
-        if (accountContainer.validateManager(email)) {
-            if (projectContainer.registerProject(projectDTO)) {
+        if (accountContainer.validateManager(email) & projectContainer.registerProject(projectDTO)) {
                 isProjectRegistered = true;
             }
-        }
         return isProjectRegistered;
     }
 

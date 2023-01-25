@@ -3,12 +3,10 @@ package org.switch2022.project.utils.dto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.model.ProjectTypology;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ProjectDTOTest {
 
@@ -16,14 +14,16 @@ class ProjectDTOTest {
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
-  ProjectDTO projectDTOOne, projectDTOTwo;
+  ProjectDTO projectDTOOne, projectDTOTwo, projectDTOThree;
 
   @BeforeEach
   void setUp() {
-    projectDTOOne = new ProjectDTO("AA001", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    projectDTOTwo = new ProjectDTO("AA002", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    projectDTOOne = new ProjectDTO("AA001", "Aptoide", "John",
+            "Fixed cost", "Hunting");
+    projectDTOTwo = new ProjectDTO("AA002", "Aptoide", "John",
+            "Fixed cost", "Hunting");
+    projectDTOThree = new ProjectDTO("AA001", "Aptoide", "John",
+            "Fixed cost", "Hunting");
   }
 
   @AfterEach
@@ -56,5 +56,16 @@ class ProjectDTOTest {
     assertEquals(expected, result);
   }
 
-  //todo hashcode test
+  @Test
+  void testHashCode() {
+    ProjectDTO obj1 = projectDTOOne;
+    ProjectDTO obj2 = projectDTOTwo;
+    ProjectDTO obj3 = projectDTOThree;
+
+    // Check that equal objects have the same hash code
+    assertEquals(obj1.hashCode(), obj3.hashCode());
+
+    // Check that unequal objects have different hash codes
+    assertNotEquals(obj1.hashCode(), obj2.hashCode());
+  }
 }

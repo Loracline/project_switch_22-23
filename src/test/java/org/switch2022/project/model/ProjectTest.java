@@ -12,15 +12,17 @@ public class ProjectTest {
    * BeforeEach and AfterEach execute common code before/after running the
    * tests below.
    */
-  Project projectOne, projectTwo;
+  Project projectOne, projectTwo, projectThree;
 
   @BeforeEach
   void setUp() {
-    projectOne = new Project("AA001", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    projectTwo = new Project("AA002", "Aptoide", new Customer("John"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    }
+    projectOne = new Project("AA001", "Aptoide", "John",
+            "Fixed cost", "Hunting");
+    projectTwo = new Project("AA002", "Aptoide", "John",
+            "Fixed cost", "Hunting");
+    projectThree = new Project("AA001", "Aptoide", "John",
+            "Fixed cost", "Hunting");
+  }
 
   @AfterEach
   void tearDown() {
@@ -33,18 +35,10 @@ public class ProjectTest {
    */
   @Test
   void ensureSameObjectEqualsItself() {
-    Project projectTwo = projectOne;
+    Project projectReference = projectOne;
     boolean expected = true;
-    boolean result = projectOne.equals(projectTwo);
+    boolean result = projectOne.equals(projectReference);
     assertEquals(expected, result);
-  }
-
-  @Test
-  void ensureTwoProjectsAreNotEqual() {
-    Project projectTwo = projectOne;
-    boolean expected = false;
-    boolean result = projectOne.equals(projectTwo);
-    assertNotEquals(expected, result);
   }
 
   @Test
@@ -55,10 +49,16 @@ public class ProjectTest {
     assertEquals(expected, result);
   }
 
+  @Test
+  void ensureTwoProjectsAreNotEqual() {
+    boolean expected = false;
+    boolean result = projectOne.equals(projectTwo);
+    assertEquals(expected, result);
+  }
+
   /**
    * Testing if one can get code from given project.
    */
-
   @Test
   void ensureProjectCodeIsEqual() {
     String expected = "AA001";
@@ -95,15 +95,15 @@ public class ProjectTest {
    */
   @Test
   void ensureCustomerIsEqual() {
-    Customer expected = new Customer("John");
-    Customer result = projectOne.getCustomer();
+    String expected = "John";
+    String result = projectOne.getCustomer();
     assertEquals(expected, result);
   }
 
   @Test
   void ensureCustomerIsNotEqual() {
-    Customer expected = new Customer("Johnny");
-    Customer result = projectOne.getCustomer();
+    String expected = "Johnny";
+    String result = projectOne.getCustomer();
     assertNotEquals(expected, result);
   }
 
@@ -129,15 +129,15 @@ public class ProjectTest {
    */
   @Test
   void ensureProjectTypologyIsEqual() {
-    ProjectTypology expected = new ProjectTypology("Fixed cost");
-    ProjectTypology result = projectOne.getProjectTypology();
+    String expected = "Fixed cost";
+    String result = projectOne.getProjectTypology();
     assertEquals(expected, result);
   }
 
   @Test
   void ensureProjectTypologyIsNotEqual() {
-    ProjectTypology expected = new ProjectTypology("Variable cost");
-    ProjectTypology result = projectOne.getProjectTypology();
+    String expected = "Variable cost";
+    String result = projectOne.getProjectTypology();
     assertNotEquals(expected, result);
   }
 
@@ -146,32 +146,28 @@ public class ProjectTest {
    */
   @Test
   void ensureBusinessSectorIsEqual() {
-    BusinessSector expected = new BusinessSector("Hunting");
-    BusinessSector result = projectOne.getBusinessSector();
+    String expected = "Hunting";
+    String result = projectOne.getBusinessSector();
     assertEquals(expected, result);
   }
 
   @Test
   void ensureBusinessSectorIsNotEqual() {
-    BusinessSector expected = new BusinessSector("Fishing");
-    BusinessSector result = projectOne.getBusinessSector();
+    String expected = "Fishing";
+    String result = projectOne.getBusinessSector();
     assertNotEquals(expected, result);
   }
 
-  /**
-   * Hashcode tests
-   */
-/*  @Test
-  void ensureProjectsHaveTheSameHashCode() {
-    int projectOneHashCode = projectOne.hashCode();
-    int projectTwoHashCode = projectTwo.hashCode();
-    assertEquals(projectOneHashCode, projectTwoHashCode);
-  }*/ //todo
-
   @Test
-  void ensureProjectsHaveDifferentHashCode() {
-    int projectOneHashCode = projectOne.hashCode();
-    int projectTwoHashCode = projectTwo.hashCode();
-    assertNotEquals(projectOneHashCode, projectTwoHashCode);
+  void testHashCode() {
+    Project obj1 = projectOne;
+    Project obj2 = projectTwo;
+    Project obj3 = projectThree;
+
+    // Check that equal objects have the same hash code
+    assertEquals(obj1.hashCode(), obj3.hashCode());
+
+    // Check that unequal objects have different hash codes
+    assertNotEquals(obj1.hashCode(), obj2.hashCode());
   }
 }

@@ -80,28 +80,18 @@ class RegisterAccountControllerTest {
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
 
-    businessSector = new BusinessSector("fishing");
 
     businessSectors = new ArrayList<>();
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
-
-    projectTypology = new ProjectTypology("Fixed Cost");
 
     List<ProjectTypology> typologies = new ArrayList<>();
-    typologies.add(projectTypology);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
-
-    customerOne = new Customer("ISEP");
-    customerTwo = new Customer("PortoTech");
 
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer(customers);
-    customers.add(customerOne);
-    customers.add(customerTwo);
-    ;
-    project = new Project("proj001", "software development management", customerOne,
-            projectTypology, businessSector);
+
+    project = new Project("proj001", "software development management", "ISEP",
+            "Fixed Cost", "fishing");
 
     List<Project> projects = new ArrayList<>();
     projects.add(project);
@@ -137,16 +127,11 @@ class RegisterAccountControllerTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector = null;
-    businessSectors.clear();
     businessSectorContainer = null;
     project = null;
     projects.clear();
     projectContainer = null;
     company = null;
-    customerOne = null;
-    customerTwo = null;
-    customers.clear();
     customerContainer = null;
     controller = null;
   }

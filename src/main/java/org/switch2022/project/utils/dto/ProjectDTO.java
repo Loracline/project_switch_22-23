@@ -13,18 +13,22 @@ public class ProjectDTO {
 
   public String code;
   public String name;
-  public Customer customer;
+  public String customer;
   public String status;
-  public ProjectTypology projectTypology;
-  public BusinessSector businessSector;
+  public String projectTypology;
+  public String businessSector;
 
   @Override
   public int hashCode() {
     return Objects.hash(code, name, customer, status, projectTypology, businessSector);
   }
 
-  public ProjectDTO(String code, String name, Customer customer, ProjectTypology projectTypology,
-                    BusinessSector businessSector) {
+  /**
+   * Constructor of the class GetProjectsDTO.
+   */
+
+  public ProjectDTO(String code, String name, String customer,
+                    String projectTypology, String businessSector) {
     this.code = code;
     this.name = name;
     this.customer = customer;
@@ -40,5 +44,4 @@ public class ProjectDTO {
     ProjectDTO that = (ProjectDTO) o;
     return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(customer, that.customer) && Objects.equals(status, that.status) && Objects.equals(projectTypology, that.projectTypology) && Objects.equals(businessSector, that.businessSector);
   }
-
 }

@@ -7,28 +7,30 @@ import org.switch2022.project.utils.dto.AccountInProjectDTO;
 
 import java.time.LocalDate;
 
-import static org.switch2022.project.utils.mapper.AccountMapper.getAccountFromDTO;
-import static org.switch2022.project.utils.mapper.ProjectMapper.fromDTO;
-
 public class AccountInProjectDTOMapper {
 
     /**
      * Method that creates an AccountInProject from an AccountInProjectDTO
      *
-     * @param dto instance of accountDTO from which information is going to be retrieved
+     * @param dto
      * @return new instance of AccountInProject
      */
 
     public AccountInProject accountInProjectFromDTO(AccountInProjectDTO dto) {
-        Account account = getAccountFromDTO(dto.accountDTO);
-        Project project = fromDTO(dto.projectDTO);
+        ProjectMapper projectMapper = new ProjectMapper();
+        AccountMapper accountMapper = new AccountMapper();
+
+
+        Account account = accountMapper.getAccountFromDTO(dto.accountDTO);
+        Project project = projectMapper.getProjectFromDTO(dto.projectDTO);
 
         float costPerHour = dto.costPerHour;
         float percentageAllocation = dto.percentageAllocation;
         LocalDate startDate = dto.startDate;
         String role = dto.role;
 
-        return new AccountInProject(account, project,
+        AccountInProject accountInProject = new AccountInProject(account, project,
                 role, costPerHour, percentageAllocation, startDate);
+        return accountInProject;
     }
 }

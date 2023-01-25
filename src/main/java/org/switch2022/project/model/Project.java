@@ -13,15 +13,15 @@ public class Project {
      */
     private final String projectCode;
     private final String projectName;
-    private final Customer customer;
-    private final ProjectTypology projectTypology;
-    private final BusinessSector businessSector;
+    private final String customer;
+    private final String projectTypology;
+    private final String businessSector;
     private String projectStatus;
 
     /**
      * Constructor
      */
-    public Project(String projectCode, String name, Customer customer, ProjectTypology projectTypology, BusinessSector businessSector) {
+    public Project(String projectCode, String name, String customer, String projectTypology, String businessSector) {
         this.projectCode = projectCode;
         this.projectName = name;
         this.customer = customer;
@@ -77,7 +77,7 @@ public class Project {
      *
      * @return the customer of the project.
      */
-    public Customer getCustomer() {
+    public String getCustomer() {
         return this.customer;
     }
 
@@ -95,7 +95,7 @@ public class Project {
      *
      * @return the typology of the project.
      */
-    public ProjectTypology getProjectTypology() {
+    public String getProjectTypology() {
         return this.projectTypology;
     }
 
@@ -104,7 +104,7 @@ public class Project {
      *
      * @return the business sector of the project.
      */
-    public BusinessSector getBusinessSector() {
+    public String getBusinessSector() {
         return this.businessSector;
     }
 }

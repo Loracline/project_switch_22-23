@@ -97,8 +97,8 @@ class ProjectTypologyControllerTest {
         customers.add(customerOne);
         customers.add(customerTwo);
 
-        project = new Project("proj001", "software development management", customerOne,
-                projectTypologyOne, businessSector);
+        project = new Project("proj001", "software development management", "ISEP",
+                "Fixed Cost", "fishing");
 
         List<Project> projects = new ArrayList<>();
         projects.add(project);

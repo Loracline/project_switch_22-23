@@ -43,11 +43,8 @@ class AccountInProjectContainerTest {
         accountDTO2.phoneNumber = 912345679;
         accountDTO2.photo = null;
 
-        // ProjectDTO created.
-        Customer customer = new Customer("IT Customer");
-        ProjectTypology projectTypology = new ProjectTypology("fixed cost");
-        BusinessSector businessSector = new BusinessSector("IT Sector");
-        projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
+        projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
 
         // Container of accounts in project created.
         accountsInProject = new ArrayList<>();

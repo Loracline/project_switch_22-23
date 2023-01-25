@@ -24,33 +24,23 @@ public class ProjectContainerTest {
     Project projectOne, projectTwo;
     List<Project> projects;
     ProjectContainer projectContainer;
-    ProjectTypology projectTypology;
-    Customer customer;
-    BusinessSector businessSector;
     ProjectDTO projectOneDTO, projectTwoDTO;
 
 
     @BeforeEach
     void setUp() {
-        //typologies = new ArrayList<>();
-        projectTypology = new ProjectTypology("Fixed cost");
-
-        customer = new Customer("John");
-
-        businessSector = new BusinessSector("Hunting");
-
-        projectOne = new Project("AA001", "Aptoide", customer,
-                projectTypology, businessSector);
-        projectTwo = new Project("AA002", "Aptoide", customer, projectTypology,
-                businessSector);
+        projectOne = new Project("AA001", "Aptoide", "John",
+                "Fixed cost", "Hunting");
+        projectTwo = new Project("AA001", "Aptoide", "John",
+                "Fixed cost", "Hunting");
         projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);
         projectContainer = new ProjectContainer(projects);
-        projectOneDTO = new ProjectDTO("AA001", "Aptoide", customer,
-                projectTypology, businessSector);
-        projectTwoDTO = new ProjectDTO("AA003", "Aptoide", customer,
-                projectTypology, businessSector);
+        projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John",
+                "Fixed cost", "Hunting");
+        projectTwoDTO = new ProjectDTO("AA003", "Aptoide", "John",
+                "Fixed cost", "Hunting");
 
     }
 
@@ -60,9 +50,6 @@ public class ProjectContainerTest {
         projectTwo = null;
         projectOneDTO = null;
         projectTwoDTO = null;
-        projectTypology = null;
-        customer = null;
-        businessSector = null;
     }
 
     /**

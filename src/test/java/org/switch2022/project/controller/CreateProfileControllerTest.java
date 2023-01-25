@@ -21,7 +21,6 @@ class CreateProfileControllerTest {
 
     Account accountOne, accountTwo, accountThree, accountFour;
     Profile profileOne, profileTwo;
-    ProjectTypology projectTypology;
     Project project;
     List<Account> accounts;
     List<Profile> profiles;
@@ -30,10 +29,8 @@ class CreateProfileControllerTest {
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
-    BusinessSector businessSector;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
-    Customer customerOne, customerTwo;
     CustomerContainer customerContainer;
     List<Customer> customers;
 
@@ -63,7 +60,6 @@ class CreateProfileControllerTest {
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("User");
 
-
         profiles = new ArrayList<>();
         profileContainer = new ProfileContainer(profiles);
         profiles.add(profileOne);
@@ -73,28 +69,17 @@ class CreateProfileControllerTest {
         projectContainer = new ProjectContainer(projects);
         projects.add(project);
 
-        businessSector = new BusinessSector("fishing");
-
         businessSectors = new ArrayList<>();
         businessSectorContainer= new BusinessSectorContainer(businessSectors);
-        businessSectors.add(businessSector);
-
-        projectTypology = new ProjectTypology("Fixed Cost");
 
         List<ProjectTypology> typologies = new ArrayList<>();
-        typologies.add(projectTypology);
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
-
-        customerOne = new Customer("ISEP");
-        customerTwo = new Customer("PortoTech");
 
         customers = new ArrayList<>();
         customerContainer = new CustomerContainer(customers);
-        customers.add(customerOne);
-        customers.add(customerTwo);
 
-        project = new Project("proj001", "software development management", customerOne,
-                projectTypology, businessSector);
+        project = new Project("proj001", "software development management", "ISEP",
+                "Fixed cost", "fishing");
 
         List<Project> projects = new ArrayList<>();
         projects.add(project);
@@ -125,14 +110,11 @@ class CreateProfileControllerTest {
         profiles.clear();
         accountContainer = null;
         profileContainer = null;
-        businessSector=null;
         businessSectors.clear();
         businessSectorContainer=null;
         project = null;
         projects.clear();
         projectContainer = null;
-        customerOne = null;
-        customerTwo = null;
         customers.clear();
         customerContainer = null;
         company = null;
