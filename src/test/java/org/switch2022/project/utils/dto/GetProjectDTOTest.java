@@ -18,7 +18,6 @@ public class GetProjectDTOTest {
         projectDTO = new GetProjectDTO("AA001", "software development management",
                 "isep",  "planned" ,"fixed cost", "fishing");
     }
-
     @Test
     void ensureSameObjectEqualsItself() {
         assertTrue(projectDTO.equals(projectDTO));

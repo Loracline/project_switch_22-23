@@ -6,13 +6,13 @@ end legend
 skinparam sequenceMessageAlign center
 title CREATE A NEW PROJECT TYPOLOGY
 
-"Controller" --> "Company"
+"CreateProjectTypologyController" --> "Company"
 "Company" --> "ProjectTypologyContainer"
 "Company" --> "AccountContainer"
 "ProjectTypologyContainer" --> "ProjectTypology"
 "AccountContainer" --> "Account"
 
-class "Controller" {
+class "CreateProjectTypologyController" {
 - company
 +createProjectTypology(email, projectTypology)
 }
