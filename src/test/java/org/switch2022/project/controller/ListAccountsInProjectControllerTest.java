@@ -139,12 +139,9 @@ class ListAccountsInProjectControllerTest {
                 projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
         //controller
-        listAccountsInProjectController = new ListAccountsInProjectController();
+        listAccountsInProjectController = new ListAccountsInProjectController(company);
 
-        listAccountsInProjectController.setCompany(company);
-
-        accountFour.setProfile(profileThree);//perguntar se é melhor usar um setter para os testes ou um construtor
-        // (para atribuir uma company a um controller)
+        accountFour.setProfile(profileThree);
     }
 
     @AfterEach

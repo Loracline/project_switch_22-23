@@ -20,9 +20,9 @@ Manager -> ui: lists all accounts of a given project
 activate ui
 ui --> Manager: request data (projectCode)
 Manager -> ui: types requested data
-ui -> controller: listAccountsByProject(email, projectCode)
+ui -> controller: listAccountsByProject(emailManager, projectCode)
 activate controller
-controller -> company: validateManager(email)
+controller -> company: validateManager(emailManager)
 activate company
 ref over company: validateManager_sequenceDiagram
 company -->> controller: true
