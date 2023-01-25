@@ -5,8 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -216,5 +215,16 @@ public class AccountInProjectTest {
         Account result = accountInProject.getAccountByProject("AA001");
         //Assert
         assertNull(result);
+    }
+
+    @Test
+    void ensureThatPercentageOfAllocationIsReturned() {
+        //Arrange
+        float expected = 45.0f;
+        //Act
+        float result = accountInProject.getPercentageOfAllocation();
+        //Assert
+        assertEquals(expected,result);
+
     }
 }

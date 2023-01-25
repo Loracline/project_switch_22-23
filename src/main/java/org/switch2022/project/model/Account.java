@@ -106,14 +106,6 @@ public class Account {
         return accountName;
     }
 
-    /**
-     * Getter method for the attribute: phone number.
-     *
-     * @return phone number of the account.
-     */
-    public long getPhoneNumber() {
-        return phoneNumber;
-    }
 
     /**
      * Getter method for the attribute: photo.
