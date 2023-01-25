@@ -22,6 +22,23 @@ public class ProjectContainer {
     public ProjectContainer(List<Project> projects) {
         this.projects = projects;
     }
+    /**
+     * This method verify the existence of a project by code confirmation.
+     *
+     * @return the project with given code.
+     */
+    public Project getProjectByCode(String code){
+        Project projectRequested = null;
+        int i = 0;
+        while (i < this.projects.size()) {
+            if (projects.get(i).getProjectCode().equalsIgnoreCase(code)) {
+                projectRequested = projects.get(i);
+                break;
+            }
+            i++;
+        }
+        return projectRequested;
+    }
 
     /**
      * Getter method for the attribute: projects.

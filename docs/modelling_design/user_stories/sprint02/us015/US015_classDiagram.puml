@@ -6,9 +6,9 @@ legend top
 US015 - As a Manager, I want to get a list of all projects
 end legend
 
-class "ListProjectController" {
+class "GetListOfProjectsController" {
 -company
--projectMapper
+-listOfProjectsMapper
 +getListOfProjects(email)
 }
 
@@ -16,7 +16,7 @@ class "Company"{
 -projectContainer
 -accountContainer
 +validateManager(email)
-+getListAllProjects()
++listAllProjects()
 }
 
 class "AccountContainer"{
@@ -33,29 +33,33 @@ class "Account"{
 
 class "ProjectContainer"{
 -projects
-+getListOfProjects()
-+getProject()
++getProjects()
 }
 
-class "ProjectMapper"{
+class "Project"{
+-projectCode
+}
+
+class "ListOfProjectsMapper"{
 +add(projectDTO)
 +toDTO(project)
 }
 
-class "ProjectDTO" {
+class "GetProjectDTO" {
 +code
-+nameProject
-+costumer
++name
++customer
 +status
-+startDate
-+endDate
++projectTypology
++businessSector
 +createDTO()
 }
 
-"ListProjectController" --> "Company"
-"ListProjectController" --> "ProjectMapper"
+"GetListOfProjectsController" "1"-->"1" "Company": has
+"GetListOfProjectsController" "1"-->"1" "ListOfProjectsMapper": has
 "Company" "1"-->"1" "ProjectContainer": has
 "Company" "1"-->"1" "AccountContainer": has
-"AccountContainer" --> "Account"
-"ProjectMapper" --> "ProjectDTO"
+"AccountContainer" "1"-->"*" Account: contains
+"ProjectContainer" "1"-->"*" Project: contains
+"ListOfProjectsMapper" ..> "GetProjectDTO"
 @enduml
