@@ -125,9 +125,10 @@ class AddUserToProjectControllerTest {
         customers.add(customerTwo);
 
         //projects
-        projectOne = new Project("proj001", "software development", new Customer ("John"),new ProjectTypology("Fixed cost")
+        projectOne = new Project("proj001", "software development", new Customer ("John", "228674498"),new ProjectTypology("Fixed cost")
                 , new BusinessSector( "Hunting"));
-        projectTwo = new Project("proj002", "project software", new Customer ("John"),new ProjectTypology("Fixed cost")
+        projectTwo = new Project("proj002", "project software", new Customer ("John", "228674498"),
+                new ProjectTypology("Fixed cost")
                 , new BusinessSector( "Hunting"));
 
         projects = new ArrayList<>();

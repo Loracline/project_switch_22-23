@@ -28,7 +28,7 @@ class AccountInProjectContainerTest {
     ProjectTypology projectTypologyOne;
     AccountDTO accountDTO, accountDTO2, accountDTO3;
     ProjectDTO projectDTO;
-    AccountInProjectDTO accountInProjectDTOPO, accountInProjectDTOTM, accountInProjectDTOInvalid;
+    AllocationDTO accountInProjectDTOPO, accountInProjectDTOTM, accountInProjectDTOInvalid;
     Project project;
     AllocationDTO allocationDTOPO, allocationDTOTM,
             allocationDTOInvalid, allocationDTOAllocationValid,
@@ -65,8 +65,8 @@ class AccountInProjectContainerTest {
         accounts.add(accountFour);
 
         //customer
-        customerOne = new Customer("Genius Software");
-        customerTwo = new Customer("Delta Software");
+        customerOne = new Customer("Genius Software", "228674498");
+        customerTwo = new Customer("Delta Software", "228674498");
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -117,7 +117,9 @@ class AccountInProjectContainerTest {
         projectDTO = new ProjectDTO("id001", "Test", "IT Customer","fixed cost", "IT Sector");
 
         //Project created
-        project = new Project("proj001", "software development management", "IT Customer","fixed cost", "IT Sector");
+        project = new Project("proj001", "software development management", new Customer(
+                "IT Customer","228674498"),new ProjectTypology("fixed cost"), new BusinessSector("IT " +
+                "Sector"));
 
         // Container of accounts in project created.
         accountsInProject = new ArrayList<>();

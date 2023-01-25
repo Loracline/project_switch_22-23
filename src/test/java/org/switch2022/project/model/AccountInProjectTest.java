@@ -23,7 +23,7 @@ public class AccountInProjectTest {
         //Account in project created.
 
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        project = new Project("1A", "project code", new Customer("John"),
+        project = new Project("1A", "project code", new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
