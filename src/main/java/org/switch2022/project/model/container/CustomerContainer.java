@@ -24,7 +24,7 @@ public class CustomerContainer {
     }
 
     /**
-     * This method validates if customer already exists by checking the name.
+     * This method validates if customer already exists by checking the NIF.
      *
      * @param customerNIF of the intended costumer.
      * @return TRUE if exists and FALSE otherwise.
