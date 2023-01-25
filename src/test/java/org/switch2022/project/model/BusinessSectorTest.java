@@ -49,4 +49,21 @@ class BusinessSectorTest {
         // Check that unequal objects have different hash codes
         assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
+
+
+    @Test
+    void getBusinessSectorNameSuccessfully() {
+    BusinessSector businessSector = new BusinessSector("fishing");
+    String expected = businessSector.getBusinessSectorName();
+    String result = "fishing";
+    assertEquals(expected, result);
+    }
+
+    @Test
+    void getBusinessSectorNameNotSuccessfully() {
+        BusinessSector businessSector = new BusinessSector("fishing");
+        String expected = businessSector.getBusinessSectorName();
+        String result = "mining";
+        assertNotEquals(expected, result);
+    }
 }
