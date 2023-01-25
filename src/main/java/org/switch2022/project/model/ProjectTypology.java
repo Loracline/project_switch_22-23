@@ -19,7 +19,7 @@ public class ProjectTypology {
         this.projectTypologyName = projectTypologyName.toLowerCase();
     }
 
-    public String getProjectTypology() {
+    public String getProjectTypologyName() {
         return this.projectTypologyName;
     }
 
@@ -39,7 +39,7 @@ public class ProjectTypology {
             return false;
         }
         ProjectTypology that = (ProjectTypology) toCompare;
-        return Objects.equals(projectTypologyName, that.projectTypologyName);
+        return Objects.equals(projectTypologyName, that.projectTypologyName.toLowerCase());
     }
     /**
      * The hashCode() method is used to generate a unique hash code for an

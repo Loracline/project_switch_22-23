@@ -15,8 +15,9 @@ participant ":ListAllUsersController" as usersController
 participant ":ListAllProjectsController" as projectsController
 participant ":AddUserToProjectController" as controller
 participant ":Company" as company
-participant "accountInProjectContainer:AccountInProjectContainer" as accinprojcont
-participant "accountInProjectDTOMapper:AccountInProjectDTOMapper" as mapper
+participant ":AccountContainer"
+participant ":ProjectContainer"
+participant ":AccountInProjectContainer" as accinprojcont
 participant "accountInProject:AccountInProject" as accinproj
 
 Manager -> ui: requests list of all User accounts
@@ -41,26 +42,29 @@ Manager -> ui: selects project
 deactivate ui
 
 
-Manager -> ui: starts the association of the selected User as the Product Owner of the selected project
+Manager -> ui: starts the association of the selected User as the Product Owner/Team Member/Scrum Master of the selected project
 activate ui
 ui --> Manager: requests data
 Manager -> ui: sends data (role, costPerHour, percentageAllocation, startDate)
-ui -> controller: addUserToProject(emailManager, accountInProjectDTO)
+ui -> controller: addUserToProject(emailManager, accountDTO, projectDTO, allocationDTO)
 activate controller
 controller -> company: validateManager(emailManager)
 ref over company: validateManager_sequenceDiagram
 company --> controller: true
-controller -> company: addUserToProject(accountInProjectDTO)
+controller -> company: addUserToProject(accountDTO, projectDTO, allocationDTO)
 activate company
-company -> accinprojcont: addUserToProject(accountInProjectDTO)
+company -> ":AccountContainer": getAccountByEmail(accountDTO.email)
+activate ":AccountContainer"
+":AccountContainer" --> company: account
+deactivate ":AccountContainer"
+company -> ":ProjectContainer": getProjectByCode(projectDTO.code)
+activate ":ProjectContainer"
+":ProjectContainer" --> company: project
+deactivate ":ProjectContainer"
+company -> accinprojcont: addUserToProject(account, project, allocationDTO)
 activate accinprojcont
-create mapper
-accinprojcont -> mapper: accountInProjectFromDTO(accountInProjectDTO)
-activate mapper
 create accinproj
-mapper -> accinproj: create(account, project...)
-mapper --> accinprojcont: acountInProject
-deactivate mapper
+accinprojcont -> accinproj :create(account, project, allocationDTO.costPerHour...)
 accinprojcont -> accinprojcont: add(accountInProject)
 accinprojcont --> company: true
 deactivate accinprojcont

@@ -470,14 +470,22 @@ adm <-- ":System":informs operation success
 
 @startuml
 skinparam sequenceMessageAlign center
-title TO ASSOCIATE USER AS TEAM MEMBER TO A PROJECT
+title TO ASSOCIATE USER AS TEAM MEMBER/PRODUCT OWNER/SCRUM MASTER TO A PROJECT
 actor "Manager"
-"Manager" -> ":System": associates User as Team Member
+"Manager" -> ":System": requests list of all User accounts
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Manager" <-- ":System": informs successful association
+"Manager" <-- ":System": requests to select User account
+"Manager" -> ":System": selects User account
+"Manager" -> ":System": requests list of all projects
+"Manager" <-- ":System": requests to select project
+"Manager" -> ":System": selects project
+"Manager" -> ":System": starts the association of the selected User with the selected project and a role
+"Manager" <-- ":System": requests data
+"Manager" -> ":System": sends data (role, costPerHour, percentageAllocation, startDate)
+"Manager" <-- ":System": informs team member/product owner/scrum master associated/defined
 @enduml
 
 @startuml
@@ -502,18 +510,6 @@ Account is authenticated.
 ":System" grants access.
 end note
 "User" <-- ":System": shows list of all projects the user is allocated
-@enduml
-
-@startuml
-skinparam sequenceMessageAlign center
-title TO DEFINE THE Product Owner OF A PROJECT
-actor "Manager"
-"Manager" -> ":System": defines a Scrum Master of a project
-note left
-Account is authenticated.
-":System" grants access.
-end note
-"Manager" <-- ":System": informs set role
 @enduml
 
 @startuml

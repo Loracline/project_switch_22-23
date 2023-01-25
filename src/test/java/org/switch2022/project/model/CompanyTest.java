@@ -28,7 +28,7 @@ class CompanyTest {
     List<Profile> profiles;
     List<Project> projects;
     List<ProjectTypology> typologies;
-    BusinessSector businessSectorOne, businessSectorTwo, businessSector;
+    BusinessSector businessSectorOne, businessSectorTwo;
     List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
@@ -36,7 +36,7 @@ class CompanyTest {
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
     ProjectDTO projectOneDTO, projectTwoDTO;
-    Customer customerOne, customerTwo, customerThree, customer;
+    Customer customerOne, customerTwo, customerThree;
     CustomerContainer customerContainer;
     List<Customer> customers;
     float costPerHour;
@@ -90,12 +90,14 @@ class CompanyTest {
         businessSectors.add(businessSectorOne);
 
         // Projects created.
-        project = new Project("AA001", "software development management", customer, projectTypologyOne,
-                businessSector);
-        projectOne = new Project("AA001", "software development management", customerOne, projectTypologyOne,
-                businessSectorOne);
-        projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSectorOne);
-        projectThree = new Project("AA003", "motor software", customerOne, projectTypologyTwo, businessSectorOne);
+        project = new Project("AA002", "software development management", "John",
+                "Fixed cost", "Hunting");
+        projectOne = new Project("AA001", "software development management", "John",
+                "Fixed cost", "Hunting");
+        projectTwo = new Project("AA002", "project software", "John",
+                "Fixed cost", "Hunting");
+        projectThree = new Project("AA001", "Aptoide", "John","Fixed cost",
+                "Hunting");
 
         // Container of projects created.
         projects = new ArrayList<>();
@@ -132,8 +134,10 @@ class CompanyTest {
         customers.add(customerTwo);
 
         // ProjectDTOs created.
-        projectOneDTO = new ProjectDTO("AA001", "Aptoide", customerThree, projectTypologyOne, businessSectorTwo);
-        projectTwoDTO = new ProjectDTO("AA004", "Aptoide", customerThree, projectTypologyOne, businessSectorTwo);
+        projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John","Fixed cost",
+                "Hunting");
+        projectTwoDTO = new ProjectDTO("AA004", "Aptoide", "John", "Fixed cost",
+                "Hunting");
 
         // Accounts allocated to project.
         accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member",
@@ -164,18 +168,17 @@ class CompanyTest {
         profileThree = null;
         accounts.clear();
         profiles.clear();
-        project = null;
         accountContainer = null;
         profileContainer = null;
         businessSectorOne = null;
         businessSectors.clear();
         businessSectorContainer = null;
-        businessSector = null;
         projectTypologyOne = null;
         projectTypologyTwo = null;
         typologies.clear();
         projectTypologyContainer = null;
         projects.clear();
+        project = null;
         projectContainer = null;
         projectOneDTO = null;
         projectTwoDTO = null;
@@ -434,7 +437,7 @@ class CompanyTest {
     void projectRegistered() {
         accountOne.setProfile(profileThree);
         boolean expected = true;
-        boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
+        boolean result = company.registerProject(projectTwoDTO);
         assertEquals(expected, result);
     }
 
@@ -442,18 +445,9 @@ class CompanyTest {
     void projectNotRegistered() {
         accountOne.setProfile(profileThree);
         boolean expected = false;
-        boolean result = company.registerProject(projectOneDTO, accountOne.getEmail());
+        boolean result = company.registerProject(projectOneDTO);
         assertEquals(expected, result);
     }
-
-    @Test
-    void managerNotValidated() {
-        accountOne.setProfile(profileOne);
-        boolean expected = false;
-        boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
-        assertEquals(expected, result);
-    }
-
 
     /**
      * listAllProjects()
@@ -526,10 +520,8 @@ class CompanyTest {
         accountDTO.phoneNumber = 912345678;
         accountDTO.photo = null;
         //projectDTO
-        Customer customer = new Customer("IT Customer");
-        ProjectTypology projectTypology = new ProjectTypology("fixed cost");
-        BusinessSector businessSector = new BusinessSector("IT Sector");
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
+        ProjectDTO projectDTO = new ProjectDTO("id001", "Aptoide", "John",
+                "Fixed cost", "Hunting");
 
         //account in project dto - product owner
         AccountInProjectDTO accountInProjectDTOPO = new AccountInProjectDTO();
@@ -556,10 +548,8 @@ class CompanyTest {
         accountDTO.phoneNumber = 912345688;
         accountDTO.photo = null;
         //projectDTO
-        Customer customer = new Customer("IT Customer");
-        ProjectTypology projectTypology = new ProjectTypology("fixed cost");
-        BusinessSector businessSector = new BusinessSector("IT Sector");
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
+        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
 
         //account in project dto - product owner
         AccountInProjectDTO accountInProjectDTOTM = new AccountInProjectDTO();

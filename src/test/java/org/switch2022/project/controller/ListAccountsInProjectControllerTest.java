@@ -104,8 +104,8 @@ class ListAccountsInProjectControllerTest {
         businessSectors.add(businessSectorOne);
 
         //project
-        projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne);
-        projectTwo = new Project("2B", "Software Development Management", customerTwo, projectTypologyOne, businessSectorOne);
+        projectOne = new Project("1A", "Mobile Software", "Genius Software", "Fixed Cost", "Fishing");
+        projectTwo = new Project("2B", "Software Development Management", "Delta Software", "Fixed Cost", "Fishing");
         projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);

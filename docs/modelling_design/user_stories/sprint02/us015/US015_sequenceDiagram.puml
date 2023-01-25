@@ -7,13 +7,13 @@ end legend
 autonumber
 actor Manager
 participant ":GetListOfProjectsUI" as ui
-participant ":GetListListOfProjectsController" as controller
+participant ":GetListOfProjectsController" as controller
 participant ":Company" as company
 participant ":AccountContainer" as ac
 participant "account:Account" as a
 participant ":ProjectContainer" as pc
-participant "projectMapper:ProjectMapper" as mapper
-participant "listAllProjectsDTO: List<ProjectDTO>" as list
+participant "listOfProjectsMapper:ListOfProjectsMapper" as mapper
+participant "listAllProjectsDTO: List<GetProjectDTO>" as list
 participant "projectDTO:projectDTO" as DTO
 
 activate Manager
@@ -34,9 +34,9 @@ ac --> company: true
 deactivate ac
 company --> controller: true
 deactivate company
-controller -> company: getListAllProjects()
+controller -> company: listAllProjects()
 activate company
-company -> pc: getListAllProjects()
+company -> pc: getProjects()
 activate pc
 pc --> company: projects
 deactivate pc
