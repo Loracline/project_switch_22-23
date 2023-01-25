@@ -20,8 +20,6 @@ class ChangeProfileControllerTest {
   Account accountOne;
   Account accountTwo;
   Profile profileOne;
-  BusinessSector businessSector;
-  ProjectTypology projectTypology;
   Project project;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
@@ -34,7 +32,6 @@ class ChangeProfileControllerTest {
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
-  Customer customerOne, customerTwo;
   CustomerContainer customerContainer;
   List<Customer> customers;
 
@@ -63,28 +60,19 @@ class ChangeProfileControllerTest {
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
 
-    businessSector = new BusinessSector("fishing");
 
     businessSectors = new ArrayList<>();
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
 
-    projectTypology = new ProjectTypology("Fixed Cost");
 
     List<ProjectTypology> typologies = new ArrayList<>();
-    typologies.add(projectTypology);
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
-
-    customerOne = new Customer("ISEP");
-    customerTwo = new Customer("PortoTech");
 
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer(customers);
-    customers.add(customerOne);
-    customers.add(customerTwo);
 
-    project = new Project("proj001", "software development management", customerOne,
-            projectTypology, businessSector);
+    project = new Project("proj001", "software development management", "John",
+            "Fixed cost", "fishing");
 
     List<Project> projects = new ArrayList<>();
     projects.add(project);
@@ -118,11 +106,8 @@ class ChangeProfileControllerTest {
     project = null;
     projects.clear();
     projectContainer = null;
-    businessSector = null;
     businessSectors.clear();
     businessSectorContainer = null;
-    customerOne = null;
-    customerTwo = null;
     customers.clear();
     customerContainer = null;
   }

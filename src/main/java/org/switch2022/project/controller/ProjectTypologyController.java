@@ -9,7 +9,7 @@ public class ProjectTypologyController {
     /**
      * Attributes of the class ProjectTypologyController, according to the US007 Class Diagram.
      */
-    private Company company;
+    final private Company company;
     /**
      * ProjectTypologyController constructor
      */
@@ -17,7 +17,6 @@ public class ProjectTypologyController {
         this.company=company;
     }
     public boolean createProjectTypology(String email,String projectTypology){
-       boolean createProjectTypology = company.validateAdministrator(email) && company.createProjectTypology(projectTypology);
-       return createProjectTypology;
+       return company.validateAdministrator(email) && company.createProjectTypology(projectTypology);
     }
 }
