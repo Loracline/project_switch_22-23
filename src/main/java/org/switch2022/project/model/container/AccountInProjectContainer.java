@@ -70,7 +70,7 @@ public class AccountInProjectContainer {
     private float currentPercentageOfAllocation(Account account) {
         int i = 0;
         float sumOfPercentages = 0;
-        while (Helper.isLower(i, accountsInProject.size())) {
+        while (Util.isLower(i, accountsInProject.size())) {
             if (accountsInProject.get(i).getAccount().equals(account) &&
                     accountsInProject.get(i).getEndDate() == null) {
                 sumOfPercentages += accountsInProject.get(i).getPercentageOfAllocation();

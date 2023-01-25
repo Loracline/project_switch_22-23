@@ -1,33 +1,35 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.*;
+import org.switch2022.project.model.Company;
 
 /**
- * Class ChangeProfileController is built to allow access to ProfileContainer and AccountContainer
- * in Company Class.
+ * Class ChangeProfileController acts as an intermediary between the user
+ * interface (UI) and the business logic underlying the "US003 - As
+ * Administrator, I want to change the profile of a user account."
  */
 public class ChangeProfileController {
-  /**
-   * Attributes of the class ChangeProfileController, according to the Class Diagram.
-   */
-  private Company company;
+    /**
+     * Attributes
+     */
+    private final Company company;
 
-  /**
-   * ChangeProfileController constructor
-   */
-  public ChangeProfileController(Company company) {
-    this.company = company;
-  }
-  /**
-   * This method updates the account Profile
-   *
-   * @param email
-   * @param profileName
-   *
-   * @return true if account Profile is updated successfully
-   * @return false if account Profile isn't updated
-   */
-  public boolean changeProfile(String email, String profileName) {
-    return company.changeProfile(email, profileName);
-  }
+
+    /**
+     * Constructor
+     */
+    public ChangeProfileController(Company company) {
+        this.company = company;
+    }
+
+
+    /**
+     * This method changes the profile associated to a specific e-mail account.
+     *
+     * @param email       of the account one wish to change.
+     * @param profileName of the desired profile.
+     * @return TRUE if changed, and FALSE otherwise.
+     */
+    public boolean changeProfile(String email, String profileName) {
+        return company.changeProfile(email, profileName);
+    }
 }
