@@ -1,5 +1,6 @@
 package org.switch2022.project.model.container;
 
+import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
@@ -79,4 +80,25 @@ public class AccountInProjectContainer {
     private boolean doesAccountInProjectExist(AccountInProject accountInProject) {
         return this.accountsInProject.contains(accountInProject);
     }
+    /**
+     * This method returns a list of Projects Allocated To a Account
+     *
+     * @return a list of Projects
+     */
+    public List<Project> listProjectsByAccount(String emailUser) {
+        List<Project> projects = new ArrayList<>();
+        int i = 0;
+        while (Helper.isLower(i, accountsInProject.size())) {
+            Project requestedProject = accountsInProject.get(i).getProjectsByAccount(emailUser);
+            if (requestedProject != null) {
+                projects.add(requestedProject);
+            }
+            i++;
+        }
+        return projects;
+    }
+
+
+
+
 }

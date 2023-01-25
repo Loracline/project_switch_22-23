@@ -118,13 +118,19 @@ public class AccountInProject {
     }
 
 
-    public Project getProjectsByAccount(Account account) {
-        // code to retrieve project by account email
-        return project;
+    public Project getProjectsByAccount(String emailUser) {
+        Project requestedProject = null;
+        if ( validate(emailUser)) {
+        }
+        return requestedProject;
     }
 
-
-
-
+    private boolean validate (String emailUser) {
+        boolean validate = false;
+        if ( this.account.getEmail().equals(emailUser)){
+            validate = true;
+        }
+        return validate;
+    }
 
 }

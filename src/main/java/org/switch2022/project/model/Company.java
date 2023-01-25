@@ -242,5 +242,16 @@ public class Company {
     public List<Account> listAccountsByProject(String projectCode) {
         return accountInProjectContainer.listAccountsByProject(projectCode);
     }
+
+    /**
+     * This method lists the projects of a specific account.
+     *
+     * @param emailUser of an account searches for.
+     * @return list of accounts involved in this project.
+     */
+    public List<Project> listProjectsByAccount(String emailUser) {
+        return accountInProjectContainer.listProjectsByAccount(emailUser);
+    }
+
 }
 

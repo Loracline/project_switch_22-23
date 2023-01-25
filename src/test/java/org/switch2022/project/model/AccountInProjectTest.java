@@ -206,4 +206,28 @@ public class AccountInProjectTest {
         //Assert
         assertNull(result);
     }
+
+    @Test
+    void ensureThatAllProjectsInAccountsAreListedSuccessfully() {
+        List<Project> expected = new ArrayList<>();
+        expected.add(projectOne);
+        expected.add(projectTwo);
+
+
+        //Act
+        List<Project> result = accountInProjectContainerOne.listProjectsByAccount("mike@isep.ipp.pt");
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatListProjectsInAccountIsEmpty() {
+        List<Project> expected = new ArrayList<>();
+
+        //Act
+        List<Project> result = accountInProjectContainerOne.listProjectsByAccount("mary@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
 }
