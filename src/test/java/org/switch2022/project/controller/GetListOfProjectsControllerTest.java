@@ -35,7 +35,7 @@ public class GetListOfProjectsControllerTest {
         accountManager.setProfile(new Profile("Manager"));
 
         //project
-        customer = new Customer("ISEP", "222333444");
+        customer = new Customer("isep", "222333444");
         projectTypology = new ProjectTypology("Fixed cost");
         businessSector = new BusinessSector("fishing");
         projectOne = new Project("AA001", "software development management",
