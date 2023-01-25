@@ -23,6 +23,7 @@ class Company {
 
 class AccountContainer {
 -accounts
++validateManager(email)
 +getAccountByEmail(accountDTO.email)
 }
 
@@ -47,11 +48,6 @@ class AccountInProjectContainer{
 +addUserToProject(account, project, allocationDTO)
 }
 
-class "AccountContainer"{
--accounts
-+validateManager(email)
-}
-
 class "Account"{
 -email
 -profile
@@ -70,7 +66,6 @@ Company "1"-->"1" AccountInProjectContainer: has
 Company "1"-->"1" AccountContainer: has
 Company "1"-->"1" ProjectContainer: has
 AccountInProjectContainer "1"--> "*" AccountInProject: has
-Company "1"-->"1" "AccountContainer": has
 "AccountContainer""1" --> "*""Account": has
 "Account" "*"--> "1""Profile": has
 @enduml
