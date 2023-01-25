@@ -16,11 +16,11 @@ public class ProjectTest {
 
   @BeforeEach
   void setUp() {
-    projectOne = new Project("AA001", "Aptoide", new Customer("John"),
+    projectOne = new Project("AA001", "Aptoide", new Customer("John","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    projectTwo = new Project("AA002", "Aptoide", new Customer("John"),
+    projectTwo = new Project("AA002", "Aptoide", new Customer("John","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    projectThree = new Project("AA001", "Aptoide", new Customer("John"),
+    projectThree = new Project("AA001", "Aptoide", new Customer("John","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
   }
 
@@ -95,7 +95,7 @@ public class ProjectTest {
    */
   @Test
   void ensureCustomerIsEqual() {
-    Customer expected = new Customer("John");
+    Customer expected = new Customer("John","228674498");
     Customer result = projectOne.getCustomer();
     assertEquals(expected, result);
   }

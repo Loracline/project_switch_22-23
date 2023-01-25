@@ -20,11 +20,10 @@ public class AccountInProjectTest {
 
     @BeforeEach
     void setUp() {
-        /*
-          Account in project created.
-         */
+        //Account in project created.
+
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        project = new Project("1A", "project code", new Customer("John"),
+        project = new Project("1A", "project code", new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
@@ -187,6 +186,18 @@ public class AccountInProjectTest {
         boolean result = accountInProject.isRoleValid();
         //Assert
         assertFalse(result);
+    }
+    @Test
+    void ensureEndDateIsRetrieved() {
+        //Arrange
+        AccountInProject accountInProject = new AccountInProject(account, project,
+                "Product Visionary", costPerHour, percentageAllocation, startDate);
+        LocalDate expected = LocalDate.of(2023, 12, 25);
+        //Act
+        accountInProject.setEndDate(LocalDate.of(2023, 12, 25));
+        LocalDate result = accountInProject.getEndDate();
+        //Assert
+        assertEquals(expected, result);
     }
 
     @Test

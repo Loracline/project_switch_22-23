@@ -6,13 +6,13 @@ US014 - As Manager, I want to get a list of all human resources in a project.
 end legend
 class "ListAccountsInProjectController" {
 -company
-+listAccountsByProject(email, projectCode)
++listAccountsByProject(emailManager, projectCode)
 }
 
 class "Company"{
 -accountsInProjectContainer
 -accountContainer
-+validateManager(email)
++validateManager(emailManager)
 +listAccountsByProject(projectCode)
 }
 

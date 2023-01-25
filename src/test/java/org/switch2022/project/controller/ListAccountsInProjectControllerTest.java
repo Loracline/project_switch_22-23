@@ -20,78 +20,57 @@ class ListAccountsInProjectControllerTest {
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
-    Account accountOne, accountTwo, accountThree, accountFour;
-    AccountDTO accountDTOOne, accountDTOTwo, accountDTOThree;
-    Profile profileOne, profileTwo, profileThree;
-    Customer customerOne, customerTwo;
+    Account accountOne, accountTwo;
+    AccountDTO accountDTOOne;
+    Profile profileOne, profileTwo;
+    Customer customerOne;
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
-    Project projectOne, projectTwo;
-    AccountInProject accountInProjectOne, accountInProjectTwo, accountInProjectThree, accountInProjectFour, accountInProjectFive;
-    float costPerHour;
-    float percentageAllocation;
-    LocalDate startDate;
+    Project projectOne;
+    AccountInProject accountInProjectOne;
     List<Account> accounts;
     List<AccountDTO> accountsDTOOne;
     List<Profile> profiles;
     List<ProjectTypology> typologies;
     List<BusinessSector> businessSectors;
     List<Project> projects;
+    List<Customer> customers;
     List<AccountInProject> accountsInProject;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     BusinessSectorContainer businessSectorContainer;
     ProjectContainer projectContainer;
+    CustomerContainer customerContainer;
     ProjectTypologyContainer projectTypologyContainer;
     AccountInProjectContainer accountInProjectContainer;
     Company company;
     ListAccountsInProjectController listAccountsInProjectController;
-    CustomerContainer customerContainer;
-    List<Customer> customers;
 
     @BeforeEach
     void setUp() {
-
-        costPerHour = 1;
-        percentageAllocation = 1;
-        //startDate = LocalDate.now();
-        startDate = LocalDate.of(2020, 1, 8);
-
         //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
-        accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
-        accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
+        accountTwo = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
         accounts = new ArrayList<>();
         accounts.add(accountOne);
         accounts.add(accountTwo);
-        accounts.add(accountThree);
-        accounts.add(accountFour);
 
         //accountDTO
         accountDTOOne = AccountMapper.accountToDTO(accountOne);
-        accountDTOTwo = AccountMapper.accountToDTO(accountTwo);
-        accountDTOThree = AccountMapper.accountToDTO(accountThree);
         accountsDTOOne = new ArrayList<>();
         accountsDTOOne.add(accountDTOOne);
-        accountsDTOOne.add(accountDTOTwo);
-        accountsDTOOne.add(accountDTOThree);
 
         //profile
         profileOne = new Profile("Administrator");
-        profileTwo = new Profile("User");
-        profileThree = new Profile("Manager");
+        profileTwo = new Profile("Manager");
         profiles = new ArrayList<>();
         profiles.add(profileOne);
         profiles.add(profileTwo);
-        profiles.add(profileThree);
 
         //customer
         customerOne = new Customer("Genius Software", "234567890");
-        customerTwo = new Customer("Delta Software", "245567789");
         customers = new ArrayList<>();
         customers.add(customerOne);
-        customers.add(customerTwo);
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -104,24 +83,15 @@ class ListAccountsInProjectControllerTest {
         businessSectors.add(businessSectorOne);
 
         //project
-        projectOne = new Project("1A", "Mobile Software", new Customer("Genious Software"), new ProjectTypology("Fixed Cost"), new BusinessSector("Fishing") );
-        projectTwo = new Project("2B", "Software Development Management", new Customer("Delta Software"), new ProjectTypology("Fixed Cost"),new BusinessSector("Fishing"));
+        projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
         projects = new ArrayList<>();
         projects.add(projectOne);
-        projects.add(projectTwo);
 
         //accountInProject
-        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);
-        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);
-        accountInProjectThree = new AccountInProject(accountThree, projectOne, "Product Owner", costPerHour, percentageAllocation, startDate);
-        accountInProjectFour = new AccountInProject(accountThree, projectTwo, "Scrum Master", costPerHour, percentageAllocation, startDate);
-        accountInProjectFive = new AccountInProject(accountOne, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate);
+        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", 1,
+                34f, LocalDate.of(2020, 1, 8));
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProjectOne);
-        accountsInProject.add(accountInProjectTwo);
-        accountsInProject.add(accountInProjectThree);
-        accountsInProject.add(accountInProjectFour);
-        accountsInProject.add(accountInProjectFive);
 
         //containers
         accountContainer = new AccountContainer(accounts);
@@ -137,38 +107,22 @@ class ListAccountsInProjectControllerTest {
                 projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
         //controller
-        listAccountsInProjectController = new ListAccountsInProjectController();
-
-        listAccountsInProjectController.setCompany(company);
-
-        accountFour.setProfile(profileThree);//perguntar se é melhor usar um setter para os testes ou um construtor
-        // (para atribuir uma company a um controller)
+        listAccountsInProjectController = new ListAccountsInProjectController(company);
+        accountTwo.setProfile(profileTwo);
     }
 
     @AfterEach
     void tearDown() {
-
         accountOne = null;
         accountTwo = null;
-        accountThree = null;
-        accountFour = null;
         accountDTOOne = null;
-        accountDTOTwo = null;
-        accountDTOThree = null;
         profileOne = null;
         profileTwo = null;
-        profileThree = null;
         customerOne = null;
-        customerTwo = null;
         projectTypologyOne = null;
         businessSectorOne = null;
         projectOne = null;
-        projectTwo = null;
         accountInProjectOne = null;
-        accountInProjectTwo = null;
-        accountInProjectThree = null;
-        accountInProjectFour = null;
-        accountInProjectFive = null;
         accounts.clear();
         accountsDTOOne.clear();
         profiles.clear();
@@ -188,8 +142,13 @@ class ListAccountsInProjectControllerTest {
         customerContainer = null;
     }
 
+    /**
+     * US014
+     * Test for listing all resources allocated to a given project.
+     */
+
     @Test
-    void ensureAllAccountsByProjectAreListedSuccessfully() {
+    void ensureAllAccountsInAProjectAreListedSuccessfully() {
         //Arrange
         List<AccountDTO> expected = accountsDTOOne;
 
@@ -200,11 +159,15 @@ class ListAccountsInProjectControllerTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test to assure that no user other than Manager can access the list of resources of a project.
+     */
+
     @Test
-    void ensureThatListAccountsByProjectIsEmpty_NoPermission() {
+    void ensureThatAnEmptyListIsReturnedForAnUnauthorizedAccount() {
         //Arrange
         List<AccountDTO> expected = new ArrayList<>();
-        accountFour.setProfile(profileOne);
+        accountTwo.setProfile(profileOne);
 
         //Act
         List<AccountDTO> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
