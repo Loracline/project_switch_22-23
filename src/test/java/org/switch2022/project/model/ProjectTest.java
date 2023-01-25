@@ -160,14 +160,14 @@ public class ProjectTest {
 
   @Test
   void testHashCode() {
-    Project obj1 = projectOne;
-    Project obj2 = projectTwo;
-    Project obj3 = projectThree;
+    Project objectOne = projectOne;
+    Project objectTwo = projectTwo;
+    Project objectThree = projectThree;
 
     // Check that equal objects have the same hash code
-    assertEquals(obj1.hashCode(), obj3.hashCode());
+    assertEquals(objectOne.hashCode(), objectThree.hashCode());
 
     // Check that unequal objects have different hash codes
-    assertNotEquals(obj1.hashCode(), obj2.hashCode());
+    assertNotEquals(objectOne.hashCode(), objectTwo.hashCode());
   }
 }

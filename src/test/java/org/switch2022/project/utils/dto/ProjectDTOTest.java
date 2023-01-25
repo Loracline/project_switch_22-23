@@ -58,14 +58,14 @@ class ProjectDTOTest {
 
   @Test
   void testHashCode() {
-    ProjectDTO obj1 = projectDTOOne;
-    ProjectDTO obj2 = projectDTOTwo;
-    ProjectDTO obj3 = projectDTOThree;
+    ProjectDTO objectOne = projectDTOOne;
+    ProjectDTO objectTwo = projectDTOTwo;
+    ProjectDTO objectThree = projectDTOThree;
 
     // Check that equal objects have the same hash code
-    assertEquals(obj1.hashCode(), obj3.hashCode());
+    assertEquals(objectOne.hashCode(), objectThree.hashCode());
 
     // Check that unequal objects have different hash codes
-    assertNotEquals(obj1.hashCode(), obj2.hashCode());
+    assertNotEquals(objectOne.hashCode(), objectTwo.hashCode());
   }
 }

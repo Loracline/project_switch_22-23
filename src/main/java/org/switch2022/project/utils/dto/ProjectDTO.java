@@ -1,12 +1,9 @@
 package org.switch2022.project.utils.dto;
 
-import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
-import org.switch2022.project.model.ProjectTypology;
-
 import java.util.Objects;
 
 public class ProjectDTO {
+
   /**
    * Attributes of the class ProjectDTO, according to the Class Diagram.
    */

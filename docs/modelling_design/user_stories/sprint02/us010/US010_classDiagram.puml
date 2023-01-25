@@ -7,7 +7,7 @@ US010 - As Manager, I want to register/create a new project.
 end legend
 
 class RegisterProjectController {
-- service
+- company
 + registerProject(dto, email)
 }
 
