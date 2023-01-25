@@ -23,6 +23,5 @@ public class ProjectMapper {
             projectTypology, businessSector);
     return project;
   }
-
 }
 
