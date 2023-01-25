@@ -12,10 +12,10 @@ public class ListOfProjectsMapper {
         List<GetProjectDTO> listOfProjectsDto = new ArrayList<>();
         for (Project project : projects) {
             GetProjectDTO getProjectDTO = new GetProjectDTO(project.getProjectCode(),
-                    project.getProjectName(), project.getCustomer(),
+                    project.getProjectName(), project.getCustomer().getCustomerName(),
                     project.getProjectStatus(),
-                    project.getProjectTypology(),
-                    project.getBusinessSector());
+                    project.getProjectTypology().getProjectTypologyName(),
+                    project.getBusinessSector().getBusinessSectorName());
 
             listOfProjectsDto.add(getProjectDTO);
         }

@@ -97,8 +97,8 @@ class AccountInProjectMapperTest {
         account = new Account(accountDTO.name, accountDTO.email, accountDTO.phoneNumber
                 , accountDTO.photo);
 
-        project = new Project(projectDTO.code, projectDTO.name, projectDTO.customer,
-                projectDTO.projectTypology, projectDTO.businessSector);
+        project = new Project(projectDTO.code, projectDTO.name, new Customer("John"),
+                new ProjectTypology("Fixed cost"), new BusinessSector("hunting"));
 
         AccountInProject expected = new AccountInProject(account, project, "Product " +
                 "Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19));
