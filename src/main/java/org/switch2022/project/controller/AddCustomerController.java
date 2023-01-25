@@ -21,18 +21,12 @@ public class AddCustomerController {
      * Method addCustomer
      *
      * @return true if customer is added
-     * @return false if customer isn't added successfully
+     *
      */
 
     public boolean addCustomer(String customerName, String email) {
-        boolean addCustomer = false;
-        if (company.validateAdministrator(email)) {
-            if (company.addCustomer(customerName)) {
-                addCustomer = true;
-            }
-        }
 
-        return addCustomer;
+        return company.validateAdministrator(email) && company.addCustomer(customerName);
     }
 }
 

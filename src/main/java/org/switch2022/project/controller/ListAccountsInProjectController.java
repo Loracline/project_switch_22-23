@@ -24,11 +24,17 @@ public class ListAccountsInProjectController {
      */
     public List<AccountDTO> listAccountsByProject(String email, String projectCode) {
         List<AccountDTO> accountsDTO = new ArrayList<>();
-        if (company.validateManager(email)) {
-            List<Account> accounts = company.listAccountsByProject(projectCode);
+        if (this.company.validateManager(email)) {
+            List<Account> accounts = this.company.listAccountsByProject(projectCode);
             AccountMapper accountMapper = new AccountMapper();
-            accountsDTO = accountMapper.getListDTOFromAccounts(accounts);
+            accountsDTO = accountMapper.cloneList(accounts);
         }
         return accountsDTO;
     }
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    //perguntar se é melhor usar um setter para os testes ou um construtor
+    // (para atribuir uma company a um controller)
 }

@@ -121,11 +121,10 @@ class AddUserToProjectControllerTest {
         customers.add(customerTwo);
 
         //projects
-        projectOne = new Project("proj001",
-                "software development management", customerOne,
-                projectTypologyOne, businessSector);
-        projectTwo = new Project("proj002", "project software",
-                customerTwo, projectTypologyTwo, businessSector);
+        projectOne = new Project("proj001", "software development", "John",
+                "Fixed cost", "Hunting");
+        projectTwo = new Project("proj002", "project software", "John",
+                "Fixed cost", "Hunting");
 
         projects = new ArrayList<>();
         projects.add(projectOne);
@@ -218,13 +217,12 @@ class AddUserToProjectControllerTest {
         accountDTO.phoneNumber = 912345678;
         accountDTO.photo = null;
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customerOne,
-                projectTypologyOne
-                , businessSector);
+        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
 
         projectDTO.name = "Test";
         projectDTO.status = "planned";
-        projectDTO.businessSector = new BusinessSector("IT Sector");
+        projectDTO.businessSector = "IT Sector";
         //account in project dto - product owner
         AccountInProjectDTO accountInProjectDTOPO = new AccountInProjectDTO();
         accountInProjectDTOPO.accountDTO = accountDTO;
@@ -260,13 +258,12 @@ class AddUserToProjectControllerTest {
         accountDTO.phoneNumber = 912345688;
         accountDTO.photo = null;
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customerOne,
-                projectTypologyOne
-                , businessSector);
+        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
 
         projectDTO.name = "Test";
         projectDTO.status = "planned";
-        projectDTO.businessSector = new BusinessSector("IT Sector");
+        projectDTO.businessSector = "IT Sector";
         //account in project dto - team member
         AccountInProjectDTO accountInProjectDTOTM = new AccountInProjectDTO();
         accountInProjectDTOTM.accountDTO = accountDTO;
@@ -301,13 +298,12 @@ class AddUserToProjectControllerTest {
         accountDTO.phoneNumber = 852456951;
         accountDTO.photo = null;
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customerOne,
-                projectTypologyOne
-                , businessSector);
+        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
 
         projectDTO.name = "Test";
         projectDTO.status = "planned";
-        projectDTO.businessSector = new BusinessSector("IT Sector");
+        projectDTO.businessSector = "IT Sector";
         //account in project dto - scrum master
         AccountInProjectDTO accountInProjectDTOSM = new AccountInProjectDTO();
         accountInProjectDTOSM.accountDTO = accountDTO;
@@ -339,13 +335,12 @@ class AddUserToProjectControllerTest {
         accountDTO.phoneNumber = 564897231;
         accountDTO.photo = null;
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customerOne,
-                projectTypologyOne
-                , businessSector);
+        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
 
         projectDTO.name = "Test";
         projectDTO.status = "planned";
-        projectDTO.businessSector = new BusinessSector("IT Sector");
+        projectDTO.businessSector = "IT Sector";
         //account in project dto - scrum master
         AccountInProjectDTO accountInProjectDTOSM = new AccountInProjectDTO();
         accountInProjectDTOSM.accountDTO = accountDTO;
@@ -377,13 +372,13 @@ class AddUserToProjectControllerTest {
         accountDTO.phoneNumber = 564897231;
         accountDTO.photo = null;
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customerOne,
-                projectTypologyOne
-                , businessSector);
+        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "ISEP",
+                "Fixed cost"
+                , "fishing");
 
         projectDTO.name = "Test";
         projectDTO.status = "planned";
-        projectDTO.businessSector = new BusinessSector("IT Sector");
+        projectDTO.businessSector = "IT Sector";
         //account in project dto - scrum master
         AccountInProjectDTO accountInProjectDTOSM = new AccountInProjectDTO();
         accountInProjectDTOSM.accountDTO = accountDTO;

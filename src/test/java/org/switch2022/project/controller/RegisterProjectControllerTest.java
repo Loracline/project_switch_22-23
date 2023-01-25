@@ -66,27 +66,14 @@ class RegisterProjectControllerTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    businessSectorOne = new BusinessSector("fishing");
-    businessSectorTwo = new BusinessSector("Hunting");
     businessSectors = new ArrayList<>();
     businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSectorOne);
 
-    projectTypologyOne = new ProjectTypology("Fixed Cost");
-    projectTypologyTwo = new ProjectTypology("Fixed time and materials");
     typologies = new ArrayList<>();
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
-    typologies.add(projectTypologyOne);
-    typologies.add(projectTypologyTwo);
-    projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-    customerOne = new Customer("ISEP");
-    customerTwo = new Customer("PortoTech");
-    customerThree = new Customer("John");
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer(customers);
-    customers.add(customerOne);
-    customers.add(customerTwo);
 
     businessSectorOne = new BusinessSector("IT Sector");
     costPerHour = 7.5f;
@@ -98,19 +85,21 @@ class RegisterProjectControllerTest {
     accountsInProject.add(accountInProject);
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
-    projectOne = new Project("AA001", "software development management", customerOne, projectTypologyOne,
-            businessSectorOne);
-    projectTwo = new Project("AA002", "project software", customerTwo, projectTypologyTwo, businessSectorOne);
-    projectThree = new Project("AA003", "motor software", customerTwo, projectTypologyTwo, businessSectorOne);
+    projectOne = new Project("AA001", "software development management", "Peter",
+            "Fixed cost", "Fishing");
+    projectTwo = new Project("AA002", "project software", "John",
+            "Fixed cost", "Hunting");
+    projectThree = new Project("AA00", "motor software", "John",
+            "Fixed cost", "Hunting");
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
     projectContainer = new ProjectContainer(projects);
 
-    projectOneDTO = new ProjectDTO("AA001", "Aptoide", customerThree,
-            projectTypologyOne, businessSectorTwo);
-    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", customerThree,
-            projectTypologyOne, businessSectorTwo);
+    projectOneDTO = new ProjectDTO("AA001", "software development management", "Peter",
+            "Fixed cost", "Fishing");
+    projectTwoDTO = new ProjectDTO("AA004", "software development management", "Mary",
+            "Fixed cost", "Sports");
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
             projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);

@@ -3,10 +3,7 @@ package org.switch2022.project.model.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.AccountInProject;
-import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
-import org.switch2022.project.model.ProjectTypology;
+import org.switch2022.project.model.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AccountInProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
@@ -15,14 +12,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AccountInProjectContainerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
+
+    Account accountOne;
     AccountDTO accountDTO, accountDTO2;
     ProjectDTO projectDTO;
     AccountInProjectDTO accountInProjectDTOPO, accountInProjectDTOTM, accountInProjectDTOInvalid;
@@ -44,11 +43,8 @@ class AccountInProjectContainerTest {
         accountDTO2.phoneNumber = 912345679;
         accountDTO2.photo = null;
 
-        // ProjectDTO created.
-        Customer customer = new Customer("IT Customer");
-        ProjectTypology projectTypology = new ProjectTypology("fixed cost");
-        BusinessSector businessSector = new BusinessSector("IT Sector");
-        projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
+        projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
 
         // Container of accounts in project created.
         accountsInProject = new ArrayList<>();
@@ -118,7 +114,6 @@ class AccountInProjectContainerTest {
         //Assert
         assertTrue(result);
     }
-
     /*
     @Test
     void ensureThatTeamMemberIsAddedToAccountsInProjects() {

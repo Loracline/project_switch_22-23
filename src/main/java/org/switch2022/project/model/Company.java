@@ -167,11 +167,9 @@ public class Company {
      */
     public boolean registerProject(ProjectDTO projectDTO, String email) {
         boolean isProjectRegistered = false;
-        if (accountContainer.validateManager(email)) {
-            if (projectContainer.registerProject(projectDTO)) {
+        if (accountContainer.validateManager(email) & projectContainer.registerProject(projectDTO)) {
                 isProjectRegistered = true;
             }
-        }
         return isProjectRegistered;
     }
 
@@ -214,16 +212,11 @@ public class Company {
     /**
      * This method adds a new typology of project to the container.
      *
-     * @param email           of the actor.
      * @param projectTypology of project one intend to create.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean createProjectTypology(String email, String projectTypology) {
-        boolean projectTypologyCreated = false;
-        if (accountContainer.validateAdministrator(email)) {
-            projectTypologyCreated = projectTypologyContainer.createProjectTypology(projectTypology);
-        }
-        return projectTypologyCreated;
+    public boolean createProjectTypology (String projectTypology) {
+        return projectTypologyContainer.createProjectTypology(projectTypology);
     }
 
 

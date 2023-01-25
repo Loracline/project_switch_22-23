@@ -25,7 +25,6 @@ public class AddBusinessSectorController {
      * @return true if businessSector is created
      */
     public boolean addBusinessSector(String businessSectorName, String email) {
-        boolean addBusinessSector = company.validateAdministrator(email) && company.addBusinessSector(businessSectorName);
-        return addBusinessSector;
+        return company.validateAdministrator(email) && company.addBusinessSector(businessSectorName);
     }
 }
