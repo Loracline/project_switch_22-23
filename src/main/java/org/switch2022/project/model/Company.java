@@ -2,7 +2,8 @@ package org.switch2022.project.model;
 
 
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.awt.image.BufferedImage;
@@ -225,13 +226,18 @@ public class Company {
     /**
      * This method adds an account to a project with a specific role.
      *
-     * @param accountInProjectDTO data transfer object gathering the information
+     * @param allocationDTO data transfer object gathering the information
      *                            needed.
      * @return TRUE if added, and FALSE otherwise.
      */
-  /*  public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
-        return this.accountInProjectContainer.addUserToProject(accountInProjectDTO);
-    }*/
+    public boolean addUserToProject(AccountDTO accountDTO, ProjectDTO projectDTO,
+                                    AllocationDTO allocationDTO) {
+
+        Account account = this.accountContainer.getAccountByEmail(accountDTO.email);
+        Project project = this.projectContainer.getProjectByCode(projectDTO.code);
+        return this.accountInProjectContainer.addUserToProject(account,
+                project, allocationDTO);
+    }
 
     /**
      * This method lists the accounts working in a specific project.

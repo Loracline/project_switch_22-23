@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.time.LocalDate;
@@ -20,6 +20,7 @@ class CompanyTest {
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
+
     Account accountOne, accountTwo, accountThree, accountFour;
     Profile profileOne, profileTwo, profileThree;
     ProjectTypology projectTypologyOne, projectTypologyTwo;
@@ -90,13 +91,15 @@ class CompanyTest {
         businessSectors.add(businessSectorOne);
 
         // Projects created.
-        project = new Project("AA002", "software development management", new Customer("John"),
+        project = new Project("AA002", "software development management", new Customer(
+                "John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
-        projectOne = new Project("AA001", "software development management", new Customer("John"),
+        projectOne = new Project("AA001", "software development management",
+                new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
-        projectTwo = new Project("AA002", "project software", new Customer("John"),
+        projectTwo = new Project("AA002", "project software", new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
-        projectThree = new Project("AA001", "Aptoide", new Customer("John"),
+        projectThree = new Project("AA001", "Aptoide", new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
 
         // Container of projects created.
@@ -134,7 +137,7 @@ class CompanyTest {
         customers.add(customerTwo);
 
         // ProjectDTOs created.
-        projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John","Fixed cost",
+        projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John", "Fixed cost",
                 "Hunting");
         projectTwoDTO = new ProjectDTO("AA004", "Aptoide", "John", "Fixed cost",
                 "Hunting");
@@ -155,7 +158,8 @@ class CompanyTest {
 
         // Company created.
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+                projectContainer, projectTypologyContainer, accountInProjectContainer,
+                customerContainer);
     }
 
     @AfterEach
@@ -194,10 +198,10 @@ class CompanyTest {
         company = null;
     }
 
-
     /**
      * getAccountContainer()
      */
+
     @Test
     void ensureAccountContainerIsRetrieved() {
         AccountContainer expected = accountContainer;
@@ -211,6 +215,7 @@ class CompanyTest {
      * validateUser(String email)
      * validateAdministrator(String email)
      */
+
     @Test
     void ensureThatAccountHasProfileManagerSuccessfully() {
         //Arrange
@@ -274,10 +279,10 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
-
     /**
      * createProfile(String profileName)
      */
+
     @Test
     void ensureProfileIsCreatedSuccessfully() {
         //Arrange
@@ -302,6 +307,7 @@ class CompanyTest {
     /**
      * changeProfile(String email, String profileName)
      */
+
     @Test
     void ensureAccountProfileIsChangedSuccessfully() {
         //Arrange
@@ -368,6 +374,7 @@ class CompanyTest {
     /**
      * listAllUsers()
      */
+
     @Test
     void ensureIsRetrievedEmptyList() {
         // ARRANGE
@@ -403,16 +410,21 @@ class CompanyTest {
     /**
      * changeStatus(String email, boolean status)
      */
+
     @Test
     void ensureStatusIsNotChanged() {
-        Company company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+        Company company = new Company(accountContainer, profileContainer,
+                businessSectorContainer, projectContainer, projectTypologyContainer,
+                accountInProjectContainer, customerContainer);
         boolean result = company.changeStatus("mike@isep.ipp.pt", true);
         assertFalse(result);
     }
 
     @Test
     void ensureChangeStatusReturnFalse() {
-        Company company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+        Company company = new Company(accountContainer, profileContainer,
+                businessSectorContainer, projectContainer, projectTypologyContainer,
+                accountInProjectContainer, customerContainer);
         boolean result = company.changeStatus("mike@isep.ipp.pt", true);
         assertFalse(result);
     }
@@ -434,6 +446,7 @@ class CompanyTest {
     /**
      * registerProject(ProjectDTO projectDTO, String email)
      */
+
     @Test
     void projectRegistered() {
         accountOne.setProfile(profileThree);
@@ -450,9 +463,11 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
+
     /**
      * listAllProjects()
      */
+
     @Test
     void ensureAllProjectsAreListedSuccessfully() {
         List<Project> expected = projectContainer.getProjects();
@@ -468,6 +483,7 @@ class CompanyTest {
     /**
      * addBusinessSector(String businessSectorName)
      */
+
     @Test
     void ensureBusinessSectorIsCreatedSuccessfully() {
         //Arrange
@@ -510,63 +526,60 @@ class CompanyTest {
 
 
     /**
-     * addUserToProject(AccountInProjectDTO accountInProjectDTO)
+     * addUserToProject(accountDTO, projectDTO, allocationDTO)
      */
-   /* @Test
-    void ensureProductOwnerIsSuccessfullyAssociatedToAProject() {
+
+    @Test
+    void ensureAccountIsSuccessfullyAssociatedToAProject() {
         //Arrange
         //accountDTO
         AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "John";
-        accountDTO.email = "john@isep.ipp.pt";
-        //accountDTO.phoneNumber = 912345678;
-        //accountDTO.photo = null;
+        accountDTO.name = "Emma";
+        accountDTO.email = "emma@isep.ipp.pt";
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Aptoide", "John",
+        ProjectDTO projectDTO = new ProjectDTO("AA002", "software development management", "John",
                 "Fixed cost", "Hunting");
 
         //account in project dto - product owner
-        AccountInProjectDTO accountInProjectDTOPO = new AccountInProjectDTO();
-        accountInProjectDTOPO.accountDTO = accountDTO;
-        accountInProjectDTOPO.projectDTO = projectDTO;
-        accountInProjectDTOPO.role = "Product Owner";
-        accountInProjectDTOPO.costPerHour = 7.5f;
-        accountInProjectDTOPO.percentageAllocation = 45.0f;
-        accountInProjectDTOPO.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOPO.endDate = LocalDate.of(2023, 1, 22);
+        AllocationDTO allocationDTOPO = new AllocationDTO();
+        allocationDTOPO.role = "Product Owner";
+        allocationDTOPO.costPerHour = 7.5f;
+        allocationDTOPO.percentageAllocation = 45.0f;
+        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
         //Act
-        boolean result = company.addUserToProject(accountInProjectDTOPO);
-        //Assert
-        assertTrue(result);
-    }*/
-
-  /*  @Test
-    void ensureTeamMemberIsSuccessfullyAssociatedToAProject() {
-        //Arrange
-        //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Anna";
-        accountDTO.email = "anna@isep.ipp.pt";
-        accountDTO.phoneNumber = 912345688;
-        accountDTO.photo = null;
-        //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
-                "Fixed cost", "Hunting");
-
-        //account in project dto - product owner
-        AccountInProjectDTO accountInProjectDTOTM = new AccountInProjectDTO();
-        accountInProjectDTOTM.accountDTO = accountDTO;
-        accountInProjectDTOTM.projectDTO = projectDTO;
-        accountInProjectDTOTM.role = "Team Member";
-        accountInProjectDTOTM.costPerHour = 7.5f;
-        accountInProjectDTOTM.percentageAllocation = 45.0f;
-        accountInProjectDTOTM.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOTM.endDate = LocalDate.of(2023, 1, 22);
-        //Act
-        boolean result = company.addUserToProject(accountInProjectDTOTM);
+        boolean result = company.addUserToProject(accountDTO, projectDTO,
+                allocationDTOPO);
         //Assert
         assertTrue(result);
     }
+
+    @Test
+    void ensureAccountIsNotAssociatedToAnNonExistentProject() {
+        //Arrange
+        //accountDTO
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.name = "Emma";
+        accountDTO.email = "emma@isep.ipp.pt";
+        //projectDTO
+        ProjectDTO projectDTO = new ProjectDTO("AA056", "software development " +
+                "management", "John",
+                "Fixed cost", "Hunting");
+
+        //account in project dto - product owner
+        AllocationDTO allocationDTOPO = new AllocationDTO();
+        allocationDTOPO.role = "Product Owner";
+        allocationDTOPO.costPerHour = 7.5f;
+        allocationDTOPO.percentageAllocation = 45.0f;
+        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        //Act
+        boolean result = company.addUserToProject(accountDTO, projectDTO,
+                allocationDTOPO);
+        //Assert
+        assertFalse(result);
+    }
+
+
+
     @Test
     void ensureThatAllAccountsByProjectAreListedSuccessfully() {
         List<Account> expected = new ArrayList<>();
@@ -589,6 +602,6 @@ class CompanyTest {
 
         //Assert
         assertEquals(expected, result);
-    }*/
+    }
 }
 
