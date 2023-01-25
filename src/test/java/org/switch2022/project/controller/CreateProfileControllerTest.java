@@ -78,8 +78,8 @@ class CreateProfileControllerTest {
         customers = new ArrayList<>();
         customerContainer = new CustomerContainer(customers);
 
-        project = new Project("proj001", "software development management", "ISEP",
-                "Fixed cost", "fishing");
+        project = new Project("proj001", "software development management", new Customer("ISEP"),
+                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
 
         List<Project> projects = new ArrayList<>();
         projects.add(project);
