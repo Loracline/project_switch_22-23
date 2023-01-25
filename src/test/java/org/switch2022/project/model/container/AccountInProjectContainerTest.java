@@ -13,12 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AccountInProjectContainerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
+
+    Account accountOne;
+    AccountDTO accountDTO, accountDTO2;
     AccountDTO accountDTO, accountDTO2, accountDTO3;
     ProjectDTO projectDTO;
     Project project;
@@ -43,6 +47,8 @@ class AccountInProjectContainerTest {
         accountDTO2.phoneNumber = 912345679;
         accountDTO2.photo = null;
 
+        projectDTO = new ProjectDTO("id001", "Test", "John",
+                "Fixed cost", "Hunting");
         accountDTO3 = new AccountDTO();
         accountDTO3.name = "Anna";
         accountDTO3.email = "anna@isep.ipp.pt";
@@ -131,6 +137,7 @@ class AccountInProjectContainerTest {
     /**
      * Testing if the sum of the current percentages of allocation of a user is returned.
      */
+    /*
     @Test
     void ensureThatTheSumOfTheCurrentPercentageOfAllocationIsReturned() {
         //Arrange

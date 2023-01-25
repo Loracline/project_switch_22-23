@@ -39,12 +39,32 @@ class AccountInProjectDTOMapper {
 +accountInProjectFromDTO(accountInProjectDTO)
 }
 
-AddUserToProjectController --> Company
+class "AccountContainer"{
+-accounts
++validateManager(email)
+}
+
+class "Account"{
+-email
+-profile
++checkAccountFromEmail(email)
++isManager()
+}
+
+class "Profile"{
+-profileName
++isManager()
+}
+
+
+AddUserToProjectController "1"-->"1" Company:has
 Company "1"-->"1" AccountInProjectContainer: has
-AccountInProjectContainer "1"..>"1" AccountInProjectDTOMapper
+AccountInProjectContainer "1"..>"1" AccountInProjectDTOMapper: requests
 AccountInProjectDTOMapper "1"..> "*"AccountInProject: creates
 AccountInProjectContainer "1"--> "*" AccountInProject: has
-
+Company "1"-->"1" "AccountContainer": has
+"AccountContainer""1" --> "*""Account": has
+"Account" "*"--> "1""Profile": has
 @enduml
 
 

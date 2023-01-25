@@ -7,7 +7,7 @@ US010 - As Manager, I want to register/create a new project.
 end legend
 
 class RegisterProjectController {
-- service
+- company
 + registerProject(dto, email)
 }
 
@@ -68,8 +68,6 @@ Account "1"-->"1" Profile: has
 ProjectMapper ..> ProjectDTO
 ProjectContainer ..> ProjectMapper
 RegisterProjectController ..> ProjectMapper
-Company ..> ProjectDTO
-ProjectContainer..> ProjectDTO
 ProjectMapper ..> Project
 ProjectContainer "1" -left-> "*" Project: contains
 @enduml

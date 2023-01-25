@@ -10,7 +10,7 @@ public class ChangeStatusController {
   /**
    * Attributes of the class ChangeStatusController, according to the Class Diagram.
    */
-  private Company company;
+  private final Company company;
 
   /**
    * ChangeStatusController constructor

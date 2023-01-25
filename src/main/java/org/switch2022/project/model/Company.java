@@ -163,16 +163,13 @@ public class Company {
      * This method registers a new project and adds it to the container.
      *
      * @param projectDTO data transfer object of projects information.
-     * @param email      of the actor performing the task.
      * @return TRUE if registered, and FALSE otherwise.
      */
-    public boolean registerProject(ProjectDTO projectDTO, String email) {
+    public boolean registerProject(ProjectDTO projectDTO) {
         boolean isProjectRegistered = false;
-        if (accountContainer.validateManager(email)) {
-            if (projectContainer.registerProject(projectDTO)) {
+        if (projectContainer.registerProject(projectDTO)) {
                 isProjectRegistered = true;
             }
-        }
         return isProjectRegistered;
     }
 
@@ -215,16 +212,11 @@ public class Company {
     /**
      * This method adds a new typology of project to the container.
      *
-     * @param email           of the actor.
      * @param projectTypology of project one intend to create.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean createProjectTypology(String email, String projectTypology) {
-        boolean projectTypologyCreated = false;
-        if (accountContainer.validateAdministrator(email)) {
-            projectTypologyCreated = projectTypologyContainer.createProjectTypology(projectTypology);
-        }
-        return projectTypologyCreated;
+    public boolean createProjectTypology (String projectTypology) {
+        return projectTypologyContainer.createProjectTypology(projectTypology);
     }
 
 

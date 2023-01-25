@@ -12,8 +12,6 @@ actor Administrator as a
 participant ":UIProjectTypology" as ui
 participant ":ProjectTypologyController" as ct
 participant ":Company" as c
-participant ":AccountContainer" as acc
-participant "account:Account" as ac
 participant "ProjectTypologyContainer" as ptc
 participant "pt:ProjectTypology" as pty
 
@@ -25,17 +23,9 @@ ui --> a: requests data (projectTypology)
 a -> ui: types requested data
 ui -> ct: createProjectTypology(email, projectTypology)
 activate ct
-ct -> c: createProjectTypology(email, projectTypology)
+ct -> c: validateAdministrator(email)
 activate c
-c -> acc: validateAdministrator(email)
-activate acc
-acc -> acc: account = getAccountByEmail(email)
-acc -> ac: isAdministrator()
-activate ac
-ac --> acc: true
-deactivate ac
-acc --> c: true
-deactivate acc
+ref over c: validateAdministrator_sequenceDiagram
 c --> ct: true
 deactivate c
 ct -> c: createProjectTypology(projectTypology)

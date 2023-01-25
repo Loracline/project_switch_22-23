@@ -68,19 +68,6 @@ class ProjectMapperTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    businessSectorOne = new BusinessSector("fishing");
-    businessSectorTwo = new BusinessSector("hunting");
-    businessSectors = new ArrayList<>();
-    businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSectorOne);
-
-    projectTypologyOne = new ProjectTypology("Fixed Cost");
-    projectTypologyTwo = new ProjectTypology("Fixed time and materials");
-    typologies = new ArrayList<>();
-    typologies.add(projectTypologyOne);
-    typologies.add(projectTypologyTwo);
-    projectTypologyContainer = new ProjectTypologyContainer(typologies);
-
     costPerHour = 7.5f;
     percentageAllocation = 45.0f;
     startDate = LocalDate.of(2023, 1, 19);
@@ -90,26 +77,21 @@ class ProjectMapperTest {
     accountsInProject.add(accountInProject);
     accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
-    customerOne = new Customer("ISEP");
-    customerTwo = new Customer("PortoTech");
-    customers = new ArrayList<>();
-    customerContainer = new CustomerContainer(customers);
-    customers.add(customerOne);
-    customers.add(customerTwo);
-
-
-    projectOne = new Project("AA001", "Aptoide", customerOne, projectTypologyOne,
-            businessSectorOne);
-    projectTwo = new Project("AA002", "project software", customerOne, projectTypologyTwo, businessSectorOne);
-    projectThree = new Project("AA003", "motor software", customerOne, projectTypologyTwo, businessSectorOne);
+    projectOne = new Project("AA001", "Aptoide", "ISEP",
+            "Fixed cost", "fishing");
+    projectTwo = new Project("AA002", "Aptoide", "PortoTech",
+            "Fixed cost", "fishing");
+    projectThree = new Project("AA003", "Aptoide", "John",
+            "Fixed cost", "fishing");
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
     projectContainer = new ProjectContainer(projects);
 
-    projectOneDTO = new ProjectDTO("AA001", "Aptoide", customerOne, projectTypologyOne, businessSectorOne);
-    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", customerTwo,
-            projectTypologyTwo, businessSectorTwo);
+    projectOneDTO = new ProjectDTO("AA001", "Aptoide", "ISEP",
+            "Fixed cost", "fishing");
+    projectTwoDTO = new ProjectDTO("AA004", "Aptoide", "PortoTech", "Fixed cost",
+            "Hunting");
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
             projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
@@ -132,27 +114,19 @@ class ProjectMapperTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSectorOne = null;
-    businessSectors.clear();
     businessSectorContainer = null;
-    projectTypologyOne = null;
-    projectTypologyTwo = null;
-    typologies.clear();
     projectTypologyContainer = null;
     projects.clear();
     projectContainer = null;
     projectOneDTO = null;
     projectTwoDTO = null;
-    customerOne = null;
-    customerTwo = null;
-    customers.clear();
     customerContainer = null;
     company = null;
   }
 
   @Test
   void creationOfProjectDTOSuccessful() {
-    ProjectDTO reference = projectMapper.toDTO(projectOne);
+    ProjectDTO reference = projectMapper.getDTOFromProject(projectOne);
     boolean expected = true;
     boolean result = reference.equals(projectOneDTO);
     assertEquals(expected, result);
@@ -160,7 +134,7 @@ class ProjectMapperTest {
 
   @Test
   void creationOfProjectDTONotSuccessful() {
-    ProjectDTO reference = projectMapper.toDTO(projectTwo);
+    ProjectDTO reference = projectMapper.getDTOFromProject(projectTwo);
     boolean expected = false;
     boolean result = reference.equals(projectOneDTO);
     assertEquals(expected, result);
@@ -168,7 +142,7 @@ class ProjectMapperTest {
 
   @Test
   void creationOfProjectSuccessful() {
-    Project reference = projectMapper.fromDTO(projectOneDTO);
+    Project reference = projectMapper.getProjectFromDTO(projectOneDTO);
     boolean expected = true;
     boolean result = reference.equals(projectOne);
     assertEquals(expected, result);
@@ -176,7 +150,7 @@ class ProjectMapperTest {
 
   @Test
   void creationOfProjectNotSuccessful() {
-    Project reference = projectMapper.fromDTO(projectTwoDTO);
+    Project reference = projectMapper.getProjectFromDTO(projectTwoDTO);
     boolean expected = false;
     boolean result = reference.equals(projectOne);
     assertEquals(expected, result);
