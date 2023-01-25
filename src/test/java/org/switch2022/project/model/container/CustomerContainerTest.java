@@ -25,8 +25,8 @@ class CustomerContainerTest {
         /*
           Costumers created.
          */
-        customerOne = new Customer("ACD Laboratories");
-        customerTwo = new Customer("Airgas");
+        customerOne = new Customer("ISEP", "222333444");
+        customerTwo = new Customer("PortoTech", "222333445");
 
         /*
           Container of costumers created.
@@ -53,11 +53,21 @@ class CustomerContainerTest {
      * Testing if one can add costumer to the container.
      */
     @Test
-    void ensureCustomerIsNotAddedSuccessfully_CaseInsensitive() {
+    void ensureCustomerIsNotAddedSuccessfully_LessThanNineDigits() {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = customerContainerReference.addCustomer("airgas");
+        boolean result = customerContainerReference.addCustomer("critical","2223334" );
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureCustomerIsNotAddedSuccessfully_MoreThanNineDigits() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = customerContainerReference.addCustomer("critical","2223334488" );
         //Assert
         assertEquals(expected, result);
     }
@@ -67,7 +77,7 @@ class CustomerContainerTest {
         //Arrange
         boolean expected = true;
         //Act
-        boolean result = customerContainerReference.addCustomer("Michael Brown Corp.");
+        boolean result = customerContainerReference.addCustomer("Critical", "142356678");
         //Assert
         assertEquals(expected, result);
     }
@@ -75,35 +85,37 @@ class CustomerContainerTest {
     @Test
     void ensureAddCustomerToCustomersListUnsuccessfully() {
         //Arrange
-        boolean expected = false;
+        boolean expected = true;
         //Act
-        boolean result = customerContainerReference.addCustomer("airgas");
+        boolean result = customerContainerReference.addCustomer("ISEP", "222333444");
         //Assert
         assertEquals(expected, result);
 
     }
 
-    /**
-     * Testing if one can get customer by searching the name.
-     */
     @Test
-    void ensureCustomerIsRetrievedSuccessfully() {
-        //ARRANGE
-        //Create customer to compare with
-        Customer expected = new Customer("ACD Laboratories");
-        //ACT
-        Customer result = customerContainerReference.getCustomerByName("ACD Laboratories");
-        //ASSERT
+    void ensureAddCustomerToCustomersListUnsuccessfullyCustomerNameEmpty() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = customerContainerReference.addCustomer("", "222333445");
+        //Assert
         assertEquals(expected, result);
+
     }
 
     @Test
-    void ensureThatGetCustomerReturnsNull() {
-        //ACT
-        Customer result = customerContainerReference.getCustomerByName("Michael Brown");
-        //ASSERT
-        assertNull(result);
+    void ensureAddCustomerToCustomersListUnsuccessfullyCustomerSameNIF() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = customerContainerReference.addCustomer("", "222333444");
+        //Assert
+        assertEquals(expected, result);
+
     }
+
+
 }
 
 

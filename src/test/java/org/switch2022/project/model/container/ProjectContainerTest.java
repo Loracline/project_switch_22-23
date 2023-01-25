@@ -27,9 +27,9 @@ public class ProjectContainerTest {
 
   @BeforeEach
   void setUp() {
-    projectOne = new Project("AA001", "Aptoide", new Customer("John"),
+    projectOne = new Project("AA001", "Aptoide", new Customer("John","228674498"),
             new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
-    projectTwo = new Project("AA001", "Aptoide",new Customer("John"),
+    projectTwo = new Project("AA001", "Aptoide",new Customer("John","228674498"),
             new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
     projects = new ArrayList<>();
     projects.add(projectOne);

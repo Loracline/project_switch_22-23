@@ -13,7 +13,7 @@ class CustomerTest {
      */
     @Test
     void ensureSameObjectEqualsItself() {
-        Customer reference = new Customer("ISEP");
+        Customer reference = new Customer("ISEP", "222333444");
         Customer other = reference;
         boolean expected = true;
         boolean result = reference.equals(other);
@@ -21,8 +21,8 @@ class CustomerTest {
     }
     @Test
     void ensureTwoCustomersAreNotTheSame() {
-        Customer reference = new Customer("ISEP");
-        Customer other = new Customer("Michael Brown Corp.");
+        Customer reference = new Customer("ISEP", "222333444");
+        Customer other = new Customer("Michael Brown Corp.", "200000000");
         boolean expected = false;
         boolean result = reference.equals(other);
         assertEquals(expected, result);
@@ -30,7 +30,7 @@ class CustomerTest {
 
     @Test
     void ensureDifferentObjectsNotEqual() {
-        Customer reference = new Customer("ISEP");
+        Customer reference = new Customer("ISEP", "222333444");
         Object other = new Object();
         boolean expected = false;
         boolean result = reference.equals(other);
@@ -40,9 +40,9 @@ class CustomerTest {
 
     @Test
     public void testHashCodeCustomer() {
-        Customer obj1 = new Customer("Critical");
-        Customer obj2 = new Customer("Critical");
-        Customer obj3 = new Customer("PortoTech");
+        Customer obj1 = new Customer("Critical", "200000000");
+        Customer obj2 = new Customer("Critical", "200000000");
+        Customer obj3 = new Customer("PortoTech", "222333444");
 
         // Check that equal objects have the same hash code
         assertEquals(obj1.hashCode(), obj2.hashCode());

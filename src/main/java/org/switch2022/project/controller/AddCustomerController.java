@@ -24,9 +24,9 @@ public class AddCustomerController {
      *
      */
 
-    public boolean addCustomer(String customerName, String email) {
+    public boolean addCustomer(String customerName, String customerNIF, String email) {
 
-        return company.validateAdministrator(email) && company.addCustomer(customerName);
+        return company.validateAdministrator(email) && company.addCustomer(customerName, customerNIF);
     }
 }
 
