@@ -1,9 +1,8 @@
 package org.switch2022.project.model.container;
 
-import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
+import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.Helper;
 import org.switch2022.project.utils.dto.AllocationDTO;
 
@@ -39,24 +38,28 @@ public class AccountInProjectContainer {
                                     AllocationDTO allocationDTO) {
         boolean accountInProjectAdded = false;
 
+        if (account != null && project != null) {
+            AccountInProject accountInProject = new AccountInProject(account, project,
+                    allocationDTO.role, allocationDTO.costPerHour,
+                    allocationDTO.percentageAllocation, allocationDTO.startDate);
 
-        AccountInProject accountInProject = new AccountInProject(account, project,
-                allocationDTO.role, allocationDTO.costPerHour,
-                allocationDTO.percentageAllocation,allocationDTO.startDate);
-
-        boolean isRoleValid = accountInProject.isRoleValid();
-        boolean doesAccountInProjectExist = doesAccountInProjectExist(accountInProject);
-        boolean isPercentageOfAllocationValid =
-                isPercentageOfAllocationValid(account,
-                        allocationDTO.percentageAllocation);
+            boolean isRoleValid = accountInProject.isRoleValid();
+            boolean doesAccountInProjectExist =
+                    doesAccountInProjectExist(accountInProject);
+            boolean isPercentageOfAllocationValid =
+                    isPercentageOfAllocationValid(account,
+                            allocationDTO.percentageAllocation);
 
 
-        if (isRoleValid && !doesAccountInProjectExist && isPercentageOfAllocationValid) {
-            accountsInProject.add(accountInProject);
-            accountInProjectAdded = true;
+            if (isRoleValid && !doesAccountInProjectExist && isPercentageOfAllocationValid) {
+                accountsInProject.add(accountInProject);
+                accountInProjectAdded = true;
+            }
         }
+
         return accountInProjectAdded;
     }
+
     /**
      * Method that returns the current total percentage of allocation of an account in
      * all projects
@@ -64,15 +67,15 @@ public class AccountInProjectContainer {
      * @return sum of percentages of allocation of all projects an account is involved in.
      */
 
-    public float currentPercentageOfAllocation(Account account){
+    private float currentPercentageOfAllocation(Account account) {
         int i = 0;
         float sumOfPercentages = 0;
         while (Helper.isLower(i, accountsInProject.size())) {
-            if(accountsInProject.get(i).getAccount().equals(account) &&
-                    accountsInProject.get(i).getEndDate() == null){
-                sumOfPercentages +=  accountsInProject.get(i).getPercentageOfAllocation();
-                i++;
+            if (accountsInProject.get(i).getAccount().equals(account) &&
+                    accountsInProject.get(i).getEndDate() == null) {
+                sumOfPercentages += accountsInProject.get(i).getPercentageOfAllocation();
             }
+            i++;
         }
         return sumOfPercentages;
     }
@@ -83,13 +86,13 @@ public class AccountInProjectContainer {
      *
      * @return TRUE if it doesn't exceed 100, and FALSE otherwise.
      */
-    public boolean isPercentageOfAllocationValid(Account account,
-                                                 float newPercentageAllocation) {
+    private boolean isPercentageOfAllocationValid(Account account,
+                                                  float newPercentageAllocation) {
         boolean percentageOfAllocationValid = false;
         float totalPercentageAllocation =
-                currentPercentageOfAllocation(account)+newPercentageAllocation;
+                currentPercentageOfAllocation(account) + newPercentageAllocation;
 
-        if(totalPercentageAllocation<=100f){
+        if (totalPercentageAllocation <= 100f) {
             percentageOfAllocationValid = true;
         }
         return percentageOfAllocationValid;
@@ -105,7 +108,8 @@ public class AccountInProjectContainer {
         List<Account> accounts = new ArrayList<>();
         int i = 0;
         while (Helper.isLower(i, accountsInProject.size())) {
-            Account requestedAccount = accountsInProject.get(i).getAccountByProject(projectCode);
+            Account requestedAccount =
+                    accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
                 accounts.add(requestedAccount);
             }

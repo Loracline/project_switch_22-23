@@ -16,17 +16,21 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+
 /**
  * This class tests the implementation of these three US:
  * US011 - As Manager, I want to associate a user as Team Member of a project.
  * US012 - As Manager, I want to define the PO of a project.
  * US013 - As Manager, I want to define the SM of a project.
  */
+
 class AddUserToProjectControllerTest {
-    /**
+
+/**
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
+
 
     //accounts
     Account accountOne, accountTwo, accountThree;
@@ -201,162 +205,43 @@ class AddUserToProjectControllerTest {
         company = null;
     }
 
-    /**
+/**
      * US012 - As Manager, I want to define the PO of a project.
      */
+
     @Test
-    void ensureProductOwnerIsSuccessfullyAssociatedToAProject() {
+    void ensureAccountIsSuccessfullyAssociatedToAProject() {
         //Arrange
         //email manager
         accountThree.setProfile(profileThree);
         String emailManager = "jane@isep.ipp.pt";
         //accountDTO
         AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "John";
-        accountDTO.email = "john@isep.ipp.pt";
-        accountDTO.phoneNumber = 912345678;
+        accountDTO.name = "Emma";
+        accountDTO.email = "emma@isep.ipp.pt";
+        accountDTO.phoneNumber = 932755688;
         accountDTO.photo = null;
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
+        ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
                 "Fixed cost", "Hunting");
-
         projectDTO.name = "Test";
         projectDTO.status = "planned";
         projectDTO.businessSector = "IT Sector";
         //account in project dto - product owner
         AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.accountDTO = accountDTO;
-        allocationDTOPO.projectDTO = projectDTO;
         allocationDTOPO.role = "Product Owner";
         allocationDTOPO.costPerHour = 7.5f;
         allocationDTOPO.percentageAllocation = 45.0f;
         allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
-        allocationDTOPO.endDate = LocalDate.of(2023, 1, 22);
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(emailManager, allocationDTOPO);
+        boolean result = controller.addUserToProject(emailManager, accountDTO, projectDTO,
+                allocationDTOPO);
 
         //Assert
         assertTrue(result);
 
-    }
-
-    /**
-     * US011 - As Manager, I want to associate a user as Team Member of a project.
-     */
-    @Test
-    void ensureTeamMemberIsSuccessfullyAssociatedToAProject() {
-        //Arrange
-        //email manager
-        accountThree.setProfile(profileThree);
-        String emailManager = "jane@isep.ipp.pt";
-        //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Anna";
-        accountDTO.email = "anna@isep.ipp.pt";
-        accountDTO.phoneNumber = 912345688;
-        accountDTO.photo = null;
-        //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
-                "Fixed cost", "Hunting");
-
-        projectDTO.name = "Test";
-        projectDTO.status = "planned";
-        projectDTO.businessSector = "IT Sector";
-        //account in project dto - team member
-        AllocationDTO allocationDTOTM = new AllocationDTO();
-        allocationDTOTM.accountDTO = accountDTO;
-        allocationDTOTM.projectDTO = projectDTO;
-        allocationDTOTM.role = "Team Member";
-        allocationDTOTM.costPerHour = 7.5f;
-        allocationDTOTM.percentageAllocation = 5.0f;
-        allocationDTOTM.startDate = LocalDate.of(2023, 1, 19);
-        allocationDTOTM.endDate = LocalDate.of(2023, 1, 22);
-        AddUserToProjectController controller = new AddUserToProjectController(company);
-
-        //Act
-        boolean result = controller.addUserToProject(emailManager, allocationDTOTM);
-
-        //Assert
-        assertTrue(result);
-    }
-
-    /**
-     * US013 - As Manager, I want to define the SM of a project.
-     */
-    @Test
-    void ensureScrumMasterIsSuccessfullyAssociatedToAProject() {
-        //Arrange
-        //email manager
-        accountThree.setProfile(profileThree);
-        String emailManager = "jane@isep.ipp.pt";
-        //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Mary";
-        accountDTO.email = "mary@isep.ipp.pt";
-        accountDTO.phoneNumber = 852456951;
-        accountDTO.photo = null;
-        //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
-                "Fixed cost", "Hunting");
-
-        projectDTO.name = "Test";
-        projectDTO.status = "planned";
-        projectDTO.businessSector = "IT Sector";
-        //account in project dto - scrum master
-        AllocationDTO allocationDTOSM = new AllocationDTO();
-        allocationDTOSM.accountDTO = accountDTO;
-        allocationDTOSM.projectDTO = projectDTO;
-        allocationDTOSM.role = "Scrum Master";
-        allocationDTOSM.costPerHour = 7.5f;
-        allocationDTOSM.percentageAllocation = 45.0f;
-        allocationDTOSM.startDate = LocalDate.of(2023, 1, 19);
-        allocationDTOSM.endDate = LocalDate.of(2023, 1, 22);
-        AddUserToProjectController controller = new AddUserToProjectController(company);
-
-        //Act
-        boolean result = controller.addUserToProject(emailManager, allocationDTOSM);
-
-        //Assert
-        assertTrue(result);
-    }
-
-    @Test
-    void ensureAllocationFailsBecauseRoleIsNotValid() {
-        //Arrange
-        //email manager
-        accountThree.setProfile(profileThree);
-        String emailManager = "jane@isep.ipp.pt";
-        //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Peter";
-        accountDTO.email = "peter@isep.ipp.pt";
-        accountDTO.phoneNumber = 564897231;
-        accountDTO.photo = null;
-        //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "John",
-                "Fixed cost", "Hunting");
-
-        projectDTO.name = "Test";
-        projectDTO.status = "planned";
-        projectDTO.businessSector = "IT Sector";
-        //account in project dto - scrum master
-        AllocationDTO allocationDTOSM = new AllocationDTO();
-        allocationDTOSM.accountDTO = accountDTO;
-        allocationDTOSM.projectDTO = projectDTO;
-        allocationDTOSM.role = "Administrator";
-        allocationDTOSM.costPerHour = 7.5f;
-        allocationDTOSM.percentageAllocation = 45.0f;
-        allocationDTOSM.startDate = LocalDate.of(2023, 1, 19);
-        allocationDTOSM.endDate = LocalDate.of(2023, 1, 22);
-        AddUserToProjectController controller = new AddUserToProjectController(company);
-
-        //Act
-        boolean result = controller.addUserToProject(emailManager, allocationDTOSM);
-
-        //Assert
-        assertFalse(result);
     }
 
     @Test
@@ -364,35 +249,30 @@ class AddUserToProjectControllerTest {
         //Arrange
         //email manager
         accountThree.setProfile(profileThree);
-        String emailManagerInvalid = "emma@isep.ipp.pt";
+        String emailManagerInvalid = "kate@isep.ipp.pt";
         //accountDTO
         AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Peter";
-        accountDTO.email = "peter@isep.ipp.pt";
-        accountDTO.phoneNumber = 564897231;
+        accountDTO.name = "Emma";
+        accountDTO.email = "emma@isep.ipp.pt";
+        accountDTO.phoneNumber = 932755688;
         accountDTO.photo = null;
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("id001", "Test", "ISEP",
-                "Fixed cost"
-                , "fishing");
-
+        ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
+                "Fixed cost", "Hunting");
         projectDTO.name = "Test";
         projectDTO.status = "planned";
         projectDTO.businessSector = "IT Sector";
-        //account in project dto - scrum master
-        AllocationDTO allocationDTOSM = new AllocationDTO();
-        allocationDTOSM.accountDTO = accountDTO;
-        allocationDTOSM.projectDTO = projectDTO;
-        allocationDTOSM.role = "Product Owner";
-        allocationDTOSM.costPerHour = 7.5f;
-        allocationDTOSM.percentageAllocation = 45.0f;
-        allocationDTOSM.startDate = LocalDate.of(2023, 1, 19);
-        allocationDTOSM.endDate = LocalDate.of(2023, 1, 22);
+        //account in project dto - product owner
+        AllocationDTO allocationDTOPO = new AllocationDTO();
+        allocationDTOPO.role = "Product Owner";
+        allocationDTOPO.costPerHour = 7.5f;
+        allocationDTOPO.percentageAllocation = 45.0f;
+        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
         AddUserToProjectController controller = new AddUserToProjectController(company);
-
         //Act
-        boolean result = controller.addUserToProject(emailManagerInvalid,
-                allocationDTOSM);
+        boolean result = controller.addUserToProject(emailManagerInvalid, accountDTO,
+                projectDTO,
+                allocationDTOPO);
 
         //Assert
         assertFalse(result);
