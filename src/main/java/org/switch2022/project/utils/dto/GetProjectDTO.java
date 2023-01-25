@@ -41,4 +41,8 @@ public class GetProjectDTO {
                 Objects.equals(projectTypology, that.projectTypology) &&
                 Objects.equals(businessSector, that.businessSector);
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(code, name, customer, status, projectTypology, businessSector);
+    }
 }

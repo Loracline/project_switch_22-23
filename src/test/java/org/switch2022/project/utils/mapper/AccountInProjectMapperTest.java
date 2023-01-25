@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class AccountInProjectDTOMapperTest {
+class AccountInProjectMapperTest {
 
     AccountInProjectDTOMapper mapper;
     AccountDTO accountDTO;

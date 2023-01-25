@@ -12,6 +12,10 @@ public class Profile {
      */
     private final String profileName;
 
+    public String getProfileName() {
+        return profileName;
+    }
+
     /**
      * Constructor
      */

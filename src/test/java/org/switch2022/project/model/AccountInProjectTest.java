@@ -104,6 +104,41 @@ public class AccountInProjectTest {
     }
 
     /**
+     * hashCode()
+     */
+    @Test
+    void ensureAccountsInProjectHaveSameHashCode() {
+        // ARRANGE
+        AccountInProject reference = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+        AccountInProject other = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+
+        // ACT
+        int hashCodeReference = reference.hashCode();
+        int hashCodeOther = other.hashCode();
+
+        // ASSERT
+        assertEquals(hashCodeOther, hashCodeReference);
+    }
+
+    @Test
+    void ensureAccountsInProjectHaveDifferentHashCode() {
+        // ARRANGE
+        AccountInProject reference = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate);
+        AccountInProject other = new AccountInProject(account, project, "Team Member",
+                7.0f, percentageAllocation, startDate);
+
+        // ACT
+        int hashCodeReference = reference.hashCode();
+        int hashCodeOther = other.hashCode();
+
+        // ASSERT
+        assertNotEquals(hashCodeOther, hashCodeReference);
+    }
+
+    /**
      * Testing if one is able to validate the role of the account in project.
      */
     @Test
