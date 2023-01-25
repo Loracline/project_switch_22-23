@@ -17,6 +17,7 @@ public class ProjectTypologyController {
         this.company=company;
     }
     public boolean createProjectTypology(String email,String projectTypology){
-       return (company.createProjectTypology(email,projectTypology));
+       boolean createProjectTypology = company.validateAdministrator(email) && company.createProjectTypology(projectTypology);
+       return createProjectTypology;
     }
 }
