@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.time.LocalDate;
@@ -226,18 +226,18 @@ class AddUserToProjectControllerTest {
         projectDTO.status = "planned";
         projectDTO.businessSector = new BusinessSector("IT Sector");
         //account in project dto - product owner
-        AccountInProjectDTO accountInProjectDTOPO = new AccountInProjectDTO();
-        accountInProjectDTOPO.accountDTO = accountDTO;
-        accountInProjectDTOPO.projectDTO = projectDTO;
-        accountInProjectDTOPO.role = "Product Owner";
-        accountInProjectDTOPO.costPerHour = 7.5f;
-        accountInProjectDTOPO.percentageAllocation = 45.0f;
-        accountInProjectDTOPO.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOPO.endDate = LocalDate.of(2023, 1, 22);
+        AllocationDTO allocationDTOPO = new AllocationDTO();
+        allocationDTOPO.accountDTO = accountDTO;
+        allocationDTOPO.projectDTO = projectDTO;
+        allocationDTOPO.role = "Product Owner";
+        allocationDTOPO.costPerHour = 7.5f;
+        allocationDTOPO.percentageAllocation = 45.0f;
+        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOPO.endDate = LocalDate.of(2023, 1, 22);
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(emailManager, accountInProjectDTOPO);
+        boolean result = controller.addUserToProject(emailManager, allocationDTOPO);
 
         //Assert
         assertTrue(result);
@@ -268,18 +268,18 @@ class AddUserToProjectControllerTest {
         projectDTO.status = "planned";
         projectDTO.businessSector = new BusinessSector("IT Sector");
         //account in project dto - team member
-        AccountInProjectDTO accountInProjectDTOTM = new AccountInProjectDTO();
-        accountInProjectDTOTM.accountDTO = accountDTO;
-        accountInProjectDTOTM.projectDTO = projectDTO;
-        accountInProjectDTOTM.role = "Team Member";
-        accountInProjectDTOTM.costPerHour = 7.5f;
-        accountInProjectDTOTM.percentageAllocation = 45.0f;
-        accountInProjectDTOTM.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOTM.endDate = LocalDate.of(2023, 1, 22);
+        AllocationDTO allocationDTOTM = new AllocationDTO();
+        allocationDTOTM.accountDTO = accountDTO;
+        allocationDTOTM.projectDTO = projectDTO;
+        allocationDTOTM.role = "Team Member";
+        allocationDTOTM.costPerHour = 7.5f;
+        allocationDTOTM.percentageAllocation = 5.0f;
+        allocationDTOTM.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOTM.endDate = LocalDate.of(2023, 1, 22);
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(emailManager, accountInProjectDTOTM);
+        boolean result = controller.addUserToProject(emailManager, allocationDTOTM);
 
         //Assert
         assertTrue(result);
@@ -309,18 +309,18 @@ class AddUserToProjectControllerTest {
         projectDTO.status = "planned";
         projectDTO.businessSector = new BusinessSector("IT Sector");
         //account in project dto - scrum master
-        AccountInProjectDTO accountInProjectDTOSM = new AccountInProjectDTO();
-        accountInProjectDTOSM.accountDTO = accountDTO;
-        accountInProjectDTOSM.projectDTO = projectDTO;
-        accountInProjectDTOSM.role = "Scrum Master";
-        accountInProjectDTOSM.costPerHour = 7.5f;
-        accountInProjectDTOSM.percentageAllocation = 45.0f;
-        accountInProjectDTOSM.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOSM.endDate = LocalDate.of(2023, 1, 22);
+        AllocationDTO allocationDTOSM = new AllocationDTO();
+        allocationDTOSM.accountDTO = accountDTO;
+        allocationDTOSM.projectDTO = projectDTO;
+        allocationDTOSM.role = "Scrum Master";
+        allocationDTOSM.costPerHour = 7.5f;
+        allocationDTOSM.percentageAllocation = 45.0f;
+        allocationDTOSM.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOSM.endDate = LocalDate.of(2023, 1, 22);
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(emailManager, accountInProjectDTOSM);
+        boolean result = controller.addUserToProject(emailManager, allocationDTOSM);
 
         //Assert
         assertTrue(result);
@@ -347,18 +347,18 @@ class AddUserToProjectControllerTest {
         projectDTO.status = "planned";
         projectDTO.businessSector = new BusinessSector("IT Sector");
         //account in project dto - scrum master
-        AccountInProjectDTO accountInProjectDTOSM = new AccountInProjectDTO();
-        accountInProjectDTOSM.accountDTO = accountDTO;
-        accountInProjectDTOSM.projectDTO = projectDTO;
-        accountInProjectDTOSM.role = "Administrator";
-        accountInProjectDTOSM.costPerHour = 7.5f;
-        accountInProjectDTOSM.percentageAllocation = 45.0f;
-        accountInProjectDTOSM.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOSM.endDate = LocalDate.of(2023, 1, 22);
+        AllocationDTO allocationDTOSM = new AllocationDTO();
+        allocationDTOSM.accountDTO = accountDTO;
+        allocationDTOSM.projectDTO = projectDTO;
+        allocationDTOSM.role = "Administrator";
+        allocationDTOSM.costPerHour = 7.5f;
+        allocationDTOSM.percentageAllocation = 45.0f;
+        allocationDTOSM.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOSM.endDate = LocalDate.of(2023, 1, 22);
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
-        boolean result = controller.addUserToProject(emailManager,accountInProjectDTOSM);
+        boolean result = controller.addUserToProject(emailManager, allocationDTOSM);
 
         //Assert
         assertFalse(result);
@@ -385,19 +385,19 @@ class AddUserToProjectControllerTest {
         projectDTO.status = "planned";
         projectDTO.businessSector = new BusinessSector("IT Sector");
         //account in project dto - scrum master
-        AccountInProjectDTO accountInProjectDTOSM = new AccountInProjectDTO();
-        accountInProjectDTOSM.accountDTO = accountDTO;
-        accountInProjectDTOSM.projectDTO = projectDTO;
-        accountInProjectDTOSM.role = "Product Owner";
-        accountInProjectDTOSM.costPerHour = 7.5f;
-        accountInProjectDTOSM.percentageAllocation = 45.0f;
-        accountInProjectDTOSM.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOSM.endDate = LocalDate.of(2023, 1, 22);
+        AllocationDTO allocationDTOSM = new AllocationDTO();
+        allocationDTOSM.accountDTO = accountDTO;
+        allocationDTOSM.projectDTO = projectDTO;
+        allocationDTOSM.role = "Product Owner";
+        allocationDTOSM.costPerHour = 7.5f;
+        allocationDTOSM.percentageAllocation = 45.0f;
+        allocationDTOSM.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOSM.endDate = LocalDate.of(2023, 1, 22);
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
         boolean result = controller.addUserToProject(emailManagerInvalid,
-                accountInProjectDTOSM);
+                allocationDTOSM);
 
         //Assert
         assertFalse(result);

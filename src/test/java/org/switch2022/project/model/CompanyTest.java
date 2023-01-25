@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.time.LocalDate;
@@ -526,7 +526,7 @@ class CompanyTest {
     }
 
     /**
-     * addUserToProject(AccountInProjectDTO accountInProjectDTO)
+     * addUserToProject(AllocationDTO accountInProjectDTO)
      */
     @Test
     void ensureProductOwnerIsSuccessfullyAssociatedToAProject() {
@@ -544,16 +544,16 @@ class CompanyTest {
         ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
 
         //account in project dto - product owner
-        AccountInProjectDTO accountInProjectDTOPO = new AccountInProjectDTO();
-        accountInProjectDTOPO.accountDTO = accountDTO;
-        accountInProjectDTOPO.projectDTO = projectDTO;
-        accountInProjectDTOPO.role = "Product Owner";
-        accountInProjectDTOPO.costPerHour = 7.5f;
-        accountInProjectDTOPO.percentageAllocation = 45.0f;
-        accountInProjectDTOPO.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOPO.endDate = LocalDate.of(2023, 1, 22);
+        AllocationDTO allocationDTOPO = new AllocationDTO();
+        allocationDTOPO.accountDTO = accountDTO;
+        allocationDTOPO.projectDTO = projectDTO;
+        allocationDTOPO.role = "Product Owner";
+        allocationDTOPO.costPerHour = 7.5f;
+        allocationDTOPO.percentageAllocation = 45.0f;
+        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOPO.endDate = LocalDate.of(2023, 1, 22);
         //Act
-        boolean result = company.addUserToProject(accountInProjectDTOPO);
+        boolean result = company.addUserToProject(allocationDTOPO);
         //Assert
         assertTrue(result);
     }
@@ -574,16 +574,16 @@ class CompanyTest {
         ProjectDTO projectDTO = new ProjectDTO("id001", "Test", customer, projectTypology, businessSector);
 
         //account in project dto - product owner
-        AccountInProjectDTO accountInProjectDTOTM = new AccountInProjectDTO();
-        accountInProjectDTOTM.accountDTO = accountDTO;
-        accountInProjectDTOTM.projectDTO = projectDTO;
-        accountInProjectDTOTM.role = "Team Member";
-        accountInProjectDTOTM.costPerHour = 7.5f;
-        accountInProjectDTOTM.percentageAllocation = 45.0f;
-        accountInProjectDTOTM.startDate = LocalDate.of(2023, 1, 19);
-        accountInProjectDTOTM.endDate = LocalDate.of(2023, 1, 22);
+        AllocationDTO allocationDTOTM = new AllocationDTO();
+        allocationDTOTM.accountDTO = accountDTO;
+        allocationDTOTM.projectDTO = projectDTO;
+        allocationDTOTM.role = "Team Member";
+        allocationDTOTM.costPerHour = 7.5f;
+        allocationDTOTM.percentageAllocation = 45.0f;
+        allocationDTOTM.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOTM.endDate = LocalDate.of(2023, 1, 22);
         //Act
-        boolean result = company.addUserToProject(accountInProjectDTOTM);
+        boolean result = company.addUserToProject(allocationDTOTM);
         //Assert
         assertTrue(result);
     }
