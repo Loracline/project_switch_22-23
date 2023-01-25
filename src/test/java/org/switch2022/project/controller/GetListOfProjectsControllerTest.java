@@ -29,7 +29,7 @@ public class GetListOfProjectsControllerTest {
         accounts.add(userAccount);
         AccountContainer accountContainer = new AccountContainer(accounts);
 
-        Customer customer = new Customer("ISEP");
+        Customer customer = new Customer("ISEP", "222333444");
         ProjectTypology projectTypology = new ProjectTypology("Fixed cost");
         BusinessSector businessSector = new BusinessSector("fishing");
 

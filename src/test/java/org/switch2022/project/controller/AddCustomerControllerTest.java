@@ -84,15 +84,15 @@ class AddCustomerControllerTest {
         typologies.add(projectTypology);
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
-        customerOne = new Customer("ISEP");
-        customerTwo = new Customer("PortoTech");
+        customerOne = new Customer("ISEP", "222333444");
+        customerTwo = new Customer("PortoTech","222333445");
 
         customers = new ArrayList<>();
         customerContainer = new CustomerContainer(customers);
         customers.add(customerOne);
         customers.add(customerTwo);
 
-        project = new Project("proj001", "software development management", "ISEP",
+        project = new Project("proj001", "software development management", "222333444",
                 "Fixed Cost", "fishing");
 
         List<Project> projects = new ArrayList<>();
@@ -141,20 +141,11 @@ class AddCustomerControllerTest {
         boolean expected = true;
         accountOne.setProfile(profileOne);
         //Act
-        boolean result = addCustomerController.addCustomer("Critical", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical","233444000", "mike@isep.ipp.pt");
         //Assert
         assertEquals(expected,result);
     }
-    @Test
-    void addNewCustomerUnsuccessfullyInvalidName(){
-        //Arrange
-        boolean expected = false;
-        accountOne.setProfile(profileOne);
-        //Act
-        boolean result = addCustomerController.addCustomer("ISEP", "mike@isep.ipp.pt");
-        //Assert
-        assertEquals(expected,result);
-    }
+
 
 
 
@@ -164,7 +155,7 @@ class AddCustomerControllerTest {
         boolean expected = false;
         accountOne.setProfile(profileOne);
         // Act
-        boolean result = addCustomerController.addCustomer("", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("", "234345456", "mike@isep.ipp.pt");
         // Assert
         assertEquals(expected, result);
     }

@@ -201,10 +201,11 @@ public class Company {
      * This method adds a new customer to the container.
      *
      * @param customerName of the customer one intends to add.
+     * @param customerNIF
      * @return TRUE if added and FALSE otherwise.
      */
-    public boolean addCustomer(String customerName) {
-        return customerContainer.addCustomer(customerName);
+    public boolean addCustomer(String customerName, String customerNIF) {
+        return customerContainer.addCustomer(customerName, customerNIF);
     }
     // PROJECT TYPOLOGY METHODS
 

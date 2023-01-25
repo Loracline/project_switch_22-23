@@ -87,8 +87,8 @@ class ListAccountsInProjectControllerTest {
         profiles.add(profileThree);
 
         //customer
-        customerOne = new Customer("Genius Software");
-        customerTwo = new Customer("Delta Software");
+        customerOne = new Customer("Genius Software", "234567890");
+        customerTwo = new Customer("Delta Software", "245567789");
         customers = new ArrayList<>();
         customers.add(customerOne);
         customers.add(customerTwo);

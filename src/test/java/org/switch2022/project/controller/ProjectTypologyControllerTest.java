@@ -89,8 +89,8 @@ class ProjectTypologyControllerTest {
 
         projectTypologyContainer= new ProjectTypologyContainer(typologies);
 
-        customerOne = new Customer("ISEP");
-        customerTwo = new Customer("PortoTech");
+        customerOne = new Customer("ISEP", "222333444");
+        customerTwo = new Customer("PortoTech", "222333445");
 
         customers = new ArrayList<>();
         customerContainer = new CustomerContainer(customers);

@@ -121,9 +121,9 @@ class CompanyTest {
         typologies.add(projectTypologyTwo);
 
         // Customers created.
-        customerOne = new Customer("ISEP");
-        customerTwo = new Customer("PortoTech");
-        customerThree = new Customer("John");
+        customerOne = new Customer("ISEP", "222333444");
+        customerTwo = new Customer("PortoTech", "222333445");
+        customerThree = new Customer("John", "222333555");
 
         // Container of customers created.
         customers = new ArrayList<>();
