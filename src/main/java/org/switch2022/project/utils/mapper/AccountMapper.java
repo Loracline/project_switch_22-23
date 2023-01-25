@@ -2,7 +2,7 @@ package org.switch2022.project.utils.mapper;
 
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.utils.Helper;
+import org.switch2022.project.utils.Util;
 import org.switch2022.project.utils.dto.AccountDTO;
 
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class AccountMapper {
     public static List<AccountDTO> getListDTOFromAccounts(List<Account> accounts) {
         List<AccountDTO> accountsDTO = new ArrayList<>();
         int i = 0;
-        while (Helper.isLower(i, accounts.size())) {
+        while (Util.isLower(i, accounts.size())) {
             AccountDTO accountDTO = accountToDTO(accounts.get(i));
             accountsDTO.add(accountDTO);
             i++;

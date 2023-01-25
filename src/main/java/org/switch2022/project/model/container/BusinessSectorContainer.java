@@ -1,7 +1,7 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.utils.Helper;
+import org.switch2022.project.utils.Util;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class BusinessSectorContainer {
     public BusinessSector getBusinessSectorByName(String businessSectorName) {
         BusinessSector requestedBusinessSector = null;
         int i = 0;
-        while (Helper.isLower(i, businessSectors.size())) {
+        while (Util.isLower(i, businessSectors.size())) {
             if (businessSectors.get(i).getBusinessSectorName().equalsIgnoreCase(businessSectorName)) {
                 requestedBusinessSector = businessSectors.get(i);
                 break;

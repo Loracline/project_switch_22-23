@@ -3,7 +3,7 @@ package org.switch2022.project.model.container;
 import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
-import org.switch2022.project.utils.Helper;
+import org.switch2022.project.utils.Util;
 import org.switch2022.project.utils.dto.AccountInProjectDTO;
 
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class AccountInProjectContainer {
     public List<Account> listAccountsByProject(String projectCode) {
         List<Account> accounts = new ArrayList<>();
         int i = 0;
-        while (Helper.isLower(i, accountsInProject.size())) {
+        while (Util.isLower(i, accountsInProject.size())) {
             Account requestedAccount = accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
                 accounts.add(requestedAccount);
