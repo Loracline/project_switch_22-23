@@ -11,40 +11,34 @@ participant ":AddCustomerController" as controller
 participant ":Company" as company
 participant ":CustomerContainer" as container
 participant "customer:Customer" as customer
-
 activate Administrator
 Administrator -> ui: starting adding new customer
 activate ui
-ui --> Administrator: requests data (customerName)
+ui --> Administrator: requests data (customerName, customerNIF)
 deactivate ui
 Administrator -> ui: sends requested data
 activate ui
-ui -> controller: addCustomer(email, customerName)
+ui -> controller: addCustomer(email, customerName, customerNIF)
 activate controller
 controller -> company: validateAdministrator(email)
 activate company
-
 ref over company: validateAdministrator_sequenceDiagram
-
 deactivate accContainer
 company --> controller: true
 deactivate company
-controller -> company: addCustomer(customerName)
+controller -> company: addCustomer(customerName, customerNIF)
 activate company
-company -> container: addCustomer(customerName)
+company -> container: addCustomer(customerName, customerNIF)
 create customer
 activate container
-container ->> customer: create(customerName)
+container ->> customer: create(customerName, customerNIF)
 container -> container: addCustomer(customer)
 container --> company: true
 deactivate container
 company --> controller: true
 deactivate company
-
-
 controller -->> ui: true
 deactivate controller
 ui -->>Administrator: informs operation success
 deactivate ui
-
 @enduml

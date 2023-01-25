@@ -9,7 +9,7 @@ public class CreateProjectTypologyController {
     /**
      * Attributes of the class ProjectTypologyController, according to the US007 Class Diagram.
      */
-    final Company company;
+    private final Company company;
     /**
      * ProjectTypologyController constructor
      */
