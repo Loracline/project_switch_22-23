@@ -1,10 +1,10 @@
 package org.switch2022.project.model.container;
 
-import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.utils.Util;
-import org.switch2022.project.utils.dto.AccountInProjectDTO;
+import org.switch2022.project.model.Project;
+import org.switch2022.project.utils.dto.AllocationDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,23 +31,71 @@ public class AccountInProjectContainer {
      * list of accounts in project if the instance doesn't already exist and the
      * role is valid.
      *
-     * @param accountInProjectDTO data transfer object with allocation information.
+     * @param allocationDTO data transfer object with allocation information.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean addUserToProject(AccountInProjectDTO accountInProjectDTO) {
+    public boolean addUserToProject(Account account, Project project,
+                                    AllocationDTO allocationDTO) {
         boolean accountInProjectAdded = false;
-        AccountInProjectDTOMapper mapper = new AccountInProjectDTOMapper();
-        AccountInProject accountInProject =
-                mapper.accountInProjectFromDTO(accountInProjectDTO);
 
-        boolean isRoleValid = accountInProject.isRoleValid();
-        boolean doesAccountInProjectExist = doesAccountInProjectExist(accountInProject);
+        if (account != null && project != null) {
+            AccountInProject accountInProject = new AccountInProject(account, project,
+                    allocationDTO.role, allocationDTO.costPerHour,
+                    allocationDTO.percentageAllocation, allocationDTO.startDate);
 
-        if (isRoleValid && !doesAccountInProjectExist) {
-            accountsInProject.add(accountInProject);
-            accountInProjectAdded = true;
+            boolean isRoleValid = accountInProject.isRoleValid();
+            boolean doesAccountInProjectExist =
+                    doesAccountInProjectExist(accountInProject);
+            boolean isPercentageOfAllocationValid =
+                    isPercentageOfAllocationValid(account,
+                            allocationDTO.percentageAllocation);
+
+
+            if (isRoleValid && !doesAccountInProjectExist && isPercentageOfAllocationValid) {
+                accountsInProject.add(accountInProject);
+                accountInProjectAdded = true;
+            }
         }
+
         return accountInProjectAdded;
+    }
+
+    /**
+     * Method that returns the current total percentage of allocation of an account in
+     * all projects
+     *
+     * @return sum of percentages of allocation of all projects an account is involved in.
+     */
+
+    private float currentPercentageOfAllocation(Account account) {
+        int i = 0;
+        float sumOfPercentages = 0;
+        while (Helper.isLower(i, accountsInProject.size())) {
+            if (accountsInProject.get(i).getAccount().equals(account) &&
+                    accountsInProject.get(i).getEndDate() == null) {
+                sumOfPercentages += accountsInProject.get(i).getPercentageOfAllocation();
+            }
+            i++;
+        }
+        return sumOfPercentages;
+    }
+
+    /**
+     * Method that verifies if the total percentage of allocation of a user does not
+     * exceed 100%.
+     *
+     * @return TRUE if it doesn't exceed 100, and FALSE otherwise.
+     */
+    private boolean isPercentageOfAllocationValid(Account account,
+                                                  float newPercentageAllocation) {
+        boolean percentageOfAllocationValid = false;
+        float totalPercentageAllocation =
+                currentPercentageOfAllocation(account) + newPercentageAllocation;
+
+        if (totalPercentageAllocation <= 100f) {
+            percentageOfAllocationValid = true;
+        }
+        return percentageOfAllocationValid;
     }
 
 

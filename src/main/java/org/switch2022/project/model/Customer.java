@@ -11,17 +11,17 @@ public class Customer {
      * Attributes
      */
     private final String customerName;
+    private final String customerNIF;
 
     /**
      * Constructor
      */
-    public Customer(String customerName) {
+    public Customer(String customerName, String customerNIF) {
         this.customerName = customerName.toLowerCase();
+        this.customerNIF = customerNIF;
     }
 
-    public String getCustomerName() {
-        return this.customerName;
-    }
+
 
     /**
      * This method checks if two instances of Customer are equal by comparing
@@ -32,19 +32,18 @@ public class Customer {
      */
     @Override
     public boolean equals(Object toCompare) {
-        if (this == toCompare) {
-            return true;
-        }
-        if (!(toCompare instanceof Customer)) {
-            return false;
-        }
-        Customer customer1 = (Customer) toCompare;
-        return Objects.equals(customerName, customer1.customerName.toLowerCase());
+        if (this == toCompare) return true;
+        if (!(toCompare instanceof Customer)) return false;
+        Customer customer = (Customer) toCompare;
+        return Objects.equals(customerName, customer.customerName) && Objects.equals(customerNIF, customer.customerNIF);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerName);
+        return Objects.hash(customerName, customerNIF);
     }
 
+    public String getCustomerName() {
+        return  customerName;
+    }
 }

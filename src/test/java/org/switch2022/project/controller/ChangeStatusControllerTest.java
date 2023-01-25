@@ -85,8 +85,9 @@ class ChangeStatusControllerTest {
         profiles.add(profileTwo);
 
         // projects
-        project = new Project("proj001", "software development management", "John",
-                "Fixed cost", "fishing");
+        project = new Project("proj001", "software development management",
+                new Customer("John","228674498"),
+                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
 
         List<Project> projects = new ArrayList<>();
         projectContainer = new ProjectContainer(projects);

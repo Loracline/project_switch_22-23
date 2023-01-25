@@ -3,8 +3,7 @@ package org.switch2022.project.model.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Project;
+import org.switch2022.project.model.*;
 import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.util.ArrayList;
@@ -28,10 +27,10 @@ public class ProjectContainerTest {
 
   @BeforeEach
   void setUp() {
-    projectOne = new Project("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
-    projectTwo = new Project("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
+    projectOne = new Project("AA001", "Aptoide", new Customer("John","228674498"),
+            new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+    projectTwo = new Project("AA001", "Aptoide",new Customer("John","228674498"),
+            new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);

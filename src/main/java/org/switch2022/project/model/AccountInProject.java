@@ -88,9 +88,19 @@ public class AccountInProject {
         }
     }
 
+    /**
+     * This method returns the percentage of allocation of an Account Allocated To a
+     * Project.
+     *
+     * @return percentage of allocation of an Account Allocated To a Project
+     */
+    public float getPercentageOfAllocation(){
+        return this.percentageAllocation;
+    }
+
 
     /**
-     * This method returns an Account Allocated To a Project.
+     * This method returns an Account Allocated To a Project filtered by project.
      *
      * @param projectCode
      * @return an Account.
@@ -104,12 +114,37 @@ public class AccountInProject {
     }
 
     /**
+     * This method returns an account Allocated To a Project.
+     *
+     * @return an Account.
+     */
+    public Account getAccount() {
+        return new Account(this.account);
+    }
+
+    /**
+     * This method returns an account Allocated To a Project.
+     *
+     * @return an Account.
+     */
+    public LocalDate getEndDate() {
+        return this.endDate;
+    }
+
+    /**
+     * This method sets an end date of allocation to a project with a specific role
+     */
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    /**
      * This method checks if an account is allocated to a Project.
      *
      * @param projectCode one must check.
      * @return TRUE if there is an account allocated to a Project and FALSE otherwise.
      */
-    public boolean isAccountAllocatedToProject(String projectCode) {
+    private boolean isAccountAllocatedToProject(String projectCode) {
         boolean isAllocated = false;
         if (this.project.getProjectCode().equals(projectCode)) {
             isAllocated = true;

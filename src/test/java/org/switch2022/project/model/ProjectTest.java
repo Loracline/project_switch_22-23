@@ -16,12 +16,12 @@ public class ProjectTest {
 
   @BeforeEach
   void setUp() {
-    projectOne = new Project("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
-    projectTwo = new Project("AA002", "Aptoide", "John",
-            "Fixed cost", "Hunting");
-    projectThree = new Project("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
+    projectOne = new Project("AA001", "Aptoide", new Customer("John","228674498"),
+            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    projectTwo = new Project("AA002", "Aptoide", new Customer("John","228674498"),
+            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    projectThree = new Project("AA001", "Aptoide", new Customer("John","228674498"),
+            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
   }
 
   @AfterEach
@@ -95,15 +95,15 @@ public class ProjectTest {
    */
   @Test
   void ensureCustomerIsEqual() {
-    String expected = "John";
-    String result = projectOne.getCustomer();
+    Customer expected = new Customer("John","228674498");
+    Customer result = projectOne.getCustomer();
     assertEquals(expected, result);
   }
 
   @Test
   void ensureCustomerIsNotEqual() {
     String expected = "Johnny";
-    String result = projectOne.getCustomer();
+    Customer result = projectOne.getCustomer();
     assertNotEquals(expected, result);
   }
 
@@ -129,15 +129,15 @@ public class ProjectTest {
    */
   @Test
   void ensureProjectTypologyIsEqual() {
-    String expected = "Fixed cost";
-    String result = projectOne.getProjectTypology();
+    ProjectTypology expected = new ProjectTypology("Fixed cost");
+    ProjectTypology result = projectOne.getProjectTypology();
     assertEquals(expected, result);
   }
 
   @Test
   void ensureProjectTypologyIsNotEqual() {
     String expected = "Variable cost";
-    String result = projectOne.getProjectTypology();
+    ProjectTypology result = projectOne.getProjectTypology();
     assertNotEquals(expected, result);
   }
 
@@ -146,15 +146,15 @@ public class ProjectTest {
    */
   @Test
   void ensureBusinessSectorIsEqual() {
-    String expected = "Hunting";
-    String result = projectOne.getBusinessSector();
+    BusinessSector expected = new BusinessSector("Hunting");
+    BusinessSector result = projectOne.getBusinessSector();
     assertEquals(expected, result);
   }
 
   @Test
   void ensureBusinessSectorIsNotEqual() {
     String expected = "Fishing";
-    String result = projectOne.getBusinessSector();
+    BusinessSector result = projectOne.getBusinessSector();
     assertNotEquals(expected, result);
   }
 
