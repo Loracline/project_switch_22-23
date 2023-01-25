@@ -12,28 +12,28 @@ public class ListAccountsInProjectController {
     /**
      * Class CreateProfileController is built to allow access to Company
      */
-    private Company company;
+    private final Company company;
+
+    public ListAccountsInProjectController(Company company) {
+        this.company = company;
+    }
+
     /**
      * This method first verify if Manager has permission to generate a list of Accounts
      * and then returns a list of Accounts Allocated To a Project.
      *
-     * @param email
+     * @param emailManager
      * @param projectCode
      *
      * @return a list of Accounts
      */
-    public List<AccountDTO> listAccountsByProject(String email, String projectCode) {
+    public List<AccountDTO> listAccountsByProject(String emailManager, String projectCode) {
         List<AccountDTO> accountsDTO = new ArrayList<>();
-        if (this.company.validateManager(email)) {
+        if (this.company.validateManager(emailManager)) {
             List<Account> accounts = this.company.listAccountsByProject(projectCode);
             accountsDTO = AccountMapper.ListAccountsToDTO(accounts);
         }
         return accountsDTO;
     }
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 
-    //perguntar se é melhor usar um setter para os testes ou um construtor
-    // (para atribuir uma company a um controller)
 }
