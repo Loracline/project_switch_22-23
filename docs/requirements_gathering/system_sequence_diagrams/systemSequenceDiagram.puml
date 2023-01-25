@@ -17,7 +17,6 @@ Administrator -> ":System": Types requested data
 @enduml
 
 
-
 @startuml
 skinparam sequenceMessageAlign center
 title TO REGISTER NEW ACCOUNT
@@ -35,7 +34,6 @@ Administrator <-- ":System": requests data (name, email, \n phoneNumber, photo)
 Administrator  -> ":System": types requested data
 ":System" --> Administrator: informs account created
 @enduml
-
 
 
 @startuml
@@ -57,7 +55,6 @@ Administrator -> ":System": Enters account data
 @enduml
 
 
-
 @startuml
 skinparam sequenceMessageAlign center
 title TO LIST ALL ACCOUNTS
@@ -73,7 +70,6 @@ Account is authenticated.
 end note
 ":System" --> Administrator: returns accounts
 @enduml
-
 
 
 @startuml
@@ -95,7 +91,6 @@ Administrator -> ":System": Enters requested data
 @enduml
 
 
-
 @startuml
 legend top
 US006 - As Administrator, I want to activate a user account.
@@ -115,8 +110,84 @@ Administrator -> ":System": Enters requested data
 @enduml
 
 
+@startuml
+legend top
+US007 - As Administrator, I want to create a new Project Typology.
+end legend
+skinparam sequenceMessageAlign center
+title TO CREATE NEW PROJECT TYPOLOGY
+actor Administrator
+autonumber
+Administrator -> "System": starts creating new project typology
+note left
+Account is authenticated.
+"System" grants access.
+end note
+System -> "Administrator": requests data (projectTypology)
+Administrator -> "System": types requested data
+Administrator <-- "System":project typology created
+@enduml
+
 
 @startuml
+legend top
+US008 - As Administrator, I want to add a bussiness sector.
+end legend
+skinparam sequenceMessageAlign center
+title TO CREATE A NEW BUSINESS SECTOR
+actor "Administrator"
+autonumber
+Administrator -> ":System": starts adding new business sector
+note left
+Account is authenticated.
+":System" grants access.
+end note
+Administrator <-- ":System": requests data (name)
+Administrator -> ":System": types requested data
+Administrator <-- ":System":informs operation success
+@enduml
+
+
+@startuml
+legend top
+US009 - As Administrator, I want to add a customer.
+end legend
+skinparam sequenceMessageAlign center
+title TO ADD A CUSTOMER
+actor "Administrator"
+autonumber
+Administrator -> ":System": starts adding new customer
+note left
+Account is authenticated.
+":System" grants access.
+end note
+Administrator <-- ":System": requests data (customerName)
+Administrator-> ":System": sends requested data
+Administrator <-- ":System":informs operation success
+@enduml
+
+
+@startuml
+legend top
+US010 - As Manager, I want to register/create a new project.
+end legend
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW PROJECT
+autonumber
+actor "Manager"
+"Manager" -> ":System": registers new project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Manager" <-- ":System": requests data (code, name, ...)
+"Manager" -> ":System":  types requested data
+"Manager" <-- ":System": informs project created
+@enduml
+
+
+@startuml
+/'
 autonumber
 skinparam sequenceMessageAlign center
 title TO DEFINE SCRUM MASTER OF PROJECT
@@ -132,12 +203,88 @@ end note
 "Manager" <-- ":System": returns list of possible projects / accounts
 "Manager" -> ":System": Selects project / account
 "Manager" <-- ":System": informs success
+'/
 @enduml
 
 
+@startuml
+legend top
+US011 - As Manager, I want to associate a user as Team Member of a project.
+US012 - As Manager, I want to define the PO of a project.
+US013 - As Manager, I want to define the SM of a project.
+end legend
+skinparam sequenceMessageAlign center
+title TO ASSOCIATE USER AS TEAM MEMBER/PRODUCT OWNER/SCRUM MASTER TO A PROJECT
+actor "Manager"
+autonumber
+"Manager" -> ":System": requests list of all User accounts
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Manager" <-- ":System": requests to select User account
+"Manager" -> ":System": selects User account
+"Manager" -> ":System": requests list of all projects
+"Manager" <-- ":System": requests to select project
+"Manager" -> ":System": selects project
+"Manager" -> ":System": starts the association of the selected User with the selected project and a role
+"Manager" <-- ":System": requests data
+"Manager" -> ":System": sends data (role, costPerHour, percentageAllocation, startDate)
+"Manager" <-- ":System": informs team member/product owner/scrum master associated/defined
+@enduml
+
+@startuml
+legend top
+US014 - As Manager, I want to get a list of all human resources in a project.
+end legend
+skinparam sequenceMessageAlign center
+title TO GET A LIST OF ALL HUMAN RESOURCES IN PROJECT
+actor "Manager"
+autonumber
+"Manager" -> ":System": registers new project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Manager" <-- ":System": requests data (code, name, ...)
+"Manager" -> ":System":  types requested data
+"Manager" <-- ":System": informs project created
+@enduml
+
+@startuml
+legend top
+US015 - As Manager, I want to get a list of all projects.
+end legend
+skinparam sequenceMessageAlign center
+title TO GET A LIST OF ALL PROJECTS
+actor "Manager"
+autonumber
+"Manager" -> ":System": get list of all projects
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Manager" <-- ":System": returns list of all projects DTO
+"Manager" <-- ":System": show list of all projects
+@enduml
 
 
+@startuml
+legend top
+US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to.
+end legend
+skinparam sequenceMessageAlign center
+title TO GET A LIST OF ALL PROJECTS
+actor "Authenticated User"
+autonumber
+"Authenticated User" -> ":System": lists all projects the user is allocated to
+note left
+Account is authenticated.
+":System" grants access.
+end note
+"Authenticated User" <-- ":System": returns projects DTO
 
+@enduml
 
 @startuml
 skinparam sequenceMessageAlign center
@@ -164,25 +311,6 @@ Account is authenticated.
 ":System" grants access.
 end note
 ":System" --> Administrator: returns list of accounts
-@enduml
-
-
-@startuml
-skinparam sequenceMessageAlign center
-title TO REGISTER NEW PROJECT
-legend top
-US010 - As Manager, I want to register/create a new project.
-end legend
-autonumber
-actor "Manager"
-"Manager" -> ":System": Registers new project
-note left
-Account is authenticated.
-":System" grants access.
-end note
-"Manager" <-- ":System": requests data (code, name, ...)
-"Manager" -> ":System":  Types requested data
-"Manager" <-- ":System": informs project created
 @enduml
 
 
@@ -440,21 +568,9 @@ end note
 "Manager" <-- ":System": ShowListAllProjects
 @enduml
 
-@startuml
-skinparam sequenceMessageAlign center
-title CREATE A NEW PROJECT TYPOLOGY
-legend top
-US007 - As Administrator, I want to create a new Project Typology.
-end legend
-autonumber
-actor "Administrator" as adm
-adm -> ":System": starts creating new project typology
-adm <-- ":System": requests data (projectTypology)
-adm -> ":System": types requested data
-adm <-- ":System":project typology created
-@enduml
 
 @startuml
+/'
 skinparam sequenceMessageAlign center
 title TO ADD A CUSTOMER
 actor "Administrator" as adm
@@ -466,27 +582,9 @@ end note
 adm <-- ":System": requests data (customerName)
 adm -> ":System": types requested data
 adm <-- ":System":informs operation success
+'/
 @enduml
 
-@startuml
-skinparam sequenceMessageAlign center
-title TO ASSOCIATE USER AS TEAM MEMBER/PRODUCT OWNER/SCRUM MASTER TO A PROJECT
-actor "Manager"
-"Manager" -> ":System": requests list of all User accounts
-note left
-Account is authenticated.
-":System" grants access.
-end note
-"Manager" <-- ":System": requests to select User account
-"Manager" -> ":System": selects User account
-"Manager" -> ":System": requests list of all projects
-"Manager" <-- ":System": requests to select project
-"Manager" -> ":System": selects project
-"Manager" -> ":System": starts the association of the selected User with the selected project and a role
-"Manager" <-- ":System": requests data
-"Manager" -> ":System": sends data (role, costPerHour, percentageAllocation, startDate)
-"Manager" <-- ":System": informs team member/product owner/scrum master associated/defined
-@enduml
 
 @startuml
 skinparam sequenceMessageAlign center
@@ -513,6 +611,7 @@ end note
 @enduml
 
 @startuml
+/'
 skinparam sequenceMessageAlign center
 title TO CREATE A NEW BUSINESS SECTOR
 actor "Administrator" as adm
@@ -520,4 +619,5 @@ adm -> ":System": starts adding new business sector
 adm <-- ":System": requests data (name)
 adm -> ":System": types requested data
 adm <-- ":System":informs operation success
+'/
 @enduml

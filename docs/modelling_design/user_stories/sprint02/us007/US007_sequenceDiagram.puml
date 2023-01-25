@@ -10,10 +10,10 @@ end legend
 
 actor Administrator as a
 participant ":UIProjectTypology" as ui
-participant ":ProjectTypologyController" as ct
+participant "CreateProjectTypologyController" as ct
 participant ":Company" as c
 participant "ProjectTypologyContainer" as ptc
-participant "pt:ProjectTypology" as pty
+participant "projectTypology:ProjectTypology" as pty
 
 
 activate a
@@ -34,7 +34,7 @@ c -> ptc: createProjectTypology(projectTypology)
 activate ptc
 create pty
 ptc -> pty: create()
-ptc -> ptc: addProjectTypology(pt)
+ptc -> ptc: addProjectTypology(projectTypology)
 ptc --> c: true
 deactivate ptc
 c --> ct: true

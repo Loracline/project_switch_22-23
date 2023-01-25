@@ -1,53 +1,42 @@
-
 @startuml
-
 skinparam sequenceMessageAlign center
 title TO ADD A CUSTOMER
 legend top
 US009 - As Administrator, I want to add a customer
 end legend
-
 class "AddCustomerController" {
 -company
-+addCustomer(email,customerName)
-
-
++addCustomer(email,customerName, customerNIF)
 }
-
 class "Company"{
 -accountContainer
 -customerContainer
 +validateAdministrator(email)
-+addCustomer(customerName)
++addCustomer(customerName, customerNIF)
 }
-
 class "AccountContainer"{
 -accounts
 +getAccountByEmail(email)
 +validateAdministrator(email)
 }
-
 class "Account"{
 -email
 - profile
 +isAdministrator()
 }
-
 class "CustomerContainer"{
 -customers
-+addCustomer(customerName)
--doesCustomerExist(customerName)
++addCustomer(customerName, customerNIF)
+-doesCustomerNIFExist(customerName, customerNIF)
+- isValidNIF(customerNIF)
 }
-
 class "Customer"{
 -customerName
-+Customer(customerName)
++Customer(customerName, customerNIF)
 }
-
 "AddCustomerController"  --> "Company"
 "Company" "1"-->"1" "CustomerContainer": has
 "Company" "1"-->"1" "AccountContainer": has
 "CustomerContainer" "1"-->"*" "Customer": has
 "AccountContainer" "1" --> "*" "Account": has
-
 @enduml

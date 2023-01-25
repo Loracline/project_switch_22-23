@@ -5,15 +5,15 @@ import org.switch2022.project.model.Company;
  * Class ProjectTypologyController is built to allow access to ProjectTypologyContainer
  * in Company Class.
  */
-public class ProjectTypologyController {
+public class CreateProjectTypologyController {
     /**
      * Attributes of the class ProjectTypologyController, according to the US007 Class Diagram.
      */
-    final private Company company;
+    private final Company company;
     /**
      * ProjectTypologyController constructor
      */
-    public ProjectTypologyController(Company company){
+    public CreateProjectTypologyController(Company company){
         this.company=company;
     }
     public boolean createProjectTypology(String email,String projectTypology){
