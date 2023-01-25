@@ -437,7 +437,7 @@ class CompanyTest {
     void projectRegistered() {
         accountOne.setProfile(profileThree);
         boolean expected = true;
-        boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
+        boolean result = company.registerProject(projectTwoDTO);
         assertEquals(expected, result);
     }
 
@@ -445,18 +445,9 @@ class CompanyTest {
     void projectNotRegistered() {
         accountOne.setProfile(profileThree);
         boolean expected = false;
-        boolean result = company.registerProject(projectOneDTO, accountOne.getEmail());
+        boolean result = company.registerProject(projectOneDTO);
         assertEquals(expected, result);
     }
-
-    @Test
-    void managerNotValidated() {
-        accountOne.setProfile(profileOne);
-        boolean expected = false;
-        boolean result = company.registerProject(projectTwoDTO, accountOne.getEmail());
-        assertEquals(expected, result);
-    }
-
 
     /**
      * listAllProjects()
