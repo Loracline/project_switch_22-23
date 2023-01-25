@@ -16,7 +16,7 @@ public class AccountInProjectDTOMapper {
      * @return new instance of AccountInProject
      */
 
-    public AccountInProject accountInProjectFromDTO(AccountInProjectDTO dto) {
+  /*  public AccountInProject accountInProjectFromDTO(AccountInProjectDTO dto) {
         ProjectMapper projectMapper = new ProjectMapper();
         AccountMapper accountMapper = new AccountMapper();
 
@@ -32,5 +32,5 @@ public class AccountInProjectDTOMapper {
         AccountInProject accountInProject = new AccountInProject(account, project,
                 role, costPerHour, percentageAllocation, startDate);
         return accountInProject;
-    }
+    }*/
 }
