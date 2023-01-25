@@ -17,7 +17,7 @@ public class Customer {
      * Constructor
      */
     public Customer(String customerName, String customerNIF) {
-        this.customerName = customerName.toLowerCase();
+        this.customerName = customerName;
         this.customerNIF = customerNIF;
     }
 

@@ -28,6 +28,7 @@ public class ProjectTest {
   void tearDown() {
     projectOne = null;
     projectTwo = null;
+    projectThree = null;
   }
 
   /**
@@ -53,6 +54,15 @@ public class ProjectTest {
   void ensureTwoProjectsAreNotEqual() {
     boolean expected = false;
     boolean result = projectOne.equals(projectTwo);
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureTwoProjectsAreEqual() {
+    Project project = new Project("AA001", "Aptoide", new Customer("John","228674498"),
+            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    boolean expected = true;
+    boolean result = project.equals(projectOne);
     assertEquals(expected, result);
   }
 
@@ -102,7 +112,7 @@ public class ProjectTest {
 
   @Test
   void ensureCustomerIsNotEqual() {
-    String expected = "Johnny";
+    Customer expected = new Customer("Johnny", null);
     Customer result = projectOne.getCustomer();
     assertNotEquals(expected, result);
   }
@@ -136,7 +146,7 @@ public class ProjectTest {
 
   @Test
   void ensureProjectTypologyIsNotEqual() {
-    String expected = "Variable cost";
+    ProjectTypology expected = new ProjectTypology("Variable cost");
     ProjectTypology result = projectOne.getProjectTypology();
     assertNotEquals(expected, result);
   }
@@ -153,7 +163,7 @@ public class ProjectTest {
 
   @Test
   void ensureBusinessSectorIsNotEqual() {
-    String expected = "Fishing";
+    BusinessSector expected = new BusinessSector("Fishing");
     BusinessSector result = projectOne.getBusinessSector();
     assertNotEquals(expected, result);
   }

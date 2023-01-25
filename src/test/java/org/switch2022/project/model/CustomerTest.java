@@ -51,6 +51,22 @@ class CustomerTest {
         assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
 
+    @Test
+    void getCustomerNameSuccessfully() {
+        Customer customer = new Customer("john",null);
+        String expected = "john";
+        String result = customer.getCustomerName();
+        assertEquals(expected, result);
+    }
+
+
+    @Test
+    void getCustomerNameNotSuccessfully() {
+        Customer customer = new Customer("John",null);
+        String expected = "Mary";
+        String result = customer.getCustomerName();
+        assertNotEquals(expected, result);
+    }
 }
 
 

@@ -29,16 +29,12 @@ public class GetListOfProjectsControllerTest {
         accounts.add(userAccount);
         AccountContainer accountContainer = new AccountContainer(accounts);
 
-        Customer customer = new Customer("ISEP", "222333444");
-        ProjectTypology projectTypology = new ProjectTypology("Fixed cost");
-        BusinessSector businessSector = new BusinessSector("fishing");
-
         Project projectOne = new Project("AA001", "software development management",
-                new Customer("ISEP","228674498"),
-                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
+                new Customer("isep","228674498"),
+                new ProjectTypology("fixed Cost"), new BusinessSector("fishing"));
         Project projectTwo = new Project("AA002", "project software", new Customer(
-                "ISEP","228674498"),
-                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
+                "isep","228674498"),
+                new ProjectTypology("fixed Cost"), new BusinessSector("fishing"));
 
         List<Project> projects = new ArrayList<>();
         projects.add(projectOne);

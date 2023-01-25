@@ -42,9 +42,9 @@ class ProjectDTOTest {
 
   @Test
   void ensureTwoProjectsAreNotEqual() {
-    ProjectDTO projectDTOTwo = projectDTOOne;
+    ProjectDTO reference = projectDTOOne;
     boolean expected = false;
-    boolean result = projectDTOOne.equals(projectDTOTwo);
+    boolean result = projectDTOOne.equals(reference);
     assertNotEquals(expected, result);
   }
 

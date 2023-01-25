@@ -223,9 +223,7 @@ class AddUserToProjectControllerTest {
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
                 "Fixed cost", "Hunting");
-        projectDTO.name = "Test";
-        projectDTO.status = "planned";
-        projectDTO.businessSector = "IT Sector";
+
         //account in project dto - product owner
         AllocationDTO allocationDTOPO = new AllocationDTO();
         allocationDTOPO.role = "Product Owner";
@@ -256,9 +254,7 @@ class AddUserToProjectControllerTest {
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
                 "Fixed cost", "Hunting");
-        projectDTO.name = "Test";
-        projectDTO.status = "planned";
-        projectDTO.businessSector = "IT Sector";
+
         //account in project dto - product owner
         AllocationDTO allocationDTOPO = new AllocationDTO();
         allocationDTOPO.role = "Product Owner";
