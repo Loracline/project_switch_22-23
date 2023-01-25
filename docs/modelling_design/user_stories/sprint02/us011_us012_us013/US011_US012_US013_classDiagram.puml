@@ -10,13 +10,26 @@ end legend
 
 class AddUserToProjectController {
 -company
-+addUserToProject(emailManager, accountInProjectDTO)
++addUserToProject(emailManager, accountDTO, projectDTO, allocationDTO)
 }
 
 class Company {
+-accountContainer
+-projectContainer
 -accountInProjectContainer
 +validateManager(emailManager)
-+addUserToProject(accountInProjectDTO)
++addUserToProject(accountDTO, projectDTO, allocationDTO)
+}
+
+class AccountContainer {
+-accounts
++validateManager(email)
++getAccountByEmail(accountDTO.email)
+}
+
+class ProjectContainer {
+-projects
++getProjectByCode(projectDTO.code)
 }
 
 class AccountInProject{
@@ -27,21 +40,12 @@ class AccountInProject{
 -role
 -startDate
 -endDate
-+AccountInProject(account, project, costPerHour, percentageAllocation, startDate, role)
++AccountInProject(account, project, role, costPerHour, percentageAllocation, startDate)
 }
 
 class AccountInProjectContainer{
 -accountsInProject
-+addUserToProject(accountInProjectDTO)
-}
-
-class AccountInProjectDTOMapper {
-+accountInProjectFromDTO(accountInProjectDTO)
-}
-
-class "AccountContainer"{
--accounts
-+validateManager(email)
++addUserToProject(account, project, allocationDTO)
 }
 
 class "Account"{
@@ -59,10 +63,9 @@ class "Profile"{
 
 AddUserToProjectController "1"-->"1" Company:has
 Company "1"-->"1" AccountInProjectContainer: has
-AccountInProjectContainer "1"..>"1" AccountInProjectDTOMapper: requests
-AccountInProjectDTOMapper "1"..> "*"AccountInProject: creates
+Company "1"-->"1" AccountContainer: has
+Company "1"-->"1" ProjectContainer: has
 AccountInProjectContainer "1"--> "*" AccountInProject: has
-Company "1"-->"1" "AccountContainer": has
 "AccountContainer""1" --> "*""Account": has
 "Account" "*"--> "1""Profile": has
 @enduml

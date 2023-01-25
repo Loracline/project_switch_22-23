@@ -4,7 +4,7 @@ import org.switch2022.project.model.Profile;
 
 import java.util.List;
 
-import static org.switch2022.project.utils.Helper.isLower;
+import static org.switch2022.project.utils.Util.isLower;
 
 /**
  * Class ProfileContainer is built to access and manipulate the set of profiles

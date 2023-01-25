@@ -4,8 +4,8 @@ import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
+import org.switch2022.project.utils.Util;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.Helper;
 import org.switch2022.project.utils.dto.AllocationDTO;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class AccountInProjectContainer {
     private float currentPercentageOfAllocation(Account account) {
         int i = 0;
         float sumOfPercentages = 0;
-        while (Helper.isLower(i, accountsInProject.size())) {
+        while (Util.isLower(i, accountsInProject.size())) {
             if (accountsInProject.get(i).getAccount().equals(account) &&
                     accountsInProject.get(i).getEndDate() == null) {
                 sumOfPercentages += accountsInProject.get(i).getPercentageOfAllocation();
@@ -109,9 +109,8 @@ public class AccountInProjectContainer {
     public List<Account> listAccountsByProject(String projectCode) {
         List<Account> accounts = new ArrayList<>();
         int i = 0;
-        while (Helper.isLower(i, accountsInProject.size())) {
-            Account requestedAccount =
-                    accountsInProject.get(i).getAccountByProject(projectCode);
+        while (Util.isLower(i, accountsInProject.size())) {
+            Account requestedAccount = accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
                 accounts.add(requestedAccount);
             }
