@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -185,5 +187,23 @@ public class AccountInProjectTest {
         boolean result = accountInProject.isRoleValid();
         //Assert
         assertFalse(result);
+    }
+
+    @Test
+    void ensureAccountIsRetrievedSuccessfully() {
+        //Arrange
+        Account expected = account;
+        //Act
+        Account result = accountInProject.getAccountByProject("1A");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatGetAccountByProjectReturnsNull() {
+        //Act
+        Account result = accountInProject.getAccountByProject("AA001");
+        //Assert
+        assertNull(result);
     }
 }

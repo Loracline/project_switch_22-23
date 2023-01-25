@@ -26,8 +26,7 @@ public class ListAccountsInProjectController {
         List<AccountDTO> accountsDTO = new ArrayList<>();
         if (this.company.validateManager(email)) {
             List<Account> accounts = this.company.listAccountsByProject(projectCode);
-            AccountMapper accountMapper = new AccountMapper();
-            accountsDTO = accountMapper.cloneList(accounts);
+            accountsDTO = AccountMapper.ListAccountsToDTO(accounts);
         }
         return accountsDTO;
     }
