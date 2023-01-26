@@ -7,49 +7,93 @@ end legend
 skinparam sequenceMessageAlign center
 title LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 
-class "ListProjectController" {
+class ":ListProjectInAccountController" {
 - company
-- projectMapper
-+ listProjectByAccount(email)
++ listProjectsByAccount(email, emailUser)
 }
 class "Company" {
-- accountContainer
-+ listProjectByAccount(email)
-}
-class "AccountContainer"{
-- account
 - accountInProjectContainer
-+ getAccountByEmail(email)
-
++ listProjectsByAccount(email)
++validateUser(emailUser)
 }
+
+class "AccountContainer" {
+-accounts
++validateUser(emailUser)
+}
+
+class "Account" {
+-email
+-profile
+-status
++checkAccountFromEmail(email)
++isUser()
++getAccountName()
++getEmail()
++getAccountStatus()
+}
+
+class "Profile"{
+-profileName
++isUser()
+}
+
+
 class "AccountInProjectContainer"{
 - accountInProject
-+ listProjectByAccount(account)
++ listProjectsByAccount(email)
 }
 
 class "AccountInProject"{
-- account
-- project
+-account
+-project
 -role
-+ accountInProject(account, project, role)
-+ getProjectbyAccount(account)
+-startDate
+-costPerHour
+-percentageAllocation
+-endDate
+-validate(email)
++ getProjectbyAccount(email)
 }
 
-class "ProjectMapper"{
-+projectsToDTO(projects)
-+projectToDTO(project)
+class "ProjectMapperUS016"{
++getListOfProjectsDTO(projects)
++getDTOFromProject(project)
 }
 
-class "ProjectDTO"{
-+projectDTO(project)
+class "ProjectDTOus016"{
++code;
++name;
++customer;
++status;
++projectTypology;
++businessSector
 }
 
-"ListProjectController"-->"Company"
-"Company"-->"AccountContainer"
-"AccountContainer"--> "AccountInProjectContainer"
-"AccountInProjectContainer"--> "AccountInProject"
-"AccountInProjectContainer"--> "ProjectMapper"
-"ProjectMapper"..> "ProjectDTO" : create
+class "Project"{
+-projectCode
+-projectName
+-customer
+-projectStatus
+-projectTypology
+-businessSector
++getProjectCode()
++getProjectName()
++getCustomer()
++getProjectStatus()
++getProjectTypology()
++getBusinessSector()
+}
+"ProjectMapperUS016" ..> "Project"
+":ListProjectInAccountController"-->"Company"
+"Company" "1"--> "     1""AccountInProjectContainer": has
+"Company" "1   " --> "     1" "AccountContainer": has
+"AccountInProjectContainer" "1"--> "*" "AccountInProject"
+"AccountContainer" "1" --> "*" "Account": has
+"Account" "1" --> "1""Profile": has
+":ListProjectInAccountController"..> "ProjectMapperUS016"
+"ProjectMapperUS016"..> "ProjectDTOus016"
+
 
 
 @enduml
