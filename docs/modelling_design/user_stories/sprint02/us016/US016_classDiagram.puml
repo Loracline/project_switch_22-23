@@ -56,7 +56,7 @@ class "AccountInProject"{
 + getProjectbyAccount(email)
 }
 
-class "ProjectMapperUS016"{
+class "UserListProjectsMapper"{
 +getListOfProjectsDTO(projects)
 +getDTOFromProject(project)
 }
@@ -84,15 +84,15 @@ class "Project"{
 +getProjectTypology()
 +getBusinessSector()
 }
-"ProjectMapperUS016" ..> "Project"
+"UserListProjectsMapper" ..> "Project"
 ":ListProjectInAccountController"-->"Company"
 "Company" "1"--> "     1""AccountInProjectContainer": has
 "Company" "1   " --> "     1" "AccountContainer": has
 "AccountInProjectContainer" "1"--> "*" "AccountInProject"
 "AccountContainer" "1" --> "*" "Account": has
 "Account" "1" --> "1""Profile": has
-":ListProjectInAccountController"..> "ProjectMapperUS016"
-"ProjectMapperUS016"..> "ProjectDTOus016"
+":ListProjectInAccountController"..> "UserListProjectsMapper"
+"UserListProjectsMapper"..> "ProjectDTOus016"
 
 
 

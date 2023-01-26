@@ -12,7 +12,7 @@ participant ":Company" as company
 participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
 participant "projects: List<Project>" as list
-participant ":ProjectMapperUS016" as pm
+participant ":UserListProjectsMapper" as pm
 participant "projectsDTO: List<ProjectDTO>" as listDTO
 participant "projectDTO:ProjectDTO" as DTO
 activate User

@@ -1,8 +1,8 @@
 package org.switch2022.project.controller;
 import org.switch2022.project.model.Company;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.dto.ProjectDTOus016;
-import org.switch2022.project.utils.mapper.ProjectMapperUS016;
+import org.switch2022.project.utils.dto.UserListProjectsDTO;
+import org.switch2022.project.utils.mapper.UserListProjectsMapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +22,12 @@ public class ListProjectsInAccountController {
      * @return projectDTOus016
      */
 
-    public List<ProjectDTOus016> listProjectsByAccount(String emailUser) {
-        List<ProjectDTOus016> projectDTOus016 = new ArrayList<>();
+    public List<UserListProjectsDTO> listProjectsByAccount(String emailUser) {
+        List<UserListProjectsDTO> userListProjectsDTO = new ArrayList<>();
         if (company.validateUser(emailUser)) {
             List<Project> projects = company.listProjectsByAccount(emailUser);
-            projectDTOus016 = ProjectMapperUS016.getListOfProjectsDTO(projects);
+            userListProjectsDTO = UserListProjectsMapper.getListOfProjectsDTO(projects);
         }
-        return projectDTOus016;
+        return userListProjectsDTO;
     }
 }

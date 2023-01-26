@@ -5,8 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ProjectDTOus016;
-import org.switch2022.project.utils.mapper.ProjectMapperUS016;
+import org.switch2022.project.utils.dto.UserListProjectsDTO;
+import org.switch2022.project.utils.mapper.UserListProjectsMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,14 +20,14 @@ class ListProjectsInAccountControllerTest {
      */
 
     Account accountOne, accountTwo;
-    ProjectDTOus016 projectDTOOne;
+    UserListProjectsDTO projectDTOOne;
     Customer customerOne;
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
     Project projectOne;
     AccountInProject accountInProjectOne;
     List<Account> accounts;
-    List<ProjectDTOus016> projectsDTO;
+    List<UserListProjectsDTO> projectsDTO;
     List<ProjectTypology> typologies;
     List<Project> projects;
     List<Customer> customers;
@@ -65,7 +65,7 @@ class ListProjectsInAccountControllerTest {
         projects.add(projectOne);
 
         //projectDTO
-        projectDTOOne = ProjectMapperUS016.getDTOFromProject(projectOne);
+        projectDTOOne = UserListProjectsMapper.getDTOFromProject(projectOne);
         projectsDTO = new ArrayList<>();
         projectsDTO.add(projectDTOOne);
 
@@ -120,10 +120,10 @@ class ListProjectsInAccountControllerTest {
         //Arrange
         String emailActor = accountOne.getEmail(); //allocated to a
         // project = accountInProjectOne
-        List<ProjectDTOus016> expected = projectsDTO;
+        List<UserListProjectsDTO> expected = projectsDTO;
 
         //Act
-        List<ProjectDTOus016> result = listProjectsInAccountController.listProjectsByAccount(emailActor);
+        List<UserListProjectsDTO> result = listProjectsInAccountController.listProjectsByAccount(emailActor);
 
         //Assert
         assertEquals(expected, result);
@@ -138,10 +138,10 @@ class ListProjectsInAccountControllerTest {
         //Arrange
         String emailActor = accountTwo.getEmail(); //not allocated to a project
 
-        List<ProjectDTOus016> expected = new ArrayList<>();
+        List<UserListProjectsDTO> expected = new ArrayList<>();
 
         //Act
-        List<ProjectDTOus016> result =
+        List<UserListProjectsDTO> result =
                 listProjectsInAccountController.listProjectsByAccount(emailActor);
 
         //Assert

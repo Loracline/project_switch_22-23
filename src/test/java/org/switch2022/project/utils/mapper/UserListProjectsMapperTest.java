@@ -5,21 +5,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ListProjectsDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
-import org.switch2022.project.utils.dto.ProjectDTOus016;
+import org.switch2022.project.utils.dto.UserListProjectsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProjectMapperUS016Test {
+class UserListProjectsMapperTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
     Project projectOne, projectTwo;
-    ProjectDTOus016 projectOneDTO, projectTwoDTO, projectThreeDTO;
+    UserListProjectsDTO projectOneDTO, projectTwoDTO, projectThreeDTO;
     List<Project> projects;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
@@ -41,11 +39,11 @@ class ProjectMapperUS016Test {
         projects.add(projectTwo);
         projectContainer = new ProjectContainer(projects);
 
-        projectOneDTO = new ProjectDTOus016("AA001", "Aptoide", "ISEP", "Planned", "Fixed cost",
+        projectOneDTO = new UserListProjectsDTO("AA001", "Aptoide", "ISEP", "Planned", "Fixed cost",
                 "fishing");
-        projectTwoDTO = new ProjectDTOus016("AA004", "Aptoide", "PortoTech", "Planned", "Fixed cost",
+        projectTwoDTO = new UserListProjectsDTO("AA004", "Aptoide", "PortoTech", "Planned", "Fixed cost",
                 "Hunting");
-        projectThreeDTO = new ProjectDTOus016("AA001", "Aptoide", "ISEP", "Planned", "Fixed cost",
+        projectThreeDTO = new UserListProjectsDTO("AA001", "Aptoide", "ISEP", "Planned", "Fixed cost",
                 "fishing");
 
         company = new Company(null, null, null,
@@ -74,13 +72,13 @@ class ProjectMapperUS016Test {
     @Test
     void getListOfProjectsDTO() {
         //Arrange
-        List<ProjectDTOus016> expected = new ArrayList<>();
-        expected.add(new ProjectDTOus016("AA001", "Aptoide", "isep", "planned",
+        List<UserListProjectsDTO> expected = new ArrayList<>();
+        expected.add(new UserListProjectsDTO("AA001", "Aptoide", "isep", "planned",
                 "fixed cost", "fishing"));
-        expected.add(new ProjectDTOus016("AA002", "Aptoide", "portotech", "planned",
+        expected.add(new UserListProjectsDTO("AA002", "Aptoide", "portotech", "planned",
                 "fixed cost", "fishing"));
         //Act
-        List<ProjectDTOus016> result = ProjectMapperUS016.getListOfProjectsDTO(projects);
+        List<UserListProjectsDTO> result = UserListProjectsMapper.getListOfProjectsDTO(projects);
         //Assert
         assertEquals(expected, result);
 
