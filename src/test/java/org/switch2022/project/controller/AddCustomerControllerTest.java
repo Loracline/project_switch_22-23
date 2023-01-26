@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +23,6 @@ class AddCustomerControllerTest {
     BusinessSector businessSectorOne;
     Project projectOne;
     List<Account> accounts;
-    List<Customer>  customers;
     AccountContainer accountContainer;
     CustomerContainer customerContainer;
     Company company;
@@ -44,8 +41,7 @@ class AddCustomerControllerTest {
 
         //customer
         customerOne = new Customer("Genius Software", "234567890");
-        customers = new ArrayList<>();
-        customers.add(customerOne);
+
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -54,12 +50,13 @@ class AddCustomerControllerTest {
         businessSectorOne = new BusinessSector("Fishing");
 
         //project
-        projectOne = new Project("1A", "Mobile Software", customerOne,
+        projectOne = new Project("1A", "Mobile Software",new Customer ("Genius Software", "234567890"),
                 projectTypologyOne, businessSectorOne);
 
         //containers
         accountContainer = new AccountContainer(accounts);
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
+        customerContainer.addCustomer("Genius Software","234567890");
 
         //company
         company = new Company(accountContainer, null, null,
@@ -80,7 +77,6 @@ class AddCustomerControllerTest {
         businessSectorOne = null;
         projectOne = null;
         accounts.clear();
-        customers.clear();
         accountContainer = null;
         customerContainer = null;
         company = null;

@@ -29,7 +29,6 @@ class AccountContainerTest {
     ProjectContainer projectContainer;
     BusinessSectorContainer businessSectorContainer;
     CustomerContainer customerContainer;
-    List<Customer> customers;
     float costPerHour;
     float percentageAllocation;
     LocalDate startDate;
@@ -85,8 +84,7 @@ class AccountContainerTest {
         projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         // Customers container created.
-        customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
 
         // Projects created.
         project = new Project("proj001", "software development manager",new Customer(
@@ -137,7 +135,6 @@ class AccountContainerTest {
         projects.clear();
         projectContainer = null;
         projectTypologyContainer=null;
-        customers.clear();
         customerContainer = null;
         company = null;
     }

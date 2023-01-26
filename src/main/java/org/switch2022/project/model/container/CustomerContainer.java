@@ -2,6 +2,7 @@ package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Customer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -13,14 +14,8 @@ public class CustomerContainer {
     /**
      * Attributes
      */
-    private final List<Customer> customers;
+    private final List<Customer> customers = new ArrayList<>();
 
-    /**
-     * Constructor
-     */
-    public CustomerContainer(List<Customer> customers) {
-        this.customers = customers;
-    }
 
     /**
      * This method validates if customer already exists by checking the NIF.
