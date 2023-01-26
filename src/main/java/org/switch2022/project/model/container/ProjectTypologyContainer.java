@@ -2,6 +2,7 @@ package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.ProjectTypology;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,14 +13,7 @@ public class ProjectTypologyContainer {
     /**
      * Attributes
      */
-    private final List<ProjectTypology> typologies;
-
-    /**
-     * Constructor
-     */
-    public ProjectTypologyContainer(List<ProjectTypology> typologies) {
-        this.typologies = typologies;
-    }
+    private final List<ProjectTypology> typologies= new ArrayList<>();
 
     /**
      * This method checks if project typology already exists in the container.

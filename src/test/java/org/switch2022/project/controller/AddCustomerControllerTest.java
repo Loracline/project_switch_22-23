@@ -29,7 +29,6 @@ class AddCustomerControllerTest {
     List<Project> projects;
     ProjectContainer projectContainer;
     Company company;
-    ProjectTypology projectTypology;
     ProjectTypologyContainer projectTypologyContainer;
     Customer customerOne, customerTwo;
     CustomerContainer customerContainer;
@@ -73,11 +72,9 @@ class AddCustomerControllerTest {
         businessSectorContainer= new BusinessSectorContainer();
         businessSectorContainer.createBusinessSector("fishing");
 
-        projectTypology = new ProjectTypology("Fixed Cost");
-
-        List<ProjectTypology> typologies = new ArrayList<>();
-        typologies.add(projectTypology);
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         customerOne = new Customer("ISEP", "222333444");
         customerTwo = new Customer("PortoTech","222333445");
@@ -125,6 +122,7 @@ class AddCustomerControllerTest {
         project = null;
         projects.clear();
         projectContainer = null;
+        projectTypologyContainer = null;
         company = null;
         addBusinessSectorController = null;
         addCustomerController = null;

@@ -24,6 +24,7 @@ class ChangeProfileControllerTest {
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   BusinessSectorContainer businessSectorContainer;
+  /* Project typology Container*/
   ProjectTypologyContainer projectTypologyContainer;
   ProjectContainer projectContainer;
   Company company;
@@ -59,9 +60,10 @@ class ChangeProfileControllerTest {
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
 
-
-    List<ProjectTypology> typologies = new ArrayList<>();
-    projectTypologyContainer = new ProjectTypologyContainer(typologies);
+    //Project typology
+    projectTypologyContainer = new ProjectTypologyContainer();
+    projectTypologyContainer.createProjectTypology("Fixed Cost");
+    projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer(customers);

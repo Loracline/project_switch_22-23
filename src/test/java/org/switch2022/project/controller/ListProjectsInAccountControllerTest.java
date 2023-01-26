@@ -137,7 +137,7 @@ class ListProjectsInAccountControllerTest {
         profileContainer = new ProfileContainer(profiles);
         businessSectorContainer = new BusinessSectorContainer();
         projectContainer = new ProjectContainer(projects);
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        projectTypologyContainer = new ProjectTypologyContainer();
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
         customerContainer = new CustomerContainer(customers);
 
