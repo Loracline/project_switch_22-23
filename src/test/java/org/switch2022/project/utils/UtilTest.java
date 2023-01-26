@@ -1,10 +1,28 @@
 package org.switch2022.project.utils;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class UtilTest {
+    @SuppressWarnings("InstantiationOfUtilityClass")
+    @Test
+    void ensureExceptionIsThrownWhenTryingInstantiationOfClass() {
+        // Arrange
+        String expected = "Utility class";
+
+        // Act
+        IllegalStateException result = assertThrows(IllegalStateException.class,
+                () -> {
+                    Util util = new Util();
+                });
+
+        // Assert
+        Assertions.assertEquals(expected, result.getMessage());
+    }
+
     /**
      * Testing the isLower() method.
      */

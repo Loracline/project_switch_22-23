@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,8 +21,8 @@ public class AccountInProjectTest {
         //Account in project created.
 
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        project = new Project("1A", "project code", new Customer("John","228674498"),
-                new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
+        project = new Project("1A", "project code", new Customer("John", "228674498"),
+                new ProjectTypology("Fixed cost"), new BusinessSector("IT Sector"));
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
         startDate = LocalDate.of(2023, 1, 19);
@@ -130,6 +128,19 @@ public class AccountInProjectTest {
         assertNotEquals(hashCodeOther, hashCodeReference);
     }
 
+    @Test
+    void ensurePercentageAllocationIsRetrievedSuccessfully() {
+        // Arrange
+        float expected = 45.0f;
+
+        // Act
+        float result = accountInProject.getPercentageOfAllocation();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+
     /**
      * Testing if one is able to validate the role of the account in project.
      */
@@ -187,6 +198,7 @@ public class AccountInProjectTest {
         //Assert
         assertFalse(result);
     }
+
     @Test
     void ensureEndDateIsRetrieved() {
         //Arrange
