@@ -80,8 +80,9 @@ class AccountContainerTest {
         businessSectorContainer = new BusinessSectorContainer();
 
         // Project typologies container created.
-        List<ProjectTypology> typologies = new ArrayList<>();
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         // Customers container created.
         customers = new ArrayList<>();
@@ -135,6 +136,7 @@ class AccountContainerTest {
         project = null;
         projects.clear();
         projectContainer = null;
+        projectTypologyContainer=null;
         customers.clear();
         customerContainer = null;
         company = null;

@@ -51,7 +51,7 @@ class RegisterProjectControllerTest {
     profiles.add(profileTwo);
 
     typologies = new ArrayList<>();
-    projectTypologyContainer = new ProjectTypologyContainer(typologies);
+    projectTypologyContainer = new ProjectTypologyContainer();
 
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer(customers);

@@ -3,6 +3,7 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.AccountContainer;
 import org.switch2022.project.model.container.BusinessSectorContainer;
@@ -18,17 +19,19 @@ class AddBusinessSectorControllerTest {
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
-    Account accountOne;
-    Profile profileOne, profileTwo;
-    Customer customerOne;
-    ProjectTypology projectTypologyOne;
-    BusinessSector businessSectorOne;
-    Project projectOne;
-    List<Account> accounts;
-    AccountContainer accountContainer;
-    BusinessSectorContainer businessSectorContainer;
-    Company company;
-    AddBusinessSectorController addBusinessSectorController;
+  Account accountOne;
+  Profile profileOne, profileTwo;
+  List<Account> accounts;
+  AccountContainer accountContainer;
+  BusinessSector businessSectorOne;
+  BusinessSectorContainer businessSectorContainer;
+  Project projectOne;
+  Company company;
+  ProjectTypologyContainer projectTypologyContainer;
+  Customer customerOne, customerTwo;
+  CustomerContainer customerContainer;
+  List<Customer> customers;
+  AddBusinessSectorController addBusinessSectorController;
 
     @BeforeEach
     void setUp() {
@@ -45,20 +48,33 @@ class AddBusinessSectorControllerTest {
         customerOne = new Customer("Genius Software", "234567890");
 
         //projectTypology
-        projectTypologyOne = new ProjectTypology("Fixed Cost");
+      projectTypologyContainer = new ProjectTypologyContainer();
+      projectTypologyContainer.createProjectTypology("Fixed Cost");
+      projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
-        //business sector
+      //business sector
         businessSectorOne = new BusinessSector("Fishing");
 
         //project
         projectOne = new Project("1A", "Mobile Software", customerOne,
-                projectTypologyOne, businessSectorOne);
+                new ProjectTypology("Fixed Cost"), businessSectorOne);
 
         //containers
         accountContainer = new AccountContainer(accounts);
         businessSectorContainer = new BusinessSectorContainer();
         businessSectorContainer.createBusinessSector("fishing");
 
+    projectTypologyContainer = new ProjectTypologyContainer();
+    projectTypologyContainer.createProjectTypology("Fixed Cost");
+    projectTypologyContainer.createProjectTypology("Fixed time and materials");
+
+    customerOne = new Customer("ISEP", "222333444");
+    customerTwo = new Customer("PortoTech", "222333445");
+
+    customers = new ArrayList<>();
+    customerContainer = new CustomerContainer(customers);
+    customers.add(customerOne);
+    customers.add(customerTwo);
         //company
         company = new Company(accountContainer, null, businessSectorContainer,
                 null, null, null, null);
@@ -74,12 +90,12 @@ class AddBusinessSectorControllerTest {
         profileOne = null;
         profileTwo = null;
         customerOne = null;
-        projectTypologyOne = null;
         projectOne = null;
         accounts.clear();
         businessSectorOne = null;
         accountContainer = null;
         businessSectorContainer = null;
+        projectTypologyContainer = null;
         company = null;
         addBusinessSectorController = null;
     }

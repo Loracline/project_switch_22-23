@@ -45,7 +45,6 @@ class AddUserToProjectControllerTest {
     List<Account> accounts;
     List<Project> projects;
     List<AccountInProject> accountsInProject;
-    List<AccountDTO> accountsDTO;
     AllocationDTO allocationDTO;
     AccountContainer accountContainer;
     ProjectContainer projectContainer;
@@ -160,6 +159,7 @@ class AddUserToProjectControllerTest {
 
         //Assert
         assertTrue(result);
+
     }
 
     /**

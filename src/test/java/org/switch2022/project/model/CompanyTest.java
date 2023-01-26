@@ -23,12 +23,10 @@ class CompanyTest {
 
     Account accountOne, accountTwo, accountThree, accountFour;
     Profile profileOne, profileTwo, profileThree;
-    ProjectTypology projectTypologyOne, projectTypologyTwo;
     Project projectOne, projectTwo, projectThree, project;
     List<Account> accounts;
     List<Profile> profiles;
     List<Project> projects;
-    List<ProjectTypology> typologies;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -105,17 +103,10 @@ class CompanyTest {
         projects.add(projectTwo);
         projects.add(projectThree);
 
-        // Typologies created.
-        projectTypologyOne = new ProjectTypology("Fixed Cost");
-        projectTypologyTwo = new ProjectTypology("Fixed time and materials");
-
         // Container of typologies created.
-        typologies = new ArrayList<>();
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
-
-        // Typologies added to the Container.
-        typologies.add(projectTypologyOne);
-        typologies.add(projectTypologyTwo);
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         // Customers created.
         customerOne = new Customer("ISEP", "222333444");
@@ -170,9 +161,6 @@ class CompanyTest {
         accountContainer = null;
         profileContainer = null;
         businessSectorContainer = null;
-        projectTypologyOne = null;
-        projectTypologyTwo = null;
-        typologies.clear();
         projectTypologyContainer = null;
         projects.clear();
         projectContainer = null;
