@@ -22,28 +22,16 @@ class ProjectMapperTest {
 
   Account accountOne, accountTwo, accountThree;
   Profile profileOne, profileTwo, profileThree;
-  ProjectTypology projectTypologyOne, projectTypologyTwo;
-  Project projectOne, projectTwo, projectThree;
-  BusinessSector businessSectorOne, businessSectorTwo;
-  Customer customerOne, customerTwo;
+  Project projectOne, projectTwo;
   ProjectDTO projectOneDTO, projectTwoDTO, projectThreeDTO;
-  AccountInProject accountInProject;
-  float costPerHour;
-  float percentageAllocation;
-  LocalDate startDate;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
-  List<ProjectTypology> typologies;
-  List<BusinessSector> businessSectors;
-  List<AccountInProject> accountsInProject;
-  List<Customer> customers;
   BusinessSectorContainer businessSectorContainer;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   ProjectTypologyContainer projectTypologyContainer;
   ProjectContainer projectContainer;
-  AccountInProjectContainer accountInProjectContainer;
   CustomerContainer customerContainer;
   Company company;
   RegisterProjectController registerProjectController;
@@ -68,15 +56,6 @@ class ProjectMapperTest {
     profiles.add(profileOne);
     profiles.add(profileTwo);
 
-    costPerHour = 7.5f;
-    percentageAllocation = 45.0f;
-    startDate = LocalDate.of(2023, 1, 19);
-    accountInProject = new AccountInProject(accountOne, projectOne, "Team Member",
-            costPerHour, percentageAllocation, startDate);
-    accountsInProject = new ArrayList<>();
-    accountsInProject.add(accountInProject);
-    accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
-
     projectOne = new Project("AA001", "Aptoide", new Customer("ISEP","228674498"),
             new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
     projectTwo = new Project("AA002", "Aptoide", new Customer("PortoTech","228674498"),
@@ -94,7 +73,7 @@ class ProjectMapperTest {
             "fishing");
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+            projectContainer, projectTypologyContainer, null, customerContainer);
 
     registerProjectController = new RegisterProjectController(company);
 
@@ -121,7 +100,9 @@ class ProjectMapperTest {
     customerContainer = null;
     company = null;
   }
-
+  /**
+   * Test to check that the project DTO was created successfully
+   */
   @Test
   void creationOfProjectDTOSuccessful() {
     ProjectDTO reference = ProjectMapper.getDTOFromProject(projectOne);
@@ -129,7 +110,9 @@ class ProjectMapperTest {
     boolean result = reference.equals(projectOneDTO);
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to check that the project DTO was not created successfully
+   */
   @Test
   void creationOfProjectDTONotSuccessful() {
     ProjectDTO reference = ProjectMapper.getDTOFromProject(projectTwo);
@@ -137,15 +120,9 @@ class ProjectMapperTest {
     boolean result = reference.equals(projectOneDTO);
     assertEquals(expected, result);
   }
-
- /* @Test
-  void creationOfProjectSuccessful() {
-    Project reference = projectMapper.getProjectFromDTO(projectThreeDTO);
-    boolean expected = true;
-    boolean result = reference.equals(projectOne);
-    assertEquals(expected, result);
-  }*/
-
+  /**
+   * Test to check that the project was not created successfully
+   */
   @Test
   void creationOfProjectNotSuccessful() {
     Project reference = ProjectMapper.getProjectFromDTO(projectTwoDTO);

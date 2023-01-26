@@ -30,8 +30,12 @@ class ProjectDTOTest {
   void tearDown() {
     projectDTOOne = null;
     projectDTOTwo = null;
+    projectDTOThree = null;
   }
 
+  /**
+   * Test to ensure the object equals itself
+   */
   @Test
   void ensureSameObjectEqualsItself() {
     ProjectDTO projectDTOTwo = projectDTOOne;
@@ -39,7 +43,9 @@ class ProjectDTOTest {
     boolean result = projectDTOOne.equals(projectDTOTwo);
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that two objects from the same class are different
+   */
   @Test
   void ensureTwoProjectsAreNotEqual() {
     ProjectDTO reference = projectDTOOne;
@@ -47,7 +53,9 @@ class ProjectDTOTest {
     boolean result = projectDTOOne.equals(reference);
     assertNotEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that two objects are from different classes
+   */
   @Test
   void ensureObjectsAreFromDifferentClasses() {
     Object projectObject = new Object();
@@ -55,7 +63,9 @@ class ProjectDTOTest {
     boolean result = projectDTOOne.equals(projectObject);
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to check the hashcode when objects are equal and unequal
+   */
   @Test
   void testHashCode() {
     ProjectDTO objectOne = projectDTOOne;
