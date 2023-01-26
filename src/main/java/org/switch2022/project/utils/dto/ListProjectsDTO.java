@@ -27,6 +27,15 @@ public class ListProjectsDTO {
         this.businessSector = businessSector;
     }
 
+    /**
+     * Equals() method used to determine whether two objects are equal in
+     * terms of their content. This method compares the memory addresses of the two
+     * objects, which means that two objects are considered equal only if they are the same
+     * object in memory.
+     *
+     * @return TRUE if equal, and FALSE otherwise.
+     */
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -41,6 +50,13 @@ public class ListProjectsDTO {
                 Objects.equals(projectTypology, that.projectTypology) &&
                 Objects.equals(businessSector, that.businessSector);
     }
+
+    /**
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(code, name, customer, status, projectTypology, businessSector);

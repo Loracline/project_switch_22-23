@@ -50,4 +50,8 @@ public final class Util {
     public static float sum(float first, float second) {
         return first + second;
     }
+
+    public static boolean areBothConditionsGranted(boolean first, boolean second) {
+        return first && second;
+    }
 }
