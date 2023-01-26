@@ -59,7 +59,7 @@ public class GetListOfProjectsControllerTest {
                 projectContainer, null, null, null);
 
         //controller
-        getListOfProjectscontroller = new GetListOfProjectsController(company, null);
+        getListOfProjectscontroller = new GetListOfProjectsController(company);
     }
 
     @AfterEach

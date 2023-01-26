@@ -17,14 +17,12 @@ public class GetListOfProjectsController {
      * Attributes of the class GetListOfProjectController.
      */
     private final Company company;
-    private final ListOfProjectsMapper mapper;
 
     /**
      * GetListOfProjectsController constructor
      */
-    public GetListOfProjectsController(Company company, ListOfProjectsMapper mapper) {
+    public GetListOfProjectsController(Company company) {
         this.company = company;
-        this.mapper = mapper;
     }
 
     /**
@@ -38,7 +36,7 @@ public class GetListOfProjectsController {
         List<ListProjectsDTO> listOfProjectsDTO = new ArrayList<>();
         if (company.validateManager(email)) {
             List<Project> projects = company.listAllProjects();
-            listOfProjectsDTO = mapper.getListOfProjectsDTO(projects);
+            listOfProjectsDTO = ListOfProjectsMapper.getListOfProjectsDTO(projects);
         }
         return listOfProjectsDTO;
     }
