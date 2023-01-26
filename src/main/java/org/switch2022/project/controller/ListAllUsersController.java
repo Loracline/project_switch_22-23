@@ -39,6 +39,6 @@ public class ListAllUsersController {
         if (company.validateManager(actorEmail)) {
             users = company.listAllUsers();
         }
-        return AccountMapper.ListAccountsToDTO(users);
+        return AccountMapper.listAccountsToDTO(users);
     }
 }

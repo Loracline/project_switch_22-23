@@ -217,19 +217,15 @@ class AddUserToProjectControllerTest {
         accountThree.setProfile(profileThree);
         String emailManager = "jane@isep.ipp.pt";
         //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Emma";
-        accountDTO.email = "emma@isep.ipp.pt";
+        AccountDTO accountDTO = new AccountDTO("Emma", "emma@isep.ipp.pt", true);
+
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
                 "Fixed cost", "Hunting");
 
         //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+
         AddUserToProjectController controller = new AddUserToProjectController(company);
 
         //Act
@@ -248,19 +244,15 @@ class AddUserToProjectControllerTest {
         accountThree.setProfile(profileThree);
         String emailManagerInvalid = "kate@isep.ipp.pt";
         //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Emma";
-        accountDTO.email = "emma@isep.ipp.pt";
+        AccountDTO accountDTO = new AccountDTO("Emma", "emma@isep.ipp.pt", true);
+
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
                 "Fixed cost", "Hunting");
 
         //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+
         AddUserToProjectController controller = new AddUserToProjectController(company);
         //Act
         boolean result = controller.addUserToProject(emailManagerInvalid, accountDTO,

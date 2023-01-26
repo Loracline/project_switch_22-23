@@ -41,7 +41,7 @@ public class ListAccountsInProjectController {
         List<AccountDTO> accountsDTO = new ArrayList<>();
         if (this.company.validateManager(emailManager)) {
             List<Account> accounts = this.company.listAccountsByProject(projectCode);
-            accountsDTO = AccountMapper.ListAccountsToDTO(accounts);
+            accountsDTO = AccountMapper.listAccountsToDTO(accounts);
         }
         return accountsDTO;
     }

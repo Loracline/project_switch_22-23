@@ -28,11 +28,8 @@ class AccountInProjectContainerTest {
     ProjectTypology projectTypologyOne;
     AccountDTO accountDTO, accountDTO2, accountDTO3;
     ProjectDTO projectDTO;
-    AllocationDTO accountInProjectDTOPO, accountInProjectDTOTM, accountInProjectDTOInvalid;
     Project project;
-    AllocationDTO allocationDTOPO, allocationDTOTM,
-            allocationDTOInvalid, allocationDTOAllocationValid,
-            allocationDTOAllocationInvalid;
+    AllocationDTO allocationDTOPO;
     List<AccountInProject> accountsInProjectOne;
     AccountInProject accountInProjectOne, accountInProjectTwo, accountInProjectThree, accountInProjectFour, accountInProjectFive;
     List<AccountInProject> accountsInProject;
@@ -92,23 +89,15 @@ class AccountInProjectContainerTest {
         accountsInProjectOne.add(accountInProjectFive);
 
         // AccountDTOs created.
-        accountDTO = new AccountDTO();
-        accountDTO.name = "John";
-        accountDTO.email = "john@isep.ipp.pt";
-       // accountDTO.phoneNumber = 912345678;
-       // accountDTO.photo = null;
+        accountDTO = new AccountDTO("John", "john@isep.ipp.pt", true);
 
-        accountDTO2 = new AccountDTO();
-        accountDTO2.name = "Anna";
-        accountDTO2.email = "anna@isep.ipp.pt";
-        //accountDTO2.phoneNumber = 912345679;
-        //accountDTO2.photo = null;
+        accountDTO2 = new AccountDTO("Anna", "anna@isep.ipp.pt", true);
 
         projectDTO = new ProjectDTO("id001", "Test", "John",
                 "Fixed cost", "Hunting");
-        accountDTO3 = new AccountDTO();
-        accountDTO3.name = "Anna";
-        accountDTO3.email = "anna@isep.ipp.pt";
+
+        accountDTO3 = new AccountDTO("Anna", "anna@isep.ipp.pt", true);
+
 
         // ProjectDTO created.
         /*customer = new Customer("IT Customer");
@@ -159,11 +148,8 @@ class AccountInProjectContainerTest {
     void ensureThatProductOwnerIsAddedToAccountsInProjects() {
         //Assert
         Account account =  new Account("Claire", "claire@isep.ipp.pt", 932755689,null);
-        allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(account, project,
@@ -176,11 +162,7 @@ class AccountInProjectContainerTest {
     void ensureThatTeamMemberIsAddedToAccountsInProjects() {
         //Assert
         Account account =  new Account("Claire", "claire@isep.ipp.pt", 932755689,null);
-        allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Team Member";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOPO = new AllocationDTO("Team Member", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(account, project,
@@ -193,11 +175,7 @@ class AccountInProjectContainerTest {
     void ensureThatScrumMasterIsAddedToAccountsInProjects() {
         //Assert
         Account account =  new Account("Claire", "claire@isep.ipp.pt", 932755689,null);
-        allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Scrum Master";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOPO = new AllocationDTO("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(account, project,
@@ -210,11 +188,7 @@ class AccountInProjectContainerTest {
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfRoleIsInvalid() {
         //Assert
         Account account =  new Account("Claire", "claire@isep.ipp.pt", 932755689,null);
-        allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Visionary";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOPO = new AllocationDTO("Product Visionary", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(account, project,
@@ -227,11 +201,8 @@ class AccountInProjectContainerTest {
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfAllocationExists() {
         //Assert
         Account account =  new Account("Claire", "claire@isep.ipp.pt", 932755689,null);
-        allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+
 
         AccountInProject accountInProject = new AccountInProject(account, project,
                 allocationDTOPO.role, allocationDTOPO.costPerHour,
@@ -250,11 +221,7 @@ class AccountInProjectContainerTest {
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfPercentageAllocationIsInvalid() {
         //Assert
         Account account =  new Account("Claire", "claire@isep.ipp.pt", 932755689,null);
-        allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
 
         AccountInProject accountInProject = new AccountInProject(account, project,
                 allocationDTOPO.role, allocationDTOPO.costPerHour,

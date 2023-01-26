@@ -533,19 +533,15 @@ class CompanyTest {
     void ensureAccountIsSuccessfullyAssociatedToAProject() {
         //Arrange
         //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Emma";
-        accountDTO.email = "emma@isep.ipp.pt";
+        AccountDTO accountDTO = new AccountDTO("Emma","emma@isep.ipp.pt", true);
+
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("AA002", "software development management", "John",
                 "Fixed cost", "Hunting");
 
         //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner",7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+
         //Act
         boolean result = company.addUserToProject(accountDTO, projectDTO,
                 allocationDTOPO);
@@ -557,20 +553,16 @@ class CompanyTest {
     void ensureAccountIsNotAssociatedToAnNonExistentProject() {
         //Arrange
         //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Emma";
-        accountDTO.email = "emma@isep.ipp.pt";
+        AccountDTO accountDTO = new AccountDTO("Emma", "emma@isep.ipp.pt", true);
+
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("AA056", "software development " +
                 "management", "John",
                 "Fixed cost", "Hunting");
 
         //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        
         //Act
         boolean result = company.addUserToProject(accountDTO, projectDTO,
                 allocationDTOPO);

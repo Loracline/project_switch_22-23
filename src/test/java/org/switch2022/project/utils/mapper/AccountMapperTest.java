@@ -4,9 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Company;
-import org.switch2022.project.model.Profile;
-import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 
 import java.util.ArrayList;
@@ -63,10 +60,7 @@ class AccountMapperTest {
     @Test
     void ensureThatAccountIsConvertedIntoAccountDTO() {
         // ARRANGE
-        AccountDTO expected = new AccountDTO();
-        expected.name = "Mike";
-        expected.email = "mike@isep.ipp.pt";
-        expected.status = true;
+        AccountDTO expected = new AccountDTO("Mike","mike@isep.ipp.pt", true);
 
         // ACT
         AccountDTO result = AccountMapper.accountToDTO(accountOne);
@@ -84,7 +78,7 @@ class AccountMapperTest {
         List<AccountDTO> expected = accountsDTOOne;
 
         //ACT
-        List<AccountDTO> result = AccountMapper.ListAccountsToDTO(accounts);
+        List<AccountDTO> result = AccountMapper.listAccountsToDTO(accounts);
 
         // ASSERT
         assertEquals(expected, result);

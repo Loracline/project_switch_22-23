@@ -12,10 +12,7 @@ class AccountDTOTest {
     @Test
     void ensureSameAccountDTOEqualsItself() {
         // ARRANGE
-        AccountDTO reference = new AccountDTO();
-        reference.name = "John";
-        reference.email = "john@isep.ipp.pt";
-        reference.status = true;
+        AccountDTO reference = new AccountDTO("John", "john@isep.ipp.pt", true);
 
         AccountDTO other = reference;
 
@@ -28,18 +25,13 @@ class AccountDTOTest {
         assertEquals(expected, result);
     }
 
-   @Test
+    @Test
     void ensureTwoAccountDTOsAreNotEqual() {
         // ARRANGE
-        AccountDTO reference = new AccountDTO();
-        reference.name = "John";
-        reference.email = "john@isep.ipp.pt";
-        reference.status = true;
+        AccountDTO reference = new AccountDTO("John", "john@isep.ipp.pt", true);
 
-        AccountDTO other = new AccountDTO();
-        other.name = "Mary";
-        other.email = "mary@isep.ipp.pt";
-        other.status = true;
+
+        AccountDTO other = new AccountDTO("Mary", "mary@isep.ipp.pt", true);
 
         boolean expected = false;
 
@@ -53,10 +45,7 @@ class AccountDTOTest {
     @Test
     void ensureAccountDTONotEqualsOtherTypeObject() {
         // ARRANGE
-        AccountDTO reference = new AccountDTO();
-        reference.name = "John";
-        reference.email = "john@isep.ipp.pt";
-        reference.status = true;
+        AccountDTO reference = new AccountDTO("John", "john@isep.ipp.pt", true);
 
         Object other = new Object();
 
@@ -75,15 +64,9 @@ class AccountDTOTest {
     @Test
     void ensureAccountDTOsHaveSameHashCode() {
         // ARRANGE
-        AccountDTO reference = new AccountDTO();
-        reference.name = "John";
-        reference.email = "john@isep.ipp.pt";
-        reference.status = true;
+        AccountDTO reference = new AccountDTO("John", "john@isep.ipp.pt", true);
 
-        AccountDTO other = new AccountDTO();
-        other.name = "John";
-        other.email = "john@isep.ipp.pt";
-        other.status = true;
+        AccountDTO other = new AccountDTO("John", "john@isep.ipp.pt", true);
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -96,18 +79,16 @@ class AccountDTOTest {
     @Test
     void ensureAccountDTOsHaveDifferentHashCode() {
         // ARRANGE
-        AccountDTO reference = new AccountDTO();
-        reference.name = "John";
-        reference.email = "john@isep.ipp.pt";
-        reference.status = true;
+        AccountDTO reference = new AccountDTO("John", "john@isep.ipp.pt", true);
 
-        AccountDTO other = new AccountDTO();
+
+        AccountDTO other = new AccountDTO("Mary", "mary@isep.ipp.pt", false);
 
         // ACT
         int hashCodeReference = reference.hashCode();
         int hashCodeOther = other.hashCode();
 
         // ASSERT
-        assertNotEquals(hashCodeOther,hashCodeReference);
+        assertNotEquals(hashCodeOther, hashCodeReference);
     }
 }

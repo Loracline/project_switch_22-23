@@ -9,7 +9,7 @@ public class CreateProfileController {
     /**
      * Attributes of the class CreateProfileController, according to the Class Diagram.
      */
-    private Company company;
+    private final Company company;
     /**
      * CreateProfileController constructor
      */

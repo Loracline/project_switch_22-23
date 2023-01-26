@@ -1,7 +1,6 @@
 package org.switch2022.project.utils.mapper;
 
 import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Profile;
 import org.switch2022.project.utils.Util;
 import org.switch2022.project.utils.dto.AccountDTO;
 
@@ -17,11 +16,7 @@ public class AccountMapper {
      * @return DTO carrying data.
      */
     public static AccountDTO accountToDTO(Account account) {
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = account.getAccountName();
-        accountDTO.email = account.getEmail();
-        accountDTO.status = account.getAccountStatus();
-        return accountDTO;
+        return new AccountDTO(account.getAccountName(),account.getEmail(),account.getAccountStatus());
     }
 
     // LIST OF ACCOUNTS -> LIST OF DTO
@@ -31,7 +26,7 @@ public class AccountMapper {
      * @param accounts list one must convert in DTO
      * @return a list of accountDTOs.
      */
-    public static List<AccountDTO> ListAccountsToDTO(List<Account> accounts) {
+    public static List<AccountDTO> listAccountsToDTO(List<Account> accounts) {
         List<AccountDTO> accountsDTO = new ArrayList<>();
         int i = 0;
         while (Util.isLower(i, accounts.size())) {

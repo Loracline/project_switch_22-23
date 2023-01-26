@@ -17,7 +17,7 @@ public class AddUserToProjectController {
     /**
      * Attributes
      */
-    final private Company company;
+    private final Company company;
 
 
     /**

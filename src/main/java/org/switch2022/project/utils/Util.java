@@ -7,10 +7,13 @@ package org.switch2022.project.utils;
 public final class Util {
 
     /**
-     * Ensuring exception is thrown when trying to instantiate class that can't
-     * be instantiated.
+     * Utility classes, which are collections of static members, are not meant
+     * to be instantiated.
+     * Java adds an implicit public constructor to every class which does not
+     * define at least one explicitly. Hence, at least one non-public
+     * constructor should be defined.
      */
-    public Util() {
+    private Util() {
         throw new IllegalStateException("Utility class");
     }
 

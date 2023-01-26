@@ -6,9 +6,18 @@ public class AccountDTO {
     /**
      * Attributes
      */
-    public String name;
-    public String email;
-    public boolean status;
+    public final String name;
+    public final String email;
+    public final boolean status;
+
+    /**
+     * Constructor
+     */
+    public AccountDTO(String name, String email, boolean status) {
+        this.name = name;
+        this.email = email;
+        this.status = status;
+    }
 
     /**
      * The equals() method is used to determine whether two objects are equal in
@@ -29,7 +38,7 @@ public class AccountDTO {
             return false;
         }
         AccountDTO that = (AccountDTO) toCompare;
-        return  status == that.status && name.equals(that.name) && email.equals(that.email);
+        return status == that.status && name.equals(that.name) && email.equals(that.email);
     }
 
     /**

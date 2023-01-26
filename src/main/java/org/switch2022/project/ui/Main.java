@@ -1,6 +1,6 @@
-/*
- package org.switch2022.project.ui;
+package org.switch2022.project.ui;
 
+/*
  import java.io.IOException;
  import java.sql.SQLException;
  import java.util.logging.Logger;
