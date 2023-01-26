@@ -44,6 +44,9 @@ class "Account" {
 -status
 +checkAccountFromEmail(email)
 +isManager()
++getAccountName()
++getEmail()
++getAccountStatus()
 }
 
 class "Profile"{
