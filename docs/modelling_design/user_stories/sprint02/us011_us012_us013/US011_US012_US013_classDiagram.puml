@@ -35,17 +35,25 @@ class ProjectContainer {
 class AccountInProject{
 -account
 -project
+-role
 -costPerHour
 -percentageAllocation
--role
 -startDate
 -endDate
 +AccountInProject(account, project, role, costPerHour, percentageAllocation, startDate)
-}
++isRoleValid()
++getPercentageOfAllocation()
++getAccount()
++getEndDate()
++setEndDate()
 
+}
 class AccountInProjectContainer{
 -accountsInProject
 +addUserToProject(account, project, allocationDTO)
+-currentPercentageOfAllocation(account)
+-isPercentageOfAllocationValid(account, newPercentageOfAllocation)
+-doesAccountInProjectExist(accountInProject)
 }
 
 class "Account"{
