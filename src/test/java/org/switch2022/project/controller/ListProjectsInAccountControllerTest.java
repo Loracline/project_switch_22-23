@@ -109,8 +109,8 @@ class ListProjectsInAccountControllerTest {
         businessSectors.add(businessSectorOne);
 
         //project
-        projectOne = new Project("1A", "Mobile Software", new Customer("Genious Software"), new ProjectTypology("Fixed Cost"), new BusinessSector("Fishing") );
-        projectTwo = new Project("2B", "Software Development Management", new Customer("Delta Software"), new ProjectTypology("Fixed Cost"),new BusinessSector("Fishing"));
+        projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
+        projectTwo = new Project("2B", "Software Development Management",customerOne, projectTypologyOne,businessSectorOne);
         projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);
@@ -208,7 +208,7 @@ class ListProjectsInAccountControllerTest {
         List<ProjectDTO> expected = projectsDTOOne;
 
         //Act
-        List<ProjectDTO> result = listProjectsInAccountController.listProjectsByAccount("mary@isep.ipp.pt");
+        List<ProjectDTO> result = listProjectsInAccountController.listProjectsByAccount("mike@isep.ipp.pt");
 
         //Assert
         assertEquals(expected, result);

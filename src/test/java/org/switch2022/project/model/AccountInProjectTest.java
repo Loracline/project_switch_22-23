@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountInProjectTest {
     Account account;
+    Account accountTwo;
     Project project;
     float costPerHour;
     float percentageAllocation;
@@ -23,6 +24,7 @@ public class AccountInProjectTest {
         //Account in project created.
 
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
         project = new Project("1A", "project code", new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
         costPerHour = 7.5f;
@@ -35,8 +37,10 @@ public class AccountInProjectTest {
     @AfterEach
     void tearDown() {
         account = null;
+        accountTwo = null;
         project = null;
         accountInProject = null;
+
     }
 
     /**
@@ -220,25 +224,20 @@ public class AccountInProjectTest {
 
     @Test
     void ensureThatAllProjectsInAccountsAreListedSuccessfully() {
-        List<Project> expected = new ArrayList<>();
-        expected.add(projectOne);
-        expected.add(projectTwo);
-
-
+        //Arrange
+        Project expected = project;
         //Act
-        List<Project> result = accountInProjectContainerOne.listProjectsByAccount("mike@isep.ipp.pt");
-
+        Project result = accountInProject.getProjectsByAccount("john@isep.ipp.pt");
         //Assert
         assertEquals(expected, result);
     }
 
-    @Test
-    void ensureThatListProjectsInAccountIsEmpty() {
-        List<Project> expected = new ArrayList<>();
 
+    @Test
+    void ensureThatGetProjectByAccountReturnsNull() {
         //Act
-        List<Project> result = accountInProjectContainerOne.listProjectsByAccount("mary@isep.ipp.pt");
+        Project result = accountInProject.getProjectsByAccount("emma@isep.ipp.pt");
         //Assert
-        assertEquals(expected, result);
+        assertNull(result);
     }
 }

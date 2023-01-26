@@ -603,7 +603,7 @@ class CompanyTest {
         //Assert
         assertEquals(expected, result);
     }
-    }*/
+
 
 
     @Test

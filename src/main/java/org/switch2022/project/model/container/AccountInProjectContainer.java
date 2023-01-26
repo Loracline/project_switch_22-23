@@ -1,7 +1,7 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.mapper.AccountInProjectDTOMapper;
+
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.utils.Util;
@@ -137,7 +137,7 @@ public class AccountInProjectContainer {
     public List<Project> listProjectsByAccount(String emailUser) {
         List<Project> projects = new ArrayList<>();
         int i = 0;
-        while (Helper.isLower(i, accountsInProject.size())) {
+        while (Util.isLower(i, accountsInProject.size())) {
             Project requestedProject = accountsInProject.get(i).getProjectsByAccount(emailUser);
             if (requestedProject != null) {
                 projects.add(requestedProject);
@@ -146,8 +146,5 @@ public class AccountInProjectContainer {
         }
         return projects;
     }
-
-
-
 
 }

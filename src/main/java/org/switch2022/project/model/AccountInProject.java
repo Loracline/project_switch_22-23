@@ -156,6 +156,7 @@ public class AccountInProject {
     public Project getProjectsByAccount(String emailUser) {
         Project requestedProject = null;
         if ( validate(emailUser)) {
+            requestedProject = this.project;
         }
         return requestedProject;
     }
