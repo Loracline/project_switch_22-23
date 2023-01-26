@@ -98,11 +98,9 @@ class AddUserToProjectControllerTest {
                 "Fixed cost", "Fishing");
 
         //account in project dto
-        allocationDTO = new AllocationDTO();
-        allocationDTO.role = "Product Owner";
-        allocationDTO.costPerHour = 7.5f;
-        allocationDTO.percentageAllocation = 45.0f;
-        allocationDTO.startDate = LocalDate.of(2023, 1, 19);
+        allocationDTO = new AllocationDTO("Product Owner",7.5f,45.0f,LocalDate.of(2023,
+                1, 19),null);
+
 
         //containers
         accountContainer = new AccountContainer(accounts);

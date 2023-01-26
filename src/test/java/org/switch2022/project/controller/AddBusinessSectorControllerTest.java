@@ -5,12 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.AccountContainer;
-import org.switch2022.project.model.container.AccountInProjectContainer;
 import org.switch2022.project.model.container.BusinessSectorContainer;
-import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.mapper.AccountMapper;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,10 +48,8 @@ class AddBusinessSectorControllerTest {
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
 
-        //businessSector
+        //business sector
         businessSectorOne = new BusinessSector("Fishing");
-        businessSectors = new ArrayList<>();
-        businessSectors.add(businessSectorOne);
 
         //project
         projectOne = new Project("1A", "Mobile Software", customerOne,
@@ -63,7 +57,8 @@ class AddBusinessSectorControllerTest {
 
         //containers
         accountContainer = new AccountContainer(accounts);
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
+        businessSectorContainer = new BusinessSectorContainer();
+        businessSectorContainer.createBusinessSector("fishing");
 
         //company
         company = new Company(accountContainer, null, businessSectorContainer,
@@ -81,10 +76,9 @@ class AddBusinessSectorControllerTest {
         profileTwo = null;
         customerOne = null;
         projectTypologyOne = null;
-        businessSectorOne = null;
         projectOne = null;
         accounts.clear();
-        businessSectors.clear();
+        businessSectorOne = null;
         accountContainer = null;
         businessSectorContainer = null;
         company = null;

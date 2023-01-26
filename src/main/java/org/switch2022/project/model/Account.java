@@ -106,16 +106,6 @@ public class Account {
         return accountName;
     }
 
-
-    /**
-     * Getter method for the attribute: photo.
-     *
-     * @return photo of the account.
-     */
-    public BufferedImage getPhoto() {
-        return photo;
-    }
-
     /**
      * Getter method for the attribute: status.
      *

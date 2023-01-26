@@ -1,8 +1,9 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.utils.Util;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,14 +14,7 @@ public class BusinessSectorContainer {
     /**
      * Attributes
      */
-    private final List<BusinessSector> businessSectors;
-
-    /**
-     * Constructor
-     */
-    public BusinessSectorContainer(List<BusinessSector> businessSectors) {
-        this.businessSectors = businessSectors;
-    }
+    private final List<BusinessSector> businessSectors= new ArrayList<>();
 
     /**
      * This method validates if business sector already exists in the container.
@@ -29,7 +23,7 @@ public class BusinessSectorContainer {
      * @return TRUE if exists and FALSE otherwise.
      */
     private boolean doesBusinessSectorExist(BusinessSector businessSector) {
-        return this.businessSectors.contains(businessSector);
+        return businessSectors.contains(businessSector);
     }
 
     /**
@@ -47,33 +41,5 @@ public class BusinessSectorContainer {
             isAddedToList = true;
         }
         return isAddedToList;
-    }
-
-    /**
-     * Getter method for the attribute: businessSectors.
-     *
-     * @return a list of all the business sectors in the container.
-     */
-    public List<BusinessSector> getBusinessSectors() {
-        return businessSectors;
-    }
-
-    /**
-     * This method searches for a business sector with given name.
-     *
-     * @param businessSectorName of the business sector.
-     * @return the intended business sector.
-     */
-    public BusinessSector getBusinessSectorByName(String businessSectorName) {
-        BusinessSector requestedBusinessSector = null;
-        int i = 0;
-        while (Util.isLower(i, businessSectors.size())) {
-            if (businessSectors.get(i).getBusinessSectorName().equalsIgnoreCase(businessSectorName)) {
-                requestedBusinessSector = businessSectors.get(i);
-                break;
-            }
-            i++;
-        }
-        return requestedBusinessSector;
     }
 }

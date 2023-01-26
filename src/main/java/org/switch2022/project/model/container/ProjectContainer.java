@@ -57,8 +57,7 @@ public class ProjectContainer {
      * @return TRUE if registered and FALSE otherwise.
      */
     public boolean registerProject(ProjectDTO dto) {
-        ProjectMapper projectMapper = new ProjectMapper();
-        Project project = projectMapper.getProjectFromDTO(dto);
+        Project project = ProjectMapper.getProjectFromDTO(dto);
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);

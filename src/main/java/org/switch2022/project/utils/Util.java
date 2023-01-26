@@ -7,7 +7,6 @@ package org.switch2022.project.utils;
 public final class Util {
 
     /**
-     * PRIVATE CONSTRUCTOR
      * Utility classes, which are collections of static members, are not meant
      * to be instantiated.
      * Java adds an implicit public constructor to every class which does not
@@ -17,7 +16,6 @@ public final class Util {
     private Util() {
         throw new IllegalStateException("Utility class");
     }
-
 
     /**
      * This static method checks if first number is lower than the second.

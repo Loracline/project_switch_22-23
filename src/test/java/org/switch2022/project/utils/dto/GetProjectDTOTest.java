@@ -53,5 +53,4 @@ public class GetProjectDTOTest {
         // Check that unequal objects have different hash codes
         assertNotEquals(objectOne.hashCode(), objectThree.hashCode());
     }
-
 }

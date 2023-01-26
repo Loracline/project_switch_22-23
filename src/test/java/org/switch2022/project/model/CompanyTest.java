@@ -29,8 +29,6 @@ class CompanyTest {
     List<Profile> profiles;
     List<Project> projects;
     List<ProjectTypology> typologies;
-    BusinessSector businessSectorOne, businessSectorTwo;
-    List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -79,16 +77,12 @@ class CompanyTest {
         profiles.add(profileOne);
         profiles.add(profileTwo);
 
-        // Business sectors created.
-        businessSectorOne = new BusinessSector("fishing");
-        businessSectorTwo = new BusinessSector("hunting");
 
         // Container of business sectors created.
-        businessSectors = new ArrayList<>();
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
+        businessSectorContainer= new BusinessSectorContainer();
+        businessSectorContainer.createBusinessSector("fishing");
+        businessSectorContainer.createBusinessSector("hunting");
 
-        // Business sectors added to the Container.
-        businessSectors.add(businessSectorOne);
 
         // Projects created.
         project = new Project("AA002", "software development management", new Customer(
@@ -175,10 +169,7 @@ class CompanyTest {
         project = null;
         accountContainer = null;
         profileContainer = null;
-        businessSectorOne = null;
-        businessSectors.clear();
         businessSectorContainer = null;
-        //businessSector = null;
         projectTypologyOne = null;
         projectTypologyTwo = null;
         typologies.clear();
@@ -533,19 +524,15 @@ class CompanyTest {
     void ensureAccountIsSuccessfullyAssociatedToAProject() {
         //Arrange
         //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Emma";
-        accountDTO.email = "emma@isep.ipp.pt";
+        AccountDTO accountDTO = new AccountDTO("Emma","emma@isep.ipp.pt", true);
+
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("AA002", "software development management", "John",
                 "Fixed cost", "Hunting");
 
         //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner",7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+
         //Act
         boolean result = company.addUserToProject(accountDTO, projectDTO,
                 allocationDTOPO);
@@ -557,20 +544,16 @@ class CompanyTest {
     void ensureAccountIsNotAssociatedToAnNonExistentProject() {
         //Arrange
         //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Emma";
-        accountDTO.email = "emma@isep.ipp.pt";
+        AccountDTO accountDTO = new AccountDTO("Emma", "emma@isep.ipp.pt", true);
+
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("AA056", "software development " +
                 "management", "John",
                 "Fixed cost", "Hunting");
 
         //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        
         //Act
         boolean result = company.addUserToProject(accountDTO, projectDTO,
                 allocationDTOPO);
@@ -578,13 +561,11 @@ class CompanyTest {
         assertFalse(result);
     }
 
-
-
     @Test
     void ensureThatAllAccountsByProjectAreListedSuccessfully() {
+        //Arrange
         List<Account> expected = new ArrayList<>();
         expected.add(accountOne);
-
 
         //Act
         List<Account> result = company.listAccountsByProject("AA001");
@@ -595,6 +576,7 @@ class CompanyTest {
 
     @Test
     void ensureThatListAccountsByProjectIsEmpty_NoProject() {
+        //Arrange
         List<Account> expected = new ArrayList<>();
 
         //Act
@@ -603,5 +585,31 @@ class CompanyTest {
         //Assert
         assertEquals(expected, result);
     }
+
+
+
+    @Test
+    void ensureThatIsPossibleToListProjectsByAccount() {
+        //Arrange
+        List<Project> expected = new ArrayList<>();
+        expected.add(projectOne);
+        //Act
+        List<Project> result = company.listProjectsByAccount("mike@isep.ipp.pt");
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatListProjectsInAccountIsEmpty() {
+        //Arrange
+        List<Project> expected = new ArrayList<>();
+        //Act
+        List<Project> result = company.listProjectsByAccount("jane@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
+
 }
 

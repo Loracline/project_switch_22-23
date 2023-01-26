@@ -7,9 +7,17 @@ public class AllocationDTO {
     /**
      * Attributes of the class AllocationDTO, according to the AccountInProject constructor.
      */
-    public String role;
-    public float costPerHour;
-    public float percentageAllocation;
-    public LocalDate startDate;
-    public LocalDate endDate;
+    public final String role;
+    public final float costPerHour;
+    public final float percentageAllocation;
+    public final LocalDate startDate;
+    public final LocalDate endDate;
+
+    public AllocationDTO(String role, float costPerHour, float percentageAllocation, LocalDate startDate, LocalDate endDate) {
+        this.role = role;
+        this.costPerHour = costPerHour;
+        this.percentageAllocation = percentageAllocation;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 }

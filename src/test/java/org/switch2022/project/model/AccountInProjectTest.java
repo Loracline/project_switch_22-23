@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountInProjectTest {
     Account account;
+    Account accountTwo;
     Project project;
     float costPerHour;
     float percentageAllocation;
@@ -19,14 +19,16 @@ public class AccountInProjectTest {
 
     @BeforeEach
     void setUp() {
-        //Account in project created.
 
+        //Account in project created.
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
+        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
         project = new Project("1A", "project code", new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
         startDate = LocalDate.of(2023, 1, 19);
+
         accountInProject = new AccountInProject(account, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
     }
@@ -34,15 +36,17 @@ public class AccountInProjectTest {
     @AfterEach
     void tearDown() {
         account = null;
+        accountTwo = null;
         project = null;
         accountInProject = null;
     }
 
     /**
-     * Testing the equals() method.
+     * Tests for the equals() method.
      */
+
     @Test
-    void ensureSameAccountInProjectEqualsItself() {
+    void ensureThatSameAccountInProjectEqualsItself() {
         // Arrange
         AccountInProject clone = accountInProject;
         boolean expected = true;
@@ -53,7 +57,7 @@ public class AccountInProjectTest {
     }
 
     @Test
-    void ensureTwoAccountsInProjectAreEqual() {
+    void ensureThatTwoAccountsInProjectAreEqual() {
         // Arrange
         AccountInProject copy = new AccountInProject(account, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
@@ -65,7 +69,7 @@ public class AccountInProjectTest {
     }
 
     @Test
-    void ensureTwoAccountsInProjectAreDifferent() {
+    void ensureThatTwoAccountsInProjectAreDifferent() {
         // Arrange
         AccountInProject other = new AccountInProject(account, project, "Product Owner",
                 costPerHour, percentageAllocation, startDate);
@@ -77,14 +81,14 @@ public class AccountInProjectTest {
     }
 
     @Test
-    void ensureAccountInProjectDoesNotEqualsNull() {
+    void ensureThatAccountInProjectDoesNotEqualsNull() {
         // Assert
         assertNotNull(accountInProject);
     }
 
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
-    void ensureAccountInProjectDoesNotEqualOtherTypeOfObject() {
+    void ensureThatAccountInProjectDoesNotEqualOtherTypeOfObject() {
         // Arrange
         boolean expected = false;
         // Act
@@ -95,10 +99,10 @@ public class AccountInProjectTest {
     }
 
     /**
-     * hashCode()
+     * Tests for hashCode()
      */
     @Test
-    void ensureAccountsInProjectHaveSameHashCode() {
+    void ensureThatAccountsInProjectHaveSameHashCode() {
         // ARRANGE
         AccountInProject reference = new AccountInProject(account, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
@@ -114,7 +118,7 @@ public class AccountInProjectTest {
     }
 
     @Test
-    void ensureAccountsInProjectHaveDifferentHashCode() {
+    void ensureThatAccountsInProjectHaveDifferentHashCode() {
         // ARRANGE
         AccountInProject reference = new AccountInProject(account, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);
@@ -130,10 +134,27 @@ public class AccountInProjectTest {
     }
 
     /**
-     * Testing if one is able to validate the role of the account in project.
+     * Test to verify if the percentage allocation is retrieved
      */
+
     @Test
-    void ensureProductOwnerIsAValidRole() {
+    void ensureThatPercentageAllocationIsRetrievedSuccessfully() {
+        // Arrange
+        float expected = 45.0f;
+
+        // Act
+        float result = accountInProject.getPercentageOfAllocation();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test to validate if Product Owner as a valid role to an account in project. It should return true.
+     */
+
+    @Test
+    void ensureThatProductOwnerIsAValidRole() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
                 "Product Owner", costPerHour, percentageAllocation, startDate);
@@ -143,8 +164,12 @@ public class AccountInProjectTest {
         assertTrue(result);
     }
 
+    /**
+     * Test to validate if Team Member as a valid role to an account in project. It should return true.
+     */
+
     @Test
-    void ensureTeamMemberIsAValidRole() {
+    void ensureThatTeamMemberIsAValidRole() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
                 "Team Member", costPerHour, percentageAllocation, startDate);
@@ -154,8 +179,12 @@ public class AccountInProjectTest {
         assertTrue(result);
     }
 
+    /**
+     * Test to validate if Scrum Master as a valid role to an account in project. It should return true.
+     */
+
     @Test
-    void ensureScrumMasterIsAValidRole() {
+    void ensureThatScrumMasterIsAValidRole() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
                 "Scrum Master", costPerHour, percentageAllocation, startDate);
@@ -165,8 +194,12 @@ public class AccountInProjectTest {
         assertTrue(result);
     }
 
+    /**
+     * Test to validate if Project Manager as a valid role to an account in project. It should return true.
+     */
+
     @Test
-    void ensureProjectManagerIsAValidRole() {
+    void ensureThatProjectManagerIsAValidRole() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
                 "Project Manager", costPerHour, percentageAllocation, startDate);
@@ -176,8 +209,12 @@ public class AccountInProjectTest {
         assertTrue(result);
     }
 
+    /**
+     * Test to verify in an invalid role could be given to an AccountInProject. It should return false.
+     */
+
     @Test
-    void ensureAnyOtherRoleIsInvalid() {
+    void ensureThatAnyOtherRoleIsInvalid() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
                 "Product Visionary", costPerHour, percentageAllocation, startDate);
@@ -186,11 +223,14 @@ public class AccountInProjectTest {
         //Assert
         assertFalse(result);
     }
+
+    /**
+     * Test to verify if the endDate is successfully retrieved.
+     */
+
     @Test
-    void ensureEndDateIsRetrieved() {
+    void ensureThatEndDateIsRetrievedSuccessfully() {
         //Arrange
-        AccountInProject accountInProject = new AccountInProject(account, project,
-                "Product Visionary", costPerHour, percentageAllocation, startDate);
         LocalDate expected = LocalDate.of(2023, 12, 25);
         //Act
         accountInProject.setEndDate(LocalDate.of(2023, 12, 25));
@@ -199,8 +239,13 @@ public class AccountInProjectTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test to verify if an account is retrieved by giving a valid project code. To make this it accesses
+     * accountInProject to retrieve the account itself. It should return the account.
+     */
+
     @Test
-    void ensureAccountIsRetrievedSuccessfully() {
+    void ensureThatAccountIsRetrievedSuccessfullyWithProjectCode() {
         //Arrange
         Account expected = account;
         //Act
@@ -209,8 +254,12 @@ public class AccountInProjectTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test to verify if an account is retrieved by giving a invalid project code. It should return null.
+     */
+
     @Test
-    void ensureThatGetAccountByProjectReturnsNull() {
+    void ensureThatGetAccountByProjectReturnsNullWithInvalidProjectCode() {
         //Act
         Account result = accountInProject.getAccountByProject("AA001");
         //Assert
@@ -226,5 +275,24 @@ public class AccountInProjectTest {
         //Assert
         assertEquals(expected,result);
 
+    }
+
+    @Test
+    void ensureThatAllProjectsInAccountsAreListedSuccessfully() {
+        //Arrange
+        Project expected = project;
+        //Act
+        Project result = accountInProject.getProjectsByAccount("john@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
+    @Test
+    void ensureThatGetProjectByAccountReturnsNull() {
+        //Act
+        Project result = accountInProject.getProjectsByAccount("emma@isep.ipp.pt");
+        //Assert
+        assertNull(result);
     }
 }

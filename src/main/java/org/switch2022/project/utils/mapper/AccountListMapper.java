@@ -7,20 +7,10 @@ import org.switch2022.project.utils.dto.AccountDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class AccountMapper {
-    // DTO -> ACCOUNT
-    /**
-     * This method converts an account into a DTO.
-     *
-     * @param account one must convert.
-     * @return DTO carrying data.
-     */
-    public static AccountDTO accountToDTO(Account account) {
-        return new AccountDTO(account.getAccountName(),account.getEmail(),account.getAccountStatus());
-    }
+public class AccountListMapper {
 
     // LIST OF ACCOUNTS -> LIST OF DTO
+
     /**
      * This method converts a list of accounts into a list of accountDTOs.
      *
@@ -31,12 +21,12 @@ public class AccountMapper {
         List<AccountDTO> accountsDTO = new ArrayList<>();
         int i = 0;
         while (Util.isLower(i, accounts.size())) {
-            AccountDTO accountDTO = accountToDTO(accounts.get(i));
+            AccountDTO accountDTO = AccountMapper.accountToDTO(accounts.get(i));
             accountsDTO.add(accountDTO);
             i++;
         }
         return accountsDTO;
     }
 
-}
 
+}

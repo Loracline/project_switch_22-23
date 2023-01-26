@@ -12,7 +12,7 @@ public class ListAccountController {
   /**
    * Attributes of the class AccountListController, according to the Class Diagram.
    */
-  private Company company;
+  private final Company company;
   /**
    * AccountListController constructor
    */

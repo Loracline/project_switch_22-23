@@ -32,7 +32,7 @@ public class ProjectTest {
   }
 
   /**
-   * Testing the equals() method.
+   * Test to ensure the object equals itself
    */
   @Test
   void ensureSameObjectEqualsItself() {
@@ -41,7 +41,9 @@ public class ProjectTest {
     boolean result = projectOne.equals(projectReference);
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that two objects are from different classes
+   */
   @Test
   void ensureObjectsAreFromDifferentClasses() {
     Object projectObject = new Object();
@@ -49,25 +51,27 @@ public class ProjectTest {
     boolean result = projectOne.equals(projectObject);
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that two objects from the same class are different
+   */
   @Test
   void ensureTwoProjectsAreNotEqual() {
     boolean expected = false;
     boolean result = projectOne.equals(projectTwo);
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that two objects from the same class are equal
+   */
   @Test
   void ensureTwoProjectsAreEqual() {
     Project project = new Project("AA001", "Aptoide", new Customer("john","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    boolean expected = true;
-    boolean result = project.equals(projectOne);
-    assertEquals(expected, result);
+    assertEquals(project, projectOne);
   }
 
   /**
-   * Testing if one can get code from given project.
+   * Test to ensure that project code requested from a given project is retrieved
    */
   @Test
   void ensureProjectCodeIsEqual() {
@@ -75,7 +79,9 @@ public class ProjectTest {
     String result = projectOne.getProjectCode();
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that project code requested from a given project is not retrieved
+   */
   @Test
   void ensureProjectCodeIsNotEqual() {
     String expected = "AA002";
@@ -84,7 +90,7 @@ public class ProjectTest {
   }
 
   /**
-   * Testing if one can get name from given project.
+   * Test to ensure that project name requested from a given project is retrieved
    */
   @Test
   void ensureProjectNameIsEqual() {
@@ -92,7 +98,9 @@ public class ProjectTest {
     String result = projectOne.getProjectName();
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that project name requested from a given project is not retrieved
+   */
   @Test
   void ensureProjectNameIsNotEqual() {
     String expected = "Aptoido";
@@ -101,7 +109,7 @@ public class ProjectTest {
   }
 
   /**
-   * Testing if one can get customer from given project.
+   * Test to ensure that customer requested from a given project is retrieved
    */
   @Test
   void ensureCustomerIsEqual() {
@@ -109,7 +117,9 @@ public class ProjectTest {
     Customer result = projectOne.getCustomer();
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that customer requested from a given project is not retrieved
+   */
   @Test
   void ensureCustomerIsNotEqual() {
     Customer expected = new Customer("Johnny", null);
@@ -118,7 +128,7 @@ public class ProjectTest {
   }
 
   /**
-   * Testing if one can get status from given project.
+   * Test to ensure that status requested from a given project is retrieved
    */
   @Test
   void ensureStatusIsEqual() {
@@ -126,7 +136,9 @@ public class ProjectTest {
     String result = projectOne.getProjectStatus();
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that status requested from a given project is not retrieved
+   */
   @Test
   void ensureStatusIsNotEqual() {
     String expected = "finished";
@@ -135,7 +147,7 @@ public class ProjectTest {
   }
 
   /**
-   * Testing if one can get typology from given project.
+   * Test to ensure that project typology requested from a given project is retrieved
    */
   @Test
   void ensureProjectTypologyIsEqual() {
@@ -143,7 +155,9 @@ public class ProjectTest {
     ProjectTypology result = projectOne.getProjectTypology();
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that project typology requested from a given project is not retrieved
+   */
   @Test
   void ensureProjectTypologyIsNotEqual() {
     ProjectTypology expected = new ProjectTypology("Variable cost");
@@ -152,7 +166,7 @@ public class ProjectTest {
   }
 
   /**
-   * Testing if one can get business sector from given project.
+   * Test to ensure that business sector requested from a given project is retrieved
    */
   @Test
   void ensureBusinessSectorIsEqual() {
@@ -160,14 +174,18 @@ public class ProjectTest {
     BusinessSector result = projectOne.getBusinessSector();
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to ensure that business sector requested from a given project is not retrieved
+   */
   @Test
   void ensureBusinessSectorIsNotEqual() {
     BusinessSector expected = new BusinessSector("Fishing");
     BusinessSector result = projectOne.getBusinessSector();
     assertNotEquals(expected, result);
   }
-
+  /**
+   * Test to check the hashcode when objects are equal and unequal
+   */
   @Test
   void testHashCode() {
     Project objectOne = projectOne;

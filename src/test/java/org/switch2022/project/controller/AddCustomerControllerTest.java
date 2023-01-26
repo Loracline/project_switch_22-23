@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class AddCustomerControllerTest {
-    /**
+   /**
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
@@ -85,16 +86,6 @@ class AddCustomerControllerTest {
         company = null;
         addCustomerController = null;
     }
-   /* @Test
-    void addNewCustomerUnsuccessfullyInvalidName(){
-        //Arrange
-        boolean expected = false;
-        accountOne.setProfile(profileOne);
-        //Act
-        boolean result = addCustomerController.addCustomer("ISEP","222333444", "mike@isep.ipp.pt");
-        //Assert
-        assertEquals(expected,result);
-    }*/
 
     /**
      * US009

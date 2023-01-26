@@ -23,8 +23,6 @@ class ListAccountControllerTest {
   List<Profile> profiles;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
-  BusinessSector businessSector;
-  List<BusinessSector> businessSectors;
   BusinessSectorContainer businessSectorContainer;
   Project project;
   List<Project> projects;
@@ -68,11 +66,6 @@ class ListAccountControllerTest {
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
 
-    businessSector = new BusinessSector("fishing");
-
-    businessSectors = new ArrayList<>();
-    businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
 
     customerOne = new Customer("ISEP", "222333444");
     customerTwo = new Customer("PortoTech", "222333445");
@@ -107,8 +100,6 @@ class ListAccountControllerTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector = null;
-    businessSectors.clear();
     businessSectorContainer = null;
     project = null;
     projects.clear();
