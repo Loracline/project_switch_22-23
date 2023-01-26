@@ -10,7 +10,7 @@ participant ":ListAccountsInProjectUI" as ui
 participant ":ListAccountsInProjectController" as controller
 participant ":Company" as company
 participant ":AccountInProjectContainer" as aipc
-participant "accountInProject:AccountInProject" as aip
+participant ":AccountInProject" as aip
 participant "accounts: List<Account>" as list
 participant ":AccountMapper" as mapper
 participant "accountsDTO: List<AccountDTO>" as listDTO
@@ -51,7 +51,7 @@ activate mapper
 create listDTO
 mapper --> listDTO: create ()
 loop for each account in accounts
-mapper -> list: account = get(i)
+mapper -> list: get(i)
 list --> mapper: account
 activate mapper
 mapper -> mapper : accountDTO = accountToDTO(account)

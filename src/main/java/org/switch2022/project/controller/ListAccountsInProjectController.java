@@ -3,7 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Company;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.mapper.AccountListMapper;
+import org.switch2022.project.utils.mapper.AccountMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +19,12 @@ public class ListAccountsInProjectController {
      * Attributes
      */
     private final Company company;
-
-
     /**
      * Constructor
      */
     public ListAccountsInProjectController(Company company) {
         this.company = company;
     }
-
 
     /**
      * This method lists all accounts that are working in a certain project.
@@ -41,7 +38,7 @@ public class ListAccountsInProjectController {
         List<AccountDTO> accountsDTO = new ArrayList<>();
         if (this.company.validateManager(emailManager)) {
             List<Account> accounts = this.company.listAccountsByProject(projectCode);
-            accountsDTO = AccountListMapper.listAccountsToDTO(accounts);
+            accountsDTO = AccountMapper.listAccountsToDTO(accounts);
         }
         return accountsDTO;
     }
