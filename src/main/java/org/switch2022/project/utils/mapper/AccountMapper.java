@@ -4,6 +4,9 @@ import org.switch2022.project.model.Account;
 import org.switch2022.project.utils.Util;
 import org.switch2022.project.utils.dto.AccountDTO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class AccountMapper {
     // DTO -> ACCOUNT
