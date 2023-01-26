@@ -25,7 +25,6 @@ class AddBusinessSectorControllerTest {
     BusinessSector businessSectorOne;
     Project projectOne;
     List<Account> accounts;
-    List<BusinessSector> businessSectors;
     AccountContainer accountContainer;
     BusinessSectorContainer businessSectorContainer;
     Company company;
@@ -96,10 +95,11 @@ class AddBusinessSectorControllerTest {
         //Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
-        boolean result = addBusinessSectorController.addBusinessSector("mining", "mike" +
-                "@isep.ipp.pt");
+        boolean result = addBusinessSectorController.addBusinessSector("mining",
+                emailActor);
         //Assert
         assertEquals(expected, result);
     }
@@ -116,11 +116,12 @@ class AddBusinessSectorControllerTest {
         //Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         //Act
         //business sector "fishing" already exists
-        boolean result = addBusinessSectorController.addBusinessSector("fishing", "mike" +
-                "@isep.ipp.pt");
+        boolean result = addBusinessSectorController.addBusinessSector("fishing",
+                emailActor);
         //Assert
         assertEquals(expected, result);
     }
@@ -136,11 +137,12 @@ class AddBusinessSectorControllerTest {
         //Arrange
         //set profileOne (Manager) to accountOne
         accountOne.setProfile(profileTwo);
+        String emailActor = accountOne.getEmail(); //Manager
         boolean expected = false;
         //Act
         //"paul@isep.ipp.pt" is not the administrator
-        boolean result = addBusinessSectorController.addBusinessSector("mining", "paul" +
-                "@isep.ipp.pt");
+        boolean result = addBusinessSectorController.addBusinessSector("mining",
+                emailActor);
         //Assert
         assertEquals(expected, result);
     }

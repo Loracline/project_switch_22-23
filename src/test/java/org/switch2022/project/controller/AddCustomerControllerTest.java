@@ -99,9 +99,10 @@ class AddCustomerControllerTest {
         //Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
-        boolean result = addCustomerController.addCustomer("Critical","233444000", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical","233444000", emailActor);
         //Assert
         assertEquals(expected,result);
     }
@@ -117,9 +118,10 @@ class AddCustomerControllerTest {
         // Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("", "234345456", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("", "234345456", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -136,9 +138,10 @@ class AddCustomerControllerTest {
         // Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("Critical", "", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical", "", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -154,9 +157,10 @@ class AddCustomerControllerTest {
         // Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("Critical", "2223334444", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical", "2223334444", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -173,9 +177,10 @@ class AddCustomerControllerTest {
         //Arrange
         //set profileTwo (Manager) to accountOne
         accountOne.setProfile(profileTwo);
+        String emailActor = accountOne.getEmail(); //Manager
         boolean expected = false;
         //Act
-        boolean result = addCustomerController.addCustomer("Critical", "255666777", "paul@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical", "255666777", emailActor);
         // Assert
         assertEquals(expected, result);
     }
