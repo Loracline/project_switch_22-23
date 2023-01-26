@@ -36,7 +36,6 @@ class ListProjectsInAccountControllerTest {
     List<AccountDTO> accountsDTOOne;
     List<Profile> profiles;
     List<ProjectTypology> typologies;
-    List<BusinessSector> businessSectors;
     List<Project> projects;
     List<AccountInProject> accountsInProject;
     AccountContainer accountContainer;
@@ -105,8 +104,6 @@ class ListProjectsInAccountControllerTest {
 
         //businessSector
         businessSectorOne = new BusinessSector("Fishing");
-        businessSectors = new ArrayList<>();
-        businessSectors.add(businessSectorOne);
 
         //project
         projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
@@ -138,7 +135,7 @@ class ListProjectsInAccountControllerTest {
         //containers
         accountContainer = new AccountContainer(accounts);
         profileContainer = new ProfileContainer(profiles);
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
+        businessSectorContainer = new BusinessSectorContainer();
         projectContainer = new ProjectContainer(projects);
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
@@ -183,7 +180,6 @@ class ListProjectsInAccountControllerTest {
         accountsDTOOne.clear();
         profiles.clear();
         typologies.clear();
-        businessSectors.clear();
         projects.clear();
         accountsInProject.clear();
         customers.clear();

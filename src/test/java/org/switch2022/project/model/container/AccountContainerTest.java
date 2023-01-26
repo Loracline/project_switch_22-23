@@ -27,7 +27,6 @@ class AccountContainerTest {
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
-    List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
     CustomerContainer customerContainer;
     List<Customer> customers;
@@ -78,8 +77,7 @@ class AccountContainerTest {
         profiles.add(profileThree);
 
         // Business sectors container created.
-        businessSectors = new ArrayList<>();
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
+        businessSectorContainer = new BusinessSectorContainer();
 
         // Project typologies container created.
         List<ProjectTypology> typologies = new ArrayList<>();
@@ -133,7 +131,6 @@ class AccountContainerTest {
         profiles.clear();
         accountContainer = null;
         profileContainer = null;
-        businessSectors.clear();
         businessSectorContainer = null;
         project = null;
         projects.clear();

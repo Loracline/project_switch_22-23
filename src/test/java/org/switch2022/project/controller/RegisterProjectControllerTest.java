@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.ProjectDTO;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,6 @@ class RegisterProjectControllerTest {
   List<Profile> profiles;
   List<Project> projects;
   List<ProjectTypology> typologies;
-  List<BusinessSector> businessSectors;
   List<Customer> customers;
   BusinessSectorContainer businessSectorContainer;
   AccountContainer accountContainer;
@@ -52,9 +49,6 @@ class RegisterProjectControllerTest {
     profileContainer = new ProfileContainer(profiles);
     profiles.add(profileOne);
     profiles.add(profileTwo);
-
-    businessSectors = new ArrayList<>();
-    businessSectorContainer = new BusinessSectorContainer(businessSectors);
 
     typologies = new ArrayList<>();
     projectTypologyContainer = new ProjectTypologyContainer(typologies);
@@ -95,7 +89,6 @@ class RegisterProjectControllerTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSectors.clear();
     businessSectorContainer = null;
     typologies.clear();
     projectTypologyContainer = null;

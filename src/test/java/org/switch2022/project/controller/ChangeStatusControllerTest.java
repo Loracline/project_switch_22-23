@@ -32,8 +32,6 @@ class ChangeStatusControllerTest {
     ProfileContainer profileContainer;
 
     // business sectors
-    BusinessSector businessSector;
-    List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
 
     // customers
@@ -93,10 +91,6 @@ class ChangeStatusControllerTest {
         projectContainer = new ProjectContainer(projects);
         projects.add(project);
 
-        // business sectors
-        businessSectors = new ArrayList<>();
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
-
         // project typologies
 
         List<ProjectTypology> typologies = new ArrayList<>();
@@ -131,8 +125,6 @@ class ChangeStatusControllerTest {
         profileOne = null;
         accountContainer = null;
         profileContainer = null;
-        businessSector = null;
-        businessSectors.clear();
         businessSectorContainer = null;
         project = null;
         projectContainer = null;

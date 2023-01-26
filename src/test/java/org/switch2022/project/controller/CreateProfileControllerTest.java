@@ -29,7 +29,6 @@ class CreateProfileControllerTest {
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
-    List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
     CustomerContainer customerContainer;
     List<Customer> customers;
@@ -68,9 +67,6 @@ class CreateProfileControllerTest {
         projects = new ArrayList<>();
         projectContainer = new ProjectContainer(projects);
         projects.add(project);
-
-        businessSectors = new ArrayList<>();
-        businessSectorContainer= new BusinessSectorContainer(businessSectors);
 
         List<ProjectTypology> typologies = new ArrayList<>();
         projectTypologyContainer = new ProjectTypologyContainer(typologies);
@@ -111,7 +107,6 @@ class CreateProfileControllerTest {
         profiles.clear();
         accountContainer = null;
         profileContainer = null;
-        businessSectors.clear();
         businessSectorContainer=null;
         project = null;
         projects.clear();

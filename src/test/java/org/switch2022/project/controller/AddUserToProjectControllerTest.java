@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AddUserToProjectControllerTest {
 
-/**
+    /**
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
@@ -58,8 +58,6 @@ class AddUserToProjectControllerTest {
     ProjectTypologyContainer projectTypologyContainer;
 
     //business sectors
-    BusinessSector businessSector;
-    List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
 
     //accounts in project
@@ -99,11 +97,8 @@ class AddUserToProjectControllerTest {
         profiles.add(profileThree);
 
         //business sectors
-        businessSector = new BusinessSector("fishing");
-
-        businessSectors = new ArrayList<>();
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
-        businessSectors.add(businessSector);
+        businessSectorContainer= new BusinessSectorContainer();
+        businessSectorContainer.createBusinessSector("fishing");
 
         //project typologies
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -125,11 +120,11 @@ class AddUserToProjectControllerTest {
         customers.add(customerTwo);
 
         //projects
-        projectOne = new Project("proj001", "software development", new Customer ("John", "228674498"),new ProjectTypology("Fixed cost")
-                , new BusinessSector( "Hunting"));
-        projectTwo = new Project("proj002", "project software", new Customer ("John", "228674498"),
+        projectOne = new Project("proj001", "software development", new Customer("John", "228674498"), new ProjectTypology("Fixed cost")
+                , new BusinessSector("Hunting"));
+        projectTwo = new Project("proj002", "project software", new Customer("John", "228674498"),
                 new ProjectTypology("Fixed cost")
-                , new BusinessSector( "Hunting"));
+                , new BusinessSector("Hunting"));
 
         projects = new ArrayList<>();
         projects.add(projectOne);
@@ -158,55 +153,53 @@ class AddUserToProjectControllerTest {
 
     @AfterEach
     void tearDown() {
-        //accounts
-        accountOne = null;
-        accountTwo = null;
-        accountThree = null;
+    //accounts
+    accountOne =null;
+    accountTwo =null;
+    accountThree =null;
         accounts.clear();
-        accountContainer = null;
+    accountContainer =null;
 
-        //profiles
-        profileOne = null;
-        profileTwo = null;
-        profileThree = null;
+    //profiles
+    profileOne =null;
+    profileTwo =null;
+    profileThree =null;
         profiles.clear();
-        profileContainer = null;
+    profileContainer =null;
 
-        //business sectors
-        businessSector = null;
-        businessSectors.clear();
-        businessSectorContainer = null;
+    //business sectors
+    businessSectorContainer =null;
 
-        //project typologies
-        projectTypologyOne = null;
-        projectTypologyTwo = null;
+    //project typologies
+    projectTypologyOne =null;
+    projectTypologyTwo =null;
         typologies.clear();
-        projectTypologyContainer = null;
+    projectTypologyContainer =null;
 
-        //customers
-        customerOne = null;
-        customerTwo = null;
+    //customers
+    customerOne =null;
+    customerTwo =null;
         customers.clear();
-        customerContainer = null;
+    customerContainer =null;
 
-        //projects
-        projectOne = null;
-        projectTwo = null;
+    //projects
+    projectOne =null;
+    projectTwo =null;
         projects.clear();
-        projectContainer = null;
+    projectContainer =null;
 
-        //accounts in project
-        accountInProject1 = null;
-        accountInProject2 = null;
-        accountInProject3 = null;
+    //accounts in project
+    accountInProject1 =null;
+    accountInProject2 =null;
+    accountInProject3 =null;
         accountsInProject.clear();
-        accountInProjectContainer = null;
+    accountInProjectContainer =null;
 
-        //company
-        company = null;
-    }
+    //company
+    company =null;
+}
 
-/**
+    /**
      * US012 - As Manager, I want to define the PO of a project.
      */
 

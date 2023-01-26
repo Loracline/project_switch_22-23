@@ -28,7 +28,6 @@ class ChangeProfileControllerTest {
   ProjectContainer projectContainer;
   Company company;
   ChangeProfileController controller;
-  List<BusinessSector> businessSectors;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
@@ -59,10 +58,6 @@ class ChangeProfileControllerTest {
     projects = new ArrayList<>();
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
-
-
-    businessSectors = new ArrayList<>();
-    businessSectorContainer = new BusinessSectorContainer(businessSectors);
 
 
     List<ProjectTypology> typologies = new ArrayList<>();
@@ -107,7 +102,6 @@ class ChangeProfileControllerTest {
     project = null;
     projects.clear();
     projectContainer = null;
-    businessSectors.clear();
     businessSectorContainer = null;
     customers.clear();
     customerContainer = null;
