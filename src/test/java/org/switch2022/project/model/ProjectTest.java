@@ -61,9 +61,7 @@ public class ProjectTest {
   void ensureTwoProjectsAreEqual() {
     Project project = new Project("AA001", "Aptoide", new Customer("john","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
-    boolean expected = true;
-    boolean result = project.equals(projectOne);
-    assertEquals(expected, result);
+    assertEquals(project, projectOne);
   }
 
   /**

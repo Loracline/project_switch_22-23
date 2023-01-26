@@ -578,13 +578,11 @@ class CompanyTest {
         assertFalse(result);
     }
 
-
-
     @Test
     void ensureThatAllAccountsByProjectAreListedSuccessfully() {
+        //Arrange
         List<Account> expected = new ArrayList<>();
         expected.add(accountOne);
-
 
         //Act
         List<Account> result = company.listAccountsByProject("AA001");
@@ -595,6 +593,7 @@ class CompanyTest {
 
     @Test
     void ensureThatListAccountsByProjectIsEmpty_NoProject() {
+        //Arrange
         List<Account> expected = new ArrayList<>();
 
         //Act
