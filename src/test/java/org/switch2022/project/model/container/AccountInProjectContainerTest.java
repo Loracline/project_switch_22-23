@@ -108,12 +108,21 @@ class AccountInProjectContainerTest {
         projectTypologyOne = null;
         accountDTO = null;
         accountDTO2 = null;
+        accountDTO3 = null;
         projectDTO = null;
         allocationDTOPO = null;
+        allocationDTOTM = null;
+        allocationDTOSM = null;
         accountsInProject.clear();
         accounts.clear();
         accountInProjectContainer = null;
+        accountInProjectOne = null;
+        accountInProjectTwo = null;
+        accountInProjectThree = null;
+        accountInProjectFour = null;
+        accountInProjectFive = null;
         businessSectorOne = null;
+        startDate = null;
     }
 
     /**
@@ -307,7 +316,6 @@ class AccountInProjectContainerTest {
      * Testing if a user that doesn't have a Manager profile is able to retrieve the list of resources allocated in a
      * given project. It should return an empty list.
      */
-
     @Test
     void ensureThatListAccountsByProjectIsEmpty_NoProject() {
         //Arrange
@@ -324,7 +332,6 @@ class AccountInProjectContainerTest {
      * Test to list all projects from an account is listed. Should return a list of projects where
      * that account works in.
      */
-
     @Test
     void ensureThatAllProjectsInAccountsAreListedSuccessfully() {
         //Arrange
@@ -342,7 +349,6 @@ class AccountInProjectContainerTest {
     /**
      * Test to list all projects from an account that has no projects is listed. Should return an empty list.
      */
-
     @Test
     void ensureThatListProjectsInAccountIsEmpty() {
         //Assert
@@ -353,5 +359,95 @@ class AccountInProjectContainerTest {
 
         //Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * Test to calculate the percentage of allocation when the account is currently in other projects.
+     */
+    @Test
+    void calculateCurrentPercentAllocation_EndDateNull() {
+        // Arrange
+        float expected = 50f;
+
+        // Act
+        float result = accountInProjectContainer.currentPercentageOfAllocation(accountTwo);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Test to calculate the percentage of allocation when the account has already left some project.
+     */
+    @Test
+    void calculateCurrentPercentAllocation_EndDateNotNull() {
+        // Arrange
+        float expected = 1f;
+
+        // Act
+        float result = accountInProjectContainer.currentPercentageOfAllocation(accountOne);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Testing if percentage of allocation is valid in the moment of the new allocation.
+     */
+    @Test
+    void ensurePercentAllocationIsValid_TotalUnderOneHundred() {
+        // Arrange
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 49);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Testing if percentage of allocation is valid when equals 100%.
+     */
+    @Test
+    void ensurePercentAllocationIsValid_TotalEqualsOneHundred() {
+        // Arrange
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 50);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Testing if percentage of allocation is invalid when above 100%.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalid_TotalAboveOneHundred() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 51);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Testing if percentage of allocation is invalid when allocating an account at 0%.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalid_NewAllocationInvalid() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 0);
+
+        // Assert
+        assertEquals(expected,result);
     }
 }
