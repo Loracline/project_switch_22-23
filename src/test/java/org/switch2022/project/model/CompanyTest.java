@@ -602,5 +602,31 @@ class CompanyTest {
         //Assert
         assertEquals(expected, result);
     }
+
+
+
+    @Test
+    void ensureThatIsPossibleToListProjectsByAccount() {
+        //Arrange
+        List<Project> expected = new ArrayList<>();
+        expected.add(projectOne);
+        //Act
+        List<Project> result = company.listProjectsByAccount("mike@isep.ipp.pt");
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatListProjectsInAccountIsEmpty() {
+        //Arrange
+        List<Project> expected = new ArrayList<>();
+        //Act
+        List<Project> result = company.listProjectsByAccount("jane@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
+
 }
 
