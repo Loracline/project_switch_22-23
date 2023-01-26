@@ -7,12 +7,12 @@ public class GetProjectDTO {
      * Attributes of the class GetProjectsDTO.
      */
 
-    public String code;
-    public String name;
-    public String customer;
-    public String status;
-    public String projectTypology;
-    public String businessSector;
+    public final String code;
+    public final String name;
+    public final String customer;
+    public final String status;
+    public final String projectTypology;
+    public final String businessSector;
 
     /**
      * Constructor of the class GetProjectsDTO.

@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.switch2022</groupId>
-    <artifactId>switch2022project</artifactId>
+    <artifactId>switch2022project-g4</artifactId>
+    <name>switch-2022 switch-2022-g4</name>
     <version>1.0-SNAPSHOT</version>
 
     <!--
