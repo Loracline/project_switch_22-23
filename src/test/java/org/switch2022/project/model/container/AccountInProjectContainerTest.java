@@ -224,16 +224,16 @@ class AccountInProjectContainerTest {
      * It should result in a tue statement since accountTwo now is 100% allocated.
      */
     @Test
-    void ensureThatAccountIsNotAddedToAccountsInProjectsIfPercentageAllocationIsInvalidAHundred() {
+    void ensureThatAccountIsAddedToAccountsInProjectsIfPercentageAllocationTotalsOneHundred() {
         //Assert
-        allocationDTOPO = new AllocationDTO("Scrum Master", 7.5f, 65.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 50.0f, LocalDate.of(2023, 1, 19), null);
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo,
                 allocationDTOPO);
 
         //Assert
-        assertFalse(result);
+        assertTrue(result);
     }
 
     /**
@@ -307,6 +307,7 @@ class AccountInProjectContainerTest {
      * Testing if a user that doesn't have a Manager profile is able to retrieve the list of resources allocated in a
      * given project. It should return an empty list.
      */
+
     @Test
     void ensureThatListAccountsByProjectIsEmpty_NoProject() {
         //Arrange
@@ -318,6 +319,11 @@ class AccountInProjectContainerTest {
         //Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * Test to list all projects from an account is listed. Should return a list of projects where
+     * that account works in.
+     */
 
     @Test
     void ensureThatAllProjectsInAccountsAreListedSuccessfully() {
@@ -333,6 +339,9 @@ class AccountInProjectContainerTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test to list all projects from an account that has no projects is listed. Should return an empty list.
+     */
 
     @Test
     void ensureThatListProjectsInAccountIsEmpty() {
