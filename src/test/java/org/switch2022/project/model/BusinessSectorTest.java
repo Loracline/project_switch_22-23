@@ -1,69 +1,119 @@
 package org.switch2022.project.model;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class BusinessSectorTest {
+
+    /**
+     * BeforeEach and AfterEach execute common code before/after running the
+     * tests below.
+     */
+    BusinessSector businessSectorOne;
+    BusinessSector businessSectorTwo;
+
+    @BeforeEach
+    void setUp() {
+        businessSectorOne = new BusinessSector("fishing");
+        businessSectorTwo = new BusinessSector("mining");
+    }
+
+    @AfterEach
+    void tearDown() {
+        businessSectorOne = null;
+    }
+
     /**
      * Testing the equals() method.
      */
     @Test
     void ensureSameObjectEqualsItself() {
-        BusinessSector reference = new BusinessSector("fishing");
-        BusinessSector other = reference;
+        //Arrange
+        BusinessSector other = businessSectorOne;
         boolean expected = true;
-        boolean result = reference.equals(other);
+
+        //Act
+        boolean result = businessSectorOne.equals(other);
+
+        //Assert
         assertEquals(expected, result);
     }
 
     @Test
     void ensureTwoBusinessSectorsAreNotTheSame() {
-        BusinessSector reference = new BusinessSector("mining");
-        BusinessSector other = new BusinessSector("farming");
+        //Arrange
         boolean expected = false;
-        boolean result = reference.equals(other);
+
+        //Expected
+        boolean result = businessSectorTwo.equals(businessSectorOne);
+
+        //Act
         assertEquals(expected, result);
     }
 
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     void ensureObjectDoesNotEqualsOtherTypeOfObject() {
-        BusinessSector reference = new BusinessSector("mining");
+        //Arrange
         String other = "mining";
         boolean expected = false;
-        boolean result = reference.equals(other);
+
+        //Act
+        boolean result = businessSectorTwo.equals(other);
+
+        //Assert
         assertEquals(expected, result);
     }
 
+    /**
+     * Testing the hashCode() method.
+     */
     @Test
     public void testHashCodeBusinessSector() {
+        //Arrange
         BusinessSector obj1 = new BusinessSector("fishing");
         BusinessSector obj2 = new BusinessSector("fishing");
         BusinessSector obj3 = new BusinessSector("farming");
 
-        // Check that equal objects have the same hash code
+        //Act and Assert
         assertEquals(obj1.hashCode(), obj2.hashCode());
 
-        // Check that unequal objects have different hash codes
         assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
 
+    /**
+     * Test to verify if a Business Sector Name is successfully retrieved. Should return CustomerName.
+     */
 
     @Test
-    void getBusinessSectorNameSuccessfully() {
-    BusinessSector businessSector = new BusinessSector("fishing");
-    String expected = businessSector.getBusinessSectorName();
-    String result = "fishing";
-    assertEquals(expected, result);
+    void ensureThatBusinessSectorNameIsSuccessfullyRetrieved() {
+        //Arrange
+        String expected = "fishing";
+
+        //Act
+        String result = businessSectorOne.getBusinessSectorName();
+
+        //Assert
+        assertEquals(expected, result);
     }
 
+    /**
+     * Test to verify if a Business Sector Name is successfully retrieved. Should return false.
+     */
+
     @Test
-    void getBusinessSectorNameNotSuccessfully() {
-        BusinessSector businessSector = new BusinessSector("fishing");
-        String expected = businessSector.getBusinessSectorName();
-        String result = "mining";
+    void ensureThatBusinessSectorNameIsNotRetrieved() {
+        //Arrange
+        String expected = "mining";
+
+        //Act
+        String result = businessSectorOne.getBusinessSectorName();
+
+        //Assert
         assertNotEquals(expected, result);
     }
 }

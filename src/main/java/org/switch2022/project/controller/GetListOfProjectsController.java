@@ -2,7 +2,7 @@ package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Company;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.dto.GetProjectDTO;
+import org.switch2022.project.utils.dto.ListProjectsDTO;
 import org.switch2022.project.utils.mapper.ListOfProjectsMapper;
 
 import java.util.ArrayList;
@@ -34,8 +34,8 @@ public class GetListOfProjectsController {
      * @param email Email of the account to be verified
      * @return a list of Projects DTO
      */
-    public List<GetProjectDTO> getListOfProjects(String email) {
-        List<GetProjectDTO> listOfProjectsDTO = new ArrayList<>();
+    public List<ListProjectsDTO> getListOfProjects(String email) {
+        List<ListProjectsDTO> listOfProjectsDTO = new ArrayList<>();
         if (company.validateManager(email)) {
             List<Project> projects = company.listAllProjects();
             listOfProjectsDTO = mapper.toDTO(projects);
