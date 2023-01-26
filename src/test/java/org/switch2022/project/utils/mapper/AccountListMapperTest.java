@@ -5,12 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.utils.dto.AccountDTO;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-class AccountMapperTest {
+class AccountListMapperTest {
+
     /**
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
@@ -53,19 +55,17 @@ class AccountMapperTest {
         accounts.clear();
     }
 
+
     /**
-     * getDTOFromAccount(Account account)
+     * getListDTOFromAccounts(List<Account> accounts)
      */
     @Test
-    void ensureThatAccountIsConvertedIntoAccountDTO() {
+    void ensureThatAccountListIsConvertedIntoAccountListDTO() {
         // ARRANGE
-        AccountDTO expected = new AccountDTO();
-        expected.name = "Mike";
-        expected.email = "mike@isep.ipp.pt";
-        expected.status = true;
+        List<AccountDTO> expected = accountsDTOOne;
 
-        // ACT
-        AccountDTO result = AccountMapper.accountToDTO(accountOne);
+        //ACT
+        List<AccountDTO> result = AccountListMapper.listAccountsToDTO(accounts);
 
         // ASSERT
         assertEquals(expected, result);

@@ -3,8 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Company;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.mapper.AccountMapper;
-
+import org.switch2022.project.utils.mapper.AccountListMapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +38,6 @@ public class ListAllUsersController {
         if (company.validateManager(actorEmail)) {
             users = company.listAllUsers();
         }
-        return AccountMapper.ListAccountsToDTO(users);
+        return AccountListMapper.listAccountsToDTO(users);
     }
 }
