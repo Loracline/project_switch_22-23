@@ -28,7 +28,7 @@ public class CustomerContainer {
      * @param customerNIF of the intended costumer.
      * @return TRUE if exists and FALSE otherwise.
      */
-    private boolean doesCustomerNIFExist(String customerNIF) {
+    private boolean doesCustomerNIFExist(Customer customerNIF) {
         return this.customers.contains(customerNIF);
     }
 
@@ -42,7 +42,7 @@ public class CustomerContainer {
     public boolean addCustomer(String customerName, String customerNIF) {
         Customer newCustomer = new Customer(customerName, customerNIF);
         boolean isAddedToList = false;
-        if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerNIFExist(customerNIF)) {
+        if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerNIFExist(newCustomer)) {
             customers.add(newCustomer);
             isAddedToList = true;
         }

@@ -52,6 +52,7 @@ class CustomerContainerTest {
     /**
      * Testing if one can add costumer to the container.
      */
+
     @Test
     void ensureCustomerIsNotAddedSuccessfully_LessThanNineDigits() {
         //Arrange
@@ -95,7 +96,7 @@ class CustomerContainerTest {
     @Test
     void ensureAddCustomerToCustomersListUnsuccessfully() {
         //Arrange
-        boolean expected = true;
+        boolean expected = false;
         //Act
         boolean result = customerContainerReference.addCustomer("ISEP", "222333444");
         //Assert
