@@ -32,7 +32,7 @@ class AccountInProjectContainerTest {
     List<AccountInProject> accountsInProject;
     AccountInProject accountInProjectOne, accountInProjectTwo, accountInProjectThree, accountInProjectFour, accountInProjectFive;
     AccountInProjectContainer accountInProjectContainer;
-    AccountInProjectContainer accountInProjectContainerOne;
+
 
     BusinessSector businessSectorOne;
 
@@ -127,7 +127,6 @@ class AccountInProjectContainerTest {
         accounts.clear();
         accountInProjectContainer = null;
         businessSectorOne = null;
-        accountInProjectContainerOne = null;
     }
 
     /**
@@ -355,24 +354,22 @@ class AccountInProjectContainerTest {
 
     @Test
     void ensureThatAllProjectsInAccountsAreListedSuccessfully() {
+        //Assert
         List<Project> expected = new ArrayList<>();
         expected.add(projectOne);
         expected.add(projectTwo);
-
-
         //Act
-        List<Project> result = accountInProjectContainerOne.listProjectsByAccount("mike@isep.ipp.pt");
-
+        List<Project> result = accountInProjectContainer.listProjectsByAccount("mike@isep.ipp.pt");
         //Assert
         assertEquals(expected, result);
     }
 
     @Test
     void ensureThatListProjectsInAccountIsEmpty() {
+        //Assert
         List<Project> expected = new ArrayList<>();
-
         //Act
-        List<Project> result = accountInProjectContainerOne.listProjectsByAccount("mary@isep.ipp.pt");
+        List<Project> result = accountInProjectContainer.listProjectsByAccount("mary@isep.ipp.pt");
         //Assert
         assertEquals(expected, result);
     }
