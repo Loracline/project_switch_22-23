@@ -1,8 +1,5 @@
 package org.switch2022.project.utils.dto;
 
-import org.switch2022.project.model.Profile;
-
-import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class AccountDTO {
@@ -11,8 +8,7 @@ public class AccountDTO {
      */
     public String name;
     public String email;
-    public static boolean status;
-
+    public boolean status;
 
     /**
      * The equals() method is used to determine whether two objects are equal in

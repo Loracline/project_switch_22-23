@@ -31,8 +31,7 @@ public class RegisterProjectController {
   public boolean registerProject(Project dto, String email) {
     boolean projectRegistration = false;
     if (company.validateManager(email)) {
-      ProjectMapper projectMapper = new ProjectMapper();
-      ProjectDTO projectDTO = projectMapper.getDTOFromProject(dto);
+      ProjectDTO projectDTO = ProjectMapper.getDTOFromProject(dto);
       if (company.registerProject(projectDTO)){
         projectRegistration = true;
       }

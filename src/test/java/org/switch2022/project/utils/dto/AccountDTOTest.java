@@ -1,14 +1,11 @@
 package org.switch2022.project.utils.dto;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.Profile;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AccountDTOTest {
-    Profile user;
-
     /**
      * equals(Object toCompare)
      */
@@ -18,9 +15,6 @@ class AccountDTOTest {
         AccountDTO reference = new AccountDTO();
         reference.name = "John";
         reference.email = "john@isep.ipp.pt";
-        //reference.phoneNumber = 912345678;
-        //reference.photo = null;
-        //reference.profile = user;
         reference.status = true;
 
         AccountDTO other = reference;
@@ -34,23 +28,17 @@ class AccountDTOTest {
         assertEquals(expected, result);
     }
 
-   /* @Test
+   @Test
     void ensureTwoAccountDTOsAreNotEqual() {
         // ARRANGE
         AccountDTO reference = new AccountDTO();
         reference.name = "John";
         reference.email = "john@isep.ipp.pt";
-        reference.phoneNumber = 912345678;
-        reference.photo = null;
-        reference.profile = user;
         reference.status = true;
 
         AccountDTO other = new AccountDTO();
         other.name = "Mary";
         other.email = "mary@isep.ipp.pt";
-        other.phoneNumber = 912345678;
-        other.photo = null;
-        other.profile = user;
         other.status = true;
 
         boolean expected = false;
@@ -60,7 +48,7 @@ class AccountDTOTest {
 
         // ASSERT
         assertEquals(expected, result);
-    }*/
+    }
 
     @Test
     void ensureAccountDTONotEqualsOtherTypeObject() {
@@ -68,9 +56,6 @@ class AccountDTOTest {
         AccountDTO reference = new AccountDTO();
         reference.name = "John";
         reference.email = "john@isep.ipp.pt";
-       // reference.phoneNumber = 912345678;
-        //reference.photo = null;
-       // reference.profile = user;
         reference.status = true;
 
         Object other = new Object();
@@ -93,17 +78,11 @@ class AccountDTOTest {
         AccountDTO reference = new AccountDTO();
         reference.name = "John";
         reference.email = "john@isep.ipp.pt";
-       // reference.phoneNumber = 912345678;
-        //reference.photo = null;
-        //reference.profile = user;
         reference.status = true;
 
         AccountDTO other = new AccountDTO();
         other.name = "John";
         other.email = "john@isep.ipp.pt";
-        //other.phoneNumber = 912345678;
-       // other.photo = null;
-       // other.profile = user;
         other.status = true;
 
         // ACT
@@ -120,9 +99,6 @@ class AccountDTOTest {
         AccountDTO reference = new AccountDTO();
         reference.name = "John";
         reference.email = "john@isep.ipp.pt";
-        //reference.phoneNumber = 912345678;
-       // reference.photo = null;
-        //reference.profile = user;
         reference.status = true;
 
         AccountDTO other = new AccountDTO();
