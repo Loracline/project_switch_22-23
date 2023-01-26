@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ListProjectsInAccountController {
 
-    private Company company;
+    private final Company company;
 
     public ListProjectsInAccountController(Company company) {
         this.company = company;
@@ -31,11 +31,11 @@ public class ListProjectsInAccountController {
      */
 
     public List<ProjectDTOus016> listProjectsByAccount(String emailUser) {
-        List<ProjectDTOus016> projsDTO = new ArrayList<>();
+        List<ProjectDTOus016> projectDTOus016 = new ArrayList<>();
         if (company.validateUser(emailUser)) {
             List<Project> projects = company.listProjectsByAccount(emailUser);
-            projsDTO = ProjectMapperUS016.getListOfProjectsDTO(projects);
+            projectDTOus016 = ProjectMapperUS016.getListOfProjectsDTO(projects);
         }
-        return projsDTO;
+        return projectDTOus016;
     }
 }

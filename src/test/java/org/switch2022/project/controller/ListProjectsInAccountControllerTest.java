@@ -5,11 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ListProjectsDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTOus016;
-import org.switch2022.project.utils.mapper.ListOfProjectsMapper;
-import org.switch2022.project.utils.mapper.ProjectMapper;
 import org.switch2022.project.utils.mapper.ProjectMapperUS016;
 
 import java.time.LocalDate;
