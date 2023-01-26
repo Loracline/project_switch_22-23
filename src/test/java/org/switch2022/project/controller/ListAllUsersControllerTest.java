@@ -32,7 +32,6 @@ class ListAllUsersControllerTest {
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
-    AccountMapper accountMapper;
     Company company;
 
     @BeforeEach
@@ -70,9 +69,6 @@ class ListAllUsersControllerTest {
         accountTwo.setProfile(profileTwo); // accountTwo is a "User".
         accountThree.setProfile(profileThree); // accountThree is a "Manager".
 
-        // Account mapper created.
-        accountMapper = new AccountMapper();
-
         // Company created.
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
@@ -103,7 +99,7 @@ class ListAllUsersControllerTest {
     void listAllUsersSuccessfully() {
         // ARRANGE
         ListAllUsersController controller = new ListAllUsersController(company);
-        AccountDTO accountTwoDTO = accountMapper.accountToDTO(accountTwo);
+        AccountDTO accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
         List<AccountDTO> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
 
@@ -118,7 +114,7 @@ class ListAllUsersControllerTest {
     void listAllUsersUnsuccessfully_NotAManager() {
         // ARRANGE
         ListAllUsersController controller = new ListAllUsersController(company);
-        AccountDTO accountTwoDTO = accountMapper.accountToDTO(accountTwo);
+        AccountDTO accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
         List<AccountDTO> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
 
