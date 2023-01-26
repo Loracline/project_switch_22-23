@@ -37,11 +37,6 @@ class ListAccountsInProjectControllerTest {
     List<Customer> customers;
     List<AccountInProject> accountsInProject;
     AccountContainer accountContainer;
-    ProfileContainer profileContainer;
-    BusinessSectorContainer businessSectorContainer;
-    ProjectContainer projectContainer;
-    CustomerContainer customerContainer;
-    ProjectTypologyContainer projectTypologyContainer;
     AccountInProjectContainer accountInProjectContainer;
     Company company;
     ListAccountsInProjectController listAccountsInProjectController;
@@ -95,16 +90,11 @@ class ListAccountsInProjectControllerTest {
 
         //containers
         accountContainer = new AccountContainer(accounts);
-        profileContainer = new ProfileContainer(profiles);
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
-        projectContainer = new ProjectContainer(projects);
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
-        customerContainer = new CustomerContainer(customers);
 
         //company
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+        company = new Company(accountContainer, null, null,
+                null, null, accountInProjectContainer, null);
 
         //controller
         listAccountsInProjectController = new ListAccountsInProjectController(company);
@@ -132,14 +122,9 @@ class ListAccountsInProjectControllerTest {
         accountsInProject.clear();
         customers.clear();
         accountContainer = null;
-        profileContainer = null;
-        businessSectorContainer = null;
-        projectContainer = null;
-        projectTypologyContainer = null;
         accountInProjectContainer = null;
         company = null;
         listAccountsInProjectController = null;
-        customerContainer = null;
     }
 
     /**

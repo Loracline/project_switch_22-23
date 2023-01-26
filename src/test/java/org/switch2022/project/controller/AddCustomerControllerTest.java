@@ -137,6 +137,17 @@ class AddCustomerControllerTest {
         addCustomerController = null;
     }
     @Test
+    void addNewCustomerUnsuccessfullyInvalidName(){
+        //Arrange
+        boolean expected = false;
+        accountOne.setProfile(profileOne);
+        //Act
+        boolean result = addCustomerController.addCustomer("ISEP","222333444", "mike@isep.ipp.pt");
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
     void addNewCustomerSuccessfully(){
         //Arrange
         boolean expected = true;
@@ -146,8 +157,6 @@ class AddCustomerControllerTest {
         //Assert
         assertEquals(expected,result);
     }
-
-
 
 
     @Test
@@ -161,5 +170,37 @@ class AddCustomerControllerTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void addNewCustomerUnsuccessfullyEmptyNIF() {
+        // Arrange
+        boolean expected = false;
+        accountOne.setProfile(profileOne);
+        // Act
+        boolean result = addCustomerController.addCustomer("Critical", "", "mike@isep.ipp.pt");
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void addNewCustomerUnsuccessfullyInvalidNIF() {
+        // Arrange
+        boolean expected = false;
+        accountOne.setProfile(profileOne);
+        // Act
+        boolean result = addCustomerController.addCustomer("Critical", "2223334444", "mike@isep.ipp.pt");
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void addCustomerUnsuccessfullyInvalidProfile() {
+        //Arrange
+        boolean expected = false;
+        accountTwo.setProfile(profileTwo);
+        //Act
+        boolean result = addCustomerController.addCustomer("Critical", "255666777", "paul@isep.ipp.pt");
+        // Assert
+        assertEquals(expected, result);
+    }
 
 }

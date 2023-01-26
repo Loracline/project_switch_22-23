@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 class CustomerTest {
 
@@ -32,6 +32,16 @@ class CustomerTest {
     void ensureDifferentObjectsNotEqual() {
         Customer reference = new Customer("ISEP", "222333444");
         Object other = new Object();
+        boolean expected = false;
+        boolean result = reference.equals(other);
+        assertEquals(expected, result);
+    }
+
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
+    @Test
+    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
+        Customer reference = new Customer("ISEP", "222333444");
+        String other = "222333444";
         boolean expected = false;
         boolean result = reference.equals(other);
         assertEquals(expected, result);
