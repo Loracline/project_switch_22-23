@@ -72,7 +72,7 @@ class AddBusinessSectorControllerTest {
     customerTwo = new Customer("PortoTech", "222333445");
 
     customers = new ArrayList<>();
-    customerContainer = new CustomerContainer(customers);
+    customerContainer = new CustomerContainer();
     customers.add(customerOne);
     customers.add(customerTwo);
         //company
@@ -113,8 +113,7 @@ class AddBusinessSectorControllerTest {
         accountOne.setProfile(profileOne);
         boolean expected = true;
         //Act
-        boolean result = addBusinessSectorController.addBusinessSector("mining", "mike" +
-                "@isep.ipp.pt");
+        boolean result = addBusinessSectorController.addBusinessSector("mining", "mike@isep.ipp.pt");
         //Assert
         assertEquals(expected, result);
     }
@@ -134,8 +133,7 @@ class AddBusinessSectorControllerTest {
         boolean expected = false;
         //Act
         //business sector "fishing" already exists
-        boolean result = addBusinessSectorController.addBusinessSector("fishing", "mike" +
-                "@isep.ipp.pt");
+        boolean result = addBusinessSectorController.addBusinessSector("fishing", "mike@isep.ipp.pt");
         //Assert
         assertEquals(expected, result);
     }
@@ -154,8 +152,7 @@ class AddBusinessSectorControllerTest {
         boolean expected = false;
         //Act
         //"paul@isep.ipp.pt" is not the administrator
-        boolean result = addBusinessSectorController.addBusinessSector("mining", "paul" +
-                "@isep.ipp.pt");
+        boolean result = addBusinessSectorController.addBusinessSector("mining", "paul@isep.ipp.pt");
         //Assert
         assertEquals(expected, result);
     }

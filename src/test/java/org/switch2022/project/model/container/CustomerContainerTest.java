@@ -3,10 +3,7 @@ package org.switch2022.project.model.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.Customer;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,38 +13,25 @@ class CustomerContainerTest {
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
-    Customer customerOne, customerTwo;
-    List<Customer> customers;
-    CustomerContainer customerContainerReference;
+
+    CustomerContainer customerContainer;
 
     @BeforeEach
     void setUp() {
-        /*
-          Costumers created.
-         */
-        customerOne = new Customer("ISEP", "222333444");
-        customerTwo = new Customer("PortoTech", "222333445");
 
-        /*
-          Container of costumers created.
-         */
-        customers = new ArrayList<>();
-        customerContainerReference = new CustomerContainer(customers);
+        //Customer Container
+        customerContainer = new CustomerContainer();
+        customerContainer.addCustomer("ISEP", "222333444");
+        customerContainer.addCustomer("PortoTech", "222333445");
 
-        /*
-          Costumers added to the Container.
-         */
-        customers.add(customerOne);
-        customers.add(customerTwo);
     }
+
 
     @AfterEach
     void tearDown() {
-        customerOne = null;
-        customerTwo = null;
-        customers.clear();
-        customerContainerReference = null;
+        customerContainer = null;
     }
+
 
     /**
      * Testing if one can add costumer to the container.
@@ -58,7 +42,7 @@ class CustomerContainerTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = customerContainerReference.addCustomer("critical","2223334" );
+        boolean result = customerContainer.addCustomer("critical","2223334" );
         //Assert
         assertEquals(expected, result);
     }
@@ -68,7 +52,7 @@ class CustomerContainerTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = customerContainerReference.addCustomer("critical","2223334488" );
+        boolean result = customerContainer.addCustomer("critical","2223334488" );
         //Assert
         assertEquals(expected, result);
     }
@@ -78,7 +62,7 @@ class CustomerContainerTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = customerContainerReference.addCustomer("critical","22233344@");
+        boolean result = customerContainer.addCustomer("critical","22233344@");
         //Assert
         assertEquals(expected, result);
     }
@@ -88,7 +72,7 @@ class CustomerContainerTest {
         //Arrange
         boolean expected = true;
         //Act
-        boolean result = customerContainerReference.addCustomer("Critical", "142356678");
+        boolean result = customerContainer.addCustomer("Critical", "142356678");
         //Assert
         assertEquals(expected, result);
     }
@@ -98,7 +82,7 @@ class CustomerContainerTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = customerContainerReference.addCustomer("ISEP", "222333444");
+        boolean result = customerContainer.addCustomer("ISEP", "222333444");
         //Assert
         assertEquals(expected, result);
 
@@ -109,7 +93,7 @@ class CustomerContainerTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = customerContainerReference.addCustomer("", "222333445");
+        boolean result = customerContainer.addCustomer("", "222333445");
         //Assert
         assertEquals(expected, result);
 
@@ -120,7 +104,18 @@ class CustomerContainerTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = customerContainerReference.addCustomer("", "222333444");
+        boolean result = customerContainer.addCustomer("", "222333444");
+        //Assert
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    void ensureAddCustomerToCustomersListUnsuccessfullyCustomerEmptyNIF() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = customerContainer.addCustomer("Critical", "");
         //Assert
         assertEquals(expected, result);
 

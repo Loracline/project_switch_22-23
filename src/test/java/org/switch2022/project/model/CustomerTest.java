@@ -1,31 +1,11 @@
 package org.switch2022.project.model;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class CustomerTest {
 
-    /**
-     * BeforeEach and AfterEach execute common code before/after running the
-     * tests below.
-     */
-    Customer customerOne, customerTwo, customerThree;
-
-    @BeforeEach
-    void setUp() {
-        customerOne = new Customer("ISEP", "222333444");
-        customerTwo = new Customer("Michael Brown Corp.", "200000000");
-    }
-
-    @AfterEach
-    void tearDown() {
-        customerOne = null;
-        customerTwo = null;
-        customerThree = null;
-    }
 
     /**
      * Testing the equals() method.
@@ -33,22 +13,23 @@ class CustomerTest {
     @Test
     void ensureThatSameObjectEqualsItself() {
         //Arrange
-        Customer other = customerOne;
+        Customer reference = new Customer("ISEP", "222333444");
+        Customer other = reference;
         boolean expected = true;
-
         //Act
-        boolean result = customerOne.equals(other);
-
+        boolean result = reference.equals(other);
         //Assert
-        assertEquals(expected, result);
+        assertEquals(expected,result);
     }
     @Test
     void ensureThatTwoCustomersAreNotTheSame() {
         //Arrange
+        Customer reference = new Customer("ISEP", "222333444");
+        Customer other = new Customer("PortoTech", "222333445");
         boolean expected = false;
 
         //Act
-        boolean result = customerOne.equals(customerTwo);
+        boolean result = reference.equals(other);
 
         //Assert
         assertEquals(expected, result);
@@ -57,11 +38,12 @@ class CustomerTest {
     @Test
     void ensureThatDifferentObjectsAreNotEqual() {
         //Arrange
+        Customer reference = new Customer("ISEP", "222333444");
         Object other = new Object();
         boolean expected = false;
 
         //Act
-        boolean result = customerOne.equals(other);
+        boolean result = reference.equals(other);
 
         //Assert
         assertEquals(expected, result);

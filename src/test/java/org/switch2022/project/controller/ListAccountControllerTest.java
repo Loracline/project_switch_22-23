@@ -31,7 +31,6 @@ class ListAccountControllerTest {
   ProjectTypology projectTypology;
   Customer customerOne, customerTwo;
   CustomerContainer customerContainer;
-  List<Customer> customers;
   ProjectTypologyContainer projectTypologyContainer;
   List<ProjectTypology> typologies = new ArrayList<>();
 
@@ -67,13 +66,11 @@ class ListAccountControllerTest {
     projects.add(project);
 
 
-    customerOne = new Customer("ISEP", "222333444");
-    customerTwo = new Customer("PortoTech", "222333445");
 
-    customers = new ArrayList<>();
-    customerContainer = new CustomerContainer(customers);
-    customers.add(customerOne);
-    customers.add(customerTwo);
+
+
+    customerContainer = new CustomerContainer();
+
 
     accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
@@ -106,7 +103,6 @@ class ListAccountControllerTest {
     projectContainer = null;
     customerOne = null;
     customerTwo = null;
-    customers.clear();
     customerContainer = null;
     company = null;
   }

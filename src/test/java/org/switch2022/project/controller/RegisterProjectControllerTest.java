@@ -54,7 +54,7 @@ class RegisterProjectControllerTest {
     projectTypologyContainer = new ProjectTypologyContainer();
 
     customers = new ArrayList<>();
-    customerContainer = new CustomerContainer(customers);
+    customerContainer = new CustomerContainer();
 
     projectOne = new Project("AA001", "software development management", new Customer(
             "Peter","228674498"),
