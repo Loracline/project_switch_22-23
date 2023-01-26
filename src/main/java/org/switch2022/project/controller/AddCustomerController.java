@@ -7,7 +7,7 @@ public class AddCustomerController {
     /**
      * Attributes of the class addCustomerController, according to the Class Diagram.
      */
-    private Company company;
+    private final Company company;
 
     /**
      * Create addCustomerController constructor

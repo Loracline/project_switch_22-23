@@ -17,7 +17,7 @@ public class Customer {
      * Constructor
      */
     public Customer(String customerName, String customerNIF) {
-        this.customerName = customerName;
+        this.customerName = customerName.toLowerCase();
         this.customerNIF = customerNIF;
     }
 
@@ -25,10 +25,10 @@ public class Customer {
 
     /**
      * This method checks if two instances of Customer are equal by comparing
-     * its names.
+     * its names and NIF.
      *
      * @param toCompare Customer instance to compare with.
-     * @return TRUE if the two have the same customer name, and FALSE otherwise.
+     * @return TRUE if the two have the same customer NIF and name, and FALSE otherwise.
      */
     @Override
     public boolean equals(Object toCompare) {
