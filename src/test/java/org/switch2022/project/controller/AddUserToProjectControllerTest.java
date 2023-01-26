@@ -4,10 +4,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.model.container.*;
+import org.switch2022.project.model.container.AccountContainer;
+import org.switch2022.project.model.container.AccountInProjectContainer;
+import org.switch2022.project.model.container.ProjectContainer;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.mapper.AccountMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,246 +29,159 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AddUserToProjectControllerTest {
 
-/**
-     * BeforeEach and AfterEach executes common code before/after running the
-     * tests below.
+    /**
+     * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
-
-    //accounts
-    Account accountOne, accountTwo, accountThree;
+    Account accountOne, accountTwo;
+    Profile profileOne, profileTwo;
+    Customer customerOne;
+    ProjectTypology projectTypologyOne;
+    BusinessSector businessSectorOne;
+    Project projectOne;
+    AccountDTO accountDTO;
+    ProjectDTO projectDTO;
+    AccountInProject accountInProject;
     List<Account> accounts;
-    AccountContainer accountContainer;
-
-    //profiles
-    Profile profileOne, profileTwo, profileThree;
-    List<Profile> profiles;
-    ProfileContainer profileContainer;
-
-    //customers
-    Customer customerOne, customerTwo;
-    List<Customer> customers;
-    CustomerContainer customerContainer;
-
-    //projects
-    Project projectOne, projectTwo;
     List<Project> projects;
-    ProjectContainer projectContainer;
-
-    //project typologies
-    ProjectTypology projectTypologyOne, projectTypologyTwo;
-    List<ProjectTypology> typologies;
-    ProjectTypologyContainer projectTypologyContainer;
-
-    //business sectors
-    BusinessSector businessSector;
-    List<BusinessSector> businessSectors;
-    BusinessSectorContainer businessSectorContainer;
-
-    //accounts in project
-    LocalDate startDate;
-    AccountInProject accountInProject1, accountInProject2, accountInProject3;
     List<AccountInProject> accountsInProject;
+    List<AccountDTO> accountsDTO;
+    AllocationDTO allocationDTO;
+    AccountContainer accountContainer;
+    ProjectContainer projectContainer;
     AccountInProjectContainer accountInProjectContainer;
-
-    //company
     Company company;
+    AddUserToProjectController addUserToProjectController;
 
     @BeforeEach
     void setUp() {
-        //accounts
-        accountOne = new Account("Mike", "mike@isep.ipp.pt",
-                932755689, null);
-        accountTwo = new Account("Emma", "emma@isep.ipp.pt",
-                932755688, null);
-        accountThree = new Account("Jane", "jane@isep.ipp.pt",
-                932755687, null);
-
+        //account
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 972755689, null);
         accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
         accounts.add(accountOne);
         accounts.add(accountTwo);
-        accounts.add(accountThree);
 
-        //profiles
+
+        //accountDTO
+        accountDTO = AccountMapper.accountToDTO(accountTwo);
+        /*accountsDTO = new ArrayList<>();
+        accountsDTO.add(accountDTO);*/
+
+        //accountInProject
+        accountInProject = new AccountInProject(accountOne, projectOne, "Team Member", 1,
+                34f, LocalDate.of(2020, 1, 8));
+        accountsInProject = new ArrayList<>();
+        accountsInProject.add(accountInProject);
+
+        //profile
         profileOne = new Profile("Administrator");
-        profileTwo = new Profile("User");
-        profileThree = new Profile("Manager");
+        profileTwo = new Profile("Manager");
 
-        profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
-        profiles.add(profileThree);
+        //customer
+        customerOne = new Customer("Genius Software", "234567890");
 
-        //business sectors
-        businessSector = new BusinessSector("fishing");
-
-        businessSectors = new ArrayList<>();
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
-        businessSectors.add(businessSector);
-
-        //project typologies
+        //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
-        projectTypologyTwo = new ProjectTypology(
-                "Fixed time and materials");
 
-        typologies = new ArrayList<>();
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
-        typologies.add(projectTypologyOne);
-        typologies.add(projectTypologyTwo);
+        //businessSector
+        businessSectorOne = new BusinessSector("Fishing");
 
-        //customers
-        customerOne = new Customer("ISEP", "222333444");
-        customerTwo = new Customer("PortoTech", "222333445");
-
-        customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
-        customers.add(customerOne);
-        customers.add(customerTwo);
-
-        //projects
-        projectOne = new Project("proj001", "software development", new Customer ("John", "228674498"),new ProjectTypology("Fixed cost")
-                , new BusinessSector( "Hunting"));
-        projectTwo = new Project("proj002", "project software", new Customer ("John", "228674498"),
-                new ProjectTypology("Fixed cost")
-                , new BusinessSector( "Hunting"));
-
+        //project
+        projectOne = new Project("1A", "Mobile Software", customerOne,
+                projectTypologyOne, businessSectorOne);
         projects = new ArrayList<>();
         projects.add(projectOne);
-        projects.add(projectTwo);
+
+        //projectDTO
+        projectDTO = new ProjectDTO("1A", "Mobile Software", "Genius Software",
+                "Fixed cost", "Fishing");
+
+        //account in project dto
+        allocationDTO = new AllocationDTO();
+        allocationDTO.role = "Product Owner";
+        allocationDTO.costPerHour = 7.5f;
+        allocationDTO.percentageAllocation = 45.0f;
+        allocationDTO.startDate = LocalDate.of(2023, 1, 19);
+
+        //containers
+        accountContainer = new AccountContainer(accounts);
         projectContainer = new ProjectContainer(projects);
-
-        //accounts in project
-        accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member",
-                7.5f, 40.0f, startDate);
-        accountInProject2 = new AccountInProject(accountTwo, projectTwo, "Product Owner",
-                7.5f, 40.0f, startDate);
-        accountInProject3 = new AccountInProject(accountThree, projectOne, "Scrum Master",
-                7.5f, 40.0f, startDate);
-
-        accountsInProject = new ArrayList<>();
-        accountsInProject.add(accountInProject1);
-        accountsInProject.add(accountInProject2);
-        accountsInProject.add(accountInProject3);
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
         //company
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer,
-                customerContainer);
+        company = new Company(accountContainer, null, null,
+                projectContainer, null, accountInProjectContainer, null);
+
+        //controller
+        addUserToProjectController = new AddUserToProjectController(company);
     }
 
     @AfterEach
     void tearDown() {
-        //accounts
         accountOne = null;
         accountTwo = null;
-        accountThree = null;
-        accounts.clear();
-        accountContainer = null;
-
-        //profiles
         profileOne = null;
         profileTwo = null;
-        profileThree = null;
-        profiles.clear();
-        profileContainer = null;
-
-        //business sectors
-        businessSector = null;
-        businessSectors.clear();
-        businessSectorContainer = null;
-
-        //project typologies
-        projectTypologyOne = null;
-        projectTypologyTwo = null;
-        typologies.clear();
-        projectTypologyContainer = null;
-
-        //customers
         customerOne = null;
-        customerTwo = null;
-        customers.clear();
-        customerContainer = null;
-
-        //projects
+        projectTypologyOne = null;
+        businessSectorOne = null;
         projectOne = null;
-        projectTwo = null;
+        accountDTO = null;
+        projectDTO = null;
+        accountInProject = null;
+        accounts.clear();
         projects.clear();
-        projectContainer = null;
-
-        //accounts in project
-        accountInProject1 = null;
-        accountInProject2 = null;
-        accountInProject3 = null;
         accountsInProject.clear();
+        allocationDTO = null;
+        accountContainer = null;
+        projectContainer = null;
         accountInProjectContainer = null;
-
-        //company
         company = null;
+        addUserToProjectController = null;
     }
 
-/**
-     * US012 - As Manager, I want to define the PO of a project.
+
+    /**
+     * US011-US013
+     * Tests if an account is successfully associated to a project if the actor
+     * is an administrator.
+     * Expected return: true
      */
 
     @Test
     void ensureAccountIsSuccessfullyAssociatedToAProject() {
         //Arrange
-        //email manager
-        accountThree.setProfile(profileThree);
-        String emailManager = "jane@isep.ipp.pt";
-        //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Emma";
-        accountDTO.email = "emma@isep.ipp.pt";
-        //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
-                "Fixed cost", "Hunting");
-
-        //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
-        AddUserToProjectController controller = new AddUserToProjectController(company);
+        //set profileTwo (Manager) to accountOne
+        accountOne.setProfile(profileTwo);
+        String emailManager = accountOne.getEmail();
 
         //Act
-        boolean result = controller.addUserToProject(emailManager, accountDTO, projectDTO,
-                allocationDTOPO);
+        boolean result = addUserToProjectController.addUserToProject(emailManager,
+                accountDTO, projectDTO, allocationDTO);
 
         //Assert
         assertTrue(result);
-
     }
 
+    /**
+     * US011-US013
+     * Tests if an account is not associated to a project if the actor
+     * is not an administrator.
+     * Expected return: false
+     */
     @Test
     void ensureAllocationFailsBecauseProfileIsNotManager() {
         //Arrange
-        //email manager
-        accountThree.setProfile(profileThree);
-        String emailManagerInvalid = "kate@isep.ipp.pt";
-        //accountDTO
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.name = "Emma";
-        accountDTO.email = "emma@isep.ipp.pt";
-        //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("proj001", "software development", "John",
-                "Fixed cost", "Hunting");
+        //set profileOne (Administrator) to accountOne
+        accountOne.setProfile(profileOne);
+        String emailManager = accountOne.getEmail();
 
-        //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO();
-        allocationDTOPO.role = "Product Owner";
-        allocationDTOPO.costPerHour = 7.5f;
-        allocationDTOPO.percentageAllocation = 45.0f;
-        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
-        AddUserToProjectController controller = new AddUserToProjectController(company);
         //Act
-        boolean result = controller.addUserToProject(emailManagerInvalid, accountDTO,
+        boolean result = addUserToProjectController.addUserToProject(emailManager,
+                accountDTO,
                 projectDTO,
-                allocationDTOPO);
+                allocationDTO);
 
         //Assert
         assertFalse(result);

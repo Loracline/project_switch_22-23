@@ -3,8 +3,12 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
+import org.switch2022.project.model.container.AccountContainer;
+import org.switch2022.project.model.container.AccountInProjectContainer;
+import org.switch2022.project.model.container.BusinessSectorContainer;
+import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.mapper.AccountMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,156 +18,136 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AddBusinessSectorControllerTest {
 
-  /**
-   * BeforeEach and AfterEach executes common code before/after running the tests below.
-   */
+    /**
+     * BeforeEach and AfterEach executes common code before/after running the tests below.
+     */
 
-  Account accountOne, accountTwo, accountThree, accountFour;
-  Profile profileOne, profileTwo;
-  List<Account> accounts;
-  List<Profile> profiles;
-  AccountContainer accountContainer;
-  ProfileContainer profileContainer;
-  BusinessSector businessSector;
-  List<BusinessSector> businessSectors;
-  BusinessSectorContainer businessSectorContainer;
-  Project project;
-  List<Project> projects;
-  ProjectContainer projectContainer;
-  Company company;
-  ProjectTypology projectTypology;
-  ProjectTypologyContainer projectTypologyContainer;
-  Customer customerOne, customerTwo;
-  CustomerContainer customerContainer;
-  List<Customer> customers;
-  AddBusinessSectorController addBusinessSectorController;
+    Account accountOne;
+    Profile profileOne, profileTwo;
+    Customer customerOne;
+    ProjectTypology projectTypologyOne;
+    BusinessSector businessSectorOne;
+    Project projectOne;
+    List<Account> accounts;
+    List<BusinessSector> businessSectors;
+    AccountContainer accountContainer;
+    BusinessSectorContainer businessSectorContainer;
+    Company company;
+    AddBusinessSectorController addBusinessSectorController;
 
-  float costPerHour;
-  float percentageAllocation;
-  LocalDate startDate;
-  AccountInProject accountInProject1, accountInProject2;
-  List<AccountInProject> accountsInProject;
-  AccountInProjectContainer accountInProjectContainer;
+    @BeforeEach
+    void setUp() {
+        //account
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accounts = new ArrayList<>();
+        accounts.add(accountOne);
 
+        //profile
+        profileOne = new Profile("Administrator");
+        profileTwo = new Profile("Manager");
 
-  @BeforeEach
-  void setUp() {
-    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-    accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
-    accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
-    accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
+        //customer
+        customerOne = new Customer("Genius Software", "234567890");
 
-    accounts = new ArrayList<>();
-    accountContainer = new AccountContainer(accounts);
-    accounts.add(accountOne);
-    accounts.add(accountTwo);
+        //projectTypology
+        projectTypologyOne = new ProjectTypology("Fixed Cost");
 
+        //businessSector
+        businessSectorOne = new BusinessSector("Fishing");
+        businessSectors = new ArrayList<>();
+        businessSectors.add(businessSectorOne);
 
-    profileOne = new Profile("Administrator");
-    profileTwo = new Profile("User");
+        //project
+        projectOne = new Project("1A", "Mobile Software", customerOne,
+                projectTypologyOne, businessSectorOne);
 
+        //containers
+        accountContainer = new AccountContainer(accounts);
+        businessSectorContainer = new BusinessSectorContainer(businessSectors);
 
-    profiles = new ArrayList<>();
-    profileContainer = new ProfileContainer(profiles);
-    profiles.add(profileOne);
-    profiles.add(profileTwo);
+        //company
+        company = new Company(accountContainer, null, businessSectorContainer,
+                null, null, null, null);
 
-    projects = new ArrayList<>();
-    projectContainer = new ProjectContainer(projects);
-    projects.add(project);
+        //controller
+        addBusinessSectorController = new AddBusinessSectorController(company);
 
-    businessSector = new BusinessSector("fishing");
+    }
 
-    businessSectors = new ArrayList<>();
-    businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
+    @AfterEach
+    void tearDown() {
+        accountOne = null;
+        profileOne = null;
+        profileTwo = null;
+        customerOne = null;
+        projectTypologyOne = null;
+        businessSectorOne = null;
+        projectOne = null;
+        accounts.clear();
+        businessSectors.clear();
+        accountContainer = null;
+        businessSectorContainer = null;
+        company = null;
+        addBusinessSectorController = null;
+    }
 
-    projectTypology = new ProjectTypology("Fixed Cost");
+    /**
+     * US008
+     * Tests if the addition of a business sector is performed successfully if the actor
+     * is an administrator.
+     * Expected return: true
+     */
+    @Test
+    void ensureThatNewBusinessSectorIsAddedSuccessfullyIfActorIsAdministrator() {
+        //Arrange
+        //set profileOne (Administrator) to accountOne
+        accountOne.setProfile(profileOne);
+        boolean expected = true;
+        //Act
+        boolean result = addBusinessSectorController.addBusinessSector("mining", "mike" +
+                "@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
 
-    List<ProjectTypology> typologies = new ArrayList<>();
-    typologies.add(projectTypology);
-    projectTypologyContainer = new ProjectTypologyContainer(typologies);
+    /**
+     * US008
+     * Tests if the addition of a business sector is not performed if the
+     * name of the business sector is invalid (empty or already existent).
+     * Expected return = false
+     */
 
-    customerOne = new Customer("ISEP", "222333444");
-    customerTwo = new Customer("PortoTech", "222333445");
+    @Test
+    void ensureThatNewBusinessSectorIsNotAddedIfNameIsInvalid() {
+        //Arrange
+        //set profileOne (Administrator) to accountOne
+        accountOne.setProfile(profileOne);
+        boolean expected = false;
+        //Act
+        //business sector "fishing" already exists
+        boolean result = addBusinessSectorController.addBusinessSector("fishing", "mike" +
+                "@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
 
-    customers = new ArrayList<>();
-    customerContainer = new CustomerContainer(customers);
-    customers.add(customerOne);
-    customers.add(customerTwo);
-
-    project = new Project("proj001", "software development management", new Customer(
-            "ISEP","228674498"),
-            new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
-
-    List<Project> projects = new ArrayList<>();
-    projects.add(project);
-    projectContainer = new ProjectContainer(projects);
-
-    accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
-            costPerHour, percentageAllocation, startDate);
-    accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
-            costPerHour, percentageAllocation, startDate);
-    accountsInProject = new ArrayList<>();
-    accountsInProject.add(accountInProject1);
-    accountsInProject.add(accountInProject2);
-    accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
-
-    company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, accountInProjectContainer,customerContainer);
-
-    addBusinessSectorController = new AddBusinessSectorController(company);
-  }
-
-  @AfterEach
-  void tearDown() {
-    accountOne = null;
-    accountTwo = null;
-    profileOne = null;
-    profileTwo = null;
-    accounts.clear();
-    profiles.clear();
-    accountContainer = null;
-    profileContainer = null;
-    businessSector = null;
-    businessSectors.clear();
-    businessSectorContainer = null;
-    project = null;
-    projects.clear();
-    projectContainer = null;
-    company = null;
-    addBusinessSectorController = null;
-  }
-
-  @Test
-  void addNewBusinessSectorSuccessfully() {
-    //Arrange
-    boolean expected = true;
-    accountOne.setProfile(profileOne);
-    //Act
-    boolean result = addBusinessSectorController.addBusinessSector("mining", "mike@isep.ipp.pt");
-    //Assert
-    assertEquals(expected, result);
-  }
-
-  @Test
-  void addNewBusinessSectorUnsuccessfullyInvalidName() {
-    //Arrange
-    boolean expected = false;
-    accountOne.setProfile(profileOne);
-    //Act
-    boolean result = addBusinessSectorController.addBusinessSector("fishing", "mike@isep.ipp.pt");
-    //Assert
-    assertEquals(expected, result);
-  }
-  @Test
-  void addNewBusinessSectorUnsuccessfullyInvalidProfile() {
-    //Arrange
-    boolean expected = false;
-    accountTwo.setProfile(profileTwo);
-    //Act
-    boolean result = addBusinessSectorController.addBusinessSector("mining", "paul@isep.ipp.pt");
-    //Assert
-    assertEquals(expected, result);
-  }
+    /**
+     * US008
+     * Tests if the addition of a business sector is not performed if the
+     * actor is not an administrator.
+     * Expected return = false
+     */
+    @Test
+    void ensureThatNewBusinessSectorIsNotAddedIfActorIsNotAdministrator() {
+        //Arrange
+        //set profileOne (Manager) to accountOne
+        accountOne.setProfile(profileTwo);
+        boolean expected = false;
+        //Act
+        //"paul@isep.ipp.pt" is not the administrator
+        boolean result = addBusinessSectorController.addBusinessSector("mining", "paul" +
+                "@isep.ipp.pt");
+        //Assert
+        assertEquals(expected, result);
+    }
 }
