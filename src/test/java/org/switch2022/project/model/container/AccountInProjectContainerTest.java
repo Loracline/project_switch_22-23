@@ -74,7 +74,7 @@ class AccountInProjectContainerTest {
         accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team Member", costPerHour, 50f, startDate);
         accountInProjectThree = new AccountInProject(accountThree, projectOne, "Product Owner", costPerHour, percentageAllocation, startDate);
         accountInProjectFour = new AccountInProject(accountOne, projectTwo, "Scrum Master", costPerHour, percentageAllocation, startDate);
-        accountInProjectFour.setEndDate(LocalDate.of(2020, 1, 8));
+        accountInProjectFour.setEndDate(LocalDate.of(2020, 1, 9));
         accountInProjectFive = new AccountInProject(accountThree, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate);
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProjectOne);
