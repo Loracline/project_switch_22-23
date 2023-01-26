@@ -19,12 +19,10 @@ class CreateProjectTypologyControllerTest {
     Account accountOne, accountTwo;
     Profile profileOne, profileTwo;
     Customer customerOne;
-    ProjectTypology projectTypologyOne;
     Project projectOne;
     BusinessSector businessSectorOne;
     List<Account> accounts;
     List<Profile> profiles;
-    List<ProjectTypology> typologies;
     List<Project> projects;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -53,22 +51,21 @@ class CreateProjectTypologyControllerTest {
         customerOne = new Customer("Genius Software", "234567890");
 
         //projectTypology
-        projectTypologyOne = new ProjectTypology("Fixed Cost");
-        typologies = new ArrayList<>();
-        typologies.add(projectTypologyOne);
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         //businessSector
         businessSectorOne = new BusinessSector("Fishing");
 
         //project
-        projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
+        projectOne = new Project("1A", "Mobile Software", customerOne, new ProjectTypology("Fixed Cost"), businessSectorOne );
         projects = new ArrayList<>();
         projects.add(projectOne);
 
         //containers
         accountContainer = new AccountContainer(accounts);
         profileContainer = new ProfileContainer(profiles);
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
 
         //company
         company = new Company(accountContainer, profileContainer, null,
@@ -83,14 +80,13 @@ class CreateProjectTypologyControllerTest {
     void tearDown() {
         accountOne = null;
         accountTwo = null;
+        businessSectorOne =null;
         profileOne = null;
         profileTwo = null;
         customerOne = null;
-        projectTypologyOne = null;
         projectOne = null;
         accounts.clear();
         profiles.clear();
-        typologies.clear();
         projects.clear();
         accountContainer = null;
         profileContainer = null;

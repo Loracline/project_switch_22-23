@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AccountTest {
     /**
-     * equals()
+     * Tests for equals() method.
      */
     @Test
-    void ensureSameAccountEqualsItself() {
+    void ensureThatSameAccountEqualsItself() {
         // Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account other = reference;
@@ -29,7 +29,7 @@ class AccountTest {
     }
 
     @Test
-    void ensureTwoAccountsAreEqual() {
+    void ensureThatTwoAccountsAreEqual() {
         // Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account other = new Account("John", "john@isep.ipp.pt", 912345678, null);
@@ -43,7 +43,7 @@ class AccountTest {
     }
 
     @Test
-    void ensureTwoAccountsAreDifferent() {
+    void ensureThatTwoAccountsAreDifferent() {
         // Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account other = new Account("Mary", "john@isep.ipp.pt", 912345678, null);
@@ -57,7 +57,7 @@ class AccountTest {
     }
 
     @Test
-    void ensureAccountDoesNotEqualsNull() {
+    void ensureThatAccountDoesNotEqualsNull() {
         // Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account other = null;
@@ -72,7 +72,7 @@ class AccountTest {
 
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
-    void ensureAccountDoesNotEqualOtherTypeOfObject() {
+    void ensureThatAccountDoesNotEqualOtherTypeOfObject() {
         // Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Profile other = new Profile("John");
@@ -87,10 +87,10 @@ class AccountTest {
 
 
     /**
-     * hashCode()
+     *  Tests for hashCode() method.
      */
     @Test
-    void ensureAccountsHaveSameHashCode() {
+    void ensureThatAccountsHaveSameHashCode() {
         // ARRANGE
         Account reference = new Account("John", "john@isep.ipp.pt", 951357852, null);
         Account other = new Account("John", "john@isep.ipp.pt", 951357852, null);
@@ -104,7 +104,7 @@ class AccountTest {
     }
 
     @Test
-    void ensureAccountsHaveDifferentHashCode() {
+    void ensureThatAccountsHaveDifferentHashCode() {
         // ARRANGE
         Account reference = new Account("John", "john@isep.ipp.pt", 951357852, null);
         Account other = new Account("John", "john@isep.ipp.pt", 951357853, null);
@@ -119,10 +119,11 @@ class AccountTest {
 
 
     /**
-     * GETTER methods
+     * Test if an email from an account is successfully retrieved. It compares the expected email from what it got.
+     * Should return true.
      */
     @Test
-    void ensureEmailIsRetrievedSuccessfully() {
+    void ensureThatEmailIsRetrievedSuccessfully() {
         // Arrange
         Account account = new Account("John", "john@isep.ipp.pt", 912345678, null);
         String expected = "john@isep.ipp.pt";
@@ -135,8 +136,10 @@ class AccountTest {
     }
 
     /**
-     * SETTER methods
+     * Test if a picture from an account is successfully added. It compares if an account with photo equals another
+     * that has a photo added to it and should return true.
      */
+
     @Test
     void ensureThatPhotoIsSet() throws IOException {
         //ARRANGE
@@ -150,17 +153,32 @@ class AccountTest {
         assertEquals(accountWithPhoto, accountOne);
     }
 
+    /**
+     * Test if a profile is given to an account. Compares if account with profile and the same without a profile are
+     * not the same. Should return false.
+     */
+
     @Test
-    void ensureProfileIsSetSuccessfully() throws IOException {
+    void ensureThatProfileIsSetSuccessfully() throws IOException {
+        //Arrange
         BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, photo); //Default Profile: User
-        accountOne.setProfile(new Profile("Manager"));
         Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, photo);
+
+        //Act
+        accountOne.setProfile(new Profile("Manager"));
+
+        //Assert
         assertNotEquals(accountOne, accountTwo);
     }
 
+    /**
+     * Test if a profile from an account is successfully changed to another. Compares if account with profile and the same without a profile are
+     * not the same. Should return false.
+     */
+
     @Test
-    void ensureAccountProfileIsSetSuccessfully() {
+    void ensureThatAccountProfileIsSetSuccessfully() {
         // Arrange
         Account accountBeforeUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null);//Default Profile: User
         Account accountAfterUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null); //Default Profile: User
@@ -176,8 +194,12 @@ class AccountTest {
         assertNotEquals(accountBeforeUpdate, accountAfterUpdate);
     }
 
+    /**
+     * Test if an account status is set to Active. Should return true, which is equivalent of an inactive profile.
+     */
+
     @Test
-    void ensureAccountStatusIsSetToActive() {
+    void ensureThatAccountStatusIsSetToActive() {
         // Arrange
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null);
@@ -190,8 +212,12 @@ class AccountTest {
         assertEquals(accountOne, accountTwo);
     }
 
+    /**
+     * Test if an account status is set to Inactive. Should return false, which is equivalent of an inactive profile.
+     */
+
     @Test
-    void ensureAccountStatusIsSetToInactive() {
+    void ensureThatAccountStatusIsSetToInactive() {
         // Arrange
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, null);
@@ -205,10 +231,10 @@ class AccountTest {
 
 
     /**
-     * checkAccountFromEmail(String email)
+     * Test if an account exists through a giving email. Should return true.
      */
     @Test
-    void checkAccountFromEmailSuccessfully() {
+    void ensureThatAnAccountExistsThroughAnEmailAddress() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         boolean expected = true;
@@ -218,8 +244,12 @@ class AccountTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test an account exists through a giving email. Should return false.
+     */
+
     @Test
-    void checkAccountFromEmailUnsuccessfully() {
+    void ensureThatAccountDoesNotExistsThroughAnEmailAddress() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         boolean expected = false;
@@ -230,10 +260,12 @@ class AccountTest {
     }
 
     /**
-     * isManager()
+     * This method checks if account's profile is "Manager".
+     * Should return true.
      */
+
     @Test
-    void verifyIsManagerSuccessfully() {
+    void ensureThatAnAccountIsManager() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Profile profile = new Profile("Manager");
@@ -245,8 +277,13 @@ class AccountTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * This method checks if account's profile is "Manager".
+     * Should return false.
+     */
+
     @Test
-    void verifyIsManagerUnsuccessfully() {
+    void ensureThaAnAccountIsManager() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         boolean expected = false;
@@ -257,10 +294,12 @@ class AccountTest {
     }
 
     /**
-     * isAdministrator()
+     * This method checks if account's profile is "Administrator".
+     * Should return true.
      */
+
     @Test
-    void verifyIsAdministratorSuccessfully() {
+    void ensureThatAnAccountIsAdministrator() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Profile profile = new Profile("Administrator");
@@ -272,8 +311,13 @@ class AccountTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * This method checks if account's profile is "Administrator".
+     * Should return false.
+     */
+
     @Test
-    void verifyIsAdministratorUnsuccessfully() {
+    void ensureThatAnAccountIsNotAnAdministrator() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         boolean expected = false;
@@ -284,10 +328,12 @@ class AccountTest {
     }
 
     /**
-     * isUser()
+     * This method checks if account's profile is "User".
+     * Should return true.
      */
+
     @Test
-    void verifyIsUserUnsuccessfully() {
+    void ensureThatAnAccountIsUser() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         Profile profile = new Profile("Manager");
@@ -299,8 +345,13 @@ class AccountTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * This method checks if account's profile is "User".
+     * Should return false.
+     */
+
     @Test
-    void verifyIsUserSuccessfully() {
+    void ensureThatAnAccountIsNotAnUser() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         boolean expected = true;

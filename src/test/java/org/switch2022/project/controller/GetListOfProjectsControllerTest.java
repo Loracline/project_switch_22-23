@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.GetProjectDTO;
+import org.switch2022.project.utils.dto.ListProjectsDTO;
 import org.switch2022.project.utils.mapper.ListOfProjectsMapper;
 
 import java.util.ArrayList;
@@ -89,17 +89,17 @@ public class GetListOfProjectsControllerTest {
     @Test
     void ensureThatAllProjectsAreListedSuccessfully() {
         // Arrange
-        GetProjectDTO projectDTOOne = new GetProjectDTO("AA001", "software development management",
+        ListProjectsDTO projectDTOOne = new ListProjectsDTO("AA001", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        GetProjectDTO projectDTOTwo = new GetProjectDTO("AA002", "project software", "isep", "planned",
+        ListProjectsDTO projectDTOTwo = new ListProjectsDTO("AA002", "project software", "isep", "planned",
             "fixed cost", "fishing");
 
-        List<GetProjectDTO> expectDTOs = new ArrayList<>();
+        List<ListProjectsDTO> expectDTOs = new ArrayList<>();
         expectDTOs.add(projectDTOOne);
         expectDTOs.add(projectDTOTwo);
 
         // Act
-        List<GetProjectDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep.ipp.pt");
+        List<ListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep.ipp.pt");
 
         // Assert
         assertEquals(expectDTOs, result);
@@ -111,10 +111,10 @@ public class GetListOfProjectsControllerTest {
     @Test
     void ensureThatNoProjectsAreListedWhenRequestedByAnotherProfile() {
         // Arrange
-        List<GetProjectDTO> expectDTOs = new ArrayList<>();
+        List<ListProjectsDTO> expectDTOs = new ArrayList<>();
 
         // Act
-        List<GetProjectDTO> result = getListOfProjectscontroller.getListOfProjects("paul@isep.ipp.pt");
+        List<ListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("paul@isep.ipp.pt");
 
         // Assert
         assertEquals(expectDTOs, result);

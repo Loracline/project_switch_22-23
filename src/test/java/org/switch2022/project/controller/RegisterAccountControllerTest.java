@@ -26,7 +26,6 @@ class RegisterAccountControllerTest {
 
     Account accountOne, accountTwo, accountThree;
     Profile profileOne, profileTwo, profileThree;
-    ProjectTypology projectTypology;
     Project project;
     List<Account> accounts;
     List<Profile> profiles;
@@ -42,7 +41,6 @@ class RegisterAccountControllerTest {
     AccountInProject accountInProject1, accountInProject2;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
-    Customer customerOne, customerTwo;
     CustomerContainer customerContainer;
     List<Customer> customers;
 
@@ -84,12 +82,10 @@ class RegisterAccountControllerTest {
         projectContainer = new ProjectContainer(projects);
         projects.add(project);
 
-
-        List<ProjectTypology> typologies = new ArrayList<>();
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        projectTypologyContainer = new ProjectTypologyContainer();
 
         customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
 
         project = new Project("proj001", "software development management", new Customer(
                 "ISEP", "228674498"),

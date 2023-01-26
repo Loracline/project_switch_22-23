@@ -6,45 +6,66 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ProjectTypologyTest {
+
     /**
-     * Testing the equals() method.
+     * Tests for the equals() method.
      */
+
     @Test
-    void ensureSameObjectEqualsItself() {
+    void ensureThatSameObjectEqualsItself() {
+        //Arrange
         ProjectTypology reference = new ProjectTypology("Fixed Cost");
         boolean expected = true;
+
+        //Act
         boolean result = reference.equals(reference);
+
+        //Assert
         assertEquals(expected, result);
     }
 
     @Test
-    void ensureTwoProfilesAreNotTheSame() {
+    void ensureThatTwoProjectTypologiesAreNotTheSame() {
+        //Arrange
         ProjectTypology reference = new ProjectTypology("Fixed Cost");
         ProjectTypology other = new ProjectTypology("Fixed time and materials");
         boolean expected = false;
+
+        //Act
         boolean result = reference.equals(other);
+
+        //Assert
         assertEquals(expected, result);
     }
 
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
-    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
+    void ensureThatProjectTypologyDoesNotEqualsOtherTypeOfObject() {
+        //Arrange
         ProjectTypology reference = new ProjectTypology("Fixed Cost");
         String other = "Fixed Cost";
         boolean expected = false;
+
+        //Act
         boolean result = reference.equals(other);
+
+        //Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * Tests for the hashCode() method.
+     */
     @Test
     public void testHashCodeProjectTypology() {
+        //Arrange
         ProjectTypology obj1 = new ProjectTypology("Fixed Cost");
         ProjectTypology obj2 = new ProjectTypology("Fixed Cost");
         ProjectTypology obj3 = new ProjectTypology("Fixed time and materials");
 
-        // Check that equal objects have the same hash code
+        //Act and Assert
         assertEquals(obj1.hashCode(), obj2.hashCode());
 
-        // Check that unequal objects have different hash codes
         assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
 

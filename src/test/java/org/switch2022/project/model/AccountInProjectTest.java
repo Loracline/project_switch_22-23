@@ -267,6 +267,17 @@ public class AccountInProjectTest {
     }
 
     @Test
+    void ensureThatPercentageOfAllocationIsReturned() {
+        //Arrange
+        float expected = 45.0f;
+        //Act
+        float result = accountInProject.getPercentageOfAllocation();
+        //Assert
+        assertEquals(expected,result);
+
+    }
+
+    @Test
     void ensureThatAllProjectsInAccountsAreListedSuccessfully() {
         //Arrange
         Project expected = project;

@@ -1,9 +1,8 @@
 package org.switch2022.project.model.container;
 
-import org.switch2022.project.model.Project;
-
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
+import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.Util;
 import org.switch2022.project.utils.dto.AllocationDTO;
 
@@ -61,20 +60,21 @@ public class AccountInProjectContainer {
         return accountInProjectAdded;
     }
 
+
     /**
      * Method that returns the current total percentage of allocation of an account in
      * all projects
      *
      * @return sum of percentages of allocation of all projects an account is involved in.
      */
-
     private float currentPercentageOfAllocation(Account account) {
         int i = 0;
         float sumOfPercentages = 0;
         while (Util.isLower(i, accountsInProject.size())) {
             if (accountsInProject.get(i).getAccount().equals(account) &&
                     accountsInProject.get(i).getEndDate() == null) {
-                sumOfPercentages += accountsInProject.get(i).getPercentageOfAllocation();
+                sumOfPercentages = Util.sum(sumOfPercentages,
+                        accountsInProject.get(i).getPercentageOfAllocation());
             }
             i++;
         }
@@ -91,14 +91,14 @@ public class AccountInProjectContainer {
                                                   float newPercentageAllocation) {
         boolean percentageOfAllocationValid = false;
         float totalPercentageAllocation =
-                currentPercentageOfAllocation(account) + newPercentageAllocation;
+                Util.sum(currentPercentageOfAllocation(account),
+                        newPercentageAllocation);
 
-        if (totalPercentageAllocation <= 100f) {
+        if (Util.isLowerOrEqual(totalPercentageAllocation, 100)) {
             percentageOfAllocationValid = true;
         }
         return percentageOfAllocationValid;
     }
-
 
     /**
      * This method returns a list of Accounts Allocated To a Project
@@ -128,8 +128,9 @@ public class AccountInProjectContainer {
     private boolean doesAccountInProjectExist(AccountInProject accountInProject) {
         return this.accountsInProject.contains(accountInProject);
     }
+
     /**
-     * This method returns a list of Projects Allocated To a Account
+     * This method returns a list of Projects Allocated To an Account
      *
      * @return a list of Projects
      */
@@ -145,5 +146,4 @@ public class AccountInProjectContainer {
         }
         return projects;
     }
-
 }
