@@ -29,8 +29,6 @@ class CompanyTest {
     List<Profile> profiles;
     List<Project> projects;
     List<ProjectTypology> typologies;
-    BusinessSector businessSectorOne, businessSectorTwo;
-    List<BusinessSector> businessSectors;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -79,16 +77,12 @@ class CompanyTest {
         profiles.add(profileOne);
         profiles.add(profileTwo);
 
-        // Business sectors created.
-        businessSectorOne = new BusinessSector("fishing");
-        businessSectorTwo = new BusinessSector("hunting");
 
         // Container of business sectors created.
-        businessSectors = new ArrayList<>();
-        businessSectorContainer = new BusinessSectorContainer(businessSectors);
+        businessSectorContainer= new BusinessSectorContainer();
+        businessSectorContainer.createBusinessSector("fishing");
+        businessSectorContainer.createBusinessSector("hunting");
 
-        // Business sectors added to the Container.
-        businessSectors.add(businessSectorOne);
 
         // Projects created.
         project = new Project("AA002", "software development management", new Customer(
@@ -175,10 +169,7 @@ class CompanyTest {
         project = null;
         accountContainer = null;
         profileContainer = null;
-        businessSectorOne = null;
-        businessSectors.clear();
         businessSectorContainer = null;
-        //businessSector = null;
         projectTypologyOne = null;
         projectTypologyTwo = null;
         typologies.clear();

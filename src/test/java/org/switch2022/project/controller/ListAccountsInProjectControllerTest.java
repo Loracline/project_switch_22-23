@@ -32,7 +32,6 @@ class ListAccountsInProjectControllerTest {
     List<AccountDTO> accountsDTOOne;
     List<Profile> profiles;
     List<ProjectTypology> typologies;
-    List<BusinessSector> businessSectors;
     List<Project> projects;
     List<Customer> customers;
     List<AccountInProject> accountsInProject;
@@ -74,8 +73,6 @@ class ListAccountsInProjectControllerTest {
 
         //businessSector
         businessSectorOne = new BusinessSector("Fishing");
-        businessSectors = new ArrayList<>();
-        businessSectors.add(businessSectorOne);
 
         //project
         projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
@@ -117,7 +114,6 @@ class ListAccountsInProjectControllerTest {
         accountsDTOOne.clear();
         profiles.clear();
         typologies.clear();
-        businessSectors.clear();
         projects.clear();
         accountsInProject.clear();
         customers.clear();

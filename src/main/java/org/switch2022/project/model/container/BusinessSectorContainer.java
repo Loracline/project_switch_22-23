@@ -3,6 +3,7 @@ package org.switch2022.project.model.container;
 import org.switch2022.project.model.BusinessSector;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,14 +14,7 @@ public class BusinessSectorContainer {
     /**
      * Attributes
      */
-    private final List<BusinessSector> businessSectors;
-
-    /**
-     * Constructor
-     */
-    public BusinessSectorContainer(List<BusinessSector> businessSectors) {
-        this.businessSectors = businessSectors;
-    }
+    private final List<BusinessSector> businessSectors= new ArrayList<>();
 
     /**
      * This method validates if business sector already exists in the container.
@@ -29,7 +23,7 @@ public class BusinessSectorContainer {
      * @return TRUE if exists and FALSE otherwise.
      */
     private boolean doesBusinessSectorExist(BusinessSector businessSector) {
-        return this.businessSectors.contains(businessSector);
+        return businessSectors.contains(businessSector);
     }
 
     /**

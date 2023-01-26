@@ -24,8 +24,6 @@ class AddBusinessSectorControllerTest {
   List<Profile> profiles;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
-  BusinessSector businessSector;
-  List<BusinessSector> businessSectors;
   BusinessSectorContainer businessSectorContainer;
   Project project;
   List<Project> projects;
@@ -72,11 +70,8 @@ class AddBusinessSectorControllerTest {
     projectContainer = new ProjectContainer(projects);
     projects.add(project);
 
-    businessSector = new BusinessSector("fishing");
-
-    businessSectors = new ArrayList<>();
-    businessSectorContainer = new BusinessSectorContainer(businessSectors);
-    businessSectors.add(businessSector);
+    businessSectorContainer= new BusinessSectorContainer();
+    businessSectorContainer.createBusinessSector("fishing");
 
     projectTypology = new ProjectTypology("Fixed Cost");
 
@@ -125,8 +120,6 @@ class AddBusinessSectorControllerTest {
     profiles.clear();
     accountContainer = null;
     profileContainer = null;
-    businessSector = null;
-    businessSectors.clear();
     businessSectorContainer = null;
     project = null;
     projects.clear();
