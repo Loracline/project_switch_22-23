@@ -35,6 +35,7 @@ public class ProjectContainerTest {
     projects.add(projectOne);
     projects.add(projectTwo);
     projectContainer = new ProjectContainer(projects);
+
     projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John",
             "Fixed cost", "Hunting");
     projectTwoDTO = new ProjectDTO("AA003", "Aptoide", "John",
@@ -51,8 +52,7 @@ public class ProjectContainerTest {
   }
 
   /**
-   * Testing if one is able to register a new project and add it to the
-   * container.
+   * Test to verify that a project was not registered
    */
   @Test
   void verifyProjectIsNotRegistered() {
@@ -60,23 +60,29 @@ public class ProjectContainerTest {
     boolean result = projectContainer.registerProject(projectOneDTO);
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to verify that a project was registered
+   */
   @Test
   void ensureProjectIsRegistered() {
     boolean expected = true;
     boolean result = projectContainer.registerProject(projectTwoDTO);
     assertEquals(expected, result);
   }
-
+  /**
+   * Test to verify that a project is retrieved given a project code
+   */
   @Test
-  void getProjectByCode() {
+  void ensureProjectIsRetrievedGivenProjectCode() {
     Project result = projectContainer.getProjectByCode("AA001");
 
     assertEquals(projectOne, result);
   }
-
+  /**
+   * Test to verify that a project is not retrieved given a project code
+   */
   @Test
-  void ensureThatGetAccountReturnNull() {
+  void ensureProjectIsNotRetrievedGivenProjectCode() {
       Project result = projectContainer.getProjectByCode("AA005");
 
     assertNull(result);

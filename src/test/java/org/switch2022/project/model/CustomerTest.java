@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 class CustomerTest {
 
@@ -37,6 +37,16 @@ class CustomerTest {
         assertEquals(expected, result);
     }
 
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
+    @Test
+    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
+        Customer reference = new Customer("ISEP", "222333444");
+        String other = "222333444";
+        boolean expected = false;
+        boolean result = reference.equals(other);
+        assertEquals(expected, result);
+    }
+
 
     @Test
     public void testHashCodeCustomer() {
@@ -51,6 +61,22 @@ class CustomerTest {
         assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
 
+    @Test
+    void getCustomerNameSuccessfully() {
+        Customer customer = new Customer("john",null);
+        String expected = "john";
+        String result = customer.getCustomerName();
+        assertEquals(expected, result);
+    }
+
+
+    @Test
+    void getCustomerNameNotSuccessfully() {
+        Customer customer = new Customer("John",null);
+        String expected = "Mary";
+        String result = customer.getCustomerName();
+        assertNotEquals(expected, result);
+    }
 }
 
 

@@ -1,10 +1,10 @@
 package org.switch2022.project.controller;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.model.container.AccountContainer;
-import org.switch2022.project.model.container.ProjectContainer;
+import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.GetProjectDTO;
 import org.switch2022.project.utils.mapper.ListOfProjectsMapper;
 
@@ -15,46 +15,79 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GetListOfProjectsControllerTest {
 
-    private GetListOfProjectsController controller;
+    Account accountOne, accountManager;
+    Customer customer;
+    ProjectTypology projectTypology;
+    BusinessSector businessSector;
+    Project projectOne, projectTwo;
+    List<Account> accounts;
+    List<Project> projects;
+    AccountContainer accountContainer;
+    ProjectContainer projectContainer;
+    Company company;
+    GetListOfProjectsController getListOfProjectscontroller;
 
     @BeforeEach
     void setUp() {
-        Account userAccount = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
+        //account
+        accountOne = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
+        accountManager = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountManager.setProfile(new Profile("Manager"));
 
-        Account managerAccount = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        managerAccount.setProfile(new Profile("Manager"));
+        //project
+        customer = new Customer("isep", "222333444");
+        projectTypology = new ProjectTypology("Fixed cost");
+        businessSector = new BusinessSector("fishing");
+        projectOne = new Project("AA001", "software development management",
+                customer, projectTypology, businessSector);
+        projectTwo = new Project("AA002", "project software", customer,
+                projectTypology, businessSector);
 
-        List<Account> accounts = new ArrayList<>();
-        accounts.add(managerAccount);
-        accounts.add(userAccount);
-        AccountContainer accountContainer = new AccountContainer(accounts);
+        //container
+        accounts = new ArrayList<>();
+        accounts.add(accountManager);
+        accounts.add(accountOne);
+        accountContainer = new AccountContainer(accounts);
 
-        Customer customer = new Customer("ISEP", "222333444");
-        ProjectTypology projectTypology = new ProjectTypology("Fixed cost");
-        BusinessSector businessSector = new BusinessSector("fishing");
-
-        Project projectOne = new Project("AA001", "software development management",
-                new Customer("ISEP","228674498"),
-                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
-        Project projectTwo = new Project("AA002", "project software", new Customer(
-                "ISEP","228674498"),
-                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
-
-        List<Project> projects = new ArrayList<>();
+        projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);
-        ProjectContainer projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer(projects);
 
-        Company company = new Company(accountContainer, null, null,
+        //company
+        company = new Company(accountContainer, null, null,
                 projectContainer, null, null, null);
 
+        //mapper
         ListOfProjectsMapper mapper = new ListOfProjectsMapper();
 
-        controller = new GetListOfProjectsController(company, mapper);
+        //controller
+        getListOfProjectscontroller = new GetListOfProjectsController(company, mapper);
     }
 
-   @Test
-    void ensureAllProjectsAreListedWhenRequestedByManager() {
+    @AfterEach
+    void tearDown() {
+        accountOne = null;
+        accountManager = null;
+        customer = null;
+        projectTypology = null;
+        businessSector = null;
+        projectOne = null;
+        projectTwo = null;
+        accounts.clear();
+        projects.clear();
+        accountContainer = null;
+        projectContainer = null;
+        company = null;
+        getListOfProjectscontroller = null;
+    }
+
+    /**
+     * Test that returns the list of all projects to an Account with the Manager profile.
+     */
+
+    @Test
+    void ensureThatAllProjectsAreListedSuccessfully() {
         // Arrange
         GetProjectDTO projectDTOOne = new GetProjectDTO("AA001", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
@@ -66,19 +99,22 @@ public class GetListOfProjectsControllerTest {
         expectDTOs.add(projectDTOTwo);
 
         // Act
-        List<GetProjectDTO> result = controller.getListOfProjects("mike@isep.ipp.pt");
+        List<GetProjectDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep.ipp.pt");
 
         // Assert
         assertEquals(expectDTOs, result);
     }
 
+    /**
+     * Test that resturns an empty list when an unauthorized user access the list of projects.
+     */
     @Test
-    void ensureNoProjectsAreListedWhenRequestedByAnotherProfile() {
+    void ensureThatNoProjectsAreListedWhenRequestedByAnotherProfile() {
         // Arrange
         List<GetProjectDTO> expectDTOs = new ArrayList<>();
 
         // Act
-        List<GetProjectDTO> result = controller.getListOfProjects("paul@isep.ipp.pt");
+        List<GetProjectDTO> result = getListOfProjectscontroller.getListOfProjects("paul@isep.ipp.pt");
 
         // Assert
         assertEquals(expectDTOs, result);

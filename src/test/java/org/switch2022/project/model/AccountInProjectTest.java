@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -133,6 +131,19 @@ public class AccountInProjectTest {
         // ASSERT
         assertNotEquals(hashCodeOther, hashCodeReference);
     }
+
+    @Test
+    void ensurePercentageAllocationIsRetrievedSuccessfully() {
+        // Arrange
+        float expected = 45.0f;
+
+        // Act
+        float result = accountInProject.getPercentageOfAllocation();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
 
     /**
      * Testing if one is able to validate the role of the account in project.
