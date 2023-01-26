@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AccountInProjectContainerTest {
     /**
@@ -90,7 +89,7 @@ class AccountInProjectContainerTest {
         accountDTO3 = new AccountDTO("Anna", "anna@isep.ipp.pt", true);
 
         // projectDTO
-        projectDTO = new ProjectDTO("id001", "Test", "IT Customer","fixed cost", "IT Sector");
+        projectDTO = new ProjectDTO("id001", "Test", "IT Customer", "fixed cost", "IT Sector");
 
         //container
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
@@ -227,7 +226,7 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfPercentageAllocationIsInvalidAHundred() {
         //Assert
-        allocationDTOPO = new AllocationDTO("Product Visionary", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDTO("Scrum Master", 7.5f, 65.0f, LocalDate.of(2023, 1, 19), null);
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo,
@@ -251,6 +250,22 @@ class AccountInProjectContainerTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    /**
+     * Testing if one is able to add an AccountInProject in case of current sum of percentage of allocation equals zero.
+     */
+    @Test
+    void ensureUserIAddedToProjectWhenCurrentPercentAllocationIsNull() {
+        // Arrange
+        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.addUserToProject(accountFour, projectOne, allocationDTOPO);
+
+        // Assert
+        assertEquals(expected, result);
     }
 
     /**
@@ -292,7 +307,6 @@ class AccountInProjectContainerTest {
      * Testing if a user that doesn't have a Manager profile is able to retrieve the list of resources allocated in a
      * given project. It should return an empty list.
      */
-
     @Test
     void ensureThatListAccountsByProjectIsEmpty_NoProject() {
         //Arrange
@@ -318,6 +332,7 @@ class AccountInProjectContainerTest {
         //Assert
         assertEquals(expected, result);
     }
+
 
     @Test
     void ensureThatListProjectsInAccountIsEmpty() {
