@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ListOfProjectsMapper {
 
-    public List<GetProjectDTO> toDTO(List<Project> projects) {
+    public static List<GetProjectDTO> toDTO(List<Project> projects) {
         List<GetProjectDTO> listOfProjectsDto = new ArrayList<>();
         for (Project project : projects) {
             GetProjectDTO getProjectDTO = new GetProjectDTO(project.getProjectCode(),

@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
+import org.switch2022.project.utils.dto.GetProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTO;
 import org.switch2022.project.utils.mapper.AccountMapper;
+import org.switch2022.project.utils.mapper.ListOfProjectsMapper;
 import org.switch2022.project.utils.mapper.ProjectMapper;
 
 import java.time.LocalDate;
@@ -50,7 +52,7 @@ class ListProjectsInAccountControllerTest {
 
     ProjectDTO projectDTOOne, projectDTOTwo;
 
-    List<ProjectDTO> projectsDTOOne;
+    List<GetProjectDTO> projectsDTOOne;
     ListProjectsInAccountController listProjectsInAccountController;
 
     @BeforeEach
@@ -112,12 +114,8 @@ class ListProjectsInAccountControllerTest {
         projects.add(projectOne);
         projects.add(projectTwo);
 
-        //projectDTO
-        projectDTOOne = ProjectMapper.getDTOFromProject(projectOne);
-        projectDTOTwo = ProjectMapper.getDTOFromProject(projectTwo);
-        projectsDTOOne = new ArrayList<>();
-        projectsDTOOne.add(projectDTOOne);
-        projectsDTOOne.add(projectDTOTwo);
+        //projectDTO2
+        projectsDTOOne = ListOfProjectsMapper.toDTO(projects);
 
         //accountInProject
         accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);
@@ -201,10 +199,10 @@ class ListProjectsInAccountControllerTest {
     @Test
     void ensureAllProjectsByAccountAreListedSuccessfully() {
         //Arrange
-        List<ProjectDTO> expected = projectsDTOOne;
+        List<GetProjectDTO> expected = projectsDTOOne;
 
         //Act
-        List<ProjectDTO> result = listProjectsInAccountController.listProjectsByAccount("mike@isep.ipp.pt");
+        List<GetProjectDTO> result = listProjectsInAccountController.listProjectsByAccount("mike@isep.ipp.pt");
 
         //Assert
         assertEquals(expected, result);
@@ -213,11 +211,11 @@ class ListProjectsInAccountControllerTest {
     @Test
     void ensureThatListProjectByAccountIsEmpty_NoPermission() {
         //Arrange
-        List<ProjectDTO> expected = new ArrayList<>();
+        List<GetProjectDTO> expected = new ArrayList<>();
         accountFour.setProfile(profileOne);
 
         //Act
-        List<ProjectDTO> result = listProjectsInAccountController.listProjectsByAccount("mary@isep.ipp.pt");
+        List<GetProjectDTO> result = listProjectsInAccountController.listProjectsByAccount("mary@isep.ipp.pt");
 
         //Assert
         assertEquals(expected, result);

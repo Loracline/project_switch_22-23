@@ -5,7 +5,6 @@ import org.switch2022.project.model.Project;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.utils.Util;
-import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.dto.AllocationDTO;
 
 import java.util.ArrayList;
@@ -134,11 +133,11 @@ public class AccountInProjectContainer {
      *
      * @return a list of Projects
      */
-    public List<Project> listProjectsByAccount(String emailUser) {
+    public List<Project> listProjectsByAccount(String email) {
         List<Project> projects = new ArrayList<>();
         int i = 0;
         while (Util.isLower(i, accountsInProject.size())) {
-            Project requestedProject = accountsInProject.get(i).getProjectsByAccount(emailUser);
+            Project requestedProject = accountsInProject.get(i).getProjectByAccount(email);
             if (requestedProject != null) {
                 projects.add(requestedProject);
             }
