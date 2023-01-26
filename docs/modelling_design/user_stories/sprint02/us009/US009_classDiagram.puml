@@ -34,7 +34,7 @@ class "Customer"{
 -customerName
 +Customer(customerName, customerNIF)
 }
-"AddCustomerController"  --> "Company"
+"AddCustomerController" "1"-->"1" "Company" : has
 "Company" "1"-->"1" "CustomerContainer": has
 "Company" "1"-->"1" "AccountContainer": has
 "CustomerContainer" "1"-->"*" "Customer": has
