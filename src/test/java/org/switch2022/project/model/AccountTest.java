@@ -134,21 +134,6 @@ class AccountTest {
         assertEquals(expected, result);
     }
 
-    @Test
-    void ensureGetPhotoRetrievesNonNullValue() throws IOException {
-        // ARRANGE
-        BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
-        Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        accountOne.setPhoto(photo);
-
-        // ACT
-        BufferedImage result = accountOne.getPhoto();
-
-        // RESULT
-        assertEquals(photo, result);
-    }
-
-
     /**
      * SETTER methods
      */

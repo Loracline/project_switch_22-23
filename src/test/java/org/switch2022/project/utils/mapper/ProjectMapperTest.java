@@ -34,8 +34,8 @@ class ProjectMapperTest {
   ProjectContainer projectContainer;
   CustomerContainer customerContainer;
   Company company;
-  ProjectMapper projectMapper;
   RegisterProjectController registerProjectController;
+
 
   @BeforeEach
   void setUp() {
@@ -77,8 +77,6 @@ class ProjectMapperTest {
 
     registerProjectController = new RegisterProjectController(company);
 
-    projectMapper = new ProjectMapper();
-
   }
 
   @AfterEach
@@ -107,7 +105,7 @@ class ProjectMapperTest {
    */
   @Test
   void creationOfProjectDTOSuccessful() {
-    ProjectDTO reference = projectMapper.getDTOFromProject(projectOne);
+    ProjectDTO reference = ProjectMapper.getDTOFromProject(projectOne);
     boolean expected = true;
     boolean result = reference.equals(projectOneDTO);
     assertEquals(expected, result);
@@ -117,7 +115,7 @@ class ProjectMapperTest {
    */
   @Test
   void creationOfProjectDTONotSuccessful() {
-    ProjectDTO reference = projectMapper.getDTOFromProject(projectTwo);
+    ProjectDTO reference = ProjectMapper.getDTOFromProject(projectTwo);
     boolean expected = false;
     boolean result = reference.equals(projectOneDTO);
     assertEquals(expected, result);
@@ -127,7 +125,7 @@ class ProjectMapperTest {
    */
   @Test
   void creationOfProjectNotSuccessful() {
-    Project reference = projectMapper.getProjectFromDTO(projectTwoDTO);
+    Project reference = ProjectMapper.getProjectFromDTO(projectTwoDTO);
     boolean expected = false;
     boolean result = reference.equals(projectOne);
     assertEquals(expected, result);
