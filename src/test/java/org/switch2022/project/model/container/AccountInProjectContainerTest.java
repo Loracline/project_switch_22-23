@@ -258,6 +258,27 @@ class AccountInProjectContainerTest {
     }
 
     /**
+     * Testing if one is able to add an AccountInProject with an invalid sum of percentage of allocation.
+     * It should result in a tue statement since accountTwo now is 100% allocated.
+     */
+
+    @Test
+    void ensureThatAccountIsNotAddedToAccountsInProjectsIfPercentageAllocationIsInvalidAHundred() {
+        //Assert
+        allocationDTOPO = new AllocationDTO();
+        allocationDTOPO.role = "Product Owner";
+        allocationDTOPO.costPerHour = 7.5f;
+        allocationDTOPO.percentageAllocation = 50.0f;
+        allocationDTOPO.startDate = LocalDate.of(2023, 1, 19);
+
+        //Act
+        boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo,
+                allocationDTOPO);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
      * Testing if one is able to add an AccountInProject with a null project. It should result in a false statement.
      */
 
