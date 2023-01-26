@@ -18,177 +18,162 @@ class AddCustomerControllerTest {
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
-    Account accountOne, accountTwo, accountThree, accountFour;
+    Account accountOne;
     Profile profileOne, profileTwo;
+    Customer customerOne;
+    ProjectTypology projectTypologyOne;
+    BusinessSector businessSectorOne;
+    Project projectOne;
     List<Account> accounts;
-    List<Profile> profiles;
+    List<Customer>  customers;
     AccountContainer accountContainer;
-    ProfileContainer profileContainer;
-    BusinessSectorContainer businessSectorContainer;
-    Project project;
-    List<Project> projects;
-    ProjectContainer projectContainer;
-    Company company;
-    ProjectTypology projectTypology;
-    ProjectTypologyContainer projectTypologyContainer;
-    Customer customerOne, customerTwo;
     CustomerContainer customerContainer;
-    List<Customer> customers;
-    AddBusinessSectorController addBusinessSectorController;
+    Company company;
     AddCustomerController addCustomerController;
-
-    float costPerHour;
-    float percentageAllocation;
-    LocalDate startDate;
-    AccountInProject accountInProject1, accountInProject2;
-    List<AccountInProject> accountsInProject;
-    AccountInProjectContainer accountInProjectContainer;
-
 
     @BeforeEach
     void setUp() {
+        //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
-        accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
-        accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
-
         accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
         accounts.add(accountOne);
-        accounts.add(accountTwo);
 
+        //profile
         profileOne = new Profile("Administrator");
-        profileTwo = new Profile("User");
+        profileTwo = new Profile("Manager");
 
-
-        profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
-
-        projects = new ArrayList<>();
-        projectContainer = new ProjectContainer(projects);
-        projects.add(project);
-
-        businessSectorContainer= new BusinessSectorContainer();
-        businessSectorContainer.createBusinessSector("fishing");
-
-        projectTypology = new ProjectTypology("Fixed Cost");
-
-        List<ProjectTypology> typologies = new ArrayList<>();
-        typologies.add(projectTypology);
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
-
-        customerOne = new Customer("ISEP", "222333444");
-        customerTwo = new Customer("PortoTech","222333445");
-
+        //customer
+        customerOne = new Customer("Genius Software", "234567890");
         customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
         customers.add(customerOne);
-        customers.add(customerTwo);
 
+        //projectTypology
+        projectTypologyOne = new ProjectTypology("Fixed Cost");
 
-        project = new Project("proj001", "software development management", new Customer("ISEP","222333444"),
-                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
+        //businessSector
+        businessSectorOne = new BusinessSector("Fishing");
 
-        List<Project> projects = new ArrayList<>();
-        projects.add(project);
-        projectContainer = new ProjectContainer(projects);
+        //project
+        projectOne = new Project("1A", "Mobile Software", customerOne,
+                projectTypologyOne, businessSectorOne);
 
-        accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
-        accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
-        accountsInProject = new ArrayList<>();
-        accountsInProject.add(accountInProject1);
-        accountsInProject.add(accountInProject2);
-        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+        //containers
+        accountContainer = new AccountContainer(accounts);
+        customerContainer = new CustomerContainer(customers);
 
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer,customerContainer);
+        //company
+        company = new Company(accountContainer, null, null,
+                null, null, null, customerContainer);
 
-        addBusinessSectorController = new AddBusinessSectorController(company);
+        //controller
         addCustomerController = new AddCustomerController(company);
+
     }
 
     @AfterEach
     void tearDown() {
         accountOne = null;
-        accountTwo = null;
         profileOne = null;
         profileTwo = null;
+        customerOne = null;
+        projectTypologyOne = null;
+        businessSectorOne = null;
+        projectOne = null;
         accounts.clear();
-        profiles.clear();
+        customers.clear();
         accountContainer = null;
-        profileContainer = null;
-        businessSectorContainer = null;
-        project = null;
-        projects.clear();
-        projectContainer = null;
+        customerContainer = null;
         company = null;
-        addBusinessSectorController = null;
         addCustomerController = null;
     }
-    @Test
-    void addNewCustomerUnsuccessfullyInvalidName(){
-        //Arrange
-        boolean expected = false;
-        accountOne.setProfile(profileOne);
-        //Act
-        boolean result = addCustomerController.addCustomer("ISEP","222333444", "mike@isep.ipp.pt");
-        //Assert
-        assertEquals(expected,result);
-    }
+
+    /**
+     * US009
+     * Tests if the addition of a new customer is performed successfully if the actor
+     * is an administrator.
+     * Expected return: true
+     */
 
     @Test
-    void addNewCustomerSuccessfully(){
+    void ensureThatNewCustomerIsSuccessfullyAddedIfActorIsAdministrator(){
         //Arrange
-        boolean expected = true;
+        //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        boolean expected = true;
         //Act
         boolean result = addCustomerController.addCustomer("Critical","233444000", "mike@isep.ipp.pt");
         //Assert
         assertEquals(expected,result);
     }
 
+    /**
+     * US009
+     * Tests if the addition of a new customer is not performed if the
+     * name of the customer is empty.
+     * Expected return = false
+     */
     @Test
-    void addNewCustomerUnsuccessfullyEmptyName() {
+    void ensureThatNewCustomerIsNotAddedIfNameIsEmpty() {
         // Arrange
-        boolean expected = false;
+        //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        boolean expected = false;
         // Act
         boolean result = addCustomerController.addCustomer("", "234345456", "mike@isep.ipp.pt");
         // Assert
         assertEquals(expected, result);
     }
 
+    /**
+     * US009
+     * Tests if the addition of a new customer is not performed if the
+     * NIF of the customer is empty.
+     * Expected return = false
+     */
+
     @Test
-    void addNewCustomerUnsuccessfullyEmptyNIF() {
+    void ensureThatNewCustomerIsNotAddedIfNIFIsEmpty() {
         // Arrange
-        boolean expected = false;
+        //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        boolean expected = false;
         // Act
         boolean result = addCustomerController.addCustomer("Critical", "", "mike@isep.ipp.pt");
         // Assert
         assertEquals(expected, result);
     }
 
+    /**
+     * US009
+     * Tests if the addition of a new customer is not performed if the
+     * NIF of the customer is invalid (no. digits != 9).
+     * Expected return = false
+     */
     @Test
-    void addNewCustomerUnsuccessfullyInvalidNIF() {
+    void ensureThatNewCustomerIsNotAddedIfNIFIsInvalid() {
         // Arrange
-        boolean expected = false;
+        //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        boolean expected = false;
         // Act
         boolean result = addCustomerController.addCustomer("Critical", "2223334444", "mike@isep.ipp.pt");
         // Assert
         assertEquals(expected, result);
     }
 
+    /**
+     * US009
+     * Tests if the addition of a new customer is not performed if the actor is not an
+     * administrator.
+     * Expected return = false
+     */
+
     @Test
     void addCustomerUnsuccessfullyInvalidProfile() {
         //Arrange
+        //set profileTwo (Manager) to accountOne
+        accountOne.setProfile(profileTwo);
         boolean expected = false;
-        accountTwo.setProfile(profileTwo);
         //Act
         boolean result = addCustomerController.addCustomer("Critical", "255666777", "paul@isep.ipp.pt");
         // Assert
