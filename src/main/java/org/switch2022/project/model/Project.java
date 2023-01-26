@@ -16,7 +16,7 @@ public class Project {
   private final Customer customer;
   private final ProjectTypology projectTypology;
   private final BusinessSector businessSector;
-  private String projectStatus;
+  private final String projectStatus;
 
   /**
    * Constructor

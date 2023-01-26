@@ -151,4 +151,22 @@ public class AccountInProject {
         }
         return isAllocated;
     }
+
+
+    public Project getProjectsByAccount(String emailUser) {
+        Project requestedProject = null;
+        if ( validate(emailUser)) {
+            requestedProject = this.project;
+        }
+        return requestedProject;
+    }
+
+    private boolean validate (String emailUser) {
+        boolean validate = false;
+        if ( this.account.getEmail().equals(emailUser)){
+            validate = true;
+        }
+        return validate;
+    }
+
 }
