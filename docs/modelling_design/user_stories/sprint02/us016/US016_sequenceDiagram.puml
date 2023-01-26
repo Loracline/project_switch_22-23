@@ -6,84 +6,64 @@ US016 - As Authenticated User, I want to get a list of all projects I'm currentl
 end legend
 autonumber
 actor User
-participant ":ListAccountsInProjectUI" as ui
-participant ":ListProjectsInAccountController" as controller
+participant ":ListProjectInAccountUI" as ui
+participant ":ListProjectInAccountController" as controller
 participant ":Company" as company
-participant ":AccountContainer" as container
-
-participant "account:Account" as acc
 participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
-participant "Projects: List<Project>" as list
-participant "projectMapper:ProjectMapper" as mapper
-participant "projectsDTO: List<ProjectDTO>" as listdto
+participant "projects: List<Project>" as list
+participant ":ProjectMapperUS016" as pm
+participant "projectsDTO: List<ProjectDTO>" as listDTO
 participant "projectDTO:ProjectDTO" as DTO
-participant "profile:Profile" as pf
-
 activate User
-User -> ui: Lists all projects the user is allocated to
+User -> ui: lists all projects of a given project
 activate ui
-ui -> controller: listProjectByAccount(email)
+ui --> User: request data (email)
+User -> ui: types requested data
+ui -> controller: listProjectsInAccount(email,emailUser)
 activate controller
-controller -> company: validateUser(email)
+controller -> company: validateUser(emailUser)
 activate company
-
-company -> container: validateUser(email)
-activate container
-container -> acc: validateUser(email)
-activate acc
-acc -> pf: getProfileByName()
-acc-->container : true
-deactivate acc
-container--> company: true
-deactivate container
-company --> controller: true
+ref over company: validateUser_sequenceDiagram
+company -->> controller: true
 deactivate company
-controller -> company: listProjectByAccount(email)
+controller -> company: listProjectsByAccount(email)
 activate company
-company -> container : listProjectByAccount(email)
-activate container
-container -> container : account= getAccountByEmail(email)
-container -> aipc : listProjectByAccount(account)
+company -> aipc: listProjectsByAccount(email)
 activate aipc
-
 create list
-aipc -> list :create()
+aipc --> list :create()
 loop for each AccountInProject in AccountInProjectContainer
-aipc -> aip : getProjectByAccount(account)
+aipc -> aip : getProjectByAccount(email)
+activate aip
 aip --> aipc : project
-aipc -> list : addProject(project)
+deactivate aip
+aipc -> list : add(project)
+activate list
+deactivate list
 end loop
-aipc --> container : projects
+aipc --> company : projects
 deactivate aipc
-container --> company : projects
-deactivate container
-
-deactivate container
-
-company --> controller : projects
+company --> controller: projects
 deactivate company
-create mapper
-controller -> mapper: projectsToDTO(projects)
-deactivate company
-activate mapper
-create listdto
-mapper --> listdto : create ()
-loop for each project in projects
-mapper -> list: project = get(i)
-list --> mapper: project
-deactivate aipc
-mapper -> mapper : projectDTO = projectToDTO(project)
-activate mapper
+controller -> pm: getListOfProjectsDTO(projects)
+activate pm
+create listDTO
+pm --> listDTO: create ()
+loop for each project in accounts
+pm -> list: project = get(i)
+list --> pm: project
+pm -> pm: projectDTO = projectToDTO(project)
 create DTO
-mapper --> DTO : create()
-deactivate mapper
-mapper -> listdto :add(projectDTO)
+pm --> DTO : create()
+pm ->listDTO :add(projectDTO)
+activate listDTO
 end loop
-mapper --> controller :projectsDTO
-deactivate mapper
+deactivate listDTO
+pm --> controller :projectsDTO
+deactivate pm
 controller -->> ui: projectsDTO
 deactivate controller
-ui -->> User: projectsDTO
+ui --> User: return list of accounts
 deactivate ui
 @enduml

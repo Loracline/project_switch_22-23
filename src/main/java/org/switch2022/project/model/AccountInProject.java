@@ -135,7 +135,9 @@ public class AccountInProject {
      * This method sets an end date of allocation to a project with a specific role
      */
     public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+        if(endDate.isAfter(this.startDate)){
+            this.endDate = endDate;
+        }
     }
 
     /**

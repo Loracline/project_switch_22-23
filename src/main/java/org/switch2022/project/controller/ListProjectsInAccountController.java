@@ -1,16 +1,8 @@
 package org.switch2022.project.controller;
-
-
 import org.switch2022.project.model.Company;
 import org.switch2022.project.model.Project;
-
-
-import org.switch2022.project.utils.dto.ListProjectsDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
 import org.switch2022.project.utils.dto.ProjectDTOus016;
-import org.switch2022.project.utils.mapper.ListOfProjectsMapper;
 import org.switch2022.project.utils.mapper.ProjectMapperUS016;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +19,7 @@ public class ListProjectsInAccountController {
      * and then returns a list of Projects allocated to that User
      *
      * @param emailUser
-     * @return
+     * @return projectDTOus016
      */
 
     public List<ProjectDTOus016> listProjectsByAccount(String emailUser) {
