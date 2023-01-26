@@ -24,11 +24,6 @@ class "AccountInProjectContainer"{
 class "AccountInProject"{
 -account
 -project
--role
--startDate
--costPerHour
--percentageAllocation
--endDate
 +getAccountByProject(projectCode)
 -isAccountAllocatedToProject(projectCode))
 }
