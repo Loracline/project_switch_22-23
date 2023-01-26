@@ -282,7 +282,7 @@ public class AccountInProjectTest {
         //Arrange
         Project expected = project;
         //Act
-        Project result = accountInProject.getProjectsByAccount("john@isep.ipp.pt");
+        Project result = accountInProject.getProjectByAccount("john@isep.ipp.pt");
         //Assert
         assertEquals(expected, result);
     }
@@ -291,7 +291,7 @@ public class AccountInProjectTest {
     @Test
     void ensureThatGetProjectByAccountReturnsNull() {
         //Act
-        Project result = accountInProject.getProjectsByAccount("emma@isep.ipp.pt");
+        Project result = accountInProject.getProjectByAccount("emma@isep.ipp.pt");
         //Assert
         assertNull(result);
     }

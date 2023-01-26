@@ -74,7 +74,7 @@ class CreateProfileControllerTest {
         projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
 
         project = new Project("proj001", "software development management",
                 new Customer("ISEP","228674498"),

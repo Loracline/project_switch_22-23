@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +23,6 @@ class AddCustomerControllerTest {
     BusinessSector businessSectorOne;
     Project projectOne;
     List<Account> accounts;
-    List<Customer>  customers;
     AccountContainer accountContainer;
     CustomerContainer customerContainer;
     Company company;
@@ -44,8 +41,7 @@ class AddCustomerControllerTest {
 
         //customer
         customerOne = new Customer("Genius Software", "234567890");
-        customers = new ArrayList<>();
-        customers.add(customerOne);
+
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -54,12 +50,13 @@ class AddCustomerControllerTest {
         businessSectorOne = new BusinessSector("Fishing");
 
         //project
-        projectOne = new Project("1A", "Mobile Software", customerOne,
+        projectOne = new Project("1A", "Mobile Software",new Customer ("Genius Software", "234567890"),
                 projectTypologyOne, businessSectorOne);
 
         //containers
         accountContainer = new AccountContainer(accounts);
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
+        customerContainer.addCustomer("Genius Software","234567890");
 
         //company
         company = new Company(accountContainer, null, null,
@@ -80,7 +77,6 @@ class AddCustomerControllerTest {
         businessSectorOne = null;
         projectOne = null;
         accounts.clear();
-        customers.clear();
         accountContainer = null;
         customerContainer = null;
         company = null;
@@ -99,9 +95,10 @@ class AddCustomerControllerTest {
         //Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
-        boolean result = addCustomerController.addCustomer("Critical","233444000", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical","233444000", emailActor);
         //Assert
         assertEquals(expected,result);
     }
@@ -117,9 +114,10 @@ class AddCustomerControllerTest {
         // Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("", "234345456", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("", "234345456", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -136,9 +134,10 @@ class AddCustomerControllerTest {
         // Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("Critical", "", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical", "", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -154,9 +153,10 @@ class AddCustomerControllerTest {
         // Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("Critical", "2223334444", "mike@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical", "2223334444", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -173,9 +173,10 @@ class AddCustomerControllerTest {
         //Arrange
         //set profileTwo (Manager) to accountOne
         accountOne.setProfile(profileTwo);
+        String emailActor = accountOne.getEmail(); //Manager
         boolean expected = false;
         //Act
-        boolean result = addCustomerController.addCustomer("Critical", "255666777", "paul@isep.ipp.pt");
+        boolean result = addCustomerController.addCustomer("Critical", "255666777", emailActor);
         // Assert
         assertEquals(expected, result);
     }

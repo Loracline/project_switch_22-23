@@ -10,74 +10,58 @@ class UtilTest {
      * Testing the isLower() method.
      */
     @Test
-    void ensureFirstLowerSecond() {
-        // ARRANGE
-        int first = 1;
-        int second = 2;
+    public void testIsLower_True() {
+        // Arrange
+        float first = 1.5f;
+        float second = 2.5f;
         boolean expected = true;
 
-        // ACT
+        // Act
         boolean result = Util.isLower(first, second);
 
-        // ASSERT
+        // Assert
         assertEquals(expected, result);
     }
 
     @Test
-    void ensureFirstNotLowerSecond() {
-        // ARRANGE
-        int first = 1;
-        int second = 0;
+    public void testIsLower_False() {
+        // Arrange
+        float first = 3.5f;
+        float second = 2.5f;
         boolean expected = false;
 
-        // ACT
+        // Act
         boolean result = Util.isLower(first, second);
 
-        // ASSERT
+        // Assert
         assertEquals(expected, result);
     }
 
     @Test
-    void ensureTwoIntegersBeingEqualIsFalse() {
-        // ARRANGE
-        int first = 1;
-        int second = 1;
+    public void testIsLower_Equal() {
+        // Arrange
+        float first = 3.5f;
+        float second = 3.5f;
         boolean expected = false;
 
-        // ACT
+        // Act
         boolean result = Util.isLower(first, second);
 
-        // ASSERT
+        // Assert
         assertEquals(expected, result);
     }
 
     @Test
-    void ensureFirstIndexNotLowerSecondAndThird() {
-        // ARRANGE
-        int first = 1;
-        int second = 1;
-        int three = 2;
-        boolean expected = false;
+    public void testIsLower_Negative() {
+        // Arrange
+        float first = -3.5f;
+        float second = -2.5f;
+        boolean expected = true;
 
-        // ACT
-        boolean result = Util.isLower(first, second) && Util.isLower(three, second);
+        // Act
+        boolean result = Util.isLower(first, second);
 
-        // ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureFirstIndexLowerThanThirdButNotLowerSecond() {
-        // ARRANGE
-        int first = 1;
-        int second = 1;
-        int three = 2;
-        boolean expected = false;
-
-        // ACT
-        boolean result = Util.isLower(first, three) && Util.isLower(first, second);
-
-        // ASSERT
+        // Assert
         assertEquals(expected, result);
     }
 
@@ -85,27 +69,45 @@ class UtilTest {
      * Testing the sum() method.
      */
     @Test
-    void ensureSumIsRetrievedSuccessfully() {
+    public void testSum_Positive() {
         // Arrange
-        float expected = 1;
+        float first = 1.5f;
+        float second = 2.5f;
+        float expected = 4.0f;
 
         // Act
-        float result = Util.sum(0f, 1f);
+        float result = Util.sum(first, second);
 
         // Assert
-        assertEquals(expected, result);
+        assertEquals(expected, result, 0.001f);
     }
 
     @Test
-    void ensureSumIsRetrievedSuccessfullyWithZero() {
+    public void testSum_Negative() {
         // Arrange
-        float expected = 0;
+        float first = -1.5f;
+        float second = -2.5f;
+        float expected = -4.0f;
 
         // Act
-        float result = Util.sum(0f, 0f);
+        float result = Util.sum(first, second);
 
         // Assert
-        assertEquals(expected, result);
+        assertEquals(expected, result, 0.001f);
+    }
+
+    @Test
+    public void testSum_Zero() {
+        // Arrange
+        float first = 0.0f;
+        float second = 0.0f;
+        float expected = 0.0f;
+
+        // Act
+        float result = Util.sum(first, second);
+
+        // Assert
+        assertEquals(expected, result, 0.001f);
     }
 
     /**
@@ -162,7 +164,66 @@ class UtilTest {
         boolean expected = true;
 
         // Act
-        boolean result = Util.isLowerOrEqual(first, second) && Util.isLowerOrEqual(first,third);
+        boolean result = Util.isLowerOrEqual(first, second) && Util.isLowerOrEqual(first, third);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Testing the areBothConditionsGranted() method.
+     */
+    @Test
+    public void testAreBothConditionsGranted_TrueTrue() {
+        // Arrange
+        boolean first = true;
+        boolean second = true;
+        boolean expected = true;
+
+        // Act
+        boolean result = Util.areBothConditionsGranted(first, second);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testAreBothConditionsGranted_TrueFalse() {
+        // Arrange
+        boolean first = true;
+        boolean second = false;
+        boolean expected = false;
+
+        // Act
+        boolean result = Util.areBothConditionsGranted(first, second);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testAreBothConditionsGranted_FalseTrue() {
+        // Arrange
+        boolean first = false;
+        boolean second = true;
+        boolean expected = false;
+
+        // Act
+        boolean result = Util.areBothConditionsGranted(first, second);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testAreBothConditionsGranted_FalseFalse() {
+        // Arrange
+        boolean first = false;
+        boolean second = false;
+        boolean expected = false;
+
+        // Act
+        boolean result = Util.areBothConditionsGranted(first, second);
 
         // Assert
         assertEquals(expected, result);

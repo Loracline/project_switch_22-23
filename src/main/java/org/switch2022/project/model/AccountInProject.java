@@ -153,17 +153,17 @@ public class AccountInProject {
     }
 
 
-    public Project getProjectsByAccount(String emailUser) {
+    public Project getProjectByAccount(String email) {
         Project requestedProject = null;
-        if ( validate(emailUser)) {
+        if ( validate(email)) {
             requestedProject = this.project;
         }
         return requestedProject;
     }
 
-    private boolean validate (String emailUser) {
+    private boolean validate (String email) {
         boolean validate = false;
-        if ( this.account.getEmail().equals(emailUser)){
+        if ( this.account.getEmail().equals(email)){
             validate = true;
         }
         return validate;

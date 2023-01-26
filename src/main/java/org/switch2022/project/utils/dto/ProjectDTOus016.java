@@ -2,9 +2,10 @@ package org.switch2022.project.utils.dto;
 
 import java.util.Objects;
 
-public class ListProjectsDTO {
+public class ProjectDTOus016 {
+
     /**
-     * Attributes of the class GetProjectsDTO.
+     * Attributes of the class ProjectDTOus016.
      */
 
     public final String code;
@@ -15,9 +16,9 @@ public class ListProjectsDTO {
     public final String businessSector;
 
     /**
-     * Constructor of the class GetProjectsDTO.
+     * Constructor of the class ProjectDTOus016.
      */
-    public ListProjectsDTO(String code, String name, String customer, String status,
+    public ProjectDTOus016 (String code, String name, String customer, String status,
                            String projectTypology, String businessSector) {
         this.code = code;
         this.name = name;
@@ -44,7 +45,7 @@ public class ListProjectsDTO {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ListProjectsDTO that = (ListProjectsDTO) o;
+        ProjectDTOus016 that = (ProjectDTOus016) o;
         return Objects.equals(code, that.code) && Objects.equals(name, that.name) &&
                 Objects.equals(customer, that.customer) && Objects.equals(status, that.status) &&
                 Objects.equals(projectTypology, that.projectTypology) &&
@@ -62,3 +63,4 @@ public class ListProjectsDTO {
         return Objects.hash(code, name, customer, status, projectTypology, businessSector);
     }
 }
+

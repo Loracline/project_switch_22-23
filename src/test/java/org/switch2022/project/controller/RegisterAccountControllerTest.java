@@ -85,7 +85,7 @@ class RegisterAccountControllerTest {
         projectTypologyContainer = new ProjectTypologyContainer();
 
         customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
 
         project = new Project("proj001", "software development management", new Customer(
                 "ISEP", "228674498"),

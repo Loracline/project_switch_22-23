@@ -97,7 +97,7 @@ class ChangeStatusControllerTest {
         projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
 
         // accounts in project
         accountInProject1 = new AccountInProject(accountOne, project, "Team Member",

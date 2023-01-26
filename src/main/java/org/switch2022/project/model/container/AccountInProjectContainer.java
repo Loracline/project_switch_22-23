@@ -38,7 +38,7 @@ public class AccountInProjectContainer {
                                     AllocationDTO allocationDTO) {
         boolean accountInProjectAdded = false;
 
-        if (account != null && project != null) {
+        if (Util.areBothConditionsGranted(account != null, project != null)) {
             AccountInProject accountInProject = new AccountInProject(account, project,
                     allocationDTO.role, allocationDTO.costPerHour,
                     allocationDTO.percentageAllocation, allocationDTO.startDate);
@@ -51,7 +51,7 @@ public class AccountInProjectContainer {
                             allocationDTO.percentageAllocation);
 
 
-            if (isRoleValid && !doesAccountInProjectExist && isPercentageOfAllocationValid) {
+            if (Util.areBothConditionsGranted(Util.areBothConditionsGranted(isRoleValid, !doesAccountInProjectExist), isPercentageOfAllocationValid)) {
                 accountsInProject.add(accountInProject);
                 accountInProjectAdded = true;
             }
@@ -67,12 +67,13 @@ public class AccountInProjectContainer {
      *
      * @return sum of percentages of allocation of all projects an account is involved in.
      */
-    private float currentPercentageOfAllocation(Account account) {
+    float currentPercentageOfAllocation(Account account) {
         int i = 0;
         float sumOfPercentages = 0;
         while (Util.isLower(i, accountsInProject.size())) {
-            if (accountsInProject.get(i).getAccount().equals(account) &&
-                    accountsInProject.get(i).getEndDate() == null) {
+            if (Util.areBothConditionsGranted(
+                    accountsInProject.get(i).getAccount().equals(account),
+                    accountsInProject.get(i).getEndDate() == null)) {
                 sumOfPercentages = Util.sum(sumOfPercentages,
                         accountsInProject.get(i).getPercentageOfAllocation());
             }
@@ -87,14 +88,16 @@ public class AccountInProjectContainer {
      *
      * @return TRUE if it doesn't exceed 100, and FALSE otherwise.
      */
-    private boolean isPercentageOfAllocationValid(Account account,
+    boolean isPercentageOfAllocationValid(Account account,
                                                   float newPercentageAllocation) {
         boolean percentageOfAllocationValid = false;
         float totalPercentageAllocation =
                 Util.sum(currentPercentageOfAllocation(account),
                         newPercentageAllocation);
 
-        if (Util.isLowerOrEqual(totalPercentageAllocation, 100)) {
+        if (Util.areBothConditionsGranted(
+                Util.isLowerOrEqual(totalPercentageAllocation, 100),
+                newPercentageAllocation > 0)) {
             percentageOfAllocationValid = true;
         }
         return percentageOfAllocationValid;
@@ -134,11 +137,11 @@ public class AccountInProjectContainer {
      *
      * @return a list of Projects
      */
-    public List<Project> listProjectsByAccount(String emailUser) {
+    public List<Project> listProjectsByAccount(String email) {
         List<Project> projects = new ArrayList<>();
         int i = 0;
         while (Util.isLower(i, accountsInProject.size())) {
-            Project requestedProject = accountsInProject.get(i).getProjectsByAccount(emailUser);
+            Project requestedProject = accountsInProject.get(i).getProjectByAccount(email);
             if (requestedProject != null) {
                 projects.add(requestedProject);
             }

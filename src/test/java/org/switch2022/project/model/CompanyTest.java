@@ -33,9 +33,7 @@ class CompanyTest {
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
     ProjectDTO projectOneDTO, projectTwoDTO;
-    Customer customerOne, customerTwo, customerThree;
     CustomerContainer customerContainer;
-    List<Customer> customers;
     float costPerHour;
     float percentageAllocation;
     LocalDate startDate;
@@ -108,18 +106,12 @@ class CompanyTest {
         projectTypologyContainer.createProjectTypology("Fixed Cost");
         projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
-        // Customers created.
-        customerOne = new Customer("ISEP", "222333444");
-        customerTwo = new Customer("PortoTech", "222333445");
-        customerThree = new Customer("John", "222333555");
-
         // Container of customers created.
-        customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
+        customerContainer.addCustomer("ISEP", "222333444");
+        customerContainer.addCustomer("PortoTech", "222333445");
 
-        // Customers added to the Container.
-        customers.add(customerOne);
-        customers.add(customerTwo);
+
 
         // ProjectDTOs created.
         projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John", "Fixed cost",
@@ -166,9 +158,6 @@ class CompanyTest {
         projectContainer = null;
         projectOneDTO = null;
         projectTwoDTO = null;
-        customerOne = null;
-        customerTwo = null;
-        customers.clear();
         customerContainer = null;
         accountInProject1 = null;
         accountInProject2 = null;
@@ -597,7 +586,63 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Testing if one can add costumer to the container.
+     */
+    @Test
+    void ensureCustomerIsNotAddedSuccessfully_LessThanNineDigits() {
+        //Arrange
+        boolean expected = false;
+        boolean result = company.addCustomer("critical", "2223334");
+        //Assert
+        assertEquals(expected, result);
+    }
 
+    @Test
+    void ensureCustomerIsNotAddedSuccessfully_MoreThanNineDigits() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = company.addCustomer("critical", "2223334488");
+        //Assert
+        assertEquals(expected, result);
+
+    }
+    @Test
+    void ensureAddCustomerToCustomersListSuccessfully() {
+        //Arrange
+        boolean expected = true;
+        //Act
+        boolean result = company.addCustomer("Critical", "142356678");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureAddCustomerToCustomersListUnsuccessfullyCustomerNameEmpty() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = company.addCustomer("", "222333445");
+        //Assert
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    void ensureAddCustomerToCustomersListUnsuccessfullyCustomerSameNIF() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = company.addCustomer("", "222333444");
+        //Assert
+        assertEquals(expected, result);
+
+    }
 
 }
+
+
+
+
 

@@ -25,14 +25,10 @@ class ListAllUsersControllerTest {
     Profile profileOne, profileTwo, profileThree;
     List<Account> accounts;
     List<Profile> profiles;
-    CustomerContainer customerContainer;
-    ProjectTypologyContainer projectTypologyContainer;
-    AccountInProjectContainer accountInProjectContainer;
-    ProjectContainer projectContainer;
-    BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     Company company;
+    ListAllUsersController listAllUsersController;
 
     @BeforeEach
     void setUp() {
@@ -55,23 +51,12 @@ class ListAllUsersControllerTest {
         profileTwo = new Profile("User");
         profileThree = new Profile("Manager");
 
-        // Container of profiles created.
-        profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
-
-        // Profiles added to the Container.
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
-        profiles.add(profileThree);
-
-        // Account's profiles changed.
-        accountOne.setProfile(profileOne); // accountOne is an "Administrator".
-        accountTwo.setProfile(profileTwo); // accountTwo is a "User".
-        accountThree.setProfile(profileThree); // accountThree is a "Manager".
-
         // Company created.
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+        company = new Company(accountContainer, null, null,
+                null, null, null,
+                null);
+        // Controller created
+        listAllUsersController = new ListAllUsersController(company);
     }
 
     @AfterEach
@@ -83,59 +68,90 @@ class ListAllUsersControllerTest {
         profileTwo = null;
         profileThree = null;
         accounts.clear();
-        profiles.clear();
         accountContainer = null;
-        profileContainer = null;
-        businessSectorContainer = null;
-        projectContainer = null;
-        customerContainer = null;
         company = null;
+        listAllUsersController = null;
     }
 
     /**
-     * listAllUsers(String actorEmail)
+     * Tests if the list of all accounts with profile User (default) is successfully
+     * retrieved if the actor is a manager.
      */
+
     @Test
-    void listAllUsersSuccessfully() {
+    void ensureThatListOfAllUsersIsSuccessfullyRetrievedIfActorIsManager() {
         // ARRANGE
-        ListAllUsersController controller = new ListAllUsersController(company);
+        // Accounts' profiles
+        accountOne.setProfile(profileOne); // accountOne is an "Administrator".
+        accountTwo.setProfile(profileTwo); // accountTwo is a "User".
+        accountThree.setProfile(profileThree); // accountThree is a "Manager".
+
+        //Retrieve email of actor (manager)
+        String emailActor = accountThree.getEmail();
+
+        //AccountDTO of only account with profile User (accountTwo)
         AccountDTO accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
+        //Add accountTwoDTO to empty list
         List<AccountDTO> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
 
         // ACT
-        List<AccountDTO> result = controller.listAllUsers(accountThree.getEmail());
+        List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
         assertEquals(expected,result);
     }
 
+    /**
+     * Tests if the list of all accounts with profile User (default) is not
+     * retrieved if the actor is not a manager.
+     */
+
     @Test
     void listAllUsersUnsuccessfully_NotAManager() {
         // ARRANGE
-        ListAllUsersController controller = new ListAllUsersController(company);
+        // Accounts' profiles
+        accountOne.setProfile(profileOne); // accountOne is an "Administrator".
+        accountTwo.setProfile(profileTwo); // accountTwo is a "User".
+        accountThree.setProfile(profileThree); // accountThree is a "Manager".
+
+        //Retrieve email of actor (administrator)
+        String emailActor = accountOne.getEmail();
+
+        //AccountDTO of only account with profile User (accountTwo)
         AccountDTO accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
+        //Add accountTwoDTO to empty list
         List<AccountDTO> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
 
         // ACT
-        List<AccountDTO> result = controller.listAllUsers(accountOne.getEmail());
+        List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
-        assertNotEquals(expected, result);
+        assertNotEquals(expected,result);
     }
 
+    /**
+     * Tests if an empty list is retrieved if there are no accounts with profile User.
+     */
     @Test
     void listAllUsersUnsuccessfully_NoUsersListed() {
         // ARRANGE
-        ListAllUsersController controller = new ListAllUsersController(company);
-        accountTwo.setProfile(profileThree);
+        // Accounts' profiles
+        accountOne.setProfile(profileOne); // accountOne is an "Administrator".
+        accountTwo.setProfile(profileOne); // accountTwo is an "Administrator".
+        accountThree.setProfile(profileThree); // accountThree is a "Manager".
+
+        //Retrieve email of actor
+        String emailActor = accountThree.getEmail();
+
         List<AccountDTO> expected = new ArrayList<>();
 
         // ACT
-        List<AccountDTO> result = controller.listAllUsers(accountThree.getEmail());
+        List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
-        assertEquals(expected, result);
+        assertEquals(expected,result);
     }
+
 }
