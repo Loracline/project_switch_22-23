@@ -1,24 +1,24 @@
 package org.switch2022.project.utils.mapper;
 
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.dto.ListProjectsDTO;
+import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListOfProjectsMapper {
+public class ManagerListProjectsMapper {
     /**
      * Constructor of the class ListOfProjectsMapper.
      */
-    private ListOfProjectsMapper() {
+    private ManagerListProjectsMapper() {
     }
 
     /**
      * This method receives a project and maps/transforms the project
      * into DTO
      */
-    private static ListProjectsDTO getDTOFromProject(Project project) {
-        return new ListProjectsDTO(project.getProjectCode(),
+    private static ManagerListProjectsDTO getDTOFromProject(Project project) {
+        return new ManagerListProjectsDTO(project.getProjectCode(),
                 project.getProjectName(), project.getCustomer().getCustomerName(),
                 project.getProjectStatus(),
                 project.getProjectTypology().getProjectTypologyName(),
@@ -31,12 +31,12 @@ public class ListOfProjectsMapper {
      * into DTOs and then stores them in a list to be returned by the method developed in
      * GetListOfProjectsController
      */
-    public static List<ListProjectsDTO> getListOfProjectsDTO(List<Project> projects) {
-        List<ListProjectsDTO> listOfProjectsDto = new ArrayList<>();
+    public static List<ManagerListProjectsDTO> getListOfProjectsDTO(List<Project> projects) {
+        List<ManagerListProjectsDTO> listOfProjectsDto = new ArrayList<>();
         for (Project project : projects) {
-            ListProjectsDTO listProjectsDTO = getDTOFromProject(project);
+            ManagerListProjectsDTO managerListProjectsDTO = getDTOFromProject(project);
 
-            listOfProjectsDto.add(listProjectsDTO);
+            listOfProjectsDto.add(managerListProjectsDTO);
         }
         return listOfProjectsDto;
     }
