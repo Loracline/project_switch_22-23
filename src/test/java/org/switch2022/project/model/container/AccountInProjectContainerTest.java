@@ -225,16 +225,16 @@ class AccountInProjectContainerTest {
      * It should result in a tue statement since accountTwo now is 100% allocated.
      */
     @Test
-    void ensureThatAccountIsNotAddedToAccountsInProjectsIfPercentageAllocationIsInvalidAHundred() {
+    void ensureThatAccountIsAddedToAccountsInProjectsIfPercentageAllocationTotalsOneHundred() {
         //Assert
-        allocationDTOPO = new AllocationDTO("Product Visionary", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 50.0f, LocalDate.of(2023, 1, 19), null);
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo,
                 allocationDTOPO);
 
         //Assert
-        assertFalse(result);
+        assertTrue(result);
     }
 
     /**
@@ -305,6 +305,11 @@ class AccountInProjectContainerTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test to list all projects from an account is listed. Should return a list of projects where
+     * that account works in.
+     */
+
     @Test
     void ensureThatAllProjectsInAccountsAreListedSuccessfully() {
         //Arrange
@@ -318,6 +323,10 @@ class AccountInProjectContainerTest {
         //Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * Test to list all projects from an account that has no projects is listed. Should return an empty list.
+     */
 
     @Test
     void ensureThatListProjectsInAccountIsEmpty() {
