@@ -45,7 +45,6 @@ class AddUserToProjectControllerTest {
     List<Account> accounts;
     List<Project> projects;
     List<AccountInProject> accountsInProject;
-    List<AccountDTO> accountsDTO;
     AllocationDTO allocationDTO;
     AccountContainer accountContainer;
     ProjectContainer projectContainer;
@@ -152,14 +151,15 @@ class AddUserToProjectControllerTest {
         //Arrange
         //set profileTwo (Manager) to accountOne
         accountOne.setProfile(profileTwo);
-        String emailManager = accountOne.getEmail();
+        String emailActor = accountOne.getEmail(); //Manager
 
         //Act
-        boolean result = addUserToProjectController.addUserToProject(emailManager,
+        boolean result = addUserToProjectController.addUserToProject(emailActor,
                 accountDTO, projectDTO, allocationDTO);
 
         //Assert
         assertTrue(result);
+
     }
 
     /**
@@ -173,10 +173,10 @@ class AddUserToProjectControllerTest {
         //Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);
-        String emailManager = accountOne.getEmail();
+        String emailActor = accountOne.getEmail(); //Administrator
 
         //Act
-        boolean result = addUserToProjectController.addUserToProject(emailManager,
+        boolean result = addUserToProjectController.addUserToProject(emailActor,
                 accountDTO,
                 projectDTO,
                 allocationDTO);

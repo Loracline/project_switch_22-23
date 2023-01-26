@@ -68,11 +68,13 @@ class CreateProfileControllerTest {
         projectContainer = new ProjectContainer(projects);
         projects.add(project);
 
-        List<ProjectTypology> typologies = new ArrayList<>();
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        //Project typology
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
 
         project = new Project("proj001", "software development management",
                 new Customer("ISEP","228674498"),
@@ -115,6 +117,7 @@ class CreateProfileControllerTest {
         customerContainer = null;
         company = null;
         createProfileController = null;
+        projectTypologyContainer = null;
     }
     @Test
     void addNewProfileSuccessfully(){
