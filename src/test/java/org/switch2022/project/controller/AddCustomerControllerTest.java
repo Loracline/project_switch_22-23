@@ -159,8 +159,6 @@ class AddCustomerControllerTest {
     }
 
 
-
-
     @Test
     void addNewCustomerUnsuccessfullyEmptyName() {
         // Arrange
@@ -183,5 +181,26 @@ class AddCustomerControllerTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void addNewCustomerUnsuccessfullyInvalidNIF() {
+        // Arrange
+        boolean expected = false;
+        accountOne.setProfile(profileOne);
+        // Act
+        boolean result = addCustomerController.addCustomer("Critical", "2223334444", "mike@isep.ipp.pt");
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void addCustomerUnsuccessfullyInvalidProfile() {
+        //Arrange
+        boolean expected = false;
+        accountTwo.setProfile(profileTwo);
+        //Act
+        boolean result = addCustomerController.addCustomer("Critical", "255666777", "paul@isep.ipp.pt");
+        // Assert
+        assertEquals(expected, result);
+    }
 
 }
