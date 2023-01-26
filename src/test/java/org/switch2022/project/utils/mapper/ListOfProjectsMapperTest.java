@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.ListProjectsDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class ListOfProjectsMapperTest {
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
     Project projectOne, projectTwo;
-    ProjectDTO projectOneDTO, projectTwoDTO, projectThreeDTO;
+    ListProjectsDTO projectOneDTO, projectTwoDTO, projectThreeDTO;
     List<Project> projects;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
@@ -40,11 +39,11 @@ public class ListOfProjectsMapperTest {
         projects.add(projectTwo);
         projectContainer = new ProjectContainer(projects);
 
-        projectOneDTO = new ProjectDTO("AA001", "Aptoide", "ISEP", "Fixed cost",
+        projectOneDTO = new ListProjectsDTO("AA001", "Aptoide", "ISEP", "Planned", "Fixed cost",
                 "fishing");
-        projectTwoDTO = new ProjectDTO("AA004", "Aptoide", "PortoTech", "Fixed cost",
+        projectTwoDTO = new ListProjectsDTO("AA004", "Aptoide", "PortoTech", "Planned", "Fixed cost",
                 "Hunting");
-        projectThreeDTO = new ProjectDTO("AA001", "Aptoide", "ISEP", "Fixed cost",
+        projectThreeDTO = new ListProjectsDTO("AA001", "Aptoide", "ISEP", "Planned", "Fixed cost",
                 "fishing");
 
         company = new Company(null, null, null,
@@ -71,7 +70,7 @@ public class ListOfProjectsMapperTest {
      */
 
     @Test
-    void ensureGetListOfProjectsDTOSuccessful() {
+    void getListOfProjectsDTO() {
         //Arrange
         List<ListProjectsDTO> expected = new ArrayList<>();
         expected.add(new ListProjectsDTO("AA001", "Aptoide", "isep", "planned",
@@ -82,7 +81,5 @@ public class ListOfProjectsMapperTest {
         List<ListProjectsDTO> result = ListOfProjectsMapper.getListOfProjectsDTO(projects);
         //Assert
         assertEquals(expected, result);
-
     }
-
 }
