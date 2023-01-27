@@ -129,6 +129,30 @@ class CustomerTest {
         //Assert
         assertNotEquals(expected, result);
     }
+
+    @Test
+    void ensureThatCustomerNifNotIsRetrieved() {
+        Customer customer = new Customer("john","111222333");
+        String expected = "111222333";
+
+        //Act
+        String result = customer.getCustomerNif();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatCustomerNifNotIsNotRetrieved() {
+        Customer customer = new Customer("john","111222333");
+        String expected = "111232333";
+
+        //Act
+        String result = customer.getCustomerNif();
+
+        //Assert
+        assertNotEquals(expected, result);
+    }
 }
 
 

@@ -20,7 +20,7 @@ public class ProjectContainerTest {
 
 
   Project projectOne;
-  ProjectDTOAsManager projectDTOAsManager;
+  ProjectDTOAsManager projectDTOAsManager,projectDTOAsManagerTwo;
   ProjectTypologyContainer projectTypologyContainer;
   ProjectTypology typology;
   List<Project> projects;
@@ -51,6 +51,10 @@ public class ProjectContainerTest {
 
     projectDTOAsManager = new ProjectDTOAsManager("AA001", "Aptoide", "ISEP","228674498", "Fixed cost",
             "fishing");
+    projectDTOAsManagerTwo = new ProjectDTOAsManager("AA002", "Aptoide", "ISEP","228674498", "Fixed cost",
+            "fishing");
+    projectContainer.registerProject(projectDTOAsManager,projectTypologyContainer,customerContainer,businessSectorContainer);
+
 
   }
 
@@ -70,23 +74,25 @@ public class ProjectContainerTest {
   }
 
   /**
+   * Test to verify that a project was registered
+   */
+  @Test
+  void ensureProjectIsRegistered() {
+    boolean expected = true;
+    boolean result = projectContainer.registerProject(projectDTOAsManagerTwo,projectTypologyContainer,customerContainer,businessSectorContainer);
+    assertEquals(expected, result);
+  }
+
+  /**
    * Test to verify that a project was not registered
    */
   @Test
   void verifyProjectIsNotRegistered() {
     boolean expected = false;
     boolean result = projectContainer.registerProject(projectDTOAsManager,projectTypologyContainer,customerContainer,businessSectorContainer);
-    assertNotEquals(expected, result);
-  }
-  /**
-   * Test to verify that a project was registered
-   */
-  @Test
-  void ensureProjectIsRegistered() {
-    boolean expected = true;
-    boolean result = projectContainer.registerProject(projectDTOAsManager,projectTypologyContainer,customerContainer,businessSectorContainer);
     assertEquals(expected, result);
   }
+
   /**
    * Test to verify that a project is retrieved given a project code
    */
@@ -94,7 +100,7 @@ public class ProjectContainerTest {
   void ensureProjectIsRetrievedGivenProjectCode() {
     Project result = projectContainer.getProjectByCode("AA001");
 
-    assertNotEquals(projectOne, result);
+    assertEquals(projectOne, result);
   }
   /**
    * Test to verify that a project is not retrieved given a project code

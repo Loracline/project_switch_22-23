@@ -104,6 +104,40 @@ class ProjectDTOAsManagerTest {
   }
 
   @Test
+  void ensureTwoProjectDTOsHaveOnlyEqualNameAndCustomerName() {
+    // ARRANGE
+    ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John","111222333","fixed cost","sports");
+
+
+    ProjectDTOAsManager other = new ProjectDTOAsManager("AA002", "john@isep.ipp.pt", "John","111222323","fixed materials","health");
+
+    boolean expected = false;
+
+    // ACT
+    boolean result = reference.equals(other);
+
+    // ASSERT
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureTwoProjectDTOsHaveOnlyEqualProjectTypology() {
+    // ARRANGE
+    ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John","111222333","fixed cost","sports");
+
+
+    ProjectDTOAsManager other = new ProjectDTOAsManager("AA002", "johnny@isep.ipp.pt", "Johnny","111222323","fixed cost","health");
+
+    boolean expected = false;
+
+    // ACT
+    boolean result = reference.equals(other);
+
+    // ASSERT
+    assertEquals(expected, result);
+  }
+
+  @Test
   void ensureTwoProjectDTOsHaveDifferentBusinessSector() {
     // ARRANGE
     ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John","111222333","fixed cost","sports");
