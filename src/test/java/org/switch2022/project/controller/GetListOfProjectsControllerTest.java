@@ -4,10 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.model.container.AccountContainer;
-import org.switch2022.project.model.container.ProjectContainer;
+import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
-import org.switch2022.project.utils.mapper.ManagerListProjectsMapper;
+import org.switch2022.project.utils.dto.ProjectDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,30 +29,58 @@ public class GetListOfProjectsControllerTest {
 
     @BeforeEach
     void setUp() {
-        //account
+        //accounts
         accountOne = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
         accountManager = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
         accountManager.setProfile(new Profile("Manager"));
 
-        //project
-        customer = new Customer("isep", "222333444");
-        projectTypology = new ProjectTypology("Fixed cost");
-        businessSector = new BusinessSector("fishing");
-        projectOne = new Project("AA001", "software development management",
-                customer, projectTypology, businessSector);
-        projectTwo = new Project("AA002", "project software", customer,
-                projectTypology, businessSector);
-
-        //container
         accounts = new ArrayList<>();
         accounts.add(accountManager);
         accounts.add(accountOne);
         accountContainer = new AccountContainer(accounts);
 
+        //customer
+        customer = new Customer("isep", "222333444");
+        CustomerContainer customerContainer = new CustomerContainer();
+        customerContainer.addCustomer(customer.getCustomerName(), customer.getCustomerNif());
+
+        //project typology
+        projectTypology = new ProjectTypology("Fixed cost");
+        ProjectTypologyContainer projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology(projectTypology.getProjectTypologyName());
+
+        //business sector
+        businessSector = new BusinessSector("fishing");
+        BusinessSectorContainer businessSectorContainer = new BusinessSectorContainer();
+        businessSectorContainer.createBusinessSector(businessSector.getBusinessSectorName());
+
+        //projects
+        projectOne = new Project("AA001", "software development management",
+                customer, projectTypology, businessSector);
+        projectTwo = new Project("AA002", "project software", customer,
+                projectTypology, businessSector);
+
         projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);
+
+        ProjectDTO projectOneDTO = new ProjectDTO(projectOne.getProjectCode(),
+                projectOne.getProjectName(), projectOne.getCustomer().getCustomerName(),
+                projectOne.getCustomer().getCustomerNif(),
+                projectOne.getProjectTypology().getProjectTypologyName(),
+                projectOne.getBusinessSector().getBusinessSectorName());
+
+        ProjectDTO projectOneTwo = new ProjectDTO(projectTwo.getProjectCode(),
+                projectTwo.getProjectName(), projectTwo.getCustomer().getCustomerName(),
+                projectTwo.getCustomer().getCustomerNif(),
+                projectTwo.getProjectTypology().getProjectTypologyName(),
+                projectTwo.getBusinessSector().getBusinessSectorName());
+
         projectContainer = new ProjectContainer();
+        projectContainer.registerProject(projectOneDTO, projectTypologyContainer,
+                customerContainer, businessSectorContainer);
+        projectContainer.registerProject(projectOneTwo, projectTypologyContainer,
+                customerContainer, businessSectorContainer);
 
         //company
         company = new Company(accountContainer, null, null,
@@ -87,10 +114,20 @@ public class GetListOfProjectsControllerTest {
     @Test
     void ensureThatProjectsIsListedSuccessfully() {
         // Arrange
+        ManagerListProjectsDTO projectDTOOne = new ManagerListProjectsDTO("AA001", "software " +
+                "development " +
+                "management", "isep", "planned", "fixed cost", "fishing");
+        ManagerListProjectsDTO projectDTOTwo = new ManagerListProjectsDTO("AA002", "project " +
+                "software",
+                "isep", "planned", "fixed cost", "fishing");
+
         List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
+        expectDTOs.add(projectDTOOne);
+        expectDTOs.add(projectDTOTwo);
 
         // Act
-        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep" +
+        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike" +
+                "@isep" +
                 ".ipp.pt");
 
         // Assert
@@ -106,7 +143,8 @@ public class GetListOfProjectsControllerTest {
         List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
 
         // Act
-        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("paul@isep" +
+        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("paul" +
+                "@isep" +
                 ".ipp.pt");
 
         // Assert
