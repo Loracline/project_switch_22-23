@@ -4,9 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.model.container.AccountContainer;
-import org.switch2022.project.model.container.AccountInProjectContainer;
-import org.switch2022.project.model.container.ProjectContainer;
+import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDTOAsManager;
@@ -35,7 +33,6 @@ class AddUserToProjectControllerTest {
 
     Account accountOne, accountTwo;
     Profile profileOne, profileTwo;
-    Customer customerOne;
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
     Project projectOne;
@@ -43,10 +40,12 @@ class AddUserToProjectControllerTest {
     ProjectDTOAsManager projectDTOAsManager;
     AccountInProject accountInProject;
     List<Account> accounts;
-    List<Project> projects;
     List<AccountInProject> accountsInProject;
     AllocationDTO allocationDTO;
     AccountContainer accountContainer;
+    BusinessSectorContainer businessSectorContainer;
+    CustomerContainer customerContainer;
+    ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
     AccountInProjectContainer accountInProjectContainer;
     Company company;
@@ -61,11 +60,8 @@ class AddUserToProjectControllerTest {
         accounts.add(accountOne);
         accounts.add(accountTwo);
 
-
         //accountDTO
         accountDTO = AccountMapper.accountToDTO(accountTwo);
-        /*accountsDTO = new ArrayList<>();
-        accountsDTO.add(accountDTO);*/
 
         //accountInProject
         accountInProject = new AccountInProject(accountOne, projectOne, "Team Member", 1,
@@ -77,8 +73,6 @@ class AddUserToProjectControllerTest {
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("Manager");
 
-        //customer
-        customerOne = new Customer("Genius Software", "234567890");
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -86,29 +80,41 @@ class AddUserToProjectControllerTest {
         //businessSector
         businessSectorOne = new BusinessSector("Fishing");
 
-        //project
-        projectOne = new Project("1A", "Mobile Software", customerOne,
-                projectTypologyOne, businessSectorOne);
-        projects = new ArrayList<>();
-        projects.add(projectOne);
 
         //projectDTO
+        projectDTOAsManager = new ProjectDTOAsManager("1A", "Mobile Software", "Genius Software",
+                "228674498", "Fixed cost", "Fishing");
         projectDTOAsManager = new ProjectDTOAsManager("1A", "Mobile Software", "Genius Software",
                 "228674498","Fixed cost", "Fishing");
 
         //account in project dto
-        allocationDTO = new AllocationDTO("Product Owner",7.5f,45.0f,LocalDate.of(2023,
-                1, 19),null);
+        allocationDTO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023,
+                1, 19), null);
 
 
         //containers
         accountContainer = new AccountContainer(accounts);
+
+        businessSectorContainer = new BusinessSectorContainer();
+        businessSectorContainer.createBusinessSector("fishing");
+
+        customerContainer = new CustomerContainer();
+        customerContainer.addCustomer("Genius Software","234567890");
+
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
+
         projectContainer = new ProjectContainer();
+        projectContainer.registerProject(projectDTOAsManager, projectTypologyContainer,
+                customerContainer, businessSectorContainer);
+
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
         //company
-        company = new Company(accountContainer, null, null,
-                projectContainer, null, accountInProjectContainer, null);
+        company = new Company(accountContainer, null, businessSectorContainer,
+                projectContainer, projectTypologyContainer, accountInProjectContainer,
+                customerContainer);
 
         //controller
         addUserToProjectController = new AddUserToProjectController(company);
@@ -120,25 +126,45 @@ class AddUserToProjectControllerTest {
         accountTwo = null;
         profileOne = null;
         profileTwo = null;
-        customerOne = null;
         projectTypologyOne = null;
         businessSectorOne = null;
-        projectOne = null;
         accountDTO = null;
         projectDTOAsManager = null;
         accountInProject = null;
         accounts.clear();
-        projects.clear();
         accountsInProject.clear();
         allocationDTO = null;
         accountContainer = null;
+        businessSectorContainer = null;
+        customerContainer = null;
+        projectTypologyContainer = null;
         projectContainer = null;
         accountInProjectContainer = null;
         company = null;
         addUserToProjectController = null;
     }
 
+    /**
+     * US011-US013
+     * Tests if an account is successfully associated to a project if the actor
+     * is an administrator.
+     * Expected return: true
+     */
 
+    @Test
+    void ensureAccountIsSuccessfullyAssociatedToAProject() {
+        //Arrange
+        //set profileTwo (Manager) to accountOne
+        accountOne.setProfile(profileTwo);
+        String emailActor = accountOne.getEmail(); //Manager
+
+        //Act
+        boolean result = addUserToProjectController.addUserToProject(emailActor,
+                accountDTO, projectDTOAsManager, allocationDTO);
+        //Assert
+        assertTrue(result);
+
+    }
 
 
     /**

@@ -3,8 +3,10 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.container.*;
-import org.switch2022.project.model.*;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.BusinessSector;
+import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.container.AccountContainer;
 import org.switch2022.project.model.container.BusinessSectorContainer;
 
@@ -19,19 +21,14 @@ class AddBusinessSectorControllerTest {
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
-  Account accountOne;
-  Profile profileOne, profileTwo;
-  List<Account> accounts;
-  AccountContainer accountContainer;
-  BusinessSector businessSectorOne;
-  BusinessSectorContainer businessSectorContainer;
-  Project projectOne;
-  Company company;
-  ProjectTypologyContainer projectTypologyContainer;
-  Customer customerOne, customerTwo;
-  CustomerContainer customerContainer;
-  List<Customer> customers;
-  AddBusinessSectorController addBusinessSectorController;
+    Account accountOne;
+    Profile profileOne, profileTwo;
+    List<Account> accounts;
+    AccountContainer accountContainer;
+    BusinessSector businessSectorOne;
+    BusinessSectorContainer businessSectorContainer;
+    Company company;
+    AddBusinessSectorController addBusinessSectorController;
 
     @BeforeEach
     void setUp() {
@@ -44,37 +41,15 @@ class AddBusinessSectorControllerTest {
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("Manager");
 
-        //customer
-        customerOne = new Customer("Genius Software", "234567890");
-
-        //projectTypology
-      projectTypologyContainer = new ProjectTypologyContainer();
-      projectTypologyContainer.createProjectTypology("Fixed Cost");
-      projectTypologyContainer.createProjectTypology("Fixed time and materials");
-
-      //business sector
+        //business sector
         businessSectorOne = new BusinessSector("Fishing");
 
-        //project
-        projectOne = new Project("1A", "Mobile Software", customerOne,
-                new ProjectTypology("Fixed Cost"), businessSectorOne);
 
         //containers
         accountContainer = new AccountContainer(accounts);
         businessSectorContainer = new BusinessSectorContainer();
         businessSectorContainer.createBusinessSector("fishing");
 
-    projectTypologyContainer = new ProjectTypologyContainer();
-    projectTypologyContainer.createProjectTypology("Fixed Cost");
-    projectTypologyContainer.createProjectTypology("Fixed time and materials");
-
-    customerOne = new Customer("ISEP", "222333444");
-    customerTwo = new Customer("PortoTech", "222333445");
-
-    customers = new ArrayList<>();
-    customerContainer = new CustomerContainer();
-    customers.add(customerOne);
-    customers.add(customerTwo);
         //company
         company = new Company(accountContainer, null, businessSectorContainer,
                 null, null, null, null);
@@ -89,13 +64,10 @@ class AddBusinessSectorControllerTest {
         accountOne = null;
         profileOne = null;
         profileTwo = null;
-        customerOne = null;
-        projectOne = null;
         accounts.clear();
         businessSectorOne = null;
         accountContainer = null;
         businessSectorContainer = null;
-        projectTypologyContainer = null;
         company = null;
         addBusinessSectorController = null;
     }
@@ -114,7 +86,8 @@ class AddBusinessSectorControllerTest {
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
-        boolean result = addBusinessSectorController.addBusinessSector("mining", emailActor);
+        boolean result = addBusinessSectorController.addBusinessSector("mining",
+                emailActor);
         //Assert
         assertEquals(expected, result);
     }
@@ -135,7 +108,8 @@ class AddBusinessSectorControllerTest {
         boolean expected = false;
         //Act
         //business sector "fishing" already exists
-        boolean result = addBusinessSectorController.addBusinessSector("fishing", emailActor);
+        boolean result = addBusinessSectorController.addBusinessSector("fishing",
+                emailActor);
         //Assert
         assertEquals(expected, result);
     }
@@ -155,7 +129,8 @@ class AddBusinessSectorControllerTest {
         boolean expected = false;
         //Act
         //"paul@isep.ipp.pt" is not the administrator
-        boolean result = addBusinessSectorController.addBusinessSector("mining", emailActor);
+        boolean result = addBusinessSectorController.addBusinessSector("mining",
+                emailActor);
         //Assert
         assertEquals(expected, result);
     }
