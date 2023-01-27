@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,13 +64,13 @@ public class GetListOfProjectsControllerTest {
         projects.add(projectOne);
         projects.add(projectTwo);
 
-        ProjectDTO projectOneDTO = new ProjectDTO(projectOne.getProjectCode(),
+        ProjectDTOAsManager projectOneDTO = new ProjectDTOAsManager(projectOne.getProjectCode(),
                 projectOne.getProjectName(), projectOne.getCustomer().getCustomerName(),
                 projectOne.getCustomer().getCustomerNif(),
                 projectOne.getProjectTypology().getProjectTypologyName(),
                 projectOne.getBusinessSector().getBusinessSectorName());
 
-        ProjectDTO projectOneTwo = new ProjectDTO(projectTwo.getProjectCode(),
+        ProjectDTOAsManager projectOneTwo = new ProjectDTOAsManager(projectTwo.getProjectCode(),
                 projectTwo.getProjectName(), projectTwo.getCustomer().getCustomerName(),
                 projectTwo.getCustomer().getCustomerNif(),
                 projectTwo.getProjectTypology().getProjectTypologyName(),
