@@ -66,13 +66,23 @@ class ProjectTypologyContainerTest {
     void ensureProjectTypologyIsRetrieved() {
         ProjectTypology expected = new ProjectTypology("fixed cost");
         ProjectTypology result = projectTypologyContainer.getProjectTypology("fixed cost");
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     @Test
     void ensureProjectTypologyIsNotRetrieved() {
         ProjectTypology expected = new ProjectTypology("fixed costs");
         ProjectTypology result = projectTypologyContainer.getProjectTypology("fixed cost");
-        assertNotEquals(expected,result);
+        assertNotEquals(expected, result);
+    }
+
+    @Test
+    void ensureAddProjectTypologyToTypologiesListUnsuccessfullyProjectTypologyNameEmpty() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = projectTypologyContainer.createProjectTypology("");
+        //Assert
+        assertEquals(expected, result);
     }
 }
