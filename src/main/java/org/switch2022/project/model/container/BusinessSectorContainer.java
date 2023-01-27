@@ -14,7 +14,7 @@ public class BusinessSectorContainer {
   /**
    * Attributes
    */
-  private final List<BusinessSector> businessSectors= new ArrayList<>();;
+  private final List<BusinessSector> businessSectors= new ArrayList<>();
 
   /**
    * This method validates if business sector already exists in the container.
