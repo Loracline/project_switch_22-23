@@ -19,20 +19,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ListAccountControllerTest {
   Account accountOne, accountTwo;
   Profile profileOne, profileTwo;
-  List<Account> accounts;
-  List<Profile> profiles;
   AccountContainer accountContainer;
   ProfileContainer profileContainer;
   BusinessSectorContainer businessSectorContainer;
   Project project;
-  List<Project> projects;
   ProjectContainer projectContainer;
   Company company;
-  ProjectTypology projectTypology;
   Customer customerOne, customerTwo;
   CustomerContainer customerContainer;
   ProjectTypologyContainer projectTypologyContainer;
-  List<ProjectTypology> typologies = new ArrayList<>();
 
   float costPerHour;
   float percentageAllocation;
@@ -46,30 +41,12 @@ class ListAccountControllerTest {
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
     accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
 
-
-    accounts = new ArrayList<>();
-    accountContainer = new AccountContainer(accounts);
-    accounts.add(accountOne);
-    accounts.add(accountTwo);
+    accountContainer = new AccountContainer();
+    accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+    accountContainer.addAccount("Paul", "paul@isep.ipp.pt", 939855689, null);
 
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
-
-
-    profiles = new ArrayList<>();
-    profileContainer = new ProfileContainer(profiles);
-    profiles.add(profileOne);
-    profiles.add(profileTwo);
-
-    projects = new ArrayList<>();
-    projectContainer = new ProjectContainer();
-    projects.add(project);
-
-
-
-
-
-    customerContainer = new CustomerContainer();
 
 
     accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
@@ -93,13 +70,10 @@ class ListAccountControllerTest {
     accountTwo = null;
     profileOne = null;
     profileTwo = null;
-    accounts.clear();
-    profiles.clear();
     accountContainer = null;
     profileContainer = null;
     businessSectorContainer = null;
     project = null;
-    projects.clear();
     projectContainer = null;
     customerOne = null;
     customerTwo = null;

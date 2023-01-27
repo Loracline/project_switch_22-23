@@ -21,7 +21,7 @@ class AccountInProjectContainerTest {
      */
 
     Account accountOne, accountTwo, accountThree, accountFour;
-    List<Account> accounts;
+    /*List<Account> accounts;*/
     AccountDTO accountDTO, accountDTO2, accountDTO3;
     AccountInProject accountInProjectOne, accountInProjectTwo, accountInProjectThree, accountInProjectFour, accountInProjectFive;
     List<AccountInProject> accountsInProject;
@@ -49,11 +49,11 @@ class AccountInProjectContainerTest {
         accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
         accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
         accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
-        accounts = new ArrayList<>();
+       /* accounts = new ArrayList<>();
         accounts.add(accountOne);
         accounts.add(accountTwo);
         accounts.add(accountThree);
-        accounts.add(accountFour);
+        accounts.add(accountFour);*/
 
         //customer
         customerOne = new Customer("Genius Software", "228674498");
@@ -114,7 +114,7 @@ class AccountInProjectContainerTest {
         allocationDTOTM = null;
         allocationDTOSM = null;
         accountsInProject.clear();
-        accounts.clear();
+        /*accounts.clear();*/
         accountInProjectContainer = null;
         accountInProjectOne = null;
         accountInProjectTwo = null;

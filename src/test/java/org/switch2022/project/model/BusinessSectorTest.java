@@ -75,14 +75,14 @@ class BusinessSectorTest {
     @Test
     public void testHashCodeBusinessSector() {
         //Arrange
-        BusinessSector obj1 = new BusinessSector("fishing");
-        BusinessSector obj2 = new BusinessSector("fishing");
-        BusinessSector obj3 = new BusinessSector("farming");
+        BusinessSector businessSectorOne = new BusinessSector("fishing");
+        BusinessSector businessSectorTwo = new BusinessSector("fishing");
+        BusinessSector businessSectorThree = new BusinessSector("farming");
 
         //Act and Assert
-        assertEquals(obj1.hashCode(), obj2.hashCode());
+        assertEquals(businessSectorOne.hashCode(), businessSectorTwo.hashCode());
 
-        assertNotEquals(obj1.hashCode(), obj3.hashCode());
+        assertNotEquals(businessSectorOne.hashCode(), businessSectorThree.hashCode());
     }
 
     /**

@@ -24,9 +24,6 @@ class CompanyTest {
     Account accountOne, accountTwo, accountThree, accountFour;
     Profile profileOne, profileTwo, profileThree;
     Project projectOne, projectTwo, projectThree, project;
-    List<Account> accounts;
-    List<Profile> profiles;
-    List<Project> projects;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -52,13 +49,12 @@ class CompanyTest {
         accountFour = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
 
         // Container of accounts created.
-        accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
+        accountContainer = new AccountContainer();
 
         // Accounts added to the Container.
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
-        accounts.add(accountThree);
+       accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+       accountContainer.addAccount("Emma", "emma@isep.ipp.pt", 932755688, null);
+       accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
 
         // Profiles created.
         profileOne = new Profile("Administrator");
@@ -66,12 +62,12 @@ class CompanyTest {
         profileThree = new Profile("Manager");
 
         // Container of profiles created.
-        profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
+        profileContainer = new ProfileContainer();
 
         // Profiles added to the Container.
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
+
 
 
         // Container of business sectors created.
@@ -79,6 +75,15 @@ class CompanyTest {
         businessSectorContainer.createBusinessSector("fishing");
         businessSectorContainer.createBusinessSector("hunting");
 
+        // Container of typologies created.
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
+
+        // Container of customers created.
+        customerContainer = new CustomerContainer();
+        customerContainer.addCustomer("ISEP", "222333444");
+        customerContainer.addCustomer("PortoTech", "222333445");
 
         // Projects created.
         project = new Project("AA002", "software development management", new Customer(
@@ -92,27 +97,6 @@ class CompanyTest {
         projectThree = new Project("AA001", "Aptoide", new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
 
-        // Container of projects created.
-        projects = new ArrayList<>();
-        projectContainer = new ProjectContainer();
-
-        // Projects added to the container.
-        projects.add(projectOne);
-        projects.add(projectTwo);
-        projects.add(projectThree);
-
-        // Container of typologies created.
-        projectTypologyContainer = new ProjectTypologyContainer();
-        projectTypologyContainer.createProjectTypology("Fixed Cost");
-        projectTypologyContainer.createProjectTypology("Fixed time and materials");
-
-        // Container of customers created.
-        customerContainer = new CustomerContainer();
-        customerContainer.addCustomer("ISEP", "222333444");
-        customerContainer.addCustomer("PortoTech", "222333445");
-
-
-
         // ProjectDTOs created.
         projectOneDTO = new ProjectDTOAsManager("AA001", "Aptoide", "John", "228674498","Fixed cost",
                 "Hunting");
@@ -120,6 +104,15 @@ class CompanyTest {
                 "Hunting");
         projectThreeDTO = new ProjectDTOAsManager("AA002", "software development management", "John",
                 "228674498","Fixed cost", "Hunting");
+
+
+        // Container of projects created.
+        projectContainer = new ProjectContainer();
+
+        // Projects added to the container.
+        projectContainer.registerProject(projectThreeDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
+        projectContainer.registerProject(projectOneDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
+
 
         // Accounts allocated to project.
         accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member",
@@ -149,17 +142,15 @@ class CompanyTest {
         profileOne = null;
         profileTwo = null;
         profileThree = null;
-        accounts.clear();
-        profiles.clear();
         project = null;
         accountContainer = null;
         profileContainer = null;
         businessSectorContainer = null;
         projectTypologyContainer = null;
-        projects.clear();
         projectContainer = null;
         projectOneDTO = null;
         projectTwoDTO = null;
+        projectThreeDTO=null;
         customerContainer = null;
         accountInProject1 = null;
         accountInProject2 = null;
@@ -179,7 +170,6 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
-
     /**
      * validateManager(String email)
      * validateUser(String email)
@@ -190,7 +180,7 @@ class CompanyTest {
     void ensureThatAccountHasProfileManagerSuccessfully() {
         //Arrange
         boolean expected = true;
-        accountOne.setProfile(profileThree);
+        company.changeProfile(accountOne.getEmail(),"manager");
         //Act
         boolean result = company.validateManager("mike@isep.ipp.pt");
         //Assert
@@ -211,7 +201,7 @@ class CompanyTest {
     void ensureThatAccountHasProfileAdministratorSuccessfully() {
         //Arrange
         boolean expected = true;
-        accountOne.setProfile(profileOne);
+        company.changeProfile(accountOne.getEmail(),"administrator");
         //Act
         boolean result = company.validateAdministrator("mike@isep.ipp.pt");
         //Assert
@@ -232,7 +222,7 @@ class CompanyTest {
     void ensureThatAccountHasProfileUserUnsuccessfully() {
         //Arrange
         boolean expected = false;
-        accountOne.setProfile(profileThree);
+        company.changeProfile(accountOne.getEmail(),"manager");
         //Act
         boolean result = company.validateUser("mike@isep.ipp.pt");
         //Assert
@@ -258,7 +248,7 @@ class CompanyTest {
         //Arrange
         boolean expected = true;
         //Act
-        boolean result = company.createProfile("manager");
+        boolean result = company.createProfile("user");
         //Assert
         assertEquals(expected, result);
     }
@@ -268,7 +258,7 @@ class CompanyTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = company.createProfile("user");
+        boolean result = company.createProfile("manager");
         //Assert
         assertEquals(expected, result);
     }
@@ -330,7 +320,7 @@ class CompanyTest {
         // ARRANGE
         Account copyAccountTwo = new Account(accountTwo);
         copyAccountTwo.setProfile(profileTwo);
-        boolean expected = false;
+        boolean expected = true;
 
         // ACT
         company.changeProfile(accountTwo.getEmail(), "Administrator");
@@ -348,10 +338,9 @@ class CompanyTest {
     @Test
     void ensureIsRetrievedEmptyList() {
         // ARRANGE
-        accountOne.setProfile(profileOne);
-        accountTwo.setProfile(profileThree);
-        accountThree.setProfile(profileOne);
-        accountFour.setProfile(profileThree);
+        company.changeProfile(accountTwo.getEmail(), "Administrator");
+        company.changeProfile(accountOne.getEmail(), "Administrator");
+        company.changeProfile(accountThree.getEmail(), "Administrator");
         List<Account> expected = Collections.emptyList();
 
         // ACT
@@ -427,10 +416,10 @@ class CompanyTest {
 
     @Test
     void projectNotRegistered() {
-        accountOne.setProfile(profileThree);
+        company.changeProfile(accountOne.getEmail(),"manager");
         boolean expected = false;
         boolean result = company.registerProject(projectOneDTO);
-        assertNotEquals(expected, result);
+        assertEquals(expected, result);
     }
 
 

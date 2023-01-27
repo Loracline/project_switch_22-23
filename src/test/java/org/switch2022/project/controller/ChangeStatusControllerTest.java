@@ -6,10 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -28,7 +24,7 @@ class ChangeStatusControllerTest {
     AccountContainer accountContainer;
 
     // profiles
-    Profile profileOne, profileTwo;
+    Profile profileOne;
     ProfileContainer profileContainer;
 
     // business sectors
@@ -36,21 +32,13 @@ class ChangeStatusControllerTest {
 
     // customers
     CustomerContainer customerContainer;
-    List<Customer> customers;
 
     // project typologies
     ProjectTypologyContainer projectTypologyContainer;
 
     // projects
-    Project project;
     ProjectContainer projectContainer;
 
-    // accounts in project
-    float costPerHour;
-    float percentageAllocation;
-    LocalDate startDate;
-    AccountInProject accountInProject1, accountInProject2;
-    List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
 
     // company
@@ -67,48 +55,12 @@ class ChangeStatusControllerTest {
         accountThree = new Account("Paul", "paul@isep.ipp.pt", 932755689, null);
         accountFour = new Account("Paul", "paul@isep.ipp.pt", 932755689, null);
 
-        List<Account> accountList = new ArrayList<>();
-        accountContainer = new AccountContainer(accountList);
-        accountList.add(accountOne);
-        accountList.add(accountTwo);
-        accountList.add(accountThree);
-        accountList.add(accountFour);
+        accountContainer = new AccountContainer();
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountContainer.addAccount("Paul", "paul@isep.ipp.pt", 932755689, null);
 
         // profiles
         profileOne = new Profile("Administrator");
-
-        List<Profile> profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
-
-        // projects
-        project = new Project("proj001", "software development management",
-                new Customer("John","228674498"),
-                new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
-
-        List<Project> projects = new ArrayList<>();
-        projectContainer = new ProjectContainer();
-        projects.add(project);
-
-        // project typologies
-        projectTypologyContainer = new ProjectTypologyContainer();
-        projectTypologyContainer.createProjectTypology("Fixed Cost");
-        projectTypologyContainer.createProjectTypology("Fixed time and materials");
-
-        customers = new ArrayList<>();
-        customerContainer = new CustomerContainer();
-
-        // accounts in project
-        accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
-        accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
-
-        accountsInProject = new ArrayList<>();
-        accountsInProject.add(accountInProject1);
-        accountsInProject.add(accountInProject2);
-        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
         // company
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
@@ -126,11 +78,8 @@ class ChangeStatusControllerTest {
         accountContainer = null;
         profileContainer = null;
         businessSectorContainer = null;
-        project = null;
         projectContainer = null;
-        company = null;
         changeStatusController = null;
-        customers.clear();
         customerContainer = null;
         company = null;
         projectTypologyContainer = null;

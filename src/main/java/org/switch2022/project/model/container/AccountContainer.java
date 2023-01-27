@@ -15,18 +15,7 @@ public class AccountContainer {
     /**
      * Attributes
      */
-    private final List<Account> accounts;
-
-
-
-    /**
-     * Constructor
-     */
-    public AccountContainer(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-
+    private final List<Account> accounts= new ArrayList<>();
 
     // "GETTERS"
 

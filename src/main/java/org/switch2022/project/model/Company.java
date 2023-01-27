@@ -168,8 +168,8 @@ public class Company {
     public boolean registerProject(ProjectDTOAsManager projectDTOAsManager) {
         boolean isProjectRegistered = false;
         if (projectContainer.registerProject(projectDTOAsManager, this.projectTypologyContainer, this.customerContainer, this.businessSectorContainer)) {
-                isProjectRegistered = true;
-            }
+            isProjectRegistered = true;
+        }
         return isProjectRegistered;
     }
 
@@ -216,7 +216,7 @@ public class Company {
      * @param projectTypology of project one intend to create.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean createProjectTypology (String projectTypology) {
+    public boolean createProjectTypology(String projectTypology) {
         return projectTypologyContainer.createProjectTypology(projectTypology);
     }
 
@@ -227,7 +227,7 @@ public class Company {
      * This method adds an account to a project with a specific role.
      *
      * @param allocationDTO data transfer object gathering the information
-     *                            needed.
+     *                      needed.
      * @return TRUE if added, and FALSE otherwise.
      */
     public boolean addUserToProject(AccountDTO accountDTO, ProjectDTOAsManager projectDTOAsManager,

@@ -3,15 +3,10 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.Account;
-import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Company;
-import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.AccountContainer;
 import org.switch2022.project.model.container.BusinessSectorContainer;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.switch2022.project.model.container.ProfileContainer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -23,10 +18,11 @@ class AddBusinessSectorControllerTest {
 
     Account accountOne;
     Profile profileOne, profileTwo;
-    List<Account> accounts;
     AccountContainer accountContainer;
+    ProfileContainer profileContainer;
     BusinessSector businessSectorOne;
     BusinessSectorContainer businessSectorContainer;
+    Project projectOne;
     Company company;
     AddBusinessSectorController addBusinessSectorController;
 
@@ -34,8 +30,6 @@ class AddBusinessSectorControllerTest {
     void setUp() {
         //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accounts = new ArrayList<>();
-        accounts.add(accountOne);
 
         //profile
         profileOne = new Profile("Administrator");
@@ -46,12 +40,16 @@ class AddBusinessSectorControllerTest {
 
 
         //containers
-        accountContainer = new AccountContainer(accounts);
+        accountContainer = new AccountContainer();
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
         businessSectorContainer = new BusinessSectorContainer();
         businessSectorContainer.createBusinessSector("fishing");
+        profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
 
         //company
-        company = new Company(accountContainer, null, businessSectorContainer,
+        company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 null, null, null, null);
 
         //controller
@@ -64,7 +62,8 @@ class AddBusinessSectorControllerTest {
         accountOne = null;
         profileOne = null;
         profileTwo = null;
-        accounts.clear();
+        profileContainer = null;
+        projectOne = null;
         businessSectorOne = null;
         accountContainer = null;
         businessSectorContainer = null;
@@ -82,7 +81,7 @@ class AddBusinessSectorControllerTest {
     void ensureThatNewBusinessSectorIsAddedSuccessfullyIfActorIsAdministrator() {
         //Arrange
         //set profileOne (Administrator) to accountOne
-        accountOne.setProfile(profileOne);
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
@@ -95,15 +94,15 @@ class AddBusinessSectorControllerTest {
     /**
      * US008
      * Tests if the addition of a business sector is not performed if the
-     * name of the business sector is invalid (empty or already existent).
+     * name of the business sector already exists.
      * Expected return = false
      */
 
     @Test
-    void ensureThatNewBusinessSectorIsNotAddedIfNameIsInvalid() {
+    void ensureThatNewBusinessSectorIsNotAddedIfNameAlreadyExists() {
         //Arrange
         //set profileOne (Administrator) to accountOne
-        accountOne.setProfile(profileOne);
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         //Act
@@ -124,7 +123,7 @@ class AddBusinessSectorControllerTest {
     void ensureThatNewBusinessSectorIsNotAddedIfActorIsNotAdministrator() {
         //Arrange
         //set profileOne (Manager) to accountOne
-        accountOne.setProfile(profileTwo);
+        company.changeProfile("mike@isep.ipp.pt", "Manager");
         String emailActor = accountOne.getEmail(); //Manager
         boolean expected = false;
         //Act
