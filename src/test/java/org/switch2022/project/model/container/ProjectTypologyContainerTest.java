@@ -3,8 +3,10 @@ package org.switch2022.project.model.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.ProjectTypology;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ProjectTypologyContainerTest {
     /**
@@ -58,5 +60,19 @@ class ProjectTypologyContainerTest {
         boolean expected = true;
         boolean result = projectTypologyContainer.createProjectTypology("fIxEd new typology");
         assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureProjectTypologyIsRetrieved() {
+        ProjectTypology expected = new ProjectTypology("fixed cost");
+        ProjectTypology result = projectTypologyContainer.getProjectTypology("fixed cost");
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureProjectTypologyIsNotRetrieved() {
+        ProjectTypology expected = new ProjectTypology("fixed costs");
+        ProjectTypology result = projectTypologyContainer.getProjectTypology("fixed cost");
+        assertNotEquals(expected,result);
     }
 }

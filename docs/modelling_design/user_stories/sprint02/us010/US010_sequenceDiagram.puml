@@ -14,7 +14,7 @@ participant ":Company" as comp
 participant ":ProjectContainer" as PC
 participant ":ProjectMapper" as mapper
 participant "project:Project" as project
-participant ":dto:ProjectDTO" as dto
+participant ":dto:ProjectDTOAsManager" as dto
 
 activate mg
 mg ->ui : register new project

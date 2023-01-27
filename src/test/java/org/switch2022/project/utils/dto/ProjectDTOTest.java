@@ -13,16 +13,20 @@ class ProjectDTOTest {
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
-  ProjectDTO projectDTOOne, projectDTOTwo, projectDTOThree;
+  ProjectDTO projectDTOOne, projectDTOTwo,projectDTOThree;
 
   @BeforeEach
   void setUp() {
-    projectDTOOne = new ProjectDTO("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
-    projectDTOTwo = new ProjectDTO("AA002", "Aptoide", "John",
-            "Fixed cost", "Hunting");
-    projectDTOThree = new ProjectDTO("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
+    projectDTOOne = new ProjectDTO("AA001", "Aptoide", "ISEP","228674498",
+            "Fixed cost",
+            "fishing");
+    projectDTOTwo = new ProjectDTO("AA002", "Aptoide", "ISEP","228674498",
+            "Fixed cost",
+            "fishing");
+    projectDTOThree = new ProjectDTO("AA002", "Aptoide", "ISEP","228674498",
+            "Fixed cost",
+            "fishing");
+
   }
 
   @AfterEach
@@ -89,7 +93,7 @@ class ProjectDTOTest {
 
     // Assert
     // Check that equal objects have the same hash code
-    assertEquals(objectOne.hashCode(), objectThree.hashCode());
+    assertEquals(objectTwo.hashCode(), objectThree.hashCode());
 
     // Check that unequal objects have different hash codes
     assertNotEquals(objectOne.hashCode(), objectTwo.hashCode());

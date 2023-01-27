@@ -16,7 +16,7 @@ public class ProjectMapper {
   public static Project getProjectFromDTO(ProjectDTO projectDTO, ProjectTypologyContainer projectTypologyContainer,
                                           CustomerContainer customerContainer, BusinessSectorContainer businessSectorContainer) {
 
-    Customer customer = customerContainer.getCustomer(projectDTO.customer);
+    Customer customer = customerContainer.getCustomer(projectDTO.customerName,projectDTO.customerNif);
     ProjectTypology projectTypology = projectTypologyContainer.getProjectTypology(projectDTO.projectTypology);
     BusinessSector businessSector = businessSectorContainer.getBusinessSector(projectDTO.businessSector);
     return new Project(projectDTO.code, projectDTO.name, customer,

@@ -44,7 +44,7 @@ public class BusinessSectorContainer {
   }
 
   public BusinessSector getBusinessSector(String businessSector) {
-    BusinessSector requestedBusinessSector= new BusinessSector(null);
+    BusinessSector requestedBusinessSector= new BusinessSector(businessSector);
     for (int i = 0; i < businessSectors.size(); i++) {
       if (businessSectors.get(i).getBusinessSectorName().equals(businessSector)) {
         requestedBusinessSector = businessSectors.get(i);

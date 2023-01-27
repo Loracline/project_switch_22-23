@@ -64,8 +64,8 @@ public class CustomerContainer {
     return isValidNIF;
   }
 
-  public Customer getCustomer(String nif) {
-    Customer requestedCustomer = new Customer(null,nif);
+  public Customer getCustomer(String customerName, String nif) {
+    Customer requestedCustomer = new Customer(customerName,nif);
     for (int i = 0; i < customers.size(); i++) {
       if (customers.get(i).getCustomerNif().equals(nif)) {
         requestedCustomer = customers.get(i);

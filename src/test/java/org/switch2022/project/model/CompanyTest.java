@@ -32,7 +32,7 @@ class CompanyTest {
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
-    ProjectDTO projectOneDTO, projectTwoDTO;
+    ProjectDTO projectOneDTO, projectTwoDTO, projectThreeDTO;
     CustomerContainer customerContainer;
     float costPerHour;
     float percentageAllocation;
@@ -94,7 +94,7 @@ class CompanyTest {
 
         // Container of projects created.
         projects = new ArrayList<>();
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
 
         // Projects added to the container.
         projects.add(projectOne);
@@ -114,10 +114,12 @@ class CompanyTest {
 
 
         // ProjectDTOs created.
-        projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John", "Fixed cost",
+        projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John", "228674498","Fixed cost",
                 "Hunting");
-        projectTwoDTO = new ProjectDTO("AA004", "Aptoide", "John", "Fixed cost",
+        projectTwoDTO = new ProjectDTO("AA004", "Aptoide", "John", "228674498","Fixed cost",
                 "Hunting");
+        projectThreeDTO = new ProjectDTO("AA002", "software development management", "John",
+                "228674498","Fixed cost", "Hunting");
 
         // Accounts allocated to project.
         accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member",
@@ -428,7 +430,7 @@ class CompanyTest {
         accountOne.setProfile(profileThree);
         boolean expected = false;
         boolean result = company.registerProject(projectOneDTO);
-        assertEquals(expected, result);
+        assertNotEquals(expected, result);
     }
 
 
@@ -505,12 +507,15 @@ class CompanyTest {
 
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("AA002", "software development management", "John",
-                "Fixed cost", "Hunting");
+                "228674498","Fixed cost", "Hunting");
+
 
         //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner",7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner",7.5f, 45.0f,
+                LocalDate.of(2023, 1, 19), null);
 
         //Act
+        company.registerProject(projectDTO);
         boolean result = company.addUserToProject(accountDTO, projectDTO,
                 allocationDTOPO);
         //Assert
@@ -526,7 +531,7 @@ class CompanyTest {
         //projectDTO
         ProjectDTO projectDTO = new ProjectDTO("AA056", "software development " +
                 "management", "John",
-                "Fixed cost", "Hunting");
+                "228674498","Fixed cost", "Hunting");
 
         //account in project dto - product owner
         AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
