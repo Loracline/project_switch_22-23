@@ -32,18 +32,18 @@ public class AddUserToProjectController {
      * This method adds an account with the "User" profile to a certain project
      * with a given role.
      *
-     * @param emailManager  of the actor performing the task.
+     * @param emailActor  email of the actor performing the task.
      * @param accountDTO    object carrying data about the selected account.
      * @param projectDTOAsManager    object carrying data about the selected project.
      * @param allocationDTO object carrying data about the allocation of the
      *                      account in the project.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean addUserToProject(String emailManager, AccountDTO accountDTO,
+    public boolean addUserToProject(String emailActor, AccountDTO accountDTO,
                                     ProjectDTOAsManager projectDTOAsManager,
                                     AllocationDTO allocationDTO) {
         boolean result = false;
-        if (company.validateManager(emailManager)) {
+        if (company.validateManager(emailActor)) {
             result = this.company.addUserToProject(accountDTO, projectDTOAsManager,
                     allocationDTO);
         }

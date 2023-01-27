@@ -15,15 +15,15 @@ activate Administrator
 Administrator -> ui: starting adding new customer
 activate ui
 ui --> Administrator: requests data (customerName, customerNIF)
-deactivate ui
+
 Administrator -> ui: sends requested data
-activate ui
+
 ui -> controller: addCustomer(email, customerName, customerNIF)
 activate controller
 controller -> company: validateAdministrator(email)
 activate company
 ref over company: validateAdministrator_sequenceDiagram
-deactivate accContainer
+
 company --> controller: true
 deactivate company
 controller -> company: addCustomer(customerName, customerNIF)
