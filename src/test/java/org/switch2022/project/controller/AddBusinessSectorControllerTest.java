@@ -95,12 +95,12 @@ class AddBusinessSectorControllerTest {
     /**
      * US008
      * Tests if the addition of a business sector is not performed if the
-     * name of the business sector is invalid (empty or already existent).
+     * name of the business sector already exists.
      * Expected return = false
      */
 
     @Test
-    void ensureThatNewBusinessSectorIsNotAddedIfNameIsInvalid() {
+    void ensureThatNewBusinessSectorIsNotAddedIfNameAlreadyExists() {
         //Arrange
         //set profileOne (Administrator) to accountOne
         accountOne.setProfile(profileOne);

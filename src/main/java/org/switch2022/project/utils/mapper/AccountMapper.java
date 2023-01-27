@@ -8,6 +8,13 @@ import java.util.List;
 
 
 public class AccountMapper {
+    /**
+     * Constructor of the class AccountMapper.
+     */
+    private AccountMapper(){
+
+    }
+
     // DTO -> ACCOUNT
     /**
      * This method converts an account into a DTO.

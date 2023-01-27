@@ -14,7 +14,7 @@ public final class Util {
      * constructor should be defined.
      */
     private Util() {
-        throw new IllegalStateException("Utility class");
+
     }
 
     /**
