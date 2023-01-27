@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.model.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -22,8 +20,8 @@ class AddCustomerControllerTest {
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
     Project projectOne;
-    List<Account> accounts;
     AccountContainer accountContainer;
+    ProfileContainer profileContainer;
     CustomerContainer customerContainer;
     Company company;
     AddCustomerController addCustomerController;
@@ -32,12 +30,6 @@ class AddCustomerControllerTest {
     void setUp() {
         //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accounts = new ArrayList<>();
-        accounts.add(accountOne);
-
-        //profile
-        profileOne = new Profile("Administrator");
-        profileTwo = new Profile("Manager");
 
         //customer
         customerOne = new Customer("Genius Software", "234567890");
@@ -54,12 +46,17 @@ class AddCustomerControllerTest {
                 projectTypologyOne, businessSectorOne);
 
         //containers
-        accountContainer = new AccountContainer(accounts);
+        accountContainer = new AccountContainer();
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+        profileContainer=new ProfileContainer();
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
         customerContainer = new CustomerContainer();
         customerContainer.addCustomer("Genius Software","234567890");
 
+
         //company
-        company = new Company(accountContainer, null, null,
+        company = new Company(accountContainer, profileContainer, null,
                 null, null, null, customerContainer);
 
         //controller
@@ -76,9 +73,9 @@ class AddCustomerControllerTest {
         projectTypologyOne = null;
         businessSectorOne = null;
         projectOne = null;
-        accounts.clear();
         accountContainer = null;
         customerContainer = null;
+        profileContainer=null;
         company = null;
         addCustomerController = null;
     }
@@ -94,7 +91,7 @@ class AddCustomerControllerTest {
     void ensureThatNewCustomerIsSuccessfullyAddedIfActorIsAdministrator(){
         //Arrange
         //set profileOne (Administrator) to accountOne
-        accountOne.setProfile(profileOne);
+        company.changeProfile("mike@isep.ipp.pt","Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
@@ -113,7 +110,7 @@ class AddCustomerControllerTest {
     void ensureThatNewCustomerIsNotAddedIfNameIsEmpty() {
         // Arrange
         //set profileOne (Administrator) to accountOne
-        accountOne.setProfile(profileOne);
+        company.changeProfile("mike@isep.ipp.pt","Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
@@ -133,7 +130,7 @@ class AddCustomerControllerTest {
     void ensureThatNewCustomerIsNotAddedIfNIFIsEmpty() {
         // Arrange
         //set profileOne (Administrator) to accountOne
-        accountOne.setProfile(profileOne);
+        company.changeProfile("mike@isep.ipp.pt","Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
@@ -152,7 +149,7 @@ class AddCustomerControllerTest {
     void ensureThatNewCustomerIsNotAddedIfNIFIsInvalid() {
         // Arrange
         //set profileOne (Administrator) to accountOne
-        accountOne.setProfile(profileOne);
+        company.changeProfile("mike@isep.ipp.pt","Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
@@ -172,7 +169,7 @@ class AddCustomerControllerTest {
     void addCustomerUnsuccessfullyInvalidProfile() {
         //Arrange
         //set profileTwo (Manager) to accountOne
-        accountOne.setProfile(profileTwo);
+        company.changeProfile("mike@isep.ipp.pt","Manager");
         String emailActor = accountOne.getEmail(); //Manager
         boolean expected = false;
         //Act

@@ -27,9 +27,6 @@ class RegisterAccountControllerTest {
     Account accountOne, accountTwo, accountThree;
     Profile profileOne, profileTwo, profileThree;
     Project project;
-    List<Account> accounts;
-    List<Profile> profiles;
-    List<Project> projects;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     BusinessSectorContainer businessSectorContainer;
@@ -42,7 +39,6 @@ class RegisterAccountControllerTest {
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
     CustomerContainer customerContainer;
-    List<Customer> customers;
 
     Company company;
 
@@ -55,44 +51,36 @@ class RegisterAccountControllerTest {
         accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
         accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
 
-        //add users to accounts list
-        accounts = new ArrayList<>();
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
-        accounts.add(accountThree);
-
         //initialize account container with filled account list
-        accountContainer = new AccountContainer(accounts);
+        accountContainer = new AccountContainer();
+
+        //add users to accounts list
+        accountContainer.addAccount("Claire", "claire@isep.ipp.pt", 932755689, null);
+        accountContainer.addAccount("Emma", "emma@isep.ipp.pt", 932755688, null);
+        accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
+
 
         //create profiles
         profileOne = new Profile("Manager");
         profileTwo = new Profile("Administrator");
         profileThree = new Profile("User");
 
-        //add profiles to profiles list
-        profiles = new ArrayList<>();
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
-        profiles.add(profileThree);
-
         //initialize profile container with filled profiles list
-        profileContainer = new ProfileContainer(profiles);
+        profileContainer = new ProfileContainer();
 
-        projects = new ArrayList<>();
-        projectContainer = new ProjectContainer();
-        projects.add(project);
+        //add profiles to profiles list
+        profileContainer.createProfile("Manager");
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("User");
 
         projectTypologyContainer = new ProjectTypologyContainer();
 
-        customers = new ArrayList<>();
         customerContainer = new CustomerContainer();
 
         project = new Project("proj001", "software development management", new Customer(
                 "ISEP", "228674498"),
                 new ProjectTypology("Fixed cost"), new BusinessSector("fishing"));
 
-        List<Project> projects = new ArrayList<>();
-        projects.add(project);
         projectContainer = new ProjectContainer();
 
         accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
@@ -121,13 +109,10 @@ class RegisterAccountControllerTest {
         profileOne = null;
         profileTwo = null;
         profileThree = null;
-        accounts.clear();
-        profiles.clear();
         accountContainer = null;
         profileContainer = null;
         businessSectorContainer = null;
         project = null;
-        projects.clear();
         projectContainer = null;
         company = null;
         customerContainer = null;

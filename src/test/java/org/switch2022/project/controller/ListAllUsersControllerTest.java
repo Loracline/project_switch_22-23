@@ -23,8 +23,6 @@ class ListAllUsersControllerTest {
 
     Account accountOne, accountTwo, accountThree;
     Profile profileOne, profileTwo, profileThree;
-    List<Account> accounts;
-    List<Profile> profiles;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     Company company;
@@ -38,21 +36,25 @@ class ListAllUsersControllerTest {
         accountThree = new Account("John", "john@isep.ipp.pt", 159753654, null);
 
         // Container of accounts created.
-        accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
+        accountContainer = new AccountContainer();
 
         // Accounts added to the Container.
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
-        accounts.add(accountThree);
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountContainer.addAccount("Paul", "paul@isep.ipp.pt", 939855689, null);
+        accountContainer.addAccount("John", "john@isep.ipp.pt", 159753654, null);
 
         // Profiles created.
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("User");
         profileThree = new Profile("Manager");
 
+        //profile container created
+        profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
+
         // Company created.
-        company = new Company(accountContainer, null, null,
+        company = new Company(accountContainer, profileContainer, null,
                 null, null, null,
                 null);
         // Controller created
@@ -67,8 +69,8 @@ class ListAllUsersControllerTest {
         profileOne = null;
         profileTwo = null;
         profileThree = null;
-        accounts.clear();
         accountContainer = null;
+        profileContainer=null;
         company = null;
         listAllUsersController = null;
     }
@@ -82,9 +84,8 @@ class ListAllUsersControllerTest {
     void ensureThatListOfAllUsersIsSuccessfullyRetrievedIfActorIsManager() {
         // ARRANGE
         // Accounts' profiles
-        accountOne.setProfile(profileOne); // accountOne is an "Administrator".
-        accountTwo.setProfile(profileTwo); // accountTwo is a "User".
-        accountThree.setProfile(profileThree); // accountThree is a "Manager".
+        company.changeProfile("mike@isep.ipp.pt", "administrator");// accountOne is an "Administrator".
+        company.changeProfile("john@isep.ipp.pt", "Manager"); // accountThree is a "Manager".
 
         //Retrieve email of actor (manager)
         String emailActor = accountThree.getEmail();
@@ -99,7 +100,7 @@ class ListAllUsersControllerTest {
         List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -111,9 +112,8 @@ class ListAllUsersControllerTest {
     void listAllUsersUnsuccessfully_NotAManager() {
         // ARRANGE
         // Accounts' profiles
-        accountOne.setProfile(profileOne); // accountOne is an "Administrator".
-        accountTwo.setProfile(profileTwo); // accountTwo is a "User".
-        accountThree.setProfile(profileThree); // accountThree is a "Manager".
+        company.changeProfile("mike@isep.ipp.pt", "administrator");// accountOne is an "Administrator".
+        company.changeProfile("john@isep.ipp.pt", "Manager"); // accountThree is a "Manager".
 
         //Retrieve email of actor (administrator)
         String emailActor = accountOne.getEmail();
@@ -128,7 +128,7 @@ class ListAllUsersControllerTest {
         List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
-        assertNotEquals(expected,result);
+        assertNotEquals(expected, result);
     }
 
     /**
@@ -138,9 +138,9 @@ class ListAllUsersControllerTest {
     void listAllUsersUnsuccessfully_NoUsersListed() {
         // ARRANGE
         // Accounts' profiles
-        accountOne.setProfile(profileOne); // accountOne is an "Administrator".
-        accountTwo.setProfile(profileOne); // accountTwo is an "Administrator".
-        accountThree.setProfile(profileThree); // accountThree is a "Manager".
+        company.changeProfile("mike@isep.ipp.pt", "administrator");// accountOne is an "Administrator".
+        company.changeProfile("paul@isep.ipp.pt", "Administrator"); // accountTwo is an "Administrator".
+        company.changeProfile("john@isep.ipp.pt", "Manager"); // accountThree is a "Manager".
 
         //Retrieve email of actor
         String emailActor = accountThree.getEmail();
@@ -151,7 +151,7 @@ class ListAllUsersControllerTest {
         List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
 }

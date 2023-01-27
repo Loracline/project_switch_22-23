@@ -5,9 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.Profile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -16,36 +13,25 @@ class ProfileContainerTest {
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
-    Profile profileOne, profileTwo;
-    List<Profile> profiles;
     ProfileContainer profileContainerReference;
 
     @BeforeEach
     void setUp() {
-        /*
-          Profiles created.
-         */
-        profileOne = new Profile("Administrator");
-        profileTwo = new Profile("User");
 
         /*
           Container of profiles created.
          */
-        profiles = new ArrayList<>();
-        profileContainerReference = new ProfileContainer(profiles);
+        profileContainerReference = new ProfileContainer();
 
         /*
           Profiles added to the Container.
          */
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
+       profileContainerReference.createProfile("Administrator");
+       profileContainerReference.createProfile("User");
     }
 
     @AfterEach
     void tearDown() {
-        profileOne = null;
-        profileTwo = null;
-        profiles.clear();
         profileContainerReference = null;
     }
 

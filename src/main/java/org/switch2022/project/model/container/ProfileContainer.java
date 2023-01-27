@@ -2,6 +2,7 @@ package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Profile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.switch2022.project.utils.Util.isLower;
@@ -14,14 +15,7 @@ public class ProfileContainer {
     /**
      * Attributes
      */
-    private final List<Profile> profiles;
-
-    /**
-     * Constructor
-     */
-    public ProfileContainer(List<Profile> profiles) {
-        this.profiles = profiles;
-    }
+    private final List<Profile> profiles= new ArrayList<>();
 
     /**
      * This method checks if profile already exists in the container.

@@ -18,11 +18,8 @@ class AccountContainerTest {
      */
     Account accountOne, accountTwo, accountThree, accountFour, accountFive,
             accountSix, accountSeven;
-    Profile profileOne, profileTwo, profileThree;
+    Profile profileOne, profileTwo;
     Project project;
-    List<Account> accounts;
-    List<Profile> profiles;
-    List<Project> projects;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
@@ -50,30 +47,30 @@ class AccountContainerTest {
         accountSeven = new Account("Hans", "hans@isep.ipp.pt", 357159852, null);
 
         // Container of accounts created.
-        accounts = new ArrayList<>();
-        accountContainer = new AccountContainer(accounts);
+
+        accountContainer = new AccountContainer();
 
         // Accounts added to the Container.
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
-        accounts.add(accountThree);
-        accounts.add(accountFive);
-        accounts.add(accountSix);
-        accounts.add(accountSeven);
+        accountContainer.addAccount("Claire", "claire@isep.ipp.pt", 932755689, null);
+        accountContainer.addAccount("Emma", "emma@isep.ipp.pt", 932755688, null);
+        accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
+        accountContainer.addAccount("John", "john@isep.ipp.pt", 951753258, null);
+        accountContainer.addAccount("Tess", "tess@isep.ipp.pt", 753159852, null);
+        accountContainer.addAccount("Hans", "hans@isep.ipp.pt", 357159852, null);
+
 
         // Profiles created.
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("Manager");
-        profileThree = new Profile("Administrator");
+
 
         // Container of profiles created.
-        profiles = new ArrayList<>();
-        profileContainer = new ProfileContainer(profiles);
+
+        profileContainer = new ProfileContainer();
 
         // Profiles added to the Container.
-        profiles.add(profileOne);
-        profiles.add(profileTwo);
-        profiles.add(profileThree);
+       profileContainer.createProfile("Administrator");
+       profileContainer.createProfile("Manager");
 
         // Business sectors container created.
         businessSectorContainer = new BusinessSectorContainer();
@@ -87,16 +84,12 @@ class AccountContainerTest {
         customerContainer = new CustomerContainer();
 
         // Projects created.
-        project = new Project("proj001", "software development manager",new Customer(
-                "John","228674498"),
-                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+        project = new Project("proj001", "software development manager", new Customer(
+                "John", "228674498"),
+                new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
         // Project container created.
-        projects = new ArrayList<>();
         projectContainer = new ProjectContainer();
-
-        // Projects added to the Container.
-        projects.add(project);
 
         // Accounts in project created.
         accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
@@ -126,15 +119,12 @@ class AccountContainerTest {
         accountFour = null;
         profileOne = null;
         profileTwo = null;
-        accounts.clear();
-        profiles.clear();
         accountContainer = null;
         profileContainer = null;
         businessSectorContainer = null;
         project = null;
-        projects.clear();
         projectContainer = null;
-        projectTypologyContainer=null;
+        projectTypologyContainer = null;
         customerContainer = null;
         company = null;
     }
@@ -160,7 +150,7 @@ class AccountContainerTest {
 
     @Test
     void ensureThatCopyOfAccountListIsSuccessfullyGenerated() {
-        AccountContainer listOfAccounts = new AccountContainer(accounts);
+        AccountContainer listOfAccounts = accountContainer;
 
         List<Account> copy = new ArrayList<>();
         copy.add(accountOne);
@@ -177,7 +167,7 @@ class AccountContainerTest {
 
     @Test
     void ensureThatModifiedCopyDoesNotEqualOriginal() {
-        AccountContainer newAccountContainer = new AccountContainer(accounts);
+        AccountContainer newAccountContainer =accountContainer;
 
         List<Account> copy = new ArrayList<>();
         copy.add(accountOne);
@@ -214,7 +204,7 @@ class AccountContainerTest {
     @Test
     void ensureThatAccountHasProfileManagerSuccessfully() {
         //Arrange
-        accountOne.setProfile(profileTwo);
+        company.changeProfile("claire@isep.ipp.pt","manager");
         boolean expected = true;
         //Act
         boolean result = accountContainer.validateManager("claire@isep.ipp.pt");
@@ -235,7 +225,7 @@ class AccountContainerTest {
     @Test
     void ensureThatAccountHasProfileAdministratorSuccessfully() {
         //Arrange
-        accountOne.setProfile(profileThree);
+        company.changeProfile("claire@isep.ipp.pt","administrator");
         boolean expected = true;
         //Act
         boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
@@ -256,7 +246,7 @@ class AccountContainerTest {
     @Test
     void ensureThatAccountHasProfileUserUnsuccessfully() {
         //Arrange
-        accountOne.setProfile(profileTwo);
+        company.changeProfile("claire@isep.ipp.pt","manager");
         boolean expected = false;
         //Act
         boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
@@ -309,7 +299,7 @@ class AccountContainerTest {
         boolean result = accountContainer.changeStatus("claire@isep.ipp.pt", false);
 
         // ASSERT
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -331,9 +321,9 @@ class AccountContainerTest {
     @Test
     void ensureListIsRetrievedSuccessfully() {
         // Arrange
-        accountOne.setProfile(profileOne);
-        accountTwo.setProfile(profileTwo);
-        accountThree.setProfile(profileThree);
+        company.changeProfile("claire@isep.ipp.pt","administrator");
+        company.changeProfile("emma@isep.ipp.pt","manager");
+        company.changeProfile("jane@isep.ipp.pt","administrator");
 
         List<Account> expected = new ArrayList<>();
         expected.add(accountFive);

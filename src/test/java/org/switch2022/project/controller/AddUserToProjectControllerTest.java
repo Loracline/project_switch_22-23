@@ -39,7 +39,6 @@ class AddUserToProjectControllerTest {
     AccountDTO accountDTO;
     ProjectDTOAsManager projectDTOAsManager;
     AccountInProject accountInProject;
-    List<Account> accounts;
     List<AccountInProject> accountsInProject;
     AllocationDTO allocationDTO;
     AccountContainer accountContainer;
@@ -47,6 +46,7 @@ class AddUserToProjectControllerTest {
     CustomerContainer customerContainer;
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
+    ProfileContainer profileContainer;
     AccountInProjectContainer accountInProjectContainer;
     Company company;
     AddUserToProjectController addUserToProjectController;
@@ -56,9 +56,6 @@ class AddUserToProjectControllerTest {
         //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
         accountTwo = new Account("Emma", "emma@isep.ipp.pt", 972755689, null);
-        accounts = new ArrayList<>();
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
 
         //accountDTO
         accountDTO = AccountMapper.accountToDTO(accountTwo);
@@ -80,7 +77,6 @@ class AddUserToProjectControllerTest {
         //businessSector
         businessSectorOne = new BusinessSector("Fishing");
 
-
         //projectDTO
         projectDTOAsManager = new ProjectDTOAsManager("1A", "Mobile Software", "Genius Software",
                 "228674498", "Fixed cost", "Fishing");
@@ -93,7 +89,6 @@ class AddUserToProjectControllerTest {
 
 
         //containers
-        accountContainer = new AccountContainer(accounts);
 
         businessSectorContainer = new BusinessSectorContainer();
         businessSectorContainer.createBusinessSector("fishing");
@@ -109,12 +104,19 @@ class AddUserToProjectControllerTest {
         projectContainer.registerProject(projectDTOAsManager, projectTypologyContainer,
                 customerContainer, businessSectorContainer);
 
+        accountContainer = new AccountContainer();
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountContainer.addAccount("Emma", "emma@isep.ipp.pt", 972755689, null);
+
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+        profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
 
         //company
-        company = new Company(accountContainer, null, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer,
-                customerContainer);
+
+        company = new Company(accountContainer, profileContainer, businessSectorContainer,
+                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
         //controller
         addUserToProjectController = new AddUserToProjectController(company);
@@ -131,7 +133,6 @@ class AddUserToProjectControllerTest {
         accountDTO = null;
         projectDTOAsManager = null;
         accountInProject = null;
-        accounts.clear();
         accountsInProject.clear();
         allocationDTO = null;
         accountContainer = null;
@@ -142,6 +143,7 @@ class AddUserToProjectControllerTest {
         accountInProjectContainer = null;
         company = null;
         addUserToProjectController = null;
+        profileContainer = null;
     }
 
     /**
@@ -155,18 +157,17 @@ class AddUserToProjectControllerTest {
     void ensureAccountIsSuccessfullyAssociatedToAProject() {
         //Arrange
         //set profileTwo (Manager) to accountOne
-        accountOne.setProfile(profileTwo);
+        company.changeProfile("mike@isep.ipp.pt", "Manager");
         String emailActor = accountOne.getEmail(); //Manager
 
         //Act
         boolean result = addUserToProjectController.addUserToProject(emailActor,
                 accountDTO, projectDTOAsManager, allocationDTO);
+
         //Assert
         assertTrue(result);
 
     }
-
-
     /**
      * US011-US013
      * Tests if an account is not associated to a project if the actor
@@ -177,7 +178,7 @@ class AddUserToProjectControllerTest {
     void ensureAllocationFailsBecauseProfileIsNotManager() {
         //Arrange
         //set profileOne (Administrator) to accountOne
-        accountOne.setProfile(profileOne);
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
 
         //Act
