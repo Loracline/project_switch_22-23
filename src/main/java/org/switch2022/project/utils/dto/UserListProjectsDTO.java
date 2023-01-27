@@ -5,7 +5,7 @@ import java.util.Objects;
 public class UserListProjectsDTO {
 
     /**
-     * Attributes of the class ProjectDTOus016.
+     * Attributes of the class UserListProjectsDTO.
      */
 
     public final String code;
@@ -16,7 +16,7 @@ public class UserListProjectsDTO {
     public final String businessSector;
 
     /**
-     * Constructor of the class ProjectDTOus016.
+     * Constructor of the class UserListProjectsDTO.
      */
     public UserListProjectsDTO(String code, String name, String customer, String status,
                                String projectTypology, String businessSector) {
