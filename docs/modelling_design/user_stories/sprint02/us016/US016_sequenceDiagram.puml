@@ -13,8 +13,8 @@ participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
 participant "projects: List<Project>" as list
 participant ":UserListProjectsMapper" as pm
-participant "projectsDTO: List<ProjectDTO>" as listDTO
-participant "projectDTO:ProjectDTO" as DTO
+participant "userListProjectDTO: List<ProjectDTO>" as listDTO
+participant "userListProjectDTO:ProjectDTO" as DTO
 activate User
 User -> ui: lists all projects of a given project
 activate ui
@@ -56,14 +56,14 @@ list --> pm: project
 pm -> pm: projectDTO = projectToDTO(project)
 create DTO
 pm --> DTO : create()
-pm ->listDTO :add(projectDTO)
+pm ->listDTO :add(userListProjectDTO)
 activate listDTO
 end loop
 deactivate listDTO
-pm --> controller :projectsDTO
+pm --> controller :userListProjectsDTO
 deactivate pm
-controller -->> ui: projectsDTO
+controller -->> ui: userListProjectsDTO
 deactivate controller
-ui --> User: return list of accounts
+ui --> User: return list of projects
 deactivate ui
 @enduml
