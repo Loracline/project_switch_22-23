@@ -3,7 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.Company;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
 /**
  * Class AddUserToProjectController acts as an intermediary between the
@@ -34,17 +34,17 @@ public class AddUserToProjectController {
      *
      * @param emailManager  of the actor performing the task.
      * @param accountDTO    object carrying data about the selected account.
-     * @param projectDTO    object carrying data about the selected project.
+     * @param projectDTOAsManager    object carrying data about the selected project.
      * @param allocationDTO object carrying data about the allocation of the
      *                      account in the project.
      * @return TRUE if added, and FALSE otherwise.
      */
     public boolean addUserToProject(String emailManager, AccountDTO accountDTO,
-                                    ProjectDTO projectDTO,
+                                    ProjectDTOAsManager projectDTOAsManager,
                                     AllocationDTO allocationDTO) {
         boolean result = false;
         if (company.validateManager(emailManager)) {
-            result = this.company.addUserToProject(accountDTO, projectDTO,
+            result = this.company.addUserToProject(accountDTO, projectDTOAsManager,
                     allocationDTO);
         }
         return result;

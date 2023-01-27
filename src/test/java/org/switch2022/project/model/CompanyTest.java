@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ class CompanyTest {
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
-    ProjectDTO projectOneDTO, projectTwoDTO, projectThreeDTO;
+    ProjectDTOAsManager projectOneDTO, projectTwoDTO, projectThreeDTO;
     CustomerContainer customerContainer;
     float costPerHour;
     float percentageAllocation;
@@ -114,11 +114,11 @@ class CompanyTest {
 
 
         // ProjectDTOs created.
-        projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John", "228674498","Fixed cost",
+        projectOneDTO = new ProjectDTOAsManager("AA001", "Aptoide", "John", "228674498","Fixed cost",
                 "Hunting");
-        projectTwoDTO = new ProjectDTO("AA004", "Aptoide", "John", "228674498","Fixed cost",
+        projectTwoDTO = new ProjectDTOAsManager("AA004", "Aptoide", "John", "228674498","Fixed cost",
                 "Hunting");
-        projectThreeDTO = new ProjectDTO("AA002", "software development management", "John",
+        projectThreeDTO = new ProjectDTOAsManager("AA002", "software development management", "John",
                 "228674498","Fixed cost", "Hunting");
 
         // Accounts allocated to project.
@@ -506,7 +506,7 @@ class CompanyTest {
         AccountDTO accountDTO = new AccountDTO("Emma","emma@isep.ipp.pt", true);
 
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("AA002", "software development management", "John",
+        ProjectDTOAsManager projectDTOAsManager = new ProjectDTOAsManager("AA002", "software development management", "John",
                 "228674498","Fixed cost", "Hunting");
 
 
@@ -515,8 +515,8 @@ class CompanyTest {
                 LocalDate.of(2023, 1, 19), null);
 
         //Act
-        company.registerProject(projectDTO);
-        boolean result = company.addUserToProject(accountDTO, projectDTO,
+        company.registerProject(projectDTOAsManager);
+        boolean result = company.addUserToProject(accountDTO, projectDTOAsManager,
                 allocationDTOPO);
         //Assert
         assertTrue(result);
@@ -529,7 +529,7 @@ class CompanyTest {
         AccountDTO accountDTO = new AccountDTO("Emma", "emma@isep.ipp.pt", true);
 
         //projectDTO
-        ProjectDTO projectDTO = new ProjectDTO("AA056", "software development " +
+        ProjectDTOAsManager projectDTOAsManager = new ProjectDTOAsManager("AA056", "software development " +
                 "management", "John",
                 "228674498","Fixed cost", "Hunting");
 
@@ -537,7 +537,7 @@ class CompanyTest {
         AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
         
         //Act
-        boolean result = company.addUserToProject(accountDTO, projectDTO,
+        boolean result = company.addUserToProject(accountDTO, projectDTOAsManager,
                 allocationDTOPO);
         //Assert
         assertFalse(result);

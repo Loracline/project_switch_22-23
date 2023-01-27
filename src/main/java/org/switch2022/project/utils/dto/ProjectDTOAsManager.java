@@ -2,7 +2,7 @@ package org.switch2022.project.utils.dto;
 
 import java.util.Objects;
 
-public class ProjectDTO {
+public class ProjectDTOAsManager {
 
   /**
    * Attributes of the class ProjectDTO, according to the Class Diagram.
@@ -26,8 +26,8 @@ public class ProjectDTO {
    * Constructor of the class GetProjectsDTO.
    */
 
-  public ProjectDTO(String code, String name, String customerName, String customerNif,
-                    String projectTypology, String businessSector) {
+  public ProjectDTOAsManager(String code, String name, String customerName, String customerNif,
+                             String projectTypology, String businessSector) {
     this.code = code;
     this.name = name;
     this.customerName = customerName.toLowerCase();
@@ -40,8 +40,8 @@ public class ProjectDTO {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof ProjectDTO)) return false;
-    ProjectDTO that = (ProjectDTO) o;
+    if (!(o instanceof ProjectDTOAsManager)) return false;
+    ProjectDTOAsManager that = (ProjectDTOAsManager) o;
     return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(customerName, that.customerName)
             && Objects.equals(customerNif, that.customerNif)
             && Objects.equals(status, that.status) && Objects.equals(projectTypology, that.projectTypology) &&

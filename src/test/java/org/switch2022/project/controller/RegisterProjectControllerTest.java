@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ class RegisterProjectControllerTest {
   Account accountOne;
   Profile profileOne, profileTwo, profileThree;
   Project projectOne, projectTwo, projectThree;
-  ProjectDTO projectOneDTO, projectTwoDTO;
+  ProjectDTOAsManager projectOneDTO, projectTwoDTO;
   List<Account> accounts;
   List<Profile> profiles;
   List<Project> projects;
@@ -69,9 +69,9 @@ class RegisterProjectControllerTest {
     projects.add(projectTwo);
     projectContainer = new ProjectContainer();
 
-    projectOneDTO = new ProjectDTO("AA001", "software development management", "Peter","228674498",
+    projectOneDTO = new ProjectDTOAsManager("AA001", "software development management", "Peter","228674498",
             "Fixed cost", "Fishing");
-    projectTwoDTO = new ProjectDTO("AA004", "software development management", "Mary",
+    projectTwoDTO = new ProjectDTOAsManager("AA004", "software development management", "Mary",
             "228674498","Fixed cost", "Sports");
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,

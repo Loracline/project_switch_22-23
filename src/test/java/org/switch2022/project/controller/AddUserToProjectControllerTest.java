@@ -9,7 +9,7 @@ import org.switch2022.project.model.container.AccountInProjectContainer;
 import org.switch2022.project.model.container.ProjectContainer;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 import org.switch2022.project.utils.mapper.AccountMapper;
 
 import java.time.LocalDate;
@@ -40,7 +40,7 @@ class AddUserToProjectControllerTest {
     BusinessSector businessSectorOne;
     Project projectOne;
     AccountDTO accountDTO;
-    ProjectDTO projectDTO;
+    ProjectDTOAsManager projectDTOAsManager;
     AccountInProject accountInProject;
     List<Account> accounts;
     List<Project> projects;
@@ -93,7 +93,7 @@ class AddUserToProjectControllerTest {
         projects.add(projectOne);
 
         //projectDTO
-        projectDTO = new ProjectDTO("1A", "Mobile Software", "Genius Software",
+        projectDTOAsManager = new ProjectDTOAsManager("1A", "Mobile Software", "Genius Software",
                 "228674498","Fixed cost", "Fishing");
 
         //account in project dto
@@ -125,7 +125,7 @@ class AddUserToProjectControllerTest {
         businessSectorOne = null;
         projectOne = null;
         accountDTO = null;
-        projectDTO = null;
+        projectDTOAsManager = null;
         accountInProject = null;
         accounts.clear();
         projects.clear();
@@ -157,7 +157,7 @@ class AddUserToProjectControllerTest {
         //Act
         boolean result = addUserToProjectController.addUserToProject(emailActor,
                 accountDTO,
-                projectDTO,
+                projectDTOAsManager,
                 allocationDTO);
 
         //Assert
