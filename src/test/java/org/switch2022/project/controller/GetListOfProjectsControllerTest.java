@@ -4,9 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ListProjectsDTO;
-import org.switch2022.project.utils.mapper.ListOfProjectsMapper;
+import org.switch2022.project.model.container.AccountContainer;
+import org.switch2022.project.model.container.ProjectContainer;
+import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +58,8 @@ public class GetListOfProjectsControllerTest {
         company = new Company(accountContainer, null, null,
                 projectContainer, null, null, null);
 
-        //mapper
-        ListOfProjectsMapper mapper = new ListOfProjectsMapper();
-
         //controller
-        getListOfProjectscontroller = new GetListOfProjectsController(company, mapper);
+        getListOfProjectscontroller = new GetListOfProjectsController(company);
     }
 
     @AfterEach
@@ -89,17 +86,20 @@ public class GetListOfProjectsControllerTest {
     @Test
     void ensureThatAllProjectsAreListedSuccessfully() {
         // Arrange
-        ListProjectsDTO projectDTOOne = new ListProjectsDTO("AA001", "software development management",
+        ManagerListProjectsDTO projectDTOOne = new ManagerListProjectsDTO("AA001", "software development " +
+                "management",
                 "isep", "planned", "fixed cost", "fishing");
-        ListProjectsDTO projectDTOTwo = new ListProjectsDTO("AA002", "project software", "isep", "planned",
-            "fixed cost", "fishing");
+        ManagerListProjectsDTO projectDTOTwo = new ManagerListProjectsDTO("AA002", "project software", "isep",
+                "planned",
+                "fixed cost", "fishing");
 
-        List<ListProjectsDTO> expectDTOs = new ArrayList<>();
+        List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
         expectDTOs.add(projectDTOOne);
         expectDTOs.add(projectDTOTwo);
 
         // Act
-        List<ListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep.ipp.pt");
+        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep" +
+                ".ipp.pt");
 
         // Assert
         assertEquals(expectDTOs, result);
@@ -111,10 +111,11 @@ public class GetListOfProjectsControllerTest {
     @Test
     void ensureThatNoProjectsAreListedWhenRequestedByAnotherProfile() {
         // Arrange
-        List<ListProjectsDTO> expectDTOs = new ArrayList<>();
+        List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
 
         // Act
-        List<ListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("paul@isep.ipp.pt");
+        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("paul@isep" +
+                ".ipp.pt");
 
         // Assert
         assertEquals(expectDTOs, result);

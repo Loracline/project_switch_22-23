@@ -92,12 +92,12 @@ class ChangeStatusControllerTest {
         projects.add(project);
 
         // project typologies
-
-        List<ProjectTypology> typologies = new ArrayList<>();
-        projectTypologyContainer = new ProjectTypologyContainer(typologies);
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         customers = new ArrayList<>();
-        customerContainer = new CustomerContainer(customers);
+        customerContainer = new CustomerContainer();
 
         // accounts in project
         accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
@@ -133,6 +133,7 @@ class ChangeStatusControllerTest {
         customers.clear();
         customerContainer = null;
         company = null;
+        projectTypologyContainer = null;
     }
 
     /**

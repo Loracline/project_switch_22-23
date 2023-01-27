@@ -5,22 +5,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ListProjectsDTOTest {
+public class UserListProjectsDTOTest {
+
     /**
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
-    ListProjectsDTO projectDTOOne;
-    ListProjectsDTO projectDTOTwo;
-    ListProjectsDTO projectDTOThree;
+    UserListProjectsDTO projectDTOOne;
+    UserListProjectsDTO projectDTOTwo;
+    UserListProjectsDTO projectDTOThree;
 
     @BeforeEach
     void setUp() {
-        projectDTOOne = new ListProjectsDTO("AA001", "software development management",
+        projectDTOOne = new UserListProjectsDTO("AA001", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        projectDTOTwo = new ListProjectsDTO("AA002", "software development management",
+        projectDTOTwo = new UserListProjectsDTO("AA002", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        projectDTOThree = new ListProjectsDTO("AA002", "software development management",
+        projectDTOThree = new UserListProjectsDTO("AA002", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
     }
     /**
@@ -64,11 +65,11 @@ public class ListProjectsDTOTest {
      */
     @Test
     public void testHashCodeGetProjectDTO() {
-        ListProjectsDTO objectOne = new ListProjectsDTO("AA001", "software development management",
+        UserListProjectsDTO objectOne = new UserListProjectsDTO("AA001", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        ListProjectsDTO objectTwo = new ListProjectsDTO("AA001", "software development management",
+        UserListProjectsDTO objectTwo = new UserListProjectsDTO("AA001", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        ListProjectsDTO objectThree = new ListProjectsDTO("AA003", "software development management",
+        UserListProjectsDTO objectThree = new UserListProjectsDTO("AA003", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
         // Check that equal objects have the same hash code
         assertEquals(objectOne.hashCode(), objectTwo.hashCode());

@@ -6,11 +6,11 @@ end legend
 skinparam sequenceMessageAlign center
 title CREATE A NEW PROJECT TYPOLOGY
 
-"CreateProjectTypologyController" --> "Company"
-"Company" --> "ProjectTypologyContainer"
-"Company" --> "AccountContainer"
-"ProjectTypologyContainer" --> "ProjectTypology"
-"AccountContainer" --> "Account"
+"CreateProjectTypologyController""1"-->"1" "Company": has
+"Company" "1"-->"1" "ProjectTypologyContainer" : has
+"Company" "1"-->"1" "AccountContainer" : has
+"ProjectTypologyContainer" "1"-->"*" "ProjectTypology" : has
+"AccountContainer" "1"-->"*" "Account" : has
 
 class "CreateProjectTypologyController" {
 - company

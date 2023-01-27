@@ -24,7 +24,34 @@ public final class Util {
      * @param second integer number.
      * @return TRUE if first is lower than second, and FALSE otherwise.
      */
-    public static boolean isLower(int first, int second) {
+    public static boolean isLower(float first, float second) {
         return first < second;
+    }
+
+    /**
+     * This static method checks if first number is lower or equals than the
+     * second.
+     *
+     * @param first  integer number.
+     * @param second integer number.
+     * @return TRUE if first is lower or equal than second, and FALSE otherwise.
+     */
+    public static boolean isLowerOrEqual(float first, float second) {
+        return first <= second;
+    }
+
+    /**
+     * This static method sums two numbers.
+     *
+     * @param first  float number.
+     * @param second float number.
+     * @return the result of the sum.
+     */
+    public static float sum(float first, float second) {
+        return first + second;
+    }
+
+    public static boolean areBothConditionsGranted(boolean first, boolean second) {
+        return first && second;
     }
 }
