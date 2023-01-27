@@ -66,7 +66,7 @@ class RegisterProjectControllerTest {
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
-    projectContainer = new ProjectContainer(projects);
+    projectContainer = new ProjectContainer();
 
     projectOneDTO = new ProjectDTO("AA001", "software development management", "Peter",
             "Fixed cost", "Fishing");
@@ -105,9 +105,14 @@ class RegisterProjectControllerTest {
    */
   @Test
   void projectRegistered() {
+    // Arrange
     accountOne.setProfile(profileThree);
+
+    // Act
     boolean expected = true;
-    boolean result = registerProjectController.registerProject(projectThree, accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectTwoDTO, accountOne.getEmail());
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -115,9 +120,14 @@ class RegisterProjectControllerTest {
    */
   @Test
   void projectNotRegistered() {
+    // Arrange
     accountOne.setProfile(profileThree);
+
+    // Act
     boolean expected = false;
-    boolean result = registerProjectController.registerProject(projectTwo, accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectOneDTO, accountOne.getEmail());
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -125,9 +135,14 @@ class RegisterProjectControllerTest {
    */
   @Test
   void managerNotValid() {
+    // Arrange
     accountOne.setProfile(profileTwo);
+
+    // Act
     boolean expected = false;
-    boolean result = registerProjectController.registerProject(projectThree, accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectTwoDTO, accountOne.getEmail());
+
+    // Assert
     assertEquals(expected, result);
   }
 }

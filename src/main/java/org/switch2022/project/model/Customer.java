@@ -43,7 +43,11 @@ public class Customer {
         return Objects.hash(customerName, customerNIF);
     }
 
-    public String getCustomerName() {
-        return  customerName;
+    public String getCustomerNif() {
+        return  customerNIF;
     }
+
+  public String getCustomerName() {
+        return customerName;
+  }
 }

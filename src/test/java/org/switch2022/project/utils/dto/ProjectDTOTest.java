@@ -37,9 +37,14 @@ class ProjectDTOTest {
    */
   @Test
   void ensureSameObjectEqualsItself() {
+    // Arrange
     ProjectDTO projectDTOTwo = projectDTOOne;
+
+    // Act
     boolean expected = true;
     boolean result = projectDTOOne.equals(projectDTOTwo);
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -47,9 +52,14 @@ class ProjectDTOTest {
    */
   @Test
   void ensureTwoProjectsAreNotEqual() {
+    // Arrange
     ProjectDTO reference = projectDTOOne;
+
+    // Act
     boolean expected = false;
     boolean result = projectDTOOne.equals(reference);
+
+    // Assert
     assertNotEquals(expected, result);
   }
   /**
@@ -57,9 +67,14 @@ class ProjectDTOTest {
    */
   @Test
   void ensureObjectsAreFromDifferentClasses() {
+    // Arrange
     Object projectObject = new Object();
+
+    // Act
     boolean expected = false;
     boolean result = projectDTOOne.equals(projectObject);
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -67,10 +82,12 @@ class ProjectDTOTest {
    */
   @Test
   void testHashCode() {
+    // Arrange
     ProjectDTO objectOne = projectDTOOne;
     ProjectDTO objectTwo = projectDTOTwo;
     ProjectDTO objectThree = projectDTOThree;
 
+    // Assert
     // Check that equal objects have the same hash code
     assertEquals(objectOne.hashCode(), objectThree.hashCode());
 

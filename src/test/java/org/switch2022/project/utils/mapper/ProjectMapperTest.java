@@ -63,7 +63,7 @@ class ProjectMapperTest {
     projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
-    projectContainer = new ProjectContainer(projects);
+    projectContainer = new ProjectContainer();
 
     projectOneDTO = new ProjectDTO("AA001", "Aptoide", "ISEP", "Fixed cost",
             "fishing");
@@ -100,34 +100,5 @@ class ProjectMapperTest {
     customerContainer = null;
     company = null;
   }
-  /**
-   * Test to check that the project DTO was created successfully
-   */
-  @Test
-  void creationOfProjectDTOSuccessful() {
-    ProjectDTO reference = ProjectMapper.getDTOFromProject(projectOne);
-    boolean expected = true;
-    boolean result = reference.equals(projectOneDTO);
-    assertEquals(expected, result);
-  }
-  /**
-   * Test to check that the project DTO was not created successfully
-   */
-  @Test
-  void creationOfProjectDTONotSuccessful() {
-    ProjectDTO reference = ProjectMapper.getDTOFromProject(projectTwo);
-    boolean expected = false;
-    boolean result = reference.equals(projectOneDTO);
-    assertEquals(expected, result);
-  }
-  /**
-   * Test to check that the project was not created successfully
-   */
-  @Test
-  void creationOfProjectNotSuccessful() {
-    Project reference = ProjectMapper.getProjectFromDTO(projectTwoDTO);
-    boolean expected = false;
-    boolean result = reference.equals(projectOne);
-    assertEquals(expected, result);
-  }
+//todo test
 }

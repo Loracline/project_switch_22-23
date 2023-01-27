@@ -167,7 +167,7 @@ public class Company {
      */
     public boolean registerProject(ProjectDTO projectDTO) {
         boolean isProjectRegistered = false;
-        if (projectContainer.registerProject(projectDTO)) {
+        if (projectContainer.registerProject(projectDTO, this.projectTypologyContainer, this.customerContainer, this.businessSectorContainer)) {
                 isProjectRegistered = true;
             }
         return isProjectRegistered;

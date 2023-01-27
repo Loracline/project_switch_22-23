@@ -36,6 +36,7 @@ public class ProjectTest {
    */
   @Test
   void ensureSameObjectEqualsItself() {
+    // Arrange
     Project projectReference = projectOne;
     boolean expected = true;
     boolean result = projectOne.equals(projectReference);
@@ -46,6 +47,7 @@ public class ProjectTest {
    */
   @Test
   void ensureObjectsAreFromDifferentClasses() {
+    // Arrange
     Object projectObject = new Object();
     boolean expected = false;
     boolean result = projectOne.equals(projectObject);
@@ -56,6 +58,7 @@ public class ProjectTest {
    */
   @Test
   void ensureTwoProjectsAreNotEqual() {
+    // Arrange
     boolean expected = false;
     boolean result = projectOne.equals(projectTwo);
     assertEquals(expected, result);
@@ -65,8 +68,11 @@ public class ProjectTest {
    */
   @Test
   void ensureTwoProjectsAreEqual() {
+    // Arrange
     Project project = new Project("AA001", "Aptoide", new Customer("john","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+
+    // Assert
     assertEquals(project, projectOne);
   }
 
@@ -75,8 +81,11 @@ public class ProjectTest {
    */
   @Test
   void ensureProjectCodeIsEqual() {
+    // Act
     String expected = "AA001";
     String result = projectOne.getProjectCode();
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -84,8 +93,11 @@ public class ProjectTest {
    */
   @Test
   void ensureProjectCodeIsNotEqual() {
+    // Act
     String expected = "AA002";
     String result = projectOne.getProjectCode();
+
+    // Assert
     assertNotEquals(expected, result);
   }
 
@@ -94,8 +106,11 @@ public class ProjectTest {
    */
   @Test
   void ensureProjectNameIsEqual() {
+    // Act
     String expected = "Aptoide";
     String result = projectOne.getProjectName();
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -103,8 +118,11 @@ public class ProjectTest {
    */
   @Test
   void ensureProjectNameIsNotEqual() {
+    // Act
     String expected = "Aptoido";
     String result = projectOne.getProjectName();
+
+    // Assert
     assertNotEquals(expected, result);
   }
 
@@ -113,8 +131,11 @@ public class ProjectTest {
    */
   @Test
   void ensureCustomerIsEqual() {
+    // Act
     Customer expected = new Customer("john","228674498");
     Customer result = projectOne.getCustomer();
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -122,8 +143,11 @@ public class ProjectTest {
    */
   @Test
   void ensureCustomerIsNotEqual() {
+    // Act
     Customer expected = new Customer("Johnny", null);
     Customer result = projectOne.getCustomer();
+
+    // Assert
     assertNotEquals(expected, result);
   }
 
@@ -132,8 +156,11 @@ public class ProjectTest {
    */
   @Test
   void ensureStatusIsEqual() {
+    // Act
     String expected = "planned";
     String result = projectOne.getProjectStatus();
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -141,8 +168,11 @@ public class ProjectTest {
    */
   @Test
   void ensureStatusIsNotEqual() {
+    // Act
     String expected = "finished";
     String result = projectOne.getProjectStatus();
+
+    // Assert
     assertNotEquals(expected, result);
   }
 
@@ -151,8 +181,11 @@ public class ProjectTest {
    */
   @Test
   void ensureProjectTypologyIsEqual() {
+    // Act
     ProjectTypology expected = new ProjectTypology("Fixed cost");
     ProjectTypology result = projectOne.getProjectTypology();
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -160,8 +193,11 @@ public class ProjectTest {
    */
   @Test
   void ensureProjectTypologyIsNotEqual() {
+    // Act
     ProjectTypology expected = new ProjectTypology("Variable cost");
     ProjectTypology result = projectOne.getProjectTypology();
+
+    // Assert
     assertNotEquals(expected, result);
   }
 
@@ -170,8 +206,11 @@ public class ProjectTest {
    */
   @Test
   void ensureBusinessSectorIsEqual() {
+    // Act
     BusinessSector expected = new BusinessSector("Hunting");
     BusinessSector result = projectOne.getBusinessSector();
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -179,8 +218,11 @@ public class ProjectTest {
    */
   @Test
   void ensureBusinessSectorIsNotEqual() {
+    // Act
     BusinessSector expected = new BusinessSector("Fishing");
     BusinessSector result = projectOne.getBusinessSector();
+
+    // Assert
     assertNotEquals(expected, result);
   }
   /**
@@ -188,10 +230,12 @@ public class ProjectTest {
    */
   @Test
   void testHashCode() {
+    // Arrange
     Project objectOne = projectOne;
     Project objectTwo = projectTwo;
     Project objectThree = projectThree;
 
+    // Assert
     // Check that equal objects have the same hash code
     assertEquals(objectOne.hashCode(), objectThree.hashCode());
 
