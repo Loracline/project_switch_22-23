@@ -46,11 +46,11 @@ class BusinessSector {
 +BusinessSector(name)
 }
 
-AddBusinessSectorController --> Company
-Company --> AccountContainer
-AccountContainer --> Account
-Account --> Profile
-Company --> BusinessSectorContainer
-BusinessSectorContainer --> BusinessSector
+AddBusinessSectorController "1"-->"1" Company: has
+Company "1"-->"1"  AccountContainer :has
+AccountContainer "1"-->"*"  Account
+Account "*"-->"1"  Profile
+Company "1"-->"1"  BusinessSectorContainer
+BusinessSectorContainer "1"-->"*"  BusinessSector
 
 @enduml
