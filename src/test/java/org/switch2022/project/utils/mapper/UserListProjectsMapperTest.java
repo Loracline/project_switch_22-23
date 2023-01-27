@@ -37,7 +37,7 @@ class UserListProjectsMapperTest {
         projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
 
         projectOneDTO = new UserListProjectsDTO("AA001", "Aptoide", "ISEP", "Planned", "Fixed cost",
                 "fishing");

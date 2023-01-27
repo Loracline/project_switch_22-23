@@ -8,7 +8,7 @@ end legend
 
 class RegisterProjectController {
 - company
-+ registerProject(dto, email)
++ registerProject(projectDTO, email)
 }
 
 
@@ -16,7 +16,7 @@ class Company {
 - projectContainer
 - accountContainer
 + validateManager(email)
-+ registerProject(dto)
++ registerProject(projectDTO)
 }
 class AccountContainer {
 + validateManager(email)
@@ -34,15 +34,16 @@ class Profile {
 
 class ProjectContainer {
 - projects
-+ registerProject(dto)
++ registerProject(projectDTO, projectTypologyContainer,
+customerContainer, businessSectorContainer)
 }
 
 class ProjectMapper{
-+ toDTO(project)
-+ fromDTO(projectDTO)
++ getProjectFromDTO(projectDTO, projectTypologyContainer,
+                                customerContainer, businessSectorContainer)
 }
 
-class ProjectDTO{
+class ProjectDTOAsManager{
 + code
 + name
 + status
@@ -65,7 +66,7 @@ Company "1"-->"1" ProjectContainer: has
 Company "1"-->"1" AccountContainer: has
 AccountContainer "1"-->"*" Account: contains
 Account "1"-->"1" Profile: has
-ProjectMapper ..> ProjectDTO
+ProjectMapper ..> ProjectDTOAsManager
 ProjectContainer ..> ProjectMapper
 RegisterProjectController ..> ProjectMapper
 ProjectMapper ..> Project

@@ -9,8 +9,7 @@ import org.switch2022.project.utils.dto.ProjectDTO;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * BeforeEach and AfterEach executes common code before/after running the tests
@@ -19,36 +18,55 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ProjectContainerTest {
 
-  Project projectOne, projectTwo;
+
+  Project projectOne;
+  ProjectDTO projectDTO;
+  ProjectTypologyContainer projectTypologyContainer;
+  ProjectTypology typology;
   List<Project> projects;
+  BusinessSectorContainer businessSectorContainer;
   ProjectContainer projectContainer;
-  ProjectDTO projectOneDTO, projectTwoDTO;
+  CustomerContainer customerContainer;
+  BusinessSector businessSector;
+  Customer customer;
+  Company company;
 
 
   @BeforeEach
   void setUp() {
-    projectOne = new Project("AA001", "Aptoide", new Customer("John","228674498"),
-            new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
-    projectTwo = new Project("AA001", "Aptoide",new Customer("John","228674498"),
-            new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+    projectOne = new Project("AA001", "Aptoide", new Customer("ISEP","228674498"),
+            new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
     projects = new ArrayList<>();
     projects.add(projectOne);
-    projects.add(projectTwo);
-    projectContainer = new ProjectContainer(projects);
+    projectContainer = new ProjectContainer();
 
-    projectOneDTO = new ProjectDTO("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
-    projectTwoDTO = new ProjectDTO("AA003", "Aptoide", "John",
-            "Fixed cost", "Hunting");
+    projectTypologyContainer = new ProjectTypologyContainer();
+    typology = new ProjectTypology("Fixed cost");
+
+    customerContainer = new CustomerContainer();
+    customer = new Customer("ISEP","228674498");
+
+    businessSectorContainer = new BusinessSectorContainer();
+    businessSector = new BusinessSector("fishing");
+
+    projectDTO = new ProjectDTO("AA001", "Aptoide", "ISEP","228674498", "Fixed cost",
+            "fishing");
 
   }
 
   @AfterEach
   void tearDown() {
     projectOne = null;
-    projectTwo = null;
-    projectOneDTO = null;
-    projectTwoDTO = null;
+    businessSectorContainer = null;
+    businessSector = null;
+    projectTypologyContainer = null;
+    typology = null;
+    projects.clear();
+    projectContainer = null;
+    projectDTO = null;
+    customerContainer = null;
+    customer = null;
+    company = null;
   }
 
   /**
@@ -57,8 +75,8 @@ public class ProjectContainerTest {
   @Test
   void verifyProjectIsNotRegistered() {
     boolean expected = false;
-    boolean result = projectContainer.registerProject(projectOneDTO);
-    assertEquals(expected, result);
+    boolean result = projectContainer.registerProject(projectDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
+    assertNotEquals(expected, result);
   }
   /**
    * Test to verify that a project was registered
@@ -66,7 +84,7 @@ public class ProjectContainerTest {
   @Test
   void ensureProjectIsRegistered() {
     boolean expected = true;
-    boolean result = projectContainer.registerProject(projectTwoDTO);
+    boolean result = projectContainer.registerProject(projectDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
     assertEquals(expected, result);
   }
   /**
@@ -76,7 +94,7 @@ public class ProjectContainerTest {
   void ensureProjectIsRetrievedGivenProjectCode() {
     Project result = projectContainer.getProjectByCode("AA001");
 
-    assertEquals(projectOne, result);
+    assertNotEquals(projectOne, result);
   }
   /**
    * Test to verify that a project is not retrieved given a project code

@@ -37,7 +37,7 @@ public class ManagerListProjectsMapperTest {
         projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
 
         projectOneDTO = new ManagerListProjectsDTO("AA001", "Aptoide", "ISEP", "Planned", "Fixed cost",
                 "fishing");

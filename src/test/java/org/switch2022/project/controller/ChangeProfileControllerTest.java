@@ -57,7 +57,7 @@ class ChangeProfileControllerTest {
     profiles.add(profileOne);
 
     projects = new ArrayList<>();
-    projectContainer = new ProjectContainer(projects);
+    projectContainer = new ProjectContainer();
     projects.add(project);
 
     //Project typology
@@ -74,7 +74,7 @@ class ChangeProfileControllerTest {
 
     List<Project> projects = new ArrayList<>();
     projects.add(project);
-    projectContainer = new ProjectContainer(projects);
+    projectContainer = new ProjectContainer();
 
     accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
             costPerHour, percentageAllocation, startDate);

@@ -3,9 +3,12 @@ package org.switch2022.project.model.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.Customer;
+import org.switch2022.project.model.ProjectTypology;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 class CustomerContainerTest {
@@ -120,7 +123,19 @@ class CustomerContainerTest {
         assertEquals(expected, result);
 
     }
+    @Test
+    void ensureCustomerIsRetrieved() {
+        Customer expected = new Customer("john","222555777");
+        Customer result = customerContainer.getCustomer("john","222555777");
+        assertEquals(expected,result);
+    }
 
+    @Test
+    void ensureCustomerIsNotRetrieved() {
+        Customer expected = new Customer("john","222535777");
+        Customer result = customerContainer.getCustomer("john","222555777");
+        assertNotEquals(expected,result);
+    }
 
 }
 

@@ -88,7 +88,7 @@ class ChangeStatusControllerTest {
                 new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
 
         List<Project> projects = new ArrayList<>();
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
         projects.add(project);
 
         // project typologies

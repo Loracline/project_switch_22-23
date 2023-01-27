@@ -3,8 +3,11 @@ package org.switch2022.project.model.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.BusinessSector;
+import org.switch2022.project.model.Customer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class BusinessSectorContainerTest {
     /**
@@ -73,5 +76,19 @@ class BusinessSectorContainerTest {
         //Assert
         assertEquals(expected, result);
 
+    }
+
+    @Test
+    void ensureBusinessSectorIsRetrieved() {
+        BusinessSector expected = new BusinessSector("sports");
+        BusinessSector result = businessSectorContainer.getBusinessSector("sports");
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureBusinessSectorIsNotRetrieved() {
+        BusinessSector expected = new BusinessSector("sportss");
+        BusinessSector result = businessSectorContainer.getBusinessSector("sports");
+        assertNotEquals(expected,result);
     }
 }

@@ -79,7 +79,7 @@ class RegisterAccountControllerTest {
         profileContainer = new ProfileContainer(profiles);
 
         projects = new ArrayList<>();
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
         projects.add(project);
 
         projectTypologyContainer = new ProjectTypologyContainer();
@@ -93,7 +93,7 @@ class RegisterAccountControllerTest {
 
         List<Project> projects = new ArrayList<>();
         projects.add(project);
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
 
         accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
                 costPerHour, percentageAllocation, startDate);

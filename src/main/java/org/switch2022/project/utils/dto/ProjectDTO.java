@@ -10,25 +10,28 @@ public class ProjectDTO {
 
   public final String code;
   public final String name;
-  public final String customer;
+  public String customerName;
+  public String customerNif;
   public final String status;
-  public final String projectTypology;
-  public final String businessSector;
+  public String projectTypology;
+  public String businessSector;
+
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, name, customer, status, projectTypology, businessSector);
+    return Objects.hash(code, name, customerName, customerNif, status, projectTypology, businessSector);
   }
 
   /**
    * Constructor of the class GetProjectsDTO.
    */
 
-  public ProjectDTO(String code, String name, String customer,
+  public ProjectDTO(String code, String name, String customerName, String customerNif,
                     String projectTypology, String businessSector) {
     this.code = code;
     this.name = name;
-    this.customer = customer.toLowerCase();
+    this.customerName = customerName.toLowerCase();
+    this.customerNif = customerNif;
     this.status = "planned";
     this.projectTypology = projectTypology.toLowerCase();
     this.businessSector = businessSector.toLowerCase();
@@ -39,6 +42,9 @@ public class ProjectDTO {
     if (this == o) return true;
     if (!(o instanceof ProjectDTO)) return false;
     ProjectDTO that = (ProjectDTO) o;
-    return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(customer, that.customer) && Objects.equals(status, that.status) && Objects.equals(projectTypology, that.projectTypology) && Objects.equals(businessSector, that.businessSector);
+    return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(customerName, that.customerName)
+            && Objects.equals(customerNif, that.customerNif)
+            && Objects.equals(status, that.status) && Objects.equals(projectTypology, that.projectTypology) &&
+            Objects.equals(businessSector, that.businessSector);
   }
 }

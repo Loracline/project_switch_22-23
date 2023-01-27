@@ -89,7 +89,7 @@ class AccountInProjectContainerTest {
         accountDTO3 = new AccountDTO("Anna", "anna@isep.ipp.pt", true);
 
         // projectDTO
-        projectDTO = new ProjectDTO("id001", "Test", "IT Customer", "fixed cost", "IT Sector");
+        projectDTO = new ProjectDTO("id001", "Test", "IT Customer", "228674498","fixed cost", "IT Sector");
 
         //container
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);

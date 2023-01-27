@@ -7,6 +7,7 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.AccountContainer;
 import org.switch2022.project.model.container.ProjectContainer;
 import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
+import org.switch2022.project.utils.mapper.ManagerListProjectsMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class GetListOfProjectsControllerTest {
         projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
 
         //company
         company = new Company(accountContainer, null, null,
@@ -84,18 +85,9 @@ public class GetListOfProjectsControllerTest {
      */
 
     @Test
-    void ensureThatAllProjectsAreListedSuccessfully() {
+    void ensureThatProjectsIsListedSuccessfully() {
         // Arrange
-        ManagerListProjectsDTO projectDTOOne = new ManagerListProjectsDTO("AA001", "software development " +
-                "management",
-                "isep", "planned", "fixed cost", "fishing");
-        ManagerListProjectsDTO projectDTOTwo = new ManagerListProjectsDTO("AA002", "project software", "isep",
-                "planned",
-                "fixed cost", "fishing");
-
         List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
-        expectDTOs.add(projectDTOOne);
-        expectDTOs.add(projectDTOTwo);
 
         // Act
         List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep" +

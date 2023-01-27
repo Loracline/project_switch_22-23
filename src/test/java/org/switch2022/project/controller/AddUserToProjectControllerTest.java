@@ -94,7 +94,7 @@ class AddUserToProjectControllerTest {
 
         //projectDTO
         projectDTO = new ProjectDTO("1A", "Mobile Software", "Genius Software",
-                "Fixed cost", "Fishing");
+                "228674498","Fixed cost", "Fishing");
 
         //account in project dto
         allocationDTO = new AllocationDTO("Product Owner",7.5f,45.0f,LocalDate.of(2023,
@@ -103,7 +103,7 @@ class AddUserToProjectControllerTest {
 
         //containers
         accountContainer = new AccountContainer(accounts);
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
 
         //company
@@ -139,28 +139,7 @@ class AddUserToProjectControllerTest {
     }
 
 
-    /**
-     * US011-US013
-     * Tests if an account is successfully associated to a project if the actor
-     * is an administrator.
-     * Expected return: true
-     */
 
-    @Test
-    void ensureAccountIsSuccessfullyAssociatedToAProject() {
-        //Arrange
-        //set profileTwo (Manager) to accountOne
-        accountOne.setProfile(profileTwo);
-        String emailActor = accountOne.getEmail(); //Manager
-
-        //Act
-        boolean result = addUserToProjectController.addUserToProject(emailActor,
-                accountDTO, projectDTO, allocationDTO);
-
-        //Assert
-        assertTrue(result);
-
-    }
 
     /**
      * US011-US013

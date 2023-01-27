@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ProfileTest {
     /**
-     * Testing the equals() method.
+     * Test to ensure the object equals itself.
      */
     @Test
     void ensureSameObjectEqualsItself() {
@@ -17,7 +17,9 @@ class ProfileTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
-
+    /**
+     * Test to ensure that two objects from the same class are different.
+     */
     @Test
     void ensureTwoProfilesAreNotTheSame() {
         Profile reference = new Profile("User");
@@ -26,7 +28,9 @@ class ProfileTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
-
+    /**
+     * Test to ensure that two objects are from different classes.
+     */
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
     void ensureObjectDoesNotEqualsOtherTypeOfObject() {
@@ -49,7 +53,9 @@ class ProfileTest {
         boolean result = reference.isManager();
         assertEquals(expected, result);
     }
-
+    /**
+     * Testing if profile is not "Manager" by checking its profile name.
+     */
     @Test
     void validateIfIsManagerUnsuccessfully() {
         //Arrange
@@ -72,7 +78,9 @@ class ProfileTest {
         boolean result = reference.isAdministrator();
         assertEquals(expected, result);
     }
-
+    /**
+     * Testing if profile is not "Administrator" by checking its profile name.
+     */
     @Test
     void validateIfIsAdministratorUnsuccessfully() {
         //Arrange
@@ -95,7 +103,9 @@ class ProfileTest {
         boolean result = reference.isUser();
         assertEquals(expected, result);
     }
-
+    /**
+     * Testing if profile is not "User" by checking its profile name.
+     */
     @Test
     void validateIfIsUserUnsuccessfully() {
         //Arrange
@@ -105,7 +115,9 @@ class ProfileTest {
         boolean result = reference.isUser();
         assertEquals(expected, result);
     }
-
+    /**
+     * Test to check the hashcode when objects are equal and unequal
+     */
     @Test
     public void testHashCodeProfile() {
         Profile obj1 = new Profile("manager");

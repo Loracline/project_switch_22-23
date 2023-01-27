@@ -93,7 +93,7 @@ class AccountContainerTest {
 
         // Project container created.
         projects = new ArrayList<>();
-        projectContainer = new ProjectContainer(projects);
+        projectContainer = new ProjectContainer();
 
         // Projects added to the Container.
         projects.add(project);

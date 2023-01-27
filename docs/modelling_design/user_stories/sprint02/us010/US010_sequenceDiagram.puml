@@ -14,7 +14,7 @@ participant ":Company" as comp
 participant ":ProjectContainer" as PC
 participant ":ProjectMapper" as mapper
 participant "project:Project" as project
-participant ":dto:ProjectDTO" as dto
+participant ":dto:ProjectDTOAsManager" as dto
 
 activate mg
 mg ->ui : register new project
@@ -25,7 +25,7 @@ mg -> ui: types requested data
 activate ui
 create dto
 ui -> dto: create (code, name, ...)
-ui -> controller: registerProject(dto, email)
+ui -> controller: registerProject(projectDTO, email)
 activate controller
 
 controller -> comp: validateManager(email)
@@ -33,11 +33,11 @@ ref over comp: validateManager_sequenceDiagram
 activate comp
 comp -->> controller: true
 deactivate comp
-controller -> comp: registerProject(dto)
+controller -> comp: registerProject(projectDTO)
 activate comp
-comp -> PC : registerProject(dto)
+comp -> PC : registerProject(projectDTO, projectTypologyContainer,\ncustomerContainer, businessSectorContainer)
 activate PC
-PC -> mapper: createProject(dto)
+PC -> mapper: createProject(projectDTO,projectTypologyContainer,\ncustomerContainer, businessSectorContainer)
 activate mapper
 create project
 mapper -> project : create (code, name, ...)

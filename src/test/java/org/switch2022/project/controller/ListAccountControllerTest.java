@@ -62,7 +62,7 @@ class ListAccountControllerTest {
     profiles.add(profileTwo);
 
     projects = new ArrayList<>();
-    projectContainer = new ProjectContainer(projects);
+    projectContainer = new ProjectContainer();
     projects.add(project);
 
 

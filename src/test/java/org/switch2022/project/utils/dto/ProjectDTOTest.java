@@ -13,16 +13,20 @@ class ProjectDTOTest {
    * BeforeEach and AfterEach executes common code before/after running the tests below.
    */
 
-  ProjectDTO projectDTOOne, projectDTOTwo, projectDTOThree;
+  ProjectDTO projectDTOOne, projectDTOTwo,projectDTOThree;
 
   @BeforeEach
   void setUp() {
-    projectDTOOne = new ProjectDTO("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
-    projectDTOTwo = new ProjectDTO("AA002", "Aptoide", "John",
-            "Fixed cost", "Hunting");
-    projectDTOThree = new ProjectDTO("AA001", "Aptoide", "John",
-            "Fixed cost", "Hunting");
+    projectDTOOne = new ProjectDTO("AA001", "Aptoide", "ISEP","228674498",
+            "Fixed cost",
+            "fishing");
+    projectDTOTwo = new ProjectDTO("AA002", "Aptoide", "ISEP","228674498",
+            "Fixed cost",
+            "fishing");
+    projectDTOThree = new ProjectDTO("AA002", "Aptoide", "ISEP","228674498",
+            "Fixed cost",
+            "fishing");
+
   }
 
   @AfterEach
@@ -37,9 +41,14 @@ class ProjectDTOTest {
    */
   @Test
   void ensureSameObjectEqualsItself() {
+    // Arrange
     ProjectDTO projectDTOTwo = projectDTOOne;
+
+    // Act
     boolean expected = true;
     boolean result = projectDTOOne.equals(projectDTOTwo);
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -47,9 +56,14 @@ class ProjectDTOTest {
    */
   @Test
   void ensureTwoProjectsAreNotEqual() {
+    // Arrange
     ProjectDTO reference = projectDTOOne;
+
+    // Act
     boolean expected = false;
     boolean result = projectDTOOne.equals(reference);
+
+    // Assert
     assertNotEquals(expected, result);
   }
   /**
@@ -57,9 +71,14 @@ class ProjectDTOTest {
    */
   @Test
   void ensureObjectsAreFromDifferentClasses() {
+    // Arrange
     Object projectObject = new Object();
+
+    // Act
     boolean expected = false;
     boolean result = projectDTOOne.equals(projectObject);
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -67,12 +86,14 @@ class ProjectDTOTest {
    */
   @Test
   void testHashCode() {
+    // Arrange
     ProjectDTO objectOne = projectDTOOne;
     ProjectDTO objectTwo = projectDTOTwo;
     ProjectDTO objectThree = projectDTOThree;
 
+    // Assert
     // Check that equal objects have the same hash code
-    assertEquals(objectOne.hashCode(), objectThree.hashCode());
+    assertEquals(objectTwo.hashCode(), objectThree.hashCode());
 
     // Check that unequal objects have different hash codes
     assertNotEquals(objectOne.hashCode(), objectTwo.hashCode());

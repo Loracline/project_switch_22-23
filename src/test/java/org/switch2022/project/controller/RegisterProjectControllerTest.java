@@ -32,6 +32,7 @@ class RegisterProjectControllerTest {
   ProjectTypologyContainer projectTypologyContainer;
   ProjectContainer projectContainer;
   CustomerContainer customerContainer;
+  BusinessSector businessSector;
   Company company;
   RegisterProjectController registerProjectController;
 
@@ -56,22 +57,22 @@ class RegisterProjectControllerTest {
     customers = new ArrayList<>();
     customerContainer = new CustomerContainer();
 
+    businessSectorContainer = new BusinessSectorContainer();
+    businessSector = new BusinessSector("fishing");
+    projects = new ArrayList<>();
     projectOne = new Project("AA001", "software development management", new Customer(
-            "Peter","228674498"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Fishing"));
+            "Peter","228674498"), new ProjectTypology("Fixed cost"),
+            new BusinessSector("Fishing"));
     projectTwo = new Project("AA002", "project software", new Customer("John","228674498"),
             new ProjectTypology("Fixed cost"), new BusinessSector("Fishing"));
-    projectThree = new Project("AA00", "motor software", new Customer("John","228674498"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Fishing"));
-    projects = new ArrayList<>();
     projects.add(projectOne);
     projects.add(projectTwo);
-    projectContainer = new ProjectContainer(projects);
+    projectContainer = new ProjectContainer();
 
-    projectOneDTO = new ProjectDTO("AA001", "software development management", "Peter",
+    projectOneDTO = new ProjectDTO("AA001", "software development management", "Peter","228674498",
             "Fixed cost", "Fishing");
     projectTwoDTO = new ProjectDTO("AA004", "software development management", "Mary",
-            "Fixed cost", "Sports");
+            "228674498","Fixed cost", "Sports");
 
     company = new Company(accountContainer, profileContainer, businessSectorContainer,
             projectContainer, projectTypologyContainer, null, customerContainer);
@@ -105,9 +106,14 @@ class RegisterProjectControllerTest {
    */
   @Test
   void projectRegistered() {
+    // Arrange
     accountOne.setProfile(profileThree);
+
+    // Act
     boolean expected = true;
-    boolean result = registerProjectController.registerProject(projectThree, accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectOneDTO, accountOne.getEmail());
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -115,9 +121,15 @@ class RegisterProjectControllerTest {
    */
   @Test
   void projectNotRegistered() {
+    // Arrange
     accountOne.setProfile(profileThree);
+
+    // Act
+    company.registerProject(projectOneDTO);
     boolean expected = false;
-    boolean result = registerProjectController.registerProject(projectTwo, accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectOneDTO, accountOne.getEmail());
+
+    // Assert
     assertEquals(expected, result);
   }
   /**
@@ -125,9 +137,14 @@ class RegisterProjectControllerTest {
    */
   @Test
   void managerNotValid() {
+    // Arrange
     accountOne.setProfile(profileTwo);
+
+    // Act
     boolean expected = false;
-    boolean result = registerProjectController.registerProject(projectThree, accountOne.getEmail());
+    boolean result = registerProjectController.registerProject(projectTwoDTO, accountOne.getEmail());
+
+    // Assert
     assertEquals(expected, result);
   }
 }
