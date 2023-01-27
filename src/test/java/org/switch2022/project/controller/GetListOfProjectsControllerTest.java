@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.AccountContainer;
 import org.switch2022.project.model.container.ProjectContainer;
-import org.switch2022.project.utils.dto.ListProjectsDTO;
+import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,19 +86,19 @@ public class GetListOfProjectsControllerTest {
     @Test
     void ensureThatAllProjectsAreListedSuccessfully() {
         // Arrange
-        ListProjectsDTO projectDTOOne = new ListProjectsDTO("AA001", "software development " +
+        ManagerListProjectsDTO projectDTOOne = new ManagerListProjectsDTO("AA001", "software development " +
                 "management",
                 "isep", "planned", "fixed cost", "fishing");
-        ListProjectsDTO projectDTOTwo = new ListProjectsDTO("AA002", "project software", "isep",
+        ManagerListProjectsDTO projectDTOTwo = new ManagerListProjectsDTO("AA002", "project software", "isep",
                 "planned",
                 "fixed cost", "fishing");
 
-        List<ListProjectsDTO> expectDTOs = new ArrayList<>();
+        List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
         expectDTOs.add(projectDTOOne);
         expectDTOs.add(projectDTOTwo);
 
         // Act
-        List<ListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep" +
+        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike@isep" +
                 ".ipp.pt");
 
         // Assert
@@ -111,10 +111,10 @@ public class GetListOfProjectsControllerTest {
     @Test
     void ensureThatNoProjectsAreListedWhenRequestedByAnotherProfile() {
         // Arrange
-        List<ListProjectsDTO> expectDTOs = new ArrayList<>();
+        List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
 
         // Act
-        List<ListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("paul@isep" +
+        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("paul@isep" +
                 ".ipp.pt");
 
         // Assert

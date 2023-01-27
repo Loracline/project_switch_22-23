@@ -1,14 +1,14 @@
 @startuml
 
-skinparam sequenceMessageAlign center
+
 title GET A LIST OF ALL PROJECTS
+skinparam sequenceMessageAlign center
 legend top
 US015 - As a Manager, I want to get a list of all projects
 end legend
 
 class "GetListOfProjectsController" {
 -company
--listOfProjectsMapper
 +getListOfProjects(email)
 }
 
@@ -40,26 +40,31 @@ class "Project"{
 -projectCode
 }
 
-class "ListOfProjectsMapper"{
-+add(projectDTO)
-+toDTO(project)
+class "ManagerListProjectsMapper"{
++getListOfProjectsDTO(projects)
+-getDTOFromProject(project)
 }
 
-class "GetProjectDTO" {
+class "ManagerListProjectsDTO" {
 +code
 +name
 +customer
 +status
 +projectTypology
 +businessSector
-+createDTO()
 }
 
 "GetListOfProjectsController" "1"-->"1" "Company": has
-"GetListOfProjectsController" "1"-->"1" "ListOfProjectsMapper": has
+"GetListOfProjectsController" ..> "ManagerListProjectsMapper"
 "Company" "1"-->"1" "ProjectContainer": has
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" "1"-->"*" Account: contains
 "ProjectContainer" "1"-->"*" Project: contains
-"ListOfProjectsMapper" ..> "GetProjectDTO"
+"ManagerListProjectsMapper" ..> "ManagerListProjectsDTO": <<instantiate>>
+
+/'Usage relationship'/
+/'https://www.ibm.com/docs/en/rational-soft-arch/9.7.0?topic=diagrams-dependency-relationships'/
+
+/'Creation relationship'/
+/'https://www.ibm.com/docs/en/rational-soft-arch/9.7.0?topic=diagrams-instantiation-relationships'/
 @enduml
