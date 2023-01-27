@@ -45,7 +45,8 @@ mapper --> DTO: create ()
 mapper -> list: add(managerListProjectsDTO)
 end loop
 controller <-- mapper: managerListProjectsDTO
-ui <-- controller: listOfProjectsDTO
+deactivate mapper
+ui <-- controller: managerListProjectsDTO
 deactivate controller
 ui --> Manager: showListAllProjects
 deactivate ui
