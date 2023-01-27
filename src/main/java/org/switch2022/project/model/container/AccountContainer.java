@@ -15,7 +15,7 @@ public class AccountContainer {
     /**
      * Attributes
      */
-    private final List<Account> accounts= new ArrayList<>();
+    private final List<Account> accounts = new ArrayList<>();
 
     // "GETTERS"
 
@@ -36,16 +36,14 @@ public class AccountContainer {
     public Account getAccountByEmail(String email) {
         Account requestedAccount = null;
         int i = 0;
-        while (i < this.accounts.size()) {
-            if (accounts.get(i).getEmail().equalsIgnoreCase(email)) {
+        while (i < this.accounts.size() && requestedAccount == null) {
+            if (accounts.get(i).checkAccountFromEmail(email)) {
                 requestedAccount = accounts.get(i);
-                break;
             }
             i++;
         }
         return requestedAccount;
     }
-
 
 
     // VALIDATE ACTORS
@@ -116,7 +114,6 @@ public class AccountContainer {
     }
 
 
-
     // VALIDATE INSTANCE IN CONTAINER
 
     /**
@@ -138,7 +135,6 @@ public class AccountContainer {
         }
         return emailExists;
     }
-
 
 
     // ADD TO CONTAINER
@@ -165,7 +161,6 @@ public class AccountContainer {
     }
 
 
-
     // CHANGE INSTANCE IN CONTAINER
 
     /**
@@ -187,7 +182,6 @@ public class AccountContainer {
         }
         return isChanged;
     }
-
 
 
     // LIST IN CONTAINER
