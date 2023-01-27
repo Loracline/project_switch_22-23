@@ -10,11 +10,11 @@ public class ProjectDTOAsManager {
 
   public final String code;
   public final String name;
-  public String customerName;
-  public String customerNif;
+  public final String customerName;
+  public final String customerNif;
   public final String status;
-  public String projectTypology;
-  public String businessSector;
+  public final String projectTypology;
+  public final String businessSector;
 
 
   @Override
