@@ -87,6 +87,39 @@ class ProjectDTOAsManagerTest {
   }
 
   @Test
+  void ensureTwoProjectDTOsHaveDifferentCode() {
+    // ARRANGE
+    ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John","111222333","fixed cost","sports");
+
+
+    ProjectDTOAsManager other = new ProjectDTOAsManager("AA002", "john@isep.ipp.pt", "John","111222333","fixed cost","sports");
+
+    boolean expected = false;
+
+    // ACT
+    boolean result = reference.equals(other);
+
+    // ASSERT
+    assertEquals(expected, result);
+  }
+  @Test
+  void ensureTwoProjectDTOsHaveDifferentCustomerName() {
+    // ARRANGE
+    ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John","111222333","fixed cost","sports");
+
+
+    ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "Johnny","111222333","fixed cost","sports");
+
+    boolean expected = false;
+
+    // ACT
+    boolean result = reference.equals(other);
+
+    // ASSERT
+    assertEquals(expected, result);
+  }
+
+  @Test
   void ensureTwoProjectDTOsHaveDifferentProjectTypology() {
     // ARRANGE
     ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John","111222333","fixed cost","sports");
@@ -102,6 +135,8 @@ class ProjectDTOAsManagerTest {
     // ASSERT
     assertEquals(expected, result);
   }
+
+
 
   @Test
   void ensureTwoProjectDTOsHaveOnlyEqualNameAndCustomerName() {
@@ -144,6 +179,23 @@ class ProjectDTOAsManagerTest {
 
 
     ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John","111222333","fixed cost","medicine");
+
+    boolean expected = false;
+
+    // ACT
+    boolean result = reference.equals(other);
+
+    // ASSERT
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureTwoProjectDTOsHaveDifferentName() {
+    // ARRANGE
+    ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John","111222333","fixed cost","sports");
+
+
+    ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "johnny@isep.ipp.pt", "John","111222333","fixed cost","sports");
 
     boolean expected = false;
 

@@ -44,7 +44,7 @@ public class ProjectDTOAsManager {
     ProjectDTOAsManager that = (ProjectDTOAsManager) o;
     return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(customerName, that.customerName)
             && Objects.equals(customerNif, that.customerNif)
-            && Objects.equals(status, that.status) && Objects.equals(projectTypology, that.projectTypology) &&
+             && Objects.equals(projectTypology, that.projectTypology) &&
             Objects.equals(businessSector, that.businessSector);
   }
 }
