@@ -8,9 +8,7 @@ import java.util.List;
 
 public class UserListProjectsMapper {
 
-    private UserListProjectsMapper() {
-    }
-
+    private UserListProjectsMapper() {}
 
     /**
      * This method receives a project and maps/transforms the project

@@ -11,8 +11,7 @@ import org.switch2022.project.model.Project;
 
 public class ProjectMapper {
 
-  private ProjectMapper(){
-  }
+  private ProjectMapper(){}
   public static Project getProjectFromDTO(ProjectDTOAsManager projectDTOAsManager, ProjectTypologyContainer projectTypologyContainer,
                                           CustomerContainer customerContainer, BusinessSectorContainer businessSectorContainer) {
 

@@ -11,9 +11,7 @@ public class AccountMapper {
     /**
      * Constructor of the class AccountMapper.
      */
-    private AccountMapper(){
-
-    }
+    private AccountMapper(){}
 
     // DTO -> ACCOUNT
     /**
