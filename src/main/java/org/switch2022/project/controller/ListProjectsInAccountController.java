@@ -19,7 +19,7 @@ public class ListProjectsInAccountController {
      * and then returns a list of Projects allocated to that User
      *
      * @param emailUser
-     * @return projectDTOus016
+     * @return userListProjectsDTO
      */
 
     public List<UserListProjectsDTO> listProjectsByAccount(String emailUser) {

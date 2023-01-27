@@ -3,13 +3,10 @@ package org.switch2022.project.utils.mapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.controller.RegisterProjectController;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,7 @@ class ProjectMapperTest {
    */
 
   Project projectOne;
-  ProjectDTO projectDTO;
+  ProjectDTOAsManager projectDTOAsManager;
   ProjectTypologyContainer projectTypologyContainer;
   ProjectTypology typology;
   List<Project> projects;
@@ -53,7 +50,7 @@ class ProjectMapperTest {
     businessSectorContainer = new BusinessSectorContainer();
     businessSector = new BusinessSector("fishing");
 
-    projectDTO = new ProjectDTO("AA001", "Aptoide", "ISEP","228674498", "Fixed cost",
+    projectDTOAsManager = new ProjectDTOAsManager("AA001", "Aptoide", "ISEP","228674498", "Fixed cost",
             "fishing");
 
 
@@ -68,7 +65,7 @@ class ProjectMapperTest {
     typology = null;
     projects.clear();
     projectContainer = null;
-    projectDTO = null;
+    projectDTOAsManager = null;
     customerContainer = null;
     customer = null;
     company = null;
@@ -80,7 +77,7 @@ class ProjectMapperTest {
     Project expected = projectOne;
 
     // ACT
-    Project result = ProjectMapper.getProjectFromDTO(projectDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
+    Project result = ProjectMapper.getProjectFromDTO(projectDTOAsManager,projectTypologyContainer,customerContainer,businessSectorContainer);
 
     // ASSERT
     assertEquals(expected, result);

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class ProjectContainerTest {
 
 
   Project projectOne;
-  ProjectDTO projectDTO;
+  ProjectDTOAsManager projectDTOAsManager,projectDTOAsManagerTwo;
   ProjectTypologyContainer projectTypologyContainer;
   ProjectTypology typology;
   List<Project> projects;
@@ -49,8 +49,12 @@ public class ProjectContainerTest {
     businessSectorContainer = new BusinessSectorContainer();
     businessSector = new BusinessSector("fishing");
 
-    projectDTO = new ProjectDTO("AA001", "Aptoide", "ISEP","228674498", "Fixed cost",
+    projectDTOAsManager = new ProjectDTOAsManager("AA001", "Aptoide", "ISEP","228674498", "Fixed cost",
             "fishing");
+    projectDTOAsManagerTwo = new ProjectDTOAsManager("AA002", "Aptoide", "ISEP","228674498", "Fixed cost",
+            "fishing");
+    projectContainer.registerProject(projectDTOAsManager,projectTypologyContainer,customerContainer,businessSectorContainer);
+
 
   }
 
@@ -63,10 +67,20 @@ public class ProjectContainerTest {
     typology = null;
     projects.clear();
     projectContainer = null;
-    projectDTO = null;
+    projectDTOAsManager = null;
     customerContainer = null;
     customer = null;
     company = null;
+  }
+
+  /**
+   * Test to verify that a project was registered
+   */
+  @Test
+  void ensureProjectIsRegistered() {
+    boolean expected = true;
+    boolean result = projectContainer.registerProject(projectDTOAsManagerTwo,projectTypologyContainer,customerContainer,businessSectorContainer);
+    assertEquals(expected, result);
   }
 
   /**
@@ -75,18 +89,10 @@ public class ProjectContainerTest {
   @Test
   void verifyProjectIsNotRegistered() {
     boolean expected = false;
-    boolean result = projectContainer.registerProject(projectDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
-    assertNotEquals(expected, result);
-  }
-  /**
-   * Test to verify that a project was registered
-   */
-  @Test
-  void ensureProjectIsRegistered() {
-    boolean expected = true;
-    boolean result = projectContainer.registerProject(projectDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
+    boolean result = projectContainer.registerProject(projectDTOAsManager,projectTypologyContainer,customerContainer,businessSectorContainer);
     assertEquals(expected, result);
   }
+
   /**
    * Test to verify that a project is retrieved given a project code
    */
@@ -94,7 +100,7 @@ public class ProjectContainerTest {
   void ensureProjectIsRetrievedGivenProjectCode() {
     Project result = projectContainer.getProjectByCode("AA001");
 
-    assertNotEquals(projectOne, result);
+    assertEquals(projectOne, result);
   }
   /**
    * Test to verify that a project is not retrieved given a project code

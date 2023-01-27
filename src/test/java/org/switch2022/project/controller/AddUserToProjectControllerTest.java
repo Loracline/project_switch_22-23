@@ -7,7 +7,7 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 import org.switch2022.project.utils.mapper.AccountMapper;
 
 import java.time.LocalDate;
@@ -37,7 +37,7 @@ class AddUserToProjectControllerTest {
     BusinessSector businessSectorOne;
     Project projectOne;
     AccountDTO accountDTO;
-    ProjectDTO projectDTO;
+    ProjectDTOAsManager projectDTOAsManager;
     AccountInProject accountInProject;
     List<Account> accounts;
     List<AccountInProject> accountsInProject;
@@ -82,8 +82,10 @@ class AddUserToProjectControllerTest {
 
 
         //projectDTO
-        projectDTO = new ProjectDTO("1A", "Mobile Software", "Genius Software",
+        projectDTOAsManager = new ProjectDTOAsManager("1A", "Mobile Software", "Genius Software",
                 "228674498", "Fixed cost", "Fishing");
+        projectDTOAsManager = new ProjectDTOAsManager("1A", "Mobile Software", "Genius Software",
+                "228674498","Fixed cost", "Fishing");
 
         //account in project dto
         allocationDTO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023,
@@ -104,7 +106,7 @@ class AddUserToProjectControllerTest {
         projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
         projectContainer = new ProjectContainer();
-        projectContainer.registerProject(projectDTO, projectTypologyContainer,
+        projectContainer.registerProject(projectDTOAsManager, projectTypologyContainer,
                 customerContainer, businessSectorContainer);
 
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
@@ -127,7 +129,7 @@ class AddUserToProjectControllerTest {
         projectTypologyOne = null;
         businessSectorOne = null;
         accountDTO = null;
-        projectDTO = null;
+        projectDTOAsManager = null;
         accountInProject = null;
         accounts.clear();
         accountsInProject.clear();
@@ -158,7 +160,7 @@ class AddUserToProjectControllerTest {
 
         //Act
         boolean result = addUserToProjectController.addUserToProject(emailActor,
-                accountDTO, projectDTO, allocationDTO);
+                accountDTO, projectDTOAsManager, allocationDTO);
         //Assert
         assertTrue(result);
 
@@ -181,7 +183,7 @@ class AddUserToProjectControllerTest {
         //Act
         boolean result = addUserToProjectController.addUserToProject(emailActor,
                 accountDTO,
-                projectDTO,
+                projectDTOAsManager,
                 allocationDTO);
 
         //Assert
