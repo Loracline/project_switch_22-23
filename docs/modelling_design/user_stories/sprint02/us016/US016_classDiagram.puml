@@ -61,7 +61,7 @@ class "UserListProjectsMapper"{
 +getDTOFromProject(project)
 }
 
-class "ProjectDTOus016"{
+class "UserListProjectsDTO"{
 +code;
 +name;
 +customer;
@@ -92,7 +92,7 @@ class "Project"{
 "AccountContainer" "1" --> "*" "Account": has
 "Account" "1" --> "1""Profile": has
 ":ListProjectInAccountController"..> "UserListProjectsMapper"
-"UserListProjectsMapper"..> "ProjectDTOus016"
+"UserListProjectsMapper"..> "UserListProjectsDTO"
 
 
 
