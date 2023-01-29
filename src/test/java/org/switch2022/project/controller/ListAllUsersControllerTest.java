@@ -16,6 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ListAllUsersControllerTest {
+
     /**
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
@@ -48,7 +49,7 @@ class ListAllUsersControllerTest {
         profileTwo = new Profile("User");
         profileThree = new Profile("Manager");
 
-        //profile container created
+        //profile container created.
         profileContainer = new ProfileContainer();
         profileContainer.createProfile("Administrator");
         profileContainer.createProfile("Manager");
@@ -57,7 +58,8 @@ class ListAllUsersControllerTest {
         company = new Company(accountContainer, profileContainer, null,
                 null, null, null,
                 null);
-        // Controller created
+
+        // Controller created.
         listAllUsersController = new ListAllUsersController(company);
     }
 
@@ -79,7 +81,6 @@ class ListAllUsersControllerTest {
      * Tests if the list of all accounts with profile User (default) is successfully
      * retrieved if the actor is a manager.
      */
-
     @Test
     void ensureThatListOfAllUsersIsSuccessfullyRetrievedIfActorIsManager() {
         // ARRANGE

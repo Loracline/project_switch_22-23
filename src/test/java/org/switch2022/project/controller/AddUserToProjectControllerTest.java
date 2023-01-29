@@ -17,30 +17,23 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-/**
- * This class tests the implementation of these three US:
- * US011 - As Manager, I want to associate a user as Team Member of a project.
- * US012 - As Manager, I want to define the PO of a project.
- * US013 - As Manager, I want to define the SM of a project.
- */
-
 class AddUserToProjectControllerTest {
 
     /**
-     * BeforeEach and AfterEach executes common code before/after running the tests below.
+     * BeforeEach and AfterEach executes common code before/after running the
+     * tests below.
      */
 
     Account accountOne, accountTwo;
+    AccountDTO accountTwoDTO;
     Profile profileOne, profileTwo;
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
     Project projectOne;
-    AccountDTO accountDTO;
-    ProjectDTOAsManager projectDTOAsManager;
+    ProjectDTOAsManager projectDTO;
     AccountInProject accountInProject;
     List<AccountInProject> accountsInProject;
-    AllocationDTO allocationDTO;
+    AllocationDTO scrumMasterDTO;
     AccountContainer accountContainer;
     BusinessSectorContainer businessSectorContainer;
     CustomerContainer customerContainer;
@@ -54,22 +47,24 @@ class AddUserToProjectControllerTest {
     @BeforeEach
     void setUp() {
         //account
-        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 972755689, null);
+        accountOne = new Account("Mike", "mike@isep.ipp.pt",
+                932755689, null);
+        accountTwo = new Account("Emma", "emma@isep.ipp.pt",
+                972755689, null);
 
         //accountDTO
-        accountDTO = AccountMapper.accountToDTO(accountTwo);
+        accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
 
         //accountInProject
-        accountInProject = new AccountInProject(accountOne, projectOne, "Team Member", 1,
-                34f, LocalDate.of(2020, 1, 8));
+        accountInProject = new AccountInProject(accountOne, projectOne,
+                "Team Member", 1, 34f,
+                LocalDate.of(2020, 1, 8));
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProject);
 
         //profile
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("Manager");
-
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
@@ -78,45 +73,43 @@ class AddUserToProjectControllerTest {
         businessSectorOne = new BusinessSector("Fishing");
 
         //projectDTO
-        projectDTOAsManager = new ProjectDTOAsManager("1A", "Mobile Software", "Genius Software",
-                "228674498", "Fixed cost", "Fishing");
-        projectDTOAsManager = new ProjectDTOAsManager("1A", "Mobile Software", "Genius Software",
-                "228674498","Fixed cost", "Fishing");
+        projectDTO = new ProjectDTOAsManager("1A",
+                "Mobile Software", "Genius Software",
+                "228674498", "Fixed cost",
+                "Fishing");
 
-        //account in project dto
-        allocationDTO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023,
-                1, 19), null);
-
+        //allocationDTO
+        scrumMasterDTO = new AllocationDTO("Scrum Master", 7.5f,
+                45.0f,
+                LocalDate.of(2023, 1, 19), null);
 
         //containers
-
         businessSectorContainer = new BusinessSectorContainer();
         businessSectorContainer.createBusinessSector("fishing");
-
         customerContainer = new CustomerContainer();
-        customerContainer.addCustomer("Genius Software","234567890");
-
+        customerContainer.addCustomer("Genius Software",
+                "234567890");
         projectTypologyContainer = new ProjectTypologyContainer();
         projectTypologyContainer.createProjectTypology("Fixed Cost");
         projectTypologyContainer.createProjectTypology("Fixed time and materials");
-
         projectContainer = new ProjectContainer();
-        projectContainer.registerProject(projectDTOAsManager, projectTypologyContainer,
+        projectContainer.registerProject(projectDTO, projectTypologyContainer,
                 customerContainer, businessSectorContainer);
-
         accountContainer = new AccountContainer();
-        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accountContainer.addAccount("Emma", "emma@isep.ipp.pt", 972755689, null);
-
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt",
+                932755689, null);
+        accountContainer.addAccount("Emma", "emma@isep.ipp.pt",
+                972755689, null);
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
         profileContainer = new ProfileContainer();
         profileContainer.createProfile("Administrator");
         profileContainer.createProfile("Manager");
 
         //company
-
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
+        company = new Company(accountContainer, profileContainer,
+                businessSectorContainer, projectContainer,
+                projectTypologyContainer, accountInProjectContainer,
+                customerContainer);
 
         //controller
         addUserToProjectController = new AddUserToProjectController(company);
@@ -130,11 +123,11 @@ class AddUserToProjectControllerTest {
         profileTwo = null;
         projectTypologyOne = null;
         businessSectorOne = null;
-        accountDTO = null;
-        projectDTOAsManager = null;
+        accountTwoDTO = null;
+        projectDTO = null;
         accountInProject = null;
         accountsInProject.clear();
-        allocationDTO = null;
+        scrumMasterDTO = null;
         accountContainer = null;
         businessSectorContainer = null;
         customerContainer = null;
@@ -147,45 +140,37 @@ class AddUserToProjectControllerTest {
     }
 
     /**
-     * US011-US013
-     * Tests if an account is successfully associated to a project if the actor
-     * is an administrator.
-     * Expected return: true
+     * This test verifies if an account with the "Manager" profile can
+     * successfully associate a Scrum Master to an existing project.
      */
-
     @Test
-    void ensureAccountIsSuccessfullyAssociatedToAProject() {
+    void ensureScrumMasterIsAssociatedToProjectSuccessfully() {
         //Arrange
-        //set profileTwo (Manager) to accountOne
-        company.changeProfile("mike@isep.ipp.pt", "Manager");
-        String emailActor = accountOne.getEmail(); //Manager
+        company.changeProfile(accountOne.getEmail(), "Manager");
+        String emailActor = accountOne.getEmail();
 
         //Act
         boolean result = addUserToProjectController.addUserToProject(emailActor,
-                accountDTO, projectDTOAsManager, allocationDTO);
+                accountTwoDTO, projectDTO, scrumMasterDTO);
 
         //Assert
         assertTrue(result);
-
     }
+
     /**
-     * US011-US013
-     * Tests if an account is not associated to a project if the actor
-     * is not an administrator.
-     * Expected return: false
+     * This test verifies the failure of the allocation when the authorization
+     * is not granted to other profile than "Manager" (in this specific case,
+     * "Administrator").
      */
     @Test
     void ensureAllocationFailsBecauseProfileIsNotManager() {
         //Arrange
-        //set profileOne (Administrator) to accountOne
-        company.changeProfile("mike@isep.ipp.pt", "Administrator");
-        String emailActor = accountOne.getEmail(); //Administrator
+        company.changeProfile(accountOne.getEmail(), "Administrator");
+        String emailActor = accountOne.getEmail();
 
         //Act
         boolean result = addUserToProjectController.addUserToProject(emailActor,
-                accountDTO,
-                projectDTOAsManager,
-                allocationDTO);
+                accountTwoDTO, projectDTO, scrumMasterDTO);
 
         //Assert
         assertFalse(result);

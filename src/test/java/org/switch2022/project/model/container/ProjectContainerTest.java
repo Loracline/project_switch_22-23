@@ -6,47 +6,48 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * BeforeEach and AfterEach executes common code before/after running the tests
- * below.
- */
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ProjectContainerTest {
 
+    /**
+     * BeforeEach and AfterEach executes common code before/after running the
+     * tests below.
+     */
+
     Project projectOne;
-    ProjectDTOAsManager projectDTOAsManager, projectDTOAsManagerTwo;
-    ProjectTypologyContainer projectTypologyContainer;
+    ProjectDTOAsManager projectOneDTO, projectTwoDTO;
     ProjectTypology typology;
+    Customer customer;
+    BusinessSector businessSector;
+    ProjectTypologyContainer projectTypologyContainer;
     BusinessSectorContainer businessSectorContainer;
     ProjectContainer projectContainer;
     CustomerContainer customerContainer;
-    BusinessSector businessSector;
-    Customer customer;
     Company company;
-
 
     @BeforeEach
     void setUp() {
-        projectOne = new Project("AA001", "Aptoide", new Customer("ISEP", "228674498"),
-                new ProjectTypology("Fixed cost"), new BusinessSector("fishing"));
+        projectOne = new Project("AA001", "Aptoide",
+                new Customer("ISEP", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("fishing"));
 
         projectTypologyContainer = new ProjectTypologyContainer();
-        typology = new ProjectTypology("Fixed cost");
-
         customerContainer = new CustomerContainer();
-        customer = new Customer("ISEP", "228674498");
-
         businessSectorContainer = new BusinessSectorContainer();
-        businessSector = new BusinessSector("fishing");
 
-        projectDTOAsManager = new ProjectDTOAsManager("AA001", "Aptoide", "ISEP", "228674498", "Fixed cost",
+        projectOneDTO = new ProjectDTOAsManager("AA001", "Aptoide",
+                "ISEP", "228674498", "Fixed cost",
                 "fishing");
-        projectDTOAsManagerTwo = new ProjectDTOAsManager("AA002", "Aptoide", "ISEP", "228674498", "Fixed cost",
+        projectTwoDTO = new ProjectDTOAsManager("AA002", "Aptoide",
+                "ISEP", "228674498", "Fixed cost",
                 "fishing");
-        projectContainer= new ProjectContainer();
-        projectContainer.registerProject(projectDTOAsManager, projectTypologyContainer, customerContainer, businessSectorContainer);
+
+        projectContainer = new ProjectContainer();
+        projectContainer.registerProject(projectOneDTO, projectTypologyContainer,
+                customerContainer, businessSectorContainer);
     }
 
     @AfterEach
@@ -57,29 +58,43 @@ public class ProjectContainerTest {
         projectTypologyContainer = null;
         typology = null;
         projectContainer = null;
-        projectDTOAsManager = null;
+        projectOneDTO = null;
         customerContainer = null;
         customer = null;
         company = null;
     }
 
     /**
-     * Test to verify that a project was registered
+     * This test verifies that a new project is registered and added to the
+     * container successfully.
      */
     @Test
-    void ensureProjectIsRegistered() {
+    void ensureProjectIsRegisteredSuccessfully() {
+        // Arrange
         boolean expected = true;
-        boolean result = projectContainer.registerProject(projectDTOAsManagerTwo, projectTypologyContainer, customerContainer, businessSectorContainer);
+
+        // Act
+        boolean result = projectContainer.registerProject(projectTwoDTO,
+                projectTypologyContainer, customerContainer, businessSectorContainer);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Test to verify that a project was not registered
+     * This test verifies that a project is not registered because it already
+     * exists in the container.
      */
     @Test
-    void verifyProjectIsNotRegistered() {
+    void ensureProjectIsNotRegisteredBecauseItAlreadyExists() {
+        // Arrange
         boolean expected = false;
-        boolean result = projectContainer.registerProject(projectDTOAsManager, projectTypologyContainer, customerContainer, businessSectorContainer);
+
+        // Act
+        boolean result = projectContainer.registerProject(projectOneDTO,
+                projectTypologyContainer, customerContainer, businessSectorContainer);
+
+        // Assert
         assertEquals(expected, result);
     }
 

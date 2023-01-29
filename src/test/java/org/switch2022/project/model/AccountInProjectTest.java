@@ -44,7 +44,6 @@ public class AccountInProjectTest {
     /**
      * Tests for the equals() method.
      */
-
     @Test
     void ensureThatSameAccountInProjectEqualsItself() {
         // Arrange
@@ -136,7 +135,6 @@ public class AccountInProjectTest {
     /**
      * Test to verify if the percentage allocation is retrieved
      */
-
     @Test
     void ensureThatPercentageAllocationIsRetrievedSuccessfully() {
         // Arrange
@@ -152,7 +150,6 @@ public class AccountInProjectTest {
     /**
      * Test to validate if Product Owner as a valid role to an account in project. It should return true.
      */
-
     @Test
     void ensureThatProductOwnerIsAValidRole() {
         //Arrange
@@ -167,7 +164,6 @@ public class AccountInProjectTest {
     /**
      * Test to validate if Team Member as a valid role to an account in project. It should return true.
      */
-
     @Test
     void ensureThatTeamMemberIsAValidRole() {
         //Arrange
@@ -182,7 +178,6 @@ public class AccountInProjectTest {
     /**
      * Test to validate if Scrum Master as a valid role to an account in project. It should return true.
      */
-
     @Test
     void ensureThatScrumMasterIsAValidRole() {
         //Arrange
@@ -197,7 +192,6 @@ public class AccountInProjectTest {
     /**
      * Test to validate if Project Manager as a valid role to an account in project. It should return true.
      */
-
     @Test
     void ensureThatProjectManagerIsAValidRole() {
         //Arrange
@@ -212,7 +206,6 @@ public class AccountInProjectTest {
     /**
      * Test to verify in an invalid role could be given to an AccountInProject. It should return false.
      */
-
     @Test
     void ensureThatAnyOtherRoleIsInvalid() {
         //Arrange
@@ -227,7 +220,6 @@ public class AccountInProjectTest {
     /**
      * Test to verify if the endDate is successfully retrieved.
      */
-
     @Test
     void ensureThatEndDateIsRetrievedSuccessfully() {
         //Arrange
@@ -243,7 +235,6 @@ public class AccountInProjectTest {
      * Test to verify if an account is retrieved by giving a valid project code. To make this it accesses
      * accountInProject to retrieve the account itself. It should return the account.
      */
-
     @Test
     void ensureThatAccountIsRetrievedSuccessfullyWithProjectCode() {
         //Arrange
@@ -255,9 +246,8 @@ public class AccountInProjectTest {
     }
 
     /**
-     * Test to verify if an account is retrieved by giving a invalid project code. It should return null.
+     * Test to verify if an account is retrieved by giving an invalid project code. It should return null.
      */
-
     @Test
     void ensureThatGetAccountByProjectReturnsNullWithInvalidProjectCode() {
         //Act
@@ -286,7 +276,6 @@ public class AccountInProjectTest {
         //Assert
         assertEquals(expected, result);
     }
-
 
     @Test
     void ensureThatGetProjectByAccountReturnsNull() {
