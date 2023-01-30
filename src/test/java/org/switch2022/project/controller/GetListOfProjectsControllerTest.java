@@ -122,7 +122,7 @@ public class GetListOfProjectsControllerTest {
     }
 
     /**
-     * Test that resturns an empty list when an unauthorized user access the list of projects.
+     * Test that returns an empty list when an unauthorized user access the list of projects.
      */
     @Test
     void ensureThatNoProjectsAreListedWhenRequestedByAnotherProfile() {

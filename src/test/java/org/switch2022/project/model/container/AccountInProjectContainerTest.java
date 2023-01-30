@@ -15,13 +15,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AccountInProjectContainerTest {
+
     /**
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
 
     Account accountOne, accountTwo, accountThree, accountFour;
-    /*List<Account> accounts;*/
     AccountDTO accountDTO, accountDTO2, accountDTO3;
     AccountInProject accountInProjectOne, accountInProjectTwo, accountInProjectThree, accountInProjectFour, accountInProjectFive;
     List<AccountInProject> accountsInProject;
@@ -49,11 +49,6 @@ class AccountInProjectContainerTest {
         accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
         accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
         accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
-       /* accounts = new ArrayList<>();
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
-        accounts.add(accountThree);
-        accounts.add(accountFour);*/
 
         //customer
         customerOne = new Customer("Genius Software", "228674498");
@@ -89,7 +84,7 @@ class AccountInProjectContainerTest {
         accountDTO3 = new AccountDTO("Anna", "anna@isep.ipp.pt", true);
 
         // projectDTO
-        projectDTOAsManager = new ProjectDTOAsManager("id001", "Test", "IT Customer", "228674498","fixed cost", "IT Sector");
+        projectDTOAsManager = new ProjectDTOAsManager("id001", "Test", "IT Customer", "228674498", "fixed cost", "IT Sector");
 
         //container
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
@@ -373,7 +368,7 @@ class AccountInProjectContainerTest {
         float result = accountInProjectContainer.currentPercentageOfAllocation(accountTwo);
 
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -388,7 +383,7 @@ class AccountInProjectContainerTest {
         float result = accountInProjectContainer.currentPercentageOfAllocation(accountOne);
 
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -403,7 +398,7 @@ class AccountInProjectContainerTest {
         boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 49);
 
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -418,7 +413,7 @@ class AccountInProjectContainerTest {
         boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 50);
 
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -433,7 +428,7 @@ class AccountInProjectContainerTest {
         boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 51);
 
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -448,6 +443,6 @@ class AccountInProjectContainerTest {
         boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 0);
 
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 }

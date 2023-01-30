@@ -16,29 +16,29 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CompanyTest {
+
     /**
-     * BeforeEach and AfterEach executes common code before/after running the
-     * tests below.
+     * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
     Account accountOne, accountTwo, accountThree, accountFour;
+    AccountDTO accountTwoDTO;
     Profile profileOne, profileTwo, profileThree;
     Project projectOne, projectTwo, projectThree, project;
-    BusinessSectorContainer businessSectorContainer;
-    AccountContainer accountContainer;
-    ProfileContainer profileContainer;
-    ProjectTypologyContainer projectTypologyContainer;
-    ProjectContainer projectContainer;
-    ProjectDTOAsManager projectOneDTO, projectTwoDTO, projectThreeDTO;
-    CustomerContainer customerContainer;
+    ProjectDTOAsManager projectOneDTO, projectNonExistentDTO, projectTwoDTO;
     float costPerHour;
     float percentageAllocation;
     LocalDate startDate;
     AccountInProject accountInProject1, accountInProject2;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
+    BusinessSectorContainer businessSectorContainer;
+    AccountContainer accountContainer;
+    ProfileContainer profileContainer;
+    ProjectTypologyContainer projectTypologyContainer;
+    ProjectContainer projectContainer;
+    CustomerContainer customerContainer;
     Company company;
-
 
     @BeforeEach
     void setUp() {
@@ -48,13 +48,16 @@ class CompanyTest {
         accountThree = new Account("Jane", "jane@isep.ipp.pt", 932755687, null);
         accountFour = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
 
+        // AccountDTO created.
+        accountTwoDTO = new AccountDTO(accountTwo.getAccountName(), accountTwo.getEmail(), accountTwo.getAccountStatus());
+
         // Container of accounts created.
         accountContainer = new AccountContainer();
 
         // Accounts added to the Container.
-       accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
-       accountContainer.addAccount("Emma", "emma@isep.ipp.pt", 932755688, null);
-       accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountContainer.addAccount("Emma", "emma@isep.ipp.pt", 932755688, null);
+        accountContainer.addAccount("Jane", "jane@isep.ipp.pt", 932755687, null);
 
         // Profiles created.
         profileOne = new Profile("Administrator");
@@ -68,10 +71,8 @@ class CompanyTest {
         profileContainer.createProfile("Administrator");
         profileContainer.createProfile("Manager");
 
-
-
         // Container of business sectors created.
-        businessSectorContainer= new BusinessSectorContainer();
+        businessSectorContainer = new BusinessSectorContainer();
         businessSectorContainer.createBusinessSector("fishing");
         businessSectorContainer.createBusinessSector("hunting");
 
@@ -86,39 +87,26 @@ class CompanyTest {
         customerContainer.addCustomer("PortoTech", "222333445");
 
         // Projects created.
-        project = new Project("AA002", "software development management", new Customer(
-                "John","228674498"),
-                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
-        projectOne = new Project("AA001", "software development management",
-                new Customer("John","228674498"),
-                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
-        projectTwo = new Project("AA002", "project software", new Customer("John","228674498"),
-                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
-        projectThree = new Project("AA001", "Aptoide", new Customer("John","228674498"),
-                new ProjectTypology("Fixed cost"),new BusinessSector("Hunting") );
+        project = new Project("AA002", "software development management", new Customer("John", "228674498"), new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+        projectOne = new Project("AA001", "software development management", new Customer("John", "228674498"), new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+        projectTwo = new Project("AA002", "project software", new Customer("John", "228674498"), new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+        projectThree = new Project("AA001", "Aptoide", new Customer("John", "228674498"), new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
         // ProjectDTOs created.
-        projectOneDTO = new ProjectDTOAsManager("AA001", "Aptoide", "John", "228674498","Fixed cost",
-                "Hunting");
-        projectTwoDTO = new ProjectDTOAsManager("AA004", "Aptoide", "John", "228674498","Fixed cost",
-                "Hunting");
-        projectThreeDTO = new ProjectDTOAsManager("AA002", "software development management", "John",
-                "228674498","Fixed cost", "Hunting");
-
+        projectOneDTO = new ProjectDTOAsManager("AA001", "Aptoide", "John", "228674498", "Fixed cost", "Hunting");
+        projectTwoDTO = new ProjectDTOAsManager("AA002", "software development management", "John", "228674498", "Fixed cost", "Hunting");
+        projectNonExistentDTO = new ProjectDTOAsManager("AA004", "Aptoide", "John", "228674498", "Fixed cost", "Hunting");
 
         // Container of projects created.
         projectContainer = new ProjectContainer();
 
         // Projects added to the container.
-        projectContainer.registerProject(projectThreeDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
-        projectContainer.registerProject(projectOneDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
-
+        projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer, businessSectorContainer);
+        projectContainer.registerProject(projectTwoDTO, projectTypologyContainer, customerContainer, businessSectorContainer);
 
         // Accounts allocated to project.
-        accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member",
-                costPerHour, percentageAllocation, startDate);
-        accountInProject2 = new AccountInProject(accountTwo, projectTwo, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+        accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);
+        accountInProject2 = new AccountInProject(accountTwo, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate);
 
         // Container of accounts allocated in projects created.
         accountsInProject = new ArrayList<>();
@@ -129,9 +117,7 @@ class CompanyTest {
         accountsInProject.add(accountInProject2);
 
         // Company created.
-        company = new Company(accountContainer, profileContainer, businessSectorContainer,
-                projectContainer, projectTypologyContainer, accountInProjectContainer,
-                customerContainer);
+        company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
     }
 
     @AfterEach
@@ -149,8 +135,8 @@ class CompanyTest {
         projectTypologyContainer = null;
         projectContainer = null;
         projectOneDTO = null;
+        projectNonExistentDTO = null;
         projectTwoDTO = null;
-        projectThreeDTO=null;
         customerContainer = null;
         accountInProject1 = null;
         accountInProject2 = null;
@@ -162,38 +148,44 @@ class CompanyTest {
     /**
      * getAccountContainer()
      */
-
     @Test
-    void ensureAccountContainerIsRetrieved() {
+    void ensureAccountContainerIsRetrievedSuccessfully() {
+        // Arrange
         AccountContainer expected = accountContainer;
+
+        // Act
         AccountContainer result = company.getAccountContainer();
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * validateManager(String email)
-     * validateUser(String email)
-     * validateAdministrator(String email)
+     * These tests verify if authorization process is successful regarding the
+     * three account profile types of the actor performing tasks.
      */
-
     @Test
-    void ensureThatAccountHasProfileManagerSuccessfully() {
-        //Arrange
+    void ensureManagerIsValidatedSuccessfully() {
+        // Arrange
         boolean expected = true;
-        company.changeProfile(accountOne.getEmail(),"manager");
-        //Act
-        boolean result = company.validateManager("mike@isep.ipp.pt");
-        //Assert
+        company.changeProfile(accountOne.getEmail(), "manager");
+
+        // Act
+        boolean result = company.validateManager(accountOne.getEmail());
+
+        // Assert
         assertEquals(expected, result);
     }
 
     @Test
-    void ensureThatAccountHasProfileManagerUnsuccessfully() {
-        //Arrange
+    void ensureValidationFailsWhenProfileIsNotManager() {
+        // Arrange
         boolean expected = false;
-        //Act
-        boolean result = company.validateManager("mike@isep.ipp.pt");
-        //Assert
+
+        // Act
+        boolean result = company.validateManager(accountOne.getEmail());
+
+        // Assert
         assertEquals(expected, result);
     }
 
@@ -201,7 +193,7 @@ class CompanyTest {
     void ensureThatAccountHasProfileAdministratorSuccessfully() {
         //Arrange
         boolean expected = true;
-        company.changeProfile(accountOne.getEmail(),"administrator");
+        company.changeProfile(accountOne.getEmail(), "administrator");
         //Act
         boolean result = company.validateAdministrator("mike@isep.ipp.pt");
         //Assert
@@ -222,7 +214,7 @@ class CompanyTest {
     void ensureThatAccountHasProfileUserUnsuccessfully() {
         //Arrange
         boolean expected = false;
-        company.changeProfile(accountOne.getEmail(),"manager");
+        company.changeProfile(accountOne.getEmail(), "manager");
         //Act
         boolean result = company.validateUser("mike@isep.ipp.pt");
         //Assert
@@ -263,11 +255,9 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
-
     /**
      * changeProfile(String email, String profileName)
      */
-
     @Test
     void ensureAccountProfileIsChangedSuccessfully() {
         //Arrange
@@ -332,26 +322,11 @@ class CompanyTest {
     }
 
     /**
-     * listAllUsers()
+     * These tests verify if a list of accounts with the "User" profile is
+     * retrieved successfully.
      */
-
     @Test
-    void ensureIsRetrievedEmptyList() {
-        // ARRANGE
-        company.changeProfile(accountTwo.getEmail(), "Administrator");
-        company.changeProfile(accountOne.getEmail(), "Administrator");
-        company.changeProfile(accountThree.getEmail(), "Administrator");
-        List<Account> expected = Collections.emptyList();
-
-        // ACT
-        List<Account> result = company.listAllUsers();
-
-        // ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureIsRetrievedListNotEmpty() {
+    void ensureUsersListIsRetrievedSuccessfully() {
         // ARRANGE
         List<Account> expected = new ArrayList<>();
         expected.add(accountOne);
@@ -365,6 +340,20 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void ensureEmptyListIsRetrievedWhenNoUserProfilesExistInContainer() {
+        // ARRANGE
+        company.changeProfile(accountTwo.getEmail(), "Administrator");
+        company.changeProfile(accountOne.getEmail(), "Manager");
+        company.changeProfile(accountThree.getEmail(), "Manager");
+        List<Account> expected = Collections.emptyList();
+
+        // ACT
+        List<Account> result = company.listAllUsers();
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
 
     /**
      * changeStatus(String email, boolean status)
@@ -372,18 +361,14 @@ class CompanyTest {
 
     @Test
     void ensureStatusIsNotChanged() {
-        Company company = new Company(accountContainer, profileContainer,
-                businessSectorContainer, projectContainer, projectTypologyContainer,
-                accountInProjectContainer, customerContainer);
+        Company company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
         boolean result = company.changeStatus("mike@isep.ipp.pt", true);
         assertFalse(result);
     }
 
     @Test
     void ensureChangeStatusReturnFalse() {
-        Company company = new Company(accountContainer, profileContainer,
-                businessSectorContainer, projectContainer, projectTypologyContainer,
-                accountInProjectContainer, customerContainer);
+        Company company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
         boolean result = company.changeStatus("mike@isep.ipp.pt", true);
         assertFalse(result);
     }
@@ -401,27 +386,33 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
-
     /**
-     * registerProject(ProjectDTO projectDTO, String email)
+     * These tests verify if a new project can be created successfully when
+     * receiving a DTO carrying the relevant data.
      */
-
     @Test
-    void projectRegistered() {
-        accountOne.setProfile(profileThree);
+    void ensureProjectIsRegisteredSuccessfully() {
+        // Arrange
         boolean expected = true;
-        boolean result = company.registerProject(projectTwoDTO);
+
+        // Act
+        boolean result = company.registerProject(projectNonExistentDTO);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     @Test
-    void projectNotRegistered() {
-        company.changeProfile(accountOne.getEmail(),"manager");
+    void ensureProjectRegistrationFailsBecauseItAlreadyExistsInContainer() {
+        // Arrange
         boolean expected = false;
+
+        // Act
         boolean result = company.registerProject(projectOneDTO);
+
+        // Assert
         assertEquals(expected, result);
     }
-
 
     /**
      * listAllProjects()
@@ -437,7 +428,6 @@ class CompanyTest {
         // Assert
         assertEquals(expected, result);
     }
-
 
     /**
      * addBusinessSector(String businessSectorName)
@@ -483,51 +473,30 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
-
     /**
-     * addUserToProject(accountDTO, projectDTO, allocationDTO)
+     * These tests verify is allocation of account with a certain role is done
+     * successfully to an already existent project.
      */
-
     @Test
-    void ensureAccountIsSuccessfullyAssociatedToAProject() {
-        //Arrange
-        //accountDTO
-        AccountDTO accountDTO = new AccountDTO("Emma","emma@isep.ipp.pt", true);
+    void ensureScrumMasterIsAssociatedToProjectSuccessfully() {
+        // Arrange
+        AllocationDTO scrumMasterDTO = new AllocationDTO("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
 
-        //projectDTO
-        ProjectDTOAsManager projectDTOAsManager = new ProjectDTOAsManager("AA002", "software development management", "John",
-                "228674498","Fixed cost", "Hunting");
+        // Act
+        boolean result = company.addUserToProject(accountTwoDTO, projectOneDTO, scrumMasterDTO);
 
-
-        //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner",7.5f, 45.0f,
-                LocalDate.of(2023, 1, 19), null);
-
-        //Act
-        company.registerProject(projectDTOAsManager);
-        boolean result = company.addUserToProject(accountDTO, projectDTOAsManager,
-                allocationDTOPO);
-        //Assert
+        // Assert
         assertTrue(result);
     }
 
     @Test
-    void ensureAccountIsNotAssociatedToAnNonExistentProject() {
+    void ensureProductOwnerIsNotAssociatedBecauseProjectDoNotExist() {
         //Arrange
-        //accountDTO
-        AccountDTO accountDTO = new AccountDTO("Emma", "emma@isep.ipp.pt", true);
+        AllocationDTO productOwnerDTO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
 
-        //projectDTO
-        ProjectDTOAsManager projectDTOAsManager = new ProjectDTOAsManager("AA056", "software development " +
-                "management", "John",
-                "228674498","Fixed cost", "Hunting");
-
-        //account in project dto - product owner
-        AllocationDTO allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
-        
         //Act
-        boolean result = company.addUserToProject(accountDTO, projectDTOAsManager,
-                allocationDTOPO);
+        boolean result = company.addUserToProject(accountTwoDTO, projectNonExistentDTO, productOwnerDTO);
+
         //Assert
         assertFalse(result);
     }
@@ -557,8 +526,6 @@ class CompanyTest {
         assertEquals(expected, result);
     }
 
-
-
     @Test
     void ensureThatIsPossibleToListProjectsByAccount() {
         //Arrange
@@ -567,7 +534,7 @@ class CompanyTest {
         //Act
         List<Project> result = company.listProjectsByAccount("mike@isep.ipp.pt");
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -602,6 +569,7 @@ class CompanyTest {
         assertEquals(expected, result);
 
     }
+
     @Test
     void ensureAddCustomerToCustomersListSuccessfully() {
         //Arrange
@@ -633,7 +601,6 @@ class CompanyTest {
         assertEquals(expected, result);
 
     }
-
 }
 
 
