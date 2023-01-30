@@ -4,7 +4,7 @@ package org.switch2022.project.model;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -162,14 +162,14 @@ public class Company {
     /**
      * This method registers a new project and adds it to the container.
      *
-     * @param projectDTO data transfer object of projects information.
+     * @param projectDTOAsManager data transfer object of projects information.
      * @return TRUE if registered, and FALSE otherwise.
      */
-    public boolean registerProject(ProjectDTO projectDTO) {
+    public boolean registerProject(ProjectDTOAsManager projectDTOAsManager) {
         boolean isProjectRegistered = false;
-        if (projectContainer.registerProject(projectDTO, this.projectTypologyContainer, this.customerContainer, this.businessSectorContainer)) {
-                isProjectRegistered = true;
-            }
+        if (projectContainer.registerProject(projectDTOAsManager, this.projectTypologyContainer, this.customerContainer, this.businessSectorContainer)) {
+            isProjectRegistered = true;
+        }
         return isProjectRegistered;
     }
 
@@ -216,7 +216,7 @@ public class Company {
      * @param projectTypology of project one intend to create.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean createProjectTypology (String projectTypology) {
+    public boolean createProjectTypology(String projectTypology) {
         return projectTypologyContainer.createProjectTypology(projectTypology);
     }
 
@@ -227,14 +227,14 @@ public class Company {
      * This method adds an account to a project with a specific role.
      *
      * @param allocationDTO data transfer object gathering the information
-     *                            needed.
+     *                      needed.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean addUserToProject(AccountDTO accountDTO, ProjectDTO projectDTO,
+    public boolean addUserToProject(AccountDTO accountDTO, ProjectDTOAsManager projectDTOAsManager,
                                     AllocationDTO allocationDTO) {
 
         Account account = this.accountContainer.getAccountByEmail(accountDTO.email);
-        Project project = this.projectContainer.getProjectByCode(projectDTO.code);
+        Project project = this.projectContainer.getProjectByCode(projectDTOAsManager.code);
         return this.accountInProjectContainer.addUserToProject(account,
                 project, allocationDTO);
     }

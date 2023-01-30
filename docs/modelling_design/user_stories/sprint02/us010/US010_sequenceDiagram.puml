@@ -20,9 +20,9 @@ activate mg
 mg ->ui : register new project
 activate ui
 ui -->> mg: requests data (code, name, ...)
-deactivate ui
+
 mg -> ui: types requested data
-activate ui
+
 create dto
 ui -> dto: create (code, name, ...)
 ui -> controller: registerProject(projectDTO, email)

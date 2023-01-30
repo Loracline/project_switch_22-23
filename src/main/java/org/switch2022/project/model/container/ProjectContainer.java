@@ -1,7 +1,7 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 import org.switch2022.project.utils.mapper.ProjectMapper;
 
 import java.util.ArrayList;
@@ -12,11 +12,10 @@ import java.util.List;
  * of this company.
  */
 public class ProjectContainer {
-  /**
-   * Attributes
-   */
-  private final List<Project> projects = new ArrayList<>();
-
+    /**
+     * Attributes
+     */
+    private final List<Project> projects= new ArrayList<>();
 
   /**
    * This method verify the existence of a project by code confirmation.
@@ -49,12 +48,12 @@ public class ProjectContainer {
    * This method creates a new project and adds it to the container if it
    * doesn't already exist.
    *
-   * @param projectDTO data transfer object of the attributes of project.
+   * @param projectDTOAsManager data transfer object of the attributes of project.
    * @return TRUE if registered and FALSE otherwise.
    */
-  public boolean registerProject(ProjectDTO projectDTO, ProjectTypologyContainer projectTypologyContainer,
+  public boolean registerProject(ProjectDTOAsManager projectDTOAsManager, ProjectTypologyContainer projectTypologyContainer,
                                  CustomerContainer customerContainer, BusinessSectorContainer businessSectorContainer) {
-    Project project = ProjectMapper.getProjectFromDTO(projectDTO, projectTypologyContainer, customerContainer, businessSectorContainer);
+    Project project = ProjectMapper.getProjectFromDTO(projectDTOAsManager, projectTypologyContainer, customerContainer, businessSectorContainer);
     boolean projectRegistered = false;
     if (!doesProjectExist(project)) {
       projects.add(project);

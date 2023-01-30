@@ -7,7 +7,6 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.UserListProjectsDTO;
 import org.switch2022.project.utils.mapper.UserListProjectsMapper;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +25,10 @@ class ListProjectsInAccountControllerTest {
     BusinessSector businessSectorOne;
     Project projectOne;
     AccountInProject accountInProjectOne;
-    List<Account> accounts;
     List<UserListProjectsDTO> projectsDTO;
-    List<ProjectTypology> typologies;
-    List<Project> projects;
-    List<Customer> customers;
     List<AccountInProject> accountsInProject;
     AccountContainer accountContainer;
+    ProfileContainer profileContainer;
     AccountInProjectContainer accountInProjectContainer;
     Company company;
     ListProjectsInAccountController listProjectsInAccountController;
@@ -42,27 +38,21 @@ class ListProjectsInAccountControllerTest {
         //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
         accountTwo = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
-        accounts = new ArrayList<>();
-        accounts.add(accountOne);
-        accounts.add(accountTwo);
+
 
         //customer
         customerOne = new Customer("Genius Software", "234567890");
-        customers = new ArrayList<>();
-        customers.add(customerOne);
+
 
         //projectTypology
         projectTypologyOne = new ProjectTypology("Fixed Cost");
-        typologies = new ArrayList<>();
-        typologies.add(projectTypologyOne);
+
 
         //businessSector
         businessSectorOne = new BusinessSector("Fishing");
 
         //project
         projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
-        projects = new ArrayList<>();
-        projects.add(projectOne);
 
         //projectDTO
         projectDTOOne = UserListProjectsMapper.getDTOFromProject(projectOne);
@@ -76,11 +66,16 @@ class ListProjectsInAccountControllerTest {
         accountsInProject.add(accountInProjectOne);
 
         //containers
-        accountContainer = new AccountContainer(accounts);
+        accountContainer = new AccountContainer();
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountContainer.addAccount("Mary", "mary@isep.ipp.pt", 939855689, null);
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+        profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
 
         //company
-        company = new Company(accountContainer, null, null,
+        company = new Company(accountContainer, profileContainer, null,
                 null, null, accountInProjectContainer, null);
 
         //controller
@@ -98,13 +93,10 @@ class ListProjectsInAccountControllerTest {
         businessSectorOne = null;
         projectOne = null;
         accountInProjectOne = null;
-        accounts.clear();
         projectsDTO.clear();
-        typologies.clear();
-        projects.clear();
         accountsInProject.clear();
-        customers.clear();
         accountContainer = null;
+        profileContainer=null;
         accountInProjectContainer = null;
         company = null;
         listProjectsInAccountController = null;

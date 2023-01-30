@@ -4,106 +4,117 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.utils.dto.ProjectDTO;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * BeforeEach and AfterEach executes common code before/after running the tests
- * below.
- */
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ProjectContainerTest {
 
+    /**
+     * BeforeEach and AfterEach executes common code before/after running the
+     * tests below.
+     */
 
-  Project projectOne;
-  ProjectDTO projectDTO;
-  ProjectTypologyContainer projectTypologyContainer;
-  ProjectTypology typology;
-  List<Project> projects;
-  BusinessSectorContainer businessSectorContainer;
-  ProjectContainer projectContainer;
-  CustomerContainer customerContainer;
-  BusinessSector businessSector;
-  Customer customer;
-  Company company;
+    Project projectOne;
+    ProjectDTOAsManager projectOneDTO, projectTwoDTO;
+    ProjectTypology typology;
+    Customer customer;
+    BusinessSector businessSector;
+    ProjectTypologyContainer projectTypologyContainer;
+    BusinessSectorContainer businessSectorContainer;
+    ProjectContainer projectContainer;
+    CustomerContainer customerContainer;
+    Company company;
 
+    @BeforeEach
+    void setUp() {
+        projectOne = new Project("AA001", "Aptoide",
+                new Customer("ISEP", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("fishing"));
 
-  @BeforeEach
-  void setUp() {
-    projectOne = new Project("AA001", "Aptoide", new Customer("ISEP","228674498"),
-            new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
-    projects = new ArrayList<>();
-    projects.add(projectOne);
-    projectContainer = new ProjectContainer();
+        projectTypologyContainer = new ProjectTypologyContainer();
+        customerContainer = new CustomerContainer();
+        businessSectorContainer = new BusinessSectorContainer();
 
-    projectTypologyContainer = new ProjectTypologyContainer();
-    typology = new ProjectTypology("Fixed cost");
+        projectOneDTO = new ProjectDTOAsManager("AA001", "Aptoide",
+                "ISEP", "228674498", "Fixed cost",
+                "fishing");
+        projectTwoDTO = new ProjectDTOAsManager("AA002", "Aptoide",
+                "ISEP", "228674498", "Fixed cost",
+                "fishing");
 
-    customerContainer = new CustomerContainer();
-    customer = new Customer("ISEP","228674498");
+        projectContainer = new ProjectContainer();
+        projectContainer.registerProject(projectOneDTO, projectTypologyContainer,
+                customerContainer, businessSectorContainer);
+    }
 
-    businessSectorContainer = new BusinessSectorContainer();
-    businessSector = new BusinessSector("fishing");
+    @AfterEach
+    void tearDown() {
+        projectOne = null;
+        businessSectorContainer = null;
+        businessSector = null;
+        projectTypologyContainer = null;
+        typology = null;
+        projectContainer = null;
+        projectOneDTO = null;
+        customerContainer = null;
+        customer = null;
+        company = null;
+    }
 
-    projectDTO = new ProjectDTO("AA001", "Aptoide", "ISEP","228674498", "Fixed cost",
-            "fishing");
+    /**
+     * This test verifies that a new project is registered and added to the
+     * container successfully.
+     */
+    @Test
+    void ensureProjectIsRegisteredSuccessfully() {
+        // Arrange
+        boolean expected = true;
 
-  }
+        // Act
+        boolean result = projectContainer.registerProject(projectTwoDTO,
+                projectTypologyContainer, customerContainer, businessSectorContainer);
 
-  @AfterEach
-  void tearDown() {
-    projectOne = null;
-    businessSectorContainer = null;
-    businessSector = null;
-    projectTypologyContainer = null;
-    typology = null;
-    projects.clear();
-    projectContainer = null;
-    projectDTO = null;
-    customerContainer = null;
-    customer = null;
-    company = null;
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to verify that a project was not registered
-   */
-  @Test
-  void verifyProjectIsNotRegistered() {
-    boolean expected = false;
-    boolean result = projectContainer.registerProject(projectDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
-    assertNotEquals(expected, result);
-  }
-  /**
-   * Test to verify that a project was registered
-   */
-  @Test
-  void ensureProjectIsRegistered() {
-    boolean expected = true;
-    boolean result = projectContainer.registerProject(projectDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
-    assertEquals(expected, result);
-  }
-  /**
-   * Test to verify that a project is retrieved given a project code
-   */
-  @Test
-  void ensureProjectIsRetrievedGivenProjectCode() {
-    Project result = projectContainer.getProjectByCode("AA001");
+    /**
+     * This test verifies that a project is not registered because it already
+     * exists in the container.
+     */
+    @Test
+    void ensureProjectIsNotRegisteredBecauseItAlreadyExists() {
+        // Arrange
+        boolean expected = false;
 
-    assertNotEquals(projectOne, result);
-  }
-  /**
-   * Test to verify that a project is not retrieved given a project code
-   */
-  @Test
-  void ensureProjectIsNotRetrievedGivenProjectCode() {
-      Project result = projectContainer.getProjectByCode("AA005");
+        // Act
+        boolean result = projectContainer.registerProject(projectOneDTO,
+                projectTypologyContainer, customerContainer, businessSectorContainer);
 
-    assertNull(result);
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test to verify that a project is retrieved given a project code
+     */
+    @Test
+    void ensureProjectIsRetrievedGivenProjectCode() {
+        Project result = projectContainer.getProjectByCode("AA001");
+
+        assertEquals(projectOne, result);
+    }
+
+    /**
+     * Test to verify that a project is not retrieved given a project code
+     */
+    @Test
+    void ensureProjectIsNotRetrievedGivenProjectCode() {
+        Project result = projectContainer.getProjectByCode("AA005");
+        assertNull(result);
+    }
 }
 

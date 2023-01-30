@@ -34,7 +34,7 @@ public class ProjectTypologyContainer {
   public boolean createProjectTypology(String projectTypology) {
     ProjectTypology newProjectTypology = new ProjectTypology(projectTypology);
     boolean isAddedToList = false;
-    if (!doesTypologyExist(newProjectTypology)) {
+    if (!projectTypology.isEmpty() && !doesTypologyExist(newProjectTypology)) {
       typologies.add(newProjectTypology);
       isAddedToList = true;
     }

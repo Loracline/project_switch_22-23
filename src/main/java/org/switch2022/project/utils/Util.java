@@ -13,9 +13,7 @@ public final class Util {
      * define at least one explicitly. Hence, at least one non-public
      * constructor should be defined.
      */
-    private Util() {
-        throw new IllegalStateException("Utility class");
-    }
+    private Util() {}
 
     /**
      * This static method checks if first number is lower than the second.

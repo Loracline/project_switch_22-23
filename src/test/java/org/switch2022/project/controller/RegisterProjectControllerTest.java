@@ -3,148 +3,135 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.*;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.BusinessSector;
+import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ProjectDTO;
-import java.util.ArrayList;
-import java.util.List;
+import org.switch2022.project.utils.dto.ProjectDTOAsManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RegisterProjectControllerTest {
 
-  /**
-   * BeforeEach and AfterEach executes common code before/after running the tests below.
-   */
+    /**
+     * BeforeEach and AfterEach executes common code before/after running
+     * the tests below.
+     */
 
-  Account accountOne;
-  Profile profileOne, profileTwo, profileThree;
-  Project projectOne, projectTwo, projectThree;
-  ProjectDTO projectOneDTO, projectTwoDTO;
-  List<Account> accounts;
-  List<Profile> profiles;
-  List<Project> projects;
-  List<ProjectTypology> typologies;
-  List<Customer> customers;
-  BusinessSectorContainer businessSectorContainer;
-  AccountContainer accountContainer;
-  ProfileContainer profileContainer;
-  ProjectTypologyContainer projectTypologyContainer;
-  ProjectContainer projectContainer;
-  CustomerContainer customerContainer;
-  BusinessSector businessSector;
-  Company company;
-  RegisterProjectController registerProjectController;
+    Account accountOne;
+    Profile profileOne, profileTwo, profileThree;
+    BusinessSector businessSector;
+    ProjectDTOAsManager projectOneDTO, projectTwoDTO;
+    BusinessSectorContainer businessSectorContainer;
+    AccountContainer accountContainer;
+    ProfileContainer profileContainer;
+    ProjectTypologyContainer projectTypologyContainer;
+    ProjectContainer projectContainer;
+    CustomerContainer customerContainer;
+    Company company;
+    RegisterProjectController registerProjectController;
 
-  @BeforeEach
-  void setUp() {
-    accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-    accounts = new ArrayList<>();
-    accountContainer = new AccountContainer(accounts);
-    accounts.add(accountOne);
+    @BeforeEach
+    void setUp() {
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountContainer = new AccountContainer();
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
 
-    profileOne = new Profile("Administrator");
-    profileTwo = new Profile("User");
-    profileThree = new Profile("Manager");
-    profiles = new ArrayList<>();
-    profileContainer = new ProfileContainer(profiles);
-    profiles.add(profileOne);
-    profiles.add(profileTwo);
+        profileOne = new Profile("Administrator");
+        profileTwo = new Profile("User");
+        profileThree = new Profile("Manager");
+        profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
 
-    typologies = new ArrayList<>();
-    projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer = new ProjectTypologyContainer();
 
-    customers = new ArrayList<>();
-    customerContainer = new CustomerContainer();
+        customerContainer = new CustomerContainer();
 
-    businessSectorContainer = new BusinessSectorContainer();
-    businessSector = new BusinessSector("fishing");
-    projects = new ArrayList<>();
-    projectOne = new Project("AA001", "software development management", new Customer(
-            "Peter","228674498"), new ProjectTypology("Fixed cost"),
-            new BusinessSector("Fishing"));
-    projectTwo = new Project("AA002", "project software", new Customer("John","228674498"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Fishing"));
-    projects.add(projectOne);
-    projects.add(projectTwo);
-    projectContainer = new ProjectContainer();
+        businessSector = new BusinessSector("fishing");
+        businessSectorContainer = new BusinessSectorContainer();
 
-    projectOneDTO = new ProjectDTO("AA001", "software development management", "Peter","228674498",
-            "Fixed cost", "Fishing");
-    projectTwoDTO = new ProjectDTO("AA004", "software development management", "Mary",
-            "228674498","Fixed cost", "Sports");
+        projectOneDTO = new ProjectDTOAsManager("AA001", "software development management", "Peter", "228674498",
+                "Fixed cost", "Fishing");
+        projectTwoDTO = new ProjectDTOAsManager("AA004", "software development management", "Mary",
+                "228674498", "Fixed cost", "Sports");
+        projectContainer = new ProjectContainer();
+        projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer, businessSectorContainer);
 
-    company = new Company(accountContainer, profileContainer, businessSectorContainer,
-            projectContainer, projectTypologyContainer, null, customerContainer);
+        company = new Company(accountContainer, profileContainer, businessSectorContainer,
+                projectContainer, projectTypologyContainer, null, customerContainer);
 
-    registerProjectController = new RegisterProjectController(company);
-  }
+        registerProjectController = new RegisterProjectController(company);
+    }
 
-  @AfterEach
-  void tearDown() {
-    accountOne = null;
-    profileOne = null;
-    profileTwo = null;
-    profileThree = null;
-    accounts.clear();
-    profiles.clear();
-    accountContainer = null;
-    profileContainer = null;
-    businessSectorContainer = null;
-    typologies.clear();
-    projectTypologyContainer = null;
-    projects.clear();
-    projectContainer = null;
-    projectOneDTO = null;
-    projectTwoDTO = null;
-    customers.clear();
-    customerContainer = null;
-    company = null;
-  }
-  /**
-   * Test to ensure that a project is registered
-   */
-  @Test
-  void projectRegistered() {
-    // Arrange
-    accountOne.setProfile(profileThree);
+    @AfterEach
+    void tearDown() {
+        accountOne = null;
+        profileOne = null;
+        profileTwo = null;
+        profileThree = null;
+        accountContainer = null;
+        profileContainer = null;
+        businessSectorContainer = null;
+        projectTypologyContainer = null;
+        projectContainer = null;
+        projectOneDTO = null;
+        projectTwoDTO = null;
+        customerContainer = null;
+        company = null;
+    }
 
-    // Act
-    boolean expected = true;
-    boolean result = registerProjectController.registerProject(projectOneDTO, accountOne.getEmail());
+    /**
+     * This test verifies if a new project is registered when the actor is an
+     * account with the profile "Manager".
+     */
+    @Test
+    void ensureProjectIsRegisteredWhenActorIsManager() {
+        // Arrange
+        company.changeProfile("mike@isep.ipp.pt", "manager");
+        boolean expected = true;
 
-    // Assert
-    assertEquals(expected, result);
-  }
-  /**
-   * Test to ensure that a project is not registered
-   */
-  @Test
-  void projectNotRegistered() {
-    // Arrange
-    accountOne.setProfile(profileThree);
+        // Act
+        boolean result = registerProjectController.registerProject(projectTwoDTO,
+                accountOne.getEmail());
 
-    // Act
-    company.registerProject(projectOneDTO);
-    boolean expected = false;
-    boolean result = registerProjectController.registerProject(projectOneDTO, accountOne.getEmail());
+        // Assert
+        assertEquals(expected, result);
+    }
 
-    // Assert
-    assertEquals(expected, result);
-  }
-  /**
-   * Test to ensure that the user is not able to register a project
-   */
-  @Test
-  void managerNotValid() {
-    // Arrange
-    accountOne.setProfile(profileTwo);
+    /**
+     * This test verifies if a new project is not registered when it already
+     * exists in the project container.
+     */
+    @Test
+    void ensureProjectIsNotRegisteredWhenItAlreadyExists() {
+        // Arrange
+        company.changeProfile(accountOne.getEmail(), "manager");
+        boolean expected = false;
 
-    // Act
-    boolean expected = false;
-    boolean result = registerProjectController.registerProject(projectTwoDTO, accountOne.getEmail());
+        // Act
+        boolean result = registerProjectController.registerProject(projectOneDTO,
+                accountOne.getEmail());
 
-    // Assert
-    assertEquals(expected, result);
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * This test verifies if a new project is not registered when the actor is
+     * an account with other profile than "Manager".
+     */
+    @Test
+    void ensureProjectIsNotRegisteredWhenActorIsNotManager() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = registerProjectController.registerProject(projectTwoDTO,
+                accountOne.getEmail());
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }

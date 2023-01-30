@@ -10,8 +10,7 @@ public class ManagerListProjectsMapper {
     /**
      * Constructor of the class ListOfProjectsMapper.
      */
-    private ManagerListProjectsMapper() {
-    }
+    private ManagerListProjectsMapper() {}
 
     /**
      * This method receives a project and maps/transforms the project
