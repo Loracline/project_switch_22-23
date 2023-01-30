@@ -89,7 +89,7 @@ public class AccountInProjectContainer {
      * @return TRUE if it doesn't exceed 100, and FALSE otherwise.
      */
     boolean isPercentageOfAllocationValid(Account account,
-                                                  float newPercentageAllocation) {
+                                          float newPercentageAllocation) {
         boolean percentageOfAllocationValid = false;
         float totalPercentageAllocation =
                 Util.sum(currentPercentageOfAllocation(account),
@@ -119,6 +119,7 @@ public class AccountInProjectContainer {
             i++;
         }
         return accounts;
+        //SERA ESTA A CAMADA RESPONSAVEL POR CRIAR UMA LISTA DE ACCOUNTS QUE FORAM ATRIBUIDAS A UM DETERMINADO PROJETO
     }
 
     /**

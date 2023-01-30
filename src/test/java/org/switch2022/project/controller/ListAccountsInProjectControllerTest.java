@@ -8,7 +8,6 @@ import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.mapper.AccountMapper;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +21,9 @@ class ListAccountsInProjectControllerTest {
 
     Account accountOne, accountTwo;
     AccountDTO accountDTOOne;
-    Profile profileOne, profileTwo;
-    Customer customerOne;
-    ProjectTypology projectTypologyOne;
-    BusinessSector businessSectorOne;
-    Project projectOne;
-    AccountInProject accountInProjectOne;
     List<AccountDTO> accountsDTOOne;
+    Project projectOne, projectTwo, projectThree;
+    AccountInProject accountInProjectOne, accountInProjectTwo;
     List<AccountInProject> accountsInProject;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -40,35 +35,24 @@ class ListAccountsInProjectControllerTest {
     void setUp() {
         //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
-        accountTwo = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
+        accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
 
         //accountDTO
         accountDTOOne = AccountMapper.accountToDTO(accountOne);
         accountsDTOOne = new ArrayList<>();
         accountsDTOOne.add(accountDTOOne);
 
-        //profile
-        profileOne = new Profile("Administrator");
-        profileTwo = new Profile("Manager");
-
-        //customer
-        customerOne = new Customer("Genius Software", "234567890");
-
-        //projectTypology
-        projectTypologyOne = new ProjectTypology("Fixed Cost");
-
-        //businessSector
-        businessSectorOne = new BusinessSector("Fishing");
-
         //project
-        projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
-
+        projectOne = new Project("1A", null, null, null, null);
+        projectTwo = new Project("1B", null, null, null, null);
+        projectThree = new Project("1C", null, null, null, null);
 
         //accountInProject
-        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", 1,
-                34f, LocalDate.of(2020, 1, 8));
+        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Scrum Master", 1, 34f, null);
+        accountInProjectTwo = new AccountInProject(accountOne, projectTwo, "Product Owner", 1, 34f, null);
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProjectOne);
+        accountsInProject.add(accountInProjectTwo);
 
         //containers
         accountContainer = new AccountContainer();
@@ -85,7 +69,6 @@ class ListAccountsInProjectControllerTest {
 
         //controller
         listAccountsInProjectController = new ListAccountsInProjectController(company);
-        company.changeProfile("mary@isep.ipp.pt", "Manager");
     }
 
     @AfterEach
@@ -93,17 +76,15 @@ class ListAccountsInProjectControllerTest {
         accountOne = null;
         accountTwo = null;
         accountDTOOne = null;
-        profileOne = null;
-        profileTwo = null;
-        customerOne = null;
-        projectTypologyOne = null;
-        businessSectorOne = null;
-        projectOne = null;
-        accountInProjectOne = null;
         accountsDTOOne.clear();
+        projectOne = null;
+        projectTwo = null;
+        projectThree = null;
+        accountInProjectOne = null;
+        accountInProjectTwo = null;
         accountsInProject.clear();
         accountContainer = null;
-        profileContainer=null;
+        profileContainer = null;
         accountInProjectContainer = null;
         company = null;
         listAccountsInProjectController = null;
@@ -113,11 +94,11 @@ class ListAccountsInProjectControllerTest {
      * US014
      * Test for listing all resources allocated to a given project.
      */
-
     @Test
     void ensureAllAccountsInAProjectAreListedSuccessfully() {
         //Arrange
         List<AccountDTO> expected = accountsDTOOne;
+        company.changeProfile("mary@isep.ipp.pt", "Manager");
 
         //Act
         List<AccountDTO> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
@@ -129,7 +110,6 @@ class ListAccountsInProjectControllerTest {
     /**
      * Test to assure that no user other than Manager can access the list of resources of a project.
      */
-
     @Test
     void ensureThatAnEmptyListIsReturnedForAnUnauthorizedAccount() {
         //Arrange
@@ -138,6 +118,22 @@ class ListAccountsInProjectControllerTest {
 
         //Act
         List<AccountDTO> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test to assure that is returned an empty list when a project has no one assigned to it yet.
+     */
+    @Test
+    void ensureThatAnEmptyListIsReturnedWhenAProjectHasNoOneAssignedToIt() {
+        //Arrange
+        List<AccountDTO> expected = new ArrayList<>();
+        company.changeProfile("mary@isep.ipp.pt", "Manager");
+
+        //Act
+        List<AccountDTO> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1C");
 
         //Assert
         assertEquals(expected, result);

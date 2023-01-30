@@ -6,13 +6,13 @@ US014 - As Manager, I want to get a list of all human resources in a project.
 end legend
 class "ListAccountsInProjectController" {
 -company
-+listAccountsByProject(emailManager, projectCode)
++listAccountsByProject(emailActor, projectCode)
 }
 
 class "Company"{
 -accountsInProjectContainer
 -accountContainer
-+validateManager(emailManager)
++validateManager(emailActor)
 +listAccountsByProject(projectCode)
 }
 
@@ -25,7 +25,7 @@ class "AccountInProject"{
 -account
 -project
 +getAccountByProject(projectCode)
--isAccountAllocatedToProject(projectCode))
+-hasProject(projectCode)
 }
 
 class "AccountContainer" {
@@ -60,13 +60,19 @@ class "AccountDTO"{
 +status
 }
 
+class "Project"{
+-projectCode
++hasProjectCode(projectCode)
+}
+
 "ListAccountsInProjectController" --> "Company"
 "ListAccountsInProjectController" ..> "AccountMapper"
 "Company" "1"-->"1" "AccountInProjectContainer": has
 "Company" "1" --> "1" "AccountContainer": has
-"AccountContainer" "1" --> "*" "Account": has
+"AccountContainer" "1" --> "*" "Account": contains
 "Account" "1" --> "1""Profile": has
 "AccountMapper" ..> "AccountDTO"
-"AccountInProjectContainer" "1" --> "*" "AccountInProject": has
+"AccountInProjectContainer" "1" --> "*" "AccountInProject": contains
 "AccountMapper"..>"Account"
+"AccountInProject" "1"-->"1" "Project": has
 @enduml

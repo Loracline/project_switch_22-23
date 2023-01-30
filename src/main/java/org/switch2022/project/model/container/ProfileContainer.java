@@ -5,8 +5,6 @@ import org.switch2022.project.model.Profile;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.switch2022.project.utils.Util.isLower;
-
 /**
  * Class ProfileContainer is built to access and manipulate the set of profiles
  * of this company.
@@ -15,7 +13,7 @@ public class ProfileContainer {
     /**
      * Attributes
      */
-    private final List<Profile> profiles= new ArrayList<>();
+    private final List<Profile> profiles = new ArrayList<>();
 
     /**
      * This method checks if profile already exists in the container.
@@ -51,13 +49,11 @@ public class ProfileContainer {
      * @return profile with given name.
      */
     public Profile getProfileByName(String profileName) {
-        Profile profile = new Profile(profileName);
         Profile requestedProfile = null;
         int i = 0;
-        while (isLower(i, this.profiles.size())) {
-            if (this.profiles.get(i).equals(profile)) {
+        while (i < this.profiles.size() && requestedProfile == null) {
+            if (this.profiles.get(i).checkProfileByProfileName(profileName)) {
                 requestedProfile = profiles.get(i);
-                break;
             }
             i++;
         }

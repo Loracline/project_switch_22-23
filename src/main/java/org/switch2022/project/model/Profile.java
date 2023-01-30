@@ -74,5 +74,15 @@ public class Profile {
         Profile profile = new Profile("User");
         return this.profileName.equals(profile.profileName);
     }
+
+    /**
+     * This method verifies if profile is the one intended through its profileName.
+     *
+     * @param profileName of the seeked account
+     * @return TRUE if profile has given profileName, and FALSE otherwise.
+     */
+    public boolean checkProfileByProfileName(String profileName) {
+        return this.profileName.equalsIgnoreCase(profileName);
+    }
 }
 

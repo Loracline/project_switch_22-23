@@ -52,7 +52,8 @@ public class AccountInProject {
             return false;
         }
         AccountInProject that = (AccountInProject) objectToCompare;
-        return account.equals(that.account) && project.equals(that.project) && role.equals(that.role) && startDate.equals(that.startDate);
+        return account.equals(that.account) && project.equals(that.project) &&
+                role.equals(that.role) && startDate.equals(that.startDate);
     }
 
     /**
@@ -94,7 +95,7 @@ public class AccountInProject {
      *
      * @return percentage of allocation of an Account Allocated To a Project
      */
-    public float getPercentageOfAllocation(){
+    public float getPercentageOfAllocation() {
         return this.percentageAllocation;
     }
 
@@ -107,7 +108,7 @@ public class AccountInProject {
      */
     public Account getAccountByProject(String projectCode) {
         Account requestedAccount = null;
-        if (isAccountAllocatedToProject(projectCode)) {
+        if (hasProject(projectCode)) {
             requestedAccount = this.account;
         }
         return requestedAccount;
@@ -135,7 +136,7 @@ public class AccountInProject {
      * This method sets an end date of allocation to a project with a specific role
      */
     public void setEndDate(LocalDate endDate) {
-        if(endDate.isAfter(this.startDate)){
+        if (endDate.isAfter(this.startDate)) {
             this.endDate = endDate;
         }
     }
@@ -146,29 +147,24 @@ public class AccountInProject {
      * @param projectCode one must check.
      * @return TRUE if there is an account allocated to a Project and FALSE otherwise.
      */
-    private boolean isAccountAllocatedToProject(String projectCode) {
-        boolean isAllocated = false;
-        if (this.project.getProjectCode().equals(projectCode)) {
-            isAllocated = true;
-        }
-        return isAllocated;
+    private boolean hasProject(String projectCode) {
+        return project.hasProjectCode(projectCode);
     }
 
 
     public Project getProjectByAccount(String email) {
         Project requestedProject = null;
-        if ( validate(email)) {
+        if (validate(email)) {
             requestedProject = this.project;
         }
         return requestedProject;
     }
 
-    private boolean validate (String email) {
+    private boolean validate(String email) {
         boolean validate = false;
-        if ( this.account.getEmail().equals(email)){
+        if (this.account.getEmail().equals(email)) {
             validate = true;
         }
         return validate;
     }
-
 }

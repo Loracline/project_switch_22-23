@@ -11,18 +11,21 @@ participant ":ListAccountsInProjectController" as controller
 participant ":Company" as company
 participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
+participant ":Project" as pr
 participant "accounts: List<Account>" as list
 participant ":AccountMapper" as mapper
 participant "accountsDTO: List<AccountDTO>" as listDTO
 participant "accountDTO:AccountDTO" as DTO
+
+
 activate Manager
 Manager -> ui: lists all accounts of a given project
 activate ui
 ui --> Manager: request data (projectCode)
 Manager -> ui: types requested data
-ui -> controller: listAccountsByProject(emailManager, projectCode)
+ui -> controller: listAccountsByProject(emailActor, projectCode)
 activate controller
-controller -> company: validateManager(emailManager)
+controller -> company: validateManager(emailActor)
 activate company
 ref over company: validateManager_sequenceDiagram
 company -->> controller: true
@@ -36,6 +39,10 @@ aipc --> list :create()
 loop for each AccountInProject in AccountInProjectContainer
 aipc -> aip : getAccountByProject(projectCode)
 activate aip
+aip -> pr : hasProjectCode(projectCode)
+activate pr
+pr --> aip : true
+deactivate pr
 aip --> aipc : account
 deactivate aip
 aipc -> list : add(account)

@@ -7,8 +7,10 @@ participant ":ChangeProfileController" as controller
 participant ":Company" as company
 participant ":ProfileContainer" as pcontainer
 participant ":AccountContainer" as acontainer
+participant "profile:Profile" as pf
 participant "account:Account" as account
-participant "profile:Profile" as pprofile
+
+
 
 skinparam sequenceMessageAlign center
 title TO CHANGE PROFILE
@@ -20,19 +22,25 @@ activate Administrator
 Administrator -> ui:  Changes account profile
 activate ui
 Administrator <-- ui:  Requests data (email, profileName)
-deactivate ui
 Administrator -> ui:  Enters account data
-activate ui
 ui -> controller: changeProfile(email, profileName)
 activate controller
 controller -> company: changeProfile(email, profileName)
 activate company
 company -> pcontainer: getProfileByName(profileName)
 activate pcontainer
+pcontainer -> pf: checkProfileByProfileName(profileName)
+activate pf
+pf --> pcontainer : true
+deactivate pf
 company <-- pcontainer: profile
 deactivate pcontainer
 company -> acontainer: getAccountByEmail(email)
 activate acontainer
+acontainer -> account: checkAccountFromEmail(email)
+activate account
+account --> acontainer: true
+deactivate account
 company <-- acontainer: account
 deactivate acontainer
 company -> account: setProfile(profile)

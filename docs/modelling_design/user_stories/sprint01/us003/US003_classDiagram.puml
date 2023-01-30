@@ -29,12 +29,14 @@ class AccountContainer {
 
 class Account{
 -email
-+getEmail(email)
+-profile
++checkAccountFromEmail(email)
 +setProfile(profile)
 }
 
 class Profile{
 -profileName
++ checkProfileByProfileName(profileName)
 }
 
 
@@ -44,5 +46,6 @@ Company "1"-->"1" ProfileContainer: has
 Company ..> Account
 AccountContainer "1"-->"*" Account: contains
 ProfileContainer "1"-->"*" Profile: contains
+Account "*"-->"1" Profile: has
 
 @enduml
