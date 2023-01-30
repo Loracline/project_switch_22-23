@@ -1,0 +1,377 @@
+@startuml
+class AddBusinessSectorController {
+-company
++addBusinessSector(businessSectorName, email)
+}
+
+class AddCustomerController {
+-company
++addCustomer(email,customerName, customerNIF)
+}
+
+class AddUserToProjectController {
+-company
++addUserToProject(emailActor, accountDTO, projectDTO, allocationDTO)
+}
+
+class ChangeProfileController {
+-company
++changeProfile(email, profileName)
+}
+
+class ChangeStatusController {
+-company
++changeStatus(email, status)
+}
+
+class CreateProfileController {
+-company
++createProfile(profileName)
+}
+
+class CreateProjectTypologyController {
+- company
++createProjectTypology(email, projectTypology)
+}
+
+class GetListOfProjectsController {
+-company
++getListOfProjects(email)
+}
+
+class ListAccountController {
+-company
++listAllAccounts()
+}
+
+class ListAccountsInProjectController {
+-company
++listAccountsByProject(emailManager, projectCode)
+}
+
+class ListAllUsersController {
+-company
++listAllUsers(actorEmail)
+}
+
+class ListProjectsInAccountController {
+- company
++ listProjectsByAccount(emailUser)
+}
+
+class RegisterAccountController {
+-company
++registerAccount(name, email, phoneNumber, photo)
+}
+
+class RegisterProjectController {
+- company
++ registerProject(dto, email)
+}
+
+
+class Company {
+-profileContainer
+-accountContainer
+-projectTypologyContainer
+-businessSectorContainer
+-customerContainer
+-projectContainer
+-accountInProjectContainer
++validateAdministrator(email)
++validateManager(email)
++validateUser(email)
++getProfileContainer()
++createProfile(profileName)
++changeProfile(email, profileName)
++listAllUsers()
++registerAccount(accountName, email, phoneNumber, photo)
++changeStatus(email, status)
++registerProject(projectDTOAsManager)
++listAllProjects()
++addBusinessSector(businessSectorName)
++addCustomer(customerName, customerNIF)
++createProjectTypology(projectTypology)
++addUserToProject(accountDTO, projectDTOAsManager,allocationDTO)
++listAccountsByProject(projectCode)
++listProjectsByAccount(emailUser)
+}
+
+
+class AccountContainer {
+-accounts
++getAccounts()
++getAccountByEmail(email)
++validateManager(email)
++validateAdministrator(email)
++validateUser(email)
++doesEmailExist(email)
++addAccount(name, email, phoneNumber, photo)
++changeStatus(email, status)
++listAllUsers
+}
+
+class AccountInProjectContainer {
+-accountsInProject
++addUserToProject(account, project, allocationDTO)
+-currentPercentageOfAllocation(account)
+-isPercentageOfAllocationValid(account, newPercentageOfAllocation)
+-doesAccountInProjectExist(accountInProject)
++listAccountsByProject(projectCode)
++listProjectsByAccount(email)
+}
+
+class BusinessSectorContainer {
+-businessSectors
++createBusinessSector(businessSectorName)
+-doesBusinessSectorExist(businessSector)
++getBusinessSector(businessSector)
+}
+
+class CustomerContainer {
+-customers
++addCustomer(customerName, customerNIF)
+-doesCustomerNIFExist(customerName, customerNIF)
+-isValidNIF(customerNIF)
++getCustomer(customerName, nif)
+}
+
+class ProfileContainer {
+-profiles
++doesProfileExist(profile)
++createProfile(name)
++getProfileByName(profileName)
+}
+
+class ProjectContainer {
+-projects
++registerProject(projectDTOAsManager, projectTypologyContainer,customerContainer, businessSectorContainer)
++getProjectByCode(code)
++getProjects()
+-doesProjectExist(project)
+}
+
+class ProjectTypologyContainer {
+-typologies
++createProjectTypology(projectTypology)
+-doesTypologyExist(projectTypology)
++getProjectTypology(typology)
+}
+
+
+class Account {
+-accountName
+-email
+-phoneNumber
+-profile
+-photo
+-accountStatus
++Account(name, email, phoneNumber, photo)
++getEmail()
++getAccountName()
++getAccountStatus()
++getProfile()
++setPhoto(photo)
++setProfile(profile)
++setStatus(status)
++checkAccountFromEmail(email)
++isAdministrator()
++isManager()
++isUser()
+}
+
+class AccountInProject {
+-account
+-project
+-role
+-startDate
+-costPerHour
+-percentageAllocation
+-endDate
++AccountInProject(account, project, role, costPerHour, percentageAllocation, startDate)
++isRoleValid()
++getPercentageOfAllocation()
++getAccount()
++getAccountByProject(projectCode)
++getEndDate()
++setEndDate()
+-isAccountAllocatedToProject(projectCode))
++getProjectByAccount(email)
+-validate(email)
+}
+
+class BusinessSector {
+-businessSectorName
++BusinessSector(name)
++getBusinessSectorName()
+}
+
+class Customer {
+-customerName
+-customerNif
++Customer(customerName, customerNIF)
++getCustomerNif()
++getCustomerName()
+}
+
+class Profile {
+-profileName
++Profile(profileName)
++isAdministrator()
++isManager()
++isUser()
+}
+
+class Project {
+-projectCode
+-projectName
+-customer
+-projectTypology
+-businessSector
+-projectStatus
++Project(projectCode, name, customer, projectTypology, businessSector)
++getProjectCode()
++getProjectName()
++getCustomer()
++getProjectStatus()
++getProjectTypology()
++getBusinessSector()
+}
+
+class ProjectTypology {
+-projectTypologyName
++ProjectTypology(name)
++getProjectTypologyName()
+}
+
+class AccountMapper {
++listAccountsToDTO(accounts)
++accountToDTO(account)
+}
+
+class ManagerListProjectsMapper {
++getListOfProjectsDTO(projects)
+-getDTOFromProject(project)
+}
+
+class ProjectMapper {
++ getProjectFromDTO(projectDTO, projectTypologyContainer, customerContainer, businessSectorContainer)
+
+}
+
+class UserListProjectsMapper {
++getListOfProjectsDTO(projects)
++getDTOFromProject(project)
+}
+
+class AccountDTO {
++name
++email
++status
++AccountDTO(name, email, status)
+}
+
+class AllocationDTO {
++role
++costPerHour
++percentageAllocation
++startDate
++endDate
++AllocationDTO(role, costPerHour, percentageAllocation, startDate, endDate)
+}
+
+class ManagerListProjectsDTO {
++code
++name
++customer
++status
++projectTypology
++businessSector
+ManagerListProjectsDTO(code, name, customer, status, projectTypology, businessSector)
+}
+
+class ProjectDTOAsManager {
++ code
++ name
++ status
++ customer
++ projectTypology
++ businessSector
+ProjectDTOAsManager(code, name, customerName, customerNif, projectTypology, businessSector)
+}
+
+class UserListProjectsDTO {
++code;
++name;
++customer;
++status;
++projectTypology;
++businessSector
+UserListProjectsDTO(code, name, customer, status, projectTypology, businessSector)
+}
+
+CreateProfileController "1" -->  "1"Company
+CreateProfileController "1" ..> "1" ProfileContainer
+CreateProfileController "1" ..> "*" Profile
+Company "1" --> "1" ProfileContainer
+ProfileContainer "1" --> "*" Profile
+
+RegisterAccountController "1" --> "1" Company
+RegisterAccountController "1" ..> "*" Account
+RegisterAccountController ..> AccountContainer
+Company "1"-->"1" AccountContainer
+AccountContainer "1"-->"*" Account
+
+ChangeProfileController "1" --> "1" Company
+ChangeProfileController "1" ..> "1" ProfileContainer
+
+ListAccountController "1" --> "1" Company
+ListAccountController "1" ..> "1" AccountContainer
+
+ChangeStatusController "1" --> "1" Company
+ChangeStatusController "1" ..> "1" AccountContainer
+ChangeStatusController "1" ..> "*" Account
+
+Account "*" --> "1" Profile
+
+CreateProjectTypologyController "1"-->"1" Company
+Company "1"-->"1" ProjectTypologyContainer
+ProjectTypologyContainer "1"-->"*" ProjectTypology
+
+AddBusinessSectorController "1"-->"1" Company
+Company "1"-->"1"  BusinessSectorContainer
+BusinessSectorContainer "1"-->"*"  BusinessSector
+
+AddCustomerController "1"-->"1" Company
+Company "1"-->"1" CustomerContainer
+CustomerContainer "1"-->"*" Customer
+
+RegisterProjectController "1"-->"1" Company
+Company "1"-->"1" ProjectContainer
+ProjectMapper "1" ..> "*" ProjectDTOAsManager
+ProjectContainer "1" ..> "1" ProjectMapper
+RegisterProjectController "1" ..> "1" ProjectMapper
+ProjectMapper "1" ..> "*" Project
+ProjectContainer "1" --> "*" Project
+
+AddUserToProjectController "1"-->"1" Company
+Company "1"-->"1" AccountInProjectContainer
+AccountInProjectContainer "1"--> "*" AccountInProject
+
+ListAccountsInProjectController "1" --> "1" Company
+ListAccountsInProjectController "1" ..> "1" AccountMapper
+AccountMapper "1" ..> "*" AccountDTO
+AccountMapper "1" ..> "*" Account
+
+GetListOfProjectsController "1"-->"1" Company
+GetListOfProjectsController "1" ..> "1" ManagerListProjectsMapper
+ManagerListProjectsMapper "1" ..> "*" ManagerListProjectsDTO
+
+UserListProjectsMapper "1" ..> "*" Project
+ListProjectsInAccountController "1" --> "1" Company
+ListProjectsInAccountController "1" ..> "1" "UserListProjectsMapper"
+UserListProjectsMapper "1" ..> "*" UserListProjectsDTO
+
+ListAllUsersController "1" --> "1" Company
+AddUserToProjectController "1" ..> "*" AllocationDTO
+@enduml
