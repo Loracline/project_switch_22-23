@@ -311,26 +311,18 @@ UserListProjectsDTO(code, name, customer, status, projectTypology, businessSecto
 }
 
 CreateProfileController "1" -->  "1"Company
-CreateProfileController "1" ..> "1" ProfileContainer
-CreateProfileController "1" ..> "*" Profile
 Company "1" --> "1" ProfileContainer
 ProfileContainer "1" --> "*" Profile
 
 RegisterAccountController "1" --> "1" Company
-RegisterAccountController "1" ..> "*" Account
-RegisterAccountController ..> AccountContainer
 Company "1"-->"1" AccountContainer
 AccountContainer "1"-->"*" Account
 
 ChangeProfileController "1" --> "1" Company
-ChangeProfileController "1" ..> "1" ProfileContainer
 
 ListAccountController "1" --> "1" Company
-ListAccountController "1" ..> "1" AccountContainer
 
 ChangeStatusController "1" --> "1" Company
-ChangeStatusController "1" ..> "1" AccountContainer
-ChangeStatusController "1" ..> "*" Account
 
 Account "*" --> "1" Profile
 
