@@ -49,8 +49,10 @@ Manager -> ui: sends data (role, costPerHour, percentageAllocation, startDate)
 ui -> controller: addUserToProject(emailManager, accountDTO, projectDTO, allocationDTO)
 activate controller
 controller -> company: validateManager(emailManager)
+activate company
 ref over company: validateManager_sequenceDiagram
 company --> controller: true
+deactivate company
 controller -> company: addUserToProject(accountDTO, projectDTO, allocationDTO)
 activate company
 company -> ":AccountContainer": getAccountByEmail(accountDTO.email)
