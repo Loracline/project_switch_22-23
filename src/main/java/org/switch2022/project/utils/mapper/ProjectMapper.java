@@ -6,13 +6,13 @@ import org.switch2022.project.model.ProjectTypology;
 import org.switch2022.project.model.container.BusinessSectorContainer;
 import org.switch2022.project.model.container.CustomerContainer;
 import org.switch2022.project.model.container.ProjectTypologyContainer;
-import org.switch2022.project.utils.dto.ProjectDTOAsManager;
+import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 import org.switch2022.project.model.Project;
 
 public class ProjectMapper {
 
   private ProjectMapper(){}
-  public static Project getProjectFromDTO(ProjectDTOAsManager projectDTOAsManager, ProjectTypologyContainer projectTypologyContainer,
+  public static Project getProjectFromDTO(ProjectDtoAsManager projectDTOAsManager, ProjectTypologyContainer projectTypologyContainer,
                                           CustomerContainer customerContainer, BusinessSectorContainer businessSectorContainer) {
 
     Customer customer = customerContainer.getCustomer(projectDTOAsManager.customerName, projectDTOAsManager.customerNif);

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
-import org.switch2022.project.utils.dto.ProjectDTOAsManager;
+import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ class AccountInProjectContainerTest {
     float percentageAllocation;
     LocalDate startDate;
     Project projectOne, projectTwo;
-    ProjectDTOAsManager projectDTOAsManager;
+    ProjectDtoAsManager projectDTOAsManager;
     Customer customerOne, customerTwo;
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
@@ -84,7 +84,7 @@ class AccountInProjectContainerTest {
         accountDTO3 = new AccountDTO("Anna", "anna@isep.ipp.pt", true);
 
         // projectDTO
-        projectDTOAsManager = new ProjectDTOAsManager("id001", "Test", "IT Customer", "228674498", "fixed cost", "IT Sector");
+        projectDTOAsManager = new ProjectDtoAsManager("id001", "Test", "IT Customer", "228674498", "fixed cost", "IT Sector");
 
         //container
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);

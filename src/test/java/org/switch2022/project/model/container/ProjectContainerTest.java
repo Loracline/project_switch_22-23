@@ -4,7 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.utils.dto.ProjectDTOAsManager;
+import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -17,7 +17,7 @@ public class ProjectContainerTest {
      */
 
     Project projectOne;
-    ProjectDTOAsManager projectOneDTO, projectTwoDTO;
+    ProjectDtoAsManager projectOneDTO, projectTwoDTO;
     ProjectTypology typology;
     Customer customer;
     BusinessSector businessSector;
@@ -38,10 +38,10 @@ public class ProjectContainerTest {
         customerContainer = new CustomerContainer();
         businessSectorContainer = new BusinessSectorContainer();
 
-        projectOneDTO = new ProjectDTOAsManager("AA001", "Aptoide",
+        projectOneDTO = new ProjectDtoAsManager("AA001", "Aptoide",
                 "ISEP", "228674498", "Fixed cost",
                 "fishing");
-        projectTwoDTO = new ProjectDTOAsManager("AA002", "Aptoide",
+        projectTwoDTO = new ProjectDtoAsManager("AA002", "Aptoide",
                 "ISEP", "228674498", "Fixed cost",
                 "fishing");
 

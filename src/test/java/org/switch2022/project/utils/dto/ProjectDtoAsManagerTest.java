@@ -7,41 +7,41 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-class ProjectDTOAsManagerTest {
+class ProjectDtoAsManagerTest {
 
     /**
      * BeforeEach and AfterEach executes common code before/after running the
      * tests below.
      */
 
-    ProjectDTOAsManager projectDTOAsManagerOne, projectDTOAsManagerTwo,
-            projectDTOAsManagerThree;
+    ProjectDtoAsManager projectDtoAsManagerOne, projectDtoAsManagerTwo,
+            projectDtoAsManagerThree;
 
     @BeforeEach
     void setUp() {
-        projectDTOAsManagerOne = new ProjectDTOAsManager("AA001",
+        projectDtoAsManagerOne = new ProjectDtoAsManager("AA001",
                 "Aptoide", "ISEP", "228674498",
                 "Fixed cost", "fishing");
-        projectDTOAsManagerTwo = new ProjectDTOAsManager("AA002",
+        projectDtoAsManagerTwo = new ProjectDtoAsManager("AA002",
                 "Aptoide", "ISEP", "228674498",
                 "Fixed cost", "fishing");
-        projectDTOAsManagerThree = new ProjectDTOAsManager("AA002",
+        projectDtoAsManagerThree = new ProjectDtoAsManager("AA002",
                 "Aptoide", "ISEP", "228674498",
                 "Fixed cost", "fishing");
     }
 
     @AfterEach
     void tearDown() {
-        projectDTOAsManagerOne = null;
-        projectDTOAsManagerTwo = null;
-        projectDTOAsManagerThree = null;
+        projectDtoAsManagerOne = null;
+        projectDtoAsManagerTwo = null;
+        projectDtoAsManagerThree = null;
     }
 
     @Test
     void ensureSameProjectDTOEqualsItself() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = reference;
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = reference;
         boolean expected = true;
 
         // ACT
@@ -54,8 +54,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsAreNotEqual() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA002", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "medicine");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "medicine");
         boolean expected = false;
 
         // ACT
@@ -68,8 +68,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsHaveDifferentCustomerNif() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222433", "fixed cost", "sports");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222433", "fixed cost", "sports");
         boolean expected = false;
 
         // ACT
@@ -82,8 +82,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsHaveDifferentCode() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA002", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
         boolean expected = false;
 
         // ACT
@@ -96,8 +96,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsHaveDifferentCustomerName() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "Johnny", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "Johnny", "111222333", "fixed cost", "sports");
         boolean expected = false;
 
         // ACT
@@ -110,8 +110,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsHaveDifferentProjectTypology() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed materials", "sports");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed materials", "sports");
         boolean expected = false;
 
         // ACT
@@ -124,8 +124,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsHaveOnlyEqualNameAndCustomerName() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA002", "john@isep.ipp.pt", "John", "111222323", "fixed materials", "health");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "john@isep.ipp.pt", "John", "111222323", "fixed materials", "health");
         boolean expected = false;
 
         // ACT
@@ -138,8 +138,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsHaveOnlyEqualProjectTypology() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA002", "johnny@isep.ipp.pt", "Johnny", "111222323", "fixed cost", "health");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "johnny@isep.ipp.pt", "Johnny", "111222323", "fixed cost", "health");
         boolean expected = false;
 
         // ACT
@@ -152,8 +152,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsHaveDifferentBusinessSector() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "medicine");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "medicine");
         boolean expected = false;
 
         // ACT
@@ -166,8 +166,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureTwoProjectDTOsHaveDifferentName() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "johnny@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "johnny@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
         boolean expected = false;
 
         // ACT
@@ -180,7 +180,7 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureProjectDTONotEqualsOtherTypeObject() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
         Object other = new Object();
         boolean expected = false;
 
@@ -197,8 +197,8 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureProjectDTOsHaveSameHashCode() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -211,10 +211,10 @@ class ProjectDTOAsManagerTest {
     @Test
     void ensureProjectDTOsHaveDifferentHashCode() {
         // ARRANGE
-        ProjectDTOAsManager reference = new ProjectDTOAsManager("AA002", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA002", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
 
 
-        ProjectDTOAsManager other = new ProjectDTOAsManager("AA003", "mary@isep.ipp.pt", "Mary", "211222333", "fixed costs", "sports");
+        ProjectDtoAsManager other = new ProjectDtoAsManager("AA003", "mary@isep.ipp.pt", "Mary", "211222333", "fixed costs", "sports");
 
         // ACT
         int hashCodeReference = reference.hashCode();

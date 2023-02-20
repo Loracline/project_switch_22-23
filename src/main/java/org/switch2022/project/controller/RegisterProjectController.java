@@ -1,7 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Company;
-import org.switch2022.project.utils.dto.ProjectDTOAsManager;
+import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 
 /**
@@ -23,12 +23,12 @@ public class RegisterProjectController {
   /**
    * This method will call the method registerProject in Company
    *
-   * @param dto
+   * @param projectDto
    * @param email
    * @return true if the project is registered
    */
-  public boolean registerProject(ProjectDTOAsManager dto, String email) {
-    return company.validateManager(email) && company.registerProject(dto);
+  public boolean registerProject(ProjectDtoAsManager projectDto, String email) {
+    return company.validateManager(email) && company.registerProject(projectDto);
   }
 }
 

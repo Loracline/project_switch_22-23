@@ -7,7 +7,7 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
-import org.switch2022.project.utils.dto.ProjectDTOAsManager;
+import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 import org.switch2022.project.utils.mapper.AccountMapper;
 
 import java.time.LocalDate;
@@ -30,7 +30,7 @@ class AddUserToProjectControllerTest {
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
     Project projectOne;
-    ProjectDTOAsManager projectDTO;
+    ProjectDtoAsManager projectDTO;
     AccountInProject accountInProject;
     List<AccountInProject> accountsInProject;
     AllocationDTO scrumMasterDTO;
@@ -73,7 +73,7 @@ class AddUserToProjectControllerTest {
         businessSectorOne = new BusinessSector("Fishing");
 
         //projectDTO
-        projectDTO = new ProjectDTOAsManager("1A",
+        projectDTO = new ProjectDtoAsManager("1A",
                 "Mobile Software", "Genius Software",
                 "228674498", "Fixed cost",
                 "Fishing");

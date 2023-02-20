@@ -8,7 +8,7 @@ import org.switch2022.project.model.container.BusinessSectorContainer;
 import org.switch2022.project.model.container.CustomerContainer;
 import org.switch2022.project.model.container.ProjectContainer;
 import org.switch2022.project.model.container.ProjectTypologyContainer;
-import org.switch2022.project.utils.dto.ProjectDTOAsManager;
+import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ class ProjectMapperTest {
      */
 
     Project projectOne;
-    ProjectDTOAsManager projectDTOAsManager;
+    ProjectDtoAsManager projectDTOAsManager;
     ProjectTypologyContainer projectTypologyContainer;
     ProjectTypology typology;
     List<Project> projects;
@@ -53,7 +53,7 @@ class ProjectMapperTest {
         businessSectorContainer = new BusinessSectorContainer();
         businessSector = new BusinessSector("fishing");
 
-        projectDTOAsManager = new ProjectDTOAsManager("AA001",
+        projectDTOAsManager = new ProjectDtoAsManager("AA001",
                 "Aptoide", "ISEP", "228674498",
                 "Fixed cost", "fishing");
     }

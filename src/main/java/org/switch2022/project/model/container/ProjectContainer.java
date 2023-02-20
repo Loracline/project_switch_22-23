@@ -1,7 +1,7 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.dto.ProjectDTOAsManager;
+import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 import org.switch2022.project.utils.mapper.ProjectMapper;
 
 import java.util.ArrayList;
@@ -25,10 +25,9 @@ public class ProjectContainer {
   public Project getProjectByCode(String code) {
     Project projectRequested = null;
     int i = 0;
-    while (i < this.projects.size()) {
+    while (i < this.projects.size() && projectRequested != projects.get(i)) {
       if (projects.get(i).getProjectCode().equalsIgnoreCase(code)) {
         projectRequested = projects.get(i);
-        break;
       }
       i++;
     }
@@ -51,7 +50,7 @@ public class ProjectContainer {
    * @param projectDTOAsManager data transfer object of the attributes of project.
    * @return TRUE if registered and FALSE otherwise.
    */
-  public boolean registerProject(ProjectDTOAsManager projectDTOAsManager, ProjectTypologyContainer projectTypologyContainer,
+  public boolean registerProject(ProjectDtoAsManager projectDTOAsManager, ProjectTypologyContainer projectTypologyContainer,
                                  CustomerContainer customerContainer, BusinessSectorContainer businessSectorContainer) {
     Project project = ProjectMapper.getProjectFromDTO(projectDTOAsManager, projectTypologyContainer, customerContainer, businessSectorContainer);
     boolean projectRegistered = false;
@@ -63,18 +62,17 @@ public class ProjectContainer {
   }
 
   /**
-   * This method verifies if the project already exists in the container.
+   * This method verifies if the project already exists in the container through the project code.
    *
-   * @param project one intend to search for.
+   * @param project existence that shall be verified.
    * @return TRUE if exists, and FALSE otherwise.
    */
   private boolean doesProjectExist(Project project) {
     boolean projectExistence = false;
     int i = 0;
-    while (i < projects.size()) {
+    while (i < projects.size() && !projectExistence) {
       if (projects.get(i).getProjectCode().equals(project.getProjectCode())) {
         projectExistence = true;
-        break;
       }
       i++;
     }
