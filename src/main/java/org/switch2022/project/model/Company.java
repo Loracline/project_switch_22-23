@@ -30,9 +30,10 @@ public class Company {
   /**
    * Constructor
    */
-  public Company(AccountContainer accountContainer, ProfileContainer profileContainer, BusinessSectorContainer
-          businessSectorContainer, ProjectContainer projectContainer, ProjectTypologyContainer projectTypologyContainer,
-                 AccountInProjectContainer accountInProjectContainer, CustomerContainer customerContainer) {
+  public Company(AccountContainer accountContainer, ProfileContainer profileContainer,
+                 BusinessSectorContainer businessSectorContainer, ProjectContainer projectContainer,
+                 ProjectTypologyContainer projectTypologyContainer, AccountInProjectContainer accountInProjectContainer,
+                 CustomerContainer customerContainer) {
     this.accountContainer = accountContainer;
     this.profileContainer = profileContainer;
     this.projectContainer = projectContainer;
@@ -140,8 +141,7 @@ public class Company {
    * @param photo       of the account.
    * @return TRUE if account is registered and FALSE otherwise.
    */
-  public boolean registerAccount(String accountName, String email, long phoneNumber,
-                                 BufferedImage photo) {
+  public boolean registerAccount(String accountName, String email, long phoneNumber, BufferedImage photo) {
     return accountContainer.addAccount(accountName, email, phoneNumber, photo);
   }
 
@@ -166,8 +166,8 @@ public class Company {
    * @return TRUE if registered, and FALSE otherwise.
    */
   public boolean registerProject(ProjectDtoAsManager projectDto) {
-    return (projectContainer.registerProject(projectDto, this.projectTypologyContainer,
-            this.customerContainer, this.businessSectorContainer));
+    return (projectContainer.registerProject(projectDto, this.projectTypologyContainer, this.customerContainer,
+            this.businessSectorContainer));
   }
 
   /**
@@ -232,8 +232,7 @@ public class Company {
 
     Account account = this.accountContainer.getAccountByEmail(accountDTO.email);
     Project project = this.projectContainer.getProjectByCode(projectDTOAsManager.code);
-    return this.accountInProjectContainer.addUserToProject(account,
-            project, allocationDTO);
+    return this.accountInProjectContainer.addUserToProject(account, project, allocationDTO);
   }
 
   /**

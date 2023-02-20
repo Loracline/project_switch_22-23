@@ -12,10 +12,10 @@ import java.util.List;
  * of this company.
  */
 public class ProjectContainer {
-    /**
-     * Attributes
-     */
-    private final List<Project> projects= new ArrayList<>();
+  /**
+   * Attributes
+   */
+  private final List<Project> projects = new ArrayList<>();
 
   /**
    * This method verify the existence of a project by code confirmation.
@@ -52,7 +52,8 @@ public class ProjectContainer {
    */
   public boolean registerProject(ProjectDtoAsManager projectDTOAsManager, ProjectTypologyContainer projectTypologyContainer,
                                  CustomerContainer customerContainer, BusinessSectorContainer businessSectorContainer) {
-    Project project = ProjectMapper.getProjectFromDTO(projectDTOAsManager, projectTypologyContainer, customerContainer, businessSectorContainer);
+    Project project = ProjectMapper.getProjectFromDTO(projectDTOAsManager, projectTypologyContainer, customerContainer,
+            businessSectorContainer);
     boolean projectRegistered = false;
     if (!doesProjectExist(project)) {
       projects.add(project);

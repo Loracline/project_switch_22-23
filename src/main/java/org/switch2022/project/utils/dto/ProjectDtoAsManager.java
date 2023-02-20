@@ -17,17 +17,12 @@ public class ProjectDtoAsManager {
   public final String businessSector;
 
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(code, name, customerName, customerNif, status, projectTypology, businessSector);
-  }
-
   /**
    * Constructor of the class ProjectDtoAsManager.
    */
 
-  public ProjectDtoAsManager(String code, String name, String customerName, String customerNif,
-                             String projectTypology, String businessSector) {
+  public ProjectDtoAsManager(String code, String name, String customerName, String customerNif, String projectTypology,
+                             String businessSector) {
     this.code = code;
     this.name = name;
     this.customerName = customerName.toLowerCase();
@@ -38,13 +33,21 @@ public class ProjectDtoAsManager {
   }
 
   @Override
+  public int hashCode() {
+    return Objects.hash(code, name, customerName, customerNif, status, projectTypology, businessSector);
+  }
+
+  @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof ProjectDtoAsManager)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ProjectDtoAsManager)) {
+      return false;
+    }
     ProjectDtoAsManager that = (ProjectDtoAsManager) o;
-    return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(customerName, that.customerName)
-            && Objects.equals(customerNif, that.customerNif)
-             && Objects.equals(projectTypology, that.projectTypology) &&
-            Objects.equals(businessSector, that.businessSector);
+    return Objects.equals(code, that.code) && Objects.equals(name, that.name) && Objects.equals(customerName,
+            that.customerName) && Objects.equals(customerNif, that.customerNif) && Objects.equals(projectTypology,
+            that.projectTypology) && Objects.equals(businessSector, that.businessSector);
   }
 }
