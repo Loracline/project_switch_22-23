@@ -16,7 +16,7 @@ public class ManagerListProjectsMapper {
      * This method receives a project and maps/transforms the project
      * into DTO
      */
-    private static ManagerListProjectsDTO getDTOFromProject(Project project) {
+    public static ManagerListProjectsDTO getDTOFromProject(Project project) {
         return new ManagerListProjectsDTO(project.getProjectCode(),
                 project.getProjectName(), project.getCustomer().getCustomerName(),
                 project.getProjectStatus(),
