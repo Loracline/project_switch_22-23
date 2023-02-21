@@ -1,6 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 
 public class AddCustomerController {
 
@@ -26,7 +27,7 @@ public class AddCustomerController {
 
     public boolean addCustomer(String customerName, String customerNIF, String email) {
 
-        return company.validateAdministrator(email) && company.addCustomer(customerName, customerNIF);
+        return company.validateProfileRequired(email, Profile.ADMINISTRATOR) && company.addCustomer(customerName, customerNIF);
     }
 }
 

@@ -4,8 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -61,6 +59,17 @@ class BusinessSectorContainerTest {
         boolean expected = false;
         //Act
         boolean result = businessSectorContainer.createBusinessSector("fishing");
+        //Assert
+        assertEquals(expected, result);
+
+    }
+
+    @Test
+    void ensureAddBusinessSectorToBusinessSectorsListUnsuccessfullyWithSpaces() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = businessSectorContainer.createBusinessSector(" fishing ");
         //Assert
         assertEquals(expected, result);
 

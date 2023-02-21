@@ -58,6 +58,17 @@ public class Company {
   // ACTOR VALIDATION METHODS
 
   /**
+   * This method validates if the actor is an account with profile the required profile.
+   *
+   * @param email of the actor's account and profileName required.
+   * @return TRUE if it has the profile required and FALSE otherwise.
+   */
+
+  public boolean validateProfileRequired (String email, String profileNameRequired){
+    return accountContainer.validateProfileRequired(email,profileNameRequired);
+  }
+
+  /**
    * This method validates if the actor is an account with profile "Manager".
    *
    * @param email of the actor's account.

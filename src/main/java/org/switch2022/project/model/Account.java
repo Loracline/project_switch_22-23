@@ -166,7 +166,15 @@ public class Account {
     public boolean checkAccountFromEmail(String email) {
         return this.email.equals(email);
     }
+    /**
+     * This method checks if account's profile is the profile required.
+     *
+     * @return TRUE if it is the profile required and FALSE otherwise.
+     */
 
+    public boolean isProfileRequired (String profileNameRequired) {
+        return this.profile.isProfileRequired(profileNameRequired);
+    }
 
     /**
      * This method checks if account's profile is "Manager".

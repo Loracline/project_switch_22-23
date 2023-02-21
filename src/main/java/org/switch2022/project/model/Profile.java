@@ -12,11 +12,15 @@ public class Profile {
      */
     private final String profileName;
 
+    public static final String ADMINISTRATOR = "administrator";
+    public static final String MANAGER = "manager";
+    public static final String USER = "user";
+
     /**
      * Constructor
      */
     public Profile(String profileName) {
-        this.profileName = profileName.toLowerCase();
+        this.profileName = profileName.toLowerCase().trim();
     }
 
     @Override
@@ -41,7 +45,7 @@ public class Profile {
             return false;
         }
         Profile profile1 = (Profile) toCompare;
-        return Objects.equals(profileName, profile1.profileName.toLowerCase());
+        return Objects.equals(profileName, profile1.profileName.toLowerCase().trim());
     }
 
     /**
@@ -49,6 +53,11 @@ public class Profile {
      *
      * @return TRUE if "Manager" and FALSE otherwise.
      */
+
+    public boolean isProfileRequired(String profileNameRequired) {
+        return this.profileName.equals(profileNameRequired);
+    }
+
     public boolean isManager() {
         Profile profile = new Profile("Manager");
         return this.profileName.equals(profile.profileName);

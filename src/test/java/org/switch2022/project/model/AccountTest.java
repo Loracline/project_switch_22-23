@@ -87,7 +87,7 @@ class AccountTest {
 
 
     /**
-     *  Tests for hashCode() method.
+     * Tests for hashCode() method.
      */
     @Test
     void ensureThatAccountsHaveSameHashCode() {
@@ -272,91 +272,23 @@ class AccountTest {
         reference.setProfile(profile);
         boolean expected = true;
         //Act
-        boolean result = reference.isManager();
+        boolean result = reference.isProfileRequired(Profile.MANAGER);
         //Assert
         assertEquals(expected, result);
     }
 
     /**
-     * This method checks if account's profile is "Manager".
+     * This method checks if account's profile is not "Manager".
      * Should return false.
      */
 
     @Test
-    void ensureThaAnAccountIsManager() {
+    void ensureThaAnAccountIsNotManager() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
         boolean expected = false;
         //Act
-        boolean result = reference.isManager();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * This method checks if account's profile is "Administrator".
-     * Should return true.
-     */
-
-    @Test
-    void ensureThatAnAccountIsAdministrator() {
-        //Arrange
-        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        Profile profile = new Profile("Administrator");
-        reference.setProfile(profile);
-        boolean expected = true;
-        //Act
-        boolean result = reference.isAdministrator();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * This method checks if account's profile is "Administrator".
-     * Should return false.
-     */
-
-    @Test
-    void ensureThatAnAccountIsNotAnAdministrator() {
-        //Arrange
-        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        boolean expected = false;
-        //Act
-        boolean result = reference.isManager();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * This method checks if account's profile is "User".
-     * Should return true.
-     */
-
-    @Test
-    void ensureThatAnAccountIsUser() {
-        //Arrange
-        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        Profile profile = new Profile("Manager");
-        reference.setProfile(profile);
-        boolean expected = false;
-        //Act
-        boolean result = reference.isUser();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * This method checks if account's profile is "User".
-     * Should return false.
-     */
-
-    @Test
-    void ensureThatAnAccountIsNotAnUser() {
-        //Arrange
-        Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        boolean expected = true;
-        //Act
-        boolean result = reference.isUser();
+        boolean result = reference.isProfileRequired(Profile.MANAGER);
         //Assert
         assertEquals(expected, result);
     }

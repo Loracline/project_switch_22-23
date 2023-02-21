@@ -17,6 +17,7 @@ class ProfileTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+
     /**
      * Test to ensure that two objects from the same class are different.
      */
@@ -28,6 +29,7 @@ class ProfileTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+
     /**
      * Test to ensure that two objects are from different classes.
      */
@@ -50,9 +52,10 @@ class ProfileTest {
         Profile reference = new Profile("Manager");
         boolean expected = true;
         //Act
-        boolean result = reference.isManager();
+        boolean result = reference.isProfileRequired(Profile.MANAGER);
         assertEquals(expected, result);
     }
+
     /**
      * Testing if profile is not "Manager" by checking its profile name.
      */
@@ -62,7 +65,7 @@ class ProfileTest {
         Profile reference = new Profile("Administrator");
         boolean expected = false;
         //Act
-        boolean result = reference.isManager();
+        boolean result = reference.isProfileRequired(Profile.MANAGER);
         assertEquals(expected, result);
     }
 
@@ -75,9 +78,10 @@ class ProfileTest {
         Profile reference = new Profile("Administrator");
         boolean expected = true;
         //Act
-        boolean result = reference.isAdministrator();
+        boolean result = reference.isProfileRequired(Profile.ADMINISTRATOR);
         assertEquals(expected, result);
     }
+
     /**
      * Testing if profile is not "Administrator" by checking its profile name.
      */
@@ -87,7 +91,7 @@ class ProfileTest {
         Profile reference = new Profile("Manager");
         boolean expected = false;
         //Act
-        boolean result = reference.isAdministrator();
+        boolean result = reference.isProfileRequired(Profile.ADMINISTRATOR);
         assertEquals(expected, result);
     }
 
@@ -100,9 +104,10 @@ class ProfileTest {
         Profile reference = new Profile("User");
         boolean expected = true;
         //Act
-        boolean result = reference.isUser();
+        boolean result = reference.isProfileRequired(Profile.USER);
         assertEquals(expected, result);
     }
+
     /**
      * Testing if profile is not "User" by checking its profile name.
      */
@@ -112,9 +117,10 @@ class ProfileTest {
         Profile reference = new Profile("Administrator");
         boolean expected = false;
         //Act
-        boolean result = reference.isUser();
+        boolean result = reference.isProfileRequired(Profile.USER);
         assertEquals(expected, result);
     }
+
     /**
      * Test to check the hashcode when objects are equal and unequal
      */

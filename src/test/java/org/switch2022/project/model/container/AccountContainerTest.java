@@ -69,8 +69,8 @@ class AccountContainerTest {
         profileContainer = new ProfileContainer();
 
         // Profiles added to the Container.
-       profileContainer.createProfile("Administrator");
-       profileContainer.createProfile("Manager");
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
 
         // Business sectors container created.
         businessSectorContainer = new BusinessSectorContainer();
@@ -167,7 +167,7 @@ class AccountContainerTest {
 
     @Test
     void ensureThatModifiedCopyDoesNotEqualOriginal() {
-        AccountContainer newAccountContainer =accountContainer;
+        AccountContainer newAccountContainer = accountContainer;
 
         List<Account> copy = new ArrayList<>();
         copy.add(accountOne);
@@ -204,10 +204,10 @@ class AccountContainerTest {
     @Test
     void ensureThatAccountHasProfileManagerSuccessfully() {
         //Arrange
-        company.changeProfile("claire@isep.ipp.pt","manager");
+        company.changeProfile("claire@isep.ipp.pt", "manager");
         boolean expected = true;
         //Act
-        boolean result = accountContainer.validateManager("claire@isep.ipp.pt");
+        boolean result = accountContainer.validateProfileRequired("claire@isep.ipp.pt", Profile.MANAGER);
         //Assert
         assertEquals(expected, result);
     }
@@ -217,53 +217,10 @@ class AccountContainerTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = accountContainer.validateManager("claire@isep.ipp.pt");
+        boolean result = accountContainer.validateProfileRequired("claire@isep.ipp.pt", Profile.MANAGER);
         //Assert
         assertEquals(expected, result);
     }
-
-    @Test
-    void ensureThatAccountHasProfileAdministratorSuccessfully() {
-        //Arrange
-        company.changeProfile("claire@isep.ipp.pt","administrator");
-        boolean expected = true;
-        //Act
-        boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatAccountHasProfileAdministratorUnsuccessfully() {
-        //Arrange
-        boolean expected = false;
-        //Act
-        boolean result = accountContainer.validateAdministrator("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatAccountHasProfileUserUnsuccessfully() {
-        //Arrange
-        company.changeProfile("claire@isep.ipp.pt","manager");
-        boolean expected = false;
-        //Act
-        boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatAccountHasProfileUserSuccessfully() {
-        //Arrange
-        boolean expected = true;
-        //Act
-        boolean result = accountContainer.validateUser("claire@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
-
 
     /**
      * addAccount(String name, String email, long phoneNumber, BufferedImage photo)
@@ -321,9 +278,9 @@ class AccountContainerTest {
     @Test
     void ensureListIsRetrievedSuccessfully() {
         // Arrange
-        company.changeProfile("claire@isep.ipp.pt","administrator");
-        company.changeProfile("emma@isep.ipp.pt","manager");
-        company.changeProfile("jane@isep.ipp.pt","administrator");
+        company.changeProfile("claire@isep.ipp.pt", "administrator");
+        company.changeProfile("emma@isep.ipp.pt", "manager");
+        company.changeProfile("jane@isep.ipp.pt", "administrator");
 
         List<Account> expected = new ArrayList<>();
         expected.add(accountFive);

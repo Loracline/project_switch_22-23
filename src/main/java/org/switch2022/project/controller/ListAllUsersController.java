@@ -2,6 +2,7 @@ package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.mapper.AccountMapper;
 
@@ -36,7 +37,7 @@ public class ListAllUsersController {
      */
     public List<AccountDTO> listAllUsers(String actorEmail) {
         List<Account> users = new ArrayList<>();
-        if (company.validateManager(actorEmail)) {
+        if (company.validateProfileRequired(actorEmail, Profile.MANAGER)) {
             users = company.listAllUsers();
         }
         return AccountMapper.listAccountsToDTO(users);

@@ -16,7 +16,7 @@ public class BusinessSector {
      * Constructor
      */
     public BusinessSector(String businessSectorName) {
-        this.businessSectorName = businessSectorName.toLowerCase();
+        this.businessSectorName = businessSectorName.toLowerCase().trim();
     }
 
     /**
@@ -45,7 +45,7 @@ public class BusinessSector {
             return false;
         }
         BusinessSector that = (BusinessSector) toCompare;
-        return Objects.equals(businessSectorName, that.businessSectorName.toLowerCase());
+        return Objects.equals(businessSectorName, that.businessSectorName.toLowerCase().trim());
     }
 
     @Override

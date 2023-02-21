@@ -2,6 +2,7 @@ package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.mapper.AccountMapper;
 
@@ -37,7 +38,7 @@ public class ListAccountsInProjectController {
      */
     public List<AccountDTO> listAccountsByProject(String emailManager, String projectCode) {
         List<AccountDTO> accountsDTO = new ArrayList<>();
-        if (this.company.validateManager(emailManager)) {
+        if (this.company.validateProfileRequired(emailManager, Profile.MANAGER)) {
             List<Account> accounts = this.company.listAccountsByProject(projectCode);
             accountsDTO = AccountMapper.listAccountsToDTO(accounts);
         }

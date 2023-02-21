@@ -171,19 +171,7 @@ class CompanyTest {
         company.changeProfile(accountOne.getEmail(), "manager");
 
         // Act
-        boolean result = company.validateManager(accountOne.getEmail());
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureValidationFailsWhenProfileIsNotManager() {
-        // Arrange
-        boolean expected = false;
-
-        // Act
-        boolean result = company.validateManager(accountOne.getEmail());
+        boolean result = company.validateProfileRequired(accountOne.getEmail(), Profile.MANAGER);
 
         // Assert
         assertEquals(expected, result);
@@ -195,7 +183,7 @@ class CompanyTest {
         boolean expected = true;
         company.changeProfile(accountOne.getEmail(), "administrator");
         //Act
-        boolean result = company.validateAdministrator("mike@isep.ipp.pt");
+        boolean result = company.validateProfileRequired("mike@isep.ipp.pt", Profile.ADMINISTRATOR);
         //Assert
         assertEquals(expected, result);
     }
@@ -205,7 +193,7 @@ class CompanyTest {
         //Arrange
         boolean expected = false;
         //Act
-        boolean result = company.validateAdministrator("mike@isep.ipp.pt");
+        boolean result = company.validateProfileRequired("mike@isep.ipp.pt", Profile.ADMINISTRATOR);
         //Assert
         assertEquals(expected, result);
     }
@@ -216,17 +204,7 @@ class CompanyTest {
         boolean expected = false;
         company.changeProfile(accountOne.getEmail(), "manager");
         //Act
-        boolean result = company.validateUser("mike@isep.ipp.pt");
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatAccountHasProfileUserSuccessfully() {
-        //Arrange
-        boolean expected = true;
-        //Act
-        boolean result = company.validateUser("mike@isep.ipp.pt");
+        boolean result = company.validateProfileRequired("mike@isep.ipp.pt", Profile.USER);
         //Assert
         assertEquals(expected, result);
     }

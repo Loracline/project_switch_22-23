@@ -1,6 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
@@ -43,7 +44,7 @@ public class AddUserToProjectController {
                                     ProjectDtoAsManager projectDTOAsManager,
                                     AllocationDTO allocationDTO) {
         boolean result = false;
-        if (company.validateManager(emailActor)) {
+        if (company.validateProfileRequired(emailActor, Profile.MANAGER)) {
             result = this.company.addUserToProject(accountDTO, projectDTOAsManager,
                     allocationDTO);
         }

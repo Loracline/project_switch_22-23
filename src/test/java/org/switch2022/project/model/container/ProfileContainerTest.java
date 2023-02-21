@@ -26,8 +26,8 @@ class ProfileContainerTest {
         /*
           Profiles added to the Container.
          */
-       profileContainerReference.createProfile("Administrator");
-       profileContainerReference.createProfile("User");
+        profileContainerReference.createProfile("Administrator");
+        profileContainerReference.createProfile("User");
     }
 
     @AfterEach
@@ -44,6 +44,16 @@ class ProfileContainerTest {
         boolean expected = false;
         //Act
         boolean result = profileContainerReference.createProfile("administrator");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureProfileIsNotAddedSuccessfully_WithSpaces() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = profileContainerReference.createProfile(" administrator ");
         //Assert
         assertEquals(expected, result);
     }

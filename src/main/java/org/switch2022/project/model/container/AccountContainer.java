@@ -49,6 +49,23 @@ public class AccountContainer {
     // VALIDATE ACTORS
 
     /**
+     * This method validates if account with given e-mail has the
+     * profile required
+     *
+     * @param email of given account.
+     * @return TRUE if it has the profile required and FALSE otherwise.
+     */
+    public boolean validateProfileRequired (String email, String profileNameRequired){
+        boolean isProfileRequired = false;
+        Account account = getAccountByEmail(email);
+        if (account.isProfileRequired(profileNameRequired)){
+            isProfileRequired = true;
+        }
+        return isProfileRequired;
+    }
+
+
+    /**
      * This method validates if account with given e-mail has the "Manager"
      * profile.
      *
