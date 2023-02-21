@@ -218,14 +218,12 @@ skinparam sequenceMessageAlign center
 title TO GET A LIST OF ALL HUMAN RESOURCES IN PROJECT
 actor "Manager"
 autonumber
-"Manager" -> ":System": registers new project
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Manager" <-- ":System": requests data (code, name, ...)
-"Manager" -> ":System":  types requested data
-"Manager" <-- ":System": informs project created
+"Manager" -> ":System": requests a list of all human resources in project
+"Manager" <-- ":System": returns list of human resources
 @enduml
 
 @startuml
@@ -260,8 +258,8 @@ Account is authenticated.
 ":System" grants access.
 end note
 "Authenticated User" <-- ":System": returns projects DTO
-
 @enduml
+
 
 @startuml
 skinparam sequenceMessageAlign center
@@ -496,6 +494,7 @@ TM <-- ":System": generates allocation report
 skinparam sequenceMessageAlign center
 title TO GENERATE KPI REPORT BY MANAGER
 actor "Manager"
+autonumber
 "Manager" -> ":System": Requests KPI report of any project
 note left
 Account is authenticated.
@@ -509,6 +508,7 @@ end note
 skinparam sequenceMessageAlign center
 title TO GENERATE KPI REPORT BY PROJECT MANAGER OR PRODUCT OWNER
 actor "PM or PO" as PP
+autonumber
 PP -> ":System": Requests KPI report of project \n he/she/they are involved in
 note left
 Account is authenticated.
@@ -522,6 +522,7 @@ PP <-- ":System": reports CPI and SPO in chosen format
 skinparam sequenceMessageAlign center
 title TO KEEP RECORD OF SCRUM CEREMONY
 actor "User in Project" as UIP
+autonumber
 UIP -> ":System": Begins ceremony
 note left
 Account is authenticated.
@@ -552,6 +553,7 @@ end note
 skinparam sequenceMessageAlign center
 title TO ADD A CUSTOMER
 actor "Administrator" as adm
+autonumber
 adm -> ":System": starts adding new customer
 note left
 Account is authenticated.
@@ -569,6 +571,7 @@ adm <-- ":System":informs operation success
 skinparam sequenceMessageAlign center
 title AS A MANAGER, TO LIST ALL HUMAN RESOURCES IN A PROJECT
 actor "Manager"
+autonumber
 "Manager" -> ":System": lists all accounts of a given project
 note left
 Account is authenticated.
@@ -581,6 +584,7 @@ end note
 skinparam sequenceMessageAlign center
 title TO LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 actor "User"
+autonumber
 "User" -> ":System": lists all projects the user is allocated to
 note left
 Account is authenticated.
