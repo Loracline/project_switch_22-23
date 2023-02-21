@@ -2,7 +2,6 @@ package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.utils.Util;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -128,7 +127,7 @@ public class AccountContainer {
             Account account = getAccountByEmail(email);
             Account copyAccount = new Account(account);
             copyAccount.setStatus(status);
-            if (account.getAccountStatus() != copyAccount.getAccountStatus()) {
+            if (account.hasAccountStatus() != copyAccount.hasAccountStatus()) {
                 isChanged = true;
             }
         }
@@ -146,7 +145,7 @@ public class AccountContainer {
     public List<Account> listAllUsers() {
         List<Account> users = new ArrayList<>();
         int i = 0;
-        while (Util.isLower(i, accounts.size())) {
+        while (i < accounts.size()) {
             if (accounts.get(i).isProfileRequired(Profile.USER)) {
                 users.add(accounts.get(i));
             }

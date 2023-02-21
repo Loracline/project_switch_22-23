@@ -41,7 +41,10 @@ public class BusinessSector {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare instanceof BusinessSector)) {
+        if (toCompare ==null){
+            return false;
+        }
+        if (toCompare.getClass() != this.getClass()) {
             return false;
         }
         BusinessSector that = (BusinessSector) toCompare;

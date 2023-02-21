@@ -27,7 +27,8 @@ public class AddCustomerController {
 
     public boolean addCustomer(String customerName, String customerNIF, String email) {
 
-        return company.validateProfileRequired(email, Profile.ADMINISTRATOR) && company.addCustomer(customerName, customerNIF);
+        return company.validateProfileRequired(email, Profile.ADMINISTRATOR)
+                && company.addCustomer(customerName, customerNIF);
     }
 }
 

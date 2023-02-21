@@ -41,7 +41,10 @@ public class Profile {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare instanceof Profile)) {
+        if (toCompare == null){
+            return false;
+        }
+        if (toCompare.getClass() != this.getClass()) {
             return false;
         }
         Profile profile1 = (Profile) toCompare;

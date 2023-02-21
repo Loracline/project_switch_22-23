@@ -42,6 +42,18 @@ class BusinessSectorTest {
         //Assert
         assertEquals(expected, result);
     }
+    @Test
+    void ensureSameObjectDoesNotEqualNull() {
+        //Arrange
+        BusinessSector other = null;
+        boolean expected = false;
+
+        //Act
+        boolean result = businessSectorOne.equals(other);
+
+        //Assert
+        assertEquals(expected, result);
+    }
 
     @Test
     void ensureTwoBusinessSectorsAreNotTheSame() {

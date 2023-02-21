@@ -13,7 +13,9 @@ public class AllocationDTO {
     public final LocalDate startDate;
     public final LocalDate endDate;
 
-    public AllocationDTO(String role, float costPerHour, float percentageAllocation, LocalDate startDate, LocalDate endDate) {
+    public AllocationDTO(String role, float costPerHour,
+                         float percentageAllocation, LocalDate startDate,
+                         LocalDate endDate) {
         this.role = role;
         this.costPerHour = costPerHour;
         this.percentageAllocation = percentageAllocation;

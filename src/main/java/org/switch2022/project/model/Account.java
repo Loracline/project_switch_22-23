@@ -63,7 +63,10 @@ public class Account {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare instanceof Account)) {
+        if (toCompare == null) {
+            return false;
+        }
+        if (toCompare.getClass() != this.getClass()) {
             return false;
         }
         Account account = (Account) toCompare;
@@ -111,7 +114,7 @@ public class Account {
      *
      * @return status of the account.
      */
-    public boolean getAccountStatus() {
+    public boolean hasAccountStatus() {
         return accountStatus;
     }
 
@@ -128,21 +131,21 @@ public class Account {
     // "SETTERS"
 
     /**
-     * Setter method for the attribute: photo.
-     *
-     * @param photo of the account.
-     */
-    public void setPhoto(BufferedImage photo) {
-        this.photo = photo;
-    }
-
-    /**
      * Setter method for the attribute: profile.
      *
      * @param profile of the account.
      */
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    /**
+     * Setter method for the attribute: photo.
+     *
+     * @param photo of the account.
+     */
+    public void setPhoto(BufferedImage photo) {
+        this.photo = photo;
     }
 
     /**

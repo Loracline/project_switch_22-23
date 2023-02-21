@@ -35,7 +35,7 @@ public class ProjectTypology {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare instanceof ProjectTypology)) {
+        if (!(toCompare.getClass() == this.getClass())) {
             return false;
         }
         ProjectTypology that = (ProjectTypology) toCompare;

@@ -3,7 +3,6 @@ package org.switch2022.project.model.container;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.Util;
 import org.switch2022.project.utils.dto.AllocationDTO;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class AccountInProjectContainer {
                                     AllocationDTO allocationDTO) {
         boolean accountInProjectAdded = false;
 
-        if (Util.areBothConditionsGranted(account != null, project != null)) {
+        if (account != null && project != null) {
             AccountInProject accountInProject = new AccountInProject(account, project,
                     allocationDTO.role, allocationDTO.costPerHour,
                     allocationDTO.percentageAllocation, allocationDTO.startDate);
@@ -51,7 +50,7 @@ public class AccountInProjectContainer {
                             allocationDTO.percentageAllocation);
 
 
-            if (Util.areBothConditionsGranted(Util.areBothConditionsGranted(isRoleValid, !doesAccountInProjectExist), isPercentageOfAllocationValid)) {
+            if (isRoleValid && !doesAccountInProjectExist && isPercentageOfAllocationValid) {
                 accountsInProject.add(accountInProject);
                 accountInProjectAdded = true;
             }
@@ -70,12 +69,11 @@ public class AccountInProjectContainer {
     float currentPercentageOfAllocation(Account account) {
         int i = 0;
         float sumOfPercentages = 0;
-        while (Util.isLower(i, accountsInProject.size())) {
-            if (Util.areBothConditionsGranted(
-                    accountsInProject.get(i).getAccount().equals(account),
-                    accountsInProject.get(i).getEndDate() == null)) {
-                sumOfPercentages = Util.sum(sumOfPercentages,
-                        accountsInProject.get(i).getPercentageOfAllocation());
+        while (i < accountsInProject.size()) {
+            if (accountsInProject.get(i).getAccount().equals(account) &&
+                    accountsInProject.get(i).getEndDate() == null) {
+                sumOfPercentages = sumOfPercentages +
+                        accountsInProject.get(i).getPercentageOfAllocation();
             }
             i++;
         }
@@ -92,12 +90,11 @@ public class AccountInProjectContainer {
                                           float newPercentageAllocation) {
         boolean percentageOfAllocationValid = false;
         float totalPercentageAllocation =
-                Util.sum(currentPercentageOfAllocation(account),
-                        newPercentageAllocation);
+                currentPercentageOfAllocation(account) +
+                        newPercentageAllocation;
 
-        if (Util.areBothConditionsGranted(
-                Util.isLowerOrEqual(totalPercentageAllocation, 100),
-                newPercentageAllocation > 0)) {
+        if (totalPercentageAllocation <= 100 &&
+                newPercentageAllocation > 0) {
             percentageOfAllocationValid = true;
         }
         return percentageOfAllocationValid;
@@ -111,7 +108,7 @@ public class AccountInProjectContainer {
     public List<Account> listAccountsByProject(String projectCode) {
         List<Account> accounts = new ArrayList<>();
         int i = 0;
-        while (Util.isLower(i, accountsInProject.size())) {
+        while (i < accountsInProject.size()) {
             Account requestedAccount = accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
                 accounts.add(requestedAccount);
@@ -140,7 +137,7 @@ public class AccountInProjectContainer {
     public List<Project> listProjectsByAccount(String email) {
         List<Project> projects = new ArrayList<>();
         int i = 0;
-        while (Util.isLower(i, accountsInProject.size())) {
+        while (i < accountsInProject.size()) {
             Project requestedProject = accountsInProject.get(i).getProjectByAccount(email);
             if (requestedProject != null) {
                 projects.add(requestedProject);

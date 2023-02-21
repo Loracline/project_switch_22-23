@@ -42,6 +42,17 @@ class ProfileTest {
         boolean result = reference.equals(other);
         assertEquals(expected, result);
     }
+    /**
+     * Test to ensure that object does not equal null
+     */
+    @Test
+    void ensureProfileDoesNotEqualNull() {
+        Profile reference = new Profile("User");
+        Profile other = null;
+        boolean expected = false;
+        boolean result = reference.equals(other);
+        assertEquals(expected, result);
+    }
 
     /**
      * Testing if profile is "Manager" by checking its profile name.

@@ -10,26 +10,22 @@ import org.switch2022.project.utils.dto.ProjectDtoAsManager;
  */
 
 public class RegisterProjectController {
-  private final Company company;
+    private final Company company;
 
-  /**
-   * RegisterProjectController constructor
-   *
-   * @param company
-   */
-  public RegisterProjectController(Company company) {
-    this.company = company;
-  }
+    /**
+     * RegisterProjectController constructor
+     */
+    public RegisterProjectController(Company company) {
+        this.company = company;
+    }
 
-  /**
-   * This method will call the method registerProject in Company
-   *
-   * @param projectDto
-   * @param email
-   * @return true if the project is registered
-   */
-  public boolean registerProject(ProjectDtoAsManager projectDto, String email) {
-    return company.validateProfileRequired(email, Profile.MANAGER) && company.registerProject(projectDto);
-  }
+    /**
+     * This method will call the method registerProject in Company
+     *
+     * @return true if the project is registered
+     */
+    public boolean registerProject(ProjectDtoAsManager projectDto, String email) {
+      return company.validateProfileRequired(email, Profile.MANAGER) && company.registerProject(projectDto);
+    }
 }
 

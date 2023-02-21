@@ -1,6 +1,7 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.*;
+import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 
 import java.awt.image.BufferedImage;
 
@@ -32,9 +33,7 @@ public class RegisterAccountController {
      * @param email       of the new account
      * @param phoneNumber of the new account
      * @param photo       of the new account
-     *
-     * @return true if Account is added
-     * @return false if Account is not added
+     * @return true if Account is added or false if Account is not added
      */
     public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo,String actorEmail) {
          return company.validateProfileRequired(actorEmail, Profile.ADMINISTRATOR) &&

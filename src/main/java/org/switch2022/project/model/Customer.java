@@ -22,7 +22,6 @@ public class Customer {
     }
 
 
-
     /**
      * This method checks if two instances of Customer are equal by comparing
      * its names and NIF.
@@ -32,10 +31,15 @@ public class Customer {
      */
     @Override
     public boolean equals(Object toCompare) {
-        if (this == toCompare) return true;
-        if (!(toCompare instanceof Customer)) return false;
+        if (this == toCompare) {
+            return true;
+        }
+        if (!(toCompare.getClass() == this.getClass())) {
+            return false;
+        }
         Customer customer = (Customer) toCompare;
-        return Objects.equals(customerName, customer.customerName.toLowerCase()) && Objects.equals(customerNIF, customer.customerNIF);
+        return Objects.equals(customerName, customer.customerName.toLowerCase())
+                && Objects.equals(customerNIF, customer.customerNIF);
     }
 
     @Override
@@ -44,10 +48,10 @@ public class Customer {
     }
 
     public String getCustomerNif() {
-        return  customerNIF;
+        return customerNIF;
     }
 
-  public String getCustomerName() {
+    public String getCustomerName() {
         return customerName;
-  }
+    }
 }

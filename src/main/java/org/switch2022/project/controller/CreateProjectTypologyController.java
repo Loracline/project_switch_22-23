@@ -12,11 +12,12 @@ public class CreateProjectTypologyController {
      * Attributes of the class ProjectTypologyController, according to the US007 Class Diagram.
      */
     private final Company company;
+
     /**
      * ProjectTypologyController constructor
      */
-    public CreateProjectTypologyController(Company company){
-        this.company=company;
+    public CreateProjectTypologyController(Company company) {
+        this.company = company;
     }
     public boolean createProjectTypology(String email,String projectTypology){
        return company.validateProfileRequired(email, Profile.ADMINISTRATOR) && company.createProjectTypology(projectTypology);
