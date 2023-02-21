@@ -30,9 +30,12 @@ public class Company {
     /**
      * Constructor
      */
-    public Company(AccountContainer accountContainer, ProfileContainer profileContainer,
-                   BusinessSectorContainer businessSectorContainer, ProjectContainer projectContainer,
-                   ProjectTypologyContainer projectTypologyContainer, AccountInProjectContainer accountInProjectContainer,
+    public Company(AccountContainer accountContainer,
+                   ProfileContainer profileContainer,
+                   BusinessSectorContainer businessSectorContainer,
+                   ProjectContainer projectContainer,
+                   ProjectTypologyContainer projectTypologyContainer,
+                   AccountInProjectContainer accountInProjectContainer,
                    CustomerContainer customerContainer) {
         this.accountContainer = accountContainer;
         this.profileContainer = profileContainer;
@@ -55,18 +58,18 @@ public class Company {
         return accountContainer;
     }
 
-  // ACTOR VALIDATION METHODS
+    // ACTOR VALIDATION METHODS
 
-  /**
-   * This method validates if the actor is an account with profile the required profile.
-   *
-   * @param email of the actor's account and profileName required.
-   * @return TRUE if it has the profile required and FALSE otherwise.
-   */
+    /**
+     * This method validates if the actor is an account with profile the required profile.
+     *
+     * @param email of the actor's account and profileName required.
+     * @return TRUE if it has the profile required and FALSE otherwise.
+     */
 
-  public boolean validateProfileRequired (String email, String profileNameRequired){
-    return accountContainer.validateProfileRequired(email,profileNameRequired);
-  }
+    public boolean validateProfileRequired(String email, String profileNameRequired) {
+        return accountContainer.validateProfileRequired(email, profileNameRequired);
+    }
 
     // PROFILE METHODS
 
@@ -120,7 +123,8 @@ public class Company {
      * @param photo       of the account.
      * @return TRUE if account is registered and FALSE otherwise.
      */
-    public boolean registerAccount(String accountName, String email, long phoneNumber, BufferedImage photo) {
+    public boolean registerAccount(String accountName, String email,
+                                   long phoneNumber, BufferedImage photo) {
         return accountContainer.addAccount(accountName, email, phoneNumber, photo);
     }
 
@@ -145,7 +149,8 @@ public class Company {
      * @return TRUE if registered, and FALSE otherwise.
      */
     public boolean registerProject(ProjectDtoAsManager projectDto) {
-        return (projectContainer.registerProject(projectDto, this.projectTypologyContainer, this.customerContainer,
+        return (projectContainer.registerProject(projectDto,
+                this.projectTypologyContainer, this.customerContainer,
                 this.businessSectorContainer));
     }
 
@@ -204,12 +209,16 @@ public class Company {
      *                      needed.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean addUserToProject(AccountDTO accountDTO, ProjectDtoAsManager projectDTOAsManager,
+    public boolean addUserToProject(AccountDTO accountDTO,
+                                    ProjectDtoAsManager projectDTOAsManager,
                                     AllocationDTO allocationDTO) {
 
-        Account account = this.accountContainer.getAccountByEmail(accountDTO.email);
-        Project project = this.projectContainer.getProjectByCode(projectDTOAsManager.code);
-        return this.accountInProjectContainer.addUserToProject(account, project, allocationDTO);
+        Account account =
+                this.accountContainer.getAccountByEmail(accountDTO.email);
+        Project project =
+                this.projectContainer.getProjectByCode(projectDTOAsManager.code);
+        return this.accountInProjectContainer.addUserToProject(account, project,
+                allocationDTO);
     }
 
     /**

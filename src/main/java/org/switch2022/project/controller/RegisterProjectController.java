@@ -25,7 +25,8 @@ public class RegisterProjectController {
      * @return true if the project is registered
      */
     public boolean registerProject(ProjectDtoAsManager projectDto, String email) {
-      return company.validateProfileRequired(email, Profile.MANAGER) && company.registerProject(projectDto);
+        return company.validateProfileRequired(email, Profile.MANAGER) &&
+                company.registerProject(projectDto);
     }
 }
 

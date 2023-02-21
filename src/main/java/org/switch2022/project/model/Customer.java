@@ -34,7 +34,10 @@ public class Customer {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare.getClass() == this.getClass())) {
+        if (toCompare == null){
+            return false;
+        }
+        if (toCompare.getClass() != this.getClass()) {
             return false;
         }
         Customer customer = (Customer) toCompare;

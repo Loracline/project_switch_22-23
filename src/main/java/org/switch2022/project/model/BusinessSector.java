@@ -41,7 +41,7 @@ public class BusinessSector {
         if (this == toCompare) {
             return true;
         }
-        if (toCompare ==null){
+        if (toCompare == null) {
             return false;
         }
         if (toCompare.getClass() != this.getClass()) {

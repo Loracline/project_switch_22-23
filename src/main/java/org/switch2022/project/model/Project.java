@@ -48,12 +48,17 @@ public class Project {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare.getClass() == this.getClass())) {
+        if (toCompare == null) {
+            return false;
+        }
+        if (toCompare.getClass() != this.getClass()) {
             return false;
         }
         Project project = (Project) toCompare;
-        return Objects.equals(projectCode, project.projectCode) && Objects.equals(projectName, project.projectName) &&
-                Objects.equals(customer, project.customer) && Objects.equals(projectStatus, project.projectStatus) &&
+        return Objects.equals(projectCode, project.projectCode) &&
+                Objects.equals(projectName, project.projectName) &&
+                Objects.equals(customer, project.customer) &&
+                Objects.equals(projectStatus, project.projectStatus) &&
                 Objects.equals(projectTypology, project.projectTypology) &&
                 Objects.equals(businessSector, project.businessSector);
     }

@@ -13,41 +13,43 @@ public class ProjectTypologyContainer {
     /**
      * Attributes
      */
-    private final List<ProjectTypology> typologies= new ArrayList<>();
+    private final List<ProjectTypology> typologies = new ArrayList<>();
 
-  /**
-   * This method checks if project typology already exists in the container.
-   *
-   * @param projectTypology one intend to search.
-   * @return TRUE if exists and FALSE otherwise.
-   */
-  public boolean doesTypologyExist(ProjectTypology projectTypology) {
-    return this.typologies.contains(projectTypology);
-  }
-
-  /**
-   * This method creates and adds new typology if it doesn't already exist.
-   *
-   * @param projectTypology one intend to add.
-   * @return TRUE is added to the Container, and FALSE otherwise.
-   */
-  public boolean createProjectTypology(String projectTypology) {
-    ProjectTypology newProjectTypology = new ProjectTypology(projectTypology);
-    boolean isAddedToList = false;
-    if (!projectTypology.isEmpty() && !doesTypologyExist(newProjectTypology)) {
-      typologies.add(newProjectTypology);
-      isAddedToList = true;
+    /**
+     * This method checks if project typology already exists in the container.
+     *
+     * @param projectTypology one intend to search.
+     * @return TRUE if exists and FALSE otherwise.
+     */
+    public boolean doesTypologyExist(ProjectTypology projectTypology) {
+        return this.typologies.contains(projectTypology);
     }
-    return isAddedToList;
-  }
 
-  public ProjectTypology getProjectTypology(String typology) {
-    ProjectTypology requestedProjectTypology = new ProjectTypology(typology);
-    for (int i = 0; i < typologies.size(); i++) {
-      if (typologies.get(i).getProjectTypologyName().equals(typology)) {
-        requestedProjectTypology = typologies.get(i);
-      }
+    /**
+     * This method creates and adds new typology if it doesn't already exist.
+     *
+     * @param projectTypology one intend to add.
+     * @return TRUE is added to the Container, and FALSE otherwise.
+     */
+    public boolean createProjectTypology(String projectTypology) {
+        ProjectTypology newProjectTypology = new ProjectTypology(projectTypology);
+        boolean isAddedToList = false;
+        if (!projectTypology.isEmpty() && !doesTypologyExist(newProjectTypology)) {
+            typologies.add(newProjectTypology);
+            isAddedToList = true;
+        }
+        return isAddedToList;
     }
-    return requestedProjectTypology;
-  }
+
+    public ProjectTypology getProjectTypology(String typology) {
+        ProjectTypology requestedProjectTypology = new ProjectTypology(typology);
+        int i = 0;
+        while (i < typologies.size()) {
+            if (typologies.get(i).getProjectTypologyName().equals(typology)) {
+                requestedProjectTypology = typologies.get(i);
+            }
+            i++;
+        }
+        return requestedProjectTypology;
+    }
 }

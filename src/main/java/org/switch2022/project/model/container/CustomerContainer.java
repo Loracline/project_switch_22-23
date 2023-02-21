@@ -17,60 +17,62 @@ public class CustomerContainer {
     private final List<Customer> customers = new ArrayList<>();
 
 
-  /**
-   * This method validates if customer already exists by checking the NIF.
-   *
-   * @param customerNIF of the intended costumer.
-   * @return TRUE if exists and FALSE otherwise.
-   */
-  private boolean doesCustomerNIFExist(Customer customerNIF) {
-    return this.customers.contains(customerNIF);
-  }
-
-  /**
-   * This method creates a new costumer and adds to the container if one
-   * doesn't already exist.
-   *
-   * @param customerNIF of the costumer to add.
-   * @return TRUE if costumer is added and FALSE otherwise.
-   */
-  public boolean addCustomer(String customerName, String customerNIF) {
-    Customer newCustomer = new Customer(customerName, customerNIF);
-    boolean isAddedToList = false;
-    if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerNIFExist(newCustomer)) {
-      customers.add(newCustomer);
-      isAddedToList = true;
+    /**
+     * This method validates if customer already exists by checking the NIF.
+     *
+     * @param customerNIF of the intended costumer.
+     * @return TRUE if exists and FALSE otherwise.
+     */
+    private boolean doesCustomerNIFExist(Customer customerNIF) {
+        return this.customers.contains(customerNIF);
     }
-    return isAddedToList;
-  }
 
-  /**
-   * This method Checks if the NIF has the correct length (9 digits) and checks if
-   * the NIF contains only digits.
-   *
-   * @param customerNIF of the costumer to add.
-   * @return TRUE if costumerNIF has the correct length and contains only digits and FALSE otherwise.
-   */
-  private boolean isValidNIF(String customerNIF) {
-    boolean isValidNIF = false;
-    if (customerNIF.length() == 9) {
-      isValidNIF = true;
-      for (int i = 0; i < customerNIF.length(); i++) {
-        if (!Character.isDigit(customerNIF.charAt(i))) {
-          isValidNIF = false;
+    /**
+     * This method creates a new costumer and adds to the container if one
+     * doesn't already exist.
+     *
+     * @param customerNIF of the costumer to add.
+     * @return TRUE if costumer is added and FALSE otherwise.
+     */
+    public boolean addCustomer(String customerName, String customerNIF) {
+        Customer newCustomer = new Customer(customerName, customerNIF);
+        boolean isAddedToList = false;
+        if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerNIFExist(newCustomer)) {
+            customers.add(newCustomer);
+            isAddedToList = true;
         }
-      }
+        return isAddedToList;
     }
-    return isValidNIF;
-  }
 
-  public Customer getCustomer(String customerName, String nif) {
-    Customer requestedCustomer = new Customer(customerName,nif);
-    for (int i = 0; i < customers.size(); i++) {
-      if (customers.get(i).getCustomerNif().equals(nif)) {
-        requestedCustomer = customers.get(i);
-      }
+    /**
+     * This method Checks if the NIF has the correct length (9 digits) and checks if
+     * the NIF contains only digits.
+     *
+     * @param customerNIF of the costumer to add.
+     * @return TRUE if costumerNIF has the correct length and contains only digits and FALSE otherwise.
+     */
+    private boolean isValidNIF(String customerNIF) {
+        boolean isValidNIF = false;
+        if (customerNIF.length() == 9) {
+            isValidNIF = true;
+            for (int i = 0; i < customerNIF.length(); i++) {
+                if (!Character.isDigit(customerNIF.charAt(i))) {
+                    isValidNIF = false;
+                }
+            }
+        }
+        return isValidNIF;
     }
-    return requestedCustomer;
-  }
+
+    public Customer getCustomer(String customerName, String nif) {
+        Customer requestedCustomer = new Customer(customerName, nif);
+        int i = 0;
+        while (i < customers.size()) {
+            if (customers.get(i).getCustomerNif().equals(nif)) {
+                requestedCustomer = customers.get(i);
+            }
+            i++;
+        }
+        return requestedCustomer;
+    }
 }

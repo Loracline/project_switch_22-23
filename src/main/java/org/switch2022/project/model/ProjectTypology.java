@@ -35,12 +35,17 @@ public class ProjectTypology {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare.getClass() == this.getClass())) {
+        if (toCompare == null) {
+            return false;
+        }
+        if (toCompare.getClass() != this.getClass()) {
             return false;
         }
         ProjectTypology that = (ProjectTypology) toCompare;
-        return Objects.equals(projectTypologyName, that.projectTypologyName.toLowerCase());
+        return Objects.equals(projectTypologyName,
+                that.projectTypologyName.toLowerCase());
     }
+
     /**
      * The hashCode() method is used to generate a unique hash code for an
      * object, based on the object's state.
