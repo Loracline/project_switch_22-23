@@ -16,7 +16,6 @@ Administrator -> ":System": Types requested data
 ":System" --> Administrator: informs profile created
 @enduml
 
-
 @startuml
 skinparam sequenceMessageAlign center
 title TO REGISTER NEW ACCOUNT
@@ -131,7 +130,7 @@ Administrator <-- ":System":project typology created
 
 @startuml
 legend top
-US008 - As Administrator, I want to add a bussiness sector.
+US008 - As Administrator, I want to add a business sector.
 end legend
 skinparam sequenceMessageAlign center
 title TO CREATE A NEW BUSINESS SECTOR
@@ -184,28 +183,6 @@ end note
 "Manager" -> ":System":  types requested data
 "Manager" <-- ":System": informs project created
 @enduml
-
-
-@startuml
-/'
-autonumber
-skinparam sequenceMessageAlign center
-title TO DEFINE SCRUM MASTER OF PROJECT
-legend top
-US0013 - As Manager, I want to define the SM of a project.
-end legend
-actor "Manager"
-"Manager" -> ":System": Starts the definition \nof SM of a project
-note left
-Account is authenticated.
-":System" grants access.
-end note
-"Manager" <-- ":System": returns list of possible projects / accounts
-"Manager" -> ":System": Selects project / account
-"Manager" <-- ":System": informs success
-'/
-@enduml
-
 
 @startuml
 legend top
@@ -612,14 +589,3 @@ end note
 "User" <-- ":System": shows list of all projects the user is allocated
 @enduml
 
-@startuml
-/'
-skinparam sequenceMessageAlign center
-title TO CREATE A NEW BUSINESS SECTOR
-actor "Administrator" as adm
-adm -> ":System": starts adding new business sector
-adm <-- ":System": requests data (name)
-adm -> ":System": types requested data
-adm <-- ":System":informs operation success
-'/
-@enduml
