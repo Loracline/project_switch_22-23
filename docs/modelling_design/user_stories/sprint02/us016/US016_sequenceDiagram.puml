@@ -7,14 +7,14 @@ end legend
 autonumber
 actor User
 participant ":ListProjectInAccountUI" as ui
-participant ":ListProjectInAccountController" as controller
+participant ":ListProjectsInAccountController" as controller
 participant ":Company" as company
 participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
 participant "projects: List<Project>" as list
-participant ":UserListProjectsMapper" as pm
-participant "userListProjectDTO: List<ProjectDTO>" as listDTO
-participant "userListProjectDTO:ProjectDTO" as DTO
+participant ":ManagerListProjectsMapper" as pm
+participant "managerListProjectDTO: List<ProjectDTO>" as listDTO
+participant "managerListProjectDTO:ProjectDTO" as DTO
 activate User
 User -> ui: lists all projects of a given project
 activate ui

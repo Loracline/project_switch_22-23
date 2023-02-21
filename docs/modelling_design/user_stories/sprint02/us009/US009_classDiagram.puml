@@ -24,6 +24,12 @@ class "Account"{
 - profile
 +isAdministrator()
 }
+
+class Profile{
+-profileName
++isAdministrator()
+}
+
 class "CustomerContainer"{
 -customers
 +addCustomer(customerName, customerNIF)
@@ -39,4 +45,5 @@ class "Customer"{
 "Company" "1"-->"1" "AccountContainer": has
 "CustomerContainer" "1"-->"*" "Customer": has
 "AccountContainer" "1" --> "*" "Account": has
+"Account" "*"-->"1" "Profile" : has
 @enduml
