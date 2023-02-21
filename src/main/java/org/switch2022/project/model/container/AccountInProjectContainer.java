@@ -92,8 +92,8 @@ public class AccountInProjectContainer {
         float totalPercentageAllocation =
                 currentPercentageOfAllocation(account) +
                         newPercentageAllocation;
-
-        if (totalPercentageAllocation <= 100 &&
+        byte maximumPercentageOfAllocation = 100;
+        if (totalPercentageAllocation <= maximumPercentageOfAllocation &&
                 newPercentageAllocation > 0) {
             percentageOfAllocationValid = true;
         }

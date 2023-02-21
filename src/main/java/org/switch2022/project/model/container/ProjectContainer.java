@@ -25,7 +25,7 @@ public class ProjectContainer {
     public Project getProjectByCode(String code) {
         Project projectRequested = null;
         int i = 0;
-        while (i < this.projects.size() && projectRequested != projects.get(i)) {
+        while (i < this.projects.size() && !(projectRequested == (projects.get(i)))) {
             if (projects.get(i).getProjectCode().equalsIgnoreCase(code)) {
                 projectRequested = projects.get(i);
             }

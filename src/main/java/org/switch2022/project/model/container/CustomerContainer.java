@@ -51,9 +51,10 @@ public class CustomerContainer {
      * @param customerNIF of the costumer to add.
      * @return TRUE if costumerNIF has the correct length and contains only digits and FALSE otherwise.
      */
-    private boolean isValidNIF(String customerNIF) {
+    private static boolean isValidNIF(String customerNIF) {
         boolean isValidNIF = false;
-        if (customerNIF.length() == 9) {
+        byte nifLength = 9;
+        if (customerNIF.length() == nifLength) {
             isValidNIF = true;
             for (int i = 0; i < customerNIF.length(); i++) {
                 if (!Character.isDigit(customerNIF.charAt(i))) {

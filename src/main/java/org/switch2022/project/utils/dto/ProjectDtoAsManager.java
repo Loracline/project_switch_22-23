@@ -21,7 +21,8 @@ public class ProjectDtoAsManager {
      * Constructor of the class ProjectDtoAsManager.
      */
 
-    public ProjectDtoAsManager(String code, String name, String customerName, String customerNif, String projectTypology, String businessSector) {
+    public ProjectDtoAsManager(String code, String name, String customerName, String customerNif,
+                               String projectTypology, String businessSector) {
         this.code = code;
         this.name = name;
         this.customerName = customerName.toLowerCase();
@@ -41,9 +42,6 @@ public class ProjectDtoAsManager {
     public boolean equals(Object o) {
         if (this == o) {
             return true;
-        }
-        if (o == null) {
-            return false;
         }
         if (o.getClass() != this.getClass()) {
             return false;

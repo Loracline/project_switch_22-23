@@ -66,6 +66,20 @@ class ProjectDtoAsManagerTest {
     }
 
     @Test
+    void ensureTwoProjectDTOsAreNotTheSameTypeOfObjects() {
+        // ARRANGE
+        ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");
+        Object other = new Object();
+        boolean expected = false;
+
+        // ACT
+        boolean result = reference.equals(other);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
     void ensureTwoProjectDTOsHaveDifferentCustomerNif() {
         // ARRANGE
         ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt", "John", "111222333", "fixed cost", "sports");

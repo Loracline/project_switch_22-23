@@ -9,7 +9,7 @@ import org.switch2022.project.model.container.CustomerContainer;
 import org.switch2022.project.model.container.ProjectTypologyContainer;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
-public class ProjectMapper {
+public final class ProjectMapper {
 
     private ProjectMapper() {
     }
