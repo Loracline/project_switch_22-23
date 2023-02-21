@@ -239,8 +239,7 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Manager" <-- ":System": returns list of all projects DTO
-"Manager" <-- ":System": show list of all projects
+"Manager" <-- ":System": returns list of all projects
 @enduml
 
 
@@ -545,7 +544,6 @@ Account is authenticated.
 end note
 "Manager" <-- ":System": ShowListAllProjects
 @enduml
-
 
 
 @startuml
