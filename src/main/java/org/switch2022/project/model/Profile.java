@@ -58,32 +58,6 @@ public class Profile {
         return this.profileName.equals(profileNameRequired);
     }
 
-    public boolean isManager() {
-        Profile profile = new Profile("Manager");
-        return this.profileName.equals(profile.profileName);
-    }
-
-    /**
-     * This method verifies if profile is "Administrator" by checking its profile
-     * name.
-     *
-     * @return TRUE if "Administrator" and FALSE otherwise.
-     */
-    public boolean isAdministrator() {
-        Profile profile = new Profile("Administrator");
-        return this.profileName.equals(profile.profileName);
-    }
-
-    /**
-     * This method verifies if profile is "User" by checking its profile name.
-     *
-     * @return TRUE if "User" amd FALSE otherwise.
-     */
-    public boolean isUser() {
-        Profile profile = new Profile("User");
-        return this.profileName.equals(profile.profileName);
-    }
-
     /**
      * This method verifies if profile is the one intended through its profileName.
      *

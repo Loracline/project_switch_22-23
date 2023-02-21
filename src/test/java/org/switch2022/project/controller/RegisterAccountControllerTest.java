@@ -122,10 +122,14 @@ class RegisterAccountControllerTest {
     @Test
     void ensureThatNewAccountIsRegisteredIfEmailIsUnique() {
         //ARRANGE
+        //set profileOne (Administrator) to accountOne
+        company.changeProfile("claire@isep.ipp.pt", "Administrator");
+        String emailActor = accountOne.getEmail(); //Administrator
+
         boolean expected = true;
 
         //ACT
-        boolean result = controller.registerAccount("Charlotte", "charlotte@isep.ipp.pt", 932755677, null);
+        boolean result = controller.registerAccount("Charlotte", "charlotte@isep.ipp.pt", 932755677, null,emailActor);
 
         //ASSERT
         assertEquals(expected, result);
@@ -135,12 +139,29 @@ class RegisterAccountControllerTest {
     @Test
     void ensureThatNewAccountIsNotRegisteredIfEmailIsDuplicated() {
         //ARRANGE
+        //set profileOne (Administrator) to accountOne
+        company.changeProfile("claire@isep.ipp.pt", "Administrator");
+        String emailActor = accountOne.getEmail(); //Administrator
+
         boolean expected = false;
 
         //ACT
-        boolean result = controller.registerAccount("Emma", "emma@isep.ipp.pt", 932755688, null);
+        boolean result = controller.registerAccount("Emma", "emma@isep.ipp.pt", 932755688, null,emailActor);
 
         //ASSERT
         assertEquals(expected, result);
     }
+    @Test
+    void ensureThatNewAccountIsNotRegistered_ProfileNotAuthorized() {
+        //ARRANGE
+
+        boolean expected = false;
+
+        //ACT
+        boolean result = controller.registerAccount("Emma", "emma@isep.ipp.pt", 932755688, null,"claire@isep.ipp.pt");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
 }

@@ -1,6 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 
 /**
  * Class CreateProfileController is built to allow access to Company
@@ -21,8 +22,9 @@ public class CreateProfileController {
      *
      * @return true if profile is created
      */
-    public boolean createProfile(String profileName) {
-        return (company.createProfile(profileName));
+    public boolean createProfile(String profileName, String actorEmail) {
+        return (company.validateProfileRequired(actorEmail, Profile.ADMINISTRATOR) &&
+                company.createProfile(profileName));
     }
 }
 

@@ -166,40 +166,14 @@ public class Account {
     public boolean checkAccountFromEmail(String email) {
         return this.email.equals(email);
     }
+
     /**
      * This method checks if account's profile is the profile required.
      *
      * @return TRUE if it is the profile required and FALSE otherwise.
      */
 
-    public boolean isProfileRequired (String profileNameRequired) {
+    public boolean isProfileRequired(String profileNameRequired) {
         return this.profile.isProfileRequired(profileNameRequired);
-    }
-
-    /**
-     * This method checks if account's profile is "Manager".
-     *
-     * @return TRUE if "Manager" and FALSE otherwise.
-     */
-    public boolean isManager() {
-        return this.profile.isManager();
-    }
-
-    /**
-     * This method checks if account's profile is "Administrator".
-     *
-     * @return TRUE if "Administrator" and FALSE otherwise.
-     */
-    public boolean isAdministrator() {
-        return this.profile.isAdministrator();
-    }
-
-    /**
-     * This method checks if account's profile is "User".
-     *
-     * @return TRUE if "User" and FALSE otherwise.
-     */
-    public boolean isUser() {
-        return this.profile.isUser();
     }
 }

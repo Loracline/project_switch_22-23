@@ -36,7 +36,8 @@ public class RegisterAccountController {
      * @return true if Account is added
      * @return false if Account is not added
      */
-    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo) {
-         return this.company.registerAccount(name, email, phoneNumber, photo);
+    public boolean registerAccount(String name, String email, long phoneNumber, BufferedImage photo,String actorEmail) {
+         return company.validateProfileRequired(actorEmail, Profile.ADMINISTRATOR) &&
+                 this.company.registerAccount(name, email, phoneNumber, photo);
     }
 }

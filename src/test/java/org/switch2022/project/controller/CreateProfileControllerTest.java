@@ -15,6 +15,8 @@ class CreateProfileControllerTest {
      */
 
     Profile profileOne, profileTwo;
+
+    Account accountOne;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
     ProjectTypologyContainer projectTypologyContainer;
@@ -36,6 +38,10 @@ class CreateProfileControllerTest {
         profileContainer.createProfile("Administrator");
         profileContainer.createProfile("User");
 
+        accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
+        accountContainer = new AccountContainer();
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
+
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
 
@@ -44,6 +50,8 @@ class CreateProfileControllerTest {
 
     @AfterEach
     void tearDown() {
+        accountOne=null;
+        accountContainer=null;
         profileOne = null;
         profileTwo = null;
         profileContainer = null;
@@ -54,9 +62,12 @@ class CreateProfileControllerTest {
     @Test
     void addNewProfileSuccessfully() {
         //Arrange
+        //set profileOne (Administrator) to accountOne
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
-        boolean result = createProfileController.createProfile("Manager");
+        boolean result = createProfileController.createProfile("Manager",emailActor);
         //Assert
         assertEquals(expected, result);
     }
@@ -64,9 +75,21 @@ class CreateProfileControllerTest {
     @Test
     void addNewProfileUnsuccessfullyInvalidName() {
         //Arrange
+        //set profileOne (Administrator) to accountOne
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
+        String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         //Act
-        boolean result = createProfileController.createProfile("User");
+        boolean result = createProfileController.createProfile("User", emailActor);
+        //Assert
+        assertEquals(expected, result);
+    }
+    @Test
+    void addNewProfileUnsuccessfully_ProfileNotAuthorized() {
+        //Arrange
+        boolean expected = false;
+        //Act
+        boolean result = createProfileController.createProfile("User", "mike@isep.ipp.pt");
         //Assert
         assertEquals(expected, result);
     }

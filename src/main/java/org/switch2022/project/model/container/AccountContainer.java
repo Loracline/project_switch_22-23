@@ -1,6 +1,7 @@
 package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Profile;
 import org.switch2022.project.utils.Util;
 
 import java.awt.image.BufferedImage;
@@ -62,72 +63,6 @@ public class AccountContainer {
             isProfileRequired = true;
         }
         return isProfileRequired;
-    }
-
-
-    /**
-     * This method validates if account with given e-mail has the "Manager"
-     * profile.
-     *
-     * @param email of given account.
-     * @return TRUE if "Manager" and FALSE otherwise.
-     */
-    public boolean validateManager(String email) {
-        boolean isManager = false;
-        int i = 0;
-        while (i < this.accounts.size()) {
-            if (accounts.get(i).checkAccountFromEmail(email)) {
-                Account account = accounts.get(i);
-                if (account.isManager()) {
-                    isManager = true;
-                }
-            }
-            i++;
-        }
-        return isManager;
-    }
-
-    /**
-     * This method validates if account with given e-mail has the "Administrator"
-     * profile.
-     *
-     * @param email of given account.
-     * @return TRUE if "Administrator" and FALSE otherwise.
-     */
-    public boolean validateAdministrator(String email) {
-        boolean isAdministrator = false;
-        int i = 0;
-        while (i < this.accounts.size()) {
-            if (accounts.get(i).checkAccountFromEmail(email)) {
-                Account account = accounts.get(i);
-                if (account.isAdministrator()) {
-                    isAdministrator = true;
-                }
-            }
-            i++;
-        }
-        return isAdministrator;
-    }
-
-    /**
-     * This method validates if account with given e-mail has the "User" profile.
-     *
-     * @param email of given account.
-     * @return TRUE if "User" and FALSE otherwise.
-     */
-    public boolean validateUser(String email) {
-        boolean isUser = false;
-        int i = 0;
-        while (i < this.accounts.size()) {
-            if (accounts.get(i).checkAccountFromEmail(email)) {
-                Account account = accounts.get(i);
-                if (account.isUser()) {
-                    isUser = true;
-                }
-            }
-            i++;
-        }
-        return isUser;
     }
 
 
@@ -212,7 +147,7 @@ public class AccountContainer {
         List<Account> users = new ArrayList<>();
         int i = 0;
         while (Util.isLower(i, accounts.size())) {
-            if (accounts.get(i).isUser()) {
+            if (accounts.get(i).isProfileRequired(Profile.USER)) {
                 users.add(accounts.get(i));
             }
             i++;

@@ -1,6 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 
 /**
  * Class ChangeProfileController acts as an intermediary between the user
@@ -29,7 +30,9 @@ public class ChangeProfileController {
      * @param profileName of the desired profile.
      * @return TRUE if changed, and FALSE otherwise.
      */
-    public boolean changeProfile(String email, String profileName) {
-        return company.changeProfile(email, profileName);
+    public boolean changeProfile(String email, String profileName, String actorEmail) {
+
+        return company.validateProfileRequired(actorEmail, Profile.ADMINISTRATOR) &&
+                company.changeProfile(email, profileName);
     }
 }

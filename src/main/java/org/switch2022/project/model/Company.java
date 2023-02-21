@@ -68,38 +68,6 @@ public class Company {
     return accountContainer.validateProfileRequired(email,profileNameRequired);
   }
 
-  /**
-   * This method validates if the actor is an account with profile "Manager".
-   *
-   * @param email of the actor's account.
-   * @return TRUE if "Manager" and FALSE otherwise.
-   */
-  public boolean validateManager(String email) {
-    return accountContainer.validateManager(email);
-  }
-
-  /**
-   * This method validates if the actor is an account with profile "User".
-   *
-   * @param email of the actor's account.
-   * @return TRUE if "User" and FALSE otherwise.
-   */
-  public boolean validateUser(String email) {
-    return accountContainer.validateUser(email);
-  }
-
-  /**
-   * This method validates if the actor is an account with profile
-   * "Administrator".
-   *
-   * @param email of the actor's account.
-   * @return TRUE if "Administrator" and FALSE otherwise.
-   */
-  public boolean validateAdministrator(String email) {
-    return accountContainer.validateAdministrator(email);
-  }
-
-
   // PROFILE METHODS
 
   /**

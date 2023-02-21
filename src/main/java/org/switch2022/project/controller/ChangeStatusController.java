@@ -1,6 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Company;
+import org.switch2022.project.model.Profile;
 
 /**
  * Class ChangeStatusController acts as an intermediary between the user
@@ -30,7 +31,8 @@ public class ChangeStatusController {
      * @param status TRUE = "Active" or FALSE = "Inactive".
      * @return TRUE if changed, and FALSE otherwise.
      */
-    public boolean changeStatus(String email, boolean status) {
-        return (company.changeStatus(email, status));
+    public boolean changeStatus(String email, boolean status, String actorEmail) {
+        return (company.validateProfileRequired(actorEmail, Profile.ADMINISTRATOR) &&
+                company.changeStatus(email, status));
     }
 }

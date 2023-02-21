@@ -58,9 +58,12 @@ class ChangeProfileControllerTest {
   @Test
   void ensureAccountProfileIsChangedSuccessfully() {
     //Arrange
+    //set profileOne (Administrator) to accountOne
+    company.changeProfile("mike@isep.ipp.pt", "Administrator");
+    String emailActor = accountOne.getEmail(); //Administrator
     boolean expected = true;
     //Act
-    boolean result = controller.changeProfile("mike@isep.ipp.pt", "Administrator");
+    boolean result = controller.changeProfile("mike@isep.ipp.pt", "Administrator",emailActor);
     //Assert
     assertEquals(expected, result);
   }
@@ -68,9 +71,12 @@ class ChangeProfileControllerTest {
   @Test
   void ensureAccountProfileIsNotChangedSuccessfully_ProfileNotFound() {
     //Arrange
+    //set profileOne (Administrator) to accountOne
+    company.changeProfile("mike@isep.ipp.pt", "Administrator");
+    String emailActor = accountOne.getEmail(); //Administrator
     boolean expected = false;
     //Act
-    boolean result = controller.changeProfile("mike@isep.ipp.pt", "Manager");
+    boolean result = controller.changeProfile("mike@isep.ipp.pt", "Manager",emailActor);
     //Assert
     assertEquals(expected, result);
   }
@@ -78,9 +84,22 @@ class ChangeProfileControllerTest {
   @Test
   void ensureAccountProfileIsNotChangedSuccessfully_AccountNotFound() {
     //Arrange
+    //set profileOne (Administrator) to accountOne
+    company.changeProfile("mike@isep.ipp.pt", "Administrator");
+    String emailActor = accountOne.getEmail(); //Administrator
     boolean expected = false;
     //Act
-    boolean result = controller.changeProfile("mikke@isep.ipp.pt", "Administrator");
+    boolean result = controller.changeProfile("mikke@isep.ipp.pt", "Administrator",emailActor);
+    //Assert
+    assertEquals(expected, result);
+  }
+
+  @Test
+  void ensureAccountProfileIsNotChangedSuccessfully_ProfileNotAuthorized() {
+    //Arrange
+    boolean expected = false;
+    //Act
+    boolean result = controller.changeProfile("mike@isep.ipp.pt", "Manager","mike@isep.ipp.pt");
     //Assert
     assertEquals(expected, result);
   }

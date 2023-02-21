@@ -47,7 +47,9 @@ class ListAccountControllerTest {
 
     profileOne = new Profile("Administrator");
     profileTwo = new Profile("User");
-
+    profileContainer = new ProfileContainer();
+    profileContainer.createProfile("Administrator");
+    profileContainer.createProfile("User");
 
     accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
             costPerHour, percentageAllocation, startDate);
@@ -85,12 +87,25 @@ class ListAccountControllerTest {
   void ensureAllAccountsAreListedSuccessfully() {
     List<Account> expected = accountContainer.getAccounts();
     ListAccountController newListAccountController = new ListAccountController(company);
+    //set profileOne (Administrator) to accountOne
+    company.changeProfile("mike@isep.ipp.pt", "Administrator");
+    String emailActor = accountOne.getEmail(); //Administrator
 
     // Act
-    List<Account> result = newListAccountController.listAllAccounts();
+    List<Account> result = newListAccountController.listAllAccounts(emailActor);
 
     // Assert
     assertEquals(expected, result);
   }
+  @Test
+  void ensureAllAccountsAreListedUnsuccessfully_ProfileNotAuthorized() {
+    List<Account> expected = new ArrayList<>();
+    ListAccountController newListAccountController = new ListAccountController(company);
 
+    // Act
+    List<Account> result = newListAccountController.listAllAccounts("mike@isep.ipp.pt");
+
+    // Assert
+    assertEquals(expected, result);
+  }
 }
