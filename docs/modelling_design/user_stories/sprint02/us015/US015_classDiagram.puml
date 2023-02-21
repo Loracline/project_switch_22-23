@@ -31,6 +31,11 @@ class "Account"{
 +isManager()
 }
 
+class Profile{
+-profileName
++isAdministrator()
+}
+
 class "ProjectContainer"{
 -projects
 +getProjects()
@@ -60,6 +65,7 @@ class "ManagerListProjectsDTO" {
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" "1"-->"*" Account: contains
 "ProjectContainer" "1"-->"*" Project: contains
+"Account" "*"-->"1" "Profile" : has
 "ManagerListProjectsMapper" ..> "ManagerListProjectsDTO": <<instantiate>>
 
 /'Usage relationship'/

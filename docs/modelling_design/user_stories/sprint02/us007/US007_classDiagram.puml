@@ -11,6 +11,7 @@ title CREATE A NEW PROJECT TYPOLOGY
 "Company" "1"-->"1" "AccountContainer" : has
 "ProjectTypologyContainer" "1"-->"*" "ProjectTypology" : has
 "AccountContainer" "1"-->"*" "Account" : has
+"Account" "*"-->"1" "Profile" : has
 
 class "CreateProjectTypologyController" {
 - company
@@ -32,6 +33,12 @@ class "AccountContainer"{
 +validateAdministrator(email)
 +getAccountByEmail(email)
 }
+
+class Profile{
+-profileName
++isAdministrator()
+}
+
 class "ProjectTypology"{
 -name
 +ProjectTypology(name)

@@ -282,7 +282,7 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Authenticated User" <-- ":System": returns projects DTO
+"Authenticated User" <-- ":System": returns a list of all projects
 
 @enduml
 
