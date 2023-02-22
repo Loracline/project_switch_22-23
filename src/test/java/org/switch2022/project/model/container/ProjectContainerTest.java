@@ -46,8 +46,7 @@ public class ProjectContainerTest {
                 "fishing");
 
         projectContainer = new ProjectContainer();
-        projectContainer.registerProject(projectOneDTO, projectTypologyContainer,
-                customerContainer, businessSectorContainer);
+        projectContainer.registerProject(projectOneDTO);
     }
 
     @AfterEach
@@ -74,8 +73,7 @@ public class ProjectContainerTest {
         boolean expected = true;
 
         // Act
-        boolean result = projectContainer.registerProject(projectTwoDTO,
-                projectTypologyContainer, customerContainer, businessSectorContainer);
+        boolean result = projectContainer.registerProject(projectTwoDTO);
 
         // Assert
         assertEquals(expected, result);
@@ -91,8 +89,7 @@ public class ProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = projectContainer.registerProject(projectOneDTO,
-                projectTypologyContainer, customerContainer, businessSectorContainer);
+        boolean result = projectContainer.registerProject(projectOneDTO);
 
         // Assert
         assertEquals(expected, result);

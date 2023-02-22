@@ -53,8 +53,8 @@ public class CustomerContainer {
      */
     private static boolean isValidNIF(String customerNIF) {
         boolean isValidNIF = false;
-        byte nifLength = 9;
-        if (customerNIF.length() == nifLength) {
+        final byte NIF_LENGTH = 9;
+        if (customerNIF.length() == NIF_LENGTH) {
             isValidNIF = true;
             for (int i = 0; i < customerNIF.length(); i++) {
                 if (!Character.isDigit(customerNIF.charAt(i))) {

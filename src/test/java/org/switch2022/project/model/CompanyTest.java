@@ -101,8 +101,8 @@ class CompanyTest {
         projectContainer = new ProjectContainer();
 
         // Projects added to the container.
-        projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer, businessSectorContainer);
-        projectContainer.registerProject(projectTwoDTO, projectTypologyContainer, customerContainer, businessSectorContainer);
+        projectContainer.registerProject(projectOneDTO);
+        projectContainer.registerProject(projectTwoDTO);
 
         // Accounts allocated to project.
         accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);

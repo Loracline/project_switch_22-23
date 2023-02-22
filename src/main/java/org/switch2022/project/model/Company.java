@@ -149,9 +149,7 @@ public class Company {
      * @return TRUE if registered, and FALSE otherwise.
      */
     public boolean registerProject(ProjectDtoAsManager projectDto) {
-        return (projectContainer.registerProject(projectDto,
-                this.projectTypologyContainer, this.customerContainer,
-                this.businessSectorContainer));
+        return (projectContainer.registerProject(projectDto));
     }
 
     /**

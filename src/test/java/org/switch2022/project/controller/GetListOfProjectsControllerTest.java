@@ -73,10 +73,8 @@ public class GetListOfProjectsControllerTest {
                 projectTwo.getProjectTypology().getProjectTypologyName(),
                 projectTwo.getBusinessSector().getBusinessSectorName());
         projectContainer = new ProjectContainer();
-        projectContainer.registerProject(projectOneDTO, projectTypologyContainer,
-                customerContainer, businessSectorContainer);
-        projectContainer.registerProject(projectOneTwo, projectTypologyContainer,
-                customerContainer, businessSectorContainer);
+        projectContainer.registerProject(projectOneDTO);
+        projectContainer.registerProject(projectOneTwo);
         //company
         company = new Company(accountContainer, profileContainer, null,
                 projectContainer, null, null, null);

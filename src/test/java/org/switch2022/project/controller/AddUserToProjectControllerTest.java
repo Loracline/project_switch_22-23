@@ -93,8 +93,7 @@ class AddUserToProjectControllerTest {
         projectTypologyContainer.createProjectTypology("Fixed Cost");
         projectTypologyContainer.createProjectTypology("Fixed time and materials");
         projectContainer = new ProjectContainer();
-        projectContainer.registerProject(projectDTO, projectTypologyContainer,
-                customerContainer, businessSectorContainer);
+        projectContainer.registerProject(projectDTO);
         accountContainer = new AccountContainer();
         accountContainer.addAccount("Mike", "mike@isep.ipp.pt",
                 932755689, null);

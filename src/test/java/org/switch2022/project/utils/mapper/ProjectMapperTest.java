@@ -78,7 +78,7 @@ class ProjectMapperTest {
         // ARRANGE
         Project expected = projectOne;
         // ACT
-        Project result = ProjectMapper.getProjectFromDTO(projectDTOAsManager, projectTypologyContainer, customerContainer, businessSectorContainer);
+        Project result = ProjectMapper.getProjectFromDTO(projectDTOAsManager);
         // ASSERT
         assertEquals(expected, result);
     }
