@@ -1,6 +1,6 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.Company;
+import org.switch2022.project.model.container.Company;
 import org.switch2022.project.model.Profile;
 
 import java.awt.image.BufferedImage;

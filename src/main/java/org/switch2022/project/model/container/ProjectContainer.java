@@ -2,7 +2,7 @@ package org.switch2022.project.model.container;
 
 import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
-import org.switch2022.project.utils.mapper.ProjectMapper;
+import org.switch2022.project.utils.dto.mapper.ProjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;

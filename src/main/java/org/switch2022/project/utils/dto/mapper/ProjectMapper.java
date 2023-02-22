@@ -1,12 +1,10 @@
-package org.switch2022.project.utils.mapper;
+package org.switch2022.project.utils.dto.mapper;
 
 import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.Customer;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectTypology;
-import org.switch2022.project.model.container.BusinessSectorContainer;
-import org.switch2022.project.model.container.CustomerContainer;
-import org.switch2022.project.model.container.ProjectTypologyContainer;
+
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 public final class ProjectMapper {

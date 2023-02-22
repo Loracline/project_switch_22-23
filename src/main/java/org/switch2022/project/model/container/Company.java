@@ -1,7 +1,10 @@
-package org.switch2022.project.model;
+package org.switch2022.project.model.container;
 
 
-import org.switch2022.project.model.container.*;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.Project;
+
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;

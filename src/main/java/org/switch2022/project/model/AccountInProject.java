@@ -120,7 +120,7 @@ public class AccountInProject {
     /**
      * This method returns an Account Allocated To a Project filtered by project.
      *
-     * @param projectCode
+     * @param projectCode code of the project.
      * @return an Account.
      */
     public Account getAccountByProject(String projectCode) {
@@ -168,7 +168,12 @@ public class AccountInProject {
         return project.hasProjectCode(projectCode);
     }
 
-
+    /**
+     * This method returns a Project Allocated To a Account filtered by account.
+     *
+     * @param email one must get
+     * @return an Project.
+     */
     public Project getProjectByAccount(String email) {
         Project requestedProject = null;
         if (validate(email)) {
@@ -177,11 +182,15 @@ public class AccountInProject {
         return requestedProject;
     }
 
+    /**
+     * This method validates the email of the account object stored within
+     * the class instance is equal to the provided email
+     * @param email of an account
+     * @return validates email
+     */
+
     private boolean validate(String email) {
-        boolean validate = false;
-        if (this.account.getEmail().equals(email)) {
-            validate = true;
-        }
+        boolean validate = this.account.getEmail().equals(email);
         return validate;
     }
 }

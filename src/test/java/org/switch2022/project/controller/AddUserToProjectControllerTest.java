@@ -8,7 +8,7 @@ import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDTO;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
-import org.switch2022.project.utils.mapper.AccountMapper;
+import org.switch2022.project.utils.dto.mapper.AccountMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

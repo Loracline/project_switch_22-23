@@ -1,9 +1,9 @@
 package org.switch2022.project.controller;
-import org.switch2022.project.model.Company;
+import org.switch2022.project.model.container.Company;
 import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
-import org.switch2022.project.utils.mapper.ManagerListProjectsMapper;
+import org.switch2022.project.utils.dto.mapper.ManagerListProjectsMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,12 @@ public class ListProjectsInAccountController {
 
     /**
      * This method first verifies if User has permission to generate a list of projects
-     * and then returns a list of Projects allocated to that User
+     * and then returns a list of Projects allocated to that User.
+     * creates a new list, validates the email thru the company method "validateUser",
+     * if User is valid , calls for method listProjectsByAccount on company passing email as argument,
+     * returns a list of projects associated with the email given, then calls for getListOfProjectsDTO.
      *
-     * @param emailUser
+     * @param emailUser email of the user.
      * @return userListProjectsDTO
      */
 

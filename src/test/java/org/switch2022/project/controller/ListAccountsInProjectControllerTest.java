@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.mapper.AccountMapper;
+import org.switch2022.project.utils.dto.mapper.AccountMapper;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -130,8 +130,12 @@ public class AccountInProjectContainer {
     }
 
     /**
-     * This method returns a list of Projects Allocated To an Account
+     * This method returns a list of Projects Allocated To an Account.
+     * creates a empty list, uses while loop to iterate through accountsInProject
+     * for each iteration it calls the method getProjectByAccount, if the requested project is
+     * not null, its added to the list.
      *
+     * @param email given email to search project allocated to it.
      * @return a list of Projects
      */
     public List<Project> listProjectsByAccount(String email) {

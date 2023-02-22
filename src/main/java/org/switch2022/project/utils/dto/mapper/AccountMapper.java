@@ -1,4 +1,4 @@
-package org.switch2022.project.utils.mapper;
+package org.switch2022.project.utils.dto.mapper;
 
 import org.switch2022.project.model.Account;
 import org.switch2022.project.utils.dto.AccountDTO;

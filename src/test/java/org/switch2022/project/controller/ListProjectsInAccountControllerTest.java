@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
-import org.switch2022.project.utils.mapper.ManagerListProjectsMapper;
+import org.switch2022.project.utils.dto.mapper.ManagerListProjectsMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

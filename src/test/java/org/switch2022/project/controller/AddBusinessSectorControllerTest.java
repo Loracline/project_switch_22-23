@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.AccountContainer;
 import org.switch2022.project.model.container.BusinessSectorContainer;
+import org.switch2022.project.model.container.Company;
 import org.switch2022.project.model.container.ProfileContainer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

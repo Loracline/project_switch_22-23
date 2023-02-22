@@ -4,11 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
-import org.switch2022.project.model.container.BusinessSectorContainer;
-import org.switch2022.project.model.container.CustomerContainer;
-import org.switch2022.project.model.container.ProjectContainer;
-import org.switch2022.project.model.container.ProjectTypologyContainer;
+import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
+import org.switch2022.project.utils.dto.mapper.ProjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
