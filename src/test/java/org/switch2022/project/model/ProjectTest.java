@@ -4,8 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ProjectTest {
 
@@ -60,6 +59,22 @@ public class ProjectTest {
         Object projectObject = new Object();
         boolean expected = false;
         boolean result = projectOne.equals(projectObject);
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Test to ensure that the object to compare is equal to null
+     */
+    @Test
+    void ensureObjectToCompareIsNull() {
+        //Arrange
+        Project other = null;
+        boolean expected = false;
+
+        //Act
+        boolean result = projectOne.equals(other);
+
+        //Assert
         assertEquals(expected, result);
     }
 

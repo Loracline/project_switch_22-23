@@ -25,7 +25,7 @@ public class ProjectContainer {
     public Project getProjectByCode(String code) {
         Project projectRequested = null;
         int i = 0;
-        while (i < this.projects.size() && !(projectRequested == (projects.get(i)))) {
+        while (i < this.projects.size() && (projectRequested != (projects.get(i)))) {
             if (projects.get(i).getProjectCode().equalsIgnoreCase(code)) {
                 projectRequested = projects.get(i);
             }
@@ -50,13 +50,8 @@ public class ProjectContainer {
      * @param projectDTOAsManager data transfer object of the attributes of project.
      * @return TRUE if registered and FALSE otherwise.
      */
-    public boolean registerProject(ProjectDtoAsManager projectDTOAsManager,
-                                   ProjectTypologyContainer projectTypologyContainer,
-                                   CustomerContainer customerContainer,
-                                   BusinessSectorContainer businessSectorContainer) {
-        Project project = ProjectMapper.getProjectFromDTO(projectDTOAsManager,
-                projectTypologyContainer, customerContainer,
-                businessSectorContainer);
+    public boolean registerProject(ProjectDtoAsManager projectDTOAsManager) {
+        Project project = ProjectMapper.getProjectFromDTO(projectDTOAsManager);
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);

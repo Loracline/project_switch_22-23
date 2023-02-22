@@ -57,7 +57,7 @@ class RegisterProjectControllerTest {
         projectTwoDTO = new ProjectDtoAsManager("AA004", "software development management", "Mary",
                 "228674498", "Fixed cost", "Sports");
         projectContainer = new ProjectContainer();
-        projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer, businessSectorContainer);
+        projectContainer.registerProject(projectOneDTO);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, null, customerContainer);

@@ -11,20 +11,13 @@ import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 public final class ProjectMapper {
 
-    private ProjectMapper() {
-    }
+    private ProjectMapper() {}
 
-    public static Project getProjectFromDTO(ProjectDtoAsManager projectDTOAsManager,
-                                            ProjectTypologyContainer projectTypologyContainer,
-                                            CustomerContainer customerContainer,
-                                            BusinessSectorContainer businessSectorContainer) {
+    public static Project getProjectFromDTO(ProjectDtoAsManager projectDTOAsManager) {
 
-        Customer customer = customerContainer.getCustomer(projectDTOAsManager.customerName,
-                projectDTOAsManager.customerNif);
-        ProjectTypology projectTypology =
-                projectTypologyContainer.getProjectTypology(projectDTOAsManager.projectTypology);
-        BusinessSector businessSector =
-                businessSectorContainer.getBusinessSector(projectDTOAsManager.businessSector);
+        Customer customer = new Customer(projectDTOAsManager.customerName, projectDTOAsManager.customerNif);
+        ProjectTypology projectTypology = new ProjectTypology(projectDTOAsManager.projectTypology);
+        BusinessSector businessSector = new BusinessSector(projectDTOAsManager.businessSector);
         return new Project(projectDTOAsManager.code, projectDTOAsManager.name,
                 customer, projectTypology, businessSector);
     }
