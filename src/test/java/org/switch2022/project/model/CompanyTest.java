@@ -49,7 +49,7 @@ class CompanyTest {
         accountFour = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
 
         // AccountDTO created.
-        accountTwoDTO = new AccountDTO(accountTwo.getAccountName(), accountTwo.getEmail(), accountTwo.hasAccountStatus());
+        accountTwoDTO = new AccountDTO(accountTwo.getAccountName(), accountTwo.getEmail(), accountTwo.getAccountStatus());
 
         // Container of accounts created.
         accountContainer = new AccountContainer();

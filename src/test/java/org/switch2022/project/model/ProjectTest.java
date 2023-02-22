@@ -260,4 +260,29 @@ public class ProjectTest {
         // Check that unequal objects have different hash codes
         assertNotEquals(objectOne.hashCode(), objectTwo.hashCode());
     }
+
+    @Test
+    void ensureThatProjectIsOpen() {
+        //Arrange
+        boolean expected = true;
+
+        //Act
+        boolean result = projectOne.isProjectOpen();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatProjectIsClosed() {
+        //Arrange
+        projectOne.setProjectStatus("CLOSED");
+        boolean expected = false;
+
+        //Act
+        boolean result = projectOne.isProjectOpen();
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }

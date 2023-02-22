@@ -20,7 +20,7 @@ public class AccountMapper {
      * @return DTO carrying data.
      */
     public static AccountDTO accountToDTO(Account account) {
-        return new AccountDTO(account.getAccountName(),account.getEmail(),account.hasAccountStatus());
+        return new AccountDTO(account.getAccountName(),account.getEmail(),account.getAccountStatus());
     }
 
     // LIST OF ACCOUNTS -> LIST OF DTO

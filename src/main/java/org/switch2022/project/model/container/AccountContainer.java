@@ -127,7 +127,7 @@ public class AccountContainer {
             Account account = getAccountByEmail(email);
             Account copyAccount = new Account(account);
             copyAccount.setStatus(status);
-            if (account.hasAccountStatus() != copyAccount.hasAccountStatus()) {
+            if (account.getAccountStatus() != copyAccount.getAccountStatus()) {
                 isChanged = true;
             }
         }
@@ -152,5 +152,9 @@ public class AccountContainer {
             i++;
         }
         return users;
+    }
+
+    public boolean doesAccountExist(Account account) {
+        return accounts.contains(account);
     }
 }

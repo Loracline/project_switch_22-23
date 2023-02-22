@@ -16,7 +16,7 @@ public class Project {
     private final Customer customer;
     private final ProjectTypology projectTypology;
     private final BusinessSector businessSector;
-    private final String projectStatus;
+    private String projectStatus;
 
     /**
      * Constructor
@@ -119,5 +119,17 @@ public class Project {
 
     public boolean hasProjectCode(String projectCode) {
         return projectCode.equals(this.projectCode);
+    }
+
+    public void setProjectStatus(String status) {
+        this.projectStatus = status.toLowerCase();
+    }
+    public boolean isProjectOpen() {
+        boolean result = false;
+        final String STATUS = "closed";
+        if (!STATUS.equalsIgnoreCase(this.projectStatus)) {
+            result = true;
+        }
+        return result;
     }
 }

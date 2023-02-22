@@ -114,7 +114,7 @@ public class Account {
      *
      * @return status of the account.
      */
-    public boolean hasAccountStatus() {
+    public boolean getAccountStatus() {
         return accountStatus;
     }
 

@@ -293,4 +293,28 @@ class AccountContainerTest {
         // Assert
         assertEquals(expected, result);
     }
+
+    @Test
+    void ensureThatAccountExists() {
+        //Arrange
+        boolean expected = true;
+
+        //Act
+        boolean result = accountContainer.doesAccountExist(accountOne);
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatAccountDoesNotExist() {
+        //Arrange
+        boolean expected = false;
+
+        //Act
+        boolean result = accountContainer.doesAccountExist(accountFour);
+
+        //Assert
+        assertEquals(expected,result);
+    }
 }
