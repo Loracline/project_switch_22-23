@@ -15,10 +15,10 @@ public class AccountInProject {
      */
     private final Account account;
     private final Project project;
-    private final String role;
-    private final LocalDate startDate;
-    private final float costPerHour;
-    private final float percentageAllocation;
+    private String role;
+    private LocalDate startDate;
+    private float costPerHour;
+    private float percentageAllocation;
     private LocalDate endDate;
 
     /**
@@ -33,6 +33,11 @@ public class AccountInProject {
         this.costPerHour = costPerHour;
         this.percentageAllocation = percentageAllocation;
         this.startDate = startDate;
+    }
+
+    public AccountInProject(Account account, Project project){
+        this.account = account;
+        this.project = project;
     }
 
     /**
@@ -97,6 +102,18 @@ public class AccountInProject {
      */
     public float getPercentageOfAllocation() {
         return this.percentageAllocation;
+    }
+
+    /**
+     * This method returns the percentage of allocation of an Account Allocated To a
+     * Project.
+     *
+     * @return percentage of allocation of an Account Allocated To a Project
+     */
+    boolean isPercentageOfAllocationValid(float percentageOfAllocation){
+        final float MAXIMUM_PERCENTAGE = 100;
+        final float MINIMUM_PERCENTAGE = 0;
+        return percentageOfAllocation > MINIMUM_PERCENTAGE && percentageOfAllocation <= MAXIMUM_PERCENTAGE;
     }
 
 

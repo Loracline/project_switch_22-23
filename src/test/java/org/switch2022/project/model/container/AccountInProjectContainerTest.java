@@ -395,7 +395,7 @@ class AccountInProjectContainerTest {
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 49);
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 49);
 
         // Assert
         assertEquals(expected, result);
@@ -410,7 +410,7 @@ class AccountInProjectContainerTest {
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 50);
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 50);
 
         // Assert
         assertEquals(expected, result);
@@ -425,7 +425,7 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 51);
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 51);
 
         // Assert
         assertEquals(expected, result);
@@ -440,7 +440,7 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isPercentageOfAllocationValid(accountTwo, 0);
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 0);
 
         // Assert
         assertEquals(expected, result);

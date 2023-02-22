@@ -46,7 +46,7 @@ public class AccountInProjectContainer {
             boolean doesAccountInProjectExist =
                     doesAccountInProjectExist(accountInProject);
             boolean isPercentageOfAllocationValid =
-                    isPercentageOfAllocationValid(account,
+                    isTotalPercentageOfAllocationValid(account,
                             allocationDTO.percentageAllocation);
 
 
@@ -86,8 +86,8 @@ public class AccountInProjectContainer {
      *
      * @return TRUE if it doesn't exceed 100, and FALSE otherwise.
      */
-    boolean isPercentageOfAllocationValid(Account account,
-                                          float newPercentageAllocation) {
+    boolean isTotalPercentageOfAllocationValid(Account account,
+                                               float newPercentageAllocation) {
         boolean percentageOfAllocationValid = false;
         float totalPercentageAllocation =
                 currentPercentageOfAllocation(account) +

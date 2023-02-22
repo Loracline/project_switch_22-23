@@ -284,4 +284,64 @@ public class AccountInProjectTest {
         //Assert
         assertNull(result);
     }
+
+    /**
+     * Testing if percentage of allocation is valid when equals 100%.
+     */
+    @Test
+    void ensurePercentAllocationIsValidIfEqualsOneHundred() {
+        // Arrange
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProject.isPercentageOfAllocationValid(100);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Testing if percentage of allocation is invalid when above 100%.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalidIfAboveOneHundred() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProject.isPercentageOfAllocationValid(151);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Testing if percentage of allocation is invalid when below 0%.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalidIfBelowZero() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProject.isPercentageOfAllocationValid(-20);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Testing if percentage of allocation is invalid when allocating an account at 0%.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalid_NewAllocationInvalid() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProject.isPercentageOfAllocationValid(0);
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }
