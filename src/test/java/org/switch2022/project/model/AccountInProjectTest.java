@@ -16,7 +16,7 @@ public class AccountInProjectTest {
     float percentageAllocation;
     LocalDate startDate;
     LocalDate endDate;
-    AccountInProject accountInProject;
+    AccountInProject accountInProject, accountInProjectIncomplete;
 
     @BeforeEach
     void setUp() {
@@ -33,6 +33,8 @@ public class AccountInProjectTest {
 
         accountInProject = new AccountInProject(account, project, "Team Member",
                 costPerHour, percentageAllocation, startDate, endDate);
+
+        accountInProjectIncomplete = new AccountInProject(account, project);
     }
 
     @AfterEach
@@ -493,4 +495,54 @@ public class AccountInProjectTest {
         // Assert
         assertEquals(expected,result);
     }
+
+    @Test
+    void ensureThatReturnsTrueIfRoleIsEmpty() {
+        //Arrange
+        boolean expected = true;
+
+        //Act
+        boolean result = accountInProjectIncomplete.isRoleEmpty();
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfRoleIsNotEmpty() {
+        //Arrange
+        boolean expected = false;
+
+        //Act
+        boolean result = accountInProject.isRoleEmpty();
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureRoleIsRetrieved() {
+        //Arrange
+        String expected = "team member";
+
+        //Act
+        String result = accountInProject.getRole();
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureEmptyRoleIsRetrieved() {
+        //Arrange
+        String expected = "";
+
+        //Act
+        String result = accountInProjectIncomplete.getRole();
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+
 }

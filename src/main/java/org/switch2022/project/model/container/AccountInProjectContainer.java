@@ -39,12 +39,14 @@ public class AccountInProjectContainer {
         boolean accountInProjectAdded = false;
         AccountInProject accountInProject = new AccountInProject(account, project,
                 allocationDTO.role, allocationDTO.costPerHour,
-                allocationDTO.percentageAllocation, allocationDTO.startDate, allocationDTO.endDate);
+                allocationDTO.percentageAllocation, allocationDTO.startDate,
+                allocationDTO.endDate);
 
         if (!accountsInProject.contains(accountInProject) &&
                 isAccountInProjectValid(accountInProject)) {
             accountsInProject.add(accountInProject);
-            AccountInProject incompleteAccount = getIncompleteAccountInProject(account, project);
+            AccountInProject incompleteAccount = getIncompleteAccountInProject(account,
+                    project);
             if (incompleteAccount != null) {
                 accountsInProject.remove(incompleteAccount);
             }
@@ -54,7 +56,8 @@ public class AccountInProjectContainer {
         return accountInProjectAdded;
     }
 
-    private AccountInProject getIncompleteAccountInProject(Account account, Project project) {
+    private AccountInProject getIncompleteAccountInProject(Account account,
+                                                           Project project) {
         int i = 0;
         AccountInProject incompleteAccountInProject = null;
         while (i < accountsInProject.size()) {
@@ -95,13 +98,16 @@ public class AccountInProjectContainer {
         if (accountInProject.isScrumMasterOrProductOwner()) {
             int i = 0;
             while (i < accountsInProject.size() && !isAllocationValid) {
-
-                if (accountsInProject.get(i).getRole().equals(accountInProject.getRole()) &&
-                        isPeriodValid(accountInProject, accountsInProject.get(i))) {
+                if (accountsInProject.get(i).getRole().equals(accountInProject.getRole())) {
+                    if (isPeriodValid(accountInProject, accountsInProject.get(i))) {
+                        isAllocationValid = true;
+                    }
+                } else {
                     isAllocationValid = true;
                 }
                 i++;
             }
+
         } else if (accountInProject.isTeamMember()) {
             int f = 0;
             while (f < accountsInProject.size() && !isAllocationValid) {
@@ -114,7 +120,8 @@ public class AccountInProjectContainer {
         return isAllocationValid;
     }
 
-    private boolean isPeriodValid(AccountInProject newAccountInProject, AccountInProject existingAccountInProject) {
+    private boolean isPeriodValid(AccountInProject newAccountInProject,
+                                  AccountInProject existingAccountInProject) {
         boolean isPeriodValid = true;
         LocalDate startDateNewAllocation = newAccountInProject.getStartDate();
         LocalDate endDateNewAllocation = newAccountInProject.getEndDate();
@@ -208,7 +215,8 @@ public class AccountInProjectContainer {
         List<Account> accounts = new ArrayList<>();
         int i = 0;
         while (i < accountsInProject.size()) {
-            Account requestedAccount = accountsInProject.get(i).getAccountByProject(projectCode);
+            Account requestedAccount =
+                    accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
                 accounts.add(requestedAccount);
             }
@@ -220,7 +228,8 @@ public class AccountInProjectContainer {
     /**
      * This method returns a list of Projects Allocated To an Account.
      * creates an empty list, uses while loop to iterate through accountsInProject
-     * for each iteration it calls the method getProjectByAccount, if the requested project is
+     * for each iteration it calls the method getProjectByAccount, if the requested
+     * project is
      * not null, it's added to the list.
      *
      * @param email given email to search project allocated to it.
@@ -230,7 +239,8 @@ public class AccountInProjectContainer {
         List<Project> projects = new ArrayList<>();
         int i = 0;
         while (i < accountsInProject.size()) {
-            Project requestedProject = accountsInProject.get(i).getProjectByAccount(email);
+            Project requestedProject =
+                    accountsInProject.get(i).getProjectByAccount(email);
             if (requestedProject != null) {
                 projects.add(requestedProject);
             }

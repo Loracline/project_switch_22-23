@@ -39,7 +39,7 @@ public class AccountInProject {
     public AccountInProject(Account account, Project project) {
         this.account = account;
         this.project = project;
-        this.role = "empty";
+        this.role = "";
         this.costPerHour = 0.0f;
         this.percentageAllocation = 0.0f;
         this.startDate = LocalDate.of(1, 1, 1);
@@ -237,6 +237,6 @@ public class AccountInProject {
     }
 
     public boolean isRoleEmpty() {
-        return this.role.equalsIgnoreCase("empty");
+        return this.role.isEmpty();
     }
 }
