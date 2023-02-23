@@ -154,6 +154,26 @@ class AccountInProjectContainerTest {
     }
 
     /**
+     * Testing if one is not able to add an account to a project with an allocationDTO
+     * containing the role Product Owner, if there is already a product owner during
+     * the same period. It should result in a false statement.
+     */
+    @Test
+    void ensureThatProductOwnerIsNotAddedToAccountsInProjectsIfAlreadyExistsOne() {
+        //Assert
+        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        accountInProjectContainer.addUserToProject(accountOne, projectOne,
+                allocationDTOPO);
+
+        //Act
+        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+                allocationDTOPO);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
      * Testing if one is able to add account to project with an allocationDTO containing valid attributes, including
      * the role as a Team Member. It should result in a true statement.
      */
@@ -185,6 +205,27 @@ class AccountInProjectContainerTest {
 
         //Assert
         assertTrue(result);
+    }
+
+    /**
+     * Testing if one is not able to add an account to a project with an allocationDTO
+     * containing the role Scrum Master, if there is already a Scrum Master during
+     * the same period. It should result in a false statement.
+     */
+    @Test
+    void ensureThatScrumMasterIsNotAddedToAccountsInProjectsIfAlreadyExistsOne() {
+        //Assert
+        allocationDTOPO = new AllocationDto("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023
+                , 1, 19), LocalDate.of(2024, 1, 19));
+        accountInProjectContainer.addUserToProject(accountOne, projectOne,
+                allocationDTOPO);
+
+        //Act
+        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+                allocationDTOPO);
+
+        //Assert
+        assertFalse(result);
     }
 
     /**
