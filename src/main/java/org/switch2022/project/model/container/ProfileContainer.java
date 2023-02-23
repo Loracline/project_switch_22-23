@@ -52,7 +52,7 @@ public class ProfileContainer {
         Profile requestedProfile = null;
         int i = 0;
         while (i < this.profiles.size() && requestedProfile == null) {
-            if (this.profiles.get(i).checkProfileByProfileName(profileName)) {
+            if (this.profiles.get(i).isProfileRequired(profileName)) {
                 requestedProfile = profiles.get(i);
             }
             i++;

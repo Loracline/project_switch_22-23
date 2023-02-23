@@ -4,10 +4,11 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 /**
- * Class Account is built to create and manage new accounts.
- * An account is defined by: name, email, phone number, profile, status and photo
- * (optional).
- * Status is "True" if ACTIVE and "False" if INACTIVE.
+ * The class Account was built to create and manage new accounts.
+ * An account is defined by: name, e-mail, phone number, profile, status and
+ * photo (the last attribute is optional).
+ * The account status is "True" if the account is ACTIVE and is "False" if the
+ * account is INACTIVE.
  */
 public class Account {
     /**
@@ -17,12 +18,14 @@ public class Account {
     private final String email;
     private final long phoneNumber;
     private Profile profile;
-    private BufferedImage photo;
     private boolean accountStatus;
+    private BufferedImage photo;
 
 
     /**
      * Constructor
+     * When an account is instantiated, its default profile is "User", and its
+     * default status is ACTIVE (True).
      */
     public Account(String name, String email, long phoneNumber, BufferedImage photo) {
         this.accountName = name;
@@ -39,7 +42,7 @@ public class Account {
     /**
      * Copy Constructor
      * Provides a way to create a new object with the same state as an existing
-     * object, without modifying the existing object.
+     * one, without modifying the existing object.
      */
     public Account(Account other) {
         this.accountName = other.accountName;

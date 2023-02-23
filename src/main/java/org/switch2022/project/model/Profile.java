@@ -3,18 +3,18 @@ package org.switch2022.project.model;
 import java.util.Objects;
 
 /**
- * Class Profile is built to create and manage new profiles.
- * A profile is defined by name.
+ * The class Profile was built to create and manager new profiles.
+ * A profile is defined by a name.
  */
 public class Profile {
+    public static final String ADMINISTRATOR = "administrator";
+    public static final String MANAGER = "manager";
+    public static final String USER = "user";
+
     /**
      * Attributes
      */
     private final String profileName;
-
-    public static final String ADMINISTRATOR = "administrator";
-    public static final String MANAGER = "manager";
-    public static final String USER = "user";
 
     /**
      * Constructor
@@ -23,52 +23,48 @@ public class Profile {
         this.profileName = profileName.toLowerCase().trim();
     }
 
+    /**
+     * This method checks if two instances of class Profile are equal by
+     * comparing its names.
+     *
+     * @param toCompare Profile instance to compare with.
+     * @return TRUE if the two have the same profile name, and FALSE otherwise.
+     */
+    @Override
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) {
+            return true;
+        }
+        if (toCompare == null) {
+            return false;
+        }
+        if (toCompare.getClass() != this.getClass()) {
+            return false;
+        }
+        Profile reference = (Profile) toCompare;
+        return Objects.equals(profileName, reference.profileName.toLowerCase().trim());
+    }
+
+    /**
+     * If two objects are equal according to the equals(Object) method, then
+     * calling the hashCode method on each of the two objects must produce the
+     * same integer result.
+     *
+     * @return the hash code value for this object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(profileName);
     }
 
     /**
-     * This method checks if two instances of Profile are equal by comparing its
-     * names.
+     * This method verifies if the profile is the one required by checking its
+     * profile name.
      *
-     * @param toCompare Profile instance to compare with.
-     * @return TRUE if the two have the same profile name, and FALSE otherwise.
+     * @return TRUE if it is the profile required or FALSE otherwise.
      */
-
-    @Override
-    public boolean equals(Object toCompare) {
-        if (this == toCompare) {
-            return true;
-        }
-        if (toCompare == null){
-            return false;
-        }
-        if (toCompare.getClass() != this.getClass()) {
-            return false;
-        }
-        Profile profile1 = (Profile) toCompare;
-        return Objects.equals(profileName, profile1.profileName.toLowerCase().trim());
-    }
-
-    /**
-     * This method verifies if profile is "Manager" by checking its profile name.
-     *
-     * @return TRUE if "Manager" and FALSE otherwise.
-     */
-
     public boolean isProfileRequired(String profileNameRequired) {
-        return this.profileName.equals(profileNameRequired);
-    }
-
-    /**
-     * This method verifies if profile is the one intended through its profileName.
-     *
-     * @param profileName of the seeked account
-     * @return TRUE if profile has given profileName, and FALSE otherwise.
-     */
-    public boolean checkProfileByProfileName(String profileName) {
-        return this.profileName.equalsIgnoreCase(profileName);
+        return this.profileName.equalsIgnoreCase(profileNameRequired);
     }
 }
 
