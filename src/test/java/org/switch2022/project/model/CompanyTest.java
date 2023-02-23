@@ -467,7 +467,7 @@ class CompanyTest {
         boolean result = company.addUserToProject(accountTwoDTO, projectOneDTO, scrumMasterDTO);
 
         // Assert
-        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test

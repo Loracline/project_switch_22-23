@@ -215,4 +215,28 @@ public class AccountInProject {
     public boolean isEndDateValid() {
         return this.endDate.isAfter(this.startDate);
     }
+
+    public boolean hasProject(Project project) {
+        return this.project.equals(project);
+    }
+
+    public boolean hasAccount(Account account) {
+        return this.account.equals(account);
+    }
+
+    public boolean isScrumMasterOrProductOwner() {
+        final String SCRUM_MASTER = "Scrum Master";
+        final String PRODUCT_OWNER = "Product Owner";
+        return this.role.equalsIgnoreCase(SCRUM_MASTER) ||
+                this.role.equalsIgnoreCase(PRODUCT_OWNER);
+    }
+
+    public boolean isTeamMember() {
+        final String TEAM_MEMBER = "Team Member";
+        return this.role.equalsIgnoreCase(TEAM_MEMBER);
+    }
+
+    public boolean isRoleEmpty() {
+        return this.role.equalsIgnoreCase("empty");
+    }
 }

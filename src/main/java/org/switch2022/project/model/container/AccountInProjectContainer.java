@@ -44,12 +44,29 @@ public class AccountInProjectContainer {
         if (!accountsInProject.contains(accountInProject) &&
                 isAccountInProjectValid(accountInProject)) {
             accountsInProject.add(accountInProject);
+            AccountInProject incompleteAccount = getIncompleteAccountInProject(account, project);
+            if (incompleteAccount != null) {
+                accountsInProject.remove(incompleteAccount);
+            }
             accountInProjectAdded = true;
         }
 
         return accountInProjectAdded;
     }
 
+    private AccountInProject getIncompleteAccountInProject(Account account, Project project) {
+        int i = 0;
+        AccountInProject incompleteAccountInProject = null;
+        while (i < accountsInProject.size()) {
+            if (accountsInProject.get(i).hasAccount(account) &&
+                    accountsInProject.get(i).hasProject(project) &&
+                    accountsInProject.get(i).isRoleEmpty()) {
+                incompleteAccountInProject = accountsInProject.get(i);
+            }
+            i++;
+        }
+        return incompleteAccountInProject;
+    }
 
     private boolean isAccountInProjectValid(AccountInProject accountInProject) {
         return accountInProject.isRoleValid() &&
@@ -73,34 +90,51 @@ public class AccountInProjectContainer {
     }
 
     private boolean isAllocationValid(AccountInProject accountInProject) {
-        boolean isAllocationValid = true;
-        LocalDate startDateNewAllocation = accountInProject.getStartDate();
-        LocalDate endDateNewAllocation = accountInProject.getEndDate();
+        boolean isAllocationValid = false;
 
-        int i = 0;
-        while (i < accountsInProject.size() && isAllocationValid) {
-            LocalDate startDateExistingAllocation = accountsInProject.get(i).getStartDate();
-            LocalDate endDateExistingAllocation = accountsInProject.get(i).getEndDate();
+        if (accountInProject.isScrumMasterOrProductOwner()) {
+            int i = 0;
+            while (i < accountsInProject.size() && !isAllocationValid) {
 
-            if (isScrumMasterOrProductOwner(i) &&
-                    isPeriodOverlapping(startDateExistingAllocation,
-                            endDateExistingAllocation, startDateNewAllocation,
-                            endDateNewAllocation)) {
-                isAllocationValid = false;
+                if (accountsInProject.get(i).getRole().equals(accountInProject.getRole()) &&
+                        isPeriodValid(accountInProject, accountsInProject.get(i))) {
+                    isAllocationValid = true;
+                }
+                i++;
             }
-
-            i++;
+        } else if (accountInProject.isTeamMember()) {
+            int f = 0;
+            while (f < accountsInProject.size() && !isAllocationValid) {
+                if (isPeriodValid(accountInProject, accountsInProject.get(f))) {
+                    isAllocationValid = true;
+                }
+                f++;
+            }
         }
-
         return isAllocationValid;
     }
 
-    private boolean isScrumMasterOrProductOwner(int i) {
-        final String SCRUM_MASTER = "Scrum Master";
-        final String PRODUCT_OWNER = "Product Owner";
-        return accountsInProject.get(i).getRole().equalsIgnoreCase(SCRUM_MASTER) ||
-                accountsInProject.get(i).getRole().equalsIgnoreCase(PRODUCT_OWNER);
+    private boolean isPeriodValid(AccountInProject newAccountInProject, AccountInProject existingAccountInProject) {
+        boolean isPeriodValid = true;
+        LocalDate startDateNewAllocation = newAccountInProject.getStartDate();
+        LocalDate endDateNewAllocation = newAccountInProject.getEndDate();
+
+        //int i = 0;
+        //while (i < accountsInProject.size() && isPeriodValid) {
+        LocalDate startDateExistingAllocation = existingAccountInProject.getStartDate();
+        LocalDate endDateExistingAllocation = existingAccountInProject.getEndDate();
+
+        if (isPeriodOverlapping(startDateExistingAllocation,
+                endDateExistingAllocation, startDateNewAllocation,
+                endDateNewAllocation)) {
+            isPeriodValid = false;
+            //}
+            //i++;
+        }
+
+        return isPeriodValid;
     }
+
 
     public boolean addUserToProject(Account account, Project project) {
         boolean accountInProjectAdded = false;

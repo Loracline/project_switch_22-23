@@ -221,10 +221,11 @@ public class Company {
                 this.projectContainer.getProjectByCode(projectDTOAsManager.code);
 
         if (account != null && project != null) {
-            addUserToProject = this.accountInProjectContainer.addUserToProject(account, project,
-                    allocationDTO);
+            if (account.isProfileRequired("user") && project.isProjectOpen()) {
+                addUserToProject = this.accountInProjectContainer.addUserToProject(account, project,
+                        allocationDTO);
+            }
         }
-
         return addUserToProject;
     }
 
