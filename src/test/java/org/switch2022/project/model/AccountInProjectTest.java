@@ -9,21 +9,20 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AccountInProjectTest {
-    Account account;
-    Account accountTwo;
-    Project project;
+    Account account, otherAccount;
+    Project project, otherProject;
     float costPerHour;
     float percentageAllocation;
     LocalDate startDate;
     LocalDate endDate;
-    AccountInProject accountInProject, accountInProjectIncomplete;
+    AccountInProject accountInProject, accountInProjectIncomplete,
+            accountInProjectScrumMaster, accountInProjectProductOwner;
 
     @BeforeEach
     void setUp() {
 
         //Account in project created.
         account = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
         project = new Project("1A", "project code", new Customer("John","228674498"),
                 new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
         costPerHour = 7.5f;
@@ -40,8 +39,9 @@ public class AccountInProjectTest {
     @AfterEach
     void tearDown() {
         account = null;
-        accountTwo = null;
+        otherAccount = null;
         project = null;
+        otherProject = null;
         accountInProject = null;
     }
 
@@ -545,4 +545,124 @@ public class AccountInProjectTest {
     }
 
 
+    @Test
+    void ensureThatReturnsTrueIfAccountInProjectHasSpecifiedProject() {
+        //Arrange
+        boolean expected = true;
+
+        //Act
+        boolean result = accountInProject.hasProject(project);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfAccountInProjectDoesNotHaveSpecifiedProject() {
+        //Arrange
+        otherProject = new Project("2A", "other project code", new Customer("Poppy",
+                "228674498"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
+        boolean expected = false;
+
+        //Act
+        boolean result = accountInProject.hasProject(otherProject);
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfAccountInProjectHasSpecifiedAccount() {
+        //Arrange
+        boolean expected = true;
+
+        //Act
+        boolean result = accountInProject.hasAccount(account);
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfAccountInProjectDoesNotHaveSpecifiedAccount() {
+        //Arrange
+        otherAccount = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
+        boolean expected = false;
+
+        //Act
+        boolean result = accountInProject.hasAccount(otherAccount);
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfRoleIsScrumMaster() {
+        //Arrange
+        accountInProjectScrumMaster = new AccountInProject(account, project, "Scrum " +
+                "Master",
+                costPerHour, percentageAllocation, startDate, endDate);
+        boolean expected = true;
+
+        //Act
+        boolean result = accountInProjectScrumMaster.isScrumMasterOrProductOwner();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfRoleIsProductOwner() {
+        //Arrange
+        accountInProjectProductOwner = new AccountInProject(account, project, "Product " +
+                "Owner",
+                costPerHour, percentageAllocation, startDate, endDate);
+        boolean expected = true;
+
+        //Act
+        boolean result = accountInProjectProductOwner.isScrumMasterOrProductOwner();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfRoleIsNotScrumMasterNorProductOwner() {
+        //Arrange
+        boolean expected = false;
+
+        //Act
+        boolean result = accountInProject.isScrumMasterOrProductOwner();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfRoleIsTeamMember() {
+        //Arrange
+        boolean expected = true;
+
+        //Act
+        boolean result = accountInProject.isTeamMember();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfRoleIsNotTeamMember() {
+        //Arrange
+        accountInProjectProductOwner = new AccountInProject(account, project, "Product " +
+                "Owner",
+                costPerHour, percentageAllocation, startDate, endDate);
+        boolean expected = false;
+
+        //Act
+        boolean result = accountInProjectProductOwner.isTeamMember();
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }
