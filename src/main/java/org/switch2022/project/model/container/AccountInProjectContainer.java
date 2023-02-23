@@ -60,7 +60,7 @@ public class AccountInProjectContainer {
                                                            Project project) {
         int i = 0;
         AccountInProject incompleteAccountInProject = null;
-        while (i < accountsInProject.size()) {
+        while (Math.abs(i) < accountsInProject.size()) {
             if (accountsInProject.get(i).hasAccount(account) &&
                     accountsInProject.get(i).hasProject(project) &&
                     accountsInProject.get(i).isRoleEmpty()) {
@@ -97,7 +97,7 @@ public class AccountInProjectContainer {
 
         if (accountInProject.isScrumMasterOrProductOwner()) {
             int i = 0;
-            while (i < accountsInProject.size() && !isAllocationValid) {
+            while (Math.abs(i) < accountsInProject.size() && !isAllocationValid) {
                 if (accountsInProject.get(i).getRole().equals(accountInProject.getRole())) {
                     if (isPeriodValid(accountInProject, accountsInProject.get(i))) {
                         isAllocationValid = true;
@@ -110,7 +110,7 @@ public class AccountInProjectContainer {
 
         } else if (accountInProject.isTeamMember()) {
             int f = 0;
-            while (f < accountsInProject.size() && !isAllocationValid) {
+            while (Math.abs(f) < accountsInProject.size() && !isAllocationValid) {
                 if (isPeriodValid(accountInProject, accountsInProject.get(f))) {
                     isAllocationValid = true;
                 }
@@ -163,7 +163,7 @@ public class AccountInProjectContainer {
     float currentPercentageOfAllocation(Account account) {
         int i = 0;
         float sumOfPercentages = 0;
-        while (i < accountsInProject.size()) {
+        while (Math.abs(i) < accountsInProject.size()) {
             if (isAccountTheSame(account, i) &&
                     doesPeriodIncludeCurrentDate(i)) {
 
@@ -199,7 +199,8 @@ public class AccountInProjectContainer {
                 currentPercentageOfAllocation(account) +
                         newPercentageAllocation;
 
-        if (totalPercentageAllocation <= MAXIMUM_PERCENTAGE) {
+        if (totalPercentageAllocation <= MAXIMUM_PERCENTAGE &&
+                newPercentageAllocation > 0) {
             percentageOfAllocationValid = true;
         }
 
@@ -214,7 +215,7 @@ public class AccountInProjectContainer {
     public List<Account> listAccountsByProject(String projectCode) {
         List<Account> accounts = new ArrayList<>();
         int i = 0;
-        while (i < accountsInProject.size()) {
+        while (Math.abs(i) < accountsInProject.size()) {
             Account requestedAccount =
                     accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
@@ -238,7 +239,7 @@ public class AccountInProjectContainer {
     public List<Project> listProjectsByAccount(String email) {
         List<Project> projects = new ArrayList<>();
         int i = 0;
-        while (i < accountsInProject.size()) {
+        while (Math.abs(i) < accountsInProject.size()) {
             Project requestedProject =
                     accountsInProject.get(i).getProjectByAccount(email);
             if (requestedProject != null) {
