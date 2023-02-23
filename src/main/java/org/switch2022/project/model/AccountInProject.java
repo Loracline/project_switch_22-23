@@ -26,18 +26,24 @@ public class AccountInProject {
      */
     public AccountInProject(Account account, Project project, String role,
                             float costPerHour,
-                            float percentageAllocation, LocalDate startDate) {
+                            float percentageAllocation, LocalDate startDate, LocalDate endDate) {
         this.account = account;
         this.project = project;
         this.role = role.toLowerCase();
         this.costPerHour = costPerHour;
         this.percentageAllocation = percentageAllocation;
         this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public AccountInProject(Account account, Project project){
+    public AccountInProject(Account account, Project project) {
         this.account = account;
         this.project = project;
+        this.role = "empty";
+        this.costPerHour = 0.0f;
+        this.percentageAllocation = 0.0f;
+        this.startDate = LocalDate.of(1, 1, 1);
+        this.endDate = LocalDate.of(1, 1, 1);
     }
 
     /**
@@ -104,13 +110,17 @@ public class AccountInProject {
         return this.percentageAllocation;
     }
 
+    public String getRole() {
+        return role;
+    }
+
     /**
      * This method returns the percentage of allocation of an Account Allocated To a
      * Project.
      *
      * @return percentage of allocation of an Account Allocated To a Project
      */
-    boolean isPercentageOfAllocationValid(float percentageOfAllocation){
+    public boolean isPercentageOfAllocationValid(float percentageOfAllocation) {
         final float MAXIMUM_PERCENTAGE = 100;
         final float MINIMUM_PERCENTAGE = 0;
         return percentageOfAllocation > MINIMUM_PERCENTAGE && percentageOfAllocation <= MAXIMUM_PERCENTAGE;
@@ -150,12 +160,12 @@ public class AccountInProject {
     }
 
     /**
-     * This method sets an end date of allocation to a project with a specific role
+     * This method returns an account Allocated To a Project.
+     *
+     * @return an Account.
      */
-    public void setEndDate(LocalDate endDate) {
-        if (endDate.isAfter(this.startDate)) {
-            this.endDate = endDate;
-        }
+    public LocalDate getStartDate() {
+        return this.startDate;
     }
 
     /**
@@ -169,10 +179,10 @@ public class AccountInProject {
     }
 
     /**
-     * This method returns a Project Allocated To a Account filtered by account.
+     * This method returns a Project Allocated To an Account filtered by account.
      *
      * @param email one must get
-     * @return an Project.
+     * @return a Project.
      */
     public Project getProjectByAccount(String email) {
         Project requestedProject = null;
@@ -185,12 +195,24 @@ public class AccountInProject {
     /**
      * This method validates the email of the account object stored within
      * the class instance is equal to the provided email
+     *
      * @param email of an account
      * @return validates email
      */
 
     private boolean validate(String email) {
-        boolean validate = this.account.getEmail().equals(email);
-        return validate;
+        return this.account.getEmail().equals(email);
+    }
+
+    public boolean isStartDateBeforeNow() {
+        return this.startDate.isBefore(LocalDate.now()) || this.startDate.isEqual(LocalDate.now());
+    }
+
+    public boolean isEndDateAfterNow() {
+        return this.endDate.isAfter(LocalDate.now()) || this.endDate.isEqual(LocalDate.now());
+    }
+
+    public boolean isEndDateValid() {
+        return this.endDate.isAfter(this.startDate);
     }
 }

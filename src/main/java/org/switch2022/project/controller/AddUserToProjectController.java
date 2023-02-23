@@ -3,7 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.container.Company;
 import org.switch2022.project.model.Profile;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AllocationDTO;
+import org.switch2022.project.utils.dto.AllocationDto;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 /**
@@ -42,7 +42,7 @@ public class AddUserToProjectController {
      */
     public boolean addUserToProject(String emailActor, AccountDTO accountDTO,
                                     ProjectDtoAsManager projectDTOAsManager,
-                                    AllocationDTO allocationDTO) {
+                                    AllocationDto allocationDTO) {
         boolean result = false;
         if (company.validateProfileRequired(emailActor, Profile.MANAGER)) {
             result = this.company.addUserToProject(accountDTO, projectDTOAsManager,

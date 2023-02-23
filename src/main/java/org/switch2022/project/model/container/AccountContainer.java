@@ -127,7 +127,7 @@ public class AccountContainer {
             Account account = getAccountByEmail(email);
             Account copyAccount = new Account(account);
             copyAccount.setStatus(status);
-            if (account.getAccountStatus() != copyAccount.getAccountStatus()) {
+            if (account.isAccountStatus() != copyAccount.isAccountStatus()) {
                 isChanged = true;
             }
         }

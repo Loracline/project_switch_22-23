@@ -29,6 +29,7 @@ class AccountContainerTest {
     float costPerHour;
     float percentageAllocation;
     LocalDate startDate;
+    LocalDate endDate;
     AccountInProject accountInProject1, accountInProject2;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
@@ -93,9 +94,9 @@ class AccountContainerTest {
 
         // Accounts in project created.
         accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+                costPerHour, percentageAllocation, startDate, endDate);
         accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+                costPerHour, percentageAllocation, startDate, endDate);
 
         // Container of accounts in project created.
         accountsInProject = new ArrayList<>();

@@ -15,6 +15,7 @@ public class AccountInProjectTest {
     float costPerHour;
     float percentageAllocation;
     LocalDate startDate;
+    LocalDate endDate;
     AccountInProject accountInProject;
 
     @BeforeEach
@@ -28,9 +29,10 @@ public class AccountInProjectTest {
         costPerHour = 7.5f;
         percentageAllocation = 45.0f;
         startDate = LocalDate.of(2023, 1, 19);
+        endDate = LocalDate.of(2024, 1,19);
 
         accountInProject = new AccountInProject(account, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+                costPerHour, percentageAllocation, startDate, endDate);
     }
 
     @AfterEach
@@ -59,7 +61,7 @@ public class AccountInProjectTest {
     void ensureThatTwoAccountsInProjectAreEqual() {
         // Arrange
         AccountInProject copy = new AccountInProject(account, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+                costPerHour, percentageAllocation, startDate, endDate);
         boolean expected = true;
         // Act
         boolean result = accountInProject.equals(copy);
@@ -71,7 +73,7 @@ public class AccountInProjectTest {
     void ensureThatTwoAccountsInProjectAreDifferent() {
         // Arrange
         AccountInProject other = new AccountInProject(account, project, "Product Owner",
-                costPerHour, percentageAllocation, startDate);
+                costPerHour, percentageAllocation, startDate, endDate);
         boolean expected = false;
         // Act
         boolean result = accountInProject.equals(other);
@@ -104,9 +106,9 @@ public class AccountInProjectTest {
     void ensureThatAccountsInProjectHaveSameHashCode() {
         // ARRANGE
         AccountInProject reference = new AccountInProject(account, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+                costPerHour, percentageAllocation, startDate, endDate);
         AccountInProject other = new AccountInProject(account, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+                costPerHour, percentageAllocation, startDate, endDate);
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -120,9 +122,9 @@ public class AccountInProjectTest {
     void ensureThatAccountsInProjectHaveDifferentHashCode() {
         // ARRANGE
         AccountInProject reference = new AccountInProject(account, project, "Team Member",
-                costPerHour, percentageAllocation, startDate);
+                costPerHour, percentageAllocation, startDate, endDate);
         AccountInProject other = new AccountInProject(account, project, "Team Member",
-                7.0f, percentageAllocation, startDate);
+                7.0f, percentageAllocation, startDate, endDate);
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -154,7 +156,7 @@ public class AccountInProjectTest {
     void ensureThatProductOwnerIsAValidRole() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
-                "Product Owner", costPerHour, percentageAllocation, startDate);
+                "Product Owner", costPerHour, percentageAllocation, startDate, endDate);
         //Act
         boolean result = accountInProject.isRoleValid();
         //Assert
@@ -168,7 +170,7 @@ public class AccountInProjectTest {
     void ensureThatTeamMemberIsAValidRole() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
-                "Team Member", costPerHour, percentageAllocation, startDate);
+                "Team Member", costPerHour, percentageAllocation, startDate, endDate);
         //Act
         boolean result = accountInProject.isRoleValid();
         //Assert
@@ -182,7 +184,7 @@ public class AccountInProjectTest {
     void ensureThatScrumMasterIsAValidRole() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
-                "Scrum Master", costPerHour, percentageAllocation, startDate);
+                "Scrum Master", costPerHour, percentageAllocation, startDate, endDate);
         //Act
         boolean result = accountInProject.isRoleValid();
         //Assert
@@ -196,7 +198,7 @@ public class AccountInProjectTest {
     void ensureThatProjectManagerIsAValidRole() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
-                "Project Manager", costPerHour, percentageAllocation, startDate);
+                "Project Manager", costPerHour, percentageAllocation, startDate, endDate);
         //Act
         boolean result = accountInProject.isRoleValid();
         //Assert
@@ -210,7 +212,7 @@ public class AccountInProjectTest {
     void ensureThatAnyOtherRoleIsInvalid() {
         //Arrange
         AccountInProject accountInProject = new AccountInProject(account, project,
-                "Product Visionary", costPerHour, percentageAllocation, startDate);
+                "Product Visionary", costPerHour, percentageAllocation, startDate, endDate);
         //Act
         boolean result = accountInProject.isRoleValid();
         //Assert
@@ -223,9 +225,8 @@ public class AccountInProjectTest {
     @Test
     void ensureThatEndDateIsRetrievedSuccessfully() {
         //Arrange
-        LocalDate expected = LocalDate.of(2023, 12, 25);
+        LocalDate expected = LocalDate.of(2024, 1, 19);
         //Act
-        accountInProject.setEndDate(LocalDate.of(2023, 12, 25));
         LocalDate result = accountInProject.getEndDate();
         //Assert
         assertEquals(expected, result);
@@ -343,5 +344,153 @@ public class AccountInProjectTest {
 
         // Assert
         assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfStartDateIsBeforeNow() {
+        // Arrange
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProject.isStartDateBeforeNow();
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfStartDateIsAfterNow() {
+        // Arrange
+        boolean expected = false;
+        startDate = LocalDate.of(2023, 12, 19);
+        endDate = LocalDate.of(2024, 12,19);
+
+        accountInProject = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate, endDate);
+
+        // Act
+        boolean result = accountInProject.isStartDateBeforeNow();
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfStartDateIsNow() {
+        // Arrange
+        boolean expected = true;
+        startDate = LocalDate.now();
+        endDate = LocalDate.of(2024, 12,19);
+
+        accountInProject = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate, endDate);
+
+        // Act
+        boolean result = accountInProject.isStartDateBeforeNow();
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfEndDateIsAfterNow() {
+        // Arrange
+        boolean expected = true;
+        startDate = LocalDate.now();
+        endDate = LocalDate.of(2024, 12,19);
+
+        accountInProject = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate, endDate);
+
+        // Act
+        boolean result = accountInProject.isEndDateAfterNow();
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfEndDateIsBeforeNow() {
+        // Arrange
+        boolean expected = false;
+        startDate = LocalDate.of(2022, 2,21);
+        endDate = LocalDate.of(2023, 2,21);
+
+        accountInProject = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate, endDate);
+
+        // Act
+        boolean result = accountInProject.isEndDateAfterNow();
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfEndDateIsNow() {
+        // Arrange
+        boolean expected = true;
+        startDate = LocalDate.of(2022, 2,21);
+        endDate = LocalDate.now();
+
+        accountInProject = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate, endDate);
+
+        // Act
+        boolean result = accountInProject.isEndDateAfterNow();
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfEndDateIsAfterStartDate() {
+        // Arrange
+        boolean expected = true;
+        startDate = LocalDate.of(2022, 2,21);
+        endDate = LocalDate.now();
+
+        accountInProject = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate, endDate);
+
+        // Act
+        boolean result = accountInProject.isEndDateValid();
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfEndDateIsBeforeStartDate() {
+        // Arrange
+        boolean expected = false;
+        startDate = LocalDate.of(2025, 2,23);
+        endDate = LocalDate.now();
+
+        accountInProject = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate, endDate);
+
+        // Act
+        boolean result = accountInProject.isEndDateValid();
+
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfEndDateIsEqualToStartDate() {
+        // Arrange
+        boolean expected = false;
+        startDate = LocalDate.now();
+        endDate = LocalDate.now();
+
+        accountInProject = new AccountInProject(account, project, "Team Member",
+                costPerHour, percentageAllocation, startDate, endDate);
+
+        // Act
+        boolean result = accountInProject.isEndDateValid();
+
+        // Assert
+        assertEquals(expected,result);
     }
 }

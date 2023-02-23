@@ -32,6 +32,7 @@ class ListAccountControllerTest {
   float costPerHour;
   float percentageAllocation;
   LocalDate startDate;
+  LocalDate endDate;
   AccountInProject accountInProject1, accountInProject2;
   List<AccountInProject> accountsInProject;
   AccountInProjectContainer accountInProjectContainer;
@@ -52,9 +53,9 @@ class ListAccountControllerTest {
     profileContainer.createProfile("User");
 
     accountInProject1 = new AccountInProject(accountOne, project, "Team Member",
-            costPerHour, percentageAllocation, startDate);
+            costPerHour, percentageAllocation, startDate, endDate);
     accountInProject2 = new AccountInProject(accountTwo, project, "Team Member",
-            costPerHour, percentageAllocation, startDate);
+            costPerHour, percentageAllocation, startDate, endDate);
     accountsInProject = new ArrayList<>();
     accountsInProject.add(accountInProject1);
     accountsInProject.add(accountInProject2);

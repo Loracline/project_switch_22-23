@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AllocationDTO;
+import org.switch2022.project.utils.dto.AllocationDto;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 import java.time.LocalDate;
@@ -29,6 +29,7 @@ class CompanyTest {
     float costPerHour;
     float percentageAllocation;
     LocalDate startDate;
+    LocalDate endDate;
     AccountInProject accountInProject1, accountInProject2;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
@@ -49,7 +50,7 @@ class CompanyTest {
         accountFour = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
 
         // AccountDTO created.
-        accountTwoDTO = new AccountDTO(accountTwo.getAccountName(), accountTwo.getEmail(), accountTwo.getAccountStatus());
+        accountTwoDTO = new AccountDTO(accountTwo.getAccountName(), accountTwo.getEmail(), accountTwo.isAccountStatus());
 
         // Container of accounts created.
         accountContainer = new AccountContainer();
@@ -105,8 +106,10 @@ class CompanyTest {
         projectContainer.registerProject(projectTwoDTO);
 
         // Accounts allocated to project.
-        accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);
-        accountInProject2 = new AccountInProject(accountTwo, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate);
+        startDate = LocalDate.of(2023,1,23);
+        endDate = LocalDate.of(2024,1,23);
+        accountInProject1 = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate, endDate);
+        accountInProject2 = new AccountInProject(accountTwo, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate, endDate);
 
         // Container of accounts allocated in projects created.
         accountsInProject = new ArrayList<>();
@@ -458,7 +461,7 @@ class CompanyTest {
     @Test
     void ensureScrumMasterIsAssociatedToProjectSuccessfully() {
         // Arrange
-        AllocationDTO scrumMasterDTO = new AllocationDTO("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        AllocationDto scrumMasterDTO = new AllocationDto("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         // Act
         boolean result = company.addUserToProject(accountTwoDTO, projectOneDTO, scrumMasterDTO);
@@ -470,7 +473,7 @@ class CompanyTest {
     @Test
     void ensureProductOwnerIsNotAssociatedBecauseProjectDoNotExist() {
         //Arrange
-        AllocationDTO productOwnerDTO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        AllocationDto productOwnerDTO = new AllocationDto("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
         boolean result = company.addUserToProject(accountTwoDTO, projectNonExistentDTO, productOwnerDTO);

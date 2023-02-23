@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AllocationDTO;
+import org.switch2022.project.utils.dto.AllocationDto;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 import java.time.LocalDate;
@@ -23,13 +23,16 @@ class AccountInProjectContainerTest {
 
     Account accountOne, accountTwo, accountThree, accountFour;
     AccountDTO accountDTO, accountDTO2, accountDTO3;
-    AccountInProject accountInProjectOne, accountInProjectTwo, accountInProjectThree, accountInProjectFour, accountInProjectFive;
+    AccountInProject accountInProjectOne, accountInProjectTwo,
+            accountInProjectThree, accountInProjectFour, accountInProjectFive,
+            accountInProjectSix, accountInProjectSeven;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
-    AllocationDTO allocationDTOPO, allocationDTOTM, allocationDTOSM;
+    AllocationDto allocationDTOPO, allocationDTOTM, allocationDTOSM;
     float costPerHour;
     float percentageAllocation;
     LocalDate startDate;
+    LocalDate endDateOne, endDateTwo;
     Project projectOne, projectTwo;
     ProjectDtoAsManager projectDTOAsManager;
     Customer customerOne, customerTwo;
@@ -43,6 +46,8 @@ class AccountInProjectContainerTest {
         costPerHour = 1;
         percentageAllocation = 1;
         startDate = LocalDate.of(2020, 1, 8);
+        endDateOne = LocalDate.of(2020,1,9);
+        endDateTwo = LocalDate.of(2024,1,9);
 
         //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
@@ -65,18 +70,21 @@ class AccountInProjectContainerTest {
         projectTwo = new Project("2B", "Software Development Management", customerTwo, projectTypologyOne, businessSectorOne);
 
         //accountInProject
-        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate);
-        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team Member", costPerHour, 50f, startDate);
-        accountInProjectThree = new AccountInProject(accountThree, projectOne, "Product Owner", costPerHour, percentageAllocation, startDate);
-        accountInProjectFour = new AccountInProject(accountOne, projectTwo, "Scrum Master", costPerHour, percentageAllocation, startDate);
-        accountInProjectFour.setEndDate(LocalDate.of(2020, 1, 9));
-        accountInProjectFive = new AccountInProject(accountThree, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate);
+        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate, endDateOne);
+        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team Member", costPerHour, 50f, startDate, endDateOne);
+        accountInProjectThree = new AccountInProject(accountThree, projectOne, "Product Owner", costPerHour, percentageAllocation, startDate, endDateOne);
+        accountInProjectFour = new AccountInProject(accountOne, projectTwo, "Scrum Master", costPerHour, percentageAllocation, startDate, endDateOne);
+        accountInProjectFive = new AccountInProject(accountThree, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate, endDateOne);
+        accountInProjectSix = new AccountInProject(accountThree, projectTwo);
+        accountInProjectSeven = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate, endDateTwo);
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProjectOne);
         accountsInProject.add(accountInProjectTwo);
         accountsInProject.add(accountInProjectThree);
         accountsInProject.add(accountInProjectFour);
         accountsInProject.add(accountInProjectFive);
+        accountsInProject.add(accountInProjectSix);
+        accountsInProject.add(accountInProjectSeven);
 
         // accountDTOs
         accountDTO = new AccountDTO("John", "john@isep.ipp.pt", true);
@@ -127,7 +135,7 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatProductOwnerIsAddedToAccountsInProjects() {
         //Assert
-        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
@@ -144,7 +152,7 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatTeamMemberIsSuccessfullyAddedToAccountsInProjects() {
         //Arrange
-        allocationDTOTM = new AllocationDTO("Team Member", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOTM = new AllocationDto("Team Member", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
@@ -161,7 +169,7 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatScrumMasterIsSuccessfullyAddedToAccountsInProjects() {
         //Arrange
-        allocationDTOSM = new AllocationDTO("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOSM = new AllocationDto("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
@@ -178,7 +186,7 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfRoleIsInvalid() {
         //Arrange
-        allocationDTOPO = new AllocationDTO("Product Visionary", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDto("Product Visionary", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
@@ -195,7 +203,7 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfAllocationExists() {
         //Arrange
-        allocationDTOPO = new AllocationDTO("Team Member", 1f, 1f, LocalDate.of(2020, 1, 8), null);
+        allocationDTOPO = new AllocationDto("Team Member", 1f, 1f, LocalDate.of(2020, 1, 8), LocalDate.of(2021, 1, 8));
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
@@ -213,7 +221,7 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfPercentageAllocationIsInvalid() {
         //Assert
-        allocationDTOPO = new AllocationDTO("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDto("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo,
@@ -230,7 +238,7 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatAccountIsAddedToAccountsInProjectsIfPercentageAllocationTotalsOneHundred() {
         //Assert
-        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 50.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 50.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
         boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo,
@@ -241,28 +249,12 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add an AccountInProject with a null project. It should result in a false statement.
-     */
-    @Test
-    void ensureThatAccountIsNotAddedToAccountsInProjectsIfProjectIsNull() {
-        //Assert
-        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
-
-        //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountOne, null,
-                allocationDTOPO);
-
-        //Assert
-        assertFalse(result);
-    }
-
-    /**
      * Testing if one is able to add an AccountInProject in case of current sum of percentage of allocation equals zero.
      */
     @Test
-    void ensureUserIAddedToProjectWhenCurrentPercentAllocationIsNull() {
+    void ensureUserIsAddedToProjectWhenCurrentPercentAllocationIsNull() {
         // Arrange
-        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
         boolean expected = true;
 
         // Act
@@ -270,22 +262,6 @@ class AccountInProjectContainerTest {
 
         // Assert
         assertEquals(expected, result);
-    }
-
-    /**
-     * Testing if one is able to add an AccountInProject with a null account. It should result in a false statement.
-     */
-    @Test
-    void ensureThatAccountIsNotAddedToAccountsInProjectsIfAccountIsNull() {
-        //Assert
-        allocationDTOPO = new AllocationDTO("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
-
-        //Act
-        boolean result = accountInProjectContainer.addUserToProject(null, projectOne,
-                allocationDTOPO);
-
-        //Assert
-        assertFalse(result);
     }
 
     /**
@@ -299,6 +275,7 @@ class AccountInProjectContainerTest {
         expected.add(accountOne);
         expected.add(accountTwo);
         expected.add(accountThree);
+        expected.add(accountOne);
 
         //Act
         List<Account> result = accountInProjectContainer.listAccountsByProject("1A");
@@ -333,6 +310,7 @@ class AccountInProjectContainerTest {
         List<Project> expected = new ArrayList<>();
         expected.add(projectOne);
         expected.add(projectTwo);
+        expected.add(projectOne);
 
         //Act
         List<Project> result = accountInProjectContainer.listProjectsByAccount("mike@isep.ipp.pt");
@@ -353,21 +331,6 @@ class AccountInProjectContainerTest {
         List<Project> result = accountInProjectContainer.listProjectsByAccount("mary@isep.ipp.pt");
 
         //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Test to calculate the percentage of allocation when the account is currently in other projects.
-     */
-    @Test
-    void calculateCurrentPercentAllocation_EndDateNull() {
-        // Arrange
-        float expected = 50f;
-
-        // Act
-        float result = accountInProjectContainer.currentPercentageOfAllocation(accountTwo);
-
-        // Assert
         assertEquals(expected, result);
     }
 
@@ -425,22 +388,31 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 51);
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 151);
 
         // Assert
         assertEquals(expected, result);
     }
 
-    /**
-     * Testing if percentage of allocation is invalid when allocating an account at 0%.
-     */
     @Test
-    void ensurePercentAllocationIsInvalid_NewAllocationInvalid() {
+    void ensureUserIsAddedToProjectSuccessfullyWithMandatoryArgumentsOnly() {
+        // Arrange
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureUserIsNotAddedToProjectWithMandatoryArgumentsOnlyBecauseAllocationAlreadyExists() {
         // Arrange
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 0);
+        boolean result = accountInProjectContainer.addUserToProject(accountThree, projectTwo);
 
         // Assert
         assertEquals(expected, result);

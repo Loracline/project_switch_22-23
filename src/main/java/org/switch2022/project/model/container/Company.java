@@ -4,9 +4,8 @@ package org.switch2022.project.model.container;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.Project;
-
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AllocationDTO;
+import org.switch2022.project.utils.dto.AllocationDto;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 
 import java.awt.image.BufferedImage;
@@ -212,14 +211,21 @@ public class Company {
      */
     public boolean addUserToProject(AccountDTO accountDTO,
                                     ProjectDtoAsManager projectDTOAsManager,
-                                    AllocationDTO allocationDTO) {
+                                    AllocationDto allocationDTO) {
+
+        boolean addUserToProject = false;
 
         Account account =
                 this.accountContainer.getAccountByEmail(accountDTO.email);
         Project project =
                 this.projectContainer.getProjectByCode(projectDTOAsManager.code);
-        return this.accountInProjectContainer.addUserToProject(account, project,
-                allocationDTO);
+
+        if (account != null && project != null) {
+            addUserToProject = this.accountInProjectContainer.addUserToProject(account, project,
+                    allocationDTO);
+        }
+
+        return addUserToProject;
     }
 
     /**

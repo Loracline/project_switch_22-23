@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.*;
 import org.switch2022.project.model.container.*;
 import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AllocationDTO;
+import org.switch2022.project.utils.dto.AllocationDto;
 import org.switch2022.project.utils.dto.ProjectDtoAsManager;
 import org.switch2022.project.utils.dto.mapper.AccountMapper;
 
@@ -33,7 +33,7 @@ class AddUserToProjectControllerTest {
     ProjectDtoAsManager projectDTO;
     AccountInProject accountInProject;
     List<AccountInProject> accountsInProject;
-    AllocationDTO scrumMasterDTO;
+    AllocationDto scrumMasterDTO;
     AccountContainer accountContainer;
     BusinessSectorContainer businessSectorContainer;
     CustomerContainer customerContainer;
@@ -58,7 +58,7 @@ class AddUserToProjectControllerTest {
         //accountInProject
         accountInProject = new AccountInProject(accountOne, projectOne,
                 "Team Member", 1, 34f,
-                LocalDate.of(2020, 1, 8));
+                LocalDate.of(2020, 1, 8), LocalDate.of(2021, 1, 8));
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProject);
 
@@ -79,9 +79,9 @@ class AddUserToProjectControllerTest {
                 "Fishing");
 
         //allocationDTO
-        scrumMasterDTO = new AllocationDTO("Scrum Master", 7.5f,
+        scrumMasterDTO = new AllocationDto("Scrum Master", 7.5f,
                 45.0f,
-                LocalDate.of(2023, 1, 19), null);
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //containers
         businessSectorContainer = new BusinessSectorContainer();

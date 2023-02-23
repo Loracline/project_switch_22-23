@@ -62,7 +62,7 @@ class ListProjectsInAccountControllerTest {
 
         //accountInProject
         accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", 1,
-                34f, LocalDate.of(2020, 1, 8));
+                34f, LocalDate.of(2020, 1, 8), LocalDate.of(2021, 1, 8));
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProjectOne);
 

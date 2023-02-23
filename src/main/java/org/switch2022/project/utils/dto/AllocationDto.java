@@ -2,10 +2,10 @@ package org.switch2022.project.utils.dto;
 
 import java.time.LocalDate;
 
-public class AllocationDTO {
+public class AllocationDto {
 
     /**
-     * Attributes of the class AllocationDTO, according to the AccountInProject constructor.
+     * Attributes of the class AllocationDto, according to the AccountInProject constructor.
      */
     public final String role;
     public final float costPerHour;
@@ -13,7 +13,7 @@ public class AllocationDTO {
     public final LocalDate startDate;
     public final LocalDate endDate;
 
-    public AllocationDTO(String role, float costPerHour,
+    public AllocationDto(String role, float costPerHour,
                          float percentageAllocation, LocalDate startDate,
                          LocalDate endDate) {
         this.role = role;

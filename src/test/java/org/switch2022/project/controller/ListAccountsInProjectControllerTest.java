@@ -48,8 +48,8 @@ class ListAccountsInProjectControllerTest {
         projectThree = new Project("1C", null, null, null, null);
 
         //accountInProject
-        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Scrum Master", 1, 34f, null);
-        accountInProjectTwo = new AccountInProject(accountOne, projectTwo, "Product Owner", 1, 34f, null);
+        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Scrum Master", 1, 34f, null, null);
+        accountInProjectTwo = new AccountInProject(accountOne, projectTwo, "Product Owner", 1, 34f, null, null);
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProjectOne);
         accountsInProject.add(accountInProjectTwo);

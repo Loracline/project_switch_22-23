@@ -3,8 +3,9 @@ package org.switch2022.project.model.container;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.utils.dto.AllocationDTO;
+import org.switch2022.project.utils.dto.AllocationDto;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,28 +35,80 @@ public class AccountInProjectContainer {
      * @return TRUE if added, and FALSE otherwise.
      */
     public boolean addUserToProject(Account account, Project project,
-                                    AllocationDTO allocationDTO) {
+                                    AllocationDto allocationDTO) {
         boolean accountInProjectAdded = false;
+        AccountInProject accountInProject = new AccountInProject(account, project,
+                allocationDTO.role, allocationDTO.costPerHour,
+                allocationDTO.percentageAllocation, allocationDTO.startDate, allocationDTO.endDate);
 
-        if (account != null && project != null) {
-            AccountInProject accountInProject = new AccountInProject(account, project,
-                    allocationDTO.role, allocationDTO.costPerHour,
-                    allocationDTO.percentageAllocation, allocationDTO.startDate);
-
-            boolean isRoleValid = accountInProject.isRoleValid();
-            boolean doesAccountInProjectExist =
-                    doesAccountInProjectExist(accountInProject);
-            boolean isPercentageOfAllocationValid =
-                    isTotalPercentageOfAllocationValid(account,
-                            allocationDTO.percentageAllocation);
-
-
-            if (isRoleValid && !doesAccountInProjectExist && isPercentageOfAllocationValid) {
-                accountsInProject.add(accountInProject);
-                accountInProjectAdded = true;
-            }
+        if (!accountsInProject.contains(accountInProject) &&
+                isAccountInProjectValid(accountInProject)) {
+            accountsInProject.add(accountInProject);
+            accountInProjectAdded = true;
         }
 
+        return accountInProjectAdded;
+    }
+
+
+    private boolean isAccountInProjectValid(AccountInProject accountInProject) {
+        return accountInProject.isRoleValid() &&
+
+                accountInProject.isPercentageOfAllocationValid
+                        (accountInProject.getPercentageOfAllocation()) &&
+
+                isTotalPercentageOfAllocationValid(accountInProject.getAccount(),
+                        accountInProject.getPercentageOfAllocation()) &&
+
+                accountInProject.isEndDateValid() &&
+
+                isAllocationValid(accountInProject);
+    }
+
+    private boolean isPeriodOverlapping(LocalDate startDateOne,
+                                        LocalDate endDateOne,
+                                        LocalDate startDateTwo,
+                                        LocalDate endDateTwo) {
+        return startDateOne.isBefore(endDateTwo) && startDateTwo.isBefore(endDateOne);
+    }
+
+    private boolean isAllocationValid(AccountInProject accountInProject) {
+        boolean isAllocationValid = true;
+        LocalDate startDateNewAllocation = accountInProject.getStartDate();
+        LocalDate endDateNewAllocation = accountInProject.getEndDate();
+
+        int i = 0;
+        while (i < accountsInProject.size() && isAllocationValid) {
+            LocalDate startDateExistingAllocation = accountsInProject.get(i).getStartDate();
+            LocalDate endDateExistingAllocation = accountsInProject.get(i).getEndDate();
+
+            if (isScrumMasterOrProductOwner(i) &&
+                    isPeriodOverlapping(startDateExistingAllocation,
+                            endDateExistingAllocation, startDateNewAllocation,
+                            endDateNewAllocation)) {
+                isAllocationValid = false;
+            }
+
+            i++;
+        }
+
+        return isAllocationValid;
+    }
+
+    private boolean isScrumMasterOrProductOwner(int i) {
+        final String SCRUM_MASTER = "Scrum Master";
+        final String PRODUCT_OWNER = "Product Owner";
+        return accountsInProject.get(i).getRole().equalsIgnoreCase(SCRUM_MASTER) ||
+                accountsInProject.get(i).getRole().equalsIgnoreCase(PRODUCT_OWNER);
+    }
+
+    public boolean addUserToProject(Account account, Project project) {
+        boolean accountInProjectAdded = false;
+        AccountInProject accountInProject = new AccountInProject(account, project);
+        if (!accountsInProject.contains(accountInProject)) {
+            accountsInProject.add(accountInProject);
+            accountInProjectAdded = true;
+        }
         return accountInProjectAdded;
     }
 
@@ -70,14 +123,24 @@ public class AccountInProjectContainer {
         int i = 0;
         float sumOfPercentages = 0;
         while (i < accountsInProject.size()) {
-            if (accountsInProject.get(i).getAccount().equals(account) &&
-                    accountsInProject.get(i).getEndDate() == null) {
+            if (isAccountTheSame(account, i) &&
+                    doesPeriodIncludeCurrentDate(i)) {
+
                 sumOfPercentages = sumOfPercentages +
                         accountsInProject.get(i).getPercentageOfAllocation();
+
             }
             i++;
         }
         return sumOfPercentages;
+    }
+
+    private boolean isAccountTheSame(Account account, int i) {
+        return accountsInProject.get(i).getAccount().equals(account);
+    }
+
+    private boolean doesPeriodIncludeCurrentDate(int i) {
+        return accountsInProject.get(i).isStartDateBeforeNow() && accountsInProject.get(i).isEndDateAfterNow();
     }
 
     /**
@@ -88,15 +151,17 @@ public class AccountInProjectContainer {
      */
     boolean isTotalPercentageOfAllocationValid(Account account,
                                                float newPercentageAllocation) {
+        final byte MAXIMUM_PERCENTAGE = 100;
         boolean percentageOfAllocationValid = false;
+
         float totalPercentageAllocation =
                 currentPercentageOfAllocation(account) +
                         newPercentageAllocation;
-        byte maximumPercentageOfAllocation = 100;
-        if (totalPercentageAllocation <= maximumPercentageOfAllocation &&
-                newPercentageAllocation > 0) {
+
+        if (totalPercentageAllocation <= MAXIMUM_PERCENTAGE) {
             percentageOfAllocationValid = true;
         }
+
         return percentageOfAllocationValid;
     }
 
@@ -119,21 +184,10 @@ public class AccountInProjectContainer {
     }
 
     /**
-     * Method that verifies if an AccountInProject already exists (same account,
-     * project, role and start date)
-     *
-     * @param accountInProject one intend to search for
-     * @return TRUE if allocation was already made, and FALSE otherwise
-     */
-    private boolean doesAccountInProjectExist(AccountInProject accountInProject) {
-        return this.accountsInProject.contains(accountInProject);
-    }
-
-    /**
      * This method returns a list of Projects Allocated To an Account.
-     * creates a empty list, uses while loop to iterate through accountsInProject
+     * creates an empty list, uses while loop to iterate through accountsInProject
      * for each iteration it calls the method getProjectByAccount, if the requested project is
-     * not null, its added to the list.
+     * not null, it's added to the list.
      *
      * @param email given email to search project allocated to it.
      * @return a list of Projects
