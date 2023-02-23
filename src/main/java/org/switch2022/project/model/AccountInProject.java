@@ -151,9 +151,20 @@ public class AccountInProject {
     }
 
     /**
-     * This method returns an account Allocated To a Project.
+     * This method returns the project to which an account is allocated.
      *
-     * @return an Account.
+     * @return a project.
+     */
+    public Project getProject() {
+        return new Project(this.project.getProjectCode(), this.project.getProjectName()
+                , this.project.getCustomer(), this.project.getProjectTypology(),
+                this.project.getBusinessSector());
+    }
+
+    /**
+     * This method returns the end date of an allocation.
+     *
+     * @return the end date of the allocation.
      */
     public LocalDate getEndDate() {
         return this.endDate;
