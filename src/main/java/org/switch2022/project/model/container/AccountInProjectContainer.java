@@ -27,12 +27,27 @@ public class AccountInProjectContainer {
     }
 
     /**
-     * Method that creates a new instance of AccountInProject and adds it to the
-     * list of accounts in project if the instance doesn't already exist and the
-     * role is valid.
+     * Method that adds a new instance of AccountInProject to the list of accounts in
+     * project if the instance is in a valid state, and if it does
+     * not already exist in the list of accounts in project.
      *
+     * If both conditions are met, the method then checks if the account is already
+     * allocated to the project (with no role attributed or associated with a different
+     * role) and if the period of the new allocation does not overlap with any
+     * existing allocation.
+     *
+     * If these conditions are met, then the method checks if there is not already an
+     * existing Scrum Master or Product Owner on the project, or if the role of the new
+     * allocation is a Team Member. If there is no Scrum
+     * Master or Product Owner or the new account is a Team Member, the
+     * accountInProject  object is added to the accountsInProject list, and
+     * the method returns true.
+     *
+     * @param account       to allocate to a given project.
+     * @param project       into which a given account is allocated.
      * @param allocationDTO data transfer object with allocation information.
-     * @return TRUE if added, and FALSE otherwise.
+     * @return TRUE if a new instance of AccountInProject is successfully added to the
+     * list, and FALSE otherwise.
      */
     public boolean addUserToProject(Account account, Project project,
                                     AllocationDto allocationDTO) {
@@ -42,20 +57,59 @@ public class AccountInProjectContainer {
                 allocationDTO.percentageAllocation, allocationDTO.startDate,
                 allocationDTO.endDate);
 
-        if (!accountsInProject.contains(accountInProject) &&
-                isAccountInProjectValid(accountInProject)) {
-            accountsInProject.add(accountInProject);
-            AccountInProject incompleteAccount = getIncompleteAccountInProject(account,
-                    project);
-            if (incompleteAccount != null) {
-                accountsInProject.remove(incompleteAccount);
-            }
-            accountInProjectAdded = true;
-        }
+        if (isAccountInProjectValid(accountInProject) && !accountsInProject.contains(accountInProject)) {
 
+            int i = 0;
+            while (Math.abs(i) < accountsInProject.size() && !accountInProjectAdded) {
+                if (accountsInProject.get(i).hasAccount(account)
+                        && accountsInProject.get(i).hasProject(project)
+                        && isPeriodValid(accountInProject, accountsInProject.get(i))) {
+
+                    if (accountInProject.isScrumMasterOrProductOwner()
+                            && isScrumMasterOrProductOwnerUnique(accountInProject)
+                            || accountInProject.isTeamMember()) {
+
+                        accountsInProject.add(accountInProject);
+                        accountInProjectAdded = true;
+
+                        removeIncompleteAccountInProject(account, project);
+                    }
+                } else {
+                    accountsInProject.add(accountInProject);
+                    accountInProjectAdded = true;
+                }
+                i++;
+            }
+        }
         return accountInProjectAdded;
     }
 
+    /**
+     * Method that checks and removes incomplete instances of AccountInProject (created
+     * only with account and project, i.e., resulting from allocation without role and
+     * associated information).
+     *
+     * @param account allocated to a given project.
+     * @param project to which a given account is allocated.
+     */
+    private void removeIncompleteAccountInProject(Account account, Project project) {
+        AccountInProject incompleteAccount =
+                getIncompleteAccountInProject(account,
+                        project);
+        if (incompleteAccount != null) {
+            accountsInProject.remove(incompleteAccount);
+        }
+    }
+
+    /**
+     * Method that retrieves incomplete instances of AccountInProject (created only
+     * with account and project, i.e., resulting from allocation without role and
+     * associated information).
+     *
+     * @param account of AccountInProject instance.
+     * @param project of AccountInProject instance.
+     * @return incomplete instance of AccountInProject, and NULL otherwise.
+     */
     private AccountInProject getIncompleteAccountInProject(Account account,
                                                            Project project) {
         int i = 0;
@@ -71,6 +125,26 @@ public class AccountInProjectContainer {
         return incompleteAccountInProject;
     }
 
+    /**
+     * Method that checks if an instance of AccountInProject is valid (valid role,
+     * valid new percentage of allocation, valid total percentage of allocation, valid
+     * end date and valid allocation).
+     *
+     * The role is valid if is one of the following: Scrum Master, Product Owner, Team
+     * Member, and Project Manager.
+     *
+     * A new percentage of allocation (the one provided when creating a new instance of
+     * AccountInProject) is valid if it is above zero and below or equal to one hundred.
+     *
+     * The total percentage of allocation (the sum of all partial percentages of
+     * allocation the same account has in different projects at the same time) is valid
+     * if  it is below or equal to one hundred.
+     *
+     * The end date is valid if it is after the start date.
+     *
+     * @param accountInProject with information to validate.
+     * @return incomplete instance of AccountInProject, and NULL otherwise.
+     */
     private boolean isAccountInProjectValid(AccountInProject accountInProject) {
         return accountInProject.isRoleValid() &&
 
@@ -80,11 +154,20 @@ public class AccountInProjectContainer {
                 isTotalPercentageOfAllocationValid(accountInProject.getAccount(),
                         accountInProject.getPercentageOfAllocation()) &&
 
-                accountInProject.isEndDateValid() &&
-
-                isAllocationValid(accountInProject);
+                accountInProject.isEndDateValid();
     }
 
+    /**
+     * Method that checks if two periods are overlapping. Each period is characterized
+     * by a start date and an end date. Two periods are overlapping if the start
+     * date one is before the end date two, and start date two is before end date one.
+     *
+     * @param startDateOne as the start date of period one.
+     * @param endDateOne   as the end date of period one.
+     * @param startDateTwo as the start date of period two.
+     * @param endDateTwo   as the end date of period two.
+     * @return TRUE if two periods are overlapping, and FALSE otherwise.
+     */
     private boolean isPeriodOverlapping(LocalDate startDateOne,
                                         LocalDate endDateOne,
                                         LocalDate startDateTwo,
@@ -92,42 +175,48 @@ public class AccountInProjectContainer {
         return startDateOne.isBefore(endDateTwo) && startDateTwo.isBefore(endDateOne);
     }
 
-    private boolean isAllocationValid(AccountInProject accountInProject) {
-        boolean isAllocationValid = false;
+    /**
+     * Method that checks whether a Scrum Master(SM) or Product Owner(PO) is unique in a
+     * project.
+     *
+     * @return TRUE if there is no other account with the same role (SM or PO) in the
+     * same project during the same period, and FALSE otherwise.
+     */
+    private boolean isScrumMasterOrProductOwnerUnique(AccountInProject accountInProject) {
+        boolean isUnique = false;
 
-        if (accountInProject.isScrumMasterOrProductOwner()) {
-            int i = 0;
-            while (i < accountsInProject.size() && !isAllocationValid) {
-                if (accountsInProject.get(i).getRole().equals(accountInProject.getRole())) {
-                    if (isPeriodValid(accountInProject, accountsInProject.get(i))) {
-                        isAllocationValid = true;
+        int i = 0;
+        while (Math.abs(i) < accountsInProject.size() && !isUnique) {
+            if (accountsInProject.get(i).hasProject(accountInProject.getProject())) {
+
+                if (accountInProject.isScrumMasterOrProductOwner()) {
+                    if (accountsInProject.get(i).getRole().equals(accountInProject.getRole())) {
+                        if (isPeriodValid(accountInProject, accountsInProject.get(i))) {
+                            isUnique = true;
+                        }
+                    } else {
+                        isUnique = true;
                     }
-                } else {
-                    isAllocationValid = true;
                 }
-                i++;
             }
-
-        } else if (accountInProject.isTeamMember()) {
-            int f = 0;
-            while (f < accountsInProject.size() && !isAllocationValid) {
-                if (isPeriodValid(accountInProject, accountsInProject.get(f))) {
-                    isAllocationValid = true;
-                }
-                f++;
-            }
+            i++;
         }
-        return isAllocationValid;
+        return isUnique;
     }
 
+    /**
+     * Method that checks if the allocation period of a new account in a project
+     * overlaps with the allocation period of an existing account in the same project.
+     *
+     * @return TRUE if there is no overlapping periods between the allocations, and
+     * FALSE otherwise
+     */
     private boolean isPeriodValid(AccountInProject newAccountInProject,
                                   AccountInProject existingAccountInProject) {
         boolean isPeriodValid = true;
         LocalDate startDateNewAllocation = newAccountInProject.getStartDate();
         LocalDate endDateNewAllocation = newAccountInProject.getEndDate();
 
-        //int i = 0;
-        //while (i < accountsInProject.size() && isPeriodValid) {
         LocalDate startDateExistingAllocation = existingAccountInProject.getStartDate();
         LocalDate endDateExistingAllocation = existingAccountInProject.getEndDate();
 
@@ -135,14 +224,21 @@ public class AccountInProjectContainer {
                 endDateExistingAllocation, startDateNewAllocation,
                 endDateNewAllocation)) {
             isPeriodValid = false;
-            //}
-            //i++;
         }
 
         return isPeriodValid;
     }
 
-
+    /**
+     * Method that adds an incomplete instance of AccountInProject and adds it to the
+     * list of accounts in project if it does not already exist in the list of accounts
+     * in project.
+     *
+     * @param account       to allocate to a given project.
+     * @param project       into which a given account is allocated.
+     * @return TRUE if an incomplete instance of AccountInProject is successfully
+     * added to the list, and FALSE otherwise.
+     */
     public boolean addUserToProject(Account account, Project project) {
         boolean accountInProjectAdded = false;
         AccountInProject accountInProject = new AccountInProject(account, project);
@@ -176,10 +272,24 @@ public class AccountInProjectContainer {
         return sumOfPercentages;
     }
 
+    /**
+     * Method that checks if one account that is passed as a parameter is the same as
+     * an account that exists in a list in a given index.
+     *
+     * @param account to compare with.
+     * @param i as the index of the list.
+     * @return TRUE if accounts are equal, and FALSE otherwise.
+     */
     private boolean isAccountTheSame(Account account, int i) {
         return accountsInProject.get(i).getAccount().equals(account);
     }
 
+    /**
+     * Method that checks whether a given period in a given index of a list includes
+     * the current date.
+     * @param i as the index of the list.
+     * @return TRUE if it includes the current date, and FALSE otherwise.
+     */
     private boolean doesPeriodIncludeCurrentDate(int i) {
         return accountsInProject.get(i).isStartDateBeforeNow() && accountsInProject.get(i).isEndDateAfterNow();
     }

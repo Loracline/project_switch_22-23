@@ -154,6 +154,12 @@ public class AccountContainer {
         return users;
     }
 
+    /**
+     * This method checks if a given account is present in the accounts list.
+     *
+     * @param account to check for presence in the list.
+     * @return TRUE if the account is present in the list, and FALSE otherwise.
+     */
     public boolean doesAccountExist(Account account) {
         return accounts.contains(account);
     }
