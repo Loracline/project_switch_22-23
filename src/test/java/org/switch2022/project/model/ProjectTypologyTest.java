@@ -2,8 +2,7 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectTypologyTest {
 
@@ -51,6 +50,20 @@ class ProjectTypologyTest {
 
         //Assert
         assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureSameObjectDoesNotEqualNull() {
+        //Arrange
+        ProjectTypology reference = new ProjectTypology("Fixed Cost");
+        ProjectTypology other = null;
+        boolean expected = false;
+
+        //Act
+        boolean result = reference.equals(other);
+
+        //Assert
+        assertFalse(expected);
     }
 
     /**

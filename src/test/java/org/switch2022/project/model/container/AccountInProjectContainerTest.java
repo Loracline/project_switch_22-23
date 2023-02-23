@@ -21,11 +21,13 @@ class AccountInProjectContainerTest {
      * tests below.
      */
 
-    Account accountOne, accountTwo, accountThree, accountFour;
+    Account accountOne, accountTwo, accountThree, accountFour, accountFive,
+            accountSix;
     AccountDTO accountDTO, accountDTO2, accountDTO3;
     AccountInProject accountInProjectOne, accountInProjectTwo,
             accountInProjectThree, accountInProjectFour, accountInProjectFive,
-            accountInProjectSix, accountInProjectSeven;
+            accountInProjectSix, accountInProjectSeven, accountInProjectEight,
+            accountInProjectNine;
     List<AccountInProject> accountsInProject;
     AccountInProjectContainer accountInProjectContainer;
     AllocationDto allocationDTOPO, allocationDTOTM, allocationDTOSM;
@@ -46,14 +48,16 @@ class AccountInProjectContainerTest {
         costPerHour = 1;
         percentageAllocation = 1;
         startDate = LocalDate.of(2020, 1, 8);
-        endDateOne = LocalDate.of(2020,1,9);
-        endDateTwo = LocalDate.of(2024,1,9);
+        endDateOne = LocalDate.of(2020, 1, 9);
+        endDateTwo = LocalDate.of(2024, 1, 9);
 
         //account
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
         accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
         accountThree = new Account("Anna", "anna@isep.ipp.pt", 932755689, null);
         accountFour = new Account("Mary", "mary@isep.ipp.pt", 939855689, null);
+        accountFive = new Account("John", "john@isep.ipp.pt", 951456789, null);
+        accountSix = new Account("Joseph", "joseph@isep.ipp.pt", 256887456, null);
 
         //customer
         customerOne = new Customer("Genius Software", "228674498");
@@ -71,12 +75,15 @@ class AccountInProjectContainerTest {
 
         //accountInProject
         accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate, endDateOne);
-        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team Member", costPerHour, 50f, startDate, endDateOne);
+        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team Member", costPerHour, 50f, startDate, endDateTwo);
         accountInProjectThree = new AccountInProject(accountThree, projectOne, "Product Owner", costPerHour, percentageAllocation, startDate, endDateOne);
         accountInProjectFour = new AccountInProject(accountOne, projectTwo, "Scrum Master", costPerHour, percentageAllocation, startDate, endDateOne);
         accountInProjectFive = new AccountInProject(accountThree, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate, endDateOne);
         accountInProjectSix = new AccountInProject(accountThree, projectTwo);
         accountInProjectSeven = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate, endDateTwo);
+        accountInProjectEight = new AccountInProject(accountFive, projectTwo, "Team Member", costPerHour, 100f, startDate, endDateTwo);
+        accountInProjectNine = new AccountInProject(accountSix, projectTwo);
+
         accountsInProject = new ArrayList<>();
         accountsInProject.add(accountInProjectOne);
         accountsInProject.add(accountInProjectTwo);
@@ -85,6 +92,7 @@ class AccountInProjectContainerTest {
         accountsInProject.add(accountInProjectFive);
         accountsInProject.add(accountInProjectSix);
         accountsInProject.add(accountInProjectSeven);
+        accountsInProject.add(accountInProjectEight);
 
         // accountDTOs
         accountDTO = new AccountDTO("John", "john@isep.ipp.pt", true);
@@ -349,51 +357,6 @@ class AccountInProjectContainerTest {
         assertEquals(expected, result);
     }
 
-    /**
-     * Testing if percentage of allocation is valid in the moment of the new allocation.
-     */
-    @Test
-    void ensurePercentAllocationIsValid_TotalUnderOneHundred() {
-        // Arrange
-        boolean expected = true;
-
-        // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 49);
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Testing if percentage of allocation is valid when equals 100%.
-     */
-    @Test
-    void ensurePercentAllocationIsValid_TotalEqualsOneHundred() {
-        // Arrange
-        boolean expected = true;
-
-        // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 50);
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Testing if percentage of allocation is invalid when above 100%.
-     */
-    @Test
-    void ensurePercentAllocationIsInvalid_TotalAboveOneHundred() {
-        // Arrange
-        boolean expected = false;
-
-        // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 151);
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
     @Test
     void ensureUserIsAddedToProjectSuccessfullyWithMandatoryArgumentsOnly() {
         // Arrange
@@ -413,6 +376,145 @@ class AccountInProjectContainerTest {
 
         // Act
         boolean result = accountInProjectContainer.addUserToProject(accountThree, projectTwo);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+
+    /*
+      METHOD isTotalPercentageOfAllocationValid(account, newPercentageAllocation)
+
+      Verifying if the sum of the current percentage of allocation of an account
+      plus the new percentage of allocation one is trying to assign does not
+      exceed the 100%.
+     */
+
+    /**
+     * Scenario 1: Total percentage of allocation is valid because it does not
+     * exceed the 100%.
+     */
+    @Test
+    void ensurePercentAllocationIsValid_TotalUnderOneHundred() {
+        // Arrange
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 40);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: Total percentage of allocation is valid because it equals
+     * 100%.
+     */
+    @Test
+    void ensurePercentAllocationIsValid_TotalEqualsOneHundred() {
+        // Arrange
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 50);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: Total percentage of allocation is invalid because the new
+     * percentage of allocation is not valid as it exceeds the 100%, which means
+     * that the total will also exceed.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalid_NewPercentAllocationAboveOneHundred() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 151);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 4: Total percentage of allocation is invalid because new
+     * percentage of allocation is a negative number.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalid_NewPercentAllocationNegative() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, -1);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 5: Total percentage of allocation is invalid because new
+     * percentage of allocation is zero, so there is no new allocation ongoing.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalid_NewPercentAllocationZero() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 0);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 6: Total percentage of allocation is invalid because current
+     * percentage of allocation is already of 100%, so it is not possible to
+     * assign the account to other projects at the moment.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalid_CurrentPercentIsAlreadyMax() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountFive, 50);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 7: New percentage of allocation and current percentage of
+     * allocation are both valid, but the sum exceeds 100%.
+     */
+    @Test
+    void ensurePercentAllocationIsInvalid_TotalPercentAllocationAboveOneHundred() {
+        // Arrange
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 60);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 8: New percentage of allocation equals 100% and the account has
+     * no current percentage of allocation.
+     */
+    @Test
+    void ensurePercentAllocationIsValid_CurrentPercentAllocationIsZero() {
+        // Arrange
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountSix, 100);
 
         // Assert
         assertEquals(expected, result);

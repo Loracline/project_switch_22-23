@@ -23,6 +23,10 @@ public class ProjectTypology {
         return this.projectTypologyName;
     }
 
+    public boolean checkProjectTypologyFromName(String projectTypologyName) {
+        return this.projectTypologyName.equals(projectTypologyName);
+    }
+
     /**
      * This method checks if two instances of ProjectTypology are equal by
      * comparing its names.

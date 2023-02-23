@@ -114,7 +114,7 @@ public class AccountInProjectContainer {
                                                            Project project) {
         int i = 0;
         AccountInProject incompleteAccountInProject = null;
-        while (i < accountsInProject.size()) {
+        while (Math.abs(i) < accountsInProject.size()) {
             if (accountsInProject.get(i).hasAccount(account) &&
                     accountsInProject.get(i).hasProject(project) &&
                     accountsInProject.get(i).isRoleEmpty()) {
@@ -259,7 +259,7 @@ public class AccountInProjectContainer {
     float currentPercentageOfAllocation(Account account) {
         int i = 0;
         float sumOfPercentages = 0;
-        while (i < accountsInProject.size()) {
+        while (Math.abs(i) < accountsInProject.size()) {
             if (isAccountTheSame(account, i) &&
                     doesPeriodIncludeCurrentDate(i)) {
 
@@ -309,7 +309,8 @@ public class AccountInProjectContainer {
                 currentPercentageOfAllocation(account) +
                         newPercentageAllocation;
 
-        if (totalPercentageAllocation <= MAXIMUM_PERCENTAGE) {
+        if (totalPercentageAllocation <= MAXIMUM_PERCENTAGE &&
+                newPercentageAllocation > 0) {
             percentageOfAllocationValid = true;
         }
 
@@ -324,7 +325,7 @@ public class AccountInProjectContainer {
     public List<Account> listAccountsByProject(String projectCode) {
         List<Account> accounts = new ArrayList<>();
         int i = 0;
-        while (i < accountsInProject.size()) {
+        while (Math.abs(i) < accountsInProject.size()) {
             Account requestedAccount =
                     accountsInProject.get(i).getAccountByProject(projectCode);
             if (requestedAccount != null) {
@@ -348,7 +349,7 @@ public class AccountInProjectContainer {
     public List<Project> listProjectsByAccount(String email) {
         List<Project> projects = new ArrayList<>();
         int i = 0;
-        while (i < accountsInProject.size()) {
+        while (Math.abs(i) < accountsInProject.size()) {
             Project requestedProject =
                     accountsInProject.get(i).getProjectByAccount(email);
             if (requestedProject != null) {

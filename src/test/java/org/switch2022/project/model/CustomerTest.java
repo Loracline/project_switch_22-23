@@ -1,8 +1,8 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerTest {
 
@@ -55,6 +55,20 @@ class CustomerTest {
         //Arrange
         Customer reference = new Customer("ISEP", "222333444");
         String other = "222333444";
+        boolean expected = false;
+
+        //Act
+        boolean result = reference.equals(other);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureSameObjectDoesNotEqualNull() {
+        //Arrange
+        Customer reference = new Customer("ISEP", "222333444");
+        Customer other = null;
         boolean expected = false;
 
         //Act

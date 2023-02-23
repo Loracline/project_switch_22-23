@@ -42,10 +42,10 @@ public class ProjectTypologyContainer {
     }
 
     public ProjectTypology getProjectTypology(String typology) {
-        ProjectTypology requestedProjectTypology = new ProjectTypology(typology);
-        int i = 0;
-        while (i < typologies.size()) {
-            if (typologies.get(i).getProjectTypologyName().equals(typology)) {
+        ProjectTypology requestedProjectTypology = null;
+        int i=0;
+        while ( Math.abs(i) < this.typologies.size()) {
+            if (typologies.get(i).checkProjectTypologyFromName(typology)) {
                 requestedProjectTypology = typologies.get(i);
             }
             i++;
