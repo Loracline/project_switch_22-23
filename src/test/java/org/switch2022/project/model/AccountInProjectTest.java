@@ -43,6 +43,7 @@ public class AccountInProjectTest {
         project = null;
         otherProject = null;
         accountInProject = null;
+        accountInProjectIncomplete = null;
     }
 
     /**
@@ -665,4 +666,20 @@ public class AccountInProjectTest {
         //Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * This test verifies if a copy of the attribute project of an instance of
+     * AccountInProject is retrieved. It should return a new instance of Project
+     * with the same information of the attribute project.
+     */
+    @Test
+    void ensureThatProjectIsRetrievedIfTheProjectAttributeOfAccountInProjectIsNotNull() {
+        //Arrange
+        Project expected = project;
+        //Act
+        Project result = accountInProject.getProject();
+        //Assert
+        assertEquals(expected, result);
+    }
+
 }
