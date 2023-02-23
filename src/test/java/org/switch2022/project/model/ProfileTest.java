@@ -6,146 +6,223 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class ProfileTest {
+    /*
+      METHOD equals()
+     */
+
     /**
-     * Test to ensure the object equals itself.
+     * Scenario 1: Verify if the same object equals itself.
      */
     @Test
-    void ensureSameObjectEqualsItself() {
+    void ensureSameProfileEqualsItself() {
+        // Arrange
         Profile reference = new Profile("Admin");
         Profile other = reference;
         boolean expected = true;
+
+        // Act
         boolean result = reference.equals(other);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Test to ensure that two objects from the same class are different.
+     * Scenario 2: Verify if two objects of the same class are different from
+     * each other.
      */
     @Test
     void ensureTwoProfilesAreNotTheSame() {
+        // Arrange
         Profile reference = new Profile("User");
         Profile other = new Profile("Manager");
         boolean expected = false;
+
+        // Act
         boolean result = reference.equals(other);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Test to ensure that two objects are from different classes.
+     * Scenario 3: Verify if a Profile and a different type of object are not
+     * the same.
      */
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
-    void ensureObjectDoesNotEqualsOtherTypeOfObject() {
+    void ensureProfileDoesNotEqualOtherTypeOfObject() {
+        // Arrange
         Profile reference = new Profile("User");
         String other = "User";
         boolean expected = false;
+
+        // Act
         boolean result = reference.equals(other);
+
+        // Assert
         assertEquals(expected, result);
     }
+
     /**
-     * Test to ensure that object does not equal null
+     * Scenario 4: Verify if a Profile and a null object are not the same.
      */
     @Test
     void ensureProfileDoesNotEqualNull() {
+        // Arrange
         Profile reference = new Profile("User");
         Profile other = null;
         boolean expected = false;
+
+        // Act
         boolean result = reference.equals(other);
+
+        // Assert
         assertEquals(expected, result);
     }
 
+
+    /*
+      METHOD hashCode()
+     */
+
     /**
-     * Testing if profile is "Manager" by checking its profile name.
+     * Scenario 1: Two Profile objects are the same.
      */
     @Test
-    void validateIfIsManagerSuccessfully() {
-        //Arrange
+    public void ensureTwoProfilesHashcodeAreTheSame() {
+        // Arrange
+        Profile profileOne = new Profile("manager");
+        Profile profileTwo = new Profile("manager");
+
+        // Act
+        int profileOneHashCode = profileOne.hashCode();
+        int profileTwoHashCode = profileTwo.hashCode();
+
+        // Assert
+        assertEquals(profileOneHashCode, profileTwoHashCode);
+    }
+
+    /**
+     * Scenario 2: Two Profile objects are not the same.
+     */
+    @Test
+    public void ensureTwoProfilesHashcodeAreNotTheSame() {
+        // Arrange
+        Profile profileOne = new Profile("manager");
+        Profile profileThree = new Profile("user");
+
+        // Act
+        int profileOneHashCode = profileOne.hashCode();
+        int profileThreeHashCode = profileThree.hashCode();
+
+        // Assert
+        assertNotEquals(profileOneHashCode, profileThreeHashCode);
+    }
+
+
+    /*
+      METHOD isProfileRequired()
+     */
+
+    /**
+     * Scenario 1: Verify if profile is "Manager" by checking its profile name.
+     */
+    @Test
+    void ensureProfileManagerIsRetrievedSuccessfully() {
+        // Arrange
         Profile reference = new Profile("Manager");
         boolean expected = true;
-        //Act
+
+        // Act
         boolean result = reference.isProfileRequired(Profile.MANAGER);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Testing if profile is not "Manager" by checking its profile name.
+     * Scenario 2: Verify if profile is not "Manager" when the profile name
+     * passed by parameter is not the one correspondent.
      */
     @Test
-    void validateIfIsManagerUnsuccessfully() {
-        //Arrange
+    void ensureProfileManagerIsNotRetrievedWhenProfileNameIsNotCorrespondent() {
+        // Arrange
         Profile reference = new Profile("Administrator");
         boolean expected = false;
-        //Act
+
+        // Act
         boolean result = reference.isProfileRequired(Profile.MANAGER);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Testing if profile is "Administrator" by checking its profile name.
+     * Scenario 3: Verify if profile is "Administrator" by checking its profile
+     * name.
      */
     @Test
-    void validateIfIsAdministratorSuccessfully() {
-        //Arrange
+    void ensureProfileAdministratorIsRetrievedSuccessfully() {
+        // Arrange
         Profile reference = new Profile("Administrator");
         boolean expected = true;
-        //Act
+
+        // Act
         boolean result = reference.isProfileRequired(Profile.ADMINISTRATOR);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Testing if profile is not "Administrator" by checking its profile name.
+     * Scenario 4: Verify if profile is not "Administrator" when the profile
+     * name passed by parameter is not the one correspondent.
      */
     @Test
-    void validateIfIsAdministratorUnsuccessfully() {
-        //Arrange
+    void ensureProfileAdministratorIsNotRetrievedWhenProfileNameIsNotCorrespondent() {
+        // Arrange
         Profile reference = new Profile("Manager");
         boolean expected = false;
-        //Act
+
+        // Act
         boolean result = reference.isProfileRequired(Profile.ADMINISTRATOR);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Testing if profile is "User" by checking its profile name.
+     * Scenario 5: Verify if profile is "User" by checking its profile name.
      */
     @Test
-    void validateIfIsUserSuccessfully() {
-        //Arrange
+    void ensureProfileUserIsRetrievedSuccessfully() {
+        // Arrange
         Profile reference = new Profile("User");
         boolean expected = true;
-        //Act
+
+        // Act
         boolean result = reference.isProfileRequired(Profile.USER);
+
+        // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Testing if profile is not "User" by checking its profile name.
+     * Scenario 6: Verify if profile is not "User" when the profile name passed
+     * by parameter is not the one correspondent.
      */
     @Test
-    void validateIfIsUserUnsuccessfully() {
-        //Arrange
+    void ensureProfileUserIsNotRetrievedWhenProfileNameIsNotCorrespondent() {
+        // Arrange
         Profile reference = new Profile("Administrator");
         boolean expected = false;
-        //Act
+
+        // Act
         boolean result = reference.isProfileRequired(Profile.USER);
+
+        // Assert
         assertEquals(expected, result);
-    }
-
-    /**
-     * Test to check the hashcode when objects are equal and unequal
-     */
-    @Test
-    public void testHashCodeProfile() {
-        Profile obj1 = new Profile("manager");
-        Profile obj2 = new Profile("manager");
-        Profile obj3 = new Profile("user");
-
-        // Check that equal objects have the same hash code
-        assertEquals(obj1.hashCode(), obj2.hashCode());
-
-        // Check that unequal objects have different hash codes
-        assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
 }
 
