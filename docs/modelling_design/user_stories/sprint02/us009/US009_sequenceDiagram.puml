@@ -7,9 +7,9 @@ end legend
 autonumber
 actor Administrator
 participant ":AddCustomerUI" as ui
-participant ":AddCustomerController" as controller
-participant ":Company" as company
-participant ":CustomerContainer" as container
+participant ":AddCustomerController" as ct
+participant ":Company" as c
+participant ":CustomerContainer" as cn
 participant "customer:Customer" as customer
 activate Administrator
 Administrator -> ui: starting adding new customer
@@ -18,27 +18,27 @@ ui --> Administrator: requests data (customerName, customerNIF)
 
 Administrator -> ui: sends requested data
 
-ui -> controller: addCustomer(email, customerName, customerNIF)
-activate controller
-controller -> company: validateAdministrator(email)
-activate company
-ref over company: validateAdministrator_sequenceDiagram
+ui -> ct: addCustomer(customerName, customerNIF, email)
+activate ct
+ct -> ct: validateProfileRequired(email, profileNameRequired)
+activate c
+ref over c: validateAdministrator_sequenceDiagram
 
-company --> controller: true
-deactivate company
-controller -> company: addCustomer(customerName, customerNIF)
-activate company
-company -> container: addCustomer(customerName, customerNIF)
+c --> ct: true
+deactivate c
+ct -> c: addCustomer(customerName, customerNIF)
+activate c
+c -> cn: addCustomer(customerName, customerNIF)
 create customer
-activate container
-container ->> customer: create(customerName, customerNIF)
-container -> container: addCustomer(customer)
-container --> company: true
-deactivate container
-company --> controller: true
-deactivate company
-controller -->> ui: true
-deactivate controller
+activate cn
+cn ->> customer: create(customerName, customerNIF)
+cn -> cn: addCustomer(customer)
+cn --> c: true
+deactivate cn
+c --> ct: true
+deactivate c
+ct -->> ui: true
+deactivate ct
 ui -->>Administrator: informs operation success
 deactivate ui
 @enduml

@@ -9,38 +9,38 @@ US008 - As Administrator, I want to add a business sector.
 end legend
 
 actor Administrator as a
-participant ":AddBusinessSectorUI" as absui
-participant ":AddBusinessSectorController" as absc
+participant ":AddBusinessSectorUI" as ui
+participant ":AddBusinessSectorController" as ct
 participant ":Company" as c
-participant ":BusinessSectorContainer" as bsc
+participant ":BusinessSectorContainer" as cn
 participant "businessSector:BusinessSector" as bs
 
 activate a
-a -> absui: starts adding new business sector
-activate absui
-a <-- absui: requests data (name)
-a -> absui: types requested data
-absui -> absc: addBusinessSector(name, email)
-activate absc
-absc -> c: validateAdministrator(email)
+a -> ui: starts adding new business sector
+activate ui
+a <-- ui: requests data (name)
+a -> ui: types requested data
+ui -> ct: addBusinessSector(name, email)
+activate ct
+ct -> c: validateProfileRequired(email, profileNameRequired)
 activate c
 ref over c: validateAdministrator_sequenceDiagram
-c --> absc: true
+c --> ct: true
 deactivate c
-absc -> c: addBusinessSector(name)
+ct -> c: addBusinessSector(name)
 activate c
-c -> bsc: addBusinessSector(name)
-activate bsc
+c -> cn: addBusinessSector(name)
+activate cn
 create bs
-bsc -> bs: create(name)
-bsc -> bsc: add(businessSector)
-c <-- bsc: true
-deactivate bsc
-absc <-- c: true
+cn -> bs: create(name)
+cn -> cn: add(businessSector)
+c <-- cn: true
+deactivate cn
+ct <-- c: true
 deactivate c
-absui <-- absc: true
-deactivate absc
-a <-- absui: informs operation success
-deactivate absui
+ui <-- ct: true
+deactivate ct
+a <-- ui: informs operation success
+deactivate ui
 
 @enduml
