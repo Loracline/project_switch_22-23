@@ -90,7 +90,8 @@ public class Account {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(accountName, email, phoneNumber, profile, photo, accountStatus);
+        return Objects.hash(accountName, email, phoneNumber, profile, photo,
+                accountStatus);
     }
 
 
@@ -137,7 +138,6 @@ public class Account {
 
     /**
      * Setter method for the attribute: profile.
-     *
      */
     public void setProfile(ProfileContainer profileContainer, String profileName) {
         Profile profile = profileContainer.getProfileByName(profileName);

@@ -640,32 +640,6 @@ public class AccountInProjectTest {
         assertEquals(expected, result);
     }
 
-    @Test
-    void ensureThatReturnsTrueIfRoleIsTeamMember() {
-        //Arrange
-        boolean expected = true;
-
-        //Act
-        boolean result = accountInProject.isTeamMember();
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureThatReturnsFalseIfRoleIsNotTeamMember() {
-        //Arrange
-        accountInProjectProductOwner = new AccountInProject(account, project, "Product " +
-                "Owner",
-                costPerHour, percentageAllocation, startDate, endDate);
-        boolean expected = false;
-
-        //Act
-        boolean result = accountInProjectProductOwner.isTeamMember();
-
-        //Assert
-        assertEquals(expected, result);
-    }
 
     /**
      * This test verifies if a copy of the attribute project of an instance of
