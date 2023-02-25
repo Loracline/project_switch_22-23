@@ -7,14 +7,14 @@ end legend
 autonumber
 actor Manager
 participant ":ListAccountsInProjectUI" as ui
-participant ":ListAccountsInProjectController" as controller
-participant ":Company" as company
-participant ":AccountInProjectContainer" as aipc
-participant ":AccountInProject" as aip
-participant ":Project" as pr
+participant ":ListAccountsInProjectController" as ct
+participant ":Company" as c
+participant ":AccountInProjectContainer" as cn
+participant ":AccountInProject" as acip
+participant ":Project" as p
 participant "accounts: List<Account>" as list
 participant ":AccountMapper" as mapper
-participant "accountsDTO: List<AccountDTO>" as listDTO
+participant "accountsDTO: List<AccountDTO>" as listacDTO
 participant "accountDTO:AccountDTO" as DTO
 
 
@@ -23,56 +23,58 @@ Manager -> ui: lists all accounts of a given project
 activate ui
 ui --> Manager: request data (projectCode)
 Manager -> ui: types requested data
-ui -> controller: listAccountsByProject(emailActor, projectCode)
-activate controller
-controller -> company: validateManager(emailActor)
-activate company
-ref over company: validateManager_sequenceDiagram
-company -->> controller: true
-deactivate company
-controller -> company: listAccountsByProject(projectCode)
-activate company
-company -> aipc: listAccountsByProject(projectCode)
-activate aipc
+ui -> ct: listAccountsByProject(emailActor, projectCode)
+activate ct
+ct -> c: validateProfileRequired(email, profileNameRequired)
+activate c
+ref over c: validateManager_sequenceDiagram
+c -->> ct: true
+deactivate c
+ct -> c: listAccountsByProject(projectCode)
+activate c
+c -> cn: listAccountsByProject(projectCode)
+activate cn
 create list
-aipc --> list :create()
+cn --> list :create()
 loop for each AccountInProject in AccountInProjectContainer
-aipc -> aip : getAccountByProject(projectCode)
-activate aip
-aip -> pr : hasProjectCode(projectCode)
-activate pr
-pr --> aip : true
-deactivate pr
-aip --> aipc : account
-deactivate aip
-aipc -> list : add(account)
+cn -> acip : getAccountByProject(projectCode)
+activate acip
+acip -> p : hasProjectCode(projectCode)
+activate p
+p --> acip : true
+deactivate p
+acip --> cn: account
+deactivate acip
+cn -> list : add(account)
 activate list
 deactivate list
 end loop
-aipc --> company : accounts
-deactivate aipc
-company --> controller: accounts
-deactivate company
-controller -> mapper: listAccountsToDTO(accounts)
+cn --> c : accounts
+deactivate cn
+c --> ct: accounts
+deactivate c
+ct -> mapper: listAccountsToDTO(accounts)
 activate mapper
-create listDTO
-mapper --> listDTO: create ()
+create listacDTO
+mapper --> listacDTO: create ()
 loop for each account in accounts
 mapper -> list: get(i)
+activate list
 list --> mapper: account
+deactivate list
 activate mapper
 mapper -> mapper : accountDTO = accountToDTO(account)
 create DTO
 mapper --> DTO : create()
-mapper ->listDTO :add(accountDTO)
+mapper ->listacDTO :add(accountDTO)
 deactivate mapper
-activate listDTO
+activate listacDTO
 end loop
-deactivate listDTO
-mapper --> controller :accountsDTO
+deactivate listacDTO
+mapper --> ct :accountsDTO
 deactivate mapper
-controller -->> ui: accountsDTO
-deactivate controller
+ct -->> ui: accountsDTO
+deactivate ct
 ui --> Manager: return list of accounts
 deactivate ui
 @enduml
