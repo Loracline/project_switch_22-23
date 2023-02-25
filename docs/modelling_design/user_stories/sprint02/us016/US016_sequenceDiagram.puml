@@ -20,14 +20,14 @@ User -> ui: lists all projects of a given project
 activate ui
 ui --> User: request data (email)
 User -> ui: types requested data
-ui -> controller: listProjectsInAccount(email,emailUser)
+ui -> controller: listProjectsByAccount(emailUser)
 activate controller
-controller -> company: validateUser(emailUser)
+controller -> company: validateProfileRequired(email, profileNameRequired)
 activate company
 ref over company: validateUser_sequenceDiagram
 company -->> controller: true
 deactivate company
-controller -> company: listProjectsByAccount(email)
+controller -> company: listProjectsByAccount(emailUser)
 activate company
 company -> aipc: listProjectsByAccount(email)
 activate aipc
@@ -52,7 +52,9 @@ create listDTO
 pm --> listDTO: create ()
 loop for each project in accounts
 pm -> list: project = get(i)
+activate list
 list --> pm: project
+deactivate list
 pm -> pm: projectDTO = projectToDTO(project)
 create DTO
 pm --> DTO : create()
@@ -64,6 +66,6 @@ pm --> controller :userListProjectsDTO
 deactivate pm
 controller -->> ui: userListProjectsDTO
 deactivate controller
-ui --> User: return list of projects
+ui --> User: show list of projects
 deactivate ui
 @enduml
