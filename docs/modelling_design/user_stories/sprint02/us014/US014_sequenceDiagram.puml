@@ -75,6 +75,6 @@ mapper --> ct :accountsDTO
 deactivate mapper
 ct -->> ui: accountsDTO
 deactivate ct
-ui --> Manager: return list of accounts
+ui --> Manager: show list of accounts
 deactivate ui
 @enduml

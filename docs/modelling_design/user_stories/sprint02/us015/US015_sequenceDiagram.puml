@@ -19,13 +19,10 @@ Manager -> ui: get list of all projects
 activate ui
 ui -> controller: getListOfProjects(email)
 activate controller
-controller -> company: validateManager(email)
+controller -> company: validateProfileRequired(email, profileNameRequired)
 activate company
 ref over company: validateManager_sequenceDiagram
 company -->> controller: true
-deactivate company
-
-
 deactivate company
 controller -> company: listAllProjects()
 activate company
@@ -48,6 +45,6 @@ controller <-- mapper: managerListProjectsDTO
 deactivate mapper
 ui <-- controller: managerListProjectsDTO
 deactivate controller
-ui --> Manager: showListAllProjects
+ui --> Manager: show list all projects
 deactivate ui
 @enduml
