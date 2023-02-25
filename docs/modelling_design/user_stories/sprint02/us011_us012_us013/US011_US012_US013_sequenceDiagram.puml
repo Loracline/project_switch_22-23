@@ -8,11 +8,10 @@ US013 - As Manager, I want to define the Scrum Master of a project.
 end legend
 autonumber
 
-
 actor Manager
 participant ":AddUserToProjectUI" as ui
 participant ":ListAllUsersController" as usersController
-participant ":ListAllProjectsController" as projectsController
+participant ":GetListOfProjectsController" as projectsController
 participant ":AddUserToProjectController" as controller
 participant ":Company" as company
 participant ":AccountContainer"
@@ -32,7 +31,7 @@ Manager -> ui: selects User account
 deactivate ui
 Manager -> ui: requests list of all projects
 activate ui
-ui -> projectsController: listAllProjects(emailManager)
+ui -> projectsController: getListOfProjects(email)
 activate projectsController
 ref over projectsController: US015_sequenceDiagram
 projectsController --> ui: projectsDTO
@@ -46,14 +45,14 @@ Manager -> ui: starts the association of the selected User as the Product Owner/
 activate ui
 ui --> Manager: requests data
 Manager -> ui: sends data (role, costPerHour, percentageAllocation, startDate)
-ui -> controller: addUserToProject(emailManager, accountDTO, projectDTO, allocationDTO)
+ui -> controller: addUserToProject(emailActor, accountDTO, projectDTOAsManager, allocationDTO)
 activate controller
-controller -> company: validateManager(emailManager)
+controller -> company: validateProfileRequired(email, profileNameRequired)
 activate company
 ref over company: validateManager_sequenceDiagram
 company --> controller: true
 deactivate company
-controller -> company: addUserToProject(accountDTO, projectDTO, allocationDTO)
+controller -> company: addUserToProject(accountDTO, projectDTOAsManager, allocationDTO)
 activate company
 company -> ":AccountContainer": getAccountByEmail(accountDTO.email)
 activate ":AccountContainer"

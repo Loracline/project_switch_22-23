@@ -23,8 +23,13 @@ Administrator -> ui:  Changes account profile
 activate ui
 Administrator <-- ui:  Requests data (email, profileName)
 Administrator -> ui:  Enters account data
-ui -> controller: changeProfile(email, profileName)
+ui -> controller: changeProfile(email, profileName, actorEmail)
 activate controller
+controller -> company: validateProfileRequired(email, profileNameRequired)
+activate company
+ref over company: validateAdministrator_sequenceDiagram
+company -->> controller: true
+deactivate company
 controller -> company: changeProfile(email, profileName)
 activate company
 company -> pcontainer: getProfileByName(profileName)
