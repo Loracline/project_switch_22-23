@@ -1,5 +1,7 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.model.container.ProfileContainer;
+
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
@@ -136,10 +138,12 @@ public class Account {
     /**
      * Setter method for the attribute: profile.
      *
-     * @param profile of the account.
      */
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setProfile(ProfileContainer profileContainer, String profileName) {
+        Profile profile = profileContainer.getProfileByName(profileName);
+        if (profile != null) {
+            this.profile = profile;
+        }
     }
 
     /**

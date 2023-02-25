@@ -3,6 +3,8 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.container.Company;
 import org.switch2022.project.model.Profile;
+import org.switch2022.project.utils.dto.AccountEmailStatusDTO;
+import org.switch2022.project.utils.dto.mapper.AccountListEmailStatusMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +31,12 @@ public class ListAccountController {
      *
      * @return list of accounts
      */
-    public List<Account> listAllAccounts(String actorEmail) {
+    public List<AccountEmailStatusDTO> listAllAccounts(String actorEmail) {
         List<Account> accounts = new ArrayList<>();
         if (
                 company.validateProfileRequired(actorEmail, Profile.ADMINISTRATOR)) {
             accounts = this.company.getAccountContainer().getAccounts();
         }
-        return accounts;
+        return AccountListEmailStatusMapper.listAccountsToDTO(accounts);
     }
 }

@@ -1,6 +1,7 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.model.container.ProfileContainer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -164,9 +165,12 @@ class AccountTest {
         BufferedImage photo = ImageIO.read(new File("docs/domain_analysis/old/domainModel_v2_Jan05_2023.png"));
         Account accountOne = new Account("John", "john@isep.ipp.pt", 912345678, photo); //Default Profile: User
         Account accountTwo = new Account("John", "john@isep.ipp.pt", 912345678, photo);
+        ProfileContainer profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Manager");
 
         //Act
-        accountOne.setProfile(new Profile("Manager"));
+
+        accountOne.setProfile(profileContainer, "Manager");
 
         //Assert
         assertNotEquals(accountOne, accountTwo);
@@ -182,13 +186,12 @@ class AccountTest {
         // Arrange
         Account accountBeforeUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null);//Default Profile: User
         Account accountAfterUpdate = new Account("John", "john@isep.ipp.pt", 912345678, null); //Default Profile: User
-
-        //Create Manager profile
-        Profile profileManagerOne = new Profile("Manager");
+        ProfileContainer profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Manager");
 
         //Act
         //Change Profile User (default) to Manager
-        accountAfterUpdate.setProfile(profileManagerOne);
+        accountAfterUpdate.setProfile(profileContainer, "Manager");
 
         //Assert
         assertNotEquals(accountBeforeUpdate, accountAfterUpdate);
@@ -268,8 +271,9 @@ class AccountTest {
     void ensureThatAnAccountIsManager() {
         //Arrange
         Account reference = new Account("John", "john@isep.ipp.pt", 912345678, null);
-        Profile profile = new Profile("Manager");
-        reference.setProfile(profile);
+        ProfileContainer profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Manager");
+        reference.setProfile(profileContainer, "Manager");
         boolean expected = true;
         //Act
         boolean result = reference.isProfileRequired(Profile.MANAGER);

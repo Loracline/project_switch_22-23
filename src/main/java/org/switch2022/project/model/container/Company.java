@@ -2,7 +2,6 @@ package org.switch2022.project.model.container;
 
 
 import org.switch2022.project.model.Account;
-import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.dto.AccountDTO;
 import org.switch2022.project.utils.dto.AllocationDto;
@@ -94,10 +93,9 @@ public class Company {
      */
     public boolean changeProfile(String email, String profileName) {
         boolean wasAccountProfileUpdated = false;
-        Profile profile = profileContainer.getProfileByName(profileName);
         Account account = accountContainer.getAccountByEmail(email);
-        if (account != null && profile != null) {
-            account.setProfile(profile);
+        if (account != null && profileContainer.getProfileByName(profileName) != null) {
+            account.setProfile(profileContainer, profileName);
             wasAccountProfileUpdated = true;
         }
         return wasAccountProfileUpdated;

@@ -72,6 +72,7 @@ class CompanyTest {
         // Profiles added to the Container.
         profileContainer.createProfile("Administrator");
         profileContainer.createProfile("Manager");
+        profileContainer.createProfile("User");
 
         // Container of business sectors created.
         businessSectorContainer = new BusinessSectorContainer();
@@ -222,7 +223,7 @@ class CompanyTest {
         //Arrange
         boolean expected = true;
         //Act
-        boolean result = company.createProfile("user");
+        boolean result = company.createProfile("Director");
         //Assert
         assertEquals(expected, result);
     }
@@ -274,8 +275,8 @@ class CompanyTest {
     void ensureProfileIsNotChangedByComparingAccountAndCopyAccount() {
         // ARRANGE
         Account copyAccountTwo = new Account(accountTwo);
-        accountTwo.setProfile(profileTwo);
-        copyAccountTwo.setProfile(profileTwo);
+        accountTwo.setProfile(profileContainer, "User");
+        copyAccountTwo.setProfile(profileContainer, "User");
         boolean expected = true;
 
         // ACT
@@ -291,7 +292,7 @@ class CompanyTest {
     void ensureProfileIsChangedByComparingAccountAndCopyAccount() {
         // ARRANGE
         Account copyAccountTwo = new Account(accountTwo);
-        copyAccountTwo.setProfile(profileTwo);
+        copyAccountTwo.setProfile(profileContainer, "User");
         boolean expected = true;
 
         // ACT

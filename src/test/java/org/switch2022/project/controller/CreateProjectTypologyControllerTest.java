@@ -62,7 +62,7 @@ class CreateProjectTypologyControllerTest {
 
         //controller
         createProjectTypologyController = new CreateProjectTypologyController(company);
-        accountTwo.setProfile(profileTwo);
+        accountTwo.setProfile(profileContainer, "Manager");
     }
 
     @AfterEach

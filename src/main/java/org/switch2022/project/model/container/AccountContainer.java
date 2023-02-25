@@ -55,10 +55,10 @@ public class AccountContainer {
      * @param email of given account.
      * @return TRUE if it has the profile required and FALSE otherwise.
      */
-    public boolean validateProfileRequired (String email, String profileNameRequired){
+    public boolean validateProfileRequired(String email, String profileNameRequired) {
         boolean isProfileRequired = false;
         Account account = getAccountByEmail(email);
-        if (account.isProfileRequired(profileNameRequired)){
+        if (account.isProfileRequired(profileNameRequired)) {
             isProfileRequired = true;
         }
         return isProfileRequired;
