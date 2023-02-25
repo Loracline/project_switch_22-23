@@ -19,12 +19,18 @@ ui -->> admin: requests data (email, status)
 deactivate ui
 admin -> ui: Enters requested data
 activate ui
-ui -> controller: changeStatus(email, status)
+ui -> controller: changeStatus(email, status, actorEmail)
 activate controller
+controller -> company: validateProfileRequired(email, profileNameRequired)
+activate company
+ref over company: validateAdministrator_sequenceDiagram
+company -->> controller: true
+deactivate company
 controller -> company: changeStatus(email, status)
 activate company
-company -> container: getAccountByEmail(email)
+company ->container: changeStatus(email, status)
 activate container
+container-> container: getAccountByEmail(email)
 container -> account: setStatus(status)
 activate account
 container <-- account: true
