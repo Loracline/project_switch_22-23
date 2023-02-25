@@ -26,7 +26,8 @@ public class AccountInProject {
      */
     public AccountInProject(Account account, Project project, String role,
                             float costPerHour,
-                            float percentageAllocation, LocalDate startDate, LocalDate endDate) {
+                            float percentageAllocation, LocalDate startDate,
+                            LocalDate endDate) {
         this.account = account;
         this.project = project;
         this.role = role.toLowerCase();
@@ -40,8 +41,8 @@ public class AccountInProject {
         this.account = account;
         this.project = project;
         this.role = "";
-        this.costPerHour = 0.0f;
-        this.percentageAllocation = 0.0f;
+        this.costPerHour = 0.0F;
+        this.percentageAllocation = 0.0F;
         this.startDate = LocalDate.of(1, 1, 1);
         this.endDate = LocalDate.of(1, 1, 1);
     }
@@ -235,16 +236,16 @@ public class AccountInProject {
         return this.account.equals(account);
     }
 
+    public boolean isAccountInProjectIncomplete(Account account, Project project){
+        return hasAccount(account) &&
+                hasProject(project) &&
+                isRoleEmpty();
+    }
+
     public boolean isScrumMasterOrProductOwner() {
         final String SCRUM_MASTER = "Scrum Master";
         final String PRODUCT_OWNER = "Product Owner";
-        return this.role.equalsIgnoreCase(SCRUM_MASTER) ||
-                this.role.equalsIgnoreCase(PRODUCT_OWNER);
-    }
-
-    public boolean isTeamMember() {
-        final String TEAM_MEMBER = "Team Member";
-        return this.role.equalsIgnoreCase(TEAM_MEMBER);
+        return SCRUM_MASTER.equalsIgnoreCase(this.role) || PRODUCT_OWNER.equalsIgnoreCase(this.role);
     }
 
     public boolean isRoleEmpty() {

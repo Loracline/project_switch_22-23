@@ -28,14 +28,14 @@ public class AccountInProjectContainer {
 
     /**
      * Method that adds a new instance of AccountInProject to the list of accounts in
-     * project if the instance is in a valid state, and if it does
-     * not already exist in the list of accounts in project.
-     *
-     * If both conditions are met, the method then checks if the account is already
-     * allocated to the project (with no role attributed or associated with a different
+     * project if the instance is in a valid state.
+     * <p>
+     * If this condition is met, the method then checks if the account is already
+     * allocated to the project (with no
+     * role attributed or associated with a different
      * role) and if the period of the new allocation does not overlap with any
      * existing allocation.
-     *
+     * <p>
      * If these conditions are met, then the method checks if there is not already an
      * existing Scrum Master or Product Owner on the project, or if the role of the new
      * allocation is a Team Member. If there is no Scrum
@@ -57,17 +57,15 @@ public class AccountInProjectContainer {
                 allocationDTO.percentageAllocation, allocationDTO.startDate,
                 allocationDTO.endDate);
 
-        if (isAccountInProjectValid(accountInProject) && !accountsInProject.contains(accountInProject)) {
+        if (isAccountInProjectValid(accountInProject)) {
 
             int i = 0;
             while (Math.abs(i) < accountsInProject.size() && !accountInProjectAdded) {
-                if (accountsInProject.get(i).hasAccount(account)
-                        && accountsInProject.get(i).hasProject(project)
+                if (accountsInProject.get(i).hasAccount(account) && accountsInProject.get(i).hasProject(project)
                         && isPeriodValid(accountInProject, accountsInProject.get(i))) {
 
-                    if (accountInProject.isScrumMasterOrProductOwner()
-                            && isScrumMasterOrProductOwnerUnique(accountInProject)
-                            || accountInProject.isTeamMember()) {
+                    if (accountInProject.isRoleValid()
+                            && isScrumMasterOrProductOwnerUnique(accountInProject)) {
 
                         accountsInProject.add(accountInProject);
                         accountInProjectAdded = true;
@@ -115,9 +113,7 @@ public class AccountInProjectContainer {
         int i = 0;
         AccountInProject incompleteAccountInProject = null;
         while (Math.abs(i) < accountsInProject.size()) {
-            if (accountsInProject.get(i).hasAccount(account) &&
-                    accountsInProject.get(i).hasProject(project) &&
-                    accountsInProject.get(i).isRoleEmpty()) {
+            if (accountsInProject.get(i).isAccountInProjectIncomplete(account, project)) {
                 incompleteAccountInProject = accountsInProject.get(i);
             }
             i++;
@@ -125,28 +121,32 @@ public class AccountInProjectContainer {
         return incompleteAccountInProject;
     }
 
+
     /**
-     * Method that checks if an instance of AccountInProject is valid (valid role,
+     * Method that checks if an instance of AccountInProject is valid (not
+     * previously existing in the list of accounts in project, valid role,
      * valid new percentage of allocation, valid total percentage of allocation, valid
      * end date and valid allocation).
-     *
+     * <p>
      * The role is valid if is one of the following: Scrum Master, Product Owner, Team
      * Member, and Project Manager.
-     *
+     * <p>
      * A new percentage of allocation (the one provided when creating a new instance of
      * AccountInProject) is valid if it is above zero and below or equal to one hundred.
-     *
+     * <p>
      * The total percentage of allocation (the sum of all partial percentages of
      * allocation the same account has in different projects at the same time) is valid
      * if  it is below or equal to one hundred.
-     *
+     * <p>
      * The end date is valid if it is after the start date.
      *
      * @param accountInProject with information to validate.
      * @return incomplete instance of AccountInProject, and NULL otherwise.
      */
     private boolean isAccountInProjectValid(AccountInProject accountInProject) {
-        return accountInProject.isRoleValid() &&
+        return isAccountInProjectNotInList(accountInProject) &&
+
+                accountInProject.isRoleValid() &&
 
                 accountInProject.isPercentageOfAllocationValid
                         (accountInProject.getPercentageOfAllocation()) &&
@@ -155,6 +155,13 @@ public class AccountInProjectContainer {
                         accountInProject.getPercentageOfAllocation()) &&
 
                 accountInProject.isEndDateValid();
+    }
+
+    /**
+     * Method that checks if an instance of account in project does not exist in the list.
+     */
+    private boolean isAccountInProjectNotInList(AccountInProject accountInProject) {
+        return !accountsInProject.contains(accountInProject);
     }
 
     /**
@@ -234,8 +241,8 @@ public class AccountInProjectContainer {
      * list of accounts in project if it does not already exist in the list of accounts
      * in project.
      *
-     * @param account       to allocate to a given project.
-     * @param project       into which a given account is allocated.
+     * @param account to allocate to a given project.
+     * @param project into which a given account is allocated.
      * @return TRUE if an incomplete instance of AccountInProject is successfully
      * added to the list, and FALSE otherwise.
      */
@@ -277,7 +284,7 @@ public class AccountInProjectContainer {
      * an account that exists in a list in a given index.
      *
      * @param account to compare with.
-     * @param i as the index of the list.
+     * @param i       as the index of the list.
      * @return TRUE if accounts are equal, and FALSE otherwise.
      */
     private boolean isAccountTheSame(Account account, int i) {
@@ -287,6 +294,7 @@ public class AccountInProjectContainer {
     /**
      * Method that checks whether a given period in a given index of a list includes
      * the current date.
+     *
      * @param i as the index of the list.
      * @return TRUE if it includes the current date, and FALSE otherwise.
      */
