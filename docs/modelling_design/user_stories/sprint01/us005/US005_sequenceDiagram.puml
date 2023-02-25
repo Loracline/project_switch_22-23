@@ -5,22 +5,26 @@ end legend
 skinparam sequenceMessageAlign center
 title TO INACTIVATE USER ACCOUNT
 autonumber
-actor "Administrator" as admin
+actor "Administrator" as administrator
 participant ":ChangeStatusUI" as ui
 participant ":ChangeStatusController" as controller
 participant ":Company" as company
 participant "accountContainer:AccountContainer" as container
 participant "account:Account" as account
 
-activate admin
-admin -> ui : Changes account status to "Inactive"
+activate administrator
+
+administrator -> ui : Changes account status to "Inactive"
 activate ui
-ui -->> admin: requests data (email, status)
+
+ui -->> administrator: requests data (email, status)
 deactivate ui
-admin -> ui: Enters requested data
+administrator -> ui: Enters requested data
 activate ui
+
 ui -> controller: changeStatus(email, status, actorEmail)
 activate controller
+
 controller -> company: validateProfileRequired(email, profileNameRequired)
 activate company
 ref over company: validateAdministrator_sequenceDiagram
@@ -28,6 +32,7 @@ company -->> controller: true
 deactivate company
 controller -> company: changeStatus(email, status)
 activate company
+
 company ->container: changeStatus(email, status)
 activate container
 container-> container: getAccountByEmail(email)
@@ -41,7 +46,7 @@ company --> controller: true
 deactivate company
 controller -->> ui: true
 deactivate controller
-ui -->> admin: informs account status updated
+ui -->> administrator: informs account status updated
 deactivate ui
 
 @enduml

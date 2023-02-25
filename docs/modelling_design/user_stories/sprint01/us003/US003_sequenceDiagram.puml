@@ -5,8 +5,8 @@ actor Administrator
 participant ":ChangeProfileUI" as ui
 participant ":ChangeProfileController" as controller
 participant ":Company" as company
-participant ":ProfileContainer" as pcontainer
-participant ":AccountContainer" as acontainer
+participant ":ProfileContainer" as profileContainer
+participant ":AccountContainer" as accountContainer
 participant "profile:Profile" as pf
 participant "account:Account" as account
 
@@ -32,22 +32,22 @@ company -->> controller: true
 deactivate company
 controller -> company: changeProfile(email, profileName)
 activate company
-company -> pcontainer: getProfileByName(profileName)
-activate pcontainer
-pcontainer -> pf: checkProfileByProfileName(profileName)
+company -> profileContainer: getProfileByName(profileName)
+activate profileContainer
+profileContainer -> pf: checkProfileByProfileName(profileName)
 activate pf
-pf --> pcontainer : true
+pf --> profileContainer : true
 deactivate pf
-company <-- pcontainer: profile
-deactivate pcontainer
-company -> acontainer: getAccountByEmail(email)
-activate acontainer
-acontainer -> account: checkAccountFromEmail(email)
+company <-- profileContainer: profile
+deactivate profileContainer
+company -> accountContainer: getAccountByEmail(email)
+activate accountContainer
+accountContainer -> account: checkAccountFromEmail(email)
 activate account
-account --> acontainer: true
+account --> accountContainer: true
 deactivate account
-company <-- acontainer: account
-deactivate acontainer
+company <-- accountContainer: account
+deactivate accountContainer
 company -> account: setProfile(profile)
 activate account
 deactivate account
