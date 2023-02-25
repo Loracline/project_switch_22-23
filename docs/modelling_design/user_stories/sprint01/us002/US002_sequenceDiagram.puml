@@ -7,10 +7,10 @@ end legend
 autonumber
 actor Administrator
 participant ":RegisterAccountUI" as ui
-participant ":RegisterAccountController" as controller
-participant ":Company" as comp
-participant "accountContainer:AccountContainer" as AC
-participant "account:Account" as account
+participant ":RegisterAccountController" as ct
+participant ":Company" as c
+participant ":AccountContainer" as cn
+participant "account:Account" as ac
 activate Administrator
 Administrator -> ui: registers new account
 activate ui
@@ -18,21 +18,28 @@ ui -->> Administrator: requests data (name, email, phoneNumber, photo)
 deactivate ui
 Administrator -> ui: types requested data
 activate ui
-ui -> controller: registerAccount (name, email, phoneNumber, photo)
-activate controller
-controller -> comp: registerAccount(name, email, phoneNumber, photo)
-activate comp
-comp -> AC: addAccount(name, email, phoneNumber, photo)
-create account
-activate AC
-AC -->> account: create(name, email, phoneNumber, photo)
-AC -> AC: add(account)
-AC --> comp: true
-deactivate AC
-comp --> controller: true
-deactivate comp
-controller -->> ui: true
-deactivate controller
-ui-->> Administrator: informs account created
+ui -> ct: registerAccount (name, email, phoneNumber, photo)
+activate ct
+ct -> c: validateProfileRequired(email, profileNameRequired)
+activate c
+ref over c: validateAdministrator_sequenceDiagram
+c --> ct: true
+deactivate c
+
+ct -> c: registerAccount(name, email, phoneNumber, photo)
+activate c
+c -> cn: addAccount(name, email, phoneNumber, photo)
+create ac
+activate cn
+cn -->> ac: create(name, email, phoneNumber, photo)
+cn -> cn: add(account)
+cn --> c: true
+deactivate cn
+c --> ct: true
+deactivate c
+deactivate ac
+ct -->> ui: true
+deactivate ct
+ui-->> Administrator: informs operation success
 deactivate ui
 @enduml

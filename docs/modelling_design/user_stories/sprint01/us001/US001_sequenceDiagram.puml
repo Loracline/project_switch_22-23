@@ -6,43 +6,45 @@ legend top
 US001 - As Administrator, I want to create user profiles.
 end legend
 autonumber
-actor Administrator
-participant ":CreateProfileUI" as cpui
-participant ":CreateProfileController" as cpc
-participant ":Company" as Company
-participant "profileContainer:ProfileContainer" as ProfileContainer
-participant "profile:Profile" as Profile
-activate Administrator
-Administrator -> cpui: creates profile
-activate cpui
-cpui -->> Administrator: requests data (profileName)
-deactivate cpui
-Administrator -> cpui: types requested data
-activate cpui
-cpui -> cpc: createProfile (profileName)
-activate cpc
-cpc -> Company: createProfile (profileName)
-activate Company
 
 
-Company -->> ProfileContainer: createProfile (profileName)
-activate ProfileContainer
+actor Administrator as a
+participant ":CreateProfileUI" as ui
+participant "CreateProfileController" as ct
+participant ":Company" as c
+participant "ProfileContainer" as cn
+participant "profile:Profile" as p
 
 
-create Profile
-ProfileContainer -->> Profile: createProfile (name)
+activate a
+a -> ui: starts creating new profile
+activate ui
+ui --> a: requests data (profileName)
+a -> ui: types requested data
+ui -> ct: createProfile(profileName)
+activate ct
+ct -> c: validateProfileRequired(email, profileNameRequired)
+activate c
+ref over c: validateAdministrator_sequenceDiagram
+c --> ct: true
+deactivate c
+ct -> c: createProfile(profileName)
+activate c
+c -> cn: createProfile(name)
+activate cn
+create p
+cn -> p: create()
+cn -> cn: addProfile(name)
+cn --> c: true
+deactivate cn
+c --> ct: true
+deactivate c
+ct --> ui: true
+deactivate ct
+ui --> a: informs operation success
+deactivate ui
 
-ProfileContainer -> ProfileContainer: addProfile(profile)
-ProfileContainer -->> Company: true
-deactivate ProfileContainer
-
-Company -->> cpc: true
-deactivate ProfileContainer
-deactivate Company
-cpc -->> cpui: true
-deactivate cpc
-cpui -->> Administrator: informs profile created
-deactivate cpui
-
-
+deactivate a
 @enduml
+
+

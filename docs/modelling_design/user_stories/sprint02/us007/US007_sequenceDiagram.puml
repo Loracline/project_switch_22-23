@@ -23,7 +23,7 @@ ui --> a: requests data (projectTypology)
 a -> ui: types requested data
 ui -> ct: createProjectTypology(email, projectTypology)
 activate ct
-ct -> c: validateAdministrator(email)
+ct -> c: validateProfileRequired(email, profileNameRequired)
 activate c
 ref over c: validateAdministrator_sequenceDiagram
 c --> ct: true
@@ -33,7 +33,7 @@ activate c
 c -> ptc: createProjectTypology(projectTypology)
 activate ptc
 create pty
-ptc -> pty: create()
+ptc -> pty: create(projectTypologyName)
 ptc -> ptc: addProjectTypology(projectTypology)
 ptc --> c: true
 deactivate ptc
@@ -41,7 +41,7 @@ c --> ct: true
 deactivate c
 ct --> ui: true
 deactivate ct
-ui --> a: project typology created
+ui --> a: informs operation success
 deactivate ui
 
 deactivate a
