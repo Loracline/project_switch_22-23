@@ -13,12 +13,14 @@ class "RegisterAccountController" {
 
 class "Company" {
 -accountContainer
++validateProfileRequired(email, profileNameRequired)
 +registerAccount(name, email, phoneNumber, photo)
 }
 
 class "AccountContainer"{
 -accounts
-+addAccount(account)
++validateProfileRequired(email, profileNameRequired)
++addAccount(name, email, phoneNumber, photo)
 }
 
 class "Account" {
@@ -26,10 +28,16 @@ class "Account" {
 -email
 -phoneNumber
 -photo
++ isProfileRequired(profileNameRequired)
+}
+
+class "Profile"{
+-profileName
++isProfileRequired(profileNameRequired)
 }
 
 "RegisterAccountController" "1" --> "1" "Company": has
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" "1"-->"*" "Account": contains
-
+"Account" "*"--> "1""Profile": contains
 @enduml

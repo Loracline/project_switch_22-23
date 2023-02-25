@@ -6,37 +6,34 @@ end legend
 skinparam sequenceMessageAlign center
 title CREATE A NEW PROJECT TYPOLOGY
 
-"CreateProjectTypologyController""1"-->"1" "Company": has
-"Company" "1"-->"1" "ProjectTypologyContainer" : has
-"Company" "1"-->"1" "AccountContainer" : has
-"ProjectTypologyContainer" "1"-->"*" "ProjectTypology" : has
-"AccountContainer" "1"-->"*" "Account" : has
-"Account" "*"-->"1" "Profile" : has
 
 class "CreateProjectTypologyController" {
 - company
 +createProjectTypology(email, projectTypology)
 }
+
 class "Company" {
--accountContainer
 -projectTypologyContainer
+-accountContainer
++validateProfileRequired(email, profileNameRequired)
 +createProjectTypology(projectTypology)
-+validateAdministrator(email)
 }
+
 class "ProjectTypologyContainer"{
 -typologies
 +createProjectTypology(projectTypology)
 -doesProjectTypologyExist(projectTypology)
 }
+
 class "AccountContainer"{
 -accounts
-+validateAdministrator(email)
++validateProfileRequired(email, profileNameRequired)
 +getAccountByEmail(email)
 }
 
 class Profile{
 -profileName
-+isAdministrator()
++isProfileRequired(profileNameRequired)
 }
 
 class "ProjectTypology"{
@@ -45,13 +42,16 @@ class "ProjectTypology"{
 }
 
 class "Account"{
--name
 -email
--phoneNumber
--profile
--status
--photo
-+isAdministrator()
++isProfileRequired(profileNameRequired)
 }
+
+
+"CreateProjectTypologyController""1"-->"1" "Company": has
+"Company" "1"-->"1" "ProjectTypologyContainer" : has
+"Company" "1"-->"1" "AccountContainer" : has
+"ProjectTypologyContainer" "1"-->"*" "ProjectTypology" : has
+"AccountContainer" "1"-->"*" "Account" : has
+"Account" "*"-->"1" "Profile" : has
 
 @enduml

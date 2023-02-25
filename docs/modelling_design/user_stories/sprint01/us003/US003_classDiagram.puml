@@ -8,13 +8,14 @@ end legend
 
 class ChangeProfileController {
 -company
-+changeProfile(email, profileName)
++changeProfile(email, profileName, actorEmail)
 }
 
 class Company {
 -profileContainer
 -accountContainer
-+changeProfile(email, (profileName))
++validateProfileRequired(email, profileNameRequired)
++changeProfile(email, profileName)
 }
 
 class ProfileContainer {
@@ -24,26 +25,28 @@ class ProfileContainer {
 
 class AccountContainer {
 -accounts
++validateProfileRequired(email, profileNameRequired)
 +getAccountByEmail(email)
 }
 
 class Account{
 -email
 -profile
++ isProfileRequired(profileNameRequired)
 +checkAccountFromEmail(email)
 +setProfile(profile)
 }
 
 class Profile{
 -profileName
++ isProfileRequired(profileNameRequired)
 + checkProfileByProfileName(profileName)
 }
 
 
-ChangeProfileController --> Company
+ChangeProfileController "1"-->"1" Company
 Company "1"-->"1" AccountContainer: has
 Company "1"-->"1" ProfileContainer: has
-Company ..> Account
 AccountContainer "1"-->"*" Account: contains
 ProfileContainer "1"-->"*" Profile: contains
 Account "*"-->"1" Profile: has

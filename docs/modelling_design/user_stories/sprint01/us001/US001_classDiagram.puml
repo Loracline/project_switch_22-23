@@ -10,24 +10,36 @@ class "CreateProfileController" {
 -company
 +createProfile(profileName)
 }
-
 class "Company" {
 -profileContainer
++validateProfileRequired(email, profileNameRequired)
 +createProfile(profileName)
 }
-
 class "ProfileContainer"{
 -profiles
-+createProfile(profileName)
++createProfile(name)
 }
-
+class "AccountContainer"{
+-accounts
++validateProfileRequired(email, profileNameRequired)
+}
+class "Account"{
+-email
+-profile
++ checkAccountFromEmail(email)
++ isProfileRequired(profileNameRequired)
+}
 class "Profile"{
 -profileName
 +createProfile(name)
++isProfileRequired(profileNameRequired)
 }
 
-"CreateProfileController" ..>  "Company"
+"CreateProfileController" "1"-->"1"  "Company" : has
 "Company" "1"-->"1" "ProfileContainer": has
 "ProfileContainer" "1" --> "*" "Profile": contains
+"Company" "1"-->"1" "AccountContainer" : has
+"AccountContainer" "1"--> "*" "Account" :has
+"Account""*" -->"1" "Profile": contains
 
 @enduml

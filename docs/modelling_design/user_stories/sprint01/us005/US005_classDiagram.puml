@@ -6,30 +6,39 @@ end legend
 skinparam sequenceMessageAlign center
 title TO INACTIVATE USER ACCOUNT
 
-"ChangeStatusController"  ..> "Company"
-"ChangeStatusController" ..> "AccountContainer"
-"ChangeStatusController" ..> "Account"
-"Company" "1"-->"1" "AccountContainer": has
-"AccountContainer" "1"-->"*" "Account": contains
 
 class "ChangeStatusController" {
 -company
-+changeStatus(email, status)
++changeStatus(email, status, actorEmail)
 }
 
 class "Company" {
 -accountContainer
++validateProfileRequired(email, profileNameRequired)
 +changeStatus(email, status)
 }
 
 class "AccountContainer" {
 -accounts
++validateProfileRequired(email, profileNameRequired)
 +getAccountByEmail(email)
 }
 
 class "Account" {
 -status
-+setStatus(status)
++ isProfileRequired(profileNameRequired)
++ setStatus(status)
 }
+class "Profile"{
+-profileName
++isProfileRequired(profileNameRequired)
+}
+
+
+"ChangeStatusController" --> "Company"
+"Company" "1"-->"1" "AccountContainer": has
+"AccountContainer" "1"-->"*" "Account": contains
+"Account" "*"--> "1""Profile": contains
+
 
 @enduml

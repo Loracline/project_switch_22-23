@@ -4,30 +4,34 @@ title TO ADD A CUSTOMER
 legend top
 US009 - As Administrator, I want to add a customer
 end legend
+
 class "AddCustomerController" {
 -company
-+addCustomer(email,customerName, customerNIF)
++addCustomer(customerName, customerNIF, email)
 }
+
 class "Company"{
 -accountContainer
 -customerContainer
-+validateAdministrator(email)
++validateProfileRequired(email, profileNameRequired)
 +addCustomer(customerName, customerNIF)
 }
+
 class "AccountContainer"{
 -accounts
++validateProfileRequired(email, profileNameRequired)
 +getAccountByEmail(email)
-+validateAdministrator(email)
 }
+
 class "Account"{
 -email
 - profile
-+isAdministrator()
++isProfileRequired(profileNameRequired)
 }
 
 class Profile{
 -profileName
-+isAdministrator()
++isProfileRequired(profileNameRequired)
 }
 
 class "CustomerContainer"{
@@ -36,10 +40,12 @@ class "CustomerContainer"{
 -doesCustomerNIFExist(customerName, customerNIF)
 - isValidNIF(customerNIF)
 }
+
 class "Customer"{
 -customerName
 +Customer(customerName, customerNIF)
 }
+
 "AddCustomerController" "1"-->"1" "Company" : has
 "Company" "1"-->"1" "CustomerContainer": has
 "Company" "1"-->"1" "AccountContainer": has

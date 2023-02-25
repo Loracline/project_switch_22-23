@@ -5,18 +5,19 @@ legend top
 US002 - As Administrator, I want to register a user.
 end legend
 autonumber
-actor Administrator
+actor "Administrator" as administrator
 participant ":RegisterAccountUI" as ui
 participant ":RegisterAccountController" as ct
 participant ":Company" as c
 participant ":AccountContainer" as cn
 participant "account:Account" as ac
-activate Administrator
-Administrator -> ui: registers new account
+
+activate administrator
+administrator -> ui: registers new account
 activate ui
-ui -->> Administrator: requests data (name, email, phoneNumber, photo)
+ui -->> administrator: requests data (name, email, phoneNumber, photo)
 deactivate ui
-Administrator -> ui: types requested data
+administrator -> ui: types requested data
 activate ui
 ui -> ct: registerAccount (name, email, phoneNumber, photo)
 activate ct
@@ -40,6 +41,6 @@ deactivate c
 deactivate ac
 ct -->> ui: true
 deactivate ct
-ui-->> Administrator: informs operation success
+ui-->> administrator: informs operation success
 deactivate ui
 @enduml

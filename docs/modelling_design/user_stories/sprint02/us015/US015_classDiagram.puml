@@ -15,25 +15,25 @@ class "GetListOfProjectsController" {
 class "Company"{
 -projectContainer
 -accountContainer
-+validateManager(email)
++validateProfileRequired(email, profileNameRequired)
 +listAllProjects()
 }
 
 class "AccountContainer"{
 -accounts
-+validateManager(email)
++validateProfileRequired(email, profileNameRequired)
 +getAccountByEmail(email)
 }
 
 class "Account"{
 -email
 -profile
-+isManager()
++isProfileRequired(profileNameRequired)
 }
 
 class Profile{
 -profileName
-+isAdministrator()
++isProfileRequired(profileNameRequired)
 }
 
 class "ProjectContainer"{

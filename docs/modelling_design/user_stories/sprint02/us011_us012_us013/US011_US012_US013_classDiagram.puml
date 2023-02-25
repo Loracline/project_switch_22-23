@@ -17,13 +17,13 @@ class Company {
 -accountContainer
 -projectContainer
 -accountInProjectContainer
-+validateManager(emailManager)
++validateProfileRequired(email, profileNameRequired)
 +addUserToProject(accountDTO, projectDTO, allocationDTO)
 }
 
 class AccountContainer {
 -accounts
-+validateManager(email)
++validateProfileRequired(email, profileNameRequired)
 +getAccountByEmail(accountDTO.email)
 }
 
@@ -60,12 +60,12 @@ class "Account"{
 -email
 -profile
 +checkAccountFromEmail(email)
-+isManager()
++isProfileRequired(profileNameRequired)
 }
 
 class "Profile"{
 -profileName
-+isManager()
++isProfileRequired(profileNameRequired)
 }
 
 

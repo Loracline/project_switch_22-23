@@ -12,7 +12,7 @@ class "ListAccountsInProjectController" {
 class "Company"{
 -accountsInProjectContainer
 -accountContainer
-+validateManager(emailActor)
++validateProfileRequired(email, profileNameRequired)
 +listAccountsByProject(projectCode)
 }
 
@@ -30,7 +30,8 @@ class "AccountInProject"{
 
 class "AccountContainer" {
 -accounts
-+validateManager(email)
++validateProfileRequired(email, profileNameRequired)
++getAccountByEmail(email)
 }
 
 class "Account" {
@@ -38,7 +39,7 @@ class "Account" {
 -profile
 -status
 +checkAccountFromEmail(email)
-+isManager()
++isProfileRequired(profileNameRequired)
 +getAccountName()
 +getEmail()
 +getAccountStatus()
@@ -46,7 +47,7 @@ class "Account" {
 
 class "Profile"{
 -profileName
-+isManager()
++isProfileRequired(profileNameRequired)
 }
 
 class "AccountMapper"{

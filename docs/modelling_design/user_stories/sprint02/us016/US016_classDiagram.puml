@@ -9,17 +9,18 @@ title LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 
 class ":ListProjectInAccountController" {
 - company
-+ listProjectsByAccount(email, emailUser)
++ listProjectsByAccount(emailUser)
 }
 class "Company" {
 - accountInProjectContainer
++validateProfileRequired(email, profileNameRequired)
 + listProjectsByAccount(email)
-+validateUser(emailUser)
 }
 
 class "AccountContainer" {
 -accounts
-+validateUser(emailUser)
++validateProfileRequired(email, profileNameRequired)
++getAccountByEmail(email)
 }
 
 class "Account" {
@@ -27,7 +28,7 @@ class "Account" {
 -profile
 -status
 +checkAccountFromEmail(email)
-+isUser()
++isProfileRequired(profileNameRequired)
 +getAccountName()
 +getEmail()
 +getAccountStatus()
@@ -35,7 +36,7 @@ class "Account" {
 
 class "Profile"{
 -profileName
-+isUser()
++isProfileRequired(profileNameRequired)
 }
 
 
@@ -53,15 +54,15 @@ class "AccountInProject"{
 -percentageAllocation
 -endDate
 -validate(email)
-+ getProjectbyAccount(email)
++ getProjectByAccount(email)
 }
 
-class "UserListProjectsMapper"{
+class "ManagerListProjectsMapper"{
 +getListOfProjectsDTO(projects)
 +getDTOFromProject(project)
 }
 
-class "UserListProjectsDTO"{
+class "ManagerListProjectsDTO"{
 +code;
 +name;
 +customer;
@@ -84,15 +85,16 @@ class "Project"{
 +getProjectTypology()
 +getBusinessSector()
 }
-"UserListProjectsMapper" ..> "Project"
+
+"ManagerListProjectsMapper" ..> "Project"
 ":ListProjectInAccountController"-->"Company"
 "Company" "1"--> "     1""AccountInProjectContainer": has
 "Company" "1   " --> "     1" "AccountContainer": has
 "AccountInProjectContainer" "1"--> "*" "AccountInProject"
 "AccountContainer" "1" --> "*" "Account": has
 "Account" "1" --> "1""Profile": has
-":ListProjectInAccountController"..> "UserListProjectsMapper"
-"UserListProjectsMapper"..> "UserListProjectsDTO"
+":ListProjectInAccountController"..> "ManagerListProjectsMapper"
+"ManagerListProjectsMapper"..> "ManagerListProjectsDTO"
 
 
 
