@@ -3,12 +3,12 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
-import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AllocationDto;
-import org.switch2022.project.utils.dto.ProjectDtoAsManager;
-import org.switch2022.project.utils.dto.mapper.AccountMapper;
+import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AllocationDto;
+import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.mapper.AccountMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

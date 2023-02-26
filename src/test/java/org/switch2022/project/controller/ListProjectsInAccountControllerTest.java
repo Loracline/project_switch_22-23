@@ -3,10 +3,13 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.container.AccountContainer;
+import org.switch2022.project.container.AccountInProjectContainer;
+import org.switch2022.project.container.Company;
+import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.model.*;
-import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ManagerListProjectsDTO;
-import org.switch2022.project.utils.dto.mapper.ManagerListProjectsMapper;
+import org.switch2022.project.dto.ManagerListProjectsDTO;
+import org.switch2022.project.dto.mapper.ManagerListProjectsMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

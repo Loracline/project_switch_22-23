@@ -1,10 +1,10 @@
 package org.switch2022.project.controller;
 
-import org.switch2022.project.model.container.Company;
+import org.switch2022.project.container.Company;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.utils.dto.AccountDTO;
-import org.switch2022.project.utils.dto.AllocationDto;
-import org.switch2022.project.utils.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AllocationDto;
+import org.switch2022.project.dto.ProjectDtoAsManager;
 
 /**
  * Class AddUserToProjectController acts as an intermediary between the

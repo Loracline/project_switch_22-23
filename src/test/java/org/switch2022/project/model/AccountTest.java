@@ -1,7 +1,7 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.container.ProfileContainer;
+import org.switch2022.project.container.ProfileContainer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

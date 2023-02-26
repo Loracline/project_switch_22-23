@@ -1,10 +1,10 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.model.Account;
-import org.switch2022.project.model.container.Company;
+import org.switch2022.project.container.Company;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.utils.dto.AccountEmailStatusDTO;
-import org.switch2022.project.utils.dto.mapper.AccountListEmailStatusMapper;
+import org.switch2022.project.dto.AccountEmailStatusDTO;
+import org.switch2022.project.dto.mapper.AccountListEmailStatusMapper;
 
 import java.util.ArrayList;
 import java.util.List;

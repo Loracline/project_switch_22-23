@@ -3,11 +3,11 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.container.*;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.model.container.*;
-import org.switch2022.project.utils.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectDtoAsManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

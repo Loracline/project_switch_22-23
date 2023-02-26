@@ -126,14 +126,16 @@
                 </dependencies>
                 <configuration>
                     <targetClasses>
-                        <param>org.switch2022.project.model.*</param>
-                        <param>org.switch2022.project.utils.*</param>
+                        <param>org.switch2022.project.container.*</param>
                         <param>org.switch2022.project.controller.*</param>
+                        <param>org.switch2022.project.dto.*</param>
+                        <param>org.switch2022.project.model.*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>org.switch2022.project.model.*</param>
-                        <param>org.switch2022.project.utils.*</param>
+                        <param>org.switch2022.project.container.*</param>
                         <param>org.switch2022.project.controller.*</param>
+                        <param>org.switch2022.project.dto.*</param>
+                        <param>org.switch2022.project.model.*</param>
                     </targetTests>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>
