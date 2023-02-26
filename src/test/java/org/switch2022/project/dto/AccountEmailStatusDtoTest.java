@@ -1,21 +1,20 @@
 package org.switch2022.project.dto;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.dto.AccountEmailStatusDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AccountEmailStatusDTOTest {
+class AccountEmailStatusDtoTest {
 
     /**
      * equals(Object toCompare)
      */
     @Test
-    void ensureSameAccountDTOEqualsItself() {
+    void ensureSameAccountDtoEqualsItself() {
         // ARRANGE
-        AccountEmailStatusDTO reference = new AccountEmailStatusDTO( "john@isep.ipp.pt", true);
+        AccountEmailStatusDto reference = new AccountEmailStatusDto( "john@isep.ipp.pt", true);
 
-        AccountEmailStatusDTO other = reference;
+        AccountEmailStatusDto other = reference;
 
         boolean expected = true;
 
@@ -27,12 +26,12 @@ class AccountEmailStatusDTOTest {
     }
 
     @Test
-    void ensureTwoAccountDTOsAreNotEqual() {
+    void ensureTwoAccountDtoAreNotEqual() {
         // ARRANGE
-        AccountEmailStatusDTO reference = new AccountEmailStatusDTO("john@isep.ipp.pt", true);
+        AccountEmailStatusDto reference = new AccountEmailStatusDto("john@isep.ipp.pt", true);
 
 
-        AccountEmailStatusDTO other = new AccountEmailStatusDTO("mary@isep.ipp.pt", true);
+        AccountEmailStatusDto other = new AccountEmailStatusDto("mary@isep.ipp.pt", true);
 
         boolean expected = false;
 
@@ -44,9 +43,9 @@ class AccountEmailStatusDTOTest {
     }
 
     @Test
-    void ensureAccountDTONotEqualsOtherTypeObject() {
+    void ensureAccountDtoNotEqualsOtherTypeObject() {
         // ARRANGE
-        AccountEmailStatusDTO reference = new AccountEmailStatusDTO( "john@isep.ipp.pt", true);
+        AccountEmailStatusDto reference = new AccountEmailStatusDto( "john@isep.ipp.pt", true);
 
         Object other = new Object();
 
@@ -63,11 +62,11 @@ class AccountEmailStatusDTOTest {
      * hashCode()
      */
     @Test
-    void ensureAccountDTOsHaveSameHashCode() {
+    void ensureAccountDtoHaveSameHashCode() {
         // ARRANGE
-        AccountEmailStatusDTO reference = new AccountEmailStatusDTO( "john@isep.ipp.pt", true);
+        AccountEmailStatusDto reference = new AccountEmailStatusDto( "john@isep.ipp.pt", true);
 
-        AccountEmailStatusDTO other = new AccountEmailStatusDTO( "john@isep.ipp.pt", true);
+        AccountEmailStatusDto other = new AccountEmailStatusDto( "john@isep.ipp.pt", true);
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -78,12 +77,12 @@ class AccountEmailStatusDTOTest {
     }
 
     @Test
-    void ensureAccountDTOsHaveDifferentHashCode() {
+    void ensureAccountDtoHaveDifferentHashCode() {
         // ARRANGE
-        AccountEmailStatusDTO reference = new AccountEmailStatusDTO("john@isep.ipp.pt", true);
+        AccountEmailStatusDto reference = new AccountEmailStatusDto("john@isep.ipp.pt", true);
 
 
-        AccountEmailStatusDTO other = new AccountEmailStatusDTO("mary@isep.ipp.pt", false);
+        AccountEmailStatusDto other = new AccountEmailStatusDto("mary@isep.ipp.pt", false);
 
         // ACT
         int hashCodeReference = reference.hashCode();

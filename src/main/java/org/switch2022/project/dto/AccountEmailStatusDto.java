@@ -2,7 +2,7 @@ package org.switch2022.project.dto;
 
 import java.util.Objects;
 
-public class AccountEmailStatusDTO {
+public class AccountEmailStatusDto {
     /**
      * Attributes
      */
@@ -12,7 +12,7 @@ public class AccountEmailStatusDTO {
     /**
      * Constructor
      */
-    public AccountEmailStatusDTO(String email, boolean status) {
+    public AccountEmailStatusDto(String email, boolean status) {
         this.email = email;
         this.status = status;
     }
@@ -24,7 +24,7 @@ public class AccountEmailStatusDTO {
      * addresses of the two objects, which means that two objects are considered
      * equal only if they are the same object in memory.
      *
-     * @param toCompare accountEmailStatusDTO to compare to.
+     * @param toCompare accountEmailStatusDto to compare to.
      * @return TRUE if equal, and FALSE otherwise.
      */
     @Override
@@ -32,10 +32,10 @@ public class AccountEmailStatusDTO {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare instanceof AccountEmailStatusDTO)) {
+        if (!(toCompare instanceof AccountEmailStatusDto)) {
             return false;
         }
-        AccountEmailStatusDTO that = (AccountEmailStatusDTO) toCompare;
+        AccountEmailStatusDto that = (AccountEmailStatusDto) toCompare;
         return status == that.status && email.equals(that.email);
     }
     /**

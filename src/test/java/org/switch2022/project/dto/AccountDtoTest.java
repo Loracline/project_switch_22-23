@@ -10,7 +10,7 @@ class AccountDtoTest {
      * equals(Object toCompare)
      */
     @Test
-    void ensureSameAccountDTOEqualsItself() {
+    void ensureSameAccountDtoEqualsItself() {
         // ARRANGE
         AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", true);
 
@@ -26,7 +26,7 @@ class AccountDtoTest {
     }
 
     @Test
-    void ensureTwoAccountDTOsAreNotEqual() {
+    void ensureTwoAccountDtoAreNotEqual() {
         // ARRANGE
         AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", true);
 
@@ -43,7 +43,7 @@ class AccountDtoTest {
     }
 
     @Test
-    void ensureAccountDTONotEqualsOtherTypeObject() {
+    void ensureAccountDtoNotEqualsOtherTypeObject() {
         // ARRANGE
         AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", true);
 
@@ -62,7 +62,7 @@ class AccountDtoTest {
      * hashCode()
      */
     @Test
-    void ensureAccountDTOsHaveSameHashCode() {
+    void ensureAccountDtoHaveSameHashCode() {
         // ARRANGE
         AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", true);
 
@@ -77,7 +77,7 @@ class AccountDtoTest {
     }
 
     @Test
-    void ensureAccountDTOsHaveDifferentHashCode() {
+    void ensureAccountDtoHaveDifferentHashCode() {
         // ARRANGE
         AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", true);
 

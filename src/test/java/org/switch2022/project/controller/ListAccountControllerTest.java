@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
-import org.switch2022.project.dto.AccountEmailStatusDTO;
+import org.switch2022.project.dto.AccountEmailStatusDto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class ListAccountControllerTest {
     Account accountOne, accountTwo;
 
-    AccountEmailStatusDTO accountEmailStatusDTOOne, accountEmailStatusDTOTwo;
+    AccountEmailStatusDto accountEmailStatusDtoOne, accountEmailStatusDtoTwo;
     Profile profileOne, profileTwo;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -39,7 +39,7 @@ class ListAccountControllerTest {
     AccountInProject accountInProject1, accountInProject2;
     List<AccountInProject> accountsInProject;
 
-    List<AccountEmailStatusDTO> accountEmailStatusDTOList;
+    List<AccountEmailStatusDto> accountEmailStatusDtoList;
     AccountInProjectContainer accountInProjectContainer;
 
     @BeforeEach
@@ -51,12 +51,12 @@ class ListAccountControllerTest {
         accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
         accountContainer.addAccount("Paul", "paul@isep.ipp.pt", 939855689, null);
 
-        accountEmailStatusDTOOne = new AccountEmailStatusDTO("mike@isep.ipp.pt", true);
-        accountEmailStatusDTOTwo = new AccountEmailStatusDTO("paul@isep.ipp.pt", true);
+        accountEmailStatusDtoOne = new AccountEmailStatusDto("mike@isep.ipp.pt", true);
+        accountEmailStatusDtoTwo = new AccountEmailStatusDto("paul@isep.ipp.pt", true);
 
-        accountEmailStatusDTOList = new ArrayList<>();
-        accountEmailStatusDTOList.add(accountEmailStatusDTOOne);
-        accountEmailStatusDTOList.add(accountEmailStatusDTOTwo);
+        accountEmailStatusDtoList = new ArrayList<>();
+        accountEmailStatusDtoList.add(accountEmailStatusDtoOne);
+        accountEmailStatusDtoList.add(accountEmailStatusDtoTwo);
 
         profileOne = new Profile("Administrator");
         profileTwo = new Profile("User");
@@ -97,7 +97,7 @@ class ListAccountControllerTest {
 
     @Test
     void ensureAllAccountsAreListedSuccessfully() {
-        List<AccountEmailStatusDTO> expected = accountEmailStatusDTOList;
+        List<AccountEmailStatusDto> expected = accountEmailStatusDtoList;
         ListAccountController newListAccountController = new ListAccountController(company);
 
         //set profileOne (Administrator) to accountOne
@@ -105,7 +105,7 @@ class ListAccountControllerTest {
         String emailActor = accountOne.getEmail(); //Administrator
 
         // Act
-        List<AccountEmailStatusDTO> result = newListAccountController.listAllAccounts(emailActor);
+        List<AccountEmailStatusDto> result = newListAccountController.listAllAccounts(emailActor);
 
         // Assert
         assertEquals(expected, result);
@@ -113,11 +113,11 @@ class ListAccountControllerTest {
 
     @Test
     void ensureAllAccountsAreListedUnsuccessfully_ProfileNotAuthorized() {
-        List<AccountEmailStatusDTO> expected = new ArrayList<>();
+        List<AccountEmailStatusDto> expected = new ArrayList<>();
         ListAccountController newListAccountController = new ListAccountController(company);
 
         // Act
-        List<AccountEmailStatusDTO> result = newListAccountController.listAllAccounts("mike@isep.ipp.pt");
+        List<AccountEmailStatusDto> result = newListAccountController.listAllAccounts("mike@isep.ipp.pt");
 
         // Assert
         assertEquals(expected, result);

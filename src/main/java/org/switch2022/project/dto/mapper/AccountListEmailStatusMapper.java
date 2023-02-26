@@ -1,7 +1,7 @@
 package org.switch2022.project.dto.mapper;
 
 
-import org.switch2022.project.dto.AccountEmailStatusDTO;
+import org.switch2022.project.dto.AccountEmailStatusDto;
 import org.switch2022.project.model.Account;
 
 import java.util.ArrayList;
@@ -17,28 +17,28 @@ public class AccountListEmailStatusMapper {
     // DTO -> ACCOUNT
 
     /**
-     * This method converts an account into a DTO.
+     * This method converts an account into a Dto.
      *
      * @param account one must convert.
-     * @return DTO carrying data.
+     * @return Dto carrying data.
      */
-    private static AccountEmailStatusDTO accountToDTO(Account account) {
-        return new AccountEmailStatusDTO(account.getEmail(), account.isAccountStatus());
+    private static AccountEmailStatusDto accountToDto(Account account) {
+        return new AccountEmailStatusDto(account.getEmail(), account.isAccountStatus());
     }
 
     // LIST OF ACCOUNTS -> LIST OF DTO
     /**
-     * This method converts a list of accounts into a list of accountDTOs.
+     * This method converts a list of accounts into a list of accountDto's.
      *
-     * @param accounts list one must convert in DTO
-     * @return a list of accountDTOs.
+     * @param accounts list one must convert in Dto
+     * @return a list of accountDto's.
      */
-    public static List<AccountEmailStatusDTO> listAccountsToDTO(List<Account> accounts) {
-        List<AccountEmailStatusDTO> accountsDTO = new ArrayList<>();
+    public static List<AccountEmailStatusDto> listAccountsToDto(List<Account> accounts) {
+        List<AccountEmailStatusDto> accountsDto = new ArrayList<>();
         for (int i = 0; i < accounts.size(); i++) {
-            AccountEmailStatusDTO accountDTO = accountToDTO(accounts.get(i));
-            accountsDTO.add(accountDTO);
+            AccountEmailStatusDto accountDTO = accountToDto(accounts.get(i));
+            accountsDto.add(accountDTO);
         }
-        return accountsDTO;
+        return accountsDto;
     }
 }
