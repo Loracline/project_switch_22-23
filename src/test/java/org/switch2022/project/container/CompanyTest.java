@@ -3,9 +3,8 @@ package org.switch2022.project.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.dto.ProjectDtoAsManager;
 
@@ -23,7 +22,7 @@ class CompanyTest {
      */
 
     Account accountOne, accountTwo, accountThree, accountFour;
-    AccountDTO accountTwoDTO;
+    AccountDto accountTwoDTO;
     Profile profileOne, profileTwo, profileThree;
     Project projectOne, projectTwo, projectThree, project;
     ProjectDtoAsManager projectOneDTO, projectNonExistentDTO, projectTwoDTO;
@@ -51,7 +50,7 @@ class CompanyTest {
         accountFour = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
 
         // AccountDTO created.
-        accountTwoDTO = new AccountDTO(accountTwo.getAccountName(), accountTwo.getEmail(), accountTwo.isAccountStatus());
+        accountTwoDTO = new AccountDto(accountTwo.getAccountName(), accountTwo.getEmail(), accountTwo.isAccountStatus());
 
         // Container of accounts created.
         accountContainer = new AccountContainer();

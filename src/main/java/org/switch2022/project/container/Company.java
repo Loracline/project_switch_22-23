@@ -3,7 +3,7 @@ package org.switch2022.project.container;
 
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.dto.ProjectDtoAsManager;
 
@@ -203,25 +203,25 @@ public class Company {
     /**
      * This method adds an account to a project with a specific role.
      *
-     * @param allocationDTO data transfer object gathering the information
+     * @param allocationDto data transfer object gathering the information
      *                      needed.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean addUserToProject(AccountDTO accountDTO,
-                                    ProjectDtoAsManager projectDTOAsManager,
-                                    AllocationDto allocationDTO) {
+    public boolean addUserToProject(AccountDto accountDto,
+                                    ProjectDtoAsManager projectDtoAsManager,
+                                    AllocationDto allocationDto) {
 
         boolean addUserToProject = false;
 
         Account account =
-                this.accountContainer.getAccountByEmail(accountDTO.email);
+                this.accountContainer.getAccountByEmail(accountDto.email);
         Project project =
-                this.projectContainer.getProjectByCode(projectDTOAsManager.code);
+                this.projectContainer.getProjectByCode(projectDtoAsManager.code);
 
         if (account != null && project != null) {
             if (account.isProfileRequired("user") && project.isProjectOpen()) {
                 addUserToProject = this.accountInProjectContainer.addUserToProject(account, project,
-                        allocationDTO);
+                        allocationDto);
             }
         }
         return addUserToProject;

@@ -2,7 +2,7 @@ package org.switch2022.project.dto;
 
 import java.util.Objects;
 
-public class AccountDTO {
+public class AccountDto {
     /**
      * Attributes
      */
@@ -13,7 +13,7 @@ public class AccountDTO {
     /**
      * Constructor
      */
-    public AccountDTO(String name, String email, boolean status) {
+    public AccountDto(String name, String email, boolean status) {
         this.name = name;
         this.email = email;
         this.status = status;
@@ -37,7 +37,7 @@ public class AccountDTO {
         if (toCompare == null || getClass() != toCompare.getClass()) {
             return false;
         }
-        AccountDTO that = (AccountDTO) toCompare;
+        AccountDto that = (AccountDto) toCompare;
         return status == that.status && name.equals(that.name) && email.equals(that.email);
     }
 

@@ -8,7 +8,7 @@ import org.switch2022.project.container.AccountInProjectContainer;
 import org.switch2022.project.container.Company;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.model.*;
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.mapper.AccountMapper;
 
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ class ListAccountsInProjectControllerTest {
      */
 
     Account accountOne, accountTwo;
-    AccountDTO accountDTOOne;
-    List<AccountDTO> accountsDTOOne;
+    AccountDto accountDtoOne;
+    List<AccountDto> accountsDTOOne;
     Project projectOne, projectTwo, projectThree;
     AccountInProject accountInProjectOne, accountInProjectTwo;
     List<AccountInProject> accountsInProject;
@@ -41,9 +41,9 @@ class ListAccountsInProjectControllerTest {
         accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
 
         //accountDTO
-        accountDTOOne = AccountMapper.accountToDTO(accountOne);
+        accountDtoOne = AccountMapper.accountToDTO(accountOne);
         accountsDTOOne = new ArrayList<>();
-        accountsDTOOne.add(accountDTOOne);
+        accountsDTOOne.add(accountDtoOne);
 
         //project
         projectOne = new Project("1A", null, null, null, null);
@@ -78,7 +78,7 @@ class ListAccountsInProjectControllerTest {
     void tearDown() {
         accountOne = null;
         accountTwo = null;
-        accountDTOOne = null;
+        accountDtoOne = null;
         accountsDTOOne.clear();
         projectOne = null;
         projectTwo = null;
@@ -100,11 +100,11 @@ class ListAccountsInProjectControllerTest {
     @Test
     void ensureAllAccountsInAProjectAreListedSuccessfully() {
         //Arrange
-        List<AccountDTO> expected = accountsDTOOne;
+        List<AccountDto> expected = accountsDTOOne;
         company.changeProfile("mary@isep.ipp.pt", "Manager");
 
         //Act
-        List<AccountDTO> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
+        List<AccountDto> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
 
         //Assert
         assertEquals(expected, result);
@@ -116,11 +116,11 @@ class ListAccountsInProjectControllerTest {
     @Test
     void ensureThatAnEmptyListIsReturnedForAnUnauthorizedAccount() {
         //Arrange
-        List<AccountDTO> expected = new ArrayList<>();
+        List<AccountDto> expected = new ArrayList<>();
         company.changeProfile("mary@isep.ipp.pt", "Administrator");
 
         //Act
-        List<AccountDTO> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
+        List<AccountDto> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1A");
 
         //Assert
         assertEquals(expected, result);
@@ -132,11 +132,11 @@ class ListAccountsInProjectControllerTest {
     @Test
     void ensureThatAnEmptyListIsReturnedWhenAProjectHasNoOneAssignedToIt() {
         //Arrange
-        List<AccountDTO> expected = new ArrayList<>();
+        List<AccountDto> expected = new ArrayList<>();
         company.changeProfile("mary@isep.ipp.pt", "Manager");
 
         //Act
-        List<AccountDTO> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1C");
+        List<AccountDto> result = listAccountsInProjectController.listAccountsByProject("mary@isep.ipp.pt", "1C");
 
         //Assert
         assertEquals(expected, result);

@@ -3,9 +3,8 @@ package org.switch2022.project.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.AccountInProjectContainer;
 import org.switch2022.project.model.*;
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.dto.ProjectDtoAsManager;
 
@@ -24,7 +23,7 @@ class AccountInProjectContainerTest {
 
     Account accountOne, accountTwo, accountThree, accountFour, accountFive,
             accountSix;
-    AccountDTO accountDTO, accountDTO2, accountDTO3;
+    AccountDto accountDTO, accountDto2, accountDto3;
     AccountInProject accountInProjectOne, accountInProjectTwo,
             accountInProjectThree, accountInProjectFour, accountInProjectFive,
             accountInProjectSix, accountInProjectSeven, accountInProjectEight,
@@ -96,9 +95,9 @@ class AccountInProjectContainerTest {
         accountsInProject.add(accountInProjectEight);
 
         // accountDTOs
-        accountDTO = new AccountDTO("John", "john@isep.ipp.pt", true);
-        accountDTO2 = new AccountDTO("Anna", "anna@isep.ipp.pt", true);
-        accountDTO3 = new AccountDTO("Anna", "anna@isep.ipp.pt", true);
+        accountDTO = new AccountDto("John", "john@isep.ipp.pt", true);
+        accountDto2 = new AccountDto("Anna", "anna@isep.ipp.pt", true);
+        accountDto3 = new AccountDto("Anna", "anna@isep.ipp.pt", true);
 
         // projectDTO
         projectDTOAsManager = new ProjectDtoAsManager("id001", "Test", "IT Customer", "228674498", "fixed cost", "IT Sector");
@@ -119,8 +118,8 @@ class AccountInProjectContainerTest {
         customerTwo = null;
         projectTypologyOne = null;
         accountDTO = null;
-        accountDTO2 = null;
-        accountDTO3 = null;
+        accountDto2 = null;
+        accountDto3 = null;
         projectDTOAsManager = null;
         allocationDTOPO = null;
         allocationDTOTM = null;

@@ -1,6 +1,6 @@
 package org.switch2022.project.dto.mapper;
 
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.model.Account;
 
 import java.util.ArrayList;
@@ -20,8 +20,8 @@ public class AccountMapper {
      * @param account one must convert.
      * @return DTO carrying data.
      */
-    public static AccountDTO accountToDTO(Account account) {
-        return new AccountDTO(account.getAccountName(),account.getEmail(),account.isAccountStatus());
+    public static AccountDto accountToDTO(Account account) {
+        return new AccountDto(account.getAccountName(),account.getEmail(),account.isAccountStatus());
     }
 
     // LIST OF ACCOUNTS -> LIST OF DTO
@@ -31,11 +31,11 @@ public class AccountMapper {
      * @param accounts list one must convert in DTO
      * @return a list of accountDTOs.
      */
-    public static List<AccountDTO> listAccountsToDTO(List<Account> accounts) {
-        List<AccountDTO> accountsDTO = new ArrayList<>();
+    public static List<AccountDto> listAccountsToDTO(List<Account> accounts) {
+        List<AccountDto> accountsDTO = new ArrayList<>();
         int i = 0;
         while (i < accounts.size()) {
-            AccountDTO accountDTO = accountToDTO(accounts.get(i));
+            AccountDto accountDTO = accountToDTO(accounts.get(i));
             accountsDTO.add(accountDTO);
             i++;
         }

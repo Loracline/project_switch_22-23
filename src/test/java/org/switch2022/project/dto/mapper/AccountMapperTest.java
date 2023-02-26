@@ -4,8 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.Account;
-import org.switch2022.project.dto.AccountDTO;
-import org.switch2022.project.dto.mapper.AccountMapper;
+import org.switch2022.project.dto.AccountDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,8 @@ class AccountMapperTest {
      * tests below.
      */
     Account accountOne, accountTwo, accountThree;
-    AccountDTO accountDTOOne, accountDTOTwo, accountDTOThree;
-    List<AccountDTO> accountsDTOOne;
+    AccountDto accountDtoOne, accountDtoTwo, accountDtoThree;
+    List<AccountDto> accountsDTOOne;
     List<Account> accounts;
 
     @BeforeEach
@@ -34,13 +33,13 @@ class AccountMapperTest {
         accounts.add(accountThree);
 
         //accountDTO
-        accountDTOOne = AccountMapper.accountToDTO(accountOne);
-        accountDTOTwo = AccountMapper.accountToDTO(accountTwo);
-        accountDTOThree = AccountMapper.accountToDTO(accountThree);
+        accountDtoOne = AccountMapper.accountToDTO(accountOne);
+        accountDtoTwo = AccountMapper.accountToDTO(accountTwo);
+        accountDtoThree = AccountMapper.accountToDTO(accountThree);
         accountsDTOOne = new ArrayList<>();
-        accountsDTOOne.add(accountDTOOne);
-        accountsDTOOne.add(accountDTOTwo);
-        accountsDTOOne.add(accountDTOThree);
+        accountsDTOOne.add(accountDtoOne);
+        accountsDTOOne.add(accountDtoTwo);
+        accountsDTOOne.add(accountDtoThree);
     }
 
     @AfterEach
@@ -48,9 +47,9 @@ class AccountMapperTest {
         accountOne = null;
         accountTwo = null;
         accountThree = null;
-        accountDTOOne = null;
-        accountDTOTwo = null;
-        accountDTOThree = null;
+        accountDtoOne = null;
+        accountDtoTwo = null;
+        accountDtoThree = null;
         accountsDTOOne.clear();
         accounts.clear();
     }
@@ -61,10 +60,10 @@ class AccountMapperTest {
     @Test
     void ensureThatAccountIsConvertedIntoAccountDTO() {
         // ARRANGE
-        AccountDTO expected = new AccountDTO("Mike","mike@isep.ipp.pt", true);
+        AccountDto expected = new AccountDto("Mike","mike@isep.ipp.pt", true);
 
         // ACT
-        AccountDTO result = AccountMapper.accountToDTO(accountOne);
+        AccountDto result = AccountMapper.accountToDTO(accountOne);
 
         // ASSERT
         assertEquals(expected, result);
@@ -76,10 +75,10 @@ class AccountMapperTest {
     @Test
     void ensureThatAccountListIsConvertedIntoAccountListDTO() {
         // ARRANGE
-        List<AccountDTO> expected = accountsDTOOne;
+        List<AccountDto> expected = accountsDTOOne;
 
         //ACT
-        List<AccountDTO> result = AccountMapper.listAccountsToDTO(accounts);
+        List<AccountDto> result = AccountMapper.listAccountsToDTO(accounts);
 
         // ASSERT
         assertEquals(expected, result);

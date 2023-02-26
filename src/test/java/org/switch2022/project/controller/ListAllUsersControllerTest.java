@@ -8,7 +8,7 @@ import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.container.Company;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.mapper.AccountMapper;
 
 import java.util.ArrayList;
@@ -93,13 +93,13 @@ class ListAllUsersControllerTest {
         String emailActor = accountThree.getEmail();
 
         //AccountDTO of only account with profile User (accountTwo)
-        AccountDTO accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
+        AccountDto accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
         //Add accountTwoDTO to empty list
-        List<AccountDTO> expected = new ArrayList<>();
+        List<AccountDto> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
 
         // ACT
-        List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
+        List<AccountDto> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
         assertEquals(expected, result);
@@ -121,13 +121,13 @@ class ListAllUsersControllerTest {
         String emailActor = accountOne.getEmail();
 
         //AccountDTO of only account with profile User (accountTwo)
-        AccountDTO accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
+        AccountDto accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
         //Add accountTwoDTO to empty list
-        List<AccountDTO> expected = new ArrayList<>();
+        List<AccountDto> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
 
         // ACT
-        List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
+        List<AccountDto> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
         assertNotEquals(expected, result);
@@ -147,10 +147,10 @@ class ListAllUsersControllerTest {
         //Retrieve email of actor
         String emailActor = accountThree.getEmail();
 
-        List<AccountDTO> expected = new ArrayList<>();
+        List<AccountDto> expected = new ArrayList<>();
 
         // ACT
-        List<AccountDTO> result = listAllUsersController.listAllUsers(emailActor);
+        List<AccountDto> result = listAllUsersController.listAllUsers(emailActor);
 
         // ASSERT
         assertEquals(expected, result);

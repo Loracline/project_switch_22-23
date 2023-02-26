@@ -3,7 +3,7 @@ package org.switch2022.project.controller;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.container.Company;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.mapper.AccountMapper;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ListAllUsersController {
      * @param actorEmail must be a "Manager" profile.
      * @return list of all accounts with the profile "User".
      */
-    public List<AccountDTO> listAllUsers(String actorEmail) {
+    public List<AccountDto> listAllUsers(String actorEmail) {
         List<Account> users = new ArrayList<>();
         if (company.validateProfileRequired(actorEmail, Profile.MANAGER)) {
             users = company.listAllUsers();

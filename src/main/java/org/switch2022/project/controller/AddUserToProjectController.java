@@ -2,7 +2,7 @@ package org.switch2022.project.controller;
 
 import org.switch2022.project.container.Company;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.dto.ProjectDtoAsManager;
 
@@ -40,7 +40,7 @@ public class AddUserToProjectController {
      *                      account in the project.
      * @return TRUE if added, and FALSE otherwise.
      */
-    public boolean addUserToProject(String emailActor, AccountDTO accountDTO,
+    public boolean addUserToProject(String emailActor, AccountDto accountDTO,
                                     ProjectDtoAsManager projectDTOAsManager,
                                     AllocationDto allocationDTO) {
         boolean result = false;

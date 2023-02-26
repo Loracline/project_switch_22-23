@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
-import org.switch2022.project.dto.AccountDTO;
+import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.dto.ProjectDtoAsManager;
 import org.switch2022.project.dto.mapper.AccountMapper;
@@ -24,7 +24,7 @@ class AddUserToProjectControllerTest {
      */
 
     Account accountOne, accountTwo;
-    AccountDTO accountTwoDTO;
+    AccountDto accountTwoDTO;
     Profile profileOne, profileTwo;
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
