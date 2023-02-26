@@ -6,14 +6,14 @@ US001 - As Administrator, I want to create user profiles.
 end legend
 autonumber
 actor Administrator
-Administrator  -> ":System": Creates profile
+Administrator  -> ":System": Starts creating new profile
 note left
 Account is authenticated.
 ":System" grants access.
 end note
 ":System" --> Administrator: requests data (profileName)
 Administrator -> ":System": Types requested data
-":System" --> Administrator: informs profile created
+":System" --> Administrator: informs operation success
 @enduml
 
 @startuml
@@ -31,7 +31,7 @@ Account is authenticated.
 end note
 Administrator <-- ":System": requests data (name, email, \n phoneNumber, photo)
 Administrator  -> ":System": types requested data
-":System" --> Administrator: informs account created
+":System" --> Administrator: informs operation success
 @enduml
 
 
@@ -124,7 +124,7 @@ Account is authenticated.
 end note
 ":System" --> "Administrator": requests data (projectTypology)
 Administrator -> ":System": types requested data
-Administrator <-- ":System":project typology created
+Administrator <-- ":System": informs operation success
 @enduml
 
 
@@ -160,7 +160,7 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-Administrator <-- ":System": requests data (customerName)
+Administrator <-- ":System": requests data (customerName, customerNIF)
 Administrator-> ":System": sends requested data
 Administrator <-- ":System":informs operation success
 @enduml
@@ -218,12 +218,14 @@ skinparam sequenceMessageAlign center
 title TO GET A LIST OF ALL HUMAN RESOURCES IN PROJECT
 actor "Manager"
 autonumber
+"Manager" -> ":System": requests a list of all human resources in project
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Manager" -> ":System": requests a list of all human resources in project
-"Manager" <-- ":System": returns list of human resources
+":System" --> Manager: request data (projectCode)
+"Manager" -> ":System": types requested data
+"Manager" <-- ":System": shows list of accounts
 @enduml
 
 @startuml
@@ -239,7 +241,9 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Manager" <-- ":System": returns list of all projects
+"Manager" <-- ":System": request data (email)
+"Manager" -> ":System": types requested data
+"Manager" <-- ":System": shows list all projects
 @enduml
 
 
@@ -256,7 +260,9 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Authenticated User" <-- ":System": returns a list of all projects
+"Authenticated User" <-- ":System": request data (email)
+"Authenticated User" -> ":System": types requested data
+"Authenticated User" <-- ":System": shows list of projects
 
 @enduml
 
