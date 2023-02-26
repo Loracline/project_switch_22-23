@@ -16,12 +16,14 @@ participant ":BusinessSectorContainer" as cn
 participant "businessSector:BusinessSector" as bs
 
 activate a
+
 a -> ui: starts adding new business sector
 activate ui
 a <-- ui: requests data (name)
 a -> ui: types requested data
 ui -> ct: addBusinessSector(name, email)
 activate ct
+
 ct -> c: validateProfileRequired(email, profileNameRequired)
 activate c
 ref over c: validateAdministrator_sequenceDiagram
@@ -29,6 +31,7 @@ c --> ct: true
 deactivate c
 ct -> c: addBusinessSector(name)
 activate c
+
 c -> cn: addBusinessSector(name)
 activate cn
 create bs

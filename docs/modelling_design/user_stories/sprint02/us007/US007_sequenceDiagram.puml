@@ -17,12 +17,15 @@ participant "projectTypology:ProjectTypology" as pty
 
 
 activate a
+
 a -> ui: starts creating new project typology
 activate ui
+
 ui --> a: requests data (projectTypology)
 a -> ui: types requested data
 ui -> ct: createProjectTypology(email, projectTypology)
 activate ct
+
 ct -> c: validateProfileRequired(email, profileNameRequired)
 activate c
 ref over c: validateAdministrator_sequenceDiagram
@@ -30,6 +33,7 @@ c --> ct: true
 deactivate c
 ct -> c: createProjectTypology(projectTypology)
 activate c
+
 c -> ptc: createProjectTypology(projectTypology)
 activate ptc
 create pty
@@ -45,5 +49,6 @@ ui --> a: informs operation success
 deactivate ui
 
 deactivate a
+
 @enduml
 

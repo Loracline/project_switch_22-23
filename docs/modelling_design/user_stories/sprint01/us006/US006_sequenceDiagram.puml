@@ -1,6 +1,6 @@
 @startuml
 legend top
-US005 - As Administrator, I want to activate a user account.
+US006 - As Administrator, I want to activate a user account.
 end legend
 skinparam sequenceMessageAlign center
 title ACTIVATE USER ACCOUNT

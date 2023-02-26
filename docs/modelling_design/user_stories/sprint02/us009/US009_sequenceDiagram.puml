@@ -28,9 +28,11 @@ c --> ct: true
 deactivate c
 ct -> c: addCustomer(customerName, customerNIF)
 activate c
+
 c -> cn: addCustomer(customerName, customerNIF)
 create customer
 activate cn
+
 cn ->> customer: create(customerName, customerNIF)
 cn -> cn: addCustomer(customer)
 cn --> c: true
