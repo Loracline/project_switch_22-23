@@ -323,6 +323,55 @@ class ProjectDtoAsManager {
 +ProjectDtoAsManager(code, name, customerName, customerNif, projectTypology, businessSector)
 }
 
+'Controller Company link'
+'US016'
+"ListProjectInAccountController"-->"Company"
+'US015'
+"GetListOfProjectsController" "1"-->"1" "Company": has
+'US014'
+"ListAccountsInProjectController" --> "Company"
+'US011_US012_US013'
+"AddUserToProjectController" "1"-->"1" "Company" :has
+“ListAllUsersController” "1"-->"1" "Company" :has
+“ListProjectsInAccountController” "1"-->"1" "Company" :has
+'US010'
+"RegisterProjectController" "1"-->"1" "Company": has
+'US009'
+"AddCustomerController" "1"-->"1" "Company" : has
+'US008'
+"AddBusinessSectorController" "1"-->"1" "Company" : has
+'US007'
+"CreateProjectTypologyController""1"-->"1" "Company": has
+'US006' 'US005'
+"ChangeStatusController" --> "Company"
+'US004'
+"ListAccountController" --> "Company"
+'US003'
+"ChangeProfileController" "1"-->"1" "Company"
+'US002'
+"RegisterAccountController" "1" --> "1" "Company": has
+'US001'
+"CreateProfileController" "1"-->"1"  "Company" : has
+
+'Has Mapper link'
+'US016'
+"ManagerListProjectsMapper" ..> "Project"
+"ListProjectInAccountController"..> "ManagerListProjectsMapper"
+"ManagerListProjectsMapper"..> "ManagerListProjectsDTO"
+'US015'
+"GetListOfProjectsController" ..> "ManagerListProjectsMapper"
+"ManagerListProjectsMapper" ..> "ManagerListProjectsDTO": <<instantiate>>
+'US014'
+"ListAccountsInProjectController" ..> "AccountMapper"
+"AccountMapper" ..> "AccountDTO"
+"AccountMapper"..>"Account"
+'US010'
+"ProjectMapper" ..> "ProjectDtoAsManager"
+"ProjectMapper" ..> "ProjectDtoAsManager"
+"ProjectContainer" ..> "ProjectMapper"
+"RegisterProjectController" ..> "ProjectMapper"
+"ProjectMapper" ..> "Project"
+
 'Company Containers link'
 "Company" "1"-->"1" "ProfileContainer": has
 "Company" "1"-->"1" "AccountContainer" : has
@@ -340,60 +389,12 @@ class ProjectDtoAsManager {
 "CustomerContainer" "1"-->"*" "Customer": has
 "AccountInProjectContainer" "1"--> "*" "AccountInProject" : has
 "ProjectContainer" "1"-->"*" "Project": contains
+'US010'
+"ProjectContainer" "1" -left-> "*" "Project" : contains
 
 'Account Profile Link'
 "Account" "*"--> "1""Profile": contains
 
-'US016'
-"ManagerListProjectsMapper" ..> "Project"
-"ListProjectInAccountController"-->"Company"
-"ListProjectInAccountController"..> "ManagerListProjectsMapper"
-"ManagerListProjectsMapper"..> "ManagerListProjectsDTO"
-
-'US015'
-"GetListOfProjectsController" "1"-->"1" "Company": has
-"GetListOfProjectsController" ..> "ManagerListProjectsMapper"
-"ManagerListProjectsMapper" ..> "ManagerListProjectsDTO": <<instantiate>>
-
-'US014'
-"ListAccountsInProjectController" --> "Company"
-"ListAccountsInProjectController" ..> "AccountMapper"
-"AccountMapper" ..> "AccountDTO"
-"AccountMapper"..>"Account"
-"AccountInProject" "1"-->"1" "Project": has
-
-'US011_US012_US013'
-"AddUserToProjectController" "1"-->"1" "Company" :has
-
-'US010'
-"RegisterProjectController" "1"-->"1" "Company": has
-"ProjectMapper" ..> "ProjectDtoAsManager"
-"ProjectContainer" ..> "ProjectMapper"
-"RegisterProjectController" ..> "ProjectMapper"
-"ProjectMapper" ..> "Project"
-"ProjectContainer" "1" -left-> "*" "Project" : contains
-
-'US009'
-"AddCustomerController" "1"-->"1" "Company" : has
-
-'US008'
-"AddBusinessSectorController" "1"-->"1" "Company" : has
-
-'US007'
-"CreateProjectTypologyController""1"-->"1" "Company": has
-
-'US006' 'US005'
-"ChangeStatusController" --> "Company"
-
-'US004'
-"ListAccountController" --> "Company"
-
-'US003'
-"ChangeProfileController" "1"-->"1" "Company"
-
-'US002'
-"RegisterAccountController" "1" --> "1" "Company": has
-
-'US001'
-"CreateProfileController" "1"-->"1"  "Company" : has
+'AccountInProject Project link'
+"AccountInProject" "*"-->"1""Project": contains
 @enduml

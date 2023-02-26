@@ -17,6 +17,8 @@ participant "managerListProjectsDTO:ManagerListProjectsDTO" as DTO
 activate Manager
 Manager -> ui: get list of all projects
 activate ui
+ui --> Manager: request data (email)
+Manager -> ui: types requested data
 ui -> controller: getListOfProjects(email)
 activate controller
 controller -> company: validateProfileRequired(email, profileNameRequired)
