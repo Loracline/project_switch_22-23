@@ -12,8 +12,8 @@ participant ":AccountContainer" as container
 participant ":account:Account" as acc
 participant "users: List<Account>" as list
 participant "accountMapper:AccountMapper" as mapper
-participant "accountsDTO: List<AccountDTO>" as dtolist
-participant "accountDTO:AccountDTO" as dto
+participant "accountsDto: List<AccountDto>" as dtolist
+participant "accountDto:AccountDto" as dto
 
 Manager -> ui: list all User accounts
 activate ui
@@ -38,7 +38,7 @@ deactivate container
 company --> controller: users
 deactivate company
 create mapper
-controller -> mapper: getListDTOFromAccounts(users)
+controller -> mapper: getListDtoFromAccounts(users)
 create dtolist
 mapper --> dtolist: create()
 loop for each user in users
@@ -46,17 +46,17 @@ mapper -> list: user = get(i)
 activate list
 list --> mapper: user
 deactivate list
-mapper -> mapper: getDTOFromAccount(user)
+mapper -> mapper: getDtoFromAccount(user)
 activate mapper
 create dto
 mapper --> dto: create()
 deactivate mapper
-mapper -> dtolist: add(accountDTO)
+mapper -> dtolist: add(accountDto)
 activate dtolist
 deactivate dtolist
 end loop
-mapper --> controller: userAccountsDTO
-controller --> ui: userAccountsDTO
+mapper --> controller: userAccountsDto
+controller --> ui: userAccountsDto
 deactivate controller
 ui --> Manager: return list of Users
 deactivate ui

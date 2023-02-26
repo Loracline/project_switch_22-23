@@ -26,7 +26,7 @@ controller -> company: validateManager(email)
 activate company
 company -> ac: validateManager(email)
 activate ac
-ac -> a: checkAccountfromEmail(email)
+ac -> a: checkAccountFromEmail(email)
 activate a
 a-->>ac: true
 ac -> a: isManager()

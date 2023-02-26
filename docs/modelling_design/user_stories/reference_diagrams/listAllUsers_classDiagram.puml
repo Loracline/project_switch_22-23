@@ -23,10 +23,10 @@ class Account {
 }
 
 class AccountMapper {
-+getDTOFromAccount(user)
++getDtoFromAccount(user)
 }
 
-class AccountDTO{
+class AccountDto{
 +name
 +email
 +phoneNumber
@@ -39,6 +39,6 @@ ListAllUsersController --> Company
 ListAllUsersController --> AccountMapper
 Company "1"-->"1" AccountContainer: has
 AccountContainer "1" --> "*" Account : has
-AccountMapper "1"..> "*"AccountDTO: creates
+AccountMapper "1"..> "*"AccountDto: creates
 
 @enduml

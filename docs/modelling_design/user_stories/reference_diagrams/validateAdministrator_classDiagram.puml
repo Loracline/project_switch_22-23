@@ -1,33 +1,33 @@
 @startuml
 
 skinparam sequenceMessageAlign center
-title AS A MANAGER I WANT AUTHORIZATION
+title AS A ADMINISTRATOR I WANT AUTHORIZATION
 
 class "Controller"{
 -company
-+validateManager(email)
++validateAdministrator(email)
 }
 
 class "Company"{
 -accountContainer
-+validateManager(email)
++validateAdministrator(email)
 }
 
 class "AccountContainer"{
 -accounts
-+validateManager(email)
++validateAdministrator(email)
 }
 
 class "Account"{
 -email
 -profile
 +checkAccountFromEmail(email)
-+isManager()
++isAdministrator()
 }
 
 class "Profile"{
 -profileName
-+isManager()
++isAdministrator()
 }
 "Controller" --> "Company"
 "Company" "1"-->"1" "AccountContainer": has
