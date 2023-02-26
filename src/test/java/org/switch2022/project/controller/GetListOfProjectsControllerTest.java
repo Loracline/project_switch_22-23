@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
-import org.switch2022.project.dto.ManagerListProjectsDTO;
+import org.switch2022.project.dto.ManagerListProjectsDto;
 import org.switch2022.project.dto.ProjectDtoAsManager;
 
 import java.util.ArrayList;
@@ -107,14 +107,14 @@ public class GetListOfProjectsControllerTest {
     void ensureThatProjectsIsListedSuccessfully() {
         // Arrange
         company.changeProfile("mike@isep.ipp.pt", "Manager");
-        ManagerListProjectsDTO projectDTOOne = new ManagerListProjectsDTO("AA001", "software " + "development " + "management", "isep", "planned", "fixed cost", "fishing");
-        ManagerListProjectsDTO projectDTOTwo = new ManagerListProjectsDTO("AA002", "project " + "software",
+        ManagerListProjectsDto projectDTOOne = new ManagerListProjectsDto("AA001", "software " + "development " + "management", "isep", "planned", "fixed cost", "fishing");
+        ManagerListProjectsDto projectDTOTwo = new ManagerListProjectsDto("AA002", "project " + "software",
                 "isep", "planned", "fixed cost", "fishing");
-        List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
+        List<ManagerListProjectsDto> expectDTOs = new ArrayList<>();
         expectDTOs.add(projectDTOOne);
         expectDTOs.add(projectDTOTwo);
         // Act
-        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("mike" + "@isep" + ".ipp.pt");
+        List<ManagerListProjectsDto> result = getListOfProjectscontroller.getListOfProjects("mike" + "@isep" + ".ipp.pt");
         // Assert
         assertEquals(expectDTOs, result);
     }
@@ -125,9 +125,9 @@ public class GetListOfProjectsControllerTest {
     @Test
     void ensureThatNoProjectsAreListedWhenRequestedByAnotherProfile() {
         // Arrange
-        List<ManagerListProjectsDTO> expectDTOs = new ArrayList<>();
+        List<ManagerListProjectsDto> expectDTOs = new ArrayList<>();
         // Act
-        List<ManagerListProjectsDTO> result = getListOfProjectscontroller.getListOfProjects("paul" + "@isep" + ".ipp.pt");
+        List<ManagerListProjectsDto> result = getListOfProjectscontroller.getListOfProjects("paul" + "@isep" + ".ipp.pt");
         // Assert
         assertEquals(expectDTOs, result);
     }

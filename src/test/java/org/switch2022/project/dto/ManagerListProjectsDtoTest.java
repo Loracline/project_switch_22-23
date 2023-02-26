@@ -2,26 +2,25 @@ package org.switch2022.project.dto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.dto.ManagerListProjectsDTO;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ManagerListProjectsDTOTest {
+public class ManagerListProjectsDtoTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
-    ManagerListProjectsDTO projectDTOOne;
-    ManagerListProjectsDTO projectDTOTwo;
-    ManagerListProjectsDTO projectDTOThree;
+    ManagerListProjectsDto projectDtoOne;
+    ManagerListProjectsDto projectDtoTwo;
+    ManagerListProjectsDto projectDtoThree;
 
     @BeforeEach
     void setUp() {
-        projectDTOOne = new ManagerListProjectsDTO("AA001", "software development management",
+        projectDtoOne = new ManagerListProjectsDto("AA001", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        projectDTOTwo = new ManagerListProjectsDTO("AA002", "software development management",
+        projectDtoTwo = new ManagerListProjectsDto("AA002", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        projectDTOThree = new ManagerListProjectsDTO("AA002", "software development management",
+        projectDtoThree = new ManagerListProjectsDto("AA002", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
     }
     /**
@@ -29,28 +28,28 @@ public class ManagerListProjectsDTOTest {
      */
     @Test
     void ensureSameObjectEqualsItself() {
-        assertTrue(projectDTOOne.equals(projectDTOOne));
+        assertTrue(projectDtoOne.equals(projectDtoOne));
     }
     /**
      * Test to ensure the object are not equals itself
      */
     @Test
     void ensureObjectAreNotEqualsItself() {
-        assertFalse(projectDTOOne.equals(projectDTOTwo));
+        assertFalse(projectDtoOne.equals(projectDtoTwo));
     }
     /**
      * Test to ensure that two projects are equals
      */
     @Test
     void ensureTwoProjectsAreEqualsItself() {
-        assertTrue(projectDTOTwo.equals(projectDTOThree));
+        assertTrue(projectDtoTwo.equals(projectDtoThree));
     }
     /**
      * Test to ensure that two projects does not equal null
      */
     @Test
     void ensureTwoProjectsDoesNotEqualsNull() {
-        assertFalse(projectDTOOne.equals(null));
+        assertFalse(projectDtoOne.equals(null));
     }
     /**
      * Test to ensure that two projects does not equal other type of object(
@@ -58,18 +57,18 @@ public class ManagerListProjectsDTOTest {
     @Test
     void ensureTwoProjectsDoesNotEqualsOtherTypeOfObject() {
         String notSameObjectType = "notSameObjectType";
-        assertFalse(projectDTOOne.equals(notSameObjectType));
+        assertFalse(projectDtoOne.equals(notSameObjectType));
     }
     /**
      * Test to check the hashcode when objects are equal and unequal
      */
     @Test
-    public void testHashCodeGetProjectDTO() {
-        ManagerListProjectsDTO objectOne = new ManagerListProjectsDTO("AA001", "software development management",
+    public void testHashCodeGetProjectDto() {
+        ManagerListProjectsDto objectOne = new ManagerListProjectsDto("AA001", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        ManagerListProjectsDTO objectTwo = new ManagerListProjectsDTO("AA001", "software development management",
+        ManagerListProjectsDto objectTwo = new ManagerListProjectsDto("AA001", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
-        ManagerListProjectsDTO objectThree = new ManagerListProjectsDTO("AA003", "software development management",
+        ManagerListProjectsDto objectThree = new ManagerListProjectsDto("AA003", "software development management",
                 "isep", "planned", "fixed cost", "fishing");
         // Check that equal objects have the same hash code
         assertEquals(objectOne.hashCode(), objectTwo.hashCode());
