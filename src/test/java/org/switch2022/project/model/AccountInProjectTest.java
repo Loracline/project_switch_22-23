@@ -84,10 +84,18 @@ public class AccountInProjectTest {
         assertEquals(expected, result);
     }
 
-    @Test
+   @Test
     void ensureThatAccountInProjectDoesNotEqualsNull() {
+        // Arrange
+        AccountInProject reference = accountInProject;
+        Account other = null;
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
         // Assert
-        assertNotNull(accountInProject);
+        assertEquals(expected, result);
     }
 
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
@@ -642,4 +650,7 @@ public class AccountInProjectTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void isAccountInProjectIncomplete() {
+    }
 }

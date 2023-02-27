@@ -60,7 +60,10 @@ public class AccountInProject {
         if (this == objectToCompare) {
             return true;
         }
-        if (objectToCompare == null || getClass() != objectToCompare.getClass()) {
+        if (objectToCompare == null)  {
+            return false;
+        }
+        if (getClass() != objectToCompare.getClass()){
             return false;
         }
         AccountInProject that = (AccountInProject) objectToCompare;

@@ -63,14 +63,7 @@ public class AccountInProjectContainer {
             while (Math.abs(i) < accountsInProject.size() && !accountInProjectAdded) {
                 if (accountsInProject.get(i).hasAccount(account) && accountsInProject.get(i).hasProject(project)) {
                     if (isPeriodValid(accountInProject, accountsInProject.get(i))) {
-                        if (accountInProject.isTeamMember()) {
-
-                            accountsInProject.add(accountInProject);
-                            accountInProjectAdded = true;
-
-                            removeIncompleteAccountInProject(account, project);
-
-                        } else if (isRoleInProjectUnique(accountInProject)) {
+                        if (accountInProject.isTeamMember() || isRoleInProjectUnique(accountInProject)) {
 
                             accountsInProject.add(accountInProject);
                             accountInProjectAdded = true;
@@ -80,12 +73,7 @@ public class AccountInProjectContainer {
                         }
                     }
                 } else {
-                    if (accountInProject.isTeamMember()) {
-
-                        accountsInProject.add(accountInProject);
-                        accountInProjectAdded = true;
-
-                    } else if (isRoleInProjectUnique(accountInProject)) {
+                    if (accountInProject.isTeamMember() || isRoleInProjectUnique(accountInProject)) {
 
                         accountsInProject.add(accountInProject);
                         accountInProjectAdded = true;
@@ -106,35 +94,15 @@ public class AccountInProjectContainer {
      * @param account allocated to a given project.
      * @param project to which a given account is allocated.
      */
-    private void removeIncompleteAccountInProject(Account account, Project project) {
-        AccountInProject incompleteAccount =
-                getIncompleteAccountInProject(account,
-                        project);
-        if (incompleteAccount != null) {
-            accountsInProject.remove(incompleteAccount);
-        }
-    }
-
-    /**
-     * Method that retrieves incomplete instances of AccountInProject (created only
-     * with account and project, i.e., resulting from allocation without role and
-     * associated information).
-     *
-     * @param account of AccountInProject instance.
-     * @param project of AccountInProject instance.
-     * @return incomplete instance of AccountInProject, and NULL otherwise.
-     */
-    private AccountInProject getIncompleteAccountInProject(Account account,
+    private void removeIncompleteAccountInProject(Account account,
                                                            Project project) {
         int i = 0;
-        AccountInProject incompleteAccountInProject = null;
         while (Math.abs(i) < accountsInProject.size()) {
             if (accountsInProject.get(i).isAccountInProjectIncomplete(account, project)) {
-                incompleteAccountInProject = accountsInProject.get(i);
+                accountsInProject.remove(accountsInProject.get(i));
             }
             i++;
         }
-        return incompleteAccountInProject;
     }
 
 

@@ -93,6 +93,7 @@ class AccountInProjectContainerTest {
         accountsInProject.add(accountInProjectSix);
         accountsInProject.add(accountInProjectSeven);
         accountsInProject.add(accountInProjectEight);
+        accountsInProject.add(accountInProjectNine);
 
         // accountDTOs
         accountDTO = new AccountDto("John", "john@isep.ipp.pt", true);
