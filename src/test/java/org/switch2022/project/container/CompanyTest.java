@@ -95,7 +95,7 @@ class CompanyTest {
         projectThree = new Project("AA001", "Aptoide", new Customer("John", "228674498"), new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
         // ProjectDTOs created.
-        projectOneDTO = new ProjectDtoAsManager("AA001", "Aptoide", "John", "228674498", "Fixed cost", "Hunting");
+        projectOneDTO = new ProjectDtoAsManager("AA001", "software development management", "John", "228674498", "Fixed cost", "Hunting");
         projectTwoDTO = new ProjectDtoAsManager("AA002", "software development management", "John", "228674498", "Fixed cost", "Hunting");
         projectNonExistentDTO = new ProjectDtoAsManager("AA004", "Aptoide", "John", "228674498", "Fixed cost", "Hunting");
 

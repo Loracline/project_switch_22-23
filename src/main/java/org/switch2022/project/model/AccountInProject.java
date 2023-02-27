@@ -15,11 +15,11 @@ public class AccountInProject {
      */
     private final Account account;
     private final Project project;
-    private String role;
-    private LocalDate startDate;
-    private float costPerHour;
-    private float percentageAllocation;
-    private LocalDate endDate;
+    private final String role;
+    private final LocalDate startDate;
+    private final float costPerHour;
+    private final float percentageAllocation;
+    private final LocalDate endDate;
 
     /**
      * Constructor
@@ -89,12 +89,10 @@ public class AccountInProject {
         final String PRODUCT_OWNER = "product owner";
         final String SCRUM_MASTER = "scrum master";
         final String TEAM_MEMBER = "team member";
-        final String PROJECT_MANAGER = "project manager";
         switch (this.role) {
             case TEAM_MEMBER:
             case PRODUCT_OWNER:
             case SCRUM_MASTER:
-            case PROJECT_MANAGER:
                 return true;
             default:
                 return false;
@@ -198,7 +196,7 @@ public class AccountInProject {
      */
     public Project getProjectByAccount(String email) {
         Project requestedProject = null;
-        if (validate(email)) {
+        if (validateEmail(email)) {
             requestedProject = this.project;
         }
         return requestedProject;
@@ -212,8 +210,8 @@ public class AccountInProject {
      * @return validates email
      */
 
-    private boolean validate(String email) {
-        return this.account.getEmail().equals(email);
+    private boolean validateEmail(String email) {
+        return email.equals(this.account.getEmail());
     }
 
     public boolean isStartDateBeforeNow() {
@@ -229,11 +227,11 @@ public class AccountInProject {
     }
 
     public boolean hasProject(Project project) {
-        return this.project.equals(project);
+        return project.equals(this.project);
     }
 
     public boolean hasAccount(Account account) {
-        return this.account.equals(account);
+        return account.equals(this.account);
     }
 
     public boolean isAccountInProjectIncomplete(Account account, Project project){
@@ -242,10 +240,9 @@ public class AccountInProject {
                 isRoleEmpty();
     }
 
-    public boolean isScrumMasterOrProductOwner() {
-        final String SCRUM_MASTER = "Scrum Master";
-        final String PRODUCT_OWNER = "Product Owner";
-        return SCRUM_MASTER.equalsIgnoreCase(this.role) || PRODUCT_OWNER.equalsIgnoreCase(this.role);
+    public boolean isTeamMember() {
+        final String TEAM_MEMBER = "Team Member";
+        return TEAM_MEMBER.equalsIgnoreCase(this.role);
     }
 
     public boolean isRoleEmpty() {

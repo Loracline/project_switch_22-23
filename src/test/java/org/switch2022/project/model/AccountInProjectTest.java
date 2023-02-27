@@ -195,20 +195,6 @@ public class AccountInProjectTest {
     }
 
     /**
-     * Test to validate if Project Manager as a valid role to an account in project. It should return true.
-     */
-    @Test
-    void ensureThatProjectManagerIsAValidRole() {
-        //Arrange
-        AccountInProject accountInProject = new AccountInProject(account, project,
-                "Project Manager", costPerHour, percentageAllocation, startDate, endDate);
-        //Act
-        boolean result = accountInProject.isRoleValid();
-        //Assert
-        assertTrue(result);
-    }
-
-    /**
      * Test to verify in an invalid role could be given to an AccountInProject. It should return false.
      */
     @Test
@@ -599,42 +585,42 @@ public class AccountInProjectTest {
     }
 
     @Test
-    void ensureThatReturnsTrueIfRoleIsScrumMaster() {
+    void ensureThatReturnsTrueIfRoleIsTeamMember() {
         //Arrange
-        accountInProjectScrumMaster = new AccountInProject(account, project, "Scrum " +
-                "Master",
-                costPerHour, percentageAllocation, startDate, endDate);
         boolean expected = true;
 
         //Act
-        boolean result = accountInProjectScrumMaster.isScrumMasterOrProductOwner();
+        boolean result = accountInProject.isTeamMember();
 
         //Assert
         assertEquals(expected, result);
     }
 
     @Test
-    void ensureThatReturnsTrueIfRoleIsProductOwner() {
+    void ensureThatReturnsFalseIfRoleIsProductOwner() {
         //Arrange
         accountInProjectProductOwner = new AccountInProject(account, project, "Product " +
                 "Owner",
                 costPerHour, percentageAllocation, startDate, endDate);
-        boolean expected = true;
+        boolean expected = false;
 
         //Act
-        boolean result = accountInProjectProductOwner.isScrumMasterOrProductOwner();
+        boolean result = accountInProjectProductOwner.isTeamMember();
 
         //Assert
         assertEquals(expected, result);
     }
 
     @Test
-    void ensureThatReturnsFalseIfRoleIsNotScrumMasterNorProductOwner() {
+    void ensureThatReturnsFalseIfRoleIsScrumMaster() {
         //Arrange
+        accountInProjectScrumMaster = new AccountInProject(account, project, "Scrum " +
+                "Master",
+                costPerHour, percentageAllocation, startDate, endDate);
         boolean expected = false;
 
         //Act
-        boolean result = accountInProject.isScrumMasterOrProductOwner();
+        boolean result = accountInProjectScrumMaster.isTeamMember();
 
         //Assert
         assertEquals(expected, result);

@@ -1,9 +1,9 @@
 package org.switch2022.project.container;
 
+import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.AccountInProject;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.dto.AllocationDto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -61,20 +61,36 @@ public class AccountInProjectContainer {
 
             int i = 0;
             while (Math.abs(i) < accountsInProject.size() && !accountInProjectAdded) {
-                if (accountsInProject.get(i).hasAccount(account) && accountsInProject.get(i).hasProject(project)
-                        && isPeriodValid(accountInProject, accountsInProject.get(i))) {
+                if (accountsInProject.get(i).hasAccount(account) && accountsInProject.get(i).hasProject(project)) {
+                    if (isPeriodValid(accountInProject, accountsInProject.get(i))) {
+                        if (accountInProject.isTeamMember()) {
 
-                    if (accountInProject.isRoleValid()
-                            && isScrumMasterOrProductOwnerUnique(accountInProject)) {
+                            accountsInProject.add(accountInProject);
+                            accountInProjectAdded = true;
+
+                            removeIncompleteAccountInProject(account, project);
+
+                        } else if (isRoleInProjectUnique(accountInProject)) {
+
+                            accountsInProject.add(accountInProject);
+                            accountInProjectAdded = true;
+
+                            removeIncompleteAccountInProject(account, project);
+
+                        }
+                    }
+                } else {
+                    if (accountInProject.isTeamMember()) {
 
                         accountsInProject.add(accountInProject);
                         accountInProjectAdded = true;
 
-                        removeIncompleteAccountInProject(account, project);
+                    } else if (isRoleInProjectUnique(accountInProject)) {
+
+                        accountsInProject.add(accountInProject);
+                        accountInProjectAdded = true;
+
                     }
-                } else {
-                    accountsInProject.add(accountInProject);
-                    accountInProjectAdded = true;
                 }
                 i++;
             }
@@ -189,25 +205,22 @@ public class AccountInProjectContainer {
      * @return TRUE if there is no other account with the same role (SM or PO) in the
      * same project during the same period, and FALSE otherwise.
      */
-    private boolean isScrumMasterOrProductOwnerUnique(AccountInProject accountInProject) {
-        boolean isUnique = false;
+    private boolean isRoleInProjectUnique(AccountInProject accountInProject) {
+        boolean isUnique = true;
 
         int i = 0;
-        while (Math.abs(i) < accountsInProject.size() && !isUnique) {
+        while (i < accountsInProject.size() && isUnique) {
             if (accountsInProject.get(i).hasProject(accountInProject.getProject())) {
 
-                if (accountInProject.isScrumMasterOrProductOwner()) {
-                    if (accountsInProject.get(i).getRole().equals(accountInProject.getRole())) {
-                        if (isPeriodValid(accountInProject, accountsInProject.get(i))) {
-                            isUnique = true;
-                        }
-                    } else {
-                        isUnique = true;
+                if (accountsInProject.get(i).getRole().equals(accountInProject.getRole())) {
+                    if (!isPeriodValid(accountInProject, accountsInProject.get(i))) {
+                        isUnique = false;
                     }
                 }
             }
             i++;
         }
+
         return isUnique;
     }
 
@@ -309,7 +322,7 @@ public class AccountInProjectContainer {
      * @return TRUE if it doesn't exceed 100, and FALSE otherwise.
      */
     public boolean isTotalPercentageOfAllocationValid(Account account,
-                                               float newPercentageAllocation) {
+                                                      float newPercentageAllocation) {
         final byte MAXIMUM_PERCENTAGE = 100;
         boolean percentageOfAllocationValid = false;
 
