@@ -649,8 +649,4 @@ public class AccountInProjectTest {
         //Assert
         assertEquals(expected, result);
     }
-
-    @Test
-    void isAccountInProjectIncomplete() {
-    }
 }
