@@ -59,7 +59,7 @@ class ListProjectsInAccountControllerTest {
         projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
 
         //projectDTO
-        projectDTOOne = ManagerListProjectsMapper.getDTOFromProject(projectOne);
+        projectDTOOne = ManagerListProjectsMapper.getDtoFromProject(projectOne);
         projectsDTO = new ArrayList<>();
         projectsDTO.add(projectDTOOne);
 

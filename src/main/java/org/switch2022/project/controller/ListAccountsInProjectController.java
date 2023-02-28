@@ -40,7 +40,7 @@ public class ListAccountsInProjectController {
         List<AccountDto> accountsDTO = new ArrayList<>();
         if (this.company.validateProfileRequired(emailManager, Profile.MANAGER)) {
             List<Account> accounts = this.company.listAccountsByProject(projectCode);
-            accountsDTO = AccountMapper.listAccountsToDTO(accounts);
+            accountsDTO = AccountMapper.listAccountsToDto(accounts);
         }
         return accountsDTO;
     }
