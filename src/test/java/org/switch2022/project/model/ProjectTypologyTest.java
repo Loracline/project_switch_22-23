@@ -57,13 +57,12 @@ class ProjectTypologyTest {
         //Arrange
         ProjectTypology reference = new ProjectTypology("Fixed Cost");
         ProjectTypology other = null;
-        boolean expected = false;
 
         //Act
         boolean result = reference.equals(other);
 
         //Assert
-        assertFalse(expected);
+        assertFalse(result);
     }
 
     /**

@@ -649,4 +649,111 @@ public class AccountInProjectTest {
         //Assert
         assertEquals(expected, result);
     }
+
+    @Test
+    void ensureThatReturnsTrueIfAccountIsAlreadyAllocated() {
+        //Arrange
+        boolean expected = true;
+        //Act
+        boolean result = accountInProject.isAccountAllocatedToProject(account, project);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfAccountIsNotAlreadyAllocatedIfProjectIsDifferent() {
+        //Arrange
+        boolean expected = false;
+        Project differentProject = new Project("2A", "project code", new Customer("John","228674498"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector"));
+        //Act
+        boolean result = accountInProject.isAccountAllocatedToProject(account, differentProject);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfAccountIsNotAlreadyAllocatedIfAccountIsDifferent() {
+        //Arrange
+        boolean expected = false;
+        Account differentAccount = new Account("Ana", "ana@isep.ipp.pt", 912345678, null);
+        //Act
+        boolean result = accountInProject.isAccountAllocatedToProject(differentAccount, project);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleIsTheSame() {
+        //Arrange
+        boolean expected = true;
+        String role = "TEAM MEMBER";
+
+        //Act
+        boolean result = accountInProject.hasRole(role);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleIsNotTheSame() {
+        //Arrange
+        boolean expected = false;
+        String role = "Product Owner";
+
+        //Act
+        boolean result = accountInProject.hasRole(role);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueIfAccountInProjectIsIncomplete() {
+        //Arrange
+        boolean expected = true;
+
+        //Act
+        boolean result = accountInProjectIncomplete.isAccountInProjectIncomplete(account, project);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfAccountInProjectIsIncompleteHasADifferentAccount() {
+        //Arrange
+        otherAccount = new Account("Ana", "ana@isep.ipp.pt", 912345678, null);
+        boolean expected = false;
+
+
+        //Act
+        boolean result = accountInProjectIncomplete.isAccountInProjectIncomplete(otherAccount, project);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfAccountInProjectIsIncompleteHasADifferentProject() {
+        //Arrange
+        otherProject = new Project("2A", "project code", new Customer("John","228674498"),
+                new ProjectTypology("Fixed cost"),new BusinessSector("IT Sector") );
+        boolean expected = false;
+
+        //Act
+        boolean result = accountInProjectIncomplete.isAccountInProjectIncomplete(account, otherProject);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseIfAccountInProjectHasAllTheInformation() {
+        //Arrange
+        boolean expected = false;
+
+        //Act
+        boolean result = accountInProject.isAccountInProjectIncomplete(account, project);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
 }

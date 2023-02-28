@@ -561,4 +561,90 @@ class AccountInProjectContainerTest {
         // Assert
         assertEquals(expected, result);
     }
+
+    @Test
+    void ensureThatRoleInProjectIsUniqueInThatPeriod() {
+        // Arrange
+        AccountInProject accountInProject = new AccountInProject(accountFour, projectOne, "Scrum Master",
+                costPerHour, percentageAllocation, startDate, endDateOne);
+        String role = "Scrum Master";
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne, role, accountInProject);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleInProjectIsNotUniqueInThatPeriod() {
+        // Arrange
+        AccountInProject accountInProject = new AccountInProject(accountFour, projectOne, "Product Owner",
+                costPerHour, percentageAllocation, startDate, endDateOne);
+        String role = "Product Owner";
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne, role, accountInProject);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleInProjectIsUniqueBecausePeriodsAreNotOverlapping() {
+        // Arrange
+        AccountInProject accountInProject = new AccountInProject(accountFour, projectOne, "Product Owner",
+                costPerHour, percentageAllocation, LocalDate.of(2022, 1, 8),
+                LocalDate.of(2022, 1, 10));
+        String role = "Product Owner";
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne, role, accountInProject);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleIsValidIfRoleIsTeamMember() {
+        // Arrange
+        AllocationDto allocationDto = new AllocationDto("Team Member", 23.5F,
+                20F,startDate,endDateOne);
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne, allocationDto, accountInProjectOne);
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleIsValidIfRoleIsScrumMasterIsUniqueInProject() {
+        // Arrange
+        AllocationDto allocationDto = new AllocationDto("Scrum Master", 23.5F,
+                20F,startDate,endDateOne);
+        boolean expected = true;
+
+        // Act
+        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne, allocationDto, accountInProjectFour);
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleIsNotValidIfRoleIsNotTeamMemberAndRoleIsNotUnique() {
+        // Arrange
+        AllocationDto allocationDto = new AllocationDto("Product Owner", 23.5F,
+                20F,startDate,endDateOne);
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne, allocationDto, accountInProjectThree);
+        // Assert
+        assertEquals(expected, result);
+    }
+
 }

@@ -237,6 +237,10 @@ public class AccountInProject {
         return account.equals(this.account);
     }
 
+    public boolean isAccountAllocatedToProject(Account account, Project project) {
+        return hasAccount(account) && hasProject(project);
+    }
+
     public boolean isAccountInProjectIncomplete(Account account, Project project){
         return hasAccount(account) &&
                 hasProject(project) &&
@@ -250,5 +254,9 @@ public class AccountInProject {
 
     public boolean isRoleEmpty() {
         return this.role.isEmpty();
+    }
+
+    public boolean hasRole(String role) {
+        return role.equalsIgnoreCase(this.role);
     }
 }

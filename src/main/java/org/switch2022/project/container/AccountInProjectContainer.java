@@ -45,35 +45,31 @@ public class AccountInProjectContainer {
      *
      * @param account       to allocate to a given project.
      * @param project       into which a given account is allocated.
-     * @param allocationDTO data transfer object with allocation information.
+     * @param allocationDto data transfer object with allocation information.
      * @return TRUE if a new instance of AccountInProject is successfully added to the
      * list, and FALSE otherwise.
      */
     public boolean addUserToProject(Account account, Project project,
-                                    AllocationDto allocationDTO) {
+                                    AllocationDto allocationDto) {
         boolean accountInProjectAdded = false;
         AccountInProject accountInProject = new AccountInProject(account, project,
-                allocationDTO.role, allocationDTO.costPerHour,
-                allocationDTO.percentageAllocation, allocationDTO.startDate,
-                allocationDTO.endDate);
+                allocationDto.role, allocationDto.costPerHour,
+                allocationDto.percentageAllocation, allocationDto.startDate,
+                allocationDto.endDate);
 
         if (isAccountInProjectValid(accountInProject)) {
 
             int i = 0;
-            while (Math.abs(i) < accountsInProject.size() && !accountInProjectAdded) {
-                if (accountsInProject.get(i).hasAccount(account) && accountsInProject.get(i).hasProject(project)) {
-                    if (isPeriodValid(accountInProject, accountsInProject.get(i))) {
-                        if (accountInProject.isTeamMember() || isRoleInProjectUnique(accountInProject)) {
+            while (i < accountsInProject.size() && !accountInProjectAdded) {
+                if (accountsInProject.get(i).isAccountAllocatedToProject(account, project)) {
+                    if (arePeriodAndRoleValid(project, allocationDto, accountInProject, i)) {
+                        accountsInProject.add(accountInProject);
+                        accountInProjectAdded = true;
 
-                            accountsInProject.add(accountInProject);
-                            accountInProjectAdded = true;
-
-                            removeIncompleteAccountInProject(account, project);
-
-                        }
+                        removeIncompleteAccountInProject(account, project);
                     }
                 } else {
-                    if (accountInProject.isTeamMember() || isRoleInProjectUnique(accountInProject)) {
+                    if (isRoleValidInProject(project, allocationDto, accountInProject)) {
 
                         accountsInProject.add(accountInProject);
                         accountInProjectAdded = true;
@@ -86,6 +82,18 @@ public class AccountInProjectContainer {
         return accountInProjectAdded;
     }
 
+    public boolean arePeriodAndRoleValid(Project project,
+                                          AllocationDto allocationDto,
+                                          AccountInProject accountInProject, int i) {
+        return isPeriodValid(accountInProject, accountsInProject.get(i)) && isRoleValidInProject(project,
+                allocationDto, accountInProject);
+    }
+
+    public boolean isRoleValidInProject(Project project, AllocationDto allocationDTO, AccountInProject accountInProject) {
+        return accountInProject.isTeamMember() || isRoleInProjectUnique(project, allocationDTO.role,
+                accountInProject);
+    }
+
     /**
      * Method that checks and removes incomplete instances of AccountInProject (created
      * only with account and project, i.e., resulting from allocation without role and
@@ -95,7 +103,7 @@ public class AccountInProjectContainer {
      * @param project to which a given account is allocated.
      */
     private void removeIncompleteAccountInProject(Account account,
-                                                           Project project) {
+                                                  Project project) {
         int i = 0;
         while (Math.abs(i) < accountsInProject.size()) {
             if (accountsInProject.get(i).isAccountInProjectIncomplete(account, project)) {
@@ -173,22 +181,17 @@ public class AccountInProjectContainer {
      * @return TRUE if there is no other account with the same role (SM or PO) in the
      * same project during the same period, and FALSE otherwise.
      */
-    private boolean isRoleInProjectUnique(AccountInProject accountInProject) {
+    public boolean isRoleInProjectUnique(Project project, String role, AccountInProject accountInProject) {
         boolean isUnique = true;
 
         int i = 0;
         while (i < accountsInProject.size() && isUnique) {
-            if (accountsInProject.get(i).hasProject(accountInProject.getProject())) {
-
-                if (accountsInProject.get(i).getRole().equals(accountInProject.getRole())) {
-                    if (!isPeriodValid(accountInProject, accountsInProject.get(i))) {
-                        isUnique = false;
-                    }
-                }
+            if (accountsInProject.get(i).hasProject(project) && accountsInProject.get(i).hasRole(role) &&
+                    !isPeriodValid(accountInProject, accountsInProject.get(i))) {
+                isUnique = false;
             }
             i++;
         }
-
         return isUnique;
     }
 
