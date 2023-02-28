@@ -26,7 +26,7 @@ public class AccountDto {
      * addresses of the two objects, which means that two objects are considered
      * equal only if they are the same object in memory.
      *
-     * @param toCompare accountDTO to compare to.
+     * @param toCompare accountDto to compare to.
      * @return TRUE if equal, and FALSE otherwise.
      */
     @Override

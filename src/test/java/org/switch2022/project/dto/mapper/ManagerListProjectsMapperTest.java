@@ -59,7 +59,7 @@ public class ManagerListProjectsMapperTest {
         expected.add(new ManagerListProjectsDto("AA002", "Aptoide", "portotech", "planned",
                 "fixed cost", "fishing"));
         //Act
-        List<ManagerListProjectsDto> result = ManagerListProjectsMapper.getListOfProjectsDTO(projects);
+        List<ManagerListProjectsDto> result = ManagerListProjectsMapper.getListOfProjectsDto(projects);
         //Assert
         assertEquals(expected, result);
     }

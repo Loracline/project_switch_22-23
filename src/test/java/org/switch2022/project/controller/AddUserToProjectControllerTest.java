@@ -52,7 +52,7 @@ class AddUserToProjectControllerTest {
                 972755689, null);
 
         //accountDTO
-        accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
+        accountTwoDTO = AccountMapper.accountToDto(accountTwo);
 
         //accountInProject
         accountInProject = new AccountInProject(accountOne, projectOne,

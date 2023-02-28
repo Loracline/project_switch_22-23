@@ -41,7 +41,7 @@ class ListAccountsInProjectControllerTest {
         accountTwo = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
 
         //accountDTO
-        accountDtoOne = AccountMapper.accountToDTO(accountOne);
+        accountDtoOne = AccountMapper.accountToDto(accountOne);
         accountsDTOOne = new ArrayList<>();
         accountsDTOOne.add(accountDtoOne);
 
