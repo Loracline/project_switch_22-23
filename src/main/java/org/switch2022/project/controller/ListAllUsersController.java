@@ -40,6 +40,6 @@ public class ListAllUsersController {
         if (company.validateProfileRequired(actorEmail, Profile.MANAGER)) {
             users = company.listAllUsers();
         }
-        return AccountMapper.listAccountsToDTO(users);
+        return AccountMapper.listAccountsToDto(users);
     }
 }

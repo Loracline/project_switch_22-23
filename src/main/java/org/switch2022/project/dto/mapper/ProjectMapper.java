@@ -11,12 +11,12 @@ public final class ProjectMapper {
 
     private ProjectMapper() {}
 
-    public static Project getProjectFromDTO(ProjectDtoAsManager projectDTOAsManager) {
+    public static Project getProjectFromDto(ProjectDtoAsManager projectDtoAsManager) {
 
-        Customer customer = new Customer(projectDTOAsManager.customerName, projectDTOAsManager.customerNif);
-        ProjectTypology projectTypology = new ProjectTypology(projectDTOAsManager.projectTypology);
-        BusinessSector businessSector = new BusinessSector(projectDTOAsManager.businessSector);
-        return new Project(projectDTOAsManager.code, projectDTOAsManager.name,
+        Customer customer = new Customer(projectDtoAsManager.customerName, projectDtoAsManager.customerNif);
+        ProjectTypology projectTypology = new ProjectTypology(projectDtoAsManager.projectTypology);
+        BusinessSector businessSector = new BusinessSector(projectDtoAsManager.businessSector);
+        return new Project(projectDtoAsManager.code, projectDtoAsManager.name,
                 customer, projectTypology, businessSector);
     }
 }

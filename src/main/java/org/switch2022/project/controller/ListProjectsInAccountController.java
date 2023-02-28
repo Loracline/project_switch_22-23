@@ -31,7 +31,7 @@ public class ListProjectsInAccountController {
         List<ManagerListProjectsDto> userListProjectsDTO = new ArrayList<>();
         if (company.validateProfileRequired(emailUser, Profile.USER)) {
             List<Project> projects = company.listProjectsByAccount(emailUser);
-            userListProjectsDTO = ManagerListProjectsMapper.getListOfProjectsDTO(projects);
+            userListProjectsDTO = ManagerListProjectsMapper.getListOfProjectsDto(projects);
         }
         return userListProjectsDTO;
     }

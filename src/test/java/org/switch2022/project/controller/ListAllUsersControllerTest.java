@@ -93,7 +93,7 @@ class ListAllUsersControllerTest {
         String emailActor = accountThree.getEmail();
 
         //AccountDTO of only account with profile User (accountTwo)
-        AccountDto accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
+        AccountDto accountTwoDTO = AccountMapper.accountToDto(accountTwo);
         //Add accountTwoDTO to empty list
         List<AccountDto> expected = new ArrayList<>();
         expected.add(accountTwoDTO);
@@ -121,7 +121,7 @@ class ListAllUsersControllerTest {
         String emailActor = accountOne.getEmail();
 
         //AccountDTO of only account with profile User (accountTwo)
-        AccountDto accountTwoDTO = AccountMapper.accountToDTO(accountTwo);
+        AccountDto accountTwoDTO = AccountMapper.accountToDto(accountTwo);
         //Add accountTwoDTO to empty list
         List<AccountDto> expected = new ArrayList<>();
         expected.add(accountTwoDTO);

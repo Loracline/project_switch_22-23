@@ -47,11 +47,11 @@ public class ProjectContainer {
      * This method creates a new project and adds it to the container if it
      * doesn't already exist.
      *
-     * @param projectDTOAsManager data transfer object of the attributes of project.
+     * @param projectDtoAsManager data transfer object of the attributes of project.
      * @return TRUE if registered and FALSE otherwise.
      */
-    public boolean registerProject(ProjectDtoAsManager projectDTOAsManager) {
-        Project project = ProjectMapper.getProjectFromDTO(projectDTOAsManager);
+    public boolean registerProject(ProjectDtoAsManager projectDtoAsManager) {
+        Project project = ProjectMapper.getProjectFromDto(projectDtoAsManager);
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);
