@@ -8,23 +8,23 @@ end legend
 
 class RegisterProjectController {
 - company
-+ registerProject(projectDTO, email)
++ registerProject(projectDto, email)
 }
 
 
 class Company {
 - projectContainer
 - accountContainer
-+ validateManager(email)
-+ registerProject(projectDTO)
++ validateProfileRequired(email, profileNameRequired)
++ registerProject(projectDto)
 }
 class AccountContainer {
-+ validateManager(email)
 - Accounts
++ validateProfileRequired( email, profileNameRequired)
 }
 
 class Account {
-+ isManager()
++ isProfileRequired(profileNameRequired)
 - profile
 }
 
@@ -34,16 +34,14 @@ class Profile {
 
 class ProjectContainer {
 - projects
-+ registerProject(projectDTO, projectTypologyContainer,
-customerContainer, businessSectorContainer)
++ registerProject(projectDtoAsManager)
 }
 
 class ProjectMapper{
-+ getProjectFromDTO(projectDTO, projectTypologyContainer,
-                                customerContainer, businessSectorContainer)
++ ProjectDtoAsManager(code, name, customerName, customerNif, projectTypology, businessSector)
++ getProjectFromDto(projectDtoAsManager)
 }
-
-class ProjectDTOAsManager{
+class ProjectDtoAsManager{
 + code
 + name
 + status
@@ -59,6 +57,7 @@ class Project{
 - customer
 - projectTypology
 - businessSector
++Project( projectCode, name, customer, projectTypology, businessSector)
 }
 
 RegisterProjectController "1"-->"1" Company: has
@@ -66,9 +65,9 @@ Company "1"-->"1" ProjectContainer: has
 Company "1"-->"1" AccountContainer: has
 AccountContainer "1"-->"*" Account: contains
 Account "1"-->"1" Profile: has
-ProjectMapper ..> ProjectDTOAsManager
-ProjectContainer ..> ProjectMapper
-RegisterProjectController ..> ProjectMapper
-ProjectMapper ..> Project
+ProjectMapper "1"..>"*" ProjectDtoAsManager
+ProjectContainer "1" ..> "1" "ProjectMapper"
+RegisterProjectController "1"..>"1" "ProjectMapper"
+ProjectMapper "1"..>"*" Project
 ProjectContainer "1" -left-> "*" Project: contains
 @enduml

@@ -7,37 +7,37 @@ US010 - As Manager, I want to register/create a new project.
 end legend
 autonumber
 
-actor Manager as mg
+actor Manager as manager
 participant ":RegisterProjectUI" as ui
 participant ":RegisterProjectController" as controller
 participant ":Company" as comp
 participant ":ProjectContainer" as PC
 participant ":ProjectMapper" as mapper
 participant "project:Project" as project
-participant ":dto:ProjectDTOAsManager" as dto
+participant ":dto:ProjectDtoAsManager" as dto
 
-activate mg
-mg ->ui : register new project
+activate manager
+"manager" ->ui : register new project
 activate ui
-ui -->> mg: requests data (code, name, ...)
+"ui" -->> manager: requests data (code, name, ...)
 
-mg -> ui: types requested data
+manager -> ui: types requested data
 
 create dto
 ui -> dto: create (code, name, ...)
-ui -> controller: registerProject(projectDTO, email)
+ui -> controller: registerProject(projectDto, email)
 activate controller
 
-controller -> comp: validateManager(email)
+controller -> comp: validateProfileRequired(email, profileNameRequired)
 ref over comp: validateManager_sequenceDiagram
 activate comp
 comp -->> controller: true
 deactivate comp
-controller -> comp: registerProject(projectDTO)
+controller -> comp: registerProject(projectDto)
 activate comp
-comp -> PC : registerProject(projectDTO, projectTypologyContainer,\ncustomerContainer, businessSectorContainer)
+comp -> PC : registerProject(projectDto)
 activate PC
-PC -> mapper: createProject(projectDTO,projectTypologyContainer,\ncustomerContainer, businessSectorContainer)
+PC -> mapper: registerProject(projectDto)
 activate mapper
 create project
 mapper -> project : create (code, name, ...)
@@ -50,7 +50,7 @@ comp -->>controller: true
 deactivate comp
 controller -->> ui : true
 deactivate controller
-ui -->> mg :  informs project created
+ui -->> manager :  informs project created
 deactivate ui
 
 @enduml
