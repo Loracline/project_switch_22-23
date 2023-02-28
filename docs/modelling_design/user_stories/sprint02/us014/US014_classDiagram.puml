@@ -38,6 +38,8 @@ class "Account" {
 -email
 -profile
 -status
++equals(Object toCompare)
++hashCode()
 +checkAccountFromEmail(email)
 +isProfileRequired(profileNameRequired)
 +getAccountName()
@@ -48,21 +50,27 @@ class "Account" {
 class "Profile"{
 -profileName
 +isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 class "AccountMapper"{
-+listAccountsToDTO(accounts)
-+accountToDTO(account)
++listAccountsToDto(accounts)
++accountToDto(account)
 }
 
-class "AccountDTO"{
+class "AccountDto"{
 +name
 +email
 +status
++equals(Object toCompare)
++hashCode()
 }
 
 class "Project"{
 -projectCode
++equals(Object toCompare)
++hashCode()
 +hasProjectCode(projectCode)
 }
 
@@ -72,7 +80,7 @@ class "Project"{
 "Company" "1" --> "1" "AccountContainer": has
 "AccountContainer" "1" --> "*" "Account": contains
 "Account" "1" --> "1""Profile": has
-"AccountMapper" ..> "AccountDTO"
+"AccountMapper" ..> "AccountDto"
 "AccountInProjectContainer" "1" --> "*" "AccountInProject": contains
 "AccountMapper"..>"Account"
 "AccountInProject" "1"-->"1" "Project": has

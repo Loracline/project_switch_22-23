@@ -28,12 +28,16 @@ class "Account" {
 -email
 -phoneNumber
 -photo
++equals(Object toCompare)
++hashCode()
 + isProfileRequired(profileNameRequired)
 }
 
 class "Profile"{
 -profileName
 +isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 "RegisterAccountController" "1" --> "1" "Company": has

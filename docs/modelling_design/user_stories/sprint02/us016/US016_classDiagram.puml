@@ -27,6 +27,8 @@ class "Account" {
 -email
 -profile
 -status
++equals(Object toCompare)
++hashCode()
 +checkAccountFromEmail(email)
 +isProfileRequired(profileNameRequired)
 +getAccountName()
@@ -37,6 +39,8 @@ class "Account" {
 class "Profile"{
 -profileName
 +isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 
@@ -58,17 +62,19 @@ class "AccountInProject"{
 }
 
 class "ManagerListProjectsMapper"{
-+getListOfProjectsDTO(projects)
++getListOfProjectsDto(projects)
 +getDTOFromProject(project)
 }
 
-class "ManagerListProjectsDTO"{
+class "ManagerListProjectsDto"{
 +code;
 +name;
 +customer;
 +status;
 +projectTypology;
 +businessSector
++equals(Object toCompare)
++hashCode()
 }
 
 class "Project"{
@@ -78,6 +84,8 @@ class "Project"{
 -projectStatus
 -projectTypology
 -businessSector
++equals(Object toCompare)
++hashCode()
 +getProjectCode()
 +getProjectName()
 +getCustomer()
@@ -94,7 +102,7 @@ class "Project"{
 "AccountContainer" "1" --> "*" "Account": has
 "Account" "1" --> "1""Profile": has
 ":ListProjectInAccountController"..> "ManagerListProjectsMapper"
-"ManagerListProjectsMapper"..> "ManagerListProjectsDTO"
+"ManagerListProjectsMapper"..> "ManagerListProjectsDto"
 
 
 
