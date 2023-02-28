@@ -44,8 +44,8 @@ public class AccountInProjectContainer {
      * the method returns true.
      *
      * @param account       to allocate to a given project.
-     * @param project       into which a given account is allocated.
-     * @param allocationDto data transfer object with allocation information.
+     * @param project       to which a given account is allocated.
+     * @param allocationDto containing the allocation information.
      * @return TRUE if a new instance of AccountInProject is successfully added to the
      * list, and FALSE otherwise.
      */
@@ -61,13 +61,15 @@ public class AccountInProjectContainer {
 
             int i = 0;
             while (i < accountsInProject.size() && !accountInProjectAdded) {
-                if (accountsInProject.get(i).isAccountAllocatedToProject(account, project)) {
-                    if (arePeriodAndRoleValid(project, allocationDto, accountInProject, i)) {
-                        accountsInProject.add(accountInProject);
-                        accountInProjectAdded = true;
+                if (accountsInProject.get(i).isAccountAllocatedToProject(account,
+                        project) && arePeriodAndRoleValid(project, allocationDto,
+                        accountInProject,
+                        accountsInProject.get(i))) {
 
-                        removeIncompleteAccountInProject(account, project);
-                    }
+                    accountsInProject.add(accountInProject);
+                    accountInProjectAdded = true;
+                    removeIncompleteAccountInProject(account, project);
+
                 } else {
                     if (isRoleValidInProject(project, allocationDto, accountInProject)) {
 
@@ -82,15 +84,42 @@ public class AccountInProjectContainer {
         return accountInProjectAdded;
     }
 
+    /**
+     * Method that checks if the allocation period of a new account in project does not
+     * overlap the allocation period of another account in the same project and if
+     * the allocation role is valid.
+     *
+     * @param project               to which the account is allocated.
+     * @param allocationDto         containing the allocation information.
+     * @param accountInProject      with information to validate.
+     * @param otherAccountInProject to compare to.
+     * @return TRUE if the allocation period of a new account in project does
+     * not overlap the allocation period of another account in the same project and if
+     * the allocation role is valid and FALSE otherwise.
+     */
     public boolean arePeriodAndRoleValid(Project project,
-                                          AllocationDto allocationDto,
-                                          AccountInProject accountInProject, int i) {
-        return isPeriodValid(accountInProject, accountsInProject.get(i)) && isRoleValidInProject(project,
+                                         AllocationDto allocationDto,
+                                         AccountInProject accountInProject,
+                                         AccountInProject otherAccountInProject) {
+        return isPeriodValid(accountInProject, otherAccountInProject) && isRoleValidInProject(project,
                 allocationDto, accountInProject);
     }
 
-    public boolean isRoleValidInProject(Project project, AllocationDto allocationDTO, AccountInProject accountInProject) {
-        return accountInProject.isTeamMember() || isRoleInProjectUnique(project, allocationDTO.role,
+    /**
+     * Method that checks if a given role in an allocation is valid within a given
+     * project. A role is valid if is either Team Member or is a unique Scrum Master /
+     * Product Owner.
+     *
+     * @param project          to which the account is allocated.
+     * @param allocationDTO    containing the allocation information.
+     * @param accountInProject with information to validate.
+     * @return TRUE if role is a Team Member or if Scrum Master / Product Owner is
+     * unique in given project.
+     */
+    public boolean isRoleValidInProject(Project project, AllocationDto allocationDTO,
+                                        AccountInProject accountInProject) {
+        return accountInProject.isTeamMember() || isRoleInProjectUnique(project,
+                allocationDTO.role,
                 accountInProject);
     }
 
@@ -176,12 +205,14 @@ public class AccountInProjectContainer {
 
     /**
      * Method that checks whether a Scrum Master(SM) or Product Owner(PO) is unique in a
-     * project.
+     * project during the allocation period (startDate and endDate of the
+     * accountInProject).
      *
      * @return TRUE if there is no other account with the same role (SM or PO) in the
      * same project during the same period, and FALSE otherwise.
      */
-    public boolean isRoleInProjectUnique(Project project, String role, AccountInProject accountInProject) {
+    public boolean isRoleInProjectUnique(Project project, String role,
+                                         AccountInProject accountInProject) {
         boolean isUnique = true;
 
         int i = 0;
@@ -196,7 +227,7 @@ public class AccountInProjectContainer {
     }
 
     /**
-     * Method that checks if the allocation period of a new account in a project
+     * Method that checks if the allocation period of a new account in project
      * overlaps with the allocation period of an existing account in the same project.
      *
      * @return TRUE if there is no overlapping periods between the allocations, and

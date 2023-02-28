@@ -3,10 +3,10 @@ package org.switch2022.project.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.*;
 import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -70,18 +70,27 @@ class AccountInProjectContainerTest {
         businessSectorOne = new BusinessSector("Fishing");
 
         //project
-        projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne);
-        projectTwo = new Project("2B", "Software Development Management", customerTwo, projectTypologyOne, businessSectorOne);
+        projectOne = new Project("1A", "Mobile Software", customerOne,
+                projectTypologyOne, businessSectorOne);
+        projectTwo = new Project("2B", "Software Development Management", customerTwo,
+                projectTypologyOne, businessSectorOne);
 
         //accountInProject
-        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate, endDateOne);
-        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team Member", costPerHour, 50f, startDate, endDateTwo);
-        accountInProjectThree = new AccountInProject(accountThree, projectOne, "Product Owner", costPerHour, percentageAllocation, startDate, endDateOne);
-        accountInProjectFour = new AccountInProject(accountOne, projectTwo, "Scrum Master", costPerHour, percentageAllocation, startDate, endDateOne);
-        accountInProjectFive = new AccountInProject(accountThree, projectTwo, "Team Member", costPerHour, percentageAllocation, startDate, endDateOne);
+        accountInProjectOne = new AccountInProject(accountOne, projectOne, "Team " +
+                "Member", costPerHour, percentageAllocation, startDate, endDateOne);
+        accountInProjectTwo = new AccountInProject(accountTwo, projectOne, "Team " +
+                "Member", costPerHour, 50f, startDate, endDateTwo);
+        accountInProjectThree = new AccountInProject(accountThree, projectOne, "Product" +
+                " Owner", costPerHour, percentageAllocation, startDate, endDateOne);
+        accountInProjectFour = new AccountInProject(accountOne, projectTwo, "Scrum " +
+                "Master", costPerHour, percentageAllocation, startDate, endDateOne);
+        accountInProjectFive = new AccountInProject(accountThree, projectTwo, "Team " +
+                "Member", costPerHour, percentageAllocation, startDate, endDateOne);
         accountInProjectSix = new AccountInProject(accountThree, projectTwo);
-        accountInProjectSeven = new AccountInProject(accountOne, projectOne, "Team Member", costPerHour, percentageAllocation, startDate, endDateTwo);
-        accountInProjectEight = new AccountInProject(accountFive, projectTwo, "Team Member", costPerHour, 100f, startDate, endDateTwo);
+        accountInProjectSeven = new AccountInProject(accountOne, projectOne, "Team " +
+                "Member", costPerHour, percentageAllocation, startDate, endDateTwo);
+        accountInProjectEight = new AccountInProject(accountFive, projectTwo, "Team " +
+                "Member", costPerHour, 100f, startDate, endDateTwo);
         accountInProjectNine = new AccountInProject(accountSix, projectTwo);
 
         accountsInProject = new ArrayList<>();
@@ -101,7 +110,8 @@ class AccountInProjectContainerTest {
         accountDto3 = new AccountDto("Anna", "anna@isep.ipp.pt", true);
 
         // projectDTO
-        projectDTOAsManager = new ProjectDtoAsManager("id001", "Test", "IT Customer", "228674498", "fixed cost", "IT Sector");
+        projectDTOAsManager = new ProjectDtoAsManager("id001", "Test", "IT Customer",
+                "228674498", "fixed cost", "IT Sector");
 
         //container
         accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
@@ -138,16 +148,19 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add account to project with an allocationDTO containing valid attributes, including
+     * Testing if one is able to add account to project with an allocationDTO
+     * containing valid attributes, including
      * the role as a Product Owner. It should result in a true statement.
      */
     @Test
     void ensureThatProductOwnerIsAddedToAccountsInProjects() {
         //Assert
-        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f,
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+        boolean result = accountInProjectContainer.addUserToProject(accountOne,
+                projectOne,
                 allocationDTOPO);
 
         //Assert
@@ -162,12 +175,14 @@ class AccountInProjectContainerTest {
     @Test
     void ensureThatProductOwnerIsNotAddedToAccountsInProjectsIfAlreadyExistsOne() {
         //Assert
-        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f,
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
         accountInProjectContainer.addUserToProject(accountOne, projectOne,
                 allocationDTOPO);
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+        boolean result = accountInProjectContainer.addUserToProject(accountOne,
+                projectOne,
                 allocationDTOPO);
 
         //Assert
@@ -175,16 +190,19 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add account to project with an allocationDTO containing valid attributes, including
+     * Testing if one is able to add account to project with an allocationDTO
+     * containing valid attributes, including
      * the role as a Team Member. It should result in a true statement.
      */
     @Test
     void ensureThatTeamMemberIsSuccessfullyAddedToAccountsInProjects() {
         //Arrange
-        allocationDTOTM = new AllocationDto("Team Member", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        allocationDTOTM = new AllocationDto("Team Member", 7.5f, 45.0f,
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+        boolean result = accountInProjectContainer.addUserToProject(accountOne,
+                projectOne,
                 allocationDTOTM);
 
         //Assert
@@ -192,16 +210,19 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add account to project with an allocationDTO containing valid attributes, including
+     * Testing if one is able to add account to project with an allocationDTO
+     * containing valid attributes, including
      * the role as a Scrum Master. It should result in a true statement.
      */
     @Test
     void ensureThatScrumMasterIsSuccessfullyAddedToAccountsInProjects() {
         //Arrange
-        allocationDTOSM = new AllocationDto("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        allocationDTOSM = new AllocationDto("Scrum Master", 7.5f, 45.0f,
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+        boolean result = accountInProjectContainer.addUserToProject(accountOne,
+                projectOne,
                 allocationDTOSM);
 
         //Assert
@@ -222,7 +243,8 @@ class AccountInProjectContainerTest {
                 allocationDTOPO);
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+        boolean result = accountInProjectContainer.addUserToProject(accountOne,
+                projectOne,
                 allocationDTOPO);
 
         //Assert
@@ -230,16 +252,19 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add an AccountInProject with an allocationDTO containing an
+     * Testing if one is able to add an AccountInProject with an allocationDTO
+     * containing an
      * invalid role. It should result in a false statement.
      */
     @Test
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfRoleIsInvalid() {
         //Arrange
-        allocationDTOPO = new AllocationDto("Product Visionary", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), null);
+        allocationDTOPO = new AllocationDto("Product Visionary", 7.5f, 45.0f,
+                LocalDate.of(2023, 1, 19), null);
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+        boolean result = accountInProjectContainer.addUserToProject(accountOne,
+                projectOne,
                 allocationDTOPO);
 
         //Assert
@@ -247,16 +272,20 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add a duplicated AccountInProject, with DTO attributes that are equal to
-     * another AccountInProject, with the same account and same project It should result in a false statement.
+     * Testing if one is able to add a duplicated AccountInProject, with DTO attributes
+     * that are equal to
+     * another AccountInProject, with the same account and same project It should
+     * result in a false statement.
      */
     @Test
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfAllocationExists() {
         //Arrange
-        allocationDTOPO = new AllocationDto("Team Member", 1f, 1f, LocalDate.of(2020, 1, 8), LocalDate.of(2021, 1, 8));
+        allocationDTOPO = new AllocationDto("Team Member", 1f, 1f, LocalDate.of(2020, 1
+                , 8), LocalDate.of(2021, 1, 8));
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountOne, projectOne,
+        boolean result = accountInProjectContainer.addUserToProject(accountOne,
+                projectOne,
                 allocationDTOPO);
 
         //Assert
@@ -264,17 +293,21 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add an AccountInProject with an invalid sum of percentage of allocation.
-     * It should result in a false statement since accountTwo is already allocated to another project with 50%
+     * Testing if one is able to add an AccountInProject with an invalid sum of
+     * percentage of allocation.
+     * It should result in a false statement since accountTwo is already allocated to
+     * another project with 50%
      * of allocation.
      */
     @Test
     void ensureThatAccountIsNotAddedToAccountsInProjectsIfPercentageAllocationIsInvalid() {
         //Assert
-        allocationDTOPO = new AllocationDto("Scrum Master", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        allocationDTOPO = new AllocationDto("Scrum Master", 7.5f, 45.0f,
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo,
+        boolean result = accountInProjectContainer.addUserToProject(accountTwo,
+                projectTwo,
                 allocationDTOPO);
 
         //Assert
@@ -282,16 +315,19 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add an AccountInProject with an invalid sum of percentage of allocation.
+     * Testing if one is able to add an AccountInProject with an invalid sum of
+     * percentage of allocation.
      * It should result in a tue statement since accountTwo now is 100% allocated.
      */
     @Test
     void ensureThatAccountIsAddedToAccountsInProjectsIfPercentageAllocationTotalsOneHundred() {
         //Assert
-        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 50.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 50.0f,
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
         //Act
-        boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo,
+        boolean result = accountInProjectContainer.addUserToProject(accountTwo,
+                projectTwo,
                 allocationDTOPO);
 
         //Assert
@@ -299,23 +335,27 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if one is able to add an AccountInProject in case of current sum of percentage of allocation equals zero.
+     * Testing if one is able to add an AccountInProject in case of current sum of
+     * percentage of allocation equals zero.
      */
     @Test
     void ensureUserIsAddedToProjectWhenCurrentPercentAllocationIsNull() {
         // Arrange
-        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f, LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        allocationDTOPO = new AllocationDto("Product Owner", 7.5f, 45.0f,
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.addUserToProject(accountFour, projectOne, allocationDTOPO);
+        boolean result = accountInProjectContainer.addUserToProject(accountFour,
+                projectOne, allocationDTOPO);
 
         // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Testing if a Manager profile is able to retrieve the list of resources allocated in a given project.
+     * Testing if a Manager profile is able to retrieve the list of resources allocated
+     * in a given project.
      * It should return the list of accounts allocated to that project.
      */
     @Test
@@ -335,7 +375,8 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Testing if a user that doesn't have a Manager profile is able to retrieve the list of resources allocated in a
+     * Testing if a user that doesn't have a Manager profile is able to retrieve the
+     * list of resources allocated in a
      * given project. It should return an empty list.
      */
     @Test
@@ -351,7 +392,8 @@ class AccountInProjectContainerTest {
     }
 
     /**
-     * Test to list all projects from an account is listed. Should return a list of projects where
+     * Test to list all projects from an account is listed. Should return a list of
+     * projects where
      * that account works in.
      */
     @Test
@@ -363,14 +405,16 @@ class AccountInProjectContainerTest {
         expected.add(projectOne);
 
         //Act
-        List<Project> result = accountInProjectContainer.listProjectsByAccount("mike@isep.ipp.pt");
+        List<Project> result = accountInProjectContainer.listProjectsByAccount("mike" +
+                "@isep.ipp.pt");
 
         //Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Test to list all projects from an account that has no projects is listed. Should return an empty list.
+     * Test to list all projects from an account that has no projects is listed. Should
+     * return an empty list.
      */
     @Test
     void ensureThatListProjectsInAccountIsEmpty() {
@@ -378,14 +422,16 @@ class AccountInProjectContainerTest {
         List<Project> expected = new ArrayList<>();
 
         //Act
-        List<Project> result = accountInProjectContainer.listProjectsByAccount("mary@isep.ipp.pt");
+        List<Project> result = accountInProjectContainer.listProjectsByAccount("mary" +
+                "@isep.ipp.pt");
 
         //Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Test to calculate the percentage of allocation when the account has already left some project.
+     * Test to calculate the percentage of allocation when the account has already left
+     * some project.
      */
     @Test
     void calculateCurrentPercentAllocation_EndDateNotNull() {
@@ -393,7 +439,8 @@ class AccountInProjectContainerTest {
         float expected = 1f;
 
         // Act
-        float result = accountInProjectContainer.currentPercentageOfAllocation(accountOne);
+        float result =
+                accountInProjectContainer.currentPercentageOfAllocation(accountOne);
 
         // Assert
         assertEquals(expected, result);
@@ -405,7 +452,8 @@ class AccountInProjectContainerTest {
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.addUserToProject(accountTwo, projectTwo);
+        boolean result = accountInProjectContainer.addUserToProject(accountTwo,
+                projectTwo);
 
         // Assert
         assertEquals(expected, result);
@@ -417,22 +465,21 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.addUserToProject(accountThree, projectTwo);
+        boolean result = accountInProjectContainer.addUserToProject(accountThree,
+                projectTwo);
 
         // Assert
         assertEquals(expected, result);
     }
 
 
-    /*
-      METHOD isTotalPercentageOfAllocationValid(account, newPercentageAllocation)
-
-      Verifying if the sum of the current percentage of allocation of an account
-      plus the new percentage of allocation one is trying to assign does not
-      exceed the 100%.
-     */
-
     /**
+     * METHOD isTotalPercentageOfAllocationValid(account, newPercentageAllocation)
+     *
+     * Verifying if the sum of the current percentage of allocation of an account
+     * plus the new percentage of allocation one is trying to assign does not exceed
+     * the 100%.
+
      * Scenario 1: Total percentage of allocation is valid because it does not
      * exceed the 100%.
      */
@@ -442,7 +489,9 @@ class AccountInProjectContainerTest {
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 40);
+        boolean result =
+                accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo
+                        , 40);
 
         // Assert
         assertEquals(expected, result);
@@ -458,7 +507,9 @@ class AccountInProjectContainerTest {
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 50);
+        boolean result =
+                accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo
+                        , 50);
 
         // Assert
         assertEquals(expected, result);
@@ -475,7 +526,9 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 151);
+        boolean result =
+                accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo
+                        , 151);
 
         // Assert
         assertEquals(expected, result);
@@ -491,7 +544,9 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, -1);
+        boolean result =
+                accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo
+                        , -1);
 
         // Assert
         assertEquals(expected, result);
@@ -507,7 +562,9 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 0);
+        boolean result =
+                accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo
+                        , 0);
 
         // Assert
         assertEquals(expected, result);
@@ -524,7 +581,8 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountFive, 50);
+        boolean result =
+                accountInProjectContainer.isTotalPercentageOfAllocationValid(accountFive, 50);
 
         // Assert
         assertEquals(expected, result);
@@ -540,7 +598,9 @@ class AccountInProjectContainerTest {
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo, 60);
+        boolean result =
+                accountInProjectContainer.isTotalPercentageOfAllocationValid(accountTwo
+                        , 60);
 
         // Assert
         assertEquals(expected, result);
@@ -556,95 +616,189 @@ class AccountInProjectContainerTest {
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isTotalPercentageOfAllocationValid(accountSix, 100);
+        boolean result =
+                accountInProjectContainer.isTotalPercentageOfAllocationValid(accountSix
+                        , 100);
 
         // Assert
         assertEquals(expected, result);
     }
 
+    /** METHOD isRoleInProjectUnique(project, role, accountInProject) checks whether a
+     * Scrum Master(SM) or Product Owner(PO) is unique in a project during the
+     * allocation period (startDate and endDate of the accountInProject).
+     *
+     * Scenario 1: role from accountInProject is Scrum Master and project doesn't have
+     * this role yet.
+     */
+
     @Test
     void ensureThatRoleInProjectIsUniqueInThatPeriod() {
         // Arrange
-        AccountInProject accountInProject = new AccountInProject(accountFour, projectOne, "Scrum Master",
+        AccountInProject accountInProject = new AccountInProject(accountFour,
+                projectOne, "Scrum Master",
                 costPerHour, percentageAllocation, startDate, endDateOne);
         String role = "Scrum Master";
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne, role, accountInProject);
+        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne,
+                role, accountInProject);
 
         // Assert
         assertEquals(expected, result);
     }
 
-    @Test
-    void ensureThatRoleInProjectIsNotUniqueInThatPeriod() {
-        // Arrange
-        AccountInProject accountInProject = new AccountInProject(accountFour, projectOne, "Product Owner",
-                costPerHour, percentageAllocation, startDate, endDateOne);
-        String role = "Product Owner";
-        boolean expected = false;
-
-        // Act
-        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne, role, accountInProject);
-
-        // Assert
-        assertEquals(expected, result);
-    }
+    /** Scenario 2: role from accountInProject is Product Owner and project doesn't have
+     * this role yet (different periods).
+     */
 
     @Test
     void ensureThatRoleInProjectIsUniqueBecausePeriodsAreNotOverlapping() {
         // Arrange
-        AccountInProject accountInProject = new AccountInProject(accountFour, projectOne, "Product Owner",
+        AccountInProject accountInProject = new AccountInProject(accountFour,
+                projectOne, "Product Owner",
                 costPerHour, percentageAllocation, LocalDate.of(2022, 1, 8),
                 LocalDate.of(2022, 1, 10));
         String role = "Product Owner";
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne, role, accountInProject);
+        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne,
+                role, accountInProject);
 
         // Assert
         assertEquals(expected, result);
     }
 
+    /** Scenario 3: role from accountInProject is Product Owner and project already has
+     *  this role.
+     */
+    @Test
+    void ensureThatRoleInProjectIsNotUniqueInThatPeriod() {
+        // Arrange
+        AccountInProject accountInProject = new AccountInProject(accountFour,
+                projectOne, "Product Owner",
+                costPerHour, percentageAllocation, startDate, endDateOne);
+        String role = "Product Owner";
+        boolean expected = false;
+
+        // Act
+        boolean result = accountInProjectContainer.isRoleInProjectUnique(projectOne,
+                role, accountInProject);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /** METHOD isRoleValidInProject(project, allocationDto, accountInProject)  checks if
+     * a given role in an allocation is valid within a given project. A role is valid
+     * if is either Team Member or is a unique Scrum Master / Product Owner.
+     *
+     * Scenario 1: new allocation has a Team Member role, thus it is considered a valid
+     * role.
+     */
     @Test
     void ensureThatRoleIsValidIfRoleIsTeamMember() {
         // Arrange
         AllocationDto allocationDto = new AllocationDto("Team Member", 23.5F,
-                20F,startDate,endDateOne);
+                20F, startDate, endDateOne);
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne, allocationDto, accountInProjectOne);
+        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne,
+                allocationDto, accountInProjectOne);
         // Assert
         assertEquals(expected, result);
     }
+
+    /** Scenario 2: Scrum Master is Unique in the given project, which mean that this
+     * is a valid role.
+     */
 
     @Test
     void ensureThatRoleIsValidIfRoleIsScrumMasterIsUniqueInProject() {
         // Arrange
         AllocationDto allocationDto = new AllocationDto("Scrum Master", 23.5F,
-                20F,startDate,endDateOne);
+                20F, startDate, endDateOne);
         boolean expected = true;
 
         // Act
-        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne, allocationDto, accountInProjectFour);
+        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne,
+                allocationDto, accountInProjectFour);
         // Assert
         assertEquals(expected, result);
     }
 
+    /** Scenario 3: Product Owner is a role already existing in the project, so this
+     * role is invalid
+     */
     @Test
     void ensureThatRoleIsNotValidIfRoleIsNotTeamMemberAndRoleIsNotUnique() {
         // Arrange
         AllocationDto allocationDto = new AllocationDto("Product Owner", 23.5F,
-                20F,startDate,endDateOne);
+                20F, startDate, endDateOne);
         boolean expected = false;
 
         // Act
-        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne, allocationDto, accountInProjectThree);
+        boolean result = accountInProjectContainer.isRoleValidInProject(projectOne,
+                allocationDto, accountInProjectThree);
         // Assert
         assertEquals(expected, result);
     }
 
+    /**
+     * METHOD arePeriodAndRoleValid(Project project, AllocationDto allocationDto,
+     * AccountInProject accountInProject, AccountInProject OtherAccountInProject)
+     *
+     * Verifying if the allocation period of a new account in project overlaps with the
+     * allocation period of another account in project AND if a given role is valid
+     * within a given project (either is Team Member or is a unique Scrum Master /
+     * Product Owner).
+
+     * Scenario 1: Both period and role are valid because the allocation period of an
+     * * account in project (start     * and end dates in allocation DTO) does not
+     * overlap with the allocation period of     * another account in project AND there
+     * is no other Product Owner at the same time.
+     */
+    @Test
+    void ensureThatReturnsTrueIfBothPeriodAndRoleAreValid() {
+        //Arrange
+        AllocationDto allocationDto = new AllocationDto("Product Owner", 23.5F,
+                20F, startDate, endDateOne);
+        AccountInProject accountInProject = new AccountInProject(accountFour,
+                projectOne, "Product Owner",
+                costPerHour, percentageAllocation, LocalDate.of(2022, 1, 8),
+                LocalDate.of(2022, 1, 10));
+        AccountInProject accountInProjectToCompareTo = accountInProjectFour;
+        boolean expected = true;
+
+        //Act
+        boolean result = accountInProjectContainer.arePeriodAndRoleValid(projectOne,
+                allocationDto, accountInProject, accountInProjectToCompareTo);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: Period and role are valid because both the account in project of
+     * * interest and the account in project to compare have the role of Product Owner
+     * at the same time.
+     */
+    @Test
+    void ensureThatReturnsFalseIfProductOwnerIsNotUnique() {
+        //Arrange
+        AllocationDto allocationDto = new AllocationDto("Product Owner", 23.5F,
+                20F, startDate, endDateOne);
+        AccountInProject accountInProjectToCompareTo = accountInProjectFour;
+        boolean expected = false;
+
+        //Act
+        boolean result = accountInProjectContainer.arePeriodAndRoleValid(projectOne,
+                allocationDto, accountInProjectFour, accountInProjectToCompareTo);
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }
