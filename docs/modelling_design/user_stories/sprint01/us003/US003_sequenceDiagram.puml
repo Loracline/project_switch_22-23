@@ -18,6 +18,7 @@ legend top
 US003 - As Administrator, I want to change the profile of a user account.
 end legend
 autonumber
+
 activate Administrator
 Administrator -> ui:  Changes account profile
 activate ui
@@ -34,7 +35,7 @@ controller -> company: changeProfile(email, profileName)
 activate company
 company -> profileContainer: getProfileByName(profileName)
 activate profileContainer
-profileContainer -> pf: checkProfileByProfileName(profileName)
+profileContainer -> pf: isProfileRequired(profileNameRequired)
 activate pf
 pf --> profileContainer : true
 deactivate pf
@@ -56,6 +57,7 @@ deactivate company
 controller --> ui: true
 deactivate controller
 ui -->> Administrator: informs account profile updated
+deactivate ui
 
 
 @enduml

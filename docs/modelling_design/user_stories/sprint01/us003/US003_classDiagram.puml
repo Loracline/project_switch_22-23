@@ -42,7 +42,6 @@ class Account{
 class Profile{
 -profileName
 + isProfileRequired(profileNameRequired)
-+ checkProfileByProfileName(profileName)
 +equals(Object toCompare)
 +hashCode()
 }
