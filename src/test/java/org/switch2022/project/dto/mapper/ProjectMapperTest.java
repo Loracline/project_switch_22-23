@@ -9,7 +9,6 @@ import org.switch2022.project.model.Customer;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectTypology;
 import org.switch2022.project.dto.ProjectDtoAsManager;
-import org.switch2022.project.dto.mapper.ProjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +78,7 @@ class ProjectMapperTest {
     // ARRANGE
     Project expected = projectOne;
     // ACT
-    Project result = ProjectMapper.getProjectFromDTO(projectDTOAsManager);
+    Project result = ProjectMapper.getProjectFromDto(projectDTOAsManager);
     // ASSERT
     assertEquals(expected, result);
   }

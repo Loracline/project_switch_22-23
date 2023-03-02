@@ -32,6 +32,8 @@ class AccountContainer {
 class Account{
 -email
 -profile
++equals(Object toCompare)
++hashCode()
 + isProfileRequired(profileNameRequired)
 +checkAccountFromEmail(email)
 +setProfile(profile)
@@ -40,6 +42,8 @@ class Account{
 class Profile{
 -profileName
 + isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 

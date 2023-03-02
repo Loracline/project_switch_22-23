@@ -26,12 +26,16 @@ class "AccountContainer"{
 class "Account"{
 -email
 - profile
++equals(Object toCompare)
++hashCode()
 +isProfileRequired(profileNameRequired)
 }
 
 class Profile{
 -profileName
 +isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 class "CustomerContainer"{
@@ -44,6 +48,8 @@ class "CustomerContainer"{
 class "Customer"{
 -customerName
 +Customer(customerName, customerNIF)
++equals(Object toCompare)
++hashCode()
 }
 
 "AddCustomerController" "1"-->"1" "Company" : has

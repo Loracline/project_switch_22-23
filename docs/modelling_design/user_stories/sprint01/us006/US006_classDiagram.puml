@@ -25,12 +25,16 @@ class "AccountContainer" {
 
 class "Account" {
 -status
++equals(Object toCompare)
++hashCode()
 + isProfileRequired(profileNameRequired)
 + setStatus(status)
 }
 class "Profile"{
 -profileName
 +isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 

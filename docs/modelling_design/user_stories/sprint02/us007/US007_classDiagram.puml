@@ -34,15 +34,21 @@ class "AccountContainer"{
 class Profile{
 -profileName
 +isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 class "ProjectTypology"{
 -name
 +ProjectTypology(name)
++equals(Object toCompare)
++hashCode()
 }
 
 class "Account"{
 -email
++equals(Object toCompare)
++hashCode()
 +isProfileRequired(profileNameRequired)
 }
 

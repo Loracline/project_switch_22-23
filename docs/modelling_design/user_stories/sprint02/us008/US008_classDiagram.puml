@@ -27,6 +27,8 @@ class AccountContainer {
 class Account {
 -email
 -profile
++equals(Object toCompare)
++hashCode()
 +checkAccountFromEmail(email)
 + isProfileRequired(profileNameRequired)
 }
@@ -34,6 +36,8 @@ class Account {
 class Profile{
 -profileName
 + isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 class BusinessSectorContainer {
@@ -45,6 +49,8 @@ class BusinessSectorContainer {
 class BusinessSector {
 -name
 +BusinessSector(name)
++equals(Object toCompare)
++hashCode()
 }
 
 "AddBusinessSectorController" "1"-->"1" "Company" : has

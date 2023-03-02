@@ -26,13 +26,17 @@ class "AccountContainer"{
 class "Account"{
 -email
 -profile
-+ checkAccountFromEmail(email)
-+ isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
++checkAccountFromEmail(email)
++isProfileRequired(profileNameRequired)
 }
 class "Profile"{
 -profileName
 +createProfile(name)
 +isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 "CreateProfileController" "1"-->"1"  "Company" : has

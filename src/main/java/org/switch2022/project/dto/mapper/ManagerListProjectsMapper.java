@@ -14,9 +14,9 @@ public class ManagerListProjectsMapper {
 
     /**
      * This method receives a project and maps/transforms the project
-     * into DTO
+     * into Dto
      */
-    public static ManagerListProjectsDto getDTOFromProject(Project project) {
+    public static ManagerListProjectsDto getDtoFromProject(Project project) {
         return new ManagerListProjectsDto(project.getProjectCode(),
                 project.getProjectName(), project.getCustomer().getCustomerName(),
                 project.getProjectStatus(),
@@ -27,15 +27,15 @@ public class ManagerListProjectsMapper {
     /**
      * This method receives a list of projects, creates an empty list, maps/transforms the
      * projects
-     * into DTOs and then stores them in a list to be returned by the method developed in
+     * into Dto's and then stores them in a list to be returned by the method developed in
      * GetListOfProjectsController
      */
-    public static List<ManagerListProjectsDto> getListOfProjectsDTO(List<Project> projects) {
+    public static List<ManagerListProjectsDto> getListOfProjectsDto(List<Project> projects) {
         List<ManagerListProjectsDto> listOfProjectsDto = new ArrayList<>();
         for (Project project : projects) {
-            ManagerListProjectsDto managerListProjectsDTO = getDTOFromProject(project);
+            ManagerListProjectsDto managerListProjectsDto = getDtoFromProject(project);
 
-            listOfProjectsDto.add(managerListProjectsDTO);
+            listOfProjectsDto.add(managerListProjectsDto);
         }
         return listOfProjectsDto;
     }

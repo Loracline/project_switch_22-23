@@ -33,9 +33,9 @@ class AccountMapperTest {
         accounts.add(accountThree);
 
         //accountDTO
-        accountDtoOne = AccountMapper.accountToDTO(accountOne);
-        accountDtoTwo = AccountMapper.accountToDTO(accountTwo);
-        accountDtoThree = AccountMapper.accountToDTO(accountThree);
+        accountDtoOne = AccountMapper.accountToDto(accountOne);
+        accountDtoTwo = AccountMapper.accountToDto(accountTwo);
+        accountDtoThree = AccountMapper.accountToDto(accountThree);
         accountsDTOOne = new ArrayList<>();
         accountsDTOOne.add(accountDtoOne);
         accountsDTOOne.add(accountDtoTwo);
@@ -63,7 +63,7 @@ class AccountMapperTest {
         AccountDto expected = new AccountDto("Mike","mike@isep.ipp.pt", true);
 
         // ACT
-        AccountDto result = AccountMapper.accountToDTO(accountOne);
+        AccountDto result = AccountMapper.accountToDto(accountOne);
 
         // ASSERT
         assertEquals(expected, result);
@@ -78,7 +78,7 @@ class AccountMapperTest {
         List<AccountDto> expected = accountsDTOOne;
 
         //ACT
-        List<AccountDto> result = AccountMapper.listAccountsToDTO(accounts);
+        List<AccountDto> result = AccountMapper.listAccountsToDto(accounts);
 
         // ASSERT
         assertEquals(expected, result);

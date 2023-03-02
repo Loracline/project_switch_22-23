@@ -28,12 +28,16 @@ class "AccountContainer"{
 class "Account"{
 -email
 -profile
++equals(Object toCompare)
++hashCode()
 +isProfileRequired(profileNameRequired)
 }
 
 class Profile{
 -profileName
 +isProfileRequired(profileNameRequired)
++equals(Object toCompare)
++hashCode()
 }
 
 class "ProjectContainer"{
@@ -43,14 +47,16 @@ class "ProjectContainer"{
 
 class "Project"{
 -projectCode
++equals(Object toCompare)
++hashCode()
 }
 
 class "ManagerListProjectsMapper"{
-+getListOfProjectsDTO(projects)
--getDTOFromProject(project)
++getListOfProjectsDto(projects)
+-getDtoFromProject(project)
 }
 
-class "ManagerListProjectsDTO" {
+class "ManagerListProjectsDto" {
 +code
 +name
 +customer
@@ -66,11 +72,6 @@ class "ManagerListProjectsDTO" {
 "AccountContainer" "1"-->"*" Account: contains
 "ProjectContainer" "1"-->"*" Project: contains
 "Account" "*"-->"1" "Profile" : has
-"ManagerListProjectsMapper" ..> "ManagerListProjectsDTO": <<instantiate>>
+"ManagerListProjectsMapper" ..> "ManagerListProjectsDto": <<instantiate>>
 
-/'Usage relationship'/
-/'https://www.ibm.com/docs/en/rational-soft-arch/9.7.0?topic=diagrams-dependency-relationships'/
-
-/'Creation relationship'/
-/'https://www.ibm.com/docs/en/rational-soft-arch/9.7.0?topic=diagrams-instantiation-relationships'/
 @enduml
