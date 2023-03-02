@@ -34,12 +34,11 @@ class Profile {
 
 class ProjectContainer {
 - projects
-+ registerProject(projectDtoAsManager)
++ registerProject(projectDtoAsManager, projectTypologyContainer, customerContainer, businessSectorContainer)
 }
 
 class ProjectMapper{
-+ ProjectDtoAsManager(code, name, customerName, customerNif, projectTypology, businessSector)
-+ getProjectFromDto(projectDtoAsManager)
++ getProjectFromDto(projectDtoAsManager, projectTypologyContainer, customerContainer, businessSectorContainer)
 }
 class ProjectDtoAsManager{
 + code
