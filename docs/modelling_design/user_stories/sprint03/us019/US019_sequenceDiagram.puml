@@ -1,0 +1,63 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO CREATE NEW SPRINT
+legend top
+US019 - As Project Manager, I want to create a sprint.
+end legend
+autonumber
+
+actor ProjectManager as pm
+participant ":CreateSprintUI" as ui
+participant "CreateSprintController" as ct
+participant ":Company" as c
+participant "ProjectContainer" as pc
+participant "Project" as p
+participant "FactorySprint" as fact
+participant "Sprint:sprint" as ss
+
+activate pm
+pm -> ui: starts creating new Sprint
+
+
+ui --> pm: requests data (sprintNumber, startDate, projectCode)
+pm -> ui: types requested data
+activate ui
+
+ui -> ct: createSprint(sprintDto)
+activate ct
+
+ct -> c: createSprint(sprintDto)
+activate c
+
+c -> pc: createSprint(sprintDto, sprintNumber,\nstartDate, projectCode)
+activate pc
+
+pc -> p: createSprint(sprintDto, sprintNumber,\nstartDate, projectCode)
+activate p
+
+p -> fact: createSprint(sprintDto, sprintNumber,\nstartDate, projectCode)
+activate fact
+
+create ss
+fact -> ss: create()
+fact -->p : sprint
+
+deactivate fact
+p -> p: addSprint(sprint)
+
+p --> pc: true
+deactivate p
+
+pc --> c : true
+deactivate pc
+
+c --> ct : true
+deactivate c
+
+ct --> ui : true
+deactivate ct
+
+ui --> pm: informs sprint created
+deactivate pm
+@enduml
