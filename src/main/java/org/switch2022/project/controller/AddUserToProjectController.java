@@ -4,7 +4,7 @@ import org.switch2022.project.container.Company;
 import org.switch2022.project.model.Profile;
 import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 
 /**
  * Class AddUserToProjectController acts as an intermediary between the
@@ -35,17 +35,17 @@ public class AddUserToProjectController {
      *
      * @param emailActor  email of the actor performing the task.
      * @param accountDTO    object carrying data about the selected account.
-     * @param projectDTOAsManager    object carrying data about the selected project.
+     * @param projectCreationDTO    object carrying data about the selected project.
      * @param allocationDTO object carrying data about the allocation of the
      *                      account in the project.
      * @return TRUE if added, and FALSE otherwise.
      */
     public boolean addUserToProject(String emailActor, AccountDto accountDTO,
-                                    ProjectDtoAsManager projectDTOAsManager,
+                                    ProjectCreationDto projectCreationDTO,
                                     AllocationDto allocationDTO) {
         boolean result = false;
         if (company.validateProfileRequired(emailActor, Profile.MANAGER)) {
-            result = this.company.addUserToProject(accountDTO, projectDTOAsManager,
+            result = this.company.addUserToProject(accountDTO, projectCreationDTO,
                     allocationDTO);
         }
         return result;

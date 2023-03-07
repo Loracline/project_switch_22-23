@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
@@ -36,7 +36,7 @@ class AccountInProjectContainerTest {
     LocalDate startDate;
     LocalDate endDateOne, endDateTwo;
     Project projectOne, projectTwo;
-    ProjectDtoAsManager projectDTOAsManager;
+    ProjectCreationDto projectCreationDTO;
     Customer customerOne, customerTwo;
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
@@ -110,7 +110,7 @@ class AccountInProjectContainerTest {
         accountDto3 = new AccountDto("Anna", "anna@isep.ipp.pt", true);
 
         // projectDTO
-        projectDTOAsManager = new ProjectDtoAsManager("id001", "Test", "IT Customer",
+        projectCreationDTO = new ProjectCreationDto("id001", "Test", "IT Customer",
                 "228674498", "fixed cost", "IT Sector");
 
         //container
@@ -131,7 +131,7 @@ class AccountInProjectContainerTest {
         accountDTO = null;
         accountDto2 = null;
         accountDto3 = null;
-        projectDTOAsManager = null;
+        projectCreationDTO = null;
         allocationDTOPO = null;
         allocationDTOTM = null;
         allocationDTOSM = null;

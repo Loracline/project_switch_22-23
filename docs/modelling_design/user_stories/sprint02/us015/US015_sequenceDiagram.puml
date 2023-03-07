@@ -1,23 +1,25 @@
 @startuml
+
 skinparam sequenceMessageAlign center
 title GET A LIST OF ALL PROJECTS
 legend top
-US015 - As a Manager, I want to get a list of all projects
+US015 - As a Manager, I want to get a list of all projects.
 end legend
 autonumber
 actor Manager
+
 participant ":GetListOfProjectsUI" as ui
 participant ":GetListOfProjectsController" as controller
 participant ":Company" as company
 participant ":ProjectContainer" as pc
-participant "ManagerListProjectsMapper" as mapper
-participant "managerListProjectsDTO: List<ProjectsDTO>" as list
-participant "managerListProjectsDTO:ManagerListProjectsDTO" as DTO
+participant "ProjectMapper" as mapper
+participant "projectDto: List<ProjectDto>" as list
+participant "projectDto:ProjectDto" as dto
 
 activate Manager
-Manager -> ui: get list of all projects
+Manager -> ui: asks for list of all projects
 activate ui
-ui --> Manager: request data (email)
+ui --> Manager: requests data (email)
 Manager -> ui: types requested data
 ui -> controller: getListOfProjects(email)
 activate controller
@@ -34,19 +36,20 @@ pc --> company: projects
 deactivate pc
 company --> controller: projects
 deactivate company
-controller -> mapper: getListOfProjectsDTO(projects)
+controller -> mapper: getListOfProjectsDto(projects)
 activate mapper
 create list
 mapper --> list: create ()
 loop for each project in projects
-create DTO
-mapper --> DTO: create ()
-mapper -> list: add(managerListProjectsDTO)
+create dto
+mapper --> dto: create ()
+mapper -> list: add(projectDto)
 end loop
-controller <-- mapper: managerListProjectsDTO
+controller <-- mapper: projectDto
 deactivate mapper
-ui <-- controller: managerListProjectsDTO
+ui <-- controller: projectDto
 deactivate controller
-ui --> Manager: show list all projects
+ui --> Manager: shows list of all projects
 deactivate ui
+
 @enduml

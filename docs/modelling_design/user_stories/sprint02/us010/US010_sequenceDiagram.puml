@@ -12,9 +12,9 @@ participant ":RegisterProjectUI" as ui
 participant ":RegisterProjectController" as controller
 participant ":Company" as comp
 participant ":ProjectContainer" as PC
-participant ":ProjectMapper" as mapper
+participant ":ProjectCreationMapper" as mapper
 participant "project:Project" as project
-participant ":dto:ProjectDtoAsManager" as dto
+participant ":dto:ProjectCreationDto" as dto
 
 activate manager
 "manager" ->ui : register new project
@@ -25,7 +25,7 @@ manager -> ui: types requested data
 
 create dto
 ui -> dto: create (code, name, ...)
-ui -> controller: registerProject(projectDto, email)
+ui -> controller: registerProject(projectCreationDto, email)
 activate controller
 
 controller -> comp: validateProfileRequired(email, profileNameRequired)
@@ -35,9 +35,9 @@ comp -->> controller: true
 deactivate comp
 controller -> comp: registerProject(projectDto)
 activate comp
-comp -> PC : registerProject(projectDto, projectTypologyContainer,\ncustomerContainer, businessSectorContainer))
+comp -> PC : registerProject(projectCreationDto, projectTypologyContainer,\ncustomerContainer, businessSectorContainer))
 activate PC
-PC -> mapper: registerProject(projectDto, projectTypologyContainer,\ncustomerContainer, businessSectorContainer))
+PC -> mapper: registerProject(projectCreationDto, projectTypologyContainer,\ncustomerContainer, businessSectorContainer))
 activate mapper
 create project
 mapper -> project : create (code, name, ...)

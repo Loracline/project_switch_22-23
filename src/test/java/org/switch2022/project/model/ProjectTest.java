@@ -4,8 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 public class ProjectTest {
@@ -309,4 +308,53 @@ public class ProjectTest {
     //Assert
     assertEquals(expected, result);
   }
+
+  /** Test sprintDuration GET.
+   *
+   */
+  @Test
+  public void testGetSprintDuration() {
+    // Arrange
+    Project project = projectThree;
+
+    //Act
+     int duration = project.getSprintDuration();
+
+    // Assert
+    assertEquals(0,duration);
+  }
+
+  /** Test sprintDuration SET
+   *
+   */
+  @Test
+  public void testSetSprintDurationIsValid() {
+    // Arrange
+    Project project = projectOne;
+
+    // Assert
+    assertTrue(project.setSprintDuration(3));
+    assertEquals(3, project.getSprintDuration());
+  }
+
+  @Test
+  public void testSetSprintDurationIsInvalid() {
+    // Arrange
+    Project project = projectOne;
+
+    // Assert
+    assertFalse(project.setSprintDuration(0));
+    assertEquals(0, project.getSprintDuration());
+  }
+
+  @Test
+  public void testSetSprintDurationIsInvalidIfGreaterThenFive() {
+    // Arrange
+    Project project = projectOne;
+
+    //Assert
+    assertFalse(project.setSprintDuration(5));
+    assertEquals(0, project.getSprintDuration());
+  }
+
 }

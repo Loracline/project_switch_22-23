@@ -1,24 +1,27 @@
 @startuml
+
 skinparam sequenceMessageAlign center
-title LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
+title LIST ALL PROJECTS THE AUTHENTICATED USER IS ALLOCATED TO
 legend top
 US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to.
 end legend
 autonumber
 actor User
+
 participant ":ListProjectInAccountUI" as ui
 participant ":ListProjectsInAccountController" as controller
 participant ":Company" as company
 participant ":AccountInProjectContainer" as aipc
 participant ":AccountInProject" as aip
 participant "projects: List<Project>" as list
-participant ":ManagerListProjectsMapper" as pm
-participant "managerListProjectDTO: List<ProjectDTO>" as listDTO
-participant "managerListProjectDTO:ProjectDTO" as DTO
+participant ":ProjectMapper" as pm
+participant "projectDto: List<ProjectDto>" as listDto
+participant "projectDto:ProjectDto" as dto
+
 activate User
-User -> ui: lists all projects of a given project
+User -> ui: asks to list all projects of a given project
 activate ui
-ui --> User: request data (email)
+ui --> User: requests data (email)
 User -> ui: types requested data
 ui -> controller: listProjectsByAccount(emailUser)
 activate controller
@@ -46,26 +49,27 @@ aipc --> company : projects
 deactivate aipc
 company --> controller: projects
 deactivate company
-controller -> pm: getListOfProjectsDTO(projects)
+controller -> pm: getListOfProjectsDto(projects)
 activate pm
-create listDTO
-pm --> listDTO: create ()
+create listDto
+pm --> listDto: create ()
 loop for each project in accounts
 pm -> list: project = get(i)
 activate list
 list --> pm: project
 deactivate list
-pm -> pm: projectDTO = projectToDTO(project)
-create DTO
-pm --> DTO : create()
-pm ->listDTO :add(userListProjectDTO)
-activate listDTO
+pm -> pm: projectDto = projectToDto(project)
+create Dto
+pm --> Dto : create()
+pm ->listDto :add(projectDto)
+activate listDto
 end loop
-deactivate listDTO
-pm --> controller :userListProjectsDTO
+deactivate listDto
+pm --> controller: projectDto
 deactivate pm
-controller -->> ui: userListProjectsDTO
+controller -->> ui: projectDto
 deactivate controller
-ui --> User: show list of projects
+ui --> User: shows list of projects
 deactivate ui
+
 @enduml

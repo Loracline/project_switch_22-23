@@ -53,7 +53,7 @@ activate fp
 
 create pp
 fp -> pp : create()
-fp --> ss : period //startDate, endDate
+fp --> ss : period
 deactivate ss
 deactivate fp
 fact --> p : sprint

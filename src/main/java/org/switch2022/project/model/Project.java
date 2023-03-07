@@ -17,6 +17,7 @@ public class Project {
   private final ProjectTypology projectTypology;
   private final BusinessSector businessSector;
   private String projectStatus;
+  private int sprintDuration;
 
   /**
    * Constructor
@@ -30,12 +31,13 @@ public class Project {
     this.projectStatus = "planned";
     this.projectTypology = projectTypology;
     this.businessSector = businessSector;
+    this.sprintDuration = 0;
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(projectCode, projectName, customer, projectTypology,
-            businessSector, projectStatus);
+            businessSector, projectStatus, sprintDuration);
   }
 
   /**
@@ -134,5 +136,21 @@ public class Project {
       result = true;
     }
     return result;
+  }
+
+  /** getters and setters for sprintDuration.
+   *
+   * @return the sprint duration of the project.
+   */
+  public int getSprintDuration() {return this.sprintDuration;}
+
+  public boolean setSprintDuration(int sprintDuration) {
+    boolean isSprintDurationValid = false;
+
+    if (sprintDuration > 0 && sprintDuration < 5 ) {
+      this.sprintDuration = sprintDuration;
+      isSprintDurationValid = true;
+    }
+    return isSprintDurationValid;
   }
 }

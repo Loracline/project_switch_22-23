@@ -34,13 +34,13 @@ class Profile {
 
 class ProjectContainer {
 - projects
-+ registerProject(projectDtoAsManager, projectTypologyContainer, customerContainer, businessSectorContainer)
++ registerProject(projectCreationDto, projectTypologyContainer, customerContainer, businessSectorContainer)
 }
 
-class ProjectMapper{
-+ getProjectFromDto(projectDtoAsManager, projectTypologyContainer, customerContainer, businessSectorContainer)
+class ProjectCreationMapper{
++ getProjectFromDto(projectCreationDto, projectTypologyContainer, customerContainer, businessSectorContainer)
 }
-class ProjectDtoAsManager{
+class ProjectCreationDto{
 + code
 + name
 + status
@@ -64,9 +64,9 @@ Company "1"-->"1" ProjectContainer: has
 Company "1"-->"1" AccountContainer: has
 AccountContainer "1"-->"*" Account: contains
 Account "1"-->"1" Profile: has
-ProjectMapper "1"..>"*" ProjectDtoAsManager
-ProjectContainer "1" ..> "1" "ProjectMapper"
-RegisterProjectController "1"..>"1" "ProjectMapper"
-ProjectMapper "1"..>"*" Project
 ProjectContainer "1" -left-> "*" Project: contains
+ProjectContainer "1" ..> "1" ProjectCreationMapper
+ProjectCreationMapper "1"..>"*" Project
+ProjectCreationMapper "1"..>"*" ProjectCreationDto
+
 @enduml

@@ -3,7 +3,7 @@ package org.switch2022.project.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.Customer;
 import org.switch2022.project.model.Project;
@@ -19,7 +19,7 @@ public class ProjectContainerTest {
    */
 
   Project projectOne;
-  ProjectDtoAsManager projectOneDTO, projectTwoDTO;
+  ProjectCreationDto projectOneDTO, projectTwoDTO;
   ProjectTypology typology;
   Customer customer;
   BusinessSector businessSector;
@@ -40,10 +40,10 @@ public class ProjectContainerTest {
     customerContainer = new CustomerContainer();
     businessSectorContainer = new BusinessSectorContainer();
 
-    projectOneDTO = new ProjectDtoAsManager("AA001", "Aptoide",
+    projectOneDTO = new ProjectCreationDto("AA001", "Aptoide",
             "ISEP", "228674498", "Fixed cost",
             "fishing");
-    projectTwoDTO = new ProjectDtoAsManager("AA002", "Aptoide",
+    projectTwoDTO = new ProjectCreationDto("AA002", "Aptoide",
             "ISEP", "228674498", "Fixed cost",
             "fishing");
 

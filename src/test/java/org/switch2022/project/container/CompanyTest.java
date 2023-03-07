@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ class CompanyTest {
   AccountDto accountTwoDTO;
   Profile profileOne, profileTwo, profileThree;
   Project projectOne, projectTwo, projectThree, project;
-  ProjectDtoAsManager projectOneDTO, projectNonExistentDTO, projectTwoDTO;
+  ProjectCreationDto projectOneDTO, projectNonExistentDTO, projectTwoDTO;
   float costPerHour;
   float percentageAllocation;
   LocalDate startDate;
@@ -95,9 +95,9 @@ class CompanyTest {
     projectThree = new Project("AA001", "Aptoide", new Customer("John", "228674498"), new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
     // ProjectDTOs created.
-    projectOneDTO = new ProjectDtoAsManager("AA001", "software development management", "John", "228674498", "Fixed cost", "Hunting");
-    projectTwoDTO = new ProjectDtoAsManager("AA002", "software development management", "John", "228674498", "Fixed cost", "Hunting");
-    projectNonExistentDTO = new ProjectDtoAsManager("AA004", "Aptoide", "John", "228674498", "Fixed cost", "Hunting");
+    projectOneDTO = new ProjectCreationDto("AA001", "software development management", "John", "228674498", "Fixed cost", "Hunting");
+    projectTwoDTO = new ProjectCreationDto("AA002", "software development management", "John", "228674498", "Fixed cost", "Hunting");
+    projectNonExistentDTO = new ProjectCreationDto("AA004", "Aptoide", "John", "228674498", "Fixed cost", "Hunting");
 
     // Container of projects created.
     projectContainer = new ProjectContainer();

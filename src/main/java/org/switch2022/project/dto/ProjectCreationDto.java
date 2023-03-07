@@ -2,7 +2,7 @@ package org.switch2022.project.dto;
 
 import java.util.Objects;
 
-public class ProjectDtoAsManager {
+public class ProjectCreationDto {
 
   /**
    * Attributes of the class ProjectDtoAsManager, according to the Class Diagram.
@@ -21,8 +21,8 @@ public class ProjectDtoAsManager {
    * Constructor of the class ProjectDtoAsManager.
    */
 
-  public ProjectDtoAsManager(String code, String name, String customerName, String customerNif,
-                             String projectTypology, String businessSector) {
+  public ProjectCreationDto(String code, String name, String customerName, String customerNif,
+                            String projectTypology, String businessSector) {
     this.code = code;
     this.name = name;
     this.customerName = customerName.toLowerCase();
@@ -49,7 +49,7 @@ public class ProjectDtoAsManager {
     if (o.getClass() != this.getClass()) {
       return false;
     }
-    ProjectDtoAsManager that = (ProjectDtoAsManager) o;
+    ProjectCreationDto that = (ProjectCreationDto) o;
     return Objects.equals(code, that.code) && Objects.equals(name, that.name)
             && Objects.equals(customerName, that.customerName) &&
             Objects.equals(customerNif, that.customerNif) &&

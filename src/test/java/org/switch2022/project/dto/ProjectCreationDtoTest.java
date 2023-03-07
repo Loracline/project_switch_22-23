@@ -3,48 +3,47 @@ package org.switch2022.project.dto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.dto.ProjectDtoAsManager;
 import org.switch2022.project.model.Project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-class ProjectDtoAsManagerTest {
+class ProjectCreationDtoTest {
 
   /**
    * BeforeEach and AfterEach executes common code before/after running the
    * tests below.
    */
 
-  ProjectDtoAsManager projectDtoAsManagerOne, projectDtoAsManagerTwo,
-          projectDtoAsManagerThree;
+  ProjectCreationDto projectCreationDtoOne, projectCreationDtoTwo,
+          projectCreationDtoThree;
 
   @BeforeEach
   void setUp() {
-    projectDtoAsManagerOne = new ProjectDtoAsManager("AA001",
+    projectCreationDtoOne = new ProjectCreationDto("AA001",
             "Aptoide", "ISEP", "228674498",
             "Fixed cost", "fishing");
-    projectDtoAsManagerTwo = new ProjectDtoAsManager("AA002",
+    projectCreationDtoTwo = new ProjectCreationDto("AA002",
             "Aptoide", "ISEP", "228674498",
             "Fixed cost", "fishing");
-    projectDtoAsManagerThree = new ProjectDtoAsManager("AA002",
+    projectCreationDtoThree = new ProjectCreationDto("AA002",
             "Aptoide", "ISEP", "228674498",
             "Fixed cost", "fishing");
   }
 
   @AfterEach
   void tearDown() {
-    projectDtoAsManagerOne = null;
-    projectDtoAsManagerTwo = null;
-    projectDtoAsManagerThree = null;
+    projectCreationDtoOne = null;
+    projectCreationDtoTwo = null;
+    projectCreationDtoThree = null;
   }
 
   @Test
   void ensureSameProjectDTOEqualsItself() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = reference;
+    ProjectCreationDto other = reference;
     boolean expected = true;
 
     // ACT
@@ -57,9 +56,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsAreNotEqual() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "john@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA002", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "medicine");
     boolean expected = false;
 
@@ -80,7 +79,7 @@ class ProjectDtoAsManagerTest {
     boolean expected = false;
 
     //Act
-    boolean result = projectDtoAsManagerOne.equals(other);
+    boolean result = projectCreationDtoOne.equals(other);
 
     //Assert
     assertEquals(expected, result);
@@ -89,7 +88,7 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsAreNotTheSameTypeOfObjects() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
     Object other = new Object();
     boolean expected = false;
@@ -104,9 +103,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveDifferentCustomerNif() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222433", "fixed cost", "sports");
     boolean expected = false;
 
@@ -120,9 +119,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveDifferentCode() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "john@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA002", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
     boolean expected = false;
 
@@ -136,9 +135,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveDifferentCustomerName() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "Johnny", "111222333", "fixed cost", "sports");
     boolean expected = false;
 
@@ -152,9 +151,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveDifferentProjectTypology() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed materials", "sports");
     boolean expected = false;
 
@@ -168,9 +167,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveOnlyEqualNameAndCustomerName() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "john@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA002", "john@isep.ipp.pt",
             "John", "111222323", "fixed materials", "health");
     boolean expected = false;
 
@@ -184,9 +183,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveOnlyEqualProjectTypology() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "johnny@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA002", "johnny@isep.ipp.pt",
             "Johnny", "111222323", "fixed cost", "health");
     boolean expected = false;
 
@@ -200,9 +199,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveDifferentBusinessSector() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "medicine");
     boolean expected = false;
 
@@ -216,9 +215,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveTheSameBusinessSectorButDifferentAttributes() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA002", "johnny@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA002", "johnny@isep.ipp.pt",
             "Johnny", "111222334", "fixed materials", "sports");
     boolean expected = false;
 
@@ -232,9 +231,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureTwoProjectDTOsHaveDifferentName() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "johnny@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA001", "johnny@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
     boolean expected = false;
 
@@ -248,7 +247,7 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureProjectDTONotEqualsOtherTypeObject() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
     Object other = new Object();
     boolean expected = false;
@@ -266,9 +265,9 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureProjectDTOsHaveSameHashCode() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA001", "john@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA001", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
 
     // ACT
@@ -282,11 +281,11 @@ class ProjectDtoAsManagerTest {
   @Test
   void ensureProjectDTOsHaveDifferentHashCode() {
     // ARRANGE
-    ProjectDtoAsManager reference = new ProjectDtoAsManager("AA002", "john@isep.ipp.pt",
+    ProjectCreationDto reference = new ProjectCreationDto("AA002", "john@isep.ipp.pt",
             "John", "111222333", "fixed cost", "sports");
 
 
-    ProjectDtoAsManager other = new ProjectDtoAsManager("AA003", "mary@isep.ipp.pt",
+    ProjectCreationDto other = new ProjectCreationDto("AA003", "mary@isep.ipp.pt",
             "Mary", "211222333", "fixed costs", "sports");
 
     // ACT
