@@ -1,0 +1,37 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE A USER STORY DTO
+autonumber
+
+participant ":UserStoryDtoListAssembler" as builder
+participant "userStoryDtoList: List<UserStoryDto>" as listUsDto
+participant "userStories:List<UserStory>" as userStories
+participant ":UserStoryDtoMapper" as mapper
+participant "userStoryDto: UserStoryDto" as usDto
+
+activate builder
+
+create listUsDto
+builder --> listUsDto: create ()
+
+loop for each user story in userStories
+builder -> userStories: get(i)
+activate userStories
+
+builder <-- userStories: userStory
+deactivate userStories
+
+
+builder -> mapper: userStoriesToDto(userStory)
+activate mapper
+create usDto
+mapper --> usDto: create(number, text, status)
+mapper --> builder: userStoryDto
+deactivate mapper
+builder -> listUsDto: add(userStoryDto)
+activate listUsDto
+deactivate listUsDto
+end loop
+
+deactivate builder
+@enduml
