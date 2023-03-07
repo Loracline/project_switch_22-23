@@ -8,14 +8,14 @@ import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.Customer;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectTypology;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ProjectMapperTest {
+class ProjectCreationMapperTest {
 
   /**
    * BeforeEach and AfterEach executes common code before/after running the
@@ -23,7 +23,7 @@ class ProjectMapperTest {
    */
 
   Project projectOne;
-  ProjectDtoAsManager projectDTOAsManager;
+  ProjectCreationDto projectCreationDTO;
   ProjectTypologyContainer projectTypologyContainer;
   ProjectTypology typology;
   List<Project> projects;
@@ -56,7 +56,7 @@ class ProjectMapperTest {
     businessSectorContainer.createBusinessSector("fishing");
     businessSector = new BusinessSector("fishing");
 
-    projectDTOAsManager = new ProjectDtoAsManager("AA001",
+    projectCreationDTO = new ProjectCreationDto("AA001",
             "Aptoide", "ISEP", "228674498",
             "Fixed cost", "fishing");
   }
@@ -70,7 +70,7 @@ class ProjectMapperTest {
     typology = null;
     projects.clear();
     projectContainer = null;
-    projectDTOAsManager = null;
+    projectCreationDTO = null;
     customerContainer = null;
     customer = null;
     company = null;
@@ -81,7 +81,7 @@ class ProjectMapperTest {
     // ARRANGE
     Project expected = projectOne;
     // ACT
-    Project result = ProjectMapper.getProjectFromDto(projectDTOAsManager,projectTypologyContainer,customerContainer,businessSectorContainer);
+    Project result = ProjectCreationMapper.getProjectFromDto(projectCreationDTO,projectTypologyContainer,customerContainer,businessSectorContainer);
     // ASSERT
     assertEquals(expected, result);
   }

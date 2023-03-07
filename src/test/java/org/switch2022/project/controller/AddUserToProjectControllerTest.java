@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.dto.mapper.AccountMapper;
 import org.switch2022.project.model.*;
 
@@ -30,7 +30,7 @@ class AddUserToProjectControllerTest {
   ProjectTypology projectTypologyOne;
   BusinessSector businessSectorOne;
   Project projectOne;
-  ProjectDtoAsManager projectDTO;
+  ProjectCreationDto projectDTO;
   AccountInProject accountInProject;
   List<AccountInProject> accountsInProject;
   AllocationDto scrumMasterDTO;
@@ -73,7 +73,7 @@ class AddUserToProjectControllerTest {
     businessSectorOne = new BusinessSector("Fishing");
 
     //projectDTO
-    projectDTO = new ProjectDtoAsManager("1A",
+    projectDTO = new ProjectCreationDto("1A",
             "Mobile Software", "Genius Software",
             "228674498", "Fixed cost",
             "Fishing");
