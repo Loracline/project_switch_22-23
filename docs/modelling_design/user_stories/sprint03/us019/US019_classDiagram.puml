@@ -3,7 +3,7 @@
 skinparam sequenceMessageAlign center
 title TO CREATE NEW SPRINT
 legend top
-US001 - As Project Manager, I want to create a Sprint.
+US019 - As Project Manager, I want to create a Sprint.
 end legend
 
 class CreatSprintController {
