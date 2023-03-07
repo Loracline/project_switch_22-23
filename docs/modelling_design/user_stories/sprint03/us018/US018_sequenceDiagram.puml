@@ -47,7 +47,7 @@ container --> company: userStories
 deactivate container
 company --> controller: userStories
 deactivate company
-controller -> builder: productBacklogToDto(userStories)
+controller -> builder: backlogToDto(userStories)
 activate builder
 ref over builder: To create a user story DTO
 builder --> controller: userStoryDtoList
