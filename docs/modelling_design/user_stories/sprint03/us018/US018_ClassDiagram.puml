@@ -1,0 +1,87 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+title TO CONSULT THE PRODUCT BACKLOG
+skinparam sequenceMessageAlign center
+legend top
+US018 - As PO/SM/Team Member, I want to consult the product backlog, i.e. to get the list of user stories sorted by priority.
+end legend
+
+class "GetProductBacklogController" {
+-company
++getProductBacklog(projectDto)
+}
+
+class "Company"{
+-projectContainer
++getProductBacklog(projectDto)
+}
+
+class "ProjectContainer"{
+-projects
+-getProjectByCode(code)
++getProductBacklog(projectDto)
+}
+
+class "Project"{
+-projectCode
+-productBacklog
++getProductBacklog()
++hasProjectCode(projectCode)
+}
+
+class "ProductBacklog"{
+-userStories
+-factoryUserStory
++getUserStories()
+}
+
+class "UserStory"{
+-userStoryNumber
+-userStoryText
+-status
+-actor
+-projectCode
++getUsNumber()
++getUsStatus()
++setUsStatus()
++getUsText()
++getActor()
++getProjectCode()
+}
+
+class "FactoryUserStory"{
+createUserStory(projectCode, userStoryNumber, userStoryText, actor)
+}
+
+class "UserStoryDtoListAssembler"{
++backlogToDto(userStories)
+}
+
+class "UserStoryDtoMapper"{
++userStoriesToDto(userStory)
+}
+
+class "UserStoryDto"{
++userStoryNumber
++userStoryText
++status
+}
+
+class "ProjectDto"{
++projectCode
+}
+
+"GetProductBacklogController" "1"-->"1" "Company": has
+"GetProductBacklogController" ..> "UserStoryDtoListAssembler"
+"UserStoryDtoListAssembler" ..> "UserStoryDtoMapper"
+"UserStoryDtoMapper" ..> "UserStory"
+"Company" "1"-->"1" "ProjectContainer": has
+"ProjectContainer" "1"-->"*" Project: contains
+"ProjectContainer" ..> ProjectDto: accesses
+"Project" "1"-->"*" ProductBacklog: contains
+"ProductBacklog" "1"-->"*" UserStory: contains
+"ProductBacklog" "1"-->"*" FactoryUserStory: has
+"UserStoryDtoMapper" ..> "UserStoryDto": instantiates
+"FactoryUserStory" ..> UserStory
+@enduml

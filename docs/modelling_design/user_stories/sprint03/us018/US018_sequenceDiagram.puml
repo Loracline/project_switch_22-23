@@ -1,0 +1,61 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO CONSULT THE PRODUCT BACKLOG
+legend top
+US018 - As PO/SM/Team Member, I want to consult the product backlog, i.e. to get the list of user stories sorted by priority.
+end legend
+autonumber
+
+actor "Product Owner\nScrum Master\nTeam Member" as actor
+participant ":GetProductBacklogUI" as ui
+participant ":GetProductBacklogController" as controller
+participant ":Company" as company
+participant ":ProjectContainer" as container
+participant ":Project" as project
+participant ":ProductBacklog" as backlog
+participant ":UserStoryDtoListAssembler" as builder
+
+
+
+actor -> ui: requests list of all projects
+activate ui
+ref over ui: US016: list of all projects a user is currently allocated to
+
+ui --> actor: shows list of all projects
+actor -> ui: selects project
+deactivate ui
+
+actor -> ui: requests product backlog (list of all US) from selected project
+activate ui
+ui -> controller: getProductBacklog(projectDto)
+activate controller
+controller -> company: getProductBacklog(projectDto)
+activate company
+company -> container: getProductBacklog(projectDto)
+activate container
+
+container -> project: getProductBacklog()
+activate project
+project -> backlog: getUserStories()
+activate backlog
+backlog --> project: userStories
+deactivate backlog
+
+project --> container: userStories
+deactivate project
+container --> company: userStories
+deactivate container
+company --> controller: userStories
+deactivate company
+controller -> builder: backlogToDto(userStories)
+activate builder
+ref over builder: To create a user story DTO
+builder --> controller: userStoryDtoList
+
+deactivate builder
+controller --> ui: userStoryDtoList
+deactivate controller
+
+ui -> actor: shows list of all US
+deactivate ui
+@enduml
