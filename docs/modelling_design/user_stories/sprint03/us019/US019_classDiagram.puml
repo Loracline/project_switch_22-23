@@ -6,11 +6,11 @@ legend top
 US019 - As Project Manager, I want to create a Sprint.
 end legend
 
-class CreatSprintController {
+class CreateSprintController {
 - company
 + createSprint(projectDto,sprintDto)
 }
-CreatSprintController "1"-->"1" Company: has
+CreateSprintController "1"-->"1" Company: has
 
 class Company {
 -projectContainer
@@ -26,8 +26,8 @@ class ProjectContainer {
 ProjectContainer "1"-->"*" Project: has
 
 class Project {
--FactorySprint
--Sprints
+-factorySprint
+-sprints
 +createSprint(sprintNumber,\nstartDate, projectCode)
 +isSprintUnique(sprint)
 +isPeriodValid(sprint, existingSprint)

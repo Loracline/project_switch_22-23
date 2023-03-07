@@ -32,7 +32,7 @@ class "SprintBacklog" {
 + estimateEffortUserStory(userStoryDto, effort)
 }
 class "UserStory"{
-- effortValue
+- effort
 + setEffort(effort)
 }
 enum "Effort"{
