@@ -1,0 +1,65 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO CREATE USER STORY
+legend top
+US017 - As a Product Owner, I want to create a user story and add it to the Product Backlog.
+end legend
+autonumber
+actor "Product Owner" as product
+participant ":CreateUserStoryUI" as ui
+participant ":CreateUserStoryController" as controller
+participant ":Company" as company
+participant ":UserStoryContainer" as usContainer
+participant ":FactoryUserStory" as factory
+participant "userStory:UserStory" as userStory
+participant ":ProjectContainer" as container
+participant ":Project" as project
+participant ":ProductBacklog" as backlog
+
+
+activate product
+
+product -> ui : requests list of projects
+activate ui
+ref over ui: US016: list all projects the user is allocated as authenticated
+ui --> product: shows list of projects
+product -> ui : select project
+deactivate ui
+product -> ui : creates User Story
+activate ui
+ui --> product: requests data (US_number, actor, US_text, priority)
+product -> ui: enters User Story data
+ui -> controller: createUserStory(projectDto,userStoryCreationDto)
+activate controller
+controller -> company: createUserStory(projectDto,userStoryCreationDto)
+activate company
+company -> usContainer: createUserStory((projectDto,userStoryCreationDto, projectContainer)
+activate usContainer
+usContainer -> factory: createUserStory(projectCode, userStoryNumber,userStoryText, actor)
+activate factory
+create userStory
+factory -> userStory
+factory --> usContainer: add
+deactivate factory
+usContainer -> container: addUserStoryToProductBacklog(projectDto,userStory)
+activate container
+container -> project: addUserStoryToProductBacklog(projectCode,userStory)
+activate project
+project ->backlog: addUserStoryToProductBacklog(userStory)
+activate backlog
+backlog --> project: true
+deactivate backlog
+project --> container: true
+deactivate project
+container --> usContainer: true
+deactivate container
+usContainer --> company: true
+deactivate usContainer
+company --> controller: true
+deactivate company
+controller --> ui: true
+deactivate controller
+ui --> product: "informs Operation Success"
+deactivate ui
+deactivate product
+@enduml
