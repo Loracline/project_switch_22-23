@@ -288,6 +288,26 @@ actor <-- ":System": shows list of all US
 @enduml
 
 @startuml
+legend top
+US022 - As Team Member, I want to view the Scrum Board of current sprint.
+end legend
+skinparam sequenceMessageAlign center
+title TO VIEW THE SCRUM BOARD OF SPRINT
+actor "Team Member"
+autonumber
+"Team Member" -> ":System": request to view the Scrum Board of current sprint.
+note left
+Account is authenticated.
+":System" grants access.
+end note
+note right
+Team member request to see all projects,
+and select one (US0016).
+end note
+"Team Member" <-- ":System": shows Scrum Board of current sprint
+@enduml
+
+@startuml
 skinparam sequenceMessageAlign center
 title TO SEARCH ACCOUNT BY E-MAIL
 actor Administrator
