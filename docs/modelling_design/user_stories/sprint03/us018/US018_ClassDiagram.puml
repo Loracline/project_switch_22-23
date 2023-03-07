@@ -55,7 +55,7 @@ createUserStory(projectCode, userStoryNumber, userStoryText, actor)
 }
 
 class "UserStoryDtoListAssembler"{
-+productBacklogToDto(userStories)
++backlogToDto(userStories)
 }
 
 class "UserStoryDtoMapper"{
@@ -83,5 +83,5 @@ class "ProjectDto"{
 "ProductBacklog" "1"-->"*" UserStory: contains
 "ProductBacklog" "1"-->"*" FactoryUserStory: has
 "UserStoryDtoMapper" ..> "UserStoryDto": instantiates
-
+"FactoryUserStory" ..> UserStory
 @enduml
