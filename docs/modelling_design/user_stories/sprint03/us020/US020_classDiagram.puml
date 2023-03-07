@@ -1,0 +1,76 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+legend top
+US020 - As Team Member, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+end legend
+skinparam sequenceMessageAlign center
+title  To add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+
+class "AddUserStoryToSprintBacklogController" {
+- company
++ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
+}
+
+class "Company" {
+- projectContainer
++ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
+}
+class "ProjectContainer" {
+- projects
++ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
+- getProjectByProjectCode(projectCode)
+
+}
+
+class "Project"{
+- productBacklog
+- sprints
++ addUserStoryToSprintBacklog(userStoryNumber, sprintNumber)
++ hasProjectCode(projectCode)
+- getSprint(sprintNumber)
+}
+
+class "ProductBacklog" {
+- userStories
++ getUserStoryByNumber(userStoryNumber)
++ removeUserStory(userStory)
+}
+
+class "UserStory"{
+- userStoryNumber
+- actor
+- userStoryText
+- status
+- effort
+- listOfAcceptanceCriteria
+- projectCode
++ UserStory(userStoryNumber, actor, userStoryText)
++ hasUserStoryNumber(userStoryNumber)
+}
+
+class "Sprint"{
+- sprintNumber
+- factoryPeriod
+- period
+- sprintBacklog
++ Sprint(sprintNumber, factoryPeriod)
++ addUserStoryToSprintBacklog(userStory)
+}
+
+class "SprintBacklog" {
+- userStories
++addUserStory(userStory)
+- isUserStoryAlreadyAdded(userStory)
+}
+
+"AddUserStoryToSprintBacklogController" "1"-->"1" "Company": has
+"Company" "1"--> "1" "ProjectContainer": has
+"ProjectContainer" "1"-->"*" "Project": contains
+"Project" "1" -->"1" "ProductBacklog": has
+"Project" "1" -->"*" "Sprint": has
+"Sprint" "1" --> "1" "SprintBacklog": has
+"SprintBacklog" "1" --> "*" UserStory: contains
+"ProductBacklog" "1" --> "*" "UserStory" : contains
+
+@enduml
+
