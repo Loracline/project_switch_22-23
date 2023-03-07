@@ -22,7 +22,7 @@ public class ProjectContainer {
    *
    * @return the project with given code.
    */
-  public Project getProjectByCode(String code) {
+  private Project getProjectByCode(String code) {
     Project projectRequested = null;
     int i = 0;
     while (i < this.projects.size() && (projectRequested != (projects.get(i)))) {

@@ -10,7 +10,6 @@ import org.switch2022.project.model.Project;
 import org.switch2022.project.model.ProjectTypology;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ProjectContainerTest {
 
@@ -99,25 +98,6 @@ public class ProjectContainerTest {
 
     // Assert
     assertEquals(expected, result);
-  }
-
-  /**
-   * Test to verify that a project is retrieved given a project code
-   */
-  @Test
-  void ensureProjectIsRetrievedGivenProjectCode() {
-    Project result = projectContainer.getProjectByCode("AA001");
-
-    assertEquals(projectOne.getProjectCode(), result.getProjectCode());
-  }
-
-  /**
-   * Test to verify that a project is not retrieved given a project code
-   */
-  @Test
-  void ensureProjectIsNotRetrievedGivenProjectCode() {
-    Project result = projectContainer.getProjectByCode("AA005");
-    assertNull(result);
   }
 }
 
