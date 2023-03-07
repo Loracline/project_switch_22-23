@@ -217,7 +217,7 @@ public class Company {
     Account account =
             this.accountContainer.getAccountByEmail(accountDto.email);
     Project project =
-            this.projectContainer.getProjectByCode(projectDtoAsManager.code);
+            getProjectToAllocation(projectDtoAsManager.code);
 
     if (account != null && project != null) {
       if (account.isProfileRequired("user") && project.isProjectOpen()) {
@@ -226,6 +226,25 @@ public class Company {
       }
     }
     return addUserToProject;
+  }
+
+  /**
+   * This method retrieves an instance of project to be used to allocate an account
+   *
+   * @param projectCode of the project one searches for.
+   * @return the desired project instance.
+   */
+
+  private Project getProjectToAllocation(String projectCode){
+    Project project = null;
+    int i = 0;
+    while(i < projectContainer.getProjects().size()) {
+      if (projectContainer.getProjects().get(i).hasProjectCode(projectCode)) {
+        project = projectContainer.getProjects().get(i);
+      }
+      i++;
+    }
+    return project;
   }
 
   /**
