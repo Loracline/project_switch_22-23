@@ -50,7 +50,7 @@ class "UserStory"{
 +getProjectCode()
 }
 
-class "FactoryUserStory"{
+interface "FactoryUserStory"{
 createUserStory(projectCode, userStoryNumber, userStoryText, actor)
 }
 
