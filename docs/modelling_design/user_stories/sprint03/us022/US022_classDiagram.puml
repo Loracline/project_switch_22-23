@@ -1,0 +1,106 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO VIEW THE SCRUM BOARD OF SPRINT
+legend top
+US022 - As Team Member, I want to view the Scrum Board of current sprint.
+end legend
+
+class ViewScrumBoardController
+class Company
+class ProjectContainer
+class Project
+class Sprint
+class SprintBacklog
+class ProjectDto
+interface FactoryUserStory
+class UserStory
+class UserStoryDtoListAssembler
+class UserStoryDtoMapper
+class UserStoryDto
+
+class ViewScrumBoardController {
+-company
++getScrumBoard(projectDto)
+}
+
+class Company {
+-projectContainer
++getScrumBoard(projectDto)
+}
+
+class ProjectContainer {
+-projects
+-getProjectByCode(projectCode)
++getScrumBoard(projectDto)
+}
+
+class Project {
+-projectCode
+-sprints
++hasProjectCode(projectCode)
++getScrumBoard()
+}
+
+class Sprint {
+-sprintBacklog
++getSprintBacklog()
+}
+
+class SprintBacklog {
+-userStories
+-factoryUserStory
++getUserStories()
+}
+
+class ProjectDto {
++projectCode
+}
+
+interface FactoryUserStory {
++createUserStory(projectCode, userStoryNumber, userStoryText, actor)
+}
+
+class UserStory {
+-userStoryNumber
+-userStoryText
+-status
+-actor
+-projectCode
++getUsNumber()
++getUsStatus()
++setUsStatus()
++getUsText()
++getActor()
++getProjectCode()
+}
+
+class UserStoryDto {
++userStoryNumber
++userStoryText
++status
+}
+
+class UserStoryDtoMapper {
++userStoriesToDto(userStory)
+}
+
+class UserStoryDtoListAssembler {
++backlogToDto(userStories)
+}
+
+"ViewScrumBoardController" --> "Company"
+"Company" "1" --> "1" "ProjectContainer": contains
+"ProjectContainer" "1" --> "*" "Project": contains
+"Project" "1" --> "*" "Sprint": has
+"Sprint" "1" --> "1" "SprintBacklog": has
+"SprintBacklog" --> "FactoryUserStory"
+"SprintBacklog" "1" --> "*" "UserStory": has
+"FactoryUserStory" .--> "UserStory"
+"ProjectContainer" .--> "ProjectDto": accesses
+"ViewScrumBoardController" .--> "UserStoryDtoListAssembler"
+"UserStoryDtoListAssembler" .--> "UserStoryDtoMapper"
+"UserStoryDtoMapper" .--> "UserStoryDto": instantiates
+"UserStoryDtoMapper" .--> "UserStory"
+
+@enduml
