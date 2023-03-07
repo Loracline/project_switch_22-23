@@ -630,11 +630,32 @@ skinparam sequenceMessageAlign center
 title TO LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 actor "User"
 autonumber
-"User" -> ":System": lists all projects the user is allocated to
+"Team Member" -> ":System": lists all projects the user is allocated to
 note left
 Account is authenticated.
 ":System" grants access.
 end note
 "User" <-- ":System": shows list of all projects the user is allocated
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO ADD A USER STORY IN THE PRODUCT BACKLOG TO THE SPRINT BACKLOG, DURING THE SPRINT PLANNNING CEREMONY.
+actor "Team Member"
+autonumber
+"Team Member" -> ":System": starts adding a User Story to Sprint Backlog
+note left
+Account is authenticated.
+":System" grants access.
+end note
+
+note right
+Team Member resquests to see the
+Product Backlog and and
+selects a User Story. See US018
+end note
+"Team Member" <-- ":System": requests data(userStoryDto, sprintNumber)
+"Team Member" -> ":System": sends requested data
+"Team Member" <-- ":System": User Story was added to Sprint Backlog
 @enduml
 
