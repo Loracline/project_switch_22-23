@@ -9,7 +9,7 @@ import org.switch2022.project.container.Company;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.model.*;
 import org.switch2022.project.dto.ProjectDto;
-import org.switch2022.project.dto.mapper.ManagerListProjectsMapper;
+import org.switch2022.project.dto.mapper.ProjectMapper;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ class ListProjectsInAccountControllerTest {
         projectOne = new Project("1A", "Mobile Software", customerOne, projectTypologyOne, businessSectorOne );
 
         //projectDTO
-        projectDTOOne = ManagerListProjectsMapper.getDtoFromProject(projectOne);
+        projectDTOOne = ProjectMapper.getDtoFromProject(projectOne);
         projectsDTO = new ArrayList<>();
         projectsDTO.add(projectDTOOne);
 

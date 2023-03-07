@@ -9,7 +9,7 @@ import org.switch2022.project.dto.ProjectDto;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-public class ManagerListProjectsMapperTest {
+public class ProjectMapperTest {
     /**     * BeforeEach and AfterEach executes common code before/after running the tests below.     */    Project projectOne, projectTwo;
     ProjectDto projectOneDTO, projectTwoDTO, projectThreeDTO;
     List<Project> projects;
@@ -59,7 +59,7 @@ public class ManagerListProjectsMapperTest {
         expected.add(new ProjectDto("AA002", "Aptoide", "portotech", "planned",
                 "fixed cost", "fishing"));
         //Act
-        List<ProjectDto> result = ManagerListProjectsMapper.getListOfProjectsDto(projects);
+        List<ProjectDto> result = ProjectMapper.getListOfProjectsDto(projects);
         //Assert
         assertEquals(expected, result);
     }

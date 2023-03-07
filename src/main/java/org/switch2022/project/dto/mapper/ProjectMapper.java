@@ -6,11 +6,11 @@ import org.switch2022.project.dto.ProjectDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerListProjectsMapper {
+public class ProjectMapper {
     /**
      * Constructor of the class ListOfProjectsMapper.
      */
-    private ManagerListProjectsMapper() {}
+    private ProjectMapper() {}
 
     /**
      * This method receives a project and maps/transforms the project

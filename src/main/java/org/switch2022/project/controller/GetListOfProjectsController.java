@@ -4,7 +4,7 @@ import org.switch2022.project.container.Company;
 import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.dto.ProjectDto;
-import org.switch2022.project.dto.mapper.ManagerListProjectsMapper;
+import org.switch2022.project.dto.mapper.ProjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,7 @@ public class GetListOfProjectsController {
         List<ProjectDto> listOfProjectsDTO = new ArrayList<>();
         if (company.validateProfileRequired(email, Profile.MANAGER)) {
             List<Project> projects = company.listAllProjects();
-            listOfProjectsDTO = ManagerListProjectsMapper.getListOfProjectsDto(projects);
+            listOfProjectsDTO = ProjectMapper.getListOfProjectsDto(projects);
         }
         return listOfProjectsDTO;
     }

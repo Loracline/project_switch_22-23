@@ -3,7 +3,7 @@ import org.switch2022.project.container.Company;
 import org.switch2022.project.model.Profile;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.dto.ProjectDto;
-import org.switch2022.project.dto.mapper.ManagerListProjectsMapper;
+import org.switch2022.project.dto.mapper.ProjectMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public class ListProjectsInAccountController {
         List<ProjectDto> userListProjectsDTO = new ArrayList<>();
         if (company.validateProfileRequired(emailUser, Profile.USER)) {
             List<Project> projects = company.listProjectsByAccount(emailUser);
-            userListProjectsDTO = ManagerListProjectsMapper.getListOfProjectsDto(projects);
+            userListProjectsDTO = ProjectMapper.getListOfProjectsDto(projects);
         }
         return userListProjectsDTO;
     }
