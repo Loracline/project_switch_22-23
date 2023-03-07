@@ -666,3 +666,27 @@ end note
 "Team Member" <-- ":System": User Story was added to Sprint Backlog
 @enduml
 
+@startuml
+skinparam sequenceMessageAlign center
+title TO ESTIMATE THE EFFORT OF A USER STORY IN A SPRINT, DURING THE SPRINT PLANNING CEREMONY.
+
+actor "Team Member"
+autonumber
+"Team Member" -> ":System": requests list of user stories
+note left
+Account is authenticated.
+":System" grants access.
+end note
+
+note right
+Team Member resquests to see all
+user stories and select one (US022).
+end note
+"Team Member" <-- ":System": requests data
+"Team Member" -> ":System": selects data and estimate user story effort
+"Team Member" <-- ":System": shows success message
+@enduml
+
+
+
+
