@@ -7,7 +7,7 @@ import org.switch2022.project.container.*;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.Profile;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +21,7 @@ class RegisterProjectControllerTest {
     Account accountOne;
     Profile profileOne, profileTwo, profileThree;
     BusinessSector businessSector;
-    ProjectDtoAsManager projectOneDTO, projectTwoDTO;
+    ProjectCreationDto projectOneDTO, projectTwoDTO;
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -51,10 +51,10 @@ class RegisterProjectControllerTest {
         businessSector = new BusinessSector("fishing");
         businessSectorContainer = new BusinessSectorContainer();
 
-        projectOneDTO = new ProjectDtoAsManager("AA001", "software development " +
+        projectOneDTO = new ProjectCreationDto("AA001", "software development " +
                 "management", "Peter", "228674498",
                 "Fixed cost", "Fishing");
-        projectTwoDTO = new ProjectDtoAsManager("AA004", "software development " +
+        projectTwoDTO = new ProjectCreationDto("AA004", "software development " +
                 "management", "Mary",
                 "228674498", "Fixed cost", "Sports");
         projectContainer = new ProjectContainer();

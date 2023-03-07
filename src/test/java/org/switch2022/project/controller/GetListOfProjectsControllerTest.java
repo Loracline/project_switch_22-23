@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.dto.ProjectDto;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.model.*;
 
 import java.util.ArrayList;
@@ -62,12 +62,12 @@ public class GetListOfProjectsControllerTest {
             customer, projectTypology, businessSector);
     projectTwo = new Project("AA002", "project software", customer,
             projectTypology, businessSector);
-    ProjectDtoAsManager projectOneDTO = new ProjectDtoAsManager(projectOne.getProjectCode(),
+    ProjectCreationDto projectOneDTO = new ProjectCreationDto(projectOne.getProjectCode(),
             projectOne.getProjectName(), projectOne.getCustomer().getCustomerName(),
             projectOne.getCustomer().getCustomerNif(),
             projectOne.getProjectTypology().getProjectTypologyName(),
             projectOne.getBusinessSector().getBusinessSectorName());
-    ProjectDtoAsManager projectOneTwo = new ProjectDtoAsManager(projectTwo.getProjectCode(),
+    ProjectCreationDto projectOneTwo = new ProjectCreationDto(projectTwo.getProjectCode(),
             projectTwo.getProjectName(), projectTwo.getCustomer().getCustomerName(),
             projectTwo.getCustomer().getCustomerNif(),
             projectTwo.getProjectTypology().getProjectTypologyName(),
