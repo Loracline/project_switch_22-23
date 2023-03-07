@@ -8,28 +8,62 @@ end legend
 
 class CreatSprintController {
 - company
-+ sprintDto
++ createSprint(projectDto,sprintDto)
 }
 CreatSprintController "1"-->"1" Company: has
 
 class Company {
 -projectContainer
-+sprintDto
++createSprint(projectDto,sprintDto)
 }
 Company "1"-->"1" ProjectContainer : has
 
 class ProjectContainer {
 -project
-+sprintDto
++createSprint(sprintDto)
+-getProjectByCode(projectDto)
 }
-ProjectContainer "1"-->"1" Project: has
+ProjectContainer "1"-->"*" Project: has
 
 class Project {
 -FactorySprint
-+sprintDto
+-Sprints
++createSprint(sprintNumber,\nstartDate, projectCode)
++isSprintUnique(sprint)
++isPeriodValid(sprint, existingSprint)
++hasProjectCode(projectCode)
 }
 Project "1"-->"1" FactorySprint: has
 
+class FactorySprint {
++createSprint(startDate, sprintDuration)
+}
 
+class Sprint {
+-sprintNumber
+-FactoryPeriod
+-Period
++Sprint(startDate, sprintDuration, sprintNumber)
++createPeriod(startDate,sprintDuration)
++getStartDate()
++getEndDate()
+}
 
+Sprint -> FactoryPeriod
+FactorySprint "1"..> "*"Sprint
+
+class FactoryPeriod {
++create(startDate, sprintDuration)
+}
+
+FactoryPeriod ..> Period
+
+class Period {
+-startDate
+-endDate
+-calculateEndDate( startDate, sprintDuration)
++Period(startDate, sprintDuration)
++getStartDate()
++getEndDate()
+}
 @enduml
