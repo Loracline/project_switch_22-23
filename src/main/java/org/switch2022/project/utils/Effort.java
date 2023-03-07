@@ -1,4 +1,4 @@
-package enums;
+package org.switch2022.project.utils;
 
 public enum Effort {
 
