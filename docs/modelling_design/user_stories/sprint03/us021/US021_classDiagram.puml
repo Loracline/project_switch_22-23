@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+title TO ESTIMATE THE EFFORT OF A USER STORY
+legend top
+US021 - As Team Member, I want to estimate the effort of a user story in a sprint, during the sprint planning ceremony.
+end legend
+skinparam sequenceMessageAlign center
+
+class "EstimateUserStoryEffortController" {
+- company
++ estimateEffortUserStory(userStoryDto, effort)
+}
+
+class "Company" {
+- projectContainer
++ estimateEffortUserStory(userStoryDto, effort)
+}
+class "ProjectContainer" {
+- projects
++ estimateEffortUserStory(userStoryDto, effort)
+}
+class "Project"{
+- sprints
++ estimateEffortUserStory(userStoryDto, effort)
+}
+class "Sprint"{
+- sprintBacklog
++ estimateEffortUserStory(userStoryDto, effort)
+}
+class "SprintBacklog" {
+- userStories
++ estimateEffortUserStory(userStoryDto, effort)
+}
+class "UserStory"{
+- effortValue
++ setEffort(effort)
+}
+enum "Effort"{
+- effortValue
++ Effort(effortValue)
+}
+
+"EstimateUserStoryEffortController" "1" --> "1" "Company"
+"Company" "1" --> "1" "ProjectContainer"
+"ProjectContainer" "1" --> "*" "Project"
+"Project" "1" --> "*" "Sprint"
+"Sprint" "1" --> "1" "SprintBacklog"
+"SprintBacklog" "1" --> "*" "UserStory" : contains
+"UserStory" "1" --> "1" "Effort" : has
+@enduml

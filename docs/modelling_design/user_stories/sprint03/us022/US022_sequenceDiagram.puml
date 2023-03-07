@@ -1,0 +1,59 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO VIEW THE SCRUM BOARD OF SPRINT.
+legend top
+US022 - As Team Member, I want to view the Scrum Board of current sprint.
+end legend
+autonumber
+actor "Team Member" as member
+participant ":ViewScrumBoardUI" as ui
+participant ":ViewScrumBoardUIController" as controller
+participant ":Company" as company
+participant ":ProjectContainer" as projectContainer
+participant ":Project" as project
+participant ":Sprint" as sprint
+participant ":SprintBacklog" as backlog
+participant ":UserStoryDtoListAssembler" as dto
+
+
+activate member
+activate ui
+member -> ui : requests list of projects
+ref over ui: US016: list all projects the user is allocated as authenticated
+ui --> member : show list of projects
+member -> ui : select project
+deactivate ui
+member -> ui : requests to view the Scrum Board of current sprint
+activate ui
+ui -> controller : getScrumBoard(projectDto)
+activate controller
+controller -> company : getScrumBoard(projectDto)
+activate company
+company -> projectContainer : getScrumBoard(projectDto)
+activate projectContainer
+projectContainer -> project: getScrumBoard()
+activate project
+project -> sprint : getSprintBacklog()
+activate sprint
+sprint -> backlog: getUserStories()
+activate backlog
+backlog -> sprint: userStories
+deactivate backlog
+sprint -> project : userStories
+deactivate sprint
+project -> projectContainer : userStories
+deactivate project
+projectContainer -> company : userStories
+deactivate projectContainer
+company-> controller : userStories
+deactivate company
+controller-> dto : userStoriesToDto(userStories)
+ref over dto: To create a user story DTO
+activate dto
+dto --> controller : userStoryDtoList
+deactivate dto
+controller -> ui : userStoryDtoList
+deactivate controller
+ui -> member : shows Scrum Board of current sprint
+
+@enduml
