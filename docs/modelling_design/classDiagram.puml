@@ -11,7 +11,12 @@ class AddCustomerController {
 
 class AddUserToProjectController {
 -company
-+addUserToProject(emailActor, accountDTO, projectDtoAsManager, allocationDTO)
++addUserToProject(emailActor, accountDTO, projectCreationDto, allocationDTO)
+}
+
+class "AddUserStoryToSprintBacklogController" {
+- company
++ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
 }
 
 class ChangeProfileController {
@@ -30,13 +35,28 @@ class CreateProfileController {
 }
 
 class CreateProjectTypologyController {
-- company
+-company
 +createProjectTypology(email, projectTypology)
+}
+
+class CreateSprintController {
+-company
++createSprint(projectDto,sprintDto)
+}
+
+class EstimateUserStoryEffortController{
+-company
++estimateEffortUserStory(userStoryDto, effort)
 }
 
 class GetListOfProjectsController {
 -company
 +getListOfProjects(email)
+}
+
+class "GetProductBacklogController" {
+-company
++getProductBacklog(projectDto)
 }
 
 class ListAccountController {
@@ -55,8 +75,8 @@ class ListAllUsersController {
 }
 
 class ListProjectsInAccountController {
-- company
-+ listProjectsByAccount(emailUser)
+-company
++listProjectsByAccount(emailUser)
 }
 
 class RegisterAccountController {
@@ -65,10 +85,14 @@ class RegisterAccountController {
 }
 
 class RegisterProjectController {
-- company
-+ registerProject(projectDto, email)
+-company
++registerProject(projectCreationDto, email)
 }
 
+class ViewScrumBoardController {
+-company
++getScrumBoard(projectDto)
+}
 
 class Company {
 -accountContainer
@@ -85,14 +109,21 @@ class Company {
 +listAllUsers()
 +registerAccount(accountName, email, phoneNumber, photo)
 +changeStatus(email, status)
-+registerProject(projectDto)
++registerProject(projectCreationDto)
 +listAllProjects()
 +addBusinessSector(businessSectorName)
 +addCustomer(customerName, customerNIF)
 +createProjectTypology(projectTypology)
-+addUserToProject(accountDTO, projectDtoAsManager,allocationDTO)
++addUserToProject(accountDTO, projectCreationDto,allocationDTO)
 +listAccountsByProject(projectCode)
 +listProjectsByAccount(emailUser)
++addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++createSprint(projectDto,sprintDto)
++getScrumBoard(projectDto)
+-userStoryContainer
++createUserStory(projectDto,userStoryCreationDto)
++getProductBacklog(projectDto)
++estimateEffortUserStory(userStoryDto, effort)
 }
 
 
@@ -142,6 +173,11 @@ class CustomerContainer {
 +getCustomer(customerName, nif)
 }
 
+class "CreateUserStoryController" {
+- company
++ createUserStory(projectDto,userStoryCreationDto)
+}
+
 class ProfileContainer {
 -profiles
 +doesProfileExist(profile)
@@ -151,10 +187,18 @@ class ProfileContainer {
 
 class ProjectContainer {
 -projects
-+getProjectByCode(code)
 +getProjects()
-+registerProject(projectDtoAsManager)
++registerProject(ProjectCreationDto)
 -doesProjectExist(project)
++estimateEffortUserStory(userStoryDto, effort)
++addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
+-getProjectByProjectCode(projectCode)
++createSprint(sprintDto)
+-getProjectByCode(projectDto)
++getScrumBoard(projectDto)
++addUserStoryToProductBacklog(projectDto,userStory)
+-getProjectByCode(projectCode)
++getProductBacklog(projectDto)
 }
 
 class ProjectTypologyContainer {
@@ -164,6 +208,13 @@ class ProjectTypologyContainer {
 +getProjectTypology(typology)
 }
 
+class "UserStoryContainer"{
+-userStories
+-factoryUserStory
++createUserStory((projectDto,userStoryCreationDto, projectContainer)
++addUserStory(userStory)
+-isUserStoryUnique(userStory)
+}
 
 class Account {
 -accountName
@@ -230,6 +281,15 @@ class Customer {
 +getCustomerName()
 }
 
+class Period {
+-startDate
+-endDate
+-calculateEndDate( startDate, sprintDuration)
++Period(startDate, sprintDuration)
++getStartDate()
++getEndDate()
+}
+
 class Profile {
 -profileName
 +Profile(profileName)
@@ -243,6 +303,9 @@ class Project {
 -projectTypology
 -businessSector
 -projectStatus
+-productBacklog
+-factorySprint
+-sprints
 +Project(projectCode, name, customer, projectTypology, businessSector)
 +getProjectCode()
 +getProjectName()
@@ -252,8 +315,19 @@ class Project {
 +setProjectStatus(status)
 +getProjectTypology()
 +getBusinessSector()
-+hasProjectCode(projectCode)
+-hasProjectCode(projectCode)
 +isProjectOpen()
++estimateEffortUserStory(userStoryDto, effort)
++addUserStoryToSprintBacklog(userStoryNumber, sprintNumber)
++hasProjectCode(projectCode)
+-getSprint(sprintNumber)
++createSprint(sprintNumber,\n startDate, projectCode)
++isSprintUnique(sprint)
++isPeriodValid(sprint, existingSprint)
++getScrumBoard()
++addUserStoryToProductBacklog(projectCode,userStory)
++getProductBacklog()
++hasProjectCode(projectCode)
 }
 
 class ProjectTypology {
@@ -263,9 +337,58 @@ class ProjectTypology {
 +checkProjectTypologyFromName(projectTypologyName)
 }
 
-class AccountListEmailStatusMapper{
--accountToDTO(account)
-+listAccountsToDTO(accounts)
+class "Sprint"{
+-sprintNumber
+-factoryPeriod
+-period
+-sprintBacklog
++Sprint(sprintNumber, factoryPeriod)
++addUserStoryToSprintBacklog(userStory)
++estimateEffortUserStory(userStoryDto, effort)
++createPeriod(startDate,sprintDuration)
++getStartDate()
++getEndDate()
++getSprintBacklog()
+
+}
+
+class "ProductBacklog" {
+-userStories
+-factoryUserStory
++addUserStoryToProductBacklog(userStory)
+-isUserStoryUnique(userStory)
++getUserStories()
++getUserStoryByNumber(userStoryNumber)
++removeUserStory(userStory)
+}
+
+class "SprintBacklog" {
+-userStories
+-factoryUserStory
++estimateEffortUserStory(userStoryDto, effort)
++addUserStory(userStory)
+-isUserStoryAlreadyAdded(userStory)
++getUserStories()
+}
+class "UserStory"{
+-effort
+-userStoryNumber
+-actor
+-userStoryText
+-status
+-listOfAcceptanceCriteria
+-projectCode
++UserStory(userStoryNumber, actor, userStoryText)
++hasUserStoryNumber(userStoryNumber)
++setEffort(effort)
++getUsNumber()
++getUsStatus()
++setUsStatus()
++getUsText()
++getActor()
++getProjectCode()
++UserStory(projectCode,userStoryNumber, actor, userStoryText)
++estimateEffortUserStory(userStoryDto, effort)
 }
 
 class AccountMapper {
@@ -273,13 +396,16 @@ class AccountMapper {
 +listAccountsToDTO(accounts)
 }
 
-class ManagerListProjectsMapper {
-+getDTOFromProject(project)
-+getListOfProjectsDTO(projects)
+class ProjectMapper {
++ getProjectFromDTO(ProjectCreationDto)
 }
 
-class ProjectMapper {
-+ getProjectFromDTO(projectDtoAsManager)
+class UserStoryDtoMapper {
++userStoriesToDto(userStory)
+}
+
+class UserStoryDtoListAssembler {
++backlogToDto(userStories)
 }
 
 class AccountDTO {
@@ -289,38 +415,60 @@ class AccountDTO {
 +AccountDTO(name, email, status)
 }
 
-class AccountEmailStatusDTO{
-+AccountEmailStatusDTO(email, status)
-}
-
-class AllocationDTO {
-+role
-+costPerHour
-+percentageAllocation
-+startDate
-+endDate
-+AllocationDTO(role, costPerHour, percentageAllocation, startDate, endDate)
-}
-
-class ManagerListProjectsDTO {
-+code
+class ProjectDto {
++projectCode
 +name
 +customer
 +status
 +projectTypology
 +businessSector
-+ManagerListProjectsDTO(code, name, customer, status, projectTypology, businessSector)
++ProjectDto(code, name, customer, status, projectTypology, businessSector)
 }
 
-class ProjectDtoAsManager {
-+ code
-+ name
-+ customerName
-+ customerNif
-+ status
-+ projectTypology
-+ businessSector
-+ProjectDtoAsManager(code, name, customerName, customerNif, projectTypology, businessSector)
+class ProjectCreationDto {
++code
++name
++customerName
++customerNif
++status
++projectTypology
++businessSector
++ProjectCreationDto(code, name, customerName, customerNif, projectTypology, businessSector)
+}
+
+class "UserStoryCreationDto"{
++projectCode
++userStoryNumber
++actor
++userStoryText
+}
+
+class UserStoryDto {
++userStoryNumber
++userStoryText
++status
+}
+
+class FactoryPeriod {
++create(startDate, sprintDuration)
+}
+
+class FactorySprint {
++createSprint(startDate, sprintDuration)
+}
+
+interface "FactoryUserStory"{
+createUserStory(projectCode, userStoryNumber, userStoryText, actor)
+}
+
+enum "Effort"{
+-effortValue
++Effort(effortValue)
+}
+
+enum "Status"{
+-status
++Status(status)
 }
 
 'Controller Company link'
@@ -352,25 +500,40 @@ class ProjectDtoAsManager {
 "RegisterAccountController" "1" --> "1" "Company": has
 'US001'
 "CreateProfileController" "1"-->"1"  "Company" : has
+'US017'
+"CreateUserStoryController""1"-->"1" "Company"
+'US018'
+"GetProductBacklogController" "1"-->"1" "Company": has
+"GetProductBacklogController" ..> "UserStoryDtoListAssembler"
+'US019'
+CreateSprintController "1"-->"1" Company: has
+'US020'
+"AddUserStoryToSprintBacklogController" "1"-->"1" "Company": has
+'US021'
+"EstimateUserStoryEffortController" "1" --> "1" "Company"
+'US022'
+"ViewScrumBoardController" --> "Company"
+"ViewScrumBoardController" .--> "UserStoryDtoListAssembler"
+
+'Has Assembler link'
+"UserStoryDtoListAssembler" ..> "UserStoryDtoMapper"
 
 'Has Mapper link'
 'US016'
-"ManagerListProjectsMapper" ..> "Project"
-"ListProjectInAccountController"..> "ManagerListProjectsMapper"
-"ManagerListProjectsMapper"..> "ManagerListProjectsDTO"
+"ListProjectInAccountController"..> "ProjectMapper"
 'US015'
-"GetListOfProjectsController" ..> "ManagerListProjectsMapper"
-"ManagerListProjectsMapper" ..> "ManagerListProjectsDTO": <<instantiate>>
+"GetListOfProjectsController" ..> "ProjectMapper"
+"ProjectMapper" ..> "ProjectDto": <<instantiate>>
 'US014'
 "ListAccountsInProjectController" ..> "AccountMapper"
 "AccountMapper" ..> "AccountDTO"
 "AccountMapper"..>"Account"
 'US010'
-"ProjectMapper" ..> "ProjectDtoAsManager"
-"ProjectMapper" ..> "ProjectDtoAsManager"
+"ProjectMapper" ..> "ProjectCreationDto"
 "ProjectContainer" ..> "ProjectMapper"
 "RegisterProjectController" ..> "ProjectMapper"
 "ProjectMapper" ..> "Project"
+"UserStoryDtoMapper" ..> "UserStory"
 
 'Company Containers link'
 "Company" "1"-->"1" "ProfileContainer": has
@@ -379,7 +542,8 @@ class ProjectDtoAsManager {
 "Company" "1"-->"1"  "BusinessSectorContainer"
 "Company" "1"-->"1" "CustomerContainer": has
 "Company" "1"-->"1" "AccountInProjectContainer": has
-"Company" "1"-->"1" "ProjectContainer": has
+"Company" "1"--> "1" "ProjectContainer": has
+"Company" "1"--> "1" "UserStoryContainer": has
 
 'Container model link'
 "ProfileContainer" "1" --> "*" "Profile": contains
@@ -388,13 +552,49 @@ class ProjectDtoAsManager {
 "BusinessSectorContainer" "1"-->"*"  "BusinessSector"
 "CustomerContainer" "1"-->"*" "Customer": has
 "AccountInProjectContainer" "1"--> "*" "AccountInProject" : has
-"ProjectContainer" "1"-->"*" "Project": contains
-'US010'
+"ProjectContainer" .--> "ProjectDto": accesses
 "ProjectContainer" "1" -left-> "*" "Project" : contains
+"UserStoryContainer" "*" --> "1""FactoryUserStory"
+"UserStoryContainer" ..> "ProjectContainer"
 
 'Account Profile Link'
 "Account" "*"--> "1""Profile": contains
 
 'AccountInProject Project link'
 "AccountInProject" "*"-->"1""Project": contains
+
+'Project Link'
+"Project" "1" --> "*" "Sprint"
+"Project" "1" -->"1" "ProductBacklog": has
+"Project" "1"-->"1" "FactorySprint": has
+
+'ProductBacklog Link'
+"ProductBacklog" "1" --> "*" "UserStory" : contains
+"ProductBacklog" "1"-->"*" FactoryUserStory: has
+
+'Sprint Link'
+"Sprint" "1" --> "1" "SprintBacklog"
+"Sprint" -> "FactoryPeriod"
+
+'SprintBacklog Link'
+"SprintBacklog" "1" --> "*" "UserStory" : contains
+"SprintBacklog" --> "FactoryUserStory"
+
+'UserStory Link'
+"UserStory" "1" --> "1" "Effort" : has
+"UserStory" "1" --> "1" "Status" : has
+
+'FactorySprint Link'
+FactorySprint "1"..> "*"Sprint
+
+'FactoryPeriod Link'
+"FactoryPeriod" ..> "Period"
+
+'FactoryUserStory Link'
+"FactoryUserStory" .--> "UserStory"
+
+'Dto Link'
+"UserStoryDtoMapper" .--> "UserStoryDto": instantiates
+"UserStoryCreationDto"<.."UserStoryContainer"
+
 @enduml
