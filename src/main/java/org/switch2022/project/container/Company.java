@@ -3,7 +3,7 @@ package org.switch2022.project.container;
 
 import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Project;
 
@@ -148,7 +148,7 @@ public class Company {
    * @param projectDto data transfer object of projects information.
    * @return TRUE if registered, and FALSE otherwise.
    */
-  public boolean registerProject(ProjectDtoAsManager projectDto) {
+  public boolean registerProject(ProjectCreationDto projectDto) {
     return (projectContainer.registerProject(projectDto, projectTypologyContainer, customerContainer,
             businessSectorContainer));
   }
@@ -209,7 +209,7 @@ public class Company {
    * @return TRUE if added, and FALSE otherwise.
    */
   public boolean addUserToProject(AccountDto accountDto,
-                                  ProjectDtoAsManager projectDtoAsManager,
+                                  ProjectCreationDto projectCreationDto,
                                   AllocationDto allocationDto) {
 
     boolean addUserToProject = false;
@@ -217,7 +217,7 @@ public class Company {
     Account account =
             this.accountContainer.getAccountByEmail(accountDto.email);
     Project project =
-            getProjectToAllocation(projectDtoAsManager.code);
+            getProjectToAllocation(projectCreationDto.code);
 
     if (account != null && project != null) {
       if (account.isProfileRequired("user") && project.isProjectOpen()) {

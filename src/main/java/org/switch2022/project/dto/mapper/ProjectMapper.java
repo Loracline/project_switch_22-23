@@ -1,34 +1,42 @@
 package org.switch2022.project.dto.mapper;
 
-import org.switch2022.project.container.BusinessSectorContainer;
-import org.switch2022.project.container.CustomerContainer;
-import org.switch2022.project.container.ProjectTypologyContainer;
-import org.switch2022.project.dto.ProjectDtoAsManager;
-import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
 import org.switch2022.project.model.Project;
-import org.switch2022.project.model.ProjectTypology;
+import org.switch2022.project.dto.ProjectDto;
 
-public final class ProjectMapper {
+import java.util.ArrayList;
+import java.util.List;
 
-  private ProjectMapper() {
-  }
+public class ProjectMapper {
+    /**
+     * Constructor of the class ListOfProjectsMapper.
+     */
+    private ProjectMapper() {}
 
-  public static Project getProjectFromDto(ProjectDtoAsManager projectDtoAsManager, ProjectTypologyContainer
-          projectTypologyContainer, CustomerContainer customerContainer, BusinessSectorContainer
-                                                  businessSectorContainer) {
+    /**
+     * This method receives a project and maps/transforms the project
+     * into Dto
+     */
+    public static ProjectDto getDtoFromProject(Project project) {
+        return new ProjectDto(project.getProjectCode(),
+                project.getProjectName(), project.getCustomer().getCustomerName(),
+                project.getProjectStatus(),
+                project.getProjectTypology().getProjectTypologyName(),
+                project.getBusinessSector().getBusinessSectorName());
+    }
 
-    Customer customer = customerContainer.getCustomer(projectDtoAsManager.customerName,
-            projectDtoAsManager.customerNif);
+    /**
+     * This method receives a list of projects, creates an empty list, maps/transforms the
+     * projects
+     * into Dto's and then stores them in a list to be returned by the method developed in
+     * GetListOfProjectsController
+     */
+    public static List<ProjectDto> getListOfProjectsDto(List<Project> projects) {
+        List<ProjectDto> listOfProjectsDto = new ArrayList<>();
+        for (Project project : projects) {
+            ProjectDto projectDto = getDtoFromProject(project);
 
-    ProjectTypology projectTypology =
-            projectTypologyContainer.getProjectTypology(projectDtoAsManager.projectTypology);
-
-    BusinessSector businessSector =
-            businessSectorContainer.getBusinessSector(projectDtoAsManager.businessSector);
-
-    return new Project(projectDtoAsManager.code, projectDtoAsManager.name,
-            customer, projectTypology, businessSector);
-  }
+            listOfProjectsDto.add(projectDto);
+        }
+        return listOfProjectsDto;
+    }
 }
-

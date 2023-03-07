@@ -1,7 +1,7 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.container.Company;
-import org.switch2022.project.dto.ProjectDtoAsManager;
+import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.model.Profile;
 
 
@@ -24,7 +24,7 @@ public class RegisterProjectController {
      *
      * @return true if the project is registered
      */
-    public boolean registerProject(ProjectDtoAsManager projectDto, String email) {
+    public boolean registerProject(ProjectCreationDto projectDto, String email) {
         return company.validateProfileRequired(email, Profile.MANAGER) &&
                 company.registerProject(projectDto);
     }

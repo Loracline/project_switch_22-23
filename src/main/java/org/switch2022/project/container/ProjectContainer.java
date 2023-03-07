@@ -1,7 +1,7 @@
 package org.switch2022.project.container;
 
-import org.switch2022.project.dto.ProjectDtoAsManager;
-import org.switch2022.project.dto.mapper.ProjectMapper;
+import org.switch2022.project.dto.ProjectCreationDto;
+import org.switch2022.project.dto.mapper.ProjectCreationMapper;
 import org.switch2022.project.model.Project;
 
 import java.util.ArrayList;
@@ -47,13 +47,13 @@ public class ProjectContainer {
    * This method creates a new project and adds it to the container if it
    * doesn't already exist.
    *
-   * @param projectDtoAsManager data transfer object of the attributes of project.
+   * @param projectCreationDto data transfer object of the attributes of project.
    * @return TRUE if registered and FALSE otherwise.
    */
-  public boolean registerProject(ProjectDtoAsManager projectDtoAsManager, ProjectTypologyContainer
+  public boolean registerProject(ProjectCreationDto projectCreationDto, ProjectTypologyContainer
           projectTypologyContainer, CustomerContainer customerContainer, BusinessSectorContainer
                                          businessSectorContainer) {
-    Project project = ProjectMapper.getProjectFromDto(projectDtoAsManager, projectTypologyContainer,
+    Project project = ProjectCreationMapper.getProjectFromDto(projectCreationDto, projectTypologyContainer,
             customerContainer, businessSectorContainer);
     boolean projectRegistered = false;
     if (!doesProjectExist(project)) {

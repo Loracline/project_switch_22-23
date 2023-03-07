@@ -1,0 +1,88 @@
+@startuml
+
+left to right direction
+actor "Account in Project" as acc
+actor "Manager" as mg
+actor "Product Owner" as po
+actor "Project Manager" as pm
+actor "Administrator" as admin
+actor "Team Member" as tm
+
+rectangle System {
+  usecase "Create Profile" as US001
+  usecase "Register Account" as US002
+  usecase "Change Profile" as US003
+  usecase "List Accounts" as US004
+  usecase "Inactivate Account" as US005
+  usecase "Activate Account" as US006
+  usecase "Create Project Typology" as US007
+  usecase "Add Business Sector" as US008
+  usecase "Add Customer" as US009
+  usecase "Register Project" as US010
+  usecase "Associate Team Member" as US011
+  usecase "Define Product Owner" as US012
+  usecase "Define Scrum Master" as US013
+  usecase "Generate Allocation Report" as US01416
+  usecase "List Projects" as US015
+  usecase "Create User Story" as US017
+  usecase "Add User Story to Product Backlog" as US017
+  usecase "Consult Product Backlog" as US018
+  usecase "Create Sprint" as US019
+  usecase "Add User Story to Sprint Backlog" as US020
+  usecase "Estimate User Story Effort" as US021
+  usecase "View Scrum Board" as US022
+
+
+  usecase "Manage Project" as UC2
+  usecase "Search Project" as UC3
+  usecase "Groom User Story " as UC6
+  usecase "Review Sprint" as UC7
+  usecase "Create Task" as UC8
+  usecase "Update Task " as UC9
+  usecase "Generate KPI Report" as UC12
+  usecase "Scrum Recording" as UC14
+  usecase "Register Finished Task" as UC21
+}
+
+admin -- US001
+admin -- US002
+admin -- US003
+admin -- US004
+admin -- US005
+admin -- US006
+admin -- US007
+admin -- US008
+admin -- US009
+
+mg -- US010
+mg -- US011
+mg -- US012
+mg -- US013
+mg -- US01416
+mg -- US015
+mg -- UC3
+mg -- UC12
+
+po -- UC12
+po -- UC6
+po -- UC7
+po -- US017
+po -- US019
+
+pm -- UC12
+pm -- UC2
+
+acc -- UC8
+acc -- UC9
+acc -- UC3
+acc -- UC14
+acc -- US01416
+acc -- UC21
+acc -- US018
+
+tm -- US020
+tm -- US021
+tm -- US022
+
+
+@enduml
