@@ -253,16 +253,37 @@ US016 - As Authenticated User, I want to get a list of all projects I'm currentl
 end legend
 skinparam sequenceMessageAlign center
 title TO GET A LIST OF ALL PROJECTS
-actor "Authenticated User"
+actor actor
 autonumber
-"Authenticated User" -> ":System": lists all projects the user is allocated to
+actor -> ":System": lists all projects the user is allocated to
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-"Authenticated User" <-- ":System": request data (email)
-"Authenticated User" -> ":System": types requested data
-"Authenticated User" <-- ":System": shows list of projects
+actor <-- ":System": request data (email)
+actor -> ":System": types requested data
+actor <-- ":System": shows list of projects
+
+@enduml
+
+@startuml
+legend top
+US018 - As PO/SM/Team Member, I want to consult the product backlog, i.e. to get the list of user stories sorted by priority.
+end legend
+skinparam sequenceMessageAlign center
+title TO CONSULT THE PRODUCT BACKLOG
+actor "PO/SM/Team Member" as actor
+autonumber
+actor -> ":System": requests product backlog (list of all US) from selected project
+note left
+Account is authenticated.
+":System" grants access.
+end note
+note right
+Team member request to see all projects,
+and selects one (US016).
+end note
+actor <-- ":System": shows list of all US
 
 @enduml
 
@@ -589,11 +610,32 @@ skinparam sequenceMessageAlign center
 title TO LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 actor "User"
 autonumber
-"User" -> ":System": lists all projects the user is allocated to
+"Team Member" -> ":System": lists all projects the user is allocated to
 note left
 Account is authenticated.
 ":System" grants access.
 end note
 "User" <-- ":System": shows list of all projects the user is allocated
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+title TO ADD A USER STORY IN THE PRODUCT BACKLOG TO THE SPRINT BACKLOG, DURING THE SPRINT PLANNNING CEREMONY.
+actor "Team Member"
+autonumber
+"Team Member" -> ":System": starts adding a User Story to Sprint Backlog
+note left
+Account is authenticated.
+":System" grants access.
+end note
+
+note right
+Team Member resquests to see the
+Product Backlog and and
+selects a User Story. See US018
+end note
+"Team Member" <-- ":System": requests data(userStoryDto, sprintNumber)
+"Team Member" -> ":System": sends requested data
+"Team Member" <-- ":System": User Story was added to Sprint Backlog
 @enduml
 
