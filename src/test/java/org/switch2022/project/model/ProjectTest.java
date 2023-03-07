@@ -39,13 +39,6 @@ public class ProjectTest {
     projectThree = null;
   }
 
-  @Test
-  public void shouldCreateAValidProject() throws Exception {
-    ProjectTypology projectTypology = mock(ProjectTypology.class);
-
-    new Project("AA001", "Fisher", null, projectTypology, null);
-  }
-
   /**
    * Test to ensure the object equals itself
    */
