@@ -35,9 +35,9 @@ comp -->> controller: true
 deactivate comp
 controller -> comp: registerProject(projectDto)
 activate comp
-comp -> PC : registerProject(projectDto)
+comp -> PC : registerProject(projectDto, projectTypologyContainer,\ncustomerContainer, businessSectorContainer))
 activate PC
-PC -> mapper: registerProject(projectDto)
+PC -> mapper: registerProject(projectDto, projectTypologyContainer,\ncustomerContainer, businessSectorContainer))
 activate mapper
 create project
 mapper -> project : create (code, name, ...)

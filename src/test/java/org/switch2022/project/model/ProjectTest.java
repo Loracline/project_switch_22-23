@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.mock;
 
 public class ProjectTest {
 
@@ -37,6 +38,13 @@ public class ProjectTest {
     projectOne = null;
     projectTwo = null;
     projectThree = null;
+  }
+
+  @Test
+  public void shouldCreateAValidProject() throws Exception {
+    ProjectTypology projectTypology = mock(ProjectTypology.class);
+
+    new Project("AA001", "Fisher", null, projectTypology, null);
   }
 
   /**

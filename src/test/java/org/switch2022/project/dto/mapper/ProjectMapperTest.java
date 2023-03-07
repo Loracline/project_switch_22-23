@@ -45,12 +45,15 @@ class ProjectMapperTest {
     projectContainer = new ProjectContainer();
 
     projectTypologyContainer = new ProjectTypologyContainer();
+    projectTypologyContainer.createProjectTypology("Fixed cost");
     typology = new ProjectTypology("Fixed cost");
 
     customerContainer = new CustomerContainer();
+    customerContainer.addCustomer("ISEP", "228674498");
     customer = new Customer("ISEP", "228674498");
 
     businessSectorContainer = new BusinessSectorContainer();
+    businessSectorContainer.createBusinessSector("fishing");
     businessSector = new BusinessSector("fishing");
 
     projectDTOAsManager = new ProjectDtoAsManager("AA001",
@@ -78,7 +81,7 @@ class ProjectMapperTest {
     // ARRANGE
     Project expected = projectOne;
     // ACT
-    Project result = ProjectMapper.getProjectFromDto(projectDTOAsManager);
+    Project result = ProjectMapper.getProjectFromDto(projectDTOAsManager,projectTypologyContainer,customerContainer,businessSectorContainer);
     // ASSERT
     assertEquals(expected, result);
   }
