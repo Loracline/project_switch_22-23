@@ -20,3 +20,11 @@ US013 - As Manager, I want to define the SM of a project.
 US014 - As Manager, I want to get a list of all human resources in a project.
 US015 - As Manager, I want to get a list of all projects.
 US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to.
+
+Sprint #3:
+US017 - As Product Owner, I want to create a user story and add it to the ProductBacklog.
+US018 - As PO/SM/Team Member, I want to consult the product backlog, i.e. to get the list of user stories sorted by priority.
+US019 - As Project Manager, I want to create a sprint.
+US020 - As Team Member, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+US021 - As Team Member, I want to estimate the effort of a user story in a sprint, during the sprint planning ceremony.
+US022 - As Team Member, I want to view the Scrum Board of current sprint.

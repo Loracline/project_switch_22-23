@@ -2,7 +2,7 @@ package org.switch2022.project.dto;
 
 import java.util.Objects;
 
-public class ManagerListProjectsDto {
+public class ProjectDto {
     /**
      * Attributes of the class GetProjectsDto.
      */
@@ -17,8 +17,8 @@ public class ManagerListProjectsDto {
     /**
      * Constructor of the class GetProjectsDto.
      */
-    public ManagerListProjectsDto(String code, String name, String customer, String status,
-                                  String projectTypology, String businessSector) {
+    public ProjectDto(String code, String name, String customer, String status,
+                      String projectTypology, String businessSector) {
         this.code = code;
         this.name = name;
         this.customer = customer;
@@ -44,7 +44,7 @@ public class ManagerListProjectsDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ManagerListProjectsDto that = (ManagerListProjectsDto) o;
+        ProjectDto that = (ProjectDto) o;
         return Objects.equals(code, that.code) && Objects.equals(name, that.name) &&
                 Objects.equals(customer, that.customer) && Objects.equals(status, that.status) &&
                 Objects.equals(projectTypology, that.projectTypology) &&

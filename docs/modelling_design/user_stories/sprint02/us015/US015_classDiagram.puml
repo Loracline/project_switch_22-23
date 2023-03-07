@@ -1,10 +1,9 @@
 @startuml
 
-
 title GET A LIST OF ALL PROJECTS
 skinparam sequenceMessageAlign center
 legend top
-US015 - As a Manager, I want to get a list of all projects
+US015 - As a Manager, I want to get a list of all projects.
 end legend
 
 class "GetListOfProjectsController" {
@@ -51,13 +50,13 @@ class "Project"{
 +hashCode()
 }
 
-class "ManagerListProjectsMapper"{
+class "ProjectMapper"{
 +getListOfProjectsDto(projects)
--getDtoFromProject(project)
++getDtoFromProject(project)
 }
 
-class "ManagerListProjectsDto" {
-+code
+class "ProjectDto" {
++projectCode
 +name
 +customer
 +status
@@ -66,12 +65,12 @@ class "ManagerListProjectsDto" {
 }
 
 "GetListOfProjectsController" "1"-->"1" "Company": has
-"GetListOfProjectsController" ..> "ManagerListProjectsMapper"
+"GetListOfProjectsController" ..> "ProjectMapper"
 "Company" "1"-->"1" "ProjectContainer": has
 "Company" "1"-->"1" "AccountContainer": has
 "AccountContainer" "1"-->"*" Account: contains
 "ProjectContainer" "1"-->"*" Project: contains
 "Account" "*"-->"1" "Profile" : has
-"ManagerListProjectsMapper" ..> "ManagerListProjectsDto": <<instantiate>>
+"ProjectMapper" ..> "ProjectDto": instantiate
 
 @enduml

@@ -8,7 +8,7 @@ import org.switch2022.project.container.AccountInProjectContainer;
 import org.switch2022.project.container.Company;
 import org.switch2022.project.container.ProfileContainer;
 import org.switch2022.project.model.*;
-import org.switch2022.project.dto.ManagerListProjectsDto;
+import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.mapper.ManagerListProjectsMapper;
 
 import java.time.LocalDate;
@@ -23,13 +23,13 @@ class ListProjectsInAccountControllerTest {
      */
 
     Account accountOne, accountTwo;
-    ManagerListProjectsDto projectDTOOne;
+    ProjectDto projectDTOOne;
     Customer customerOne;
     ProjectTypology projectTypologyOne;
     BusinessSector businessSectorOne;
     Project projectOne;
     AccountInProject accountInProjectOne;
-    List<ManagerListProjectsDto> projectsDTO;
+    List<ProjectDto> projectsDTO;
     List<AccountInProject> accountsInProject;
     AccountContainer accountContainer;
     ProfileContainer profileContainer;
@@ -116,10 +116,10 @@ class ListProjectsInAccountControllerTest {
         //Arrange
         String emailActor = accountOne.getEmail(); //allocated to a
         // project = accountInProjectOne
-        List<ManagerListProjectsDto> expected = projectsDTO;
+        List<ProjectDto> expected = projectsDTO;
 
         //Act
-        List<ManagerListProjectsDto> result = listProjectsInAccountController.listProjectsByAccount(emailActor);
+        List<ProjectDto> result = listProjectsInAccountController.listProjectsByAccount(emailActor);
 
         //Assert
         assertEquals(expected, result);
@@ -134,10 +134,10 @@ class ListProjectsInAccountControllerTest {
         //Arrange
         String emailActor = accountTwo.getEmail(); //not allocated to a project
 
-        List<ManagerListProjectsDto> expected = new ArrayList<>();
+        List<ProjectDto> expected = new ArrayList<>();
 
         //Act
-        List<ManagerListProjectsDto> result =
+        List<ProjectDto> result =
                 listProjectsInAccountController.listProjectsByAccount(emailActor);
 
         //Assert

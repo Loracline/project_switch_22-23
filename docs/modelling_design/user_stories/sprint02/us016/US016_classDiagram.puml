@@ -1,16 +1,16 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
 legend top
 US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to.
 end legend
 skinparam sequenceMessageAlign center
-title LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
+title LIST ALL PROJECTS THE AUTHENTICATED USER IS ALLOCATED TO
 
 class ":ListProjectInAccountController" {
 - company
 + listProjectsByAccount(emailUser)
 }
+
 class "Company" {
 - accountInProjectContainer
 +validateProfileRequired(email, profileNameRequired)
@@ -43,7 +43,6 @@ class "Profile"{
 +hashCode()
 }
 
-
 class "AccountInProjectContainer"{
 - accountInProject
 + listProjectsByAccount(email)
@@ -61,12 +60,12 @@ class "AccountInProject"{
 + getProjectByAccount(email)
 }
 
-class "ManagerListProjectsMapper"{
+class "ProjectMapper"{
 +getListOfProjectsDto(projects)
-+getDTOFromProject(project)
++getDtoFromProject(project)
 }
 
-class "ManagerListProjectsDto"{
+class "ProjectDto"{
 +code;
 +name;
 +customer;
@@ -94,15 +93,15 @@ class "Project"{
 +getBusinessSector()
 }
 
-"ManagerListProjectsMapper" ..> "Project"
+"ProjectMapper" ..> "Project"
 ":ListProjectInAccountController"-->"Company"
 "Company" "1"--> "     1""AccountInProjectContainer": has
 "Company" "1   " --> "     1" "AccountContainer": has
-"AccountInProjectContainer" "1"--> "*" "AccountInProject"
+"AccountInProjectContainer" "1"--> "*" "AccountInProject": has
 "AccountContainer" "1" --> "*" "Account": has
 "Account" "1" --> "1""Profile": has
-":ListProjectInAccountController"..> "ManagerListProjectsMapper"
-"ManagerListProjectsMapper"..> "ManagerListProjectsDto"
+":ListProjectInAccountController"..> "ProjectMapper"
+"ProjectMapper"..> "ProjectDto"
 
 
 
