@@ -1,7 +1,7 @@
 @startuml
 
 skinparam sequenceMessageAlign center
-title TO VIEW THE SCRUM BOARD OF CURRENT SPRINT
+title TO VIEW THE SCRUM BOARD OF SPRINT
 legend top
 US022 - As Team Member, I want to view the Scrum Board of current sprint.
 end legend
