@@ -13,72 +13,93 @@ import java.util.Objects;
  * an effort, a status and a list of  acceptanceCriteria.
  */
 public class UserStory {
-    /**
-     * Attributes
-     */
-    private final String userStoryNumber;
-    private final String actor;
-    private final String userStoryText;
-    private List<String> acceptanceCriteria;
-    private Effort effort;
-    private Status status;
+  /**
+   * Attributes
+   */
+  private final String userStoryNumber;
+  private final String actor;
+  private final String userStoryText;
+  private List<String> acceptanceCriteria;
+  private Effort effort;
+  private Status status;
 
-    /**
-     * Constructor
-     * When an userStory is instantiated, its default status is PLANNED, its
-     * default effort is 1 and an empty list of acceptanceCriteria.
-     */
+  /**
+   * Constructor
+   * When an userStory is instantiated, its default status is PLANNED, its
+   * default effort is 1 and an empty list of acceptanceCriteria.
+   */
 
-    public UserStory(String userStoryNumber, String actor, String userStoryText) {
-        this.userStoryNumber = userStoryNumber.toLowerCase().trim();
-        this.actor = actor;
-        this.userStoryText = userStoryText;
-        this.acceptanceCriteria = new ArrayList<>();
-        this.effort = Effort.ONE;
-        this.status = Status.PLANNED;
+  public UserStory(String userStoryNumber, String actor, String userStoryText) {
+    this.userStoryNumber = userStoryNumber.toLowerCase().trim();
+    this.actor = actor;
+    this.userStoryText = userStoryText;
+    this.acceptanceCriteria = new ArrayList<>();
+    this.effort = Effort.ONE;
+    this.status = Status.PLANNED;
+  }
+
+  /**
+   * This method checks if two instances of UserStory are equal by comparing
+   * the userStoryNumber.
+   *
+   * @param o Account instance to compare with.
+   * @return TRUE if the two have the same attributes, and FALSE otherwise.
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+
+    if (o == null) {
+      return false;
+    }
+    if (o.getClass() != this.getClass()) {
+      return false;
     }
 
-    /**
-     * This method checks if two instances of UserStory are equal by comparing
-     * the userStoryNumber.
-     *
-     * @param o Account instance to compare with.
-     * @return TRUE if the two have the same attributes, and FALSE otherwise.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    UserStory userStory = (UserStory) o;
+    return Objects.equals(userStoryNumber, userStory.userStoryNumber.toLowerCase().trim());
+  }
 
-        if (o == null) {
-            return false;
-        }
-        if (o.getClass() != this.getClass()) {
-            return false;
-        }
+  /**
+   * The hashCode() method is used to generate a unique hash code for an
+   * object, based on the object's state.
+   *
+   * @return a unique value that represents the object.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(userStoryNumber);
+  }
 
-        UserStory userStory = (UserStory) o;
-        return Objects.equals(userStoryNumber, userStory.userStoryNumber.toLowerCase().trim());
-    }
+  /**
+   * This method verifies if an userStory is the one intended through it userStoryNumber.
+   *
+   * @param userStoryNumber of the seeked userStory.
+   * @return TRUE if userStory has given userStoryNumber, and FALSE otherwise.
+   */
 
-    /**
-     * The hashCode() method is used to generate a unique hash code for an
-     * object, based on the object's state.
-     *
-     * @return a unique value that represents the object.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(userStoryNumber);
-    }
+  public boolean hasUserStoryNumber(String userStoryNumber) {
+    return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
+  }
 
-    /**
-     * This method verifies if an userStory is the one intended through it userStoryNumber.
-     *
-     * @param userStoryNumber of the seeked userStory.
-     * @return TRUE if userStory has given userStoryNumber, and FALSE otherwise.
-     */
+  /**
+   * This method returns the effort of the userStory.
+   *
+   * @return the effort associated to the userStory.
+   */
 
-    public boolean hasUserStoryNumber(String userStoryNumber) {
-        return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
-    }
+  Effort getEffort() {
+    return effort;
+  }
+
+  /**
+   * This method sets the effort for the userStory.
+   *
+   * @param effort of the userStory.
+   * @return always true because the effort is fetched from a restricted list.
+   */
+
+  void setEffort(Effort effort) {
+    this.effort = effort;
+  }
 }

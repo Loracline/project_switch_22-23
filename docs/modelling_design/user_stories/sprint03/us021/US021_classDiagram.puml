@@ -34,6 +34,7 @@ class "SprintBacklog" {
 class "UserStory"{
 - effort
 + setEffort(effort)
++ getEffort()
 }
 enum "Effort"{
 - effortValue
