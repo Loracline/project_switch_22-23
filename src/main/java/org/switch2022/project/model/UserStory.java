@@ -17,33 +17,42 @@ public class UserStory {
      * Attributes
      */
     private final String userStoryNumber;
-    private final String actor;
-    private final String userStoryText;
-    private List<String> acceptanceCriteria;
-    private Effort effort;
-    private Status status;
+    private String actor;
+    private String userStoryText;
+    private List<String> acceptanceCriteria= new ArrayList<>();
+    private Effort effort=Effort.ONE;
+    private Status status=Status.PLANNED;
+
+    /**
+     * This method creates a new UserStory
+     * @param userStoryNumber,actor,userStoryText;
+     * When an userStory is instantiated, its default status is PLANNED, its
+     * default effort is 1 and hav an empty list of acceptanceCriteria.
+     *
+     * @return userStory
+     */
+
+    public static UserStory createUserStory(String userStoryNumber, String actor, String userStoryText) {
+        UserStory userStory = new UserStory(userStoryNumber);
+        userStory.setActor(actor);
+        userStory.setUserStoryText(userStoryText);
+        return userStory;
+    }
 
     /**
      * Constructor
-     * When an userStory is instantiated, its default status is PLANNED, its
-     * default effort is 1 and an empty list of acceptanceCriteria.
+     * It creates an userStory with the defining attribute: userStoryNumber
      */
-
-    public UserStory(String userStoryNumber, String actor, String userStoryText) {
+    private UserStory(String userStoryNumber) {
         this.userStoryNumber = userStoryNumber.toLowerCase().trim();
-        this.actor = actor;
-        this.userStoryText = userStoryText;
-        this.acceptanceCriteria = new ArrayList<>();
-        this.effort = Effort.ONE;
-        this.status = Status.PLANNED;
     }
 
     /**
      * This method checks if two instances of UserStory are equal by comparing
      * the userStoryNumber.
      *
-     * @param o Account instance to compare with.
-     * @return TRUE if the two have the same attributes, and FALSE otherwise.
+     * @param o userStory instance to compare with.
+     * @return TRUE if the two have the same attribute, and FALSE otherwise.
      */
     @Override
     public boolean equals(Object o) {
@@ -69,6 +78,20 @@ public class UserStory {
     @Override
     public int hashCode() {
         return Objects.hash(userStoryNumber);
+    }
+
+    /**
+     * Setter method for the attribute: actor
+     */
+    private void setActor(String actor) {
+        this.actor = actor;
+    }
+
+    /**
+     * Setter method for the attribute: userStoryText
+     */
+    private void setUserStoryText(String userStoryText) {
+        this.userStoryText = userStoryText;
     }
 
     /**

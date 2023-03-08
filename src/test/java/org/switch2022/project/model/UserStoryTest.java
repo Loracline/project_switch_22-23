@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.switch2022.project.model.UserStory.createUserStory;
 
 class UserStoryTest {
     /*
@@ -15,7 +16,7 @@ class UserStoryTest {
     @Test
     void ensureSameUserStoryEqualsItself() {
         // Arrange
-        UserStory reference = new UserStory("US001", "Manager", "I want to create a profile");
+        UserStory reference = createUserStory("US001", "Manager", "I want to create a profile");
         UserStory other = reference;
         boolean expected = true;
 
@@ -33,8 +34,8 @@ class UserStoryTest {
     @Test
     void ensureTwoUserStoriesAreNotTheSame() {
         // Arrange
-        UserStory reference = new UserStory("US001", "Manager", "I want to create a profile");
-        UserStory other =  new UserStory("US002", "Manager", "I want to create a profile");
+        UserStory reference = createUserStory("US001", "Manager", "I want to create a profile");
+        UserStory other =  createUserStory("US002", "Manager", "I want to create a profile");
         boolean expected = false;
 
         // Act
@@ -50,9 +51,9 @@ class UserStoryTest {
      */
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
-    void ensureProfileDoesNotEqualOtherTypeOfObject() {
+    void ensureUserStoryDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        UserStory reference = new UserStory("US001", "Manager", "I want to create a profile");
+        UserStory reference = createUserStory("US001", "Manager", "I want to create a profile");
         String other = "User";
         boolean expected = false;
 
@@ -67,9 +68,9 @@ class UserStoryTest {
      * Scenario 4: Verify if a UserStory and a null object are not the same.
      */
     @Test
-    void ensureProfileDoesNotEqualNull() {
+    void ensureUserStoryDoesNotEqualNull() {
         // Arrange
-        UserStory reference = new UserStory("US001", "Manager", "I want to create a profile");
+        UserStory reference = createUserStory("US001", "Manager", "I want to create a profile");
         UserStory other = null;
         boolean expected = false;
 
@@ -89,10 +90,10 @@ class UserStoryTest {
      * Scenario 1: Two UserStory objects are the same.
      */
     @Test
-    public void ensureTwoProfilesHashcodeAreTheSame() {
+    public void ensureTwoUserStoriesHashcodeAreTheSame() {
         // Arrange
-        UserStory userStoryOne = new UserStory("US001", "Manager", "I want to create a profile");
-        UserStory userStoryTwo = new UserStory("US001", "Manager", "I want to create a profile");
+        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create a profile");
+        UserStory userStoryTwo = createUserStory("US001", "Manager", "I want to create a profile");
 
         // Act
         int userStoryOneHashCode = userStoryOne.hashCode();
@@ -106,10 +107,10 @@ class UserStoryTest {
      * Scenario 2: Two UserStory objects are not the same.
      */
     @Test
-    public void ensureTwoProfilesHashcodeAreNotTheSame() {
+    public void ensureTwoUserStoriesHashcodeAreNotTheSame() {
         // Arrange
-        UserStory userStoryOne = new UserStory("US001", "Manager", "I want to create a profile");
-        UserStory userStoryThree = new UserStory("US002", "Manager", "I want to create a profile");
+        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create a profile");
+        UserStory userStoryThree = createUserStory("US002", "Manager", "I want to create a profile");
 
         // Act
         int userStoryOneHashCode = userStoryOne.hashCode();
@@ -129,7 +130,7 @@ class UserStoryTest {
     @Test
     public void ensureUserStoryNumberIsTheSame(){
         // Arrange
-        UserStory userStoryOne = new UserStory("US001", "Manager", "I want to create a profile");
+        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create a profile");
         boolean expected = true;
         //Act
         boolean result=userStoryOne.hasUserStoryNumber("US001");
@@ -143,7 +144,7 @@ class UserStoryTest {
     @Test
     public void ensureUserStoryNumberIsNotTheSame(){
         // Arrange
-        UserStory userStoryOne = new UserStory("US001", "Manager", "I want to create a profile");
+        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create a profile");
         boolean expected = false;
         //Act
         boolean result=userStoryOne.hasUserStoryNumber("US002");
