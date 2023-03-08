@@ -28,14 +28,14 @@ ProjectContainer "1"-->"*" Project: has
 class Project {
 -factorySprint
 -sprints
-+createSprint(sprintNumber,\nstartDate, projectCode)
++createSprint(sprintNumber,startDate, projectCode)
 +isSprintUnique(sprint)
 +isPeriodValid(sprint, existingSprint)
 +hasProjectCode(projectCode)
 }
 Project "1"-->"1" FactorySprint: has
 
-class FactorySprint {
+interface FactorySprint {
 +createSprint(startDate, sprintDuration)
 }
 
@@ -43,6 +43,7 @@ class Sprint {
 -sprintNumber
 -FactoryPeriod
 -Period
+-SprintBacklog
 +Sprint(startDate, sprintDuration, sprintNumber)
 +createPeriod(startDate,sprintDuration)
 +getStartDate()
@@ -52,7 +53,7 @@ class Sprint {
 Sprint -> FactoryPeriod
 FactorySprint "1"..> "*"Sprint
 
-class FactoryPeriod {
+interface FactoryPeriod {
 +create(startDate, sprintDuration)
 }
 
