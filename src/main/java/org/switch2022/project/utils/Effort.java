@@ -1,5 +1,10 @@
 package org.switch2022.project.utils;
 
+/**
+ * Enum Effort, contains a set of integers based on the Fibonacci sequence
+ * to be used for estimation of effort for User Stories and Tasks.
+ */
+
 public enum Effort {
 
   ONE(1),
@@ -10,9 +15,17 @@ public enum Effort {
   THIRTEEN(13),
   THIRTY_FOUR(34);
 
-  final int effortValue;
+  /**
+   * Attributes of the enum Effort, according to the Class Diagram.
+   */
 
-  Effort(int effortValue) {
-    this.effortValue = effortValue;
+  final int effort;
+
+  /**
+   * Constructor used to pass data to Enum constants.
+   */
+
+  Effort(int effort) {
+    this.effort = effort;
   }
 }
