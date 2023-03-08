@@ -7,7 +7,7 @@ end legend
 autonumber
 actor "Team Member" as member
 participant ":ViewScrumBoardUI" as ui
-participant ":ViewScrumBoardUIController" as controller
+participant ":ViewScrumBoardController" as controller
 participant ":Company" as company
 participant ":ProjectContainer" as projectContainer
 participant ":Project" as project
@@ -25,31 +25,33 @@ member -> ui : select project
 deactivate ui
 member -> ui : requests to view the Scrum Board of current sprint
 activate ui
-ui -> controller : getScrumBoard(projectDto)
+"ui" -> controller : getScrumBoard(projectDto)
 activate controller
-controller -> company : getScrumBoard(projectDto)
+"controller" -> company : getScrumBoard(projectDto)
 activate company
-company -> projectContainer : getScrumBoard(projectDto)
+"company" -> projectContainer : getScrumBoard(projectDto)
 activate projectContainer
-projectContainer -> project: getScrumBoard()
+"projectContainer" -> project: getScrumBoard()
 activate project
-project -> sprint : getSprintBacklog()
+"project" -> sprint : getSprintBacklog()
 activate sprint
-sprint -> backlog: getUserStories()
-activate backlog
-backlog -> sprint: userStories
-deactivate backlog
-sprint -> project : userStories
+"sprint" -> project : sprintBacklog
 deactivate sprint
-project -> projectContainer : userStories
+project -> projectContainer : sprintBacklog
 deactivate project
-projectContainer -> company : userStories
+projectContainer -> company : sprintBacklog
 deactivate projectContainer
-company-> controller : userStories
+company-> controller : sprintBacklog
 deactivate company
-controller-> dto : userStoriesToDto(userStories)
-ref over dto: To create a user story DTO
+controller-> dto : backlogToDto(sprintBacklog)
 activate dto
+"dto" ->backlog: getUserStories()
+activate backlog
+"backlog" -> dto: userStories
+deactivate backlog
+
+ref over dto: To create a user story DTO
+
 dto --> controller : userStoryDtoList
 deactivate dto
 controller -> ui : userStoryDtoList

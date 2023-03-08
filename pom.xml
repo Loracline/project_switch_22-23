@@ -129,6 +129,7 @@
                         <param>org.switch2022.project.container.*</param>
                         <param>org.switch2022.project.controller.*</param>
                         <param>org.switch2022.project.dto.*</param>
+                        <param>org.switch2022.project.factories.*</param>
                         <param>org.switch2022.project.model.*</param>
                         <param>org.switch2022.project.utils.*</param>
                     </targetClasses>
