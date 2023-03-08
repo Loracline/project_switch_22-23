@@ -7,13 +7,13 @@ end legend
 autonumber
 actor "Team Member" as member
 participant ":ViewScrumBoardUI" as ui
-participant ":ViewScrumBoardUIController" as controller
+participant ":ViewScrumBoardController" as controller
 participant ":Company" as company
 participant ":ProjectContainer" as projectContainer
 participant ":Project" as project
 participant ":Sprint" as sprint
-participant ":UserStoryDtoListAssembler" as dto
 participant ":SprintBacklog" as backlog
+participant ":UserStoryDtoListAssembler" as dto
 
 
 activate member
