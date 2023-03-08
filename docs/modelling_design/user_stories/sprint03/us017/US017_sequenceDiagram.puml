@@ -9,16 +9,13 @@ actor "Product Owner" as product
 participant ":CreateUserStoryUI" as ui
 participant ":CreateUserStoryController" as controller
 participant ":Company" as company
-participant ":UserStoryContainer" as usContainer
-participant ":FactoryUserStory" as factory
-participant "userStory:UserStory" as userStory
 participant ":ProjectContainer" as container
 participant ":Project" as project
 participant ":ProductBacklog" as backlog
-
+participant ":FactoryUserStory" as factory
+participant "userStory:UserStory" as userStory
 
 activate product
-
 product -> ui : requests list of projects
 activate ui
 ref over ui: US016: list all projects the user is allocated as authenticated
@@ -33,28 +30,24 @@ ui -> controller: createUserStory(projectDto,userStoryCreationDto)
 activate controller
 controller -> company: createUserStory(projectDto,userStoryCreationDto)
 activate company
-company -> usContainer: createUserStory((projectDto,userStoryCreationDto, projectContainer)
-activate usContainer
-usContainer -> factory: createUserStory(projectCode, userStoryNumber,userStoryText, actor)
+company -> container: createUserStory((projectDto,userStoryCreationDto)
+activate container
+container -> project: createUserStory(userStoryCreationDto)
+activate project
+project ->backlog: createUserStory(userStoryCreationDto,sprints)
+activate backlog
+backlog -> factory: createUserStory( userStoryNumber,userStoryText, actor)
 activate factory
 create userStory
 factory -> userStory
-factory --> usContainer: add
+factory --> backlog: true
 deactivate factory
-usContainer -> container: addUserStoryToProductBacklog(projectDto,userStory)
-activate container
-container -> project: addUserStoryToProductBacklog(projectCode,userStory)
-activate project
-project ->backlog: addUserStoryToProductBacklog(userStory)
-activate backlog
 backlog --> project: true
 deactivate backlog
 project --> container: true
 deactivate project
-container --> usContainer: true
+container --> company: true
 deactivate container
-usContainer --> company: true
-deactivate usContainer
 company --> controller: true
 deactivate company
 controller --> ui: true

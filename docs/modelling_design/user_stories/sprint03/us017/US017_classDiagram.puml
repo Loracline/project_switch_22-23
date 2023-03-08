@@ -4,7 +4,7 @@ legend top
 US017 - As Product Owner, I want to create User Story and add it to Product Backlog
 end legend
 skinparam sequenceMessageAlign center
-title To create User Story and add it to Product Backlog/ To consult the product backlog/ To create a sprint
+title To create User Story and add it to Product Backlog
 
 class "CreateUserStoryController" {
 - company
@@ -13,52 +13,52 @@ class "CreateUserStoryController" {
 
 class "Company" {
 - projectContainer
-- userStoryContainer
 + createUserStory(projectDto,userStoryCreationDto)
 }
 
-class "UserStoryContainer"{
--userStories
--factoryUserStory
-+createUserStory((projectDto,userStoryCreationDto, projectContainer)
-+addUserStory(userStory)
--isUserStoryUnique(userStory)
-
-}
 
 class "ProjectContainer" {
 - projects
-+ addUserStoryToProductBacklog(projectDto,userStory)
++ createUserStory(projectDto,userStoryCreationDto)
 -getProjectByCode(projectCode)
 }
 
 class "Project"{
 - productBacklog
-+ addUserStoryToProductBacklog(projectCode,userStory)
+- sprints
++ createUserStory(userStoryCreationDto)
 - hasProjectCode(projectCode)
 
 }
+class "Sprint"{
+-SprintBackolg
++hasUserStory (userStoryNumber)
+}
+
+class "SprintBacklog"{
+-userStories
++hasUserStory((userStoryNumber)
+}
+
 class "ProductBacklog" {
 - userStories
-+ addUserStoryToProductBacklog(userStory)
-- isUserStoryUnique(userStory)
++ createUserStory(userStoryCreationDto,sprints)
+- isUserStoryUnique(userStoryNumber)
 }
 class "UserStory"{
 - userStoryNumber
-- projectCode
 - actor
 - userStoryText
 - status
 - effort
 - listOfAcceptanceCriteria
-+ UserStory(projectCode,userStoryNumber, actor, userStoryText)
++ UserStory(userStoryNumber, actor, userStoryText)
 }
 
 interface "FactoryUserStory" {
-+ createUserStory(projectCode, userStoryNumber,actor, userStoryText)
++ createUserStory( userStoryNumber,actor, userStoryText)
 }
 class "UserStoryCreationDto"{
-+projectCode
 +userStoryNumber
 +actor
 +userStoryText
@@ -68,12 +68,14 @@ class "ProjectDto"{
 }
 
 "CreateUserStoryController""1"-->"1" "Company"
-"Company" "1"--> "1" "UserStoryContainer"
-"UserStoryContainer" "*" --> "1""FactoryUserStory"
-"UserStoryContainer" ..> "ProjectContainer"
+"Company" "1"--> "1" "ProjectContainer"
 "ProjectContainer" "1"-->"*" "Project"
 "Project" "1" -->"1" "ProductBacklog"
+"Sprint" "*"<.. "Project"
+"ProductBacklog" "*" --> "1""FactoryUserStory"
 "FactoryUserStory" ..> "UserStory"
 "ProjectDto"<.. "ProjectContainer"
 "UserStoryCreationDto"<.."UserStoryContainer"
+"ProductBacklog" ..> "Sprint"
+"Sprint" "1"-->"1" "SprintBacklog"
 @enduml

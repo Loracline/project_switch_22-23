@@ -13,93 +13,115 @@ import java.util.Objects;
  * an effort, a status and a list of  acceptanceCriteria.
  */
 public class UserStory {
-  /**
-   * Attributes
-   */
-  private final String userStoryNumber;
-  private final String actor;
-  private final String userStoryText;
-  private List<String> acceptanceCriteria;
-  private Effort effort;
-  private Status status;
+    /**
+     * Attributes
+     */
+    private final String userStoryNumber;
+    private String actor;
+    private String userStoryText;
+    private List<String> acceptanceCriteria = new ArrayList<>();
+    private Effort effort = Effort.ONE;
+    private Status status = Status.PLANNED;
 
-  /**
-   * Constructor
-   * When an userStory is instantiated, its default status is PLANNED, its
-   * default effort is 1 and an empty list of acceptanceCriteria.
-   */
+    /**
+     * This method creates a new UserStory
+     *
+     * @param userStoryNumber,actor,userStoryText; When an userStory is instantiated, its default status is PLANNED, its
+     *                                             default effort is 1 and hav an empty list of acceptanceCriteria.
+     * @return userStory
+     */
 
-  public UserStory(String userStoryNumber, String actor, String userStoryText) {
-    this.userStoryNumber = userStoryNumber.toLowerCase().trim();
-    this.actor = actor;
-    this.userStoryText = userStoryText;
-    this.acceptanceCriteria = new ArrayList<>();
-    this.effort = Effort.ONE;
-    this.status = Status.PLANNED;
-  }
-
-  /**
-   * This method checks if two instances of UserStory are equal by comparing
-   * the userStoryNumber.
-   *
-   * @param o Account instance to compare with.
-   * @return TRUE if the two have the same attributes, and FALSE otherwise.
-   */
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-
-    if (o == null) {
-      return false;
-    }
-    if (o.getClass() != this.getClass()) {
-      return false;
+    public static UserStory createUserStory(String userStoryNumber, String actor, String userStoryText) {
+        UserStory userStory = new UserStory(userStoryNumber);
+        userStory.setActor(actor);
+        userStory.setUserStoryText(userStoryText);
+        return userStory;
     }
 
-    UserStory userStory = (UserStory) o;
-    return Objects.equals(userStoryNumber, userStory.userStoryNumber.toLowerCase().trim());
-  }
+    /**
+     * Constructor
+     * It creates an userStory with the defining attribute: userStoryNumber
+     */
+    private UserStory(String userStoryNumber) {
+        this.userStoryNumber = userStoryNumber.toLowerCase().trim();
+    }
 
-  /**
-   * The hashCode() method is used to generate a unique hash code for an
-   * object, based on the object's state.
-   *
-   * @return a unique value that represents the object.
-   */
-  @Override
-  public int hashCode() {
-    return Objects.hash(userStoryNumber);
-  }
+    /**
+     * This method checks if two instances of UserStory are equal by comparing
+     * the userStoryNumber.
+     *
+     * @param o userStory instance to compare with.
+     * @return TRUE if the two have the same attribute, and FALSE otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
-  /**
-   * This method verifies if an userStory is the one intended through it userStoryNumber.
-   *
-   * @param userStoryNumber of the seeked userStory.
-   * @return TRUE if userStory has given userStoryNumber, and FALSE otherwise.
-   */
+        if (o == null) {
+            return false;
+        }
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
 
-  public boolean hasUserStoryNumber(String userStoryNumber) {
-    return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
-  }
+        UserStory userStory = (UserStory) o;
+        return Objects.equals(userStoryNumber, userStory.userStoryNumber.toLowerCase().trim());
+    }
 
-  /**
-   * This method returns the effort of the userStory.
-   *
-   * @return the effort associated to the userStory.
-   */
+    /**
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(userStoryNumber);
+    }
 
-  Effort getEffort() {
-    return effort;
-  }
+    /**
+     * Setter method for the attribute: actor
+     */
+    private void setActor(String actor) {
+        this.actor = actor;
+    }
 
-  /**
-   * This method sets the effort for the userStory.
-   *
-   * @param effort of the userStory.
-   * @return always true because the effort is fetched from a restricted list.
-   */
+    /**
+     * Setter method for the attribute: userStoryText
+     */
+    private void setUserStoryText(String userStoryText) {
+        this.userStoryText = userStoryText;
+    }
 
-  void setEffort(Effort effort) {
-    this.effort = effort;
-  }
+    /**
+     * This method verifies if an userStory is the one intended through it userStoryNumber.
+     *
+     * @param userStoryNumber of the seeked userStory.
+     * @return TRUE if userStory has given userStoryNumber, and FALSE otherwise.
+     */
+
+    public boolean hasUserStoryNumber(String userStoryNumber) {
+        return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
+    }
+
+    /**
+     * This method returns the effort of the userStory.
+     *
+     * @return the effort associated to the userStory.
+     */
+
+    Effort getEffort() {
+        return effort;
+    }
+
+    /**
+     * This method sets the effort for the userStory.
+     *
+     * @param effort of the userStory.
+     * @return always true because the effort is fetched from a restricted list.
+     */
+
+    void setEffort(Effort effort) {
+        this.effort = effort;
+    }
 }
