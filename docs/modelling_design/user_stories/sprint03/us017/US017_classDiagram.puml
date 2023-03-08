@@ -32,7 +32,7 @@ class "Project"{
 }
 class "Sprint"{
 -SprintBackolg
-+hasUserStory((userStoryNumber)
++hasUserStory (userStoryNumber)
 }
 
 class "SprintBacklog"{
