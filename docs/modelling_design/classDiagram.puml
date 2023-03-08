@@ -210,7 +210,6 @@ class ProjectTypologyContainer {
 
 class "UserStoryContainer"{
 -userStories
--factoryUserStory
 +createUserStory((projectDto,userStoryCreationDto, projectContainer)
 +addUserStory(userStory)
 -isUserStoryUnique(userStory)
@@ -405,7 +404,7 @@ class UserStoryDtoMapper {
 }
 
 class UserStoryDtoListAssembler {
-+backlogToDto(userStories)
++backlogToDto(productBacklog)
 }
 
 class AccountDTO {
@@ -570,7 +569,7 @@ CreateSprintController "1"-->"1" Company: has
 
 'ProductBacklog Link'
 "ProductBacklog" "1" --> "*" "UserStory" : contains
-"ProductBacklog" "1"-->"*" FactoryUserStory: has
+
 
 'Sprint Link'
 "Sprint" "1" --> "1" "SprintBacklog"
