@@ -12,9 +12,8 @@ participant ":GetProductBacklogController" as controller
 participant ":Company" as company
 participant ":ProjectContainer" as container
 participant ":Project" as project
+participant ":UserStoryDtoListAssembler" as assembler
 participant ":ProductBacklog" as backlog
-participant ":UserStoryDtoListAssembler" as builder
-
 
 
 actor -> ui: requests list of all projects
@@ -36,23 +35,24 @@ activate container
 
 container -> project: getProductBacklog()
 activate project
-project -> backlog: getUserStories()
-activate backlog
-backlog --> project: userStories
-deactivate backlog
 
-project --> container: userStories
+
+project --> container: productBacklog
 deactivate project
-container --> company: userStories
+container --> company: productBacklog
 deactivate container
-company --> controller: userStories
+company --> controller: productBacklog
 deactivate company
-controller -> builder: backlogToDto(userStories)
-activate builder
-ref over builder: To create a user story DTO
-builder --> controller: userStoryDtoList
+controller -> assembler: backlogToDto(productBacklog)
+activate assembler
+assembler -> backlog: getUserStories()
+activate backlog
+backlog --> assembler: userStories
+deactivate backlog
+ref over assembler: To create a user story DTO
+assembler --> controller: userStoryDtoList
 
-deactivate builder
+deactivate assembler
 controller --> ui: userStoryDtoList
 deactivate controller
 
