@@ -32,7 +32,6 @@ class "Project"{
 
 class "ProductBacklog"{
 -userStories
--factoryUserStory
 +getUserStories()
 }
 
@@ -40,22 +39,14 @@ class "UserStory"{
 -userStoryNumber
 -userStoryText
 -status
--actor
--projectCode
 +getUsNumber()
 +getUsStatus()
-+setUsStatus()
 +getUsText()
-+getActor()
-+getProjectCode()
 }
 
-interface "FactoryUserStory"{
-createUserStory(projectCode, userStoryNumber, userStoryText, actor)
-}
 
 class "UserStoryDtoListAssembler"{
-+backlogToDto(userStories)
++backlogToDto(productBacklog)
 }
 
 class "UserStoryDtoMapper"{
@@ -81,7 +72,6 @@ class "ProjectDto"{
 "ProjectContainer" ..> ProjectDto: accesses
 "Project" "1"-->"*" ProductBacklog: contains
 "ProductBacklog" "1"-->"*" UserStory: contains
-"ProductBacklog" "1"-->"*" FactoryUserStory: has
 "UserStoryDtoMapper" ..> "UserStoryDto": instantiates
-"FactoryUserStory" ..> UserStory
+
 @enduml
