@@ -1,9 +1,11 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.utils.Effort;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.switch2022.project.model.UserStory.createUserStory;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class UserStoryTest {
     /*
@@ -35,7 +37,7 @@ class UserStoryTest {
     void ensureTwoUserStoriesAreNotTheSame() {
         // Arrange
         UserStory reference = createUserStory("US001", "Manager", "I want to create a profile");
-        UserStory other =  createUserStory("US002", "Manager", "I want to create a profile");
+        UserStory other = createUserStory("US002", "Manager", "I want to create a profile");
         boolean expected = false;
 
         // Act
@@ -122,33 +124,103 @@ class UserStoryTest {
 /*
       METHOD hasUserStoryNumber()
      */
+
     /**
      * Scenario 1: Verify if userStory is the same by checking its userStoryNumber.
      * Expected result:True
      */
 
     @Test
-    public void ensureUserStoryNumberIsTheSame(){
+    public void ensureUserStoryNumberIsTheSame() {
         // Arrange
         UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create a profile");
         boolean expected = true;
         //Act
-        boolean result=userStoryOne.hasUserStoryNumber("US001");
+        boolean result = userStoryOne.hasUserStoryNumber("US001");
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
+
     /**
      * Scenario 1: Verify if userStory is not the same by checking its userStoryNumber.
      * Expected result:false
      */
     @Test
-    public void ensureUserStoryNumberIsNotTheSame(){
+    public void ensureUserStoryNumberIsNotTheSame() {
         // Arrange
         UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create a profile");
         boolean expected = false;
         //Act
-        boolean result=userStoryOne.hasUserStoryNumber("US002");
+        boolean result = userStoryOne.hasUserStoryNumber("US002");
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void ensureUserStoryNumberIsTheSame() {
+        // Arrange
+        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create a profile");
+        boolean expected = true;
+        //Act
+        boolean result = userStoryOne.hasUserStoryNumber("US001");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 1: Verify if userStory is not the same by checking its userStoryNumber.
+     * Expected result:false
+     */
+    @Test
+    public void ensureUserStoryNumberIsNotTheSame() {
+        // Arrange
+        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create a profile");
+        boolean expected = false;
+        //Act
+        boolean result = userStoryOne.hasUserStoryNumber("US002");
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method setEffort and getEffort.
+     */
+
+    /**
+     * Scenario 1: Verify if the effort of userStoryOne is set.
+     * Expected result: effort of userStoryOne is equal to effort value.
+     */
+
+    @Test
+    void ensureEffortIsSet() {
+        // Arrange
+        UserStory userStoryOne = createUserStory("US001", "Manager",
+                "I want to create a profile");
+        // Act
+        userStoryOne.setEffort(Effort.TWO);
+        Effort effortOfUserStory = userStoryOne.getEffort();
+        // Assert
+        assertEquals(effortOfUserStory, Effort.TWO);
+    }
+
+    /**
+     * Scenario 2: Verify if the effort of a userStory is the same as other userStory by setting the efforts respectively.
+     * Expected result: effort of userStoryOne is equal to effort of userStoryTwo.
+     */
+
+    @Test
+    void ensureEffortIsNotTheSameForTwoDifferentUserStories() {
+        // Arrange
+        UserStory userStoryOne = new UserStory("US001", "Manager",
+                "I want to create a profile");
+        UserStory userStoryTwo = new UserStory("US002", "Manager",
+                "I want to create a project");
+        // Act
+        Effort effortOfUserStoryOne = userStoryOne.getEffort();
+        userStoryOne.setEffort(Effort.TWO);
+        Effort effortOfUserStoryTwo = userStoryTwo.getEffort();
+        userStoryTwo.setEffort(Effort.THIRTEEN);
+        // Assert
+        assertEquals(effortOfUserStoryOne, effortOfUserStoryTwo);
     }
 }

@@ -19,16 +19,15 @@ public class UserStory {
     private final String userStoryNumber;
     private String actor;
     private String userStoryText;
-    private List<String> acceptanceCriteria= new ArrayList<>();
-    private Effort effort=Effort.ONE;
-    private Status status=Status.PLANNED;
+    private List<String> acceptanceCriteria = new ArrayList<>();
+    private Effort effort = Effort.ONE;
+    private Status status = Status.PLANNED;
 
     /**
      * This method creates a new UserStory
-     * @param userStoryNumber,actor,userStoryText;
-     * When an userStory is instantiated, its default status is PLANNED, its
-     * default effort is 1 and hav an empty list of acceptanceCriteria.
      *
+     * @param userStoryNumber,actor,userStoryText; When an userStory is instantiated, its default status is PLANNED, its
+     *                                             default effort is 1 and hav an empty list of acceptanceCriteria.
      * @return userStory
      */
 
@@ -103,5 +102,26 @@ public class UserStory {
 
     public boolean hasUserStoryNumber(String userStoryNumber) {
         return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
+    }
+
+    /**
+     * This method returns the effort of the userStory.
+     *
+     * @return the effort associated to the userStory.
+     */
+
+    Effort getEffort() {
+        return effort;
+    }
+
+    /**
+     * This method sets the effort for the userStory.
+     *
+     * @param effort of the userStory.
+     * @return always true because the effort is fetched from a restricted list.
+     */
+
+    void setEffort(Effort effort) {
+        this.effort = effort;
     }
 }
