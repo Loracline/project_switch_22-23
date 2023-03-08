@@ -196,7 +196,7 @@ class ProjectContainer {
 +createSprint(sprintDto)
 -getProjectByCode(projectDto)
 +getScrumBoard(projectDto)
-+addUserStoryToProductBacklog(projectDto,userStory)
++ createUserStory(projectDto,userStoryCreationDto)
 -getProjectByCode(projectCode)
 +getProductBacklog(projectDto)
 }
@@ -206,13 +206,6 @@ class ProjectTypologyContainer {
 +doesTypologyExist(projectTypology)
 +createProjectTypology(projectTypology)
 +getProjectTypology(typology)
-}
-
-class "UserStoryContainer"{
--userStories
-+createUserStory((projectDto,userStoryCreationDto, projectContainer)
-+addUserStory(userStory)
--isUserStoryUnique(userStory)
 }
 
 class Account {
@@ -324,7 +317,7 @@ class Project {
 +isSprintUnique(sprint)
 +isPeriodValid(sprint, existingSprint)
 +getScrumBoard()
-+addUserStoryToProductBacklog(projectCode,userStory)
++createUserStory(userStoryCreationDto)
 +getProductBacklog()
 +hasProjectCode(projectCode)
 }
@@ -348,13 +341,14 @@ class "Sprint"{
 +getStartDate()
 +getEndDate()
 +getSprintBacklog()
++hasUserStory(userStoryNumber)
 
 }
 
 class "ProductBacklog" {
 -userStories
 -factoryUserStory
-+addUserStoryToProductBacklog(userStory)
++ createUserStory(userStoryCreationDto,sprints)
 -isUserStoryUnique(userStory)
 +getUserStories()
 +getUserStoryByNumber(userStoryNumber)
@@ -368,7 +362,9 @@ class "SprintBacklog" {
 +addUserStory(userStory)
 -isUserStoryAlreadyAdded(userStory)
 +getUserStories()
++hasUserStory(userStoryNumber)
 }
+
 class "UserStory"{
 -effort
 -userStoryNumber
@@ -436,7 +432,6 @@ class ProjectCreationDto {
 }
 
 class "UserStoryCreationDto"{
-+projectCode
 +userStoryNumber
 +actor
 +userStoryText
@@ -457,7 +452,7 @@ class FactorySprint {
 }
 
 interface "FactoryUserStory"{
-createUserStory(projectCode, userStoryNumber, userStoryText, actor)
+createUserStory( userStoryNumber, userStoryText, actor)
 }
 
 enum "Effort"{
@@ -553,8 +548,7 @@ CreateSprintController "1"-->"1" Company: has
 "AccountInProjectContainer" "1"--> "*" "AccountInProject" : has
 "ProjectContainer" .--> "ProjectDto": accesses
 "ProjectContainer" "1" -left-> "*" "Project" : contains
-"UserStoryContainer" "*" --> "1""FactoryUserStory"
-"UserStoryContainer" ..> "ProjectContainer"
+
 
 'Account Profile Link'
 "Account" "*"--> "1""Profile": contains
@@ -569,7 +563,8 @@ CreateSprintController "1"-->"1" Company: has
 
 'ProductBacklog Link'
 "ProductBacklog" "1" --> "*" "UserStory" : contains
-
+"ProductBacklog" "1" --> "1""FactoryUserStory"
+"ProductBacklog" "1" ..> "*""Sprint"
 
 'Sprint Link'
 "Sprint" "1" --> "1" "SprintBacklog"
@@ -577,7 +572,6 @@ CreateSprintController "1"-->"1" Company: has
 
 'SprintBacklog Link'
 "SprintBacklog" "1" --> "*" "UserStory" : contains
-"SprintBacklog" --> "FactoryUserStory"
 
 'UserStory Link'
 "UserStory" "1" --> "1" "Effort" : has
