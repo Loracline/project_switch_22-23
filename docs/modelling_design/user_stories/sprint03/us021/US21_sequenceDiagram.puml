@@ -26,11 +26,10 @@ ref over ui: US022: As Team Member, I want to view the Scrum Board of current sp
 
 
 
-ui --> TeamMember: request to select user story
-TeamMember -> ui: selects user story
-deactivate ui
-TeamMember -> ui: estimate user story effort
-activate ui
+ui --> TeamMember: request data
+TeamMember -> ui: selects data and estimate effort (userStoryDto, effort)
+
+
 
 ui -> controller: estimateEffortUserStory(userStoryDto, effort)
 activate controller

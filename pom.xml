@@ -130,6 +130,7 @@
                         <param>org.switch2022.project.controller.*</param>
                         <param>org.switch2022.project.dto.*</param>
                         <param>org.switch2022.project.model.*</param>
+                        <param>org.switch2022.project.utils.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>org.switch2022.project.container.*</param>
