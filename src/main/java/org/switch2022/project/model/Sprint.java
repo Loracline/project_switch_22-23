@@ -15,7 +15,7 @@ class Sprint {
     private FactoryPeriod factoryPeriod;
     private Period period;
 
-    private SprintBacklog sprintBacklog;
+    private SprintBacklog sprintBacklog = new SprintBacklog();
 
     /**
      * Constructor for Sprint class.
@@ -24,7 +24,9 @@ class Sprint {
      * @param sprintDuration the duration of the sprint in days.
      * @param sprintNumber   the number of the sprint.
      */
-    public static Sprint createSprint(LocalDate startDate, int sprintDuration, String sprintNumber, FactoryPeriod factoryPeriod) {
+    public static Sprint createSprint(LocalDate startDate, int sprintDuration,
+                                      String sprintNumber,
+                                      FactoryPeriod factoryPeriod) {
         Sprint sprint = new Sprint(sprintNumber);
         sprint.setPeriod(factoryPeriod, sprintDuration,startDate);
         return sprint;
@@ -36,7 +38,6 @@ class Sprint {
      * @param sprintNumber the number of the sprint.
      */
     private Sprint(String sprintNumber) {this.sprintNumber = sprintNumber.toLowerCase().trim();}
-
 
     /**
      * Creates a new period within the sprint.
@@ -85,4 +86,16 @@ class Sprint {
 
 
     }  */
+
+    /**
+     * This method adds a new User Story to the Sprint Backlog
+     *
+     * @param userStory the new User Story to be added
+     * @return TRUE if the User Story was successfully added to the list and FALSE
+     * otherwise.
+     */
+
+    public boolean addUserStoryToSprintBacklog(UserStory userStory) {
+        return this.sprintBacklog.addUserStory(userStory);
+    }
 }
