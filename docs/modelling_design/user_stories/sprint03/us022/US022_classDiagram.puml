@@ -21,36 +21,46 @@ class UserStoryDto
 
 class ViewScrumBoardController {
 -company
-+getScrumBoard(projectDto)
++getScrumBoard(projectDto, date)
 }
 
 class Company {
 -projectContainer
-+getScrumBoard(projectDto)
++getScrumBoard(projectDto, date)
 }
 
 class ProjectContainer {
 -projects
 -getProjectByCode(projectCode)
-+getScrumBoard(projectDto)
++getScrumBoard(date)
 }
 
 class Project {
 -projectCode
 -sprints
 +hasProjectCode(projectCode)
++getSprintByDate(date)
 +getScrumBoard()
 }
 
 class Sprint {
 -sprintBacklog
-+getSprintBacklog()
+-period
++getSprintBacklogCopy()
++getPeriodByDate(date)
+}
+
+class Period {
+-startDate
+-endDate
++isDateWithinPeriod(date)
++isDateEqualOrGreaterThanStartDate(date)
++isDateEqualOrLowerThanEndDate(date)
 }
 
 class SprintBacklog {
 -userStories
--factoryUserStory
-+getUserStories()
++getUserStoriesCopy(factoryUserStory)
 }
 
 class ProjectDto {
@@ -58,7 +68,7 @@ class ProjectDto {
 }
 
 interface FactoryUserStory {
-+createUserStory(projectCode, userStoryNumber, userStoryText, actor)
++createUserStory(userStoryNumber, actor, userStoryText)
 }
 
 class UserStory {
@@ -66,13 +76,11 @@ class UserStory {
 -userStoryText
 -status
 -actor
--projectCode
 +getUsNumber()
 +getUsStatus()
 +setUsStatus()
 +getUsText()
 +getActor()
-+getProjectCode()
 }
 
 class UserStoryDto {
@@ -86,7 +94,7 @@ class UserStoryDtoMapper {
 }
 
 class UserStoryDtoListAssembler {
-+backlogToDto(userStories)
++backlogToDto(sprintBacklog)
 }
 
 "ViewScrumBoardController" --> "Company"
@@ -94,6 +102,7 @@ class UserStoryDtoListAssembler {
 "ProjectContainer" "1" --> "*" "Project": contains
 "Project" "1" --> "*" "Sprint": has
 "Sprint" "1" --> "1" "SprintBacklog": has
+"Sprint" "1" --> "1" "Period": has
 "SprintBacklog" --> "FactoryUserStory"
 "SprintBacklog" "1" --> "*" "UserStory": has
 "FactoryUserStory" .--> "UserStory"
