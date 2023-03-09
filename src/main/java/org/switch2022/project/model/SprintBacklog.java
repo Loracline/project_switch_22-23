@@ -49,7 +49,7 @@ public class SprintBacklog {
     }
 
     /**
-     * This method adds a new User Story to the userStories list is the User Story
+     * This method adds a new User Story to the userStories list if the User Story
      * doesn't already exist.
      *
      * @param userStory the new User Story to be added

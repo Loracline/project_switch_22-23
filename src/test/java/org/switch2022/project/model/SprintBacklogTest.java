@@ -130,7 +130,7 @@ class SprintBacklogTest {
 
     /**
      * METHOD addUserStory(userstory)
-     * adds a User Story is added to Sprint Backlog
+     * adds a User Story to Sprint Backlog
      * <p>
      * Scenario 1: verify if a User Story is added to Sprint Backlog if it is not
      * already there. Should return True.
@@ -171,7 +171,7 @@ class SprintBacklogTest {
     /**
      * METHOD hasUserStory(userStoryNumber)
      * verifies if any User Story in the Sprint Backlog has a giving user story number.
-     * <p>
+     *
      * Scenario 1: checks that a User Story has the giving User Story Number.
      */
 

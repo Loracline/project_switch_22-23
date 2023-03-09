@@ -2,7 +2,11 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 public class ProductBacklogTest {
@@ -26,7 +30,7 @@ public class ProductBacklogTest {
         // Assert
         assertEquals(expected, result);
     }
-    
+
     /**
      * Scenario 3: Verify if a ProductBacklog and a different type of object are not
      * the same.
@@ -84,4 +88,86 @@ public class ProductBacklogTest {
         assertEquals(productBacklogOneHashCode, productBacklogTwoHashCode);
     }
 
+    /**
+     * METHOD getUserStoryByNumber(userStoryNumber)
+     * verifies that method returns a User Story from the Product Backlog with a given User Story number.
+     * <p>
+     * Scenario 1: returns an Optional containing a User Story with a giving User Story Number.
+     */
+    @Test
+    void ensureThatReturnsAnOptionalWithAUserStory() {
+        //ARRANGE
+        UserStory userStoryDouble = mock(UserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog();
+        productBacklog.addUserStory(userStoryDouble);
+        when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(true);
+        Optional<UserStory> userStoryOptionalExpected = Optional.of(userStoryDouble);
+
+        //ACT
+        Optional<UserStory> userStoryOptional = productBacklog.getUserStoryByNumber("US002");
+
+        //ASSERT
+        assertEquals(userStoryOptionalExpected, userStoryOptional);
+    }
+
+    /**
+     * Scenario 2: returns an Optional containing a null object because there is no User Story with that User Story number.
+     */
+    @Test
+    void ensureThatReturnsAnOptionalWithANullObject() {
+        //ARRANGE
+        UserStory userStoryDouble = mock(UserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog();
+        productBacklog.addUserStory(userStoryDouble);
+        when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(false);
+
+        //Optional<UserStory> userStoryOptionalExpected = Optional.ofNullable(null);
+        Optional<UserStory> userStoryOptionalExpected = Optional.empty();
+
+        //ACT
+        Optional<UserStory> userStoryOptional = productBacklog.getUserStoryByNumber("US002");
+
+        //ASSERT
+        assertEquals(userStoryOptionalExpected, userStoryOptional);
+    }
+
+    /**
+     * METHOD addUserStory(userstory)
+     * adds a User Story to Product Backlog
+     * <p>
+     * Scenario 1: verify if a User Story is added to Product Backlog if it is not
+     * already there. Should return True.
+     */
+
+    @Test
+    void ensureThatUserStoryIsSuccessfullyAddedToProductBacklog() {
+        //Arrange
+        UserStory userStoryDouble = mock(UserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog();
+
+        //Act
+        boolean result = productBacklog.addUserStory(userStoryDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a User Story is not added to Product Backlog if it is
+     * already there. Should return false.
+     */
+
+    @Test
+    void ensureThatUserStoryIsNotAddedToProductBacklog() {
+        //Arrange
+        UserStory userStoryDouble = mock(UserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog();
+        productBacklog.addUserStory(userStoryDouble);
+
+        //Act
+        boolean result = productBacklog.addUserStory(userStoryDouble);
+
+        //Assert
+        assertFalse(result);
+    }
 }
