@@ -15,6 +15,7 @@ participant ":ProductBacklog" as backlog
 participant ":FactoryUserStory" as factory
 participant "userStory:UserStory" as userStory
 
+
 activate product
 product -> ui : requests list of projects
 activate ui
