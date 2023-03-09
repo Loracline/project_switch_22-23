@@ -7,7 +7,7 @@ import org.switch2022.project.model.BusinessSector;
  * Business Customer class
  */
 
-public class IFactoryBusinessSector {
+public class IFactoryBusinessSector implements FactoryBusinessSector{
     /**
      * This method creates a new Customer object with the specified name and NIF.
      *
