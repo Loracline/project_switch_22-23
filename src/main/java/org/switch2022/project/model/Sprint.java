@@ -3,7 +3,6 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.utils.Period;
-
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -14,11 +13,18 @@ import java.util.Objects;
  */
 class Sprint {
     private final String sprintNumber;
+    private final SprintBacklog sprintBacklog = new SprintBacklog();
     private FactoryPeriod factoryPeriod;
     private Period period;
 
-    private final SprintBacklog sprintBacklog = new SprintBacklog();
-
+    /**
+     * Constructor
+     *
+     * @param sprintNumber the number of the sprint.
+     */
+    private Sprint(String sprintNumber) {
+        this.sprintNumber = sprintNumber.toLowerCase().trim();
+    }
     /**
      * Constructor for Sprint class.
      *
@@ -30,42 +36,45 @@ class Sprint {
                                       String sprintNumber,
                                       FactoryPeriod factoryPeriod) {
         Sprint sprint = new Sprint(sprintNumber);
-        sprint.setPeriod(factoryPeriod, sprintDuration, startDate);
+        sprint.factoryPeriod = factoryPeriod;
+        sprint.setPeriod(factoryPeriod, sprintDuration,startDate);
         return sprint;
     }
 
     /**
-     * Constructor
+     * This method checks if two instances of Sprint are equal by comparing
+     * the userStoryNumber.
      *
-     * @param sprintNumber the number of the sprint.
+     * @param o userStory instance to compare with.
+     * @return TRUE if the two have the same attribute, and FALSE otherwise.
      */
-    private Sprint(String sprintNumber) {
-        this.sprintNumber = sprintNumber.toLowerCase().trim();
-    }
-
-    /**
-     * Creates a new period within the sprint.
-     *
-     * @param startDate      the start date of the period
-     * @param periodDuration the duration of the period in weeks
-     */
-    public void createPeriod(LocalDate startDate, int periodDuration) {
-        // create a new period object using the FactoryPeriod class
-        this.period = this.factoryPeriod.createPeriod(startDate, periodDuration);
-    }
-
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Sprint sprint = (Sprint) o;
         return sprintNumber.equals(sprint.sprintNumber);
     }
-
+    /**
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(sprintNumber);
+    }
+
+    /**
+     * Getter method for the attribute: period.
+     */
+    public Period getPeriod() {
+        return period;
     }
 
     /**
@@ -78,21 +87,14 @@ class Sprint {
      * @param startDate      the start date of the period
      */
 
+
+
     private void setPeriod(FactoryPeriod factoryPeriod, int sprintDuration,
                            LocalDate startDate) {
         this.factoryPeriod = factoryPeriod;
         this.period = factoryPeriod.createPeriod(startDate, sprintDuration);
     }
 
-
-   /* public isSprintCodeUnique(){
-
-    }
-
-    public isSprintCodeValid() {
-
-
-    }  */
 
     /**
      * This method adds a new User Story to the Sprint Backlog

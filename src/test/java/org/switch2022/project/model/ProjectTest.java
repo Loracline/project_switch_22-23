@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ProjectTest {
 
@@ -416,12 +417,12 @@ public class ProjectTest {
     ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
     // Act
-    Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+    Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
             businessSectorDouble);
-    Project projectToCompare = new Project("A001", "Artemis", customerDouble,
+    Project projectDoubleToCompare = new Project("A001", "Artemis", customerDouble,
             projectTypologyDouble, businessSectorDouble);
 
-    boolean isEquals = project.equals(projectToCompare);
+    boolean isEquals = projectDouble.equals(projectDoubleToCompare);
 
     // Assert
     assertTrue(isEquals);
@@ -445,12 +446,12 @@ public class ProjectTest {
     ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
     // Act
-    Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+    Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
             businessSectorDouble);
-    Project projectToCompare = new Project("A002", "Artemis", customerDouble,
+    Project projectDoubleToCompare = new Project("A002", "Artemis", customerDouble,
             projectTypologyDouble, businessSectorDouble);
 
-    boolean isEquals = project.equals(projectToCompare);
+    boolean isEquals = projectDouble.equals(projectDoubleToCompare);
 
     // Assert
     assertFalse(isEquals);
@@ -474,11 +475,11 @@ public class ProjectTest {
     ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
     // Act
-    Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+    Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
             businessSectorDouble);
     Object projectToCompare = new Object();
 
-    boolean isEquals = project.equals(projectToCompare);
+    boolean isEquals = projectDouble.equals(projectToCompare);
 
     // Assert
     assertFalse(isEquals);

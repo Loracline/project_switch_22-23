@@ -14,9 +14,9 @@ public class UserStoryDto {
      * Constructor
      */
     public UserStoryDto(String userStoryNumber, String userStoryText, String status) {
-        this.userStoryNumber = userStoryNumber;
-        this.userStoryText = userStoryText;
-        this.status = status;
+        this.userStoryNumber = userStoryNumber.toLowerCase().trim();
+        this.userStoryText = userStoryText.toLowerCase().trim();
+        this.status = status.toLowerCase().trim();
     }
 
     /**

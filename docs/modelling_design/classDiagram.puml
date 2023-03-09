@@ -389,8 +389,11 @@ class "UserStory"{
 -status
 -listOfAcceptanceCriteria
 -projectCode
-+UserStory(userStoryNumber, actor, userStoryText)
-+hasUserStoryNumber(userStoryNumber)
+-UserStory(userStoryNumber)
++ createUserStory(userStoryNumber, actor, userStoryText)
+- setActor(String actor)
+- setUserStoryText(String userStoryText)
++ hasUserStoryNumber(String userStoryNumber)
 +setEffort(effort)
 +getUsNumber()
 +getUsStatus()
@@ -560,6 +563,7 @@ CreateSprintController "1"-->"1" Company: has
 "Company" "1"-->"1" "AccountInProjectContainer": has
 "Company" "1"--> "1" "ProjectContainer": has
 "Company" "1"--> "1" "UserStoryContainer": has
+
 
 'Container model link'
 "ProfileContainer" "1" --> "*" "Profile": contains
