@@ -4,7 +4,6 @@ import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.FactoryUserStory;
 import org.switch2022.project.utils.Effort;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
