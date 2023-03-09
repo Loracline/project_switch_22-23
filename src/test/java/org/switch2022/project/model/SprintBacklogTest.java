@@ -208,4 +208,23 @@ class SprintBacklogTest {
         //Assert
         assertFalse(result);
     }
+
+    /**
+     * Scenario 3: checks that there is no User Story with the giving User Story Number
+     * because container is empty.
+     */
+
+    @Test
+    void ensureThatThereIsNoUserStoryWithGivingNumberBecauseContainerIsEmpty() {
+        //Arrange
+        UserStory userStoryDouble = mock(UserStory.class);
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        when(userStoryDouble.hasUserStoryNumber("US001")).thenReturn(false);
+
+        //Act
+        boolean result = sprintBacklog.hasUserStory("US001");
+
+        //Assert
+        assertFalse(result);
+    }
 }
