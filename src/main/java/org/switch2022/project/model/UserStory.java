@@ -2,14 +2,14 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Status;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * The class UserStory was built to create and manager new userStories.
- * An UserStory is defined by: an userStoryNumber, which is it unique ID, a projectCode,an actor, an userStoryText,
+ * An UserStory is defined by: an userStoryNumber, which is it unique ID, a
+ * projectCode,an actor, an userStoryText,
  * an effort, a status and a list of  acceptanceCriteria.
  */
 public class UserStory {
@@ -26,12 +26,15 @@ public class UserStory {
     /**
      * This method creates a new UserStory
      *
-     * @param userStoryNumber,actor,userStoryText; When an userStory is instantiated, its default status is PLANNED, its
-     *                                             default effort is 1 and hav an empty list of acceptanceCriteria.
+     * @param userStoryNumber,actor,userStoryText; When an userStory is instantiated,
+     *                                           its default status is PLANNED, its
+     *                                             default effort is 1 and hav an empty
+     *                                             list of acceptanceCriteria.
      * @return userStory
      */
 
-    public static UserStory createUserStory(String userStoryNumber, String actor, String userStoryText) {
+    public static UserStory createUserStory(String userStoryNumber, String actor,
+                                            String userStoryText) {
         UserStory userStory = new UserStory(userStoryNumber);
         userStory.setActor(actor);
         userStory.setUserStoryText(userStoryText);
@@ -65,7 +68,8 @@ public class UserStory {
         }
 
         UserStory userStory = (UserStory) o;
-        return Objects.equals(userStoryNumber, userStory.userStoryNumber.toLowerCase().trim());
+        return Objects.equals(userStoryNumber,
+                userStory.userStoryNumber.toLowerCase().trim());
     }
 
     /**
@@ -108,6 +112,27 @@ public class UserStory {
     }
 
     /**
+     * This method returns the effort of the userStory.
+     *
+     * @return the effort associated to the userStory.
+     */
+
+    Effort getEffort() {
+        return effort;
+    }
+
+    /**
+     * This method sets the effort for the userStory.
+     *
+     * @param effort of the userStory.
+     * @return always true because the effort is fetched from a restricted list.
+     */
+
+    void setEffort(Effort effort) {
+        this.effort = effort;
+    }
+
+    /**
      * Setter method for the attribute: actor
      */
     private void setActor(String actor) {
@@ -129,7 +154,8 @@ public class UserStory {
     }
 
     /**
-     * This method verifies if an userStory is the one intended through it userStoryNumber.
+     * This method verifies if an userStory is the one intended through it
+     * userStoryNumber.
      *
      * @param userStoryNumber of the seeked userStory.
      * @return TRUE if userStory has given userStoryNumber, and FALSE otherwise.
@@ -137,26 +163,5 @@ public class UserStory {
 
     public boolean hasUserStoryNumber(String userStoryNumber) {
         return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
-    }
-
-    /**
-     * This method returns the effort of the userStory.
-     *
-     * @return the effort associated to the userStory.
-     */
-
-    Effort getEffort() {
-        return effort;
-    }
-
-    /**
-     * This method sets the effort for the userStory.
-     *
-     * @param effort of the userStory.
-     * @return always true because the effort is fetched from a restricted list.
-     */
-
-    void setEffort(Effort effort) {
-        this.effort = effort;
     }
 }
