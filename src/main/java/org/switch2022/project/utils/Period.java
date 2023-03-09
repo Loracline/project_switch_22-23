@@ -59,11 +59,38 @@ public class Period {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Period period = (Period) o;
-        return Objects.equals(startDate, period.startDate) && Objects.equals(endDate, period.endDate);
+        return Objects.equals(startDate, period.startDate) &&
+                Objects.equals(endDate, period.endDate);
     }
+
 
     @Override
     public int hashCode() {
         return Objects.hash(startDate, endDate);
     }
+
+    public boolean isStartDateBeforeNow() {
+        return this.startDate.isBefore(LocalDate.now()) || this.startDate.isEqual(LocalDate.now());
+    }
+
+    /**
+     * Determines if this period does not overlap with the given period.
+     *
+     * @param period the period to compare with
+     * @return true if the periods do not overlap, false otherwise
+     */
+
+    public boolean isPeriodNotOverlapping(Period period) {
+        // check if this period ends before the start of the given period
+        if (this.endDate.isBefore(period.getStartDate())) {
+            return true;
+        }
+        // check if the given period ends before the start of this period
+        if (period.getEndDate().isBefore(this.startDate)) {
+            return true;
+        }
+        // the periods overlap
+        return false;
+    }
+
 }
