@@ -1,7 +1,6 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -130,7 +129,7 @@ class SprintBacklogTest {
   }
 
   /**
-   * METHOD addUserStory(userstory)
+   * METHOD addUserStory(userStory)
    * adds a User Story is added to Sprint Backlog
    * <p>
    * Scenario 1: verify if a User Story is added to Sprint Backlog if it is not

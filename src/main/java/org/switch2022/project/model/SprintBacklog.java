@@ -1,5 +1,7 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.factories.FactoryUserStory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,20 +9,12 @@ import java.util.Objects;
 /**
  * Class SprintBacklog, holds a set of userStories.
  */
-
 public class SprintBacklog {
 
   /**
    * Attributes of the class SprintBacklog, according to the Class Diagram.
    */
-
   private final List<UserStory> userStories = new ArrayList<>();
-
-  /**
-   * Constructor of the class SprintBacklog.
-   */
-  public SprintBacklog() {
-  }
 
   /**
    * This method checks if two instances of SprintBacklog are equal by comparing
@@ -29,7 +23,6 @@ public class SprintBacklog {
    * @param o SprintBacklog instance to compare with.
    * @return TRUE if the two have the same attributes, and FALSE otherwise.
    */
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -44,7 +37,6 @@ public class SprintBacklog {
    *
    * @return a unique value that represents the object.
    */
-
   @Override
   public int hashCode() {
     return Objects.hash(userStories);
@@ -85,5 +77,27 @@ public class SprintBacklog {
       i++;
     }
     return result;
+  }
+
+  /**
+   * This method makes a deep copy of the User Stories that are in the Sprint Backlog,
+   * and the copy in a new list.
+   * @param factoryUserStory used to create the copy User Stories.
+   * @return a list of the copied User Stories.
+   */
+  public List<UserStory> getUserStoriesCopy(FactoryUserStory factoryUserStory) {
+    List<UserStory> copyList = new ArrayList<>();
+    int i = 0;
+    while (i < this.userStories.size()) {
+      UserStory copyUserStory =
+              factoryUserStory.createUserStory(
+                      this.userStories.get(i).getUserStoryNumber(),
+                      this.userStories.get(i).getActor(),
+                      this.userStories.get(i).getUserStoryText());
+      copyUserStory.setStatus(this.userStories.get(i).getStatus());
+      copyList.add(copyUserStory);
+      i++;
+    }
+    return copyList;
   }
 }
