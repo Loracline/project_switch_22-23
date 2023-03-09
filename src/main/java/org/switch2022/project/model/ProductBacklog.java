@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Class ProductBacklog is built to access and manipulate the set of User Stories
@@ -45,5 +46,62 @@ public class ProductBacklog {
     @Override
     public int hashCode() {
         return Objects.hash(userStories);
+    }
+
+    /**
+     * This method adds a new User Story to the userStories list if the User Story
+     * doesn't already exist.
+     *
+     * @param userStory the new User Story to be added
+     * @return TRUE if the User Story was successfully added to the list and FALSE
+     * otherwise.
+     */
+    public boolean addUserStory(UserStory userStory) {
+        boolean result = true;
+        if (userStories.contains(userStory)) {
+            result = false;
+        } else {
+            userStories.add(userStory);
+        }
+        return result;
+    }
+
+    /**
+     * This method returns a User Story from the Product Backlog with a given User Story number.
+     *
+     * @param userStoryNumber of the User Story one searches for.
+     * @return an Optional with a User Story.
+     */
+
+
+    public Optional<UserStory> getUserStoryByNumber(String userStoryNumber) {
+        int i = 0;
+        UserStory userStory = null;
+        while (i < userStories.size() && userStory == null) {
+            if (userStories.get(i).hasUserStoryNumber(userStoryNumber)) {
+                userStory = userStories.get(i);
+            }
+            i++;
+        }
+        return Optional.ofNullable(userStory);
+    }
+
+    /**
+     * This method removes a User Story from the userStories list if the User Story exists.
+     *
+     * @param userStory to be deleted
+     * @return TRUE if the User Story is removed from UserStories list and FALSE otherwise.
+     */
+    public boolean removeUserStory(UserStory userStory) {
+        int i = 0;
+        boolean wasRemoved = false;
+        while (i < userStories.size() && !wasRemoved) {
+            if (userStories.contains(userStory)) {
+                userStories.remove(i);
+                wasRemoved = true;
+            }
+            i++;
+        }
+        return wasRemoved;
     }
 }
