@@ -10,17 +10,11 @@ import java.util.Objects;
 
 public class SprintBacklog {
 
-  /**
-   * Attributes of the class SprintBacklog, according to the Class Diagram.
-   */
-
-  private final List<UserStory> userStories = new ArrayList<>();
-
     /**
-     * Constructor of the class SprintBacklog.
+     * Attributes of the class SprintBacklog, according to the Class Diagram.
      */
-    public SprintBacklog() {
-    }
+
+    private final List<UserStory> userStories = new ArrayList<>();
 
     /**
      * This method checks if two instances of SprintBacklog are equal by comparing
@@ -32,8 +26,12 @@ public class SprintBacklog {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (!(o instanceof SprintBacklog)) {return false;}
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof SprintBacklog)) {
+            return false;
+        }
         SprintBacklog that = (SprintBacklog) o;
         return Objects.equals(userStories, that.userStories);
     }
