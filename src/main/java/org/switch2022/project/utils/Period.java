@@ -1,4 +1,5 @@
 package org.switch2022.project.utils;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -10,17 +11,17 @@ public class Period {
     /**
      * The start date of the period.
      */
-    private LocalDate startDate;
+    private final LocalDate startDate;
 
     /**
      * The end date of the period.
      */
-    private LocalDate endDate;
+    private final LocalDate endDate;
 
     /**
      * Creates a new period with the given start date and duration in sprints.
      *
-     * @param startDate the start date of the period
+     * @param startDate      the start date of the period
      * @param sprintDuration the duration of the period in sprints
      */
     public Period(LocalDate startDate, int sprintDuration) {
@@ -33,19 +34,23 @@ public class Period {
      *
      * @return the start date of the period
      */
-    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
     /**
      * Returns the end date of the period.
      *
      * @return the end date of the period
      */
-    public LocalDate getEndDate() { return endDate; }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
     /**
      * Calculates the end date of the period given the start date and duration in sprints.
      *
-     * @param startDate the start date of the period
+     * @param startDate      the start date of the period
      * @param sprintDuration the duration of the period in sprints
      * @return the end date of the period
      */
@@ -91,6 +96,36 @@ public class Period {
         }
         // the periods overlap
         return false;
+    }
+
+    /**
+     * This method checks if date is equal or greater than start date.
+     *
+     * @param date to compare.
+     * @return true if date is equal or greater than start date or false otherwise.
+     */
+    private boolean isDateEqualOrGreaterThanStartDate(LocalDate date) {
+        return date.isAfter(this.startDate) || date.isEqual(this.startDate);
+    }
+
+    /**
+     * This method checks if date is equal or lower than end date.
+     *
+     * @param date to compare.
+     * @return true if date is equal or lower than end date or false otherwise.
+     */
+    private boolean isDateEqualOrLowerThanEndDate(LocalDate date) {
+        return date.isBefore(this.endDate) || date.isEqual(this.endDate);
+    }
+
+    /**
+     * This method checks if date is equal or greater than start date and equal or lower than end date.
+     *
+     * @param date to compare
+     * @return true if date is equal or greater than start date and equal or lower than end date or false otherwise.
+     */
+    public boolean isDateWithinPeriod(LocalDate date) {
+        return isDateEqualOrGreaterThanStartDate(date) && isDateEqualOrLowerThanEndDate(date);
     }
 
 }
