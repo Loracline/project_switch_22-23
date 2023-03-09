@@ -84,6 +84,34 @@ public class UserStory {
     }
 
     /**
+     * Getter method for the attribute: userStoryNumber
+     */
+    public String getUserStoryNumber() {
+        return userStoryNumber;
+    }
+
+    /**
+     * Getter method for the attribute: actor
+     */
+    public String getActor() {
+        return actor;
+    }
+
+    /**
+     * Getter method for the attribute: userStoryText
+     */
+    public String getUserStoryText() {
+        return userStoryText;
+    }
+
+    /**
+     * Getter method for the attribute: status
+     */
+    public String getStatus() {
+        return status.toString();
+    }
+
+    /**
      * This method returns the effort of the userStory.
      *
      * @return the effort associated to the userStory.
@@ -119,6 +147,13 @@ public class UserStory {
     }
 
     /**
+     * Setter method for the attribute: status
+     */
+    public void setStatus(String status) {
+        this.status.valueOf(status);
+    }
+
+    /**
      * This method verifies if an userStory is the one intended through it
      * userStoryNumber.
      *
@@ -129,6 +164,4 @@ public class UserStory {
     public boolean hasUserStoryNumber(String userStoryNumber) {
         return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
     }
-
-
 }
