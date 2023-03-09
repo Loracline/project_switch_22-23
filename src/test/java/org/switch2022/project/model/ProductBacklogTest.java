@@ -132,7 +132,7 @@ public class ProductBacklogTest {
     }
 
     /**
-     * METHOD addUserStory(userstory)
+     * METHOD addUserStory(userStory)
      * adds a User Story to Product Backlog
      * <p>
      * Scenario 1: verify if a User Story is added to Product Backlog if it is not
@@ -168,6 +168,45 @@ public class ProductBacklogTest {
         boolean result = productBacklog.addUserStory(userStoryDouble);
 
         //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD removeUserStory(userStory)
+     * remove a User Story from Product Backlog
+     * <p>
+     * Scenario 1: verify if a User Story is removed from Product Backlog if it is
+     * there. Should return TRUE.
+     */
+    @Test
+    void ensureThatUserStoryIsRemovedFromProductBacklog() {
+        //ARRANGE
+        UserStory userStoryDouble = mock(UserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog();
+        productBacklog.addUserStory(userStoryDouble);
+
+        //ACT
+        boolean result = productBacklog.removeUserStory(userStoryDouble);
+
+        //ASSERT
+        assertTrue(result);
+
+    }
+
+    /**
+     * Scenario 2: verify if a User Story is not removed from Product Backlog if it is not
+     * there. Should return FALSE.
+     */
+    @Test
+    void ensureThatUserStoryIsNotRemovedFromProductBacklogBecauseItIsNotThere() {
+        //ARRANGE
+        UserStory userStoryDouble = mock(UserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog();
+
+        //ACT
+        boolean result = productBacklog.removeUserStory(userStoryDouble);
+
+        //ASSERT
         assertFalse(result);
     }
 }

@@ -67,7 +67,8 @@ public class ProductBacklog {
     }
 
     /**
-    * This method returns a User Story from the Product Backlog with a given User Story number.
+     * This method returns a User Story from the Product Backlog with a given User Story number.
+     *
      * @param userStoryNumber of the User Story one searches for.
      * @return an Optional with a User Story.
      */
@@ -83,5 +84,24 @@ public class ProductBacklog {
             i++;
         }
         return Optional.ofNullable(userStory);
+    }
+
+    /**
+     * This method removes a User Story from the userStories list if the User Story exists.
+     *
+     * @param userStory to be deleted
+     * @return TRUE if the User Story is removed from UserStories list and FALSE otherwise.
+     */
+    public boolean removeUserStory(UserStory userStory) {
+        int i = 0;
+        boolean wasRemoved = false;
+        while (i < userStories.size() && !wasRemoved) {
+            if (userStories.contains(userStory)) {
+                userStories.remove(i);
+                wasRemoved = true;
+            }
+            i++;
+        }
+        return wasRemoved;
     }
 }
