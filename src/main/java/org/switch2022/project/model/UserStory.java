@@ -80,6 +80,34 @@ public class UserStory {
     }
 
     /**
+     * Getter method for the attribute: userStoryNumber
+     */
+    public String getUserStoryNumber() {
+        return userStoryNumber;
+    }
+
+    /**
+     * Getter method for the attribute: actor
+     */
+    public String getActor() {
+        return actor;
+    }
+
+    /**
+     * Getter method for the attribute: userStoryText
+     */
+    public String getUserStoryText() {
+        return userStoryText;
+    }
+
+    /**
+     * Getter method for the attribute: status
+     */
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
      * Setter method for the attribute: actor
      */
     private void setActor(String actor) {
@@ -91,6 +119,13 @@ public class UserStory {
      */
     private void setUserStoryText(String userStoryText) {
         this.userStoryText = userStoryText;
+    }
+
+    /**
+     * Setter method for the attribute: status
+     */
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     /**
