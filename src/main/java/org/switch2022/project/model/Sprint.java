@@ -14,10 +14,18 @@ import java.util.Objects;
  */
 class Sprint {
     private final String sprintNumber;
+    private final SprintBacklog sprintBacklog = new SprintBacklog();
     private FactoryPeriod factoryPeriod;
     private Period period;
 
-    private final SprintBacklog sprintBacklog = new SprintBacklog();
+    /**
+     * Constructor
+     *
+     * @param sprintNumber the number of the sprint.
+     */
+    private Sprint(String sprintNumber) {
+        this.sprintNumber = sprintNumber.toLowerCase().trim();
+    }
 
     /**
      * Constructor for Sprint class.
@@ -35,15 +43,6 @@ class Sprint {
     }
 
     /**
-     * Constructor
-     *
-     * @param sprintNumber the number of the sprint.
-     */
-    private Sprint(String sprintNumber) {
-        this.sprintNumber = sprintNumber.toLowerCase().trim();
-    }
-
-    /**
      * Creates a new period within the sprint.
      *
      * @param startDate      the start date of the period
@@ -57,8 +56,12 @@ class Sprint {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Sprint sprint = (Sprint) o;
         return sprintNumber.equals(sprint.sprintNumber);
     }
@@ -66,6 +69,13 @@ class Sprint {
     @Override
     public int hashCode() {
         return Objects.hash(sprintNumber);
+    }
+
+    /**
+     * Getter method for the attribute: period.
+     */
+    public Period getPeriod() {
+        return period;
     }
 
     /**
@@ -77,6 +87,8 @@ class Sprint {
      * @param sprintDuration the duration of the sprint
      * @param startDate      the start date of the period
      */
+
+
 
     private void setPeriod(FactoryPeriod factoryPeriod, int sprintDuration,
                            LocalDate startDate) {
