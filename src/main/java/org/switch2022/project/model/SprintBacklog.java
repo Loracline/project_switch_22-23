@@ -10,11 +10,11 @@ import java.util.Objects;
 
 public class SprintBacklog {
 
-    /**
-     * Attributes of the class SprintBacklog, according to the Class Diagram.
-     */
+  /**
+   * Attributes of the class SprintBacklog, according to the Class Diagram.
+   */
 
-    private final List<UserStory> userStories = new ArrayList<>();
+  private final List<UserStory> userStories = new ArrayList<>();
 
     /**
      * Constructor of the class SprintBacklog.
