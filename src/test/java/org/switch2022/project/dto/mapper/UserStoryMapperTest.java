@@ -6,6 +6,10 @@ import static org.mockito.Mockito.mock;
 
 
 class UserStoryMapperTest {
+    /**
+     * Scenario 1: Verify if a UserStory object is successfully converted
+     * into a UserStoryDto.
+     */
 
 
 }
