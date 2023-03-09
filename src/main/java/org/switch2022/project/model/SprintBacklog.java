@@ -4,6 +4,7 @@ import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.FactoryUserStory;
 import org.switch2022.project.utils.Effort;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -111,6 +112,7 @@ public class SprintBacklog {
     }
     return copyList;
   }
+
 
   /**
    * This method checks if the userStory number exists in the SprintBacklog,
