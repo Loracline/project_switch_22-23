@@ -171,7 +171,7 @@ class SprintBacklogTest {
     /**
      * METHOD hasUserStory(userStoryNumber)
      * verifies if any User Story in the Sprint Backlog has a giving user story number.
-     * <p>
+     *
      * Scenario 1: checks that a User Story has the giving User Story Number.
      */
 

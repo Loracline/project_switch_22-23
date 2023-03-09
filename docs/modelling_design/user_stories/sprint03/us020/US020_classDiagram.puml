@@ -60,7 +60,6 @@ class "Sprint"{
 class "SprintBacklog" {
 - userStories
 +addUserStory(userStory)
-- isUserStoryAlreadyAdded(userStory)
 }
 
 "AddUserStoryToSprintBacklogController" "1"-->"1" "Company": has

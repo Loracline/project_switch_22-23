@@ -1,8 +1,14 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.factories.FactoryUserStory;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 
 
 public class ProductBacklogTest {
@@ -16,7 +22,8 @@ public class ProductBacklogTest {
     @Test
     void ensureSameProductBacklogEqualsItself() {
         // Arrange
-        ProductBacklog reference = new ProductBacklog();
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(factoryUserStory);
         ProductBacklog other = reference;
         boolean expected = true;
 
@@ -26,7 +33,7 @@ public class ProductBacklogTest {
         // Assert
         assertEquals(expected, result);
     }
-    
+
     /**
      * Scenario 3: Verify if a ProductBacklog and a different type of object are not
      * the same.
@@ -35,7 +42,8 @@ public class ProductBacklogTest {
     @Test
     void ensureProductBacklogDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        ProductBacklog reference = new ProductBacklog();
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(factoryUserStory);
         String other = "User";
         boolean expected = false;
 
@@ -52,7 +60,8 @@ public class ProductBacklogTest {
     @Test
     void ensureProductBacklogDoesNotEqualNull() {
         // Arrange
-        ProductBacklog reference = new ProductBacklog();
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(factoryUserStory);
         ProductBacklog other = null;
         boolean expected = false;
 
@@ -73,8 +82,9 @@ public class ProductBacklogTest {
     @Test
     public void ensureTwoProductBacklogsHashcodeAreTheSame() {
         // Arrange
-        ProductBacklog productBacklogOne = new ProductBacklog();
-        ProductBacklog productBacklogTwo = new ProductBacklog();
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogOne = new ProductBacklog(factoryUserStory);
+        ProductBacklog productBacklogTwo = new ProductBacklog(factoryUserStory);
 
         // Act
         int productBacklogOneHashCode = productBacklogOne.hashCode();
@@ -84,4 +94,131 @@ public class ProductBacklogTest {
         assertEquals(productBacklogOneHashCode, productBacklogTwoHashCode);
     }
 
+    /**
+     * METHOD getUserStoryByNumber(userStoryNumber)
+     * verifies that method returns a User Story from the Product Backlog with a given User Story number.
+     * <p>
+     * Scenario 1: returns an Optional containing a User Story with a giving User Story Number.
+     */
+    @Test
+    void ensureThatReturnsAnOptionalWithAUserStory() {
+        //ARRANGE
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        UserStory userStoryDouble = mock(UserStory.class);
+        productBacklog.addUserStory(userStoryDouble);
+        when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(true);
+        Optional<UserStory> userStoryOptionalExpected = Optional.of(userStoryDouble);
+
+        //ACT
+        Optional<UserStory> userStoryOptional = productBacklog.getUserStoryByNumber("US002");
+
+        //ASSERT
+        assertEquals(userStoryOptionalExpected, userStoryOptional);
+    }
+
+    /**
+     * Scenario 2: returns an Optional containing a null object because there is no User Story with that User Story number.
+     */
+    @Test
+    void ensureThatReturnsAnOptionalWithANullObject() {
+        //ARRANGE
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        UserStory userStoryDouble = mock(UserStory.class);
+        productBacklog.addUserStory(userStoryDouble);
+        when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(false);
+
+        //Optional<UserStory> userStoryOptionalExpected = Optional.ofNullable(null);
+        Optional<UserStory> userStoryOptionalExpected = Optional.empty();
+
+        //ACT
+        Optional<UserStory> userStoryOptional = productBacklog.getUserStoryByNumber("US002");
+
+        //ASSERT
+        assertEquals(userStoryOptionalExpected, userStoryOptional);
+    }
+
+    /**
+     * METHOD addUserStory(userStory)
+     * adds a User Story to Product Backlog
+     * <p>
+     * Scenario 1: verify if a User Story is added to Product Backlog if it is not
+     * already there. Should return True.
+     */
+
+    @Test
+    void ensureThatUserStoryIsSuccessfullyAddedToProductBacklog() {
+        //Arrange
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        UserStory userStoryDouble = mock(UserStory.class);
+
+        //Act
+        boolean result = productBacklog.addUserStory(userStoryDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a User Story is not added to Product Backlog if it is
+     * already there. Should return false.
+     */
+
+    @Test
+    void ensureThatUserStoryIsNotAddedToProductBacklog() {
+        //Arrange
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        UserStory userStoryDouble = mock(UserStory.class);
+        productBacklog.addUserStory(userStoryDouble);
+
+        //Act
+        boolean result = productBacklog.addUserStory(userStoryDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD removeUserStory(userStory)
+     * remove a User Story from Product Backlog
+     * <p>
+     * Scenario 1: verify if a User Story is removed from Product Backlog if it is
+     * there. Should return TRUE.
+     */
+    @Test
+    void ensureThatUserStoryIsRemovedFromProductBacklog() {
+        //ARRANGE
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        UserStory userStoryDouble = mock(UserStory.class);
+        productBacklog.addUserStory(userStoryDouble);
+
+        //ACT
+        boolean result = productBacklog.removeUserStory(userStoryDouble);
+
+        //ASSERT
+        assertTrue(result);
+
+    }
+
+    /**
+     * Scenario 2: verify if a User Story is not removed from Product Backlog if it is not
+     * there. Should return FALSE.
+     */
+    @Test
+    void ensureThatUserStoryIsNotRemovedFromProductBacklogBecauseItIsNotThere() {
+        //ARRANGE
+        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        UserStory userStoryDouble = mock(UserStory.class);
+
+        //ACT
+        boolean result = productBacklog.removeUserStory(userStoryDouble);
+
+        //ASSERT
+        assertFalse(result);
+    }
 }
