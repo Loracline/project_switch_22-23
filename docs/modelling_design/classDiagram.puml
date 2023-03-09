@@ -91,7 +91,7 @@ class RegisterProjectController {
 
 class ViewScrumBoardController {
 -company
-+getScrumBoard(projectDto)
++getScrumBoard(projectDto, date)
 }
 
 class Company {
@@ -119,7 +119,7 @@ class Company {
 +listProjectsByAccount(emailUser)
 +addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
 +createSprint(projectDto,sprintDto)
-+getScrumBoard(projectDto)
++getScrumBoard(projectDto, date)
 -userStoryContainer
 +createUserStory(projectDto,userStoryCreationDto)
 +getProductBacklog(projectDto)
@@ -195,7 +195,7 @@ class ProjectContainer {
 -getProjectByProjectCode(projectCode)
 +createSprint(sprintDto)
 -getProjectByCode(projectDto)
-+getScrumBoard(projectDto)
++getScrumBoard(date)
 + createUserStory(projectDto,userStoryCreationDto)
 -getProjectByCode(projectCode)
 +getProductBacklog(projectDto)
@@ -216,6 +216,8 @@ class Account {
 -accountStatus
 -photo
 +Account(accountName, email, phoneNumber, profile, accountStatus, photo)
++equals()
++hashCode()
 +getEmail()
 +getAccountName()
 +isAccountStatus()
@@ -237,6 +239,8 @@ class AccountInProject {
 -endDate
 +AccountInProject(account, project, role, costPerHour, percentageAllocation, startDate, endDate)
 +AccountInProject(account, project)
++equals()
++hashCode()
 +isRoleValid()
 +getPercentageOfAllocation()
 +getRole()
@@ -280,6 +284,9 @@ class Period {
 +Period(startDate, sprintDuration)
 +getStartDate()
 +getEndDate()
++isDateWithinPeriod(date)
++isDateEqualOrGreaterThanStartDate(date)
++isDateEqualOrLowerThanEndDate(date)
 }
 
 class Profile {
@@ -299,6 +306,8 @@ class Project {
 -factorySprint
 -sprints
 +Project(projectCode, name, customer, projectTypology, businessSector)
++equals()
++hashCode()
 +getProjectCode()
 +getProjectName()
 +getCustomer()
@@ -307,11 +316,11 @@ class Project {
 +setProjectStatus(status)
 +getProjectTypology()
 +getBusinessSector()
--hasProjectCode(projectCode)
++getSprintByDate(date)
++hasProjectCode(projectCode)
 +isProjectOpen()
 +estimateEffortUserStory(userStoryDto, effort)
 +addUserStoryToSprintBacklog(userStoryNumber, sprintNumber)
-+hasProjectCode(projectCode)
 -getSprint(sprintNumber)
 +createSprint(sprintNumber,\n startDate, projectCode)
 +isSprintUnique(sprint)
@@ -319,12 +328,13 @@ class Project {
 +getScrumBoard()
 +createUserStory(userStoryCreationDto)
 +getProductBacklog()
-+hasProjectCode(projectCode)
 }
 
 class ProjectTypology {
 -projectTypologyName
 +ProjectTypology(projectTypologyName)
++equals()
++hashCode()
 +getProjectTypologyName()
 +checkProjectTypologyFromName(projectTypologyName)
 }
@@ -340,7 +350,8 @@ class "Sprint"{
 +createPeriod(startDate,sprintDuration)
 +getStartDate()
 +getEndDate()
-+getSprintBacklog()
++getSprintBacklogCopy()
++getPeriodByDate(date)
 +hasUserStory(userStoryNumber)
 
 }
@@ -348,6 +359,8 @@ class "Sprint"{
 class "ProductBacklog" {
 -userStories
 -factoryUserStory
++equals()
++hashCode()
 + createUserStory(userStoryCreationDto,sprints)
 -isUserStoryUnique(userStory)
 +getUserStories()
@@ -358,10 +371,13 @@ class "ProductBacklog" {
 class "SprintBacklog" {
 -userStories
 -factoryUserStory
++SprintBacklog(userStories)
++equals()
++hashCode()
 +estimateEffortUserStory(userStoryDto, effort)
 +addUserStory(userStory)
 -isUserStoryAlreadyAdded(userStory)
-+getUserStories()
++getUserStoriesCopy(factoryUserStory)
 +hasUserStory(userStoryNumber)
 }
 
@@ -401,6 +417,7 @@ class UserStoryDtoMapper {
 
 class UserStoryDtoListAssembler {
 +backlogToDto(productBacklog)
++backlogToDto(sprintBacklog)
 }
 
 class AccountDTO {
@@ -408,6 +425,8 @@ class AccountDTO {
 +email
 +status
 +AccountDTO(name, email, status)
++equals()
++hashCode()
 }
 
 class ProjectDto {
@@ -418,6 +437,8 @@ class ProjectDto {
 +projectTypology
 +businessSector
 +ProjectDto(code, name, customer, status, projectTypology, businessSector)
++equals()
++hashCode()
 }
 
 class ProjectCreationDto {
@@ -452,7 +473,7 @@ class FactorySprint {
 }
 
 interface "FactoryUserStory"{
-createUserStory( userStoryNumber, userStoryText, actor)
+createUserStory(userStoryNumber, actor, userStoryText)
 }
 
 enum "Effort"{
@@ -508,6 +529,7 @@ CreateSprintController "1"-->"1" Company: has
 'US022'
 "ViewScrumBoardController" --> "Company"
 "ViewScrumBoardController" .--> "UserStoryDtoListAssembler"
+"Sprint" "1" --> "1" "Period" : has
 
 'Has Assembler link'
 "UserStoryDtoListAssembler" ..> "UserStoryDtoMapper"
