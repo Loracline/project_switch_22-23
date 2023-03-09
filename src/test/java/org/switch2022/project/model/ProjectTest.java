@@ -9,345 +9,392 @@ import static org.mockito.Mockito.mock;
 
 public class ProjectTest {
 
-  /**
-   * BeforeEach and AfterEach execute common code before/after running the
-   * tests below.
-   */
+    /**
+     * BeforeEach and AfterEach execute common code before/after running the
+     * tests below.
+     */
 
-  Project projectOne, projectTwo, projectThree;
+    Project projectOne, projectTwo, projectThree;
 
-  @BeforeEach
-  void setUp() {
-    projectOne = new Project("AA001", "Aptoide",
-            new Customer("John", "228674498"),
-            new ProjectTypology("Fixed cost"),
-            new BusinessSector("Hunting"));
-    projectTwo = new Project("AA002", "Aptoide",
-            new Customer("John", "228674498"),
-            new ProjectTypology("Fixed cost"),
-            new BusinessSector("Hunting"));
-    projectThree = new Project("AA001", "Aptoide",
-            new Customer("John", "228674498"),
-            new ProjectTypology("Fixed cost"),
-            new BusinessSector("Hunting"));
-  }
+    @BeforeEach
+    void setUp() {
+        projectOne = new Project("AA001", "Aptoide",
+                new Customer("John", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("Hunting"));
+        projectTwo = new Project("AA002", "Aptoide",
+                new Customer("John", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("Hunting"));
+        projectThree = new Project("AA001", "Aptoide",
+                new Customer("John", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("Hunting"));
+    }
 
-  @AfterEach
-  void tearDown() {
-    projectOne = null;
-    projectTwo = null;
-    projectThree = null;
-  }
+    @AfterEach
+    void tearDown() {
+        projectOne = null;
+        projectTwo = null;
+        projectThree = null;
+    }
 
-  /**
-   * Test to ensure the object equals itself
-   */
-  @Test
-  void ensureSameObjectEqualsItself() {
-    // Arrange
-    Project projectReference = projectOne;
-    boolean expected = true;
-    boolean result = projectOne.equals(projectReference);
-    assertEquals(expected, result);
-  }
+    /**
+     * Test to ensure the object equals itself
+     */
+    @Test
+    void ensureSameObjectEqualsItself() {
+        // Arrange
+        Project projectReference = projectOne;
+        boolean expected = true;
+        boolean result = projectOne.equals(projectReference);
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that two objects are from different classes
-   */
-  @Test
-  void ensureObjectsAreFromDifferentClasses() {
-    // Arrange
-    Object projectObject = new Object();
-    boolean expected = false;
-    boolean result = projectOne.equals(projectObject);
-    assertEquals(expected, result);
-  }
+    /**
+     * Test to ensure that two objects are from different classes
+     */
+    @Test
+    void ensureObjectsAreFromDifferentClasses() {
+        // Arrange
+        Object projectObject = new Object();
+        boolean expected = false;
+        boolean result = projectOne.equals(projectObject);
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that the object to compare is equal to null
-   */
-  @Test
-  void ensureObjectToCompareIsNull() {
-    //Arrange
-    Project other = null;
-    boolean expected = false;
+    /**
+     * Test to ensure that the object to compare is equal to null
+     */
+    @Test
+    void ensureObjectToCompareIsNull() {
+        //Arrange
+        Project other = null;
+        boolean expected = false;
 
-    //Act
-    boolean result = projectOne.equals(other);
+        //Act
+        boolean result = projectOne.equals(other);
 
-    //Assert
-    assertEquals(expected, result);
-  }
+        //Assert
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that two objects from the same class are different
-   */
-  @Test
-  void ensureTwoProjectsAreNotEqual() {
-    // Arrange
-    boolean expected = false;
-    boolean result = projectOne.equals(projectTwo);
-    assertEquals(expected, result);
-  }
+    /**
+     * Test to ensure that two objects from the same class are different
+     */
+    @Test
+    void ensureTwoProjectsAreNotEqual() {
+        // Arrange
+        boolean expected = false;
+        boolean result = projectOne.equals(projectTwo);
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that two objects from the same class are equal
-   */
-  @Test
-  void ensureTwoProjectsAreEqual() {
-    // Arrange
-    Project project = new Project("AA001", "Aptoide", new Customer("john", "228674498"),
-            new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
+    /**
+     * Test to ensure that two objects from the same class are equal
+     */
+    @Test
+    void ensureTwoProjectsAreEqual() {
+        // Arrange
+        Project project = new Project("AA001", "Aptoide", new Customer("john", "228674498"),
+                new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
-    // Assert
-    assertEquals(project, projectOne);
-  }
+        // Assert
+        assertEquals(project, projectOne);
+    }
 
-  /**
-   * Test to ensure that project code requested from a given project is retrieved
-   */
-  @Test
-  void ensureProjectCodeIsEqual() {
-    // Act
-    String expected = "AA001";
-    String result = projectOne.getProjectCode();
+    /**
+     * Test to ensure that project code requested from a given project is retrieved
+     */
+    @Test
+    void ensureProjectCodeIsEqual() {
+        // Act
+        String expected = "AA001";
+        String result = projectOne.getProjectCode();
 
-    // Assert
-    assertEquals(expected, result);
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that project code requested from a given project is not retrieved
-   */
-  @Test
-  void ensureProjectCodeIsNotEqual() {
-    // Act
-    String expected = "AA002";
-    String result = projectOne.getProjectCode();
+    /**
+     * Test to ensure that project code requested from a given project is not retrieved
+     */
+    @Test
+    void ensureProjectCodeIsNotEqual() {
+        // Act
+        String expected = "AA002";
+        String result = projectOne.getProjectCode();
 
-    // Assert
-    assertNotEquals(expected, result);
-  }
+        // Assert
+        assertNotEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that project name requested from a given project is retrieved
-   */
-  @Test
-  void ensureProjectNameIsEqual() {
-    // Act
-    String expected = "Aptoide";
-    String result = projectOne.getProjectName();
+    /**
+     * Test to ensure that project name requested from a given project is retrieved
+     */
+    @Test
+    void ensureProjectNameIsEqual() {
+        // Act
+        String expected = "Aptoide";
+        String result = projectOne.getProjectName();
 
-    // Assert
-    assertEquals(expected, result);
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that project name requested from a given project is not retrieved
-   */
-  @Test
-  void ensureProjectNameIsNotEqual() {
-    // Act
-    String expected = "Aptoido";
-    String result = projectOne.getProjectName();
+    /**
+     * Test to ensure that project name requested from a given project is not retrieved
+     */
+    @Test
+    void ensureProjectNameIsNotEqual() {
+        // Act
+        String expected = "Aptoido";
+        String result = projectOne.getProjectName();
 
-    // Assert
-    assertNotEquals(expected, result);
-  }
+        // Assert
+        assertNotEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that customer requested from a given project is retrieved
-   */
-  @Test
-  void ensureCustomerIsEqual() {
-    // Act
-    Customer expected = new Customer("john", "228674498");
-    Customer result = projectOne.getCustomer();
+    /**
+     * Test to ensure that customer requested from a given project is retrieved
+     */
+    @Test
+    void ensureCustomerIsEqual() {
+        // Act
+        Customer expected = new Customer("john", "228674498");
+        Customer result = projectOne.getCustomer();
 
-    // Assert
-    assertEquals(expected, result);
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that customer requested from a given project is not retrieved
-   */
-  @Test
-  void ensureCustomerIsNotEqual() {
-    // Act
-    Customer expected = new Customer("Johnny", null);
-    Customer result = projectOne.getCustomer();
+    /**
+     * Test to ensure that customer requested from a given project is not retrieved
+     */
+    @Test
+    void ensureCustomerIsNotEqual() {
+        // Act
+        Customer expected = new Customer("Johnny", null);
+        Customer result = projectOne.getCustomer();
 
-    // Assert
-    assertNotEquals(expected, result);
-  }
+        // Assert
+        assertNotEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that status requested from a given project is retrieved
-   */
-  @Test
-  void ensureStatusIsEqual() {
-    // Act
-    String expected = "planned";
-    String result = projectOne.getProjectStatus();
+    /**
+     * Test to ensure that status requested from a given project is retrieved
+     */
+    @Test
+    void ensureStatusIsEqual() {
+        // Act
+        String expected = "planned";
+        String result = projectOne.getProjectStatus();
 
-    // Assert
-    assertEquals(expected, result);
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that status requested from a given project is not retrieved
-   */
-  @Test
-  void ensureStatusIsNotEqual() {
-    // Act
-    String expected = "finished";
-    String result = projectOne.getProjectStatus();
+    /**
+     * Test to ensure that status requested from a given project is not retrieved
+     */
+    @Test
+    void ensureStatusIsNotEqual() {
+        // Act
+        String expected = "finished";
+        String result = projectOne.getProjectStatus();
 
-    // Assert
-    assertNotEquals(expected, result);
-  }
+        // Assert
+        assertNotEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that project typology requested from a given project is retrieved
-   */
-  @Test
-  void ensureProjectTypologyIsEqual() {
-    // Act
-    ProjectTypology expected = new ProjectTypology("Fixed cost");
-    ProjectTypology result = projectOne.getProjectTypology();
+    /**
+     * Test to ensure that project typology requested from a given project is retrieved
+     */
+    @Test
+    void ensureProjectTypologyIsEqual() {
+        // Act
+        ProjectTypology expected = new ProjectTypology("Fixed cost");
+        ProjectTypology result = projectOne.getProjectTypology();
 
-    // Assert
-    assertEquals(expected, result);
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that project typology requested from a given project is not retrieved
-   */
-  @Test
-  void ensureProjectTypologyIsNotEqual() {
-    // Act
-    ProjectTypology expected = new ProjectTypology("Variable cost");
-    ProjectTypology result = projectOne.getProjectTypology();
+    /**
+     * Test to ensure that project typology requested from a given project is not retrieved
+     */
+    @Test
+    void ensureProjectTypologyIsNotEqual() {
+        // Act
+        ProjectTypology expected = new ProjectTypology("Variable cost");
+        ProjectTypology result = projectOne.getProjectTypology();
 
-    // Assert
-    assertNotEquals(expected, result);
-  }
+        // Assert
+        assertNotEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that business sector requested from a given project is retrieved
-   */
-  @Test
-  void ensureBusinessSectorIsEqual() {
-    // Act
-    BusinessSector expected = new BusinessSector("Hunting");
-    BusinessSector result = projectOne.getBusinessSector();
+    /**
+     * Test to ensure that business sector requested from a given project is retrieved
+     */
+    @Test
+    void ensureBusinessSectorIsEqual() {
+        // Act
+        BusinessSector expected = new BusinessSector("Hunting");
+        BusinessSector result = projectOne.getBusinessSector();
 
-    // Assert
-    assertEquals(expected, result);
-  }
+        // Assert
+        assertEquals(expected, result);
+    }
 
-  /**
-   * Test to ensure that business sector requested from a given project is not retrieved
-   */
-  @Test
-  void ensureBusinessSectorIsNotEqual() {
-    // Act
-    BusinessSector expected = new BusinessSector("Fishing");
-    BusinessSector result = projectOne.getBusinessSector();
+    /**
+     * Test to ensure that business sector requested from a given project is not retrieved
+     */
+    @Test
+    void ensureBusinessSectorIsNotEqual() {
+        // Act
+        BusinessSector expected = new BusinessSector("Fishing");
+        BusinessSector result = projectOne.getBusinessSector();
 
-    // Assert
-    assertNotEquals(expected, result);
-  }
+        // Assert
+        assertNotEquals(expected, result);
+    }
 
-  /**
-   * Test to check the hashcode when objects are equal and unequal
-   */
-  @Test
-  void testHashCode() {
-    // Arrange
-    Project objectOne = projectOne;
-    Project objectTwo = projectTwo;
-    Project objectThree = projectThree;
+    /**
+     * Test to check the hashcode when objects are equal and unequal
+     */
+    @Test
+    void testHashCode() {
+        // Arrange
+        Project objectOne = projectOne;
+        Project objectTwo = projectTwo;
+        Project objectThree = projectThree;
 
-    // Assert
-    // Check that equal objects have the same hash code
-    assertEquals(objectOne.hashCode(), objectThree.hashCode());
+        // Assert
+        // Check that equal objects have the same hash code
+        assertEquals(objectOne.hashCode(), objectThree.hashCode());
 
-    // Check that unequal objects have different hash codes
-    assertNotEquals(objectOne.hashCode(), objectTwo.hashCode());
-  }
+        // Check that unequal objects have different hash codes
+        assertNotEquals(objectOne.hashCode(), objectTwo.hashCode());
+    }
 
-  @Test
-  void ensureThatProjectIsOpen() {
-    //Arrange
-    boolean expected = true;
+    @Test
+    void ensureThatProjectIsOpen() {
+        //Arrange
+        boolean expected = true;
 
-    //Act
-    boolean result = projectOne.isProjectOpen();
+        //Act
+        boolean result = projectOne.isProjectOpen();
 
-    //Assert
-    assertEquals(expected, result);
-  }
+        //Assert
+        assertEquals(expected, result);
+    }
 
-  @Test
-  void ensureThatProjectIsClosed() {
-    //Arrange
-    projectOne.setProjectStatus("CLOSED");
-    boolean expected = false;
+    @Test
+    void ensureThatProjectIsClosed() {
+        //Arrange
+        projectOne.setProjectStatus("CLOSED");
+        boolean expected = false;
 
-    //Act
-    boolean result = projectOne.isProjectOpen();
+        //Act
+        boolean result = projectOne.isProjectOpen();
 
-    //Assert
-    assertEquals(expected, result);
-  }
+        //Assert
+        assertEquals(expected, result);
+    }
 
-  /** Test sprintDuration GET.
-   *
-   */
-  @Test
-  public void testGetSprintDuration() {
-    // Arrange
-    Project project = projectThree;
+    /**
+     * Test sprintDuration GET.
+     */
+    @Test
+    public void testGetSprintDuration() {
+        // Arrange
+        Project project = projectThree;
 
-    //Act
-     int duration = project.getSprintDuration();
+        //Act
+        int duration = project.getSprintDuration();
 
-    // Assert
-    assertEquals(0,duration);
-  }
+        // Assert
+        assertEquals(0, duration);
+    }
 
-  /** Test sprintDuration SET
-   *
-   */
-  @Test
-  public void testSetSprintDurationIsValid() {
-    // Arrange
-    Project project = projectOne;
+    /**
+     * Test sprintDuration SET
+     */
+    @Test
+    public void testSetSprintDurationIsValid() {
+        // Arrange
+        Project project = projectOne;
 
-    // Assert
-    assertTrue(project.setSprintDuration(3));
-    assertEquals(3, project.getSprintDuration());
-  }
+        // Assert
+        assertTrue(project.setSprintDuration(3));
+        assertEquals(3, project.getSprintDuration());
+    }
 
-  @Test
-  public void testSetSprintDurationIsInvalid() {
-    // Arrange
-    Project project = projectOne;
+    @Test
+    public void testSetSprintDurationIsInvalid() {
+        // Arrange
+        Project project = projectOne;
 
-    // Assert
-    assertFalse(project.setSprintDuration(0));
-    assertEquals(0, project.getSprintDuration());
-  }
+        // Assert
+        assertFalse(project.setSprintDuration(0));
+        assertEquals(0, project.getSprintDuration());
+    }
 
-  @Test
-  public void testSetSprintDurationIsInvalidIfGreaterThenFive() {
-    // Arrange
-    Project project = projectOne;
+    @Test
+    public void testSetSprintDurationIsInvalidIfGreaterThenFive() {
+        // Arrange
+        Project project = projectOne;
 
-    //Assert
-    assertFalse(project.setSprintDuration(5));
-    assertEquals(0, project.getSprintDuration());
-  }
+        //Assert
+        assertFalse(project.setSprintDuration(5));
+        assertEquals(0, project.getSprintDuration());
+    }
 
+    //ISOLATION TESTS
+
+    /**
+     * Scenario 1: Verifies if it's possible to create a valid instance of {@link Project} with isolated objects.
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * are created.
+     * Then, an instance of {@link Project} is created with the isolated objects and verify if the created
+     * instance is not null, indicating that it was created correctly.
+     */
+
+    @Test
+    public void shouldCreateAValidProjectWithIsolation() {
+        // Arrange
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+
+        // Act
+        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble, businessSectorDouble);
+
+        // Assert
+        assertNotNull(project);
+    }
+
+    /**
+     * Scenario 2: Verifies if the method {@link Project#equals(Object)} returns {@code true} when compared to the same object.
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology} are created.
+     * Then, an instance of {@link Project} is created with the isolated objects and compared to itself using the
+     * {@link Project#equals(Object)} method.
+     * Expected result:true, indicating that the comparison was successful.
+     */
+
+    @Test
+    public void shouldReturnTrueEqualsWithSameObjectWithIsolation() {
+        // Arrange
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+
+        // Act
+        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble, businessSectorDouble);
+
+        boolean isEquals = project.equals(project);
+
+        // Assert
+        assertTrue(isEquals);
+    }
 }
