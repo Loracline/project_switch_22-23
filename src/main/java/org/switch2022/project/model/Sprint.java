@@ -105,4 +105,13 @@ class Sprint {
     public boolean addUserStoryToSprintBacklog(UserStory userStory) {
         return this.sprintBacklog.addUserStory(userStory);
     }
+
+    /**
+     * This method verifies if the Sprint has the given Sprint Number
+     * @param sprintNumber of the seeked Sprint.
+     * @return TRUE if Sprint has the given Sprint Number, and FALSE otherwise.
+     */
+    public boolean hasSprintNumber (String sprintNumber){
+        return sprintNumber.equalsIgnoreCase(this.sprintNumber);
+    }
 }
