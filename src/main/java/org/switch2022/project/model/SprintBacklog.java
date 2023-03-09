@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.factories.FactoryUserStory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -84,4 +85,26 @@ public class SprintBacklog {
         }
         return result;
     }
+
+  /**
+   * This method makes a deep copy of the User Stories that are in the Sprint Backlog,
+   * and the copy in a new list.
+   * @param factoryUserStory used to create the copy User Stories.
+   * @return a list of the copied User Stories.
+   */
+  public List<UserStory> getUserStoriesCopy(FactoryUserStory factoryUserStory) {
+    List<UserStory> copyList = new ArrayList<>();
+    int i = 0;
+    while (i < this.userStories.size()) {
+      UserStory copyUserStory =
+              factoryUserStory.createUserStory(
+                      this.userStories.get(i).getUserStoryNumber(),
+                      this.userStories.get(i).getActor(),
+                      this.userStories.get(i).getUserStoryText());
+      copyUserStory.setStatus(this.userStories.get(i).getStatus());
+      copyList.add(copyUserStory);
+      i++;
+    }
+    return copyList;
+  }
 }

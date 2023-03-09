@@ -73,9 +73,11 @@ public class PeriodTest {
 
     @Test
     void testGetStartDateNow() {
+        //Arrange
         LocalDate startDate = LocalDate.now();
         int sprintDuration = 2;
         Period period = new Period(startDate, sprintDuration);
+        //Assert
         assertEquals(startDate, period.getStartDate());
     }
 
@@ -89,11 +91,9 @@ public class PeriodTest {
         LocalDate startDate = LocalDate.now();
         int sprintDuration = 2;
         Period period = new Period(startDate, sprintDuration);
-
         // Act
         LocalDate expectedEndDate = startDate.plusWeeks(sprintDuration);
         LocalDate actualEndDate = period.getEndDate();
-
         // Assert
         assertEquals(expectedEndDate, actualEndDate);
     }
@@ -193,4 +193,161 @@ public class PeriodTest {
         // Assert
         assertNotEquals(hashCode1, hashCode2);
     }
+
+    /*
+      METHOD isPeriodNotOverlapping()
+     */
+
+    /**
+     * Scenario 1: when period 1 do not overlap period 2.
+     */
+
+    @Test
+    public void testIsPeriodNotOverlappingWhenPeriod1DoesNotOverlapPeriod2() {
+        // Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        Period period2 = new Period(startDate1.plusMonths(6), 3);
+        boolean expected = true;
+        //Act
+        boolean result = period1.isPeriodNotOverlapping(period2);
+
+        // Assert
+        assertEquals(expected,result);
+    }
+    /**
+     * Scenario 2: when period 1 do not overlap period 2.
+     */
+    @Test
+    public void testIsPeriodNotOverlappingWhenPeriod2DoesNotOverlapPeriod1() {
+        // Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        Period period2 = new Period(startDate1.plusMonths(6), 3);
+        boolean expected = true;
+        //Act
+        boolean result = period2.isPeriodNotOverlapping(period1);
+        // Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Scenario 3: when one period is before the other.
+     */
+
+    @Test
+    public void testIsPeriodNotOverlappingWhenOnePeriodIsBeforeTheOther() {
+        // Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 5);
+        LocalDate startDate2 = LocalDate.of(2022, 7, 1);
+        Period period2 = new Period(startDate2, 5);
+        boolean expected = true;
+
+        // Act
+        boolean result = period1.isPeriodNotOverlapping(period2);
+        //Assert
+        assertEquals(expected,result);
+    }
+    /**
+     * Scenario 4: when periods overlap.
+     */
+
+    @Test
+    public void testIsPeriodNotOverlappingWhenPeriodsOverlap() {
+        // Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 5);
+        LocalDate startDate2 = LocalDate.of(2022, 2, 1);
+        Period period2 = new Period(startDate2, 5);
+        boolean expected = false;
+
+        // Assert
+        boolean result = period1.isPeriodNotOverlapping(period2);
+        //Act
+        assertEquals(expected,result);
+    }
+    /**
+     * Scenario 5: when periods are adjacent.
+     */
+
+    @Test
+    public void testIsPeriodNotOverlappingWhenPeriodsAreAdjacent() {
+        // Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        LocalDate startDate2 = startDate1.plusWeeks(5);
+        Period period2 = new Period(startDate2, 3);
+        boolean expected = true;
+        //Act
+        boolean result = period1.isPeriodNotOverlapping(period2);
+        // Assert
+        assertEquals(expected,result);
+    }
+    /**
+     * Scenario 6: when periods are the same.
+     */
+
+    @Test
+    public void testIsPeriodNotOverlappingWhenPeriodsAreTheSame() {
+        // Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        Period period2 = new Period(startDate1, 3);
+        boolean expected = false;
+        //Act
+        boolean result = period1.isPeriodNotOverlapping(period2);
+        //Assert
+        assertEquals(expected,result);
+    }
+    /**
+     * Scenario 7: not overlapping when given period ens before this period starts.
+     */
+    @Test
+    public void testIsPeriodNotOverlappingWhenGivenPeriodEndsBeforeThisPeriodStarts() {
+        //Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        Period period2 = new Period(startDate1.plusWeeks(4), 3);
+        boolean expected = true;
+
+        // Act
+        boolean result = period1.isPeriodNotOverlapping(period2);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /*
+      METHOD isStartDateBeforeNow()
+     */
+    /**
+     * Scenario 1: when start date is in the past.
+     */
+    @Test
+    public void testIsStartDateBeforeNowWhenStartDateIsInPast() {
+        // Arrange
+        LocalDate pastDate = LocalDate.now().minusDays(7);
+        Period pastPeriod = new Period(pastDate, 2);
+        boolean expect = true;
+        // Act
+        boolean result = pastPeriod.isStartDateBeforeNow();
+        // Assert
+        assertEquals(expect, result);
+    }
+    /**
+     * Scenario 2: when start date is in the future.
+     */
+    @Test
+    public void testIsStartDateBeforeNowWhenStartDateIsInFuture() {
+        // Arrange
+        LocalDate futureDate = LocalDate.now().plusDays(7);
+        Period futurePeriod = new Period(futureDate, 2);
+        boolean expected = false;
+
+        // Act
+        boolean result = futurePeriod.isStartDateBeforeNow();
+        //Assert
+        assertEquals(expected,result);
+    }
+
 }
