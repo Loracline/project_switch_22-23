@@ -80,6 +80,27 @@ public class UserStory {
     }
 
     /**
+     * This method returns the effort of the userStory.
+     *
+     * @return the effort associated to the userStory.
+     */
+
+    Effort getEffort() {
+        return effort;
+    }
+
+    /**
+     * This method sets the effort for the userStory.
+     *
+     * @param effort of the userStory.
+     * @return always true because the effort is fetched from a restricted list.
+     */
+
+    void setEffort(Effort effort) {
+        this.effort = effort;
+    }
+
+    /**
      * Setter method for the attribute: actor
      */
     private void setActor(String actor) {
@@ -104,24 +125,5 @@ public class UserStory {
         return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
     }
 
-    /**
-     * This method returns the effort of the userStory.
-     *
-     * @return the effort associated to the userStory.
-     */
 
-    Effort getEffort() {
-        return effort;
-    }
-
-    /**
-     * This method sets the effort for the userStory.
-     *
-     * @param effort of the userStory.
-     * @return always true because the effort is fetched from a restricted list.
-     */
-
-    void setEffort(Effort effort) {
-        this.effort = effort;
-    }
 }
