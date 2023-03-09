@@ -25,16 +25,21 @@ member -> ui : select project
 deactivate ui
 member -> ui : requests to view the Scrum Board of current sprint
 activate ui
-"ui" -> controller : getScrumBoard(projectDto)
+"ui" -> controller : getScrumBoard(projectDto, date)
 activate controller
-"controller" -> company : getScrumBoard(projectDto)
+"controller" -> company : getScrumBoard(projectDto, date)
 activate company
-"company" -> projectContainer : getScrumBoard(projectDto)
+"company" -> projectContainer : getScrumBoard(projectDto, date)
 activate projectContainer
-"projectContainer" -> project: getScrumBoard()
+"projectContainer" -> project: getScrumBoard(date)
 activate project
-"project" -> sprint : getSprintBacklog()
+"project" -> sprint : getScrumBoard()
 activate sprint
+"sprint"-> backlog: getSprintBacklogCopy()
+activate backlog
+"backlog"-> backlog : getUserStoriesCopy()
+"backlog"-> sprint : sprintBacklog
+deactivate backlog
 "sprint" -> project : sprintBacklog
 deactivate sprint
 project -> projectContainer : sprintBacklog
