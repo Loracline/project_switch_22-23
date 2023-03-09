@@ -3,19 +3,21 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.utils.Period;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 
 /**
- * Represents a short period of time defined by a Sprint Number, Period and Sprint Backlog.
+ * Represents a short period of time defined by a Sprint Number, Period and Sprint
+ * Backlog.
  */
 class Sprint {
-    private String sprintNumber;
+    private final String sprintNumber;
     private FactoryPeriod factoryPeriod;
     private Period period;
 
-    private SprintBacklog sprintBacklog;
+    private final SprintBacklog sprintBacklog = new SprintBacklog();
 
     /**
      * Constructor for Sprint class.
@@ -24,9 +26,11 @@ class Sprint {
      * @param sprintDuration the duration of the sprint in days.
      * @param sprintNumber   the number of the sprint.
      */
-    public static Sprint createSprint(LocalDate startDate, int sprintDuration, String sprintNumber, FactoryPeriod factoryPeriod) {
+    public static Sprint createSprint(LocalDate startDate, int sprintDuration,
+                                      String sprintNumber,
+                                      FactoryPeriod factoryPeriod) {
         Sprint sprint = new Sprint(sprintNumber);
-        sprint.setPeriod(factoryPeriod, sprintDuration,startDate);
+        sprint.setPeriod(factoryPeriod, sprintDuration, startDate);
         return sprint;
     }
 
@@ -35,8 +39,9 @@ class Sprint {
      *
      * @param sprintNumber the number of the sprint.
      */
-    private Sprint(String sprintNumber) {this.sprintNumber = sprintNumber.toLowerCase().trim();}
-
+    private Sprint(String sprintNumber) {
+        this.sprintNumber = sprintNumber.toLowerCase().trim();
+    }
 
     /**
      * Creates a new period within the sprint.
@@ -64,16 +69,19 @@ class Sprint {
     }
 
     /**
-     * Sets the period for the current instance of the object using the specified factory period,
+     * Sets the period for the current instance of the object using the specified
+     * factory period,
      * sprint duration, and start date.
-     * @param factoryPeriod the factory period to use for creating the period
+     *
+     * @param factoryPeriod  the factory period to use for creating the period
      * @param sprintDuration the duration of the sprint
-     * @param startDate the start date of the period
-     * */
+     * @param startDate      the start date of the period
+     */
 
-    private void setPeriod(FactoryPeriod factoryPeriod, int sprintDuration, LocalDate startDate){
+    private void setPeriod(FactoryPeriod factoryPeriod, int sprintDuration,
+                           LocalDate startDate) {
         this.factoryPeriod = factoryPeriod;
-        this.period = factoryPeriod.createPeriod(startDate,sprintDuration);
+        this.period = factoryPeriod.createPeriod(startDate, sprintDuration);
     }
 
 
@@ -85,4 +93,16 @@ class Sprint {
 
 
     }  */
+
+    /**
+     * This method adds a new User Story to the Sprint Backlog
+     *
+     * @param userStory the new User Story to be added
+     * @return TRUE if the User Story was successfully added to the list and FALSE
+     * otherwise.
+     */
+
+    public boolean addUserStoryToSprintBacklog(UserStory userStory) {
+        return this.sprintBacklog.addUserStory(userStory);
+    }
 }

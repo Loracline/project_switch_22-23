@@ -1,5 +1,7 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.factories.FactoryUserStory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +17,14 @@ public class ProductBacklog {
      * Attributes
      */
     private final List<UserStory> userStories = new ArrayList<>();
+    private FactoryUserStory factoryUserStory;
+
+    /**
+     * Constructor to assign class that implements FactoryUserStory
+     */
+    public ProductBacklog(FactoryUserStory factoryUserStory) {
+        this.factoryUserStory = factoryUserStory;
+    }
 
     /**
      * This method checks if two instances of ProductBacklog are equal by comparing
@@ -67,7 +77,8 @@ public class ProductBacklog {
     }
 
     /**
-    * This method returns a User Story from the Product Backlog with a given User Story number.
+     * This method returns a User Story from the Product Backlog with a given User Story number.
+     *
      * @param userStoryNumber of the User Story one searches for.
      * @return an Optional with a User Story.
      */
@@ -83,5 +94,24 @@ public class ProductBacklog {
             i++;
         }
         return Optional.ofNullable(userStory);
+    }
+
+    /**
+     * This method removes a User Story from the userStories list if the User Story exists.
+     *
+     * @param userStory to be deleted
+     * @return TRUE if the User Story is removed from UserStories list and FALSE otherwise.
+     */
+    public boolean removeUserStory(UserStory userStory) {
+        int i = 0;
+        boolean wasRemoved = false;
+        while (i < userStories.size() && !wasRemoved) {
+            if (userStories.contains(userStory)) {
+                userStories.remove(i);
+                wasRemoved = true;
+            }
+            i++;
+        }
+        return wasRemoved;
     }
 }
