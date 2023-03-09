@@ -12,12 +12,13 @@ class IFactoryCustomerTest {
    */
 
   /**
-   * Scenario 1: Verify if a Customer object is created through the iFactoryCustomer instance and equal to a
-   * Customer object from the Customer instance.
+   * Scenario 1: Verify if a Customer object is created through the IFactoryCustomer instance and equal to a
+   * Customer object from a Customer instance.
+   * <p>
    * Expected result: Both Customer objects are equal.
    */
   @Test
-  void ensureThatTheUserStoryHasNotTheGivingUserStoryNumber() {
+  void ensureThatTwoCustomerObjectsHaveTheSameParameters() {
     // Arrange
     String customerName = "John Doe";
     String customerNIF = "123456789";
