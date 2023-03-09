@@ -26,7 +26,7 @@ public class ProjectContainer {
     Project projectRequested = null;
     int i = 0;
     while (i < this.projects.size() && (projectRequested != (projects.get(i)))) {
-      if (projects.get(i).getProjectCode().equalsIgnoreCase(code)) {
+      if (projects.get(i).hasProjectCode(code)) {
         projectRequested = projects.get(i);
       }
       i++;
@@ -70,14 +70,6 @@ public class ProjectContainer {
    * @return TRUE if exists, and FALSE otherwise.
    */
   private boolean doesProjectExist(Project project) {
-    boolean projectExistence = false;
-    int i = 0;
-    while (i < projects.size() && !projectExistence) {
-      if (projects.get(i).getProjectCode().equals(project.getProjectCode())) {
-        projectExistence = true;
-      }
-      i++;
-    }
-    return projectExistence;
+    return projects.contains(project);
   }
 }
