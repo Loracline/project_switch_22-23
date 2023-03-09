@@ -46,7 +46,7 @@ class Project {
 class Sprint {
 -sprintBacklog
 -period
-+getSprintBacklogCopy()
++getSprintBacklogCopy(factoryUserStory)
 +getPeriodByDate(date)
 }
 
