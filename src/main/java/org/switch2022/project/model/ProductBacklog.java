@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.factories.IFactoryUserStory;
 
 import java.util.ArrayList;
@@ -59,19 +60,42 @@ public class ProductBacklog {
     }
 
     /**
+     * This method creates an UserStory from a Dto, and checks if the userStory is unique
+     * and had it to the ProductBacklog according to the priority defined.
+     * @param userStoryCreationDto and factoryUserStory
+     * @return true if the userStory is created and added to the ProductBacklog.
+     *
+     */
+
+    public boolean createUserStory(UserStoryCreationDto userStoryCreationDto,
+                                   IFactoryUserStory factoryUserStory) {
+        boolean isUserStoryCreated = false;
+        int priority = userStoryCreationDto.priority;
+        UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto.userStoryNumber,
+                userStoryCreationDto.actor, userStoryCreationDto.userStoryText);
+        if (addUserStory(userStory,priority)) {
+            isUserStoryCreated=true;
+        }
+        return isUserStoryCreated;
+    }
+
+
+    /**
      * This method adds a new User Story to the userStories list if the User Story
      * doesn't already exist.
+     * The priority is defined being 0 as the most important.
      *
-     * @param userStory the new User Story to be added
+     * @param userStory the new User Story to be added, priority
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise.
      */
-    public boolean addUserStory(UserStory userStory) {
+    public boolean addUserStory(UserStory userStory, int priority) {
         boolean result = true;
-        if (userStories.contains(userStory)) {
+
+        if (userStories.contains(userStory) || priority > userStories.size() ) {
             result = false;
         } else {
-            userStories.add(userStory);
+            userStories.add(priority,userStory);
         }
         return result;
     }
