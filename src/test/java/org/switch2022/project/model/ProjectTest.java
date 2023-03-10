@@ -11,6 +11,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.switch2022.project.model.UserStory.createUserStory;
 
 public class ProjectTest {
@@ -359,10 +360,13 @@ public class ProjectTest {
     //ISOLATION TESTS
 
     /**
-     * Scenario 1: Verifies if it's possible to create a valid instance of {@link Project} with isolated objects.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * Scenario 1: Verifies if it's possible to create a valid instance of {@link Project} with
+     * isolated objects.
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology}
      * are created.
-     * Then, an instance of {@link Project} is created with the isolated objects and verify if the created
+     * Then, an instance of {@link Project} is created with the isolated objects and verify if
+     * the created
      * instance is not null, indicating that it was created correctly.
      */
 
@@ -374,16 +378,20 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble, businessSectorDouble);
+        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+                businessSectorDouble);
 
         // Assert
         assertNotNull(project);
     }
 
     /**
-     * Scenario 2: Verifies if the method {@link Project#equals(Object)} returns {@code true} when compared to the same object.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology} are created.
-     * Then, an instance of {@link Project} is created with the isolated objects and compared to itself using the
+     * Scenario 2: Verifies if the method {@link Project#equals(Object)} returns {@code true}
+     * when compared to the same object.
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology} are created.
+     * Then, an instance of {@link Project} is created with the isolated objects and compared to
+     * itself using the
      * {@link Project#equals(Object)} method.
      * Expected result:true, indicating that the comparison was successful.
      */
@@ -396,7 +404,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble, businessSectorDouble);
+        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+                businessSectorDouble);
 
         boolean isEquals = project.equals(project);
 
@@ -405,11 +414,14 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 3: Verifies if the method {@link Project#equals(Object)} returns {@code true} when compared to the
+     * Scenario 3: Verifies if the method {@link Project#equals(Object)} returns {@code true}
+     * when compared to the
      * same type of object and with the same parameters.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology}
      * are created.
-     * Then, two instances of {@link Project} are created with the isolated objects and compared using the
+     * Then, two instances of {@link Project} are created with the isolated objects and compared
+     * using the
      * {@link Project#equals(Object)} method.
      * Expected result:true, indicating that the comparison was successful.
      */
@@ -422,7 +434,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+        Project projectDouble = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble,
                 businessSectorDouble);
         Project projectDoubleToCompare = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble);
@@ -434,11 +447,14 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 4: Verifies if the method {@link Project#equals(Object)} returns {@code false} when compared to the
+     * Scenario 4: Verifies if the method {@link Project#equals(Object)} returns {@code false}
+     * when compared to the
      * same type of object and with the different parameters.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology}
      * are created.
-     * Then, two instances of {@link Project} are created with the isolated objects and compared using the
+     * Then, two instances of {@link Project} are created with the isolated objects and compared
+     * using the
      * {@link Project#equals(Object)} method.
      * Expected result:false, indicating that the comparison was successful.
      */
@@ -451,7 +467,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+        Project projectDouble = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble,
                 businessSectorDouble);
         Project projectDoubleToCompare = new Project("A002", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble);
@@ -463,11 +480,14 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 5: Verifies if the method {@link Project#equals(Object)} returns {@code false} when compared to the
+     * Scenario 5: Verifies if the method {@link Project#equals(Object)} returns {@code false}
+     * when compared to the
      * different type of object.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology}
      * are created.
-     * Then, one instance of {@link Project} is created with the isolated objects and compared to an instance of the
+     * Then, one instance of {@link Project} is created with the isolated objects and compared to
+     * an instance of the
      * {@link Object} with {@link Project#equals(Object)} method.
      * Expected result:false, indicating that the comparison was successful.
      */
@@ -480,7 +500,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+        Project projectDouble = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble,
                 businessSectorDouble);
         Object projectToCompare = new Object();
 
@@ -621,10 +642,37 @@ public class ProjectTest {
         assertFalse(addedAgain);
     }
 
+
+    /**
+     * METHOD getProductBacklog(). This method verifies if a copy of a Product Backlog with list
+     * of copies of user stories is correctly returned.
+     * <p>
+     * Scenario 1: Verifies that the method returns a product backlog successfully.
+     */
+    @Test
+    void ensureThatProductBacklogIsSuccessfullyReturned() {
+        //ARRANGE
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
+
+        ProductBacklog productBacklogCopyExpected = mock(ProductBacklog.class);
+        when(productBacklogDouble.getProductBacklogCopy()).thenReturn(productBacklogCopyExpected);
+
+        Project project = new Project("AP01", "Artemis", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble);
+
+        //ACT
+        ProductBacklog result = project.getProductBacklog();
+
+        //ASSERT
+        assertEquals(productBacklogCopyExpected, result);
+    }
 }
-
-
-
-
-
-

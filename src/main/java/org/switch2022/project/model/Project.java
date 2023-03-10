@@ -235,5 +235,17 @@ public class Project {
         }
         return result;
     }
+
+    /**
+     * This method verifies if a copy of a Product Backlog with list of copies of user stories is
+     * correctly returned.
+
+     * @return a product backlog.
+     */
+
+    public ProductBacklog getProductBacklog(){
+        return this.productBacklog.getProductBacklogCopy();
+    }
+
 }
 
