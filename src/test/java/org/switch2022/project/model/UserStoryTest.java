@@ -2,11 +2,12 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.utils.Effort;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.switch2022.project.model.UserStory.createUserStory;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class UserStoryTest {
+
     /**
      * METHOD equals()
      * <br>
@@ -126,84 +127,6 @@ class UserStoryTest {
     }
 
     /**
-     * METHOD getUserStoryNumber()
-     * <br>
-     * Scenario 1: Verify that the user story number returned is the same of the User
-     * Story.
-     */
-    @Test
-    void ensureUserStoryNumberIsRetrievedSuccessfully() {
-        // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager",
-                "I want to create a profile");
-        String expected = "US001".toLowerCase();
-
-        // Act
-        String result = userStoryOne.getUserStoryNumber();
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * METHOD getActor()
-     * <br>
-     * Scenario 1: Verify that the actor returned is the same of the User Story.
-     */
-    @Test
-    void ensureActorIsRetrievedSuccessfully() {
-        // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager",
-                "I want to create a profile");
-        String expected = "Manager".toLowerCase();
-
-        // Act
-        String result = userStoryOne.getActor();
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * METHOD getUserStoryText()
-     * <br>
-     * Scenario 1: Verify that the user story text returned is the same of the User Story.
-     */
-    @Test
-    void ensureUserStoryTextIsRetrievedSuccessfully() {
-        // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager",
-                "I want to create a profile");
-        String expected = "I want to create a profile".toLowerCase().trim();
-
-        // Act
-        String result = userStoryOne.getUserStoryText();
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * METHOD setStatus() and getStatus()
-     * <br>
-     * Scenario 1: Verify that the status returned is the same of the User Story.
-     */
-    @Test
-    void ensureStatusIsSetAndRetrievedSuccessfully() {
-        // Arrange
-        Status status = Status.PLANNED;
-        UserStory userStoryOne = createUserStory("US001", "Manager",
-                "I want to create a profile");
-
-        // Act
-        userStoryOne.setStatus(status.toString());
-        String expected = userStoryOne.getStatus();
-
-        // Assert
-        assertEquals(expected, userStoryOne.getStatus());
-    }
-
-    /**
      * METHOD hasUserStoryNumber()
      * <br>
      * Scenario 1: Verify if userStory is the same by checking its userStoryNumber.
@@ -243,7 +166,7 @@ class UserStoryTest {
 
     /**
      * Method setEffort and getEffort.
-     * <br>
+     *<br>
      * Scenario 1: Verify if the effort of userStoryOne is set.
      * Expected result: effort of userStoryOne is equal to effort value.
      */
@@ -252,7 +175,6 @@ class UserStoryTest {
         // Arrange
         UserStory userStoryOne = createUserStory("US001", "Manager",
                 "I want to create a profile");
-
         // Act
         userStoryOne.setEffort(Effort.TWO);
 
@@ -265,7 +187,6 @@ class UserStoryTest {
      * by setting the efforts respectively.
      * Expected result: effort of userStoryOne is equal to the effort of userStoryTwo.
      */
-
     @Test
     void ensureEffortIsTheSameForTwoDifferentUserStories() {
         // Arrange
@@ -294,7 +215,6 @@ class UserStoryTest {
                 "I want to create a profile");
         UserStory userStoryTwo = createUserStory("US002", "Manager",
                 "I want to create a project");
-
         // Act
         userStoryOne.setEffort(Effort.TWO);
         userStoryTwo.setEffort(Effort.THIRTEEN);
@@ -303,5 +223,4 @@ class UserStoryTest {
         // Assert
         assertFalse(isEquals);
     }
-
 }

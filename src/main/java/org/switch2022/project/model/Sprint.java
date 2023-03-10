@@ -80,13 +80,6 @@ public class Sprint {
     }
 
     /**
-     * Getter method for the attribute: period.
-     */
-    public Period getPeriod() {
-        return period;
-    }
-
-    /**
      * Sets the period for the current instance of the object using the specified
      * factory period,
      * sprint duration, and start date.
@@ -95,8 +88,6 @@ public class Sprint {
      * @param sprintDuration the duration of the sprint
      * @param startDate      the start date of the period
      */
-
-
     private void setPeriod(IFactoryPeriod iFactoryPeriod, int sprintDuration,
                            LocalDate startDate) {
         this.iFactoryPeriod = iFactoryPeriod;
@@ -122,7 +113,6 @@ public class Sprint {
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise.
      */
-
     public boolean addUserStoryToSprintBacklog(UserStory userStory) {
         return this.sprintBacklog.addUserStory(userStory);
     }
@@ -134,7 +124,6 @@ public class Sprint {
      * @param effort       of the userStory.
      * @return true if the effort is set and false otherwise.
      */
-
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort) {
         return (sprintBacklog.estimateEffortUserStory(userStoryDto, effort));
     }

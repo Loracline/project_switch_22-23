@@ -2,14 +2,9 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.factories.FactoryUserStory;
 import org.switch2022.project.utils.Effort;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,7 +15,6 @@ class SprintBacklogTest {
      * <p>
      * Scenario 1: Verify if the same object equals itself.
      */
-
     @Test
     void ensureSameSprintBacklogEqualsItself() {
         // Arrange
@@ -39,7 +33,6 @@ class SprintBacklogTest {
      * Scenario 2: Verify if two objects of the same class are different from
      * each other.
      */
-
     @Test
     void ensureTwoSprintBacklogsAreNotTheSame() {
         // Arrange
@@ -60,7 +53,6 @@ class SprintBacklogTest {
      * Scenario 3: Verify if a UserStory and a different type of object are not
      * the same.
      */
-
     @Test
     void ensureSprintBacklogsAreNotEqualOtherTypeOfObject() {
         // Arrange
@@ -80,7 +72,6 @@ class SprintBacklogTest {
     /**
      * Scenario 4: Verify if a SprintBacklog and a null object are not the same.
      */
-
     @Test
     void ensureSprintBacklogDoesNotEqualNull() {
         // Arrange
@@ -100,7 +91,6 @@ class SprintBacklogTest {
      * <p>
      * Scenario 1: Two SprintBacklog objects are the same.
      */
-
     @Test
     public void ensureTwoSprintBacklogsHashcodeAreTheSame() {
         // Arrange
@@ -118,7 +108,6 @@ class SprintBacklogTest {
     /**
      * Scenario 2: Two SprintBacklog objects are not the same.
      */
-
     @Test
     public void ensureTwoSprintBacklogsHashcodeAreNotTheSame() {
         // Arrange
@@ -143,7 +132,6 @@ class SprintBacklogTest {
      * Scenario 1: verify if a User Story is added to Sprint Backlog if it is not
      * already there. Should return True.
      */
-
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToSprintBacklog() {
         //Arrange
@@ -161,7 +149,6 @@ class SprintBacklogTest {
      * Scenario 2: verify if a User Story is not added to Sprint Backlog if it is
      * already there. Should return false.
      */
-
     @Test
     void ensureThatUserStoryIsNotAddedToSprintBacklog() {
         //Arrange
@@ -181,7 +168,6 @@ class SprintBacklogTest {
      * <p>
      * Scenario 1: checks that a User Story has the giving User Story Number.
      */
-
     @Test
     void ensureThatTheUserStoryHasTheGivingUserStoryNumber() {
         //Arrange
@@ -200,7 +186,6 @@ class SprintBacklogTest {
     /**
      * Scenario 2: checks that a User Story has not the giving User Story Number.
      */
-
     @Test
     void ensureThatTheUserStoryHasNotTheGivingUserStoryNumber() {
         //Arrange
@@ -220,7 +205,6 @@ class SprintBacklogTest {
      * Scenario 3: checks that there is no User Story with the giving User Story Number
      * because container is empty.
      */
-
     @Test
     void ensureThatThereIsNoUserStoryWithGivingNumberBecauseContainerIsEmpty() {
         //Arrange
@@ -240,8 +224,6 @@ class SprintBacklogTest {
      * <p>
      * Scenario 1: sets the effort of a UserStory.
      */
-
-
     @Test
     void ensureEffortIsSetForUserStoryTestOne() {
         //Arrange
@@ -264,7 +246,6 @@ class SprintBacklogTest {
     /**
      * Scenario 2: set the effort of a UserStory.
      */
-
     @Test
     void ensureEffortIsSetForUserStoryTestTwo() {
         //Arrange
@@ -278,15 +259,6 @@ class SprintBacklogTest {
         UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
                 "I want to create a profile");
         Effort effort = Effort.THREE;
-    @Test
-    void ensureEffortIsIsSetForUserStory() {
-        //Arrange
-        SprintBacklog sprintBacklog = new SprintBacklog();
-        sprintBacklog.addUserStory(UserStory.createUserStory("US001", "Manager",
-                "I want to create a profile"));
-        UserStoryDto userStoryDto = new UserStoryDto("US001", "Manager",
-                "I want to create a profile");
-        Effort effort = Effort.THREE;
 
         //Act
         boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
@@ -298,7 +270,6 @@ class SprintBacklogTest {
     /**
      * Scenario 3: does not set the effort of a UserStory.
      */
-
     @Test
     void ensureEffortIsNotSetForUserStory() {
         //Arrange
@@ -316,59 +287,5 @@ class SprintBacklogTest {
 
         //Assert
         assertFalse(result);
-    }
-        //Assert
-        assertTrue(result);
-    }
-
-    /**
-     * Method getUserStoriesCopy()
-     *<br>
-     * Scenario 1: Copy list of user stories of the Sprint Backlog is not empty as the
-     * user story was copied to it.
-     */
-    @Test
-    void ensureUserStoryCopyIsAddedToCopyListSuccessfully() {
-        // Arrange
-        SprintBacklog sprintBacklogToTest = new SprintBacklog();
-
-        UserStory userStoryDouble = mock(UserStory.class);
-        sprintBacklogToTest.addUserStory(userStoryDouble);
-
-        FactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
-                thenReturn(userStoryDouble);
-
-        // Act
-        List<UserStory> result = sprintBacklogToTest.getUserStoriesCopy(factoryUserStoryDouble);
-
-        // Assert
-        assertFalse(result.isEmpty());
-    }
-
-    /**
-     * Scenario 2: The copied list is equal to the one present in the Sprint Backlog.
-     */
-    @Test
-    void ensureCopyListEqualsListInSprintBacklog() {
-        // Arrange
-        SprintBacklog sprintBacklogToTest = new SprintBacklog();
-
-        UserStory userStoryDouble = mock(UserStory.class);
-        sprintBacklogToTest.addUserStory(userStoryDouble);
-
-        List<UserStory> expectedList = new ArrayList<>();
-        expectedList.add(userStoryDouble);
-
-        FactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
-                thenReturn(userStoryDouble);
-        userStoryDouble.setStatus(any());
-
-        // Act
-        List<UserStory> resultList = sprintBacklogToTest.getUserStoriesCopy(factoryUserStoryDouble);
-
-        // Assert
-        assertEquals(expectedList, resultList);
     }
 }

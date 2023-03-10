@@ -6,21 +6,23 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
+import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.switch2022.project.model.UserStory.createUserStory;
 
 public class ProjectTest {
-
     /**
      * BeforeEach and AfterEach execute common code before/after running the
      * tests below.
      */
-
     Project projectOne, projectTwo, projectThree;
 
     @BeforeEach
@@ -103,7 +105,8 @@ public class ProjectTest {
     @Test
     void ensureTwoProjectsAreEqual() {
         // Arrange
-        Project project = new Project("AA001", "Aptoide", new Customer("john", "228674498"),
+        Project project = new Project("AA001", "Aptoide", new Customer("john",
+                "228674498"),
                 new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
         // Assert
@@ -228,7 +231,8 @@ public class ProjectTest {
     }
 
     /**
-     * Test to ensure that project typology requested from a given project is not retrieved
+     * Test to ensure that project typology requested from a given project is not
+     * retrieved
      */
     @Test
     void ensureProjectTypologyIsNotEqual() {
@@ -360,16 +364,17 @@ public class ProjectTest {
     //ISOLATION TESTS
 
     /**
-     * Scenario 1: Verifies if it's possible to create a valid instance of {@link Project} with
+     * Scenario 1: Verifies if it's possible to create a valid instance of
+     * {@link Project} with
      * isolated objects.
      * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
      * {@link ProjectTypology}
      * are created.
-     * Then, an instance of {@link Project} is created with the isolated objects and verify if
+     * Then, an instance of {@link Project} is created with the isolated objects and
+     * verify if
      * the created
      * instance is not null, indicating that it was created correctly.
      */
-
     @Test
     public void shouldCreateAValidProjectWithIsolation() {
         // Arrange
@@ -378,7 +383,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+        Project project = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble,
                 businessSectorDouble);
 
         // Assert
@@ -386,16 +392,17 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 2: Verifies if the method {@link Project#equals(Object)} returns {@code true}
+     * Scenario 2: Verifies if the method {@link Project#equals(Object)} returns {@code
+     * true}
      * when compared to the same object.
      * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
      * {@link ProjectTypology} are created.
-     * Then, an instance of {@link Project} is created with the isolated objects and compared to
+     * Then, an instance of {@link Project} is created with the isolated objects and
+     * compared to
      * itself using the
      * {@link Project#equals(Object)} method.
      * Expected result:true, indicating that the comparison was successful.
      */
-
     @Test
     public void shouldReturnTrueEqualsWithSameObjectWithIsolation() {
         // Arrange
@@ -404,7 +411,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+        Project project = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble,
                 businessSectorDouble);
 
         boolean isEquals = project.equals(project);
@@ -414,18 +422,19 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 3: Verifies if the method {@link Project#equals(Object)} returns {@code true}
+     * Scenario 3: Verifies if the method {@link Project#equals(Object)} returns {@code
+     * true}
      * when compared to the
      * same type of object and with the same parameters.
      * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
      * {@link ProjectTypology}
      * are created.
-     * Then, two instances of {@link Project} are created with the isolated objects and compared
+     * Then, two instances of {@link Project} are created with the isolated objects and
+     * compared
      * using the
      * {@link Project#equals(Object)} method.
      * Expected result:true, indicating that the comparison was successful.
      */
-
     @Test
     public void shouldReturnTrueEqualsProjectsWithSameParameters() {
         // Arrange
@@ -447,18 +456,19 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 4: Verifies if the method {@link Project#equals(Object)} returns {@code false}
+     * Scenario 4: Verifies if the method {@link Project#equals(Object)} returns {@code
+     * false}
      * when compared to the
      * same type of object and with the different parameters.
      * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
      * {@link ProjectTypology}
      * are created.
-     * Then, two instances of {@link Project} are created with the isolated objects and compared
+     * Then, two instances of {@link Project} are created with the isolated objects and
+     * compared
      * using the
      * {@link Project#equals(Object)} method.
      * Expected result:false, indicating that the comparison was successful.
      */
-
     @Test
     public void shouldReturnFalseEqualsProjectsNotWithSameParameters() {
         // Arrange
@@ -480,18 +490,19 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 5: Verifies if the method {@link Project#equals(Object)} returns {@code false}
+     * Scenario 5: Verifies if the method {@link Project#equals(Object)} returns {@code
+     * false}
      * when compared to the
      * different type of object.
      * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
      * {@link ProjectTypology}
      * are created.
-     * Then, one instance of {@link Project} is created with the isolated objects and compared to
+     * Then, one instance of {@link Project} is created with the isolated objects and
+     * compared to
      * an instance of the
      * {@link Object} with {@link Project#equals(Object)} method.
      * Expected result:false, indicating that the comparison was successful.
      */
-
     @Test
     public void shouldReturnFalseWithDifferentClasses() {
         // Arrange
@@ -511,13 +522,11 @@ public class ProjectTest {
         assertFalse(isEquals);
     }
 
-
     /**
      * Scenario 1: Verifies that the estimateEffortUserStory() method of the Project class
      * can correctly estimate the effort for a user story
      * Expected result: true, indicating that the estimation was successful.
      */
-
     @Test
     void ensureEstimateEffortUserStorySuccessfully() {
         // Arrange
@@ -536,7 +545,8 @@ public class ProjectTest {
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
         project.addSprint(sprint);
-        sprint.addUserStoryToSprintBacklog(createUserStory("US001", "I want to create a profile",
+        sprint.addUserStoryToSprintBacklog(createUserStory("US001", "I want to create a" +
+                        " profile",
                 "Planned"));
 
         // Act
@@ -551,10 +561,8 @@ public class ProjectTest {
      * can't correctly estimate the effort for a user story
      * Expected result: false, indicating that the estimation was unsuccessful.
      */
-
     @Test
     void ensureEstimateEffortUserStoryUnsuccessfully() {
-
         // Arrange
         IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
         IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
@@ -571,7 +579,8 @@ public class ProjectTest {
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
         project.addSprint(sprint);
-        sprint.addUserStoryToSprintBacklog(createUserStory("US001", "I want to create a profile",
+        sprint.addUserStoryToSprintBacklog(createUserStory("US001", "I want to create a" +
+                        " profile",
                 "Planned"));
 
         // Act
@@ -585,7 +594,6 @@ public class ProjectTest {
      * Scenario 1: Verifies that a Sprint can be successfully added to the project
      * Expected result: true, indicating that the Sprint was added to the project.
      */
-
     @Test
     void ensureThatSprintIsSuccessfullyAddedToTheProject() {
         // Arrange
@@ -612,10 +620,10 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 2: Verifies that a Sprint with the same number can't be added to the project
+     * Scenario 2: Verifies that a Sprint with the same number can't be added to the
+     * project
      * Expected result: false, indicating that the Sprint was not added to the project.
      */
-
     @Test
     void ensureThatCannotAddSameSprintTwiceToProject() {
         // Arrange
@@ -642,9 +650,9 @@ public class ProjectTest {
         assertFalse(addedAgain);
     }
 
-
     /**
-     * METHOD getProductBacklog(). This method verifies if a copy of a Product Backlog with list
+     * METHOD getProductBacklog(). This method verifies if a copy of a Product Backlog
+     * with list
      * of copies of user stories is correctly returned.
      * <p>
      * Scenario 1: Verifies that the method returns a product backlog successfully.
@@ -653,7 +661,8 @@ public class ProjectTest {
     void ensureThatProductBacklogIsSuccessfullyReturned() {
         //ARRANGE
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+        IFactoryProductBacklog factoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
         Customer customerDouble = mock(Customer.class);
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
@@ -674,5 +683,51 @@ public class ProjectTest {
 
         //ASSERT
         assertEquals(productBacklogCopyExpected, result);
+    }
+
+    /**
+     * Method getSprintByDate()
+     * <br>
+     * Scenario 1:
+     */
+    @Test
+    void ensureThatReturnsAnOptionalWithASprint() {
+        // Arrange
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+
+        IFactoryProductBacklog factoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactorySprintBacklog factorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+
+        Period periodDouble = mock(Period.class);
+
+        LocalDate startDate = LocalDate.of(2022, 12, 1);
+        when(factoryPeriodDouble.createPeriod(any(LocalDate.class), anyInt())).thenReturn(periodDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(any(LocalDate.class))).thenReturn(true);
+        when(periodDouble.isDateEqualOrLowerThanEndDate(any(LocalDate.class))).thenReturn(true);
+
+        LocalDate dateOfInterest = LocalDate.of(2023, 1, 1);
+
+        Project projectToTest = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble);
+
+        Sprint sprint = Sprint.createSprint(startDate, 3, "SP001",
+                factoryPeriodDouble, factorySprintBacklogDouble);
+
+        projectToTest.addSprint(sprint);
+
+        Optional<Sprint> expected = Optional.of(sprint);
+
+        // Act
+        Optional<Sprint> sprintOptional = projectToTest.getSprintByDate(dateOfInterest);
+
+        // Assert
+        assertEquals(expected, sprintOptional);
     }
 }

@@ -446,6 +446,7 @@ class SprintTest {
 
         //Act
         boolean result = sprintToTest.isDateWithinPeriod(dateToCompare);
+
         //Assert
         assertFalse(result);
     }

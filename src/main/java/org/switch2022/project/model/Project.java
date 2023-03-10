@@ -49,11 +49,14 @@ public class Project {
     }
 
     /**
-     *This constructor will create a new project receiving also the interface IFactoryProductBacklog and IFactoryUserStory.
+     * This constructor will create a new project receiving also the interface
+     * IFactoryProductBacklog and IFactoryUserStory.
      */
     public Project(String projectCode, String name, Customer customer,
                    ProjectTypology projectTypology,
-                   BusinessSector businessSector, IFactoryProductBacklog iFactoryProductBacklog, IFactoryUserStory iFactoryUserStory) {
+                   BusinessSector businessSector,
+                   IFactoryProductBacklog iFactoryProductBacklog,
+                   IFactoryUserStory iFactoryUserStory) {
         this.projectCode = projectCode;
         this.projectName = name;
         this.customer = customer;
@@ -61,7 +64,8 @@ public class Project {
         this.projectTypology = projectTypology;
         this.businessSector = businessSector;
         this.sprintDuration = 0;
-        this.productBacklog = iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
+        this.productBacklog =
+                iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
         this.sprints = new ArrayList<>();
     }
 
@@ -194,28 +198,30 @@ public class Project {
      * @param date within the period of the Sprint.
      * @return an Optional with a Sprint.
      */
-//    public Optional<Sprint> getSprintByDate(LocalDate date) {
-//        Sprint sprint = null;
-//        int i = 0;
-//        while (i < this.sprints.size() && sprint == null) {
-//            if (sprints.get(i).getPeriod().isDateWithinPeriod(date)) {
-//                sprint = sprints.get(i);
-//            }
-//            i++;
-//        }
-//        return Optional.ofNullable(sprint);
-//    }
+    public Optional<Sprint> getSprintByDate(LocalDate date) {
+        Sprint sprint = null;
+        int i = 0;
+        while (i < this.sprints.size() && sprint == null) {
+            if (sprints.get(i).isDateWithinPeriod(date)) {
+                sprint = sprints.get(i);
+            }
+            i++;
+        }
+        return Optional.ofNullable(sprint);
+    }
 
     /**
      * This method sets the effort estimation of a user story.
+     *
      * @param userStoryDto The UserStoryDto object to estimate the effort for.
-     * @param effort The effort object representing the estimated effort for the user story.
-     * @param sprintNumber The number of the sprint in which the user story is being estimated.
+     * @param effort       The effort object representing the estimated effort for the
+     *                     user story.
+     * @param sprintNumber The number of the sprint in which the user story is being
+     *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
-
-
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String sprintNumber) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
+                                           String sprintNumber) {
         if (sprints != null && !sprints.isEmpty()) {
             for (Sprint sprint : sprints) {
                 if (sprint.hasSprintNumber(sprintNumber)) {
@@ -237,15 +243,14 @@ public class Project {
     }
 
     /**
-     * This method verifies if a copy of a Product Backlog with list of copies of user stories is
+     * This method verifies if a copy of a Product Backlog with list of copies of user
+     * stories is
      * correctly returned.
-
+     *
      * @return a product backlog.
      */
-
-    public ProductBacklog getProductBacklog(){
+    public ProductBacklog getProductBacklog() {
         return this.productBacklog.getProductBacklogCopy();
     }
-
 }
 
