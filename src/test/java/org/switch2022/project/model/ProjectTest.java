@@ -3,10 +3,17 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.factories.FactoryPeriod;
+import org.switch2022.project.factories.IFactoryPeriod;
+import org.switch2022.project.utils.Effort;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.switch2022.project.model.UserStory.createUserStory;
 
 public class ProjectTest {
 
@@ -350,6 +357,37 @@ public class ProjectTest {
     assertFalse(project.setSprintDuration(5));
     assertEquals(0, project.getSprintDuration());
   }
+
+  /**
+   * METHOD estimateEffortUserStory(userStoryDto, effort)
+   * <p>
+   * Scenario 1: Verifies that the effort of a UserStory can be estimated correctly by the estimateEffortUserStory()
+   * method of the Sprint class.
+   * Expected result:true, indicating that the effort was set correctly.
+   */
+
+  @Test
+  void ensureEffortIsIsSetForUserStory() {
+    //Arrange
+    LocalDate date = LocalDate.of(2021, 9, 13);
+    FactoryPeriod factoryPeriod = new IFactoryPeriod();
+    Sprint sprint = Sprint.createSprint(date, 2, "S55", factoryPeriod);
+
+    UserStory userStory = createUserStory("US001", "Manager",
+            "I want to create a profile");
+    sprint.addUserStoryToSprintBacklog(userStory);
+
+    UserStoryDto userStoryDto = new UserStoryDto("US001", "Manager",
+            "I want to create a profile");
+    Effort effort = Effort.THREE;
+
+    //Act
+    boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
+
+    //Assert
+    assertTrue(result);
+  }
+
 
   //ISOLATION TESTS
 
