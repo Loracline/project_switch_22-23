@@ -1,8 +1,9 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.factories.FactoryUserStory;
+import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.factories.IFactoryUserStory;
+import org.switch2022.project.factories.FactoryUserStory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -158,7 +159,7 @@ public class ProductBacklogTest {
         IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDouble);
+        productBacklog.addUserStory(userStoryDouble, 0);
         when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(true);
         Optional<UserStory> userStoryOptionalExpected = Optional.of(userStoryDouble);
 
@@ -178,7 +179,7 @@ public class ProductBacklogTest {
         IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDouble);
+        productBacklog.addUserStory(userStoryDouble, 0);
         when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(false);
 
         Optional<UserStory> userStoryOptionalExpected = Optional.empty();
@@ -188,6 +189,70 @@ public class ProductBacklogTest {
 
         //ASSERT
         assertEquals(userStoryOptionalExpected, userStoryOptional);
+    }
+
+    /**
+     * METHOD createUserStory
+     * creates a new User Story and add it to the Product Backlog
+     * <p>
+     * Scenario 1: verify if a User Story is added to Product Backlog if it is not
+     * already there. Should return True.
+     */
+
+    @Test
+    void ensureThatUserStoryIsSuccessfullyCreated() {
+        //Arrange
+        IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001", "Manager", "I want to create a " +
+                "profile", 0);
+
+        //Act
+        boolean result = productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a User Story is added to Product Backlog if the priority value
+     * is bigger than the size of the list already there.
+     * Should return False.
+     */
+
+    @Test
+    void ensureThatUserStoryIsUnsuccessfullyCreated() {
+        //Arrange
+        IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001",
+                "Manager", "I want to create a profile", 2);
+
+        //Act
+        boolean result = productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: verify if a User Story is not created, if it is
+     * already in the Product Backlog. Should return false.
+     */
+    @Test
+    void ensureThatUserStoryIsNotCreated_RepeatedInTheProductBacklog() {
+        //Arrange
+        IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001",
+                "Manager", "I want to create a profile", 0);
+        productBacklog.createUserStory(userStoryCreationDto,iFactoryUserStory);
+
+        //Act
+        boolean result = productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
+
+        //Assert
+        assertFalse(result);
     }
 
     /**
@@ -206,7 +271,7 @@ public class ProductBacklogTest {
         UserStory userStoryDouble = mock(UserStory.class);
 
         //Act
-        boolean result = productBacklog.addUserStory(userStoryDouble);
+        boolean result = productBacklog.addUserStory(userStoryDouble, 0);
 
         //Assert
         assertTrue(result);
@@ -226,7 +291,7 @@ public class ProductBacklogTest {
         productBacklog.addUserStory(userStoryDouble);
 
         //Act
-        boolean result = productBacklog.addUserStory(userStoryDouble);
+        boolean result = productBacklog.addUserStory(userStoryDouble, 3);
 
         //Assert
         assertFalse(result);
@@ -245,7 +310,7 @@ public class ProductBacklogTest {
         IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDouble);
+        productBacklog.addUserStory(userStoryDouble, 0);
 
         //ACT
         boolean result = productBacklog.removeUserStory(userStoryDouble);
@@ -291,7 +356,7 @@ public class ProductBacklogTest {
         userStoryDouble.setEffort(any());
         when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
                 thenReturn(userStoryDouble);
-        productBacklog.addUserStory(userStoryDouble);
+        productBacklogDouble.addUserStory(userStoryDouble,0);
 
         List<UserStory> expected = new ArrayList<>();
         expected.add(userStoryDouble);
