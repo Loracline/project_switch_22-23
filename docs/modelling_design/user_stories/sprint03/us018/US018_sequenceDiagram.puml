@@ -12,8 +12,8 @@ participant ":GetProductBacklogController" as controller
 participant ":Company" as company
 participant ":ProjectContainer" as container
 participant ":Project" as project
-participant ":UserStoryDtoListAssembler" as assembler
 participant ":ProductBacklog" as backlog
+participant ":UserStoryDtoListAssembler" as assembler
 
 
 actor -> ui: requests list of all projects
@@ -35,7 +35,14 @@ activate container
 
 container -> project: getProductBacklog()
 activate project
+project -> backlog: getBacklogCopy()
 
+loop for each user story in userStories
+activate backlog
+backlog -> backlog: getUserStoriesCopy()
+
+backlog --> project: productBacklog
+deactivate backlog
 
 project --> container: productBacklog
 deactivate project
@@ -45,7 +52,7 @@ company --> controller: productBacklog
 deactivate company
 controller -> assembler: backlogToDto(productBacklog)
 activate assembler
-assembler -> backlog: getUserStories()
+assembler -> backlog: getUserStoriesCopy()
 activate backlog
 backlog --> assembler: userStories
 deactivate backlog

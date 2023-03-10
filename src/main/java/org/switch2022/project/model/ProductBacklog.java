@@ -17,7 +17,7 @@ public class ProductBacklog {
      * Attributes
      */
     private final List<UserStory> userStories = new ArrayList<>();
-    private IFactoryUserStory IFactoryUserStory;
+    private final IFactoryUserStory IFactoryUserStory;
 
     /**
      * Constructor to assign class that implements FactoryUserStory
@@ -113,5 +113,27 @@ public class ProductBacklog {
             i++;
         }
         return wasRemoved;
+    }
+
+    /**
+     * This method makes a deep copy of the User Stories that are in the Product Backlog,
+     * and the copy in a new list.
+     *
+     * @return a list of the copied User Stories.
+     */
+
+    public List<UserStory> getUserStoriesCopy(){
+        List<UserStory> listOfCopies = new ArrayList<>();
+
+        for (UserStory userStory : this.userStories) {
+            UserStory userStoryCopy = this.IFactoryUserStory.createUserStory(
+                    userStory.getUserStoryNumber(),
+                    userStory.getActor(),
+                    userStory.getUserStoryText());
+            userStoryCopy.setStatus(userStory.getStatus());
+            userStoryCopy.setEffort(userStory.getEffort());
+            listOfCopies.add(userStoryCopy);
+        }
+        return listOfCopies;
     }
 }
