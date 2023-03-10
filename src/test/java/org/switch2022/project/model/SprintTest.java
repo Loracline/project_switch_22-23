@@ -285,4 +285,48 @@ class SprintTest {
         assertFalse(result);
     }
 
+    /**
+     * METHOD hasUserStory(userStoryNumber).
+     * Verifies if the Sprint has a given userStoryNumber, making use of hasUserStory from SprintBacklog
+     * Scenario 1: returns True
+     */
+    @Test
+    void ensureThatUserStoryIsNotPresentInTheSprintBacklog() {
+        //Arrange
+        IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
+        SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
+        IFactorySprintBacklog factorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
+                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+        when(sprintBacklogDouble.hasUserStory("US001")).thenReturn(true);
+
+        //Act
+        boolean result = sprint.hasUserStory("US001");
+
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * Scenario 2: returns False
+     */
+    @Test
+    void ensureThatUserStoryIsPresentInTheSprintBacklog() {
+        //Arrange
+        IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
+        SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
+        IFactorySprintBacklog factorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
+                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+        when(sprintBacklogDouble.hasUserStory("US001")).thenReturn(false);
+
+        //Act
+        boolean result = sprint.hasUserStory("US001");
+
+        //Assert
+        assertFalse(result);
+    }
 }
