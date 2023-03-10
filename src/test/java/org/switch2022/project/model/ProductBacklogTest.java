@@ -133,7 +133,6 @@ public class ProductBacklogTest {
         productBacklog.addUserStory(userStoryDouble);
         when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(false);
 
-        //Optional<UserStory> userStoryOptionalExpected = Optional.ofNullable(null);
         Optional<UserStory> userStoryOptionalExpected = Optional.empty();
 
         //ACT

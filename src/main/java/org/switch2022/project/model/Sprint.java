@@ -4,6 +4,7 @@ package org.switch2022.project.model;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryPeriod;
 import org.switch2022.project.utils.Effort;
+import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
@@ -14,11 +15,12 @@ import java.util.Objects;
  * Represents a short period of time defined by a Sprint Number, Period and Sprint
  * Backlog.
  */
-class Sprint {
+public class Sprint {
     private final String sprintNumber;
-    private final SprintBacklog sprintBacklog = new SprintBacklog();
-    private IFactoryPeriod IFactoryPeriod;
     private Period period;
+    private SprintBacklog sprintBacklog;
+    private IFactoryPeriod iFactoryPeriod;
+    private IFactorySprintBacklog iFactorySprintBacklog;
 
     /**
      * Constructor
@@ -38,10 +40,12 @@ class Sprint {
      */
     public static Sprint createSprint(LocalDate startDate, int sprintDuration,
                                       String sprintNumber,
-                                      IFactoryPeriod IFactoryPeriod) {
+                                      IFactoryPeriod iFactoryPeriod,
+                                      IFactorySprintBacklog iFactorySprintBacklog) {
         Sprint sprint = new Sprint(sprintNumber);
-        sprint.IFactoryPeriod = IFactoryPeriod;
-        sprint.setPeriod(IFactoryPeriod, sprintDuration, startDate);
+        sprint.iFactoryPeriod = iFactoryPeriod;
+        sprint.setPeriod(iFactoryPeriod, sprintDuration, startDate);
+        sprint.setSprintBacklog(iFactorySprintBacklog);
         return sprint;
     }
 
@@ -87,16 +91,27 @@ class Sprint {
      * factory period,
      * sprint duration, and start date.
      *
-     * @param IFactoryPeriod  the factory period to use for creating the period
+     * @param iFactoryPeriod the factory period to use for creating the period
      * @param sprintDuration the duration of the sprint
      * @param startDate      the start date of the period
      */
 
 
-    private void setPeriod(IFactoryPeriod IFactoryPeriod, int sprintDuration,
+    private void setPeriod(IFactoryPeriod iFactoryPeriod, int sprintDuration,
                            LocalDate startDate) {
-        this.IFactoryPeriod = IFactoryPeriod;
-        this.period = IFactoryPeriod.createPeriod(startDate, sprintDuration);
+        this.iFactoryPeriod = iFactoryPeriod;
+        this.period = iFactoryPeriod.createPeriod(startDate, sprintDuration);
+    }
+
+    /**
+     * Set method for the attribute Sprint Backlog.
+     *
+     * @param iFactorySprintBacklog the factory Sprint Backlog to use for creating a
+     *                              Sprint Backlog.
+     */
+    private void setSprintBacklog(IFactorySprintBacklog iFactorySprintBacklog) {
+        this.iFactorySprintBacklog = iFactorySprintBacklog;
+        this.sprintBacklog = iFactorySprintBacklog.createSprintBacklog();
     }
 
 
@@ -122,5 +137,15 @@ class Sprint {
 
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort) {
         return (sprintBacklog.estimateEffortUserStory(userStoryDto, effort));
+    }
+
+    /**
+     * This method verifies if the Sprint has the given Sprint Number
+     *
+     * @param sprintNumber of the seeked Sprint.
+     * @return TRUE if Sprint has the given Sprint Number, and FALSE otherwise.
+     */
+    public boolean hasSprintNumber(String sprintNumber) {
+        return sprintNumber.equalsIgnoreCase(this.sprintNumber);
     }
 }
