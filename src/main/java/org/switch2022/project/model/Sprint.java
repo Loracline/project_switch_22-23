@@ -2,6 +2,7 @@ package org.switch2022.project.model;
 
 
 import org.switch2022.project.factories.FactoryPeriod;
+import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
@@ -14,10 +15,10 @@ import java.util.Objects;
  */
 class Sprint {
     private final String sprintNumber;
-    private FactoryPeriod factoryPeriod;
     private Period period;
-
-    private final SprintBacklog sprintBacklog = new SprintBacklog();
+    private SprintBacklog sprintBacklog;
+    private FactoryPeriod factoryPeriod;
+    private IFactorySprintBacklog factorySprintBacklog;
 
     /**
      * Constructor for Sprint class.
@@ -28,9 +29,11 @@ class Sprint {
      */
     public static Sprint createSprint(LocalDate startDate, int sprintDuration,
                                       String sprintNumber,
-                                      FactoryPeriod factoryPeriod) {
+                                      FactoryPeriod factoryPeriod,
+                                      IFactorySprintBacklog factorySprintBacklog) {
         Sprint sprint = new Sprint(sprintNumber);
         sprint.setPeriod(factoryPeriod, sprintDuration, startDate);
+        sprint.setSprintBacklog(factorySprintBacklog);
         return sprint;
     }
 
@@ -82,6 +85,16 @@ class Sprint {
                            LocalDate startDate) {
         this.factoryPeriod = factoryPeriod;
         this.period = factoryPeriod.createPeriod(startDate, sprintDuration);
+    }
+
+    /**
+     * Set method for the attribute Sprint Backlog.
+     * @param factorySprintBacklog the factory Sprint Backlog to use for creating a
+     *                             Sprint Backlog.
+     */
+    private void setSprintBacklog(IFactorySprintBacklog factorySprintBacklog) {
+        this.factorySprintBacklog = factorySprintBacklog;
+        this.sprintBacklog = factorySprintBacklog.createSprintBacklog();
     }
 
 

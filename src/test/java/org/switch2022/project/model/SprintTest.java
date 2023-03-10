@@ -2,6 +2,8 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.factories.FactoryPeriod;
+import org.switch2022.project.factories.FactorySprintBacklog;
+import org.switch2022.project.factories.IFactorySprintBacklog;
 
 import java.time.LocalDate;
 
@@ -21,13 +23,21 @@ class SprintTest {
     @Test
     void ensureThatUserStoryIsAddedToSprintBacklog() {
         //Arrange
-        UserStory userStoryDouble = mock(UserStory.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
         FactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+
+        SprintBacklog sprintBacklog = mock(SprintBacklog.class);
+        when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklog);
+
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S035", factoryPeriodDouble);
+                3, "S035", factoryPeriodDouble, factorySprintBacklogDouble);
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(sprintBacklog.addUserStory(userStoryDouble)).thenReturn(true);
 
         //Act
         boolean result = sprint.addUserStoryToSprintBacklog(userStoryDouble);
+
 
         //Assert
         assertTrue(result);
@@ -43,11 +53,14 @@ class SprintTest {
         //Arrange
         UserStory userStoryDouble = mock(UserStory.class);
         FactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
-        SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
+        SprintBacklog sprintBacklog = mock(SprintBacklog.class);
+        IFactorySprintBacklog factorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklog);
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S035", factoryPeriodDouble);
+                3, "S035", factoryPeriodDouble, factorySprintBacklogDouble);
         sprint.addUserStoryToSprintBacklog(userStoryDouble);
-        when(sprintBacklogDouble.addUserStory(userStoryDouble)).thenReturn(false);
+        when(sprintBacklog.addUserStory(userStoryDouble)).thenReturn(false);
 
         //Act
         boolean result = sprint.addUserStoryToSprintBacklog(userStoryDouble);
@@ -65,9 +78,11 @@ class SprintTest {
     @Test
     void ensureThatReturnsTrueIfSprintHasSprintNumber() {
         //ARRANGE
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
         FactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S1", factoryPeriodDouble);
+                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
 
         //ACT
         boolean result = sprint.hasSprintNumber("S1");
@@ -82,9 +97,11 @@ class SprintTest {
     @Test
     void ensureThatReturnsFalseIfSprintDoesNotHaveSprintNumber() {
         //ARRANGE
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
         FactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S2", factoryPeriodDouble);
+                3, "S2", factoryPeriodDouble, factorySprintBacklogDouble);
 
         //ACT
         boolean result = sprint.hasSprintNumber("S1");
