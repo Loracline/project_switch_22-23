@@ -150,6 +150,17 @@ public class Sprint {
     }
 
     /**
+     * This method verifies if the User Story is already in the list.
+     *
+     * @param userStoryNumber to check the presence in the list through the
+     *                        hasStoryNumber method.
+     * @return TRUE if the User Story is present in the list and FALSE otherwise.
+     */
+    public boolean hasUserStory(String userStoryNumber){
+        return sprintBacklog.hasUserStory(userStoryNumber);
+    }
+
+    /**
      * This method checks if date is equal or greater than start date and equal or lower than end date.
      *
      * @param date to compare
