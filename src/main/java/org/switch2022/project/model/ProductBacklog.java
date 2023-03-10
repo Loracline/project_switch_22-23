@@ -62,9 +62,9 @@ public class ProductBacklog {
     /**
      * This method creates an UserStory from a Dto, and checks if the userStory is unique
      * and had it to the ProductBacklog according to the priority defined.
+     *
      * @param userStoryCreationDto and factoryUserStory
      * @return true if the userStory is created and added to the ProductBacklog.
-     *
      */
 
     public boolean createUserStory(UserStoryCreationDto userStoryCreationDto,
@@ -73,8 +73,8 @@ public class ProductBacklog {
         int priority = userStoryCreationDto.priority;
         UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto.userStoryNumber,
                 userStoryCreationDto.actor, userStoryCreationDto.userStoryText);
-        if (addUserStory(userStory,priority)) {
-            isUserStoryCreated=true;
+        if (addUserStory(userStory, priority)) {
+            isUserStoryCreated = true;
         }
         return isUserStoryCreated;
     }
@@ -92,10 +92,10 @@ public class ProductBacklog {
     public boolean addUserStory(UserStory userStory, int priority) {
         boolean result = true;
 
-        if (userStories.contains(userStory) || priority > userStories.size() ) {
+        if (userStories.contains(userStory) || priority > userStories.size()) {
             result = false;
         } else {
-            userStories.add(priority,userStory);
+            userStories.add(priority, userStory);
         }
         return result;
     }
@@ -146,7 +146,7 @@ public class ProductBacklog {
      * @return a list of the copied User Stories.
      */
 
-    public List<UserStory> getUserStoriesCopy(){
+    public List<UserStory> getUserStoriesCopy() {
         List<UserStory> listOfCopies = new ArrayList<>();
 
         for (UserStory userStory : this.userStories) {
@@ -159,5 +159,25 @@ public class ProductBacklog {
             listOfCopies.add(userStoryCopy);
         }
         return listOfCopies;
+    }
+
+    /**
+     * This method makes a copy the list of user stories contained in the product backlog and
+     * stores them in another instance of product backlog.
+     *
+     * @return a product backlog with list of copies of user stories.
+     */
+
+    public ProductBacklog getProductBacklogCopy() {
+        ProductBacklog productBacklogCopy = new ProductBacklog(this.IFactoryUserStory);
+
+        List<UserStory> userStoriesCopy =
+                getUserStoriesCopy();
+
+        for (int i = 0; i < userStoriesCopy.size(); i++) {
+            productBacklogCopy.addUserStory(userStoriesCopy.get(i), i);
+            i++;
+        }
+        return productBacklogCopy;
     }
 }

@@ -2,8 +2,8 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryCreationDto;
-import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.factories.FactoryUserStory;
+import org.switch2022.project.factories.IFactoryUserStory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 
 
 public class ProductBacklogTest {
@@ -50,7 +49,7 @@ public class ProductBacklogTest {
         ProductBacklog reference = new ProductBacklog(factoryUserStoryDoubleOne);
 
         UserStory userStoryDouble = mock(UserStory.class);
-        reference.addUserStory(userStoryDouble,0);
+        reference.addUserStory(userStoryDouble, 0);
 
         IFactoryUserStory factoryUserStoryDoubleTwo = mock(FactoryUserStory.class);
         ProductBacklog other = new ProductBacklog(factoryUserStoryDoubleTwo);
@@ -135,7 +134,7 @@ public class ProductBacklogTest {
         ProductBacklog productBacklogOne = new ProductBacklog(factoryUserStoryDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
-        productBacklogOne.addUserStory(userStoryDouble,0);
+        productBacklogOne.addUserStory(userStoryDouble, 0);
 
         ProductBacklog productBacklogTwo = new ProductBacklog(factoryUserStoryDouble);
 
@@ -149,7 +148,8 @@ public class ProductBacklogTest {
 
     /**
      * METHOD getUserStoryByNumber(userStoryNumber)
-     * verifies that method returns a User Story from the Product Backlog with a given User Story number.
+     * verifies that method returns a User Story from the Product Backlog with a given User Story
+     * number.
      * <p>
      * Scenario 1: returns an Optional containing a User Story with a giving User Story Number.
      */
@@ -171,7 +171,8 @@ public class ProductBacklogTest {
     }
 
     /**
-     * Scenario 2: returns an Optional containing a null object because there is no User Story with that User Story number.
+     * Scenario 2: returns an Optional containing a null object because there is no User Story
+     * with that User Story number.
      */
     @Test
     void ensureThatReturnsAnOptionalWithANullObject() {
@@ -204,7 +205,8 @@ public class ProductBacklogTest {
         //Arrange
         IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001", "Manager", "I want to create a " +
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001", "Manager",
+                "I want to create a " +
                 "profile", 0);
 
         //Act
@@ -246,7 +248,7 @@ public class ProductBacklogTest {
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001",
                 "Manager", "I want to create a profile", 0);
-        productBacklog.createUserStory(userStoryCreationDto,iFactoryUserStory);
+        productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
 
         //Act
         boolean result = productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
@@ -288,7 +290,7 @@ public class ProductBacklogTest {
         IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDouble,0);
+        productBacklog.addUserStory(userStoryDouble, 0);
 
         //Act
         boolean result = productBacklog.addUserStory(userStoryDouble, 3);
@@ -341,7 +343,7 @@ public class ProductBacklogTest {
     /**
      * METHOD getUserStoriesCopy(). Copy the list of user stories contained in the
      * product backlog.
-     *
+     * <p>
      * Scenario 1: Verifies that the method returns a list of deep copies of the user
      * stories that are in the product backlog.
      */
@@ -356,7 +358,7 @@ public class ProductBacklogTest {
         userStoryDouble.setEffort(any());
         when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
                 thenReturn(userStoryDouble);
-        productBacklogDouble.addUserStory(userStoryDouble,0);
+        productBacklogDouble.addUserStory(userStoryDouble, 0);
 
         List<UserStory> expected = new ArrayList<>();
         expected.add(userStoryDouble);
@@ -366,5 +368,35 @@ public class ProductBacklogTest {
 
         // ASSERT
         assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD getProductBacklogCopy(). Copy the list of user stories contained in the
+     * product backlog and stores them in another instance of product backlog.
+     * <p>
+     * Scenario 1: Verifies that the method returns a product backlog with a list of deep copies
+     * of the user stories that are in the original product backlog.
+     */
+    @Test
+    void ensureThatProductBacklogWithListOfCopiesEqualsTheOriginalProductBacklog() {
+        //ARRANGE
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        userStoryDouble.setStatus(any());
+        userStoryDouble.setEffort(any());
+        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).thenReturn(userStoryDouble);
+        productBacklog.addUserStory(userStoryDouble, 0);
+
+        ProductBacklog expected = new ProductBacklog(factoryUserStoryDouble);
+        expected.addUserStory(userStoryDouble, 0);
+
+        //ACT
+        ProductBacklog result = productBacklog.getProductBacklogCopy();
+
+        //ASSERT
+        assertEquals(expected, result);
+
     }
 }
