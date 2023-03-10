@@ -26,10 +26,35 @@ public class ProductBacklogTest {
     @Test
     void ensureSameProductBacklogEqualsItself() {
         // Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog reference = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(factoryUserStoryDouble);
         ProductBacklog other = reference;
         boolean expected = true;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: Verify if two objects of the same class are different from
+     * each other.
+     */
+    @Test
+    void ensureTwoProductBacklogsAreNotTheSame() {
+        // Arrange
+        IFactoryUserStory factoryUserStoryDoubleOne = mock(FactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(factoryUserStoryDoubleOne);
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        reference.addUserStory(userStoryDouble);
+
+        IFactoryUserStory factoryUserStoryDoubleTwo = mock(FactoryUserStory.class);
+        ProductBacklog other = new ProductBacklog(factoryUserStoryDoubleTwo);
+
+        boolean expected = false;
 
         // Act
         boolean result = reference.equals(other);
@@ -46,8 +71,8 @@ public class ProductBacklogTest {
     @Test
     void ensureProductBacklogDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog reference = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(factoryUserStoryDouble);
         String other = "User";
         boolean expected = false;
 
@@ -64,8 +89,8 @@ public class ProductBacklogTest {
     @Test
     void ensureProductBacklogDoesNotEqualNull() {
         // Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog reference = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(factoryUserStoryDouble);
         ProductBacklog other = null;
         boolean expected = false;
 
@@ -86,9 +111,9 @@ public class ProductBacklogTest {
     @Test
     public void ensureTwoProductBacklogsHashcodeAreTheSame() {
         // Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog productBacklogOne = new ProductBacklog(factoryUserStory);
-        ProductBacklog productBacklogTwo = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogOne = new ProductBacklog(factoryUserStoryDouble);
+        ProductBacklog productBacklogTwo = new ProductBacklog(factoryUserStoryDouble);
 
         // Act
         int productBacklogOneHashCode = productBacklogOne.hashCode();
@@ -96,6 +121,29 @@ public class ProductBacklogTest {
 
         // Assert
         assertEquals(productBacklogOneHashCode, productBacklogTwoHashCode);
+    }
+
+    /**
+     * Scenario 2: Two different ProductBacklog objects are not the same.
+     */
+
+    @Test
+    public void ensureTwoProductBacklogsHashcodeAreNotTheSame() {
+        // Arrange
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogOne = new ProductBacklog(factoryUserStoryDouble);
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        productBacklogOne.addUserStory(userStoryDouble);
+
+        ProductBacklog productBacklogTwo = new ProductBacklog(factoryUserStoryDouble);
+
+        // Act
+        int productBacklogOneHashCode = productBacklogOne.hashCode();
+        int productBacklogTwoHashCode = productBacklogTwo.hashCode();
+
+        // Assert
+        assertNotEquals(productBacklogOneHashCode, productBacklogTwoHashCode);
     }
 
     /**
@@ -107,7 +155,7 @@ public class ProductBacklogTest {
     @Test
     void ensureThatReturnsAnOptionalWithAUserStory() {
         //ARRANGE
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         productBacklog.addUserStory(userStoryDouble);
@@ -127,7 +175,7 @@ public class ProductBacklogTest {
     @Test
     void ensureThatReturnsAnOptionalWithANullObject() {
         //ARRANGE
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         productBacklog.addUserStory(userStoryDouble);
@@ -153,7 +201,7 @@ public class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToProductBacklog() {
         //Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
 
@@ -172,7 +220,7 @@ public class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsNotAddedToProductBacklog() {
         //Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         productBacklog.addUserStory(userStoryDouble);
@@ -194,7 +242,7 @@ public class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsRemovedFromProductBacklog() {
         //ARRANGE
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         productBacklog.addUserStory(userStoryDouble);
@@ -214,7 +262,7 @@ public class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsNotRemovedFromProductBacklogBecauseItIsNotThere() {
         //ARRANGE
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
 
@@ -235,21 +283,21 @@ public class ProductBacklogTest {
     @Test
     void ensureCopyListEqualsListInProductBacklog() {
         // ARRANGE
-        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
-        ProductBacklog productBacklogDouble = new ProductBacklog(factoryUserStoryDouble);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
         userStoryDouble.setStatus(any());
         userStoryDouble.setEffort(any());
         when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
                 thenReturn(userStoryDouble);
-        productBacklogDouble.addUserStory(userStoryDouble);
+        productBacklog.addUserStory(userStoryDouble);
 
         List<UserStory> expected = new ArrayList<>();
         expected.add(userStoryDouble);
 
         // ACT
-        List<UserStory> result = productBacklogDouble.getUserStoriesCopy();
+        List<UserStory> result = productBacklog.getUserStoriesCopy();
 
         // ASSERT
         assertEquals(expected, result);
