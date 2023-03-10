@@ -29,6 +29,12 @@ public class UserStoryDtoListAssembler {
         List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
         return userStoryDtos;
     }
+    public static List<UserStoryDto> backlogToDto(SprintBacklog sprintBacklog,
+                                                  IFactoryUserStory factoryUserStory){
+        List<UserStory> userStories = sprintBacklog.getUserStoriesCopy(factoryUserStory);
+        List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
+        return userStoryDtos;
+    }
 
     private static List<UserStoryDto> getUserStoryDtos(List<UserStory> userStories) {
         List<UserStoryDto> userStoryDtos = new ArrayList<>();
@@ -38,5 +44,6 @@ public class UserStoryDtoListAssembler {
         }
         return userStoryDtos;
     }
+
 
 }
