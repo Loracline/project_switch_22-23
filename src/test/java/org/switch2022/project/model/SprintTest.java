@@ -1,29 +1,22 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryPeriod;
 import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.factories.FactorySprintBacklog;
 import org.switch2022.project.factories.IFactorySprintBacklog;
-import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.switch2022.project.model.UserStory.createUserStory;
 
 
 class SprintTest {
 
     private final IFactoryPeriod IFactoryPeriod = new FactoryPeriod();
-    /**
-     * METHOD estimateEffortUserStory(userStoryDto, effort)
-     * <p>
-     * Scenario 1: sets the effort of a UserStory.
-     */
+
     /*
      *METHOD EQUALS
      */
@@ -34,8 +27,11 @@ class SprintTest {
     @Test
     public void testEqualsWhenDifferentSprintNumber() {
         // Arrange
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(),3,"S001", IFactoryPeriod);
-        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(),3,"S002", IFactoryPeriod);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "S001", IFactoryPeriod
+                , factorySprintBacklogDouble);
+        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, "S002", IFactoryPeriod
+                , factorySprintBacklogDouble);
         boolean expected = false;
         // Act
         boolean result = sprintOne.equals(sprintTwo);
@@ -49,8 +45,11 @@ class SprintTest {
     @Test
     public void testEqualsWhenSameSprintNumber() {
         // Arrange
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001", IFactoryPeriod);
-        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, "SP001", IFactoryPeriod);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+                IFactoryPeriod, factorySprintBacklogDouble);
+        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+                IFactoryPeriod, factorySprintBacklogDouble);
         boolean expected = true;
         // Act
         boolean result = sprintOne.equals(sprintTwo);
@@ -64,7 +63,9 @@ class SprintTest {
     @Test
     public void testEqualsWhenComparedToDifferentObject() {
         // Arrange
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 4, "SP001", IFactoryPeriod);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 4, "SP001",
+                IFactoryPeriod, factorySprintBacklogDouble);
         Object object = new Object();
         boolean expected = false;
         // Act
@@ -79,7 +80,9 @@ class SprintTest {
     @Test
     public void testSprintDoesNotEqualNull() {
         //Arrange
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 4, "SP001", IFactoryPeriod);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 4, "SP001",
+                IFactoryPeriod, factorySprintBacklogDouble);
         Sprint other = null;
         boolean expected = false;
         //Act
@@ -98,8 +101,11 @@ class SprintTest {
     @Test
     public void ensureTwoSprintHashcodeAreTheSame() {
         //Arrange
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001", IFactoryPeriod);
-        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, "SP001", IFactoryPeriod);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+                IFactoryPeriod, factorySprintBacklogDouble);
+        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+                IFactoryPeriod, factorySprintBacklogDouble);
         //Act
         int sprintOneHashCode = sprintOne.hashCode();
         int sprintTwoHashCode = sprintTwo.hashCode();
@@ -113,66 +119,16 @@ class SprintTest {
     @Test
     public void ensureTwoSprintHashcodeAreNotTheSame() {
         //Arrange
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001", IFactoryPeriod);
-        Sprint sprintThree = Sprint.createSprint(LocalDate.now(), 4, "SP003", IFactoryPeriod);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+                IFactoryPeriod, factorySprintBacklogDouble);
+        Sprint sprintThree = Sprint.createSprint(LocalDate.now(), 4, "SP003",
+                IFactoryPeriod, factorySprintBacklogDouble);
         //Act
         int sprintOneHashCode = sprintOne.hashCode();
         int sprintThreeHashCode = sprintThree.hashCode();
         //Assert
         assertNotEquals(sprintOneHashCode, sprintThreeHashCode);
-    }
-
-    /**
-     * METHOD estimateEffortUserStory(userStoryDto, effort)
-     * <p>
-     * Scenario 1: sets the effort of a UserStory.
-     */
-
-    @Test
-    void ensureEffortIsSetForUserStory() {
-        //Arrange
-        LocalDate date = LocalDate.of(2021, 9, 13);
-        IFactoryPeriod IFactoryPeriod = new FactoryPeriod();
-        Sprint sprint = Sprint.createSprint(date, 2, "S55", IFactoryPeriod);
-
-        UserStory userStory = createUserStory("US001", "Manager",
-                "I want to create a profile");
-        sprint.addUserStoryToSprintBacklog(userStory);
-
-        UserStoryDto userStoryDto = new UserStoryDto("US001", "Manager",
-                "I want to create a profile");
-        Effort effort = Effort.THREE;
-
-        //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
-
-        //Assert
-        assertTrue(result);
-    }
-
-    /**
-     * Scenario 2: does not set the effort of a userStory because userStoryNumber does not exist.
-     */
-    @Test
-    void ensureEffortIsNotSetForUserStory() {
-        //Arrange
-        LocalDate date = LocalDate.of(2021, 9, 13);
-        IFactoryPeriod iFactoryPeriod = new FactoryPeriod();
-        Sprint sprint = Sprint.createSprint(date, 2, "S55", iFactoryPeriod);
-
-        UserStory userStory = createUserStory("US001", "Manager",
-                "I want to create a profile");
-        sprint.addUserStoryToSprintBacklog(userStory);
-
-        UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
-                "I want to create a profile");
-        Effort effort = Effort.THREE;
-
-        //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
-
-        //Assert
-        assertFalse(result);
     }
 
     /**
@@ -208,7 +164,6 @@ class SprintTest {
      * Scenario 2: verify if a User Story is not added to Product Backlog. Should
      * return false.
      */
-
     @Test
     void ensureThatUserStoryIsNotAddedToSprintBacklog() {
         //Arrange

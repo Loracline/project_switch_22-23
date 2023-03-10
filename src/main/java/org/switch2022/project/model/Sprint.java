@@ -4,7 +4,6 @@ package org.switch2022.project.model;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryPeriod;
 import org.switch2022.project.utils.Effort;
-import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.utils.Period;
 
@@ -20,8 +19,17 @@ class Sprint {
     private final String sprintNumber;
     private Period period;
     private SprintBacklog sprintBacklog;
-    private IFactoryPeriod IFactoryPeriod;
-    private IFactorySprintBacklog factorySprintBacklog;
+    private IFactoryPeriod iFactoryPeriod;
+    private IFactorySprintBacklog iFactorySprintBacklog;
+
+    /**
+     * Constructor
+     *
+     * @param sprintNumber the number of the sprint.
+     */
+    private Sprint(String sprintNumber) {
+        this.sprintNumber = sprintNumber.toLowerCase().trim();
+    }
 
     /**
      * Constructor for Sprint class.
@@ -32,22 +40,13 @@ class Sprint {
      */
     public static Sprint createSprint(LocalDate startDate, int sprintDuration,
                                       String sprintNumber,
-                                      IFactoryPeriod IFactoryPeriod,
-                                      IFactorySprintBacklog factorySprintBacklog) {
+                                      IFactoryPeriod iFactoryPeriod,
+                                      IFactorySprintBacklog iFactorySprintBacklog) {
         Sprint sprint = new Sprint(sprintNumber);
-        sprint.IFactoryPeriod = IFactoryPeriod;
-        sprint.setPeriod(IFactoryPeriod, sprintDuration, startDate);
-        sprint.setSprintBacklog(factorySprintBacklog);
+        sprint.iFactoryPeriod = iFactoryPeriod;
+        sprint.setPeriod(iFactoryPeriod, sprintDuration, startDate);
+        sprint.setSprintBacklog(iFactorySprintBacklog);
         return sprint;
-    }
-
-    /**
-     * Constructor
-     *
-     * @param sprintNumber the number of the sprint.
-     */
-    private Sprint(String sprintNumber) {
-        this.sprintNumber = sprintNumber.toLowerCase().trim();
     }
 
     /**
@@ -92,28 +91,28 @@ class Sprint {
      * factory period,
      * sprint duration, and start date.
      *
-     * @param IFactoryPeriod  the factory period to use for creating the period
+     * @param iFactoryPeriod the factory period to use for creating the period
      * @param sprintDuration the duration of the sprint
      * @param startDate      the start date of the period
      */
 
 
-    private void setPeriod(IFactoryPeriod IFactoryPeriod, int sprintDuration,
+    private void setPeriod(IFactoryPeriod iFactoryPeriod, int sprintDuration,
                            LocalDate startDate) {
-        this.IFactoryPeriod = IFactoryPeriod;
-        this.period = IFactoryPeriod.createPeriod(startDate, sprintDuration);
+        this.iFactoryPeriod = iFactoryPeriod;
+        this.period = iFactoryPeriod.createPeriod(startDate, sprintDuration);
     }
 
     /**
      * Set method for the attribute Sprint Backlog.
-     * @param factorySprintBacklog the factory Sprint Backlog to use for creating a
-     *                             Sprint Backlog.
+     *
+     * @param iFactorySprintBacklog the factory Sprint Backlog to use for creating a
+     *                              Sprint Backlog.
      */
-    private void setSprintBacklog(IFactorySprintBacklog factorySprintBacklog) {
-        this.factorySprintBacklog = factorySprintBacklog;
-        this.sprintBacklog = factorySprintBacklog.createSprintBacklog();
+    private void setSprintBacklog(IFactorySprintBacklog iFactorySprintBacklog) {
+        this.iFactorySprintBacklog = iFactorySprintBacklog;
+        this.sprintBacklog = iFactorySprintBacklog.createSprintBacklog();
     }
-
 
 
     /**
@@ -142,10 +141,11 @@ class Sprint {
 
     /**
      * This method verifies if the Sprint has the given Sprint Number
+     *
      * @param sprintNumber of the seeked Sprint.
      * @return TRUE if Sprint has the given Sprint Number, and FALSE otherwise.
      */
-    public boolean hasSprintNumber (String sprintNumber){
+    public boolean hasSprintNumber(String sprintNumber) {
         return sprintNumber.equalsIgnoreCase(this.sprintNumber);
     }
 }

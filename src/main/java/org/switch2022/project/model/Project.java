@@ -28,10 +28,7 @@ public class Project {
     private String projectStatus;
     private int sprintDuration;
     private List<Sprint> sprints;
-
-
     private ProductBacklog productBacklog;
-
     private IFactoryProductBacklog iFactoryProductBacklog;
     private IFactoryUserStory iFactoryUserStory;
 

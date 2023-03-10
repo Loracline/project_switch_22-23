@@ -93,15 +93,15 @@ public class SprintBacklog {
      * This method makes a deep copy of the User Stories that are in the Sprint Backlog,
      * and the copy in a new list.
      *
-     * @param factoryUserStory used to create the copy User Stories.
+     * @param iFactoryUserStory used to create the copy User Stories.
      * @return a list of the copied User Stories.
      */
-    public List<UserStory> getUserStoriesCopy(IFactoryUserStory factoryUserStory) {
+    public List<UserStory> getUserStoriesCopy(IFactoryUserStory iFactoryUserStory) {
         List<UserStory> copyList = new ArrayList<>();
         int i = 0;
         while (i < this.userStories.size()) {
             UserStory copyUserStory =
-                    factoryUserStory.createUserStory(
+                    iFactoryUserStory.createUserStory(
                             this.userStories.get(i).getUserStoryNumber(),
                             this.userStories.get(i).getActor(),
                             this.userStories.get(i).getUserStoryText());
