@@ -278,7 +278,7 @@ class SprintBacklogTest {
         boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
 
         //Assert
-        assertFalse(result);
+        assertTrue(result);
     }
 
     /**
