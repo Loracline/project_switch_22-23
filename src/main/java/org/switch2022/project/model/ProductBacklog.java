@@ -17,7 +17,7 @@ public class ProductBacklog {
      * Attributes
      */
     private final List<UserStory> userStories = new ArrayList<>();
-    private IFactoryUserStory IFactoryUserStory;
+    private final IFactoryUserStory IFactoryUserStory;
 
     /**
      * Constructor to assign class that implements FactoryUserStory
@@ -126,7 +126,7 @@ public class ProductBacklog {
         List<UserStory> listOfCopies = new ArrayList<>();
 
         for (UserStory userStory : this.userStories) {
-            UserStory userStoryCopy = this.factoryUserStory.createUserStory(
+            UserStory userStoryCopy = this.IFactoryUserStory.createUserStory(
                     userStory.getUserStoryNumber(),
                     userStory.getActor(),
                     userStory.getUserStoryText());
