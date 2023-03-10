@@ -15,7 +15,7 @@ import java.util.Objects;
  * Represents a short period of time defined by a Sprint Number, Period and Sprint
  * Backlog.
  */
-class Sprint {
+public class Sprint {
     private final String sprintNumber;
     private Period period;
     private SprintBacklog sprintBacklog;
@@ -148,4 +148,26 @@ class Sprint {
     public boolean hasSprintNumber(String sprintNumber) {
         return sprintNumber.equalsIgnoreCase(this.sprintNumber);
     }
+
+    /**
+     * This method verifies if the User Story is already in the list.
+     *
+     * @param userStoryNumber to check the presence in the list through the
+     *                        hasStoryNumber method.
+     * @return TRUE if the User Story is present in the list and FALSE otherwise.
+     */
+    public boolean hasUserStory(String userStoryNumber){
+        return sprintBacklog.hasUserStory(userStoryNumber);
+    }
+
+    /**
+     * This method checks if date is equal or greater than start date and equal or lower than end date.
+     *
+     * @param date to compare
+     * @return true if date is equal or greater than start date and equal or lower than end date or false otherwise.
+     */
+    public boolean isDateWithinPeriod(LocalDate date) {
+        return this.period.isDateEqualOrGreaterThanStartDate(date) && this.period.isDateEqualOrLowerThanEndDate(date);
+    }
 }
+

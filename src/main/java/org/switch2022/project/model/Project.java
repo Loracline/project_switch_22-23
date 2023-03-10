@@ -194,17 +194,17 @@ public class Project {
      * @param date within the period of the Sprint.
      * @return an Optional with a Sprint.
      */
-    public Optional<Sprint> getSprintByDate(LocalDate date) {
-        Sprint sprint = null;
-        int i = 0;
-        while (i < this.sprints.size() && sprint == null) {
-            if (sprints.get(i).getPeriod().isDateWithinPeriod(date)) {
-                sprint = sprints.get(i);
-            }
-            i++;
-        }
-        return Optional.ofNullable(sprint);
-    }
+//    public Optional<Sprint> getSprintByDate(LocalDate date) {
+//        Sprint sprint = null;
+//        int i = 0;
+//        while (i < this.sprints.size() && sprint == null) {
+//            if (sprints.get(i).getPeriod().isDateWithinPeriod(date)) {
+//                sprint = sprints.get(i);
+//            }
+//            i++;
+//        }
+//        return Optional.ofNullable(sprint);
+//    }
 
     /**
      * This method sets the effort estimation of a user story.
@@ -214,8 +214,38 @@ public class Project {
      * @return true if the effort estimation is successfully set, false otherwise.
      */
 
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, int sprintNumber) {
-        return (sprints.get(sprintNumber).estimateEffortUserStory(userStoryDto, effort));
+
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String sprintNumber) {
+        if (sprints != null && !sprints.isEmpty()) {
+            for (Sprint sprint : sprints) {
+                if (sprint.hasSprintNumber(sprintNumber)) {
+                    return sprint.estimateEffortUserStory(userStoryDto, effort);
+                }
+            }
+        }
+        return false;
     }
+
+    public boolean addSprint(Sprint sprintNumber) {
+        boolean result = true;
+        if (sprints.contains(sprintNumber)) {
+            result = false;
+        } else {
+            sprints.add(sprintNumber);
+        }
+        return result;
+    }
+
+    /**
+     * This method verifies if a copy of a Product Backlog with list of copies of user stories is
+     * correctly returned.
+
+     * @return a product backlog.
+     */
+
+    public ProductBacklog getProductBacklog(){
+        return this.productBacklog.getProductBacklogCopy();
+    }
+
 }
 

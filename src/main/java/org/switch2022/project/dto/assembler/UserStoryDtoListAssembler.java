@@ -1,0 +1,49 @@
+package org.switch2022.project.dto.assembler;
+
+import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.dto.mapper.UserStoryMapper;
+import org.switch2022.project.factories.FactoryUserStory;
+import org.switch2022.project.factories.IFactoryUserStory;
+import org.switch2022.project.model.ProductBacklog;
+import org.switch2022.project.model.SprintBacklog;
+import org.switch2022.project.model.UserStory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserStoryDtoListAssembler {
+    /**
+     * Constructor of the class UserStoryDtoListAssembler.
+     */
+    private UserStoryDtoListAssembler() {}
+
+    /**
+     * This method converts a list of user stories within a Product Backlog into a list
+     * of user story DTOs.
+     *
+     * @return a list of User Story DTOs.
+     */
+    public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog){
+
+        List<UserStory> userStories = productBacklog.getUserStoriesCopy();
+        List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
+        return userStoryDtos;
+    }
+    public static List<UserStoryDto> backlogToDto(SprintBacklog sprintBacklog,
+                                                  IFactoryUserStory factoryUserStory){
+        List<UserStory> userStories = sprintBacklog.getUserStoriesCopy(factoryUserStory);
+        List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
+        return userStoryDtos;
+    }
+
+    private static List<UserStoryDto> getUserStoryDtos(List<UserStory> userStories) {
+        List<UserStoryDto> userStoryDtos = new ArrayList<>();
+
+        for (UserStory userStory : userStories) {
+            userStoryDtos.add(UserStoryMapper.userStoryToDto(userStory));
+        }
+        return userStoryDtos;
+    }
+
+
+}
