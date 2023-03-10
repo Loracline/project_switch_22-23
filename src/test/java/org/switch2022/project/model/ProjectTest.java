@@ -362,7 +362,7 @@ public class ProjectTest {
    * <p>
    * Scenario 1: Verifies that the effort of a UserStory can be estimated correctly by the estimateEffortUserStory()
    * method of the Sprint class.
-   * Expected result:true, indicating that the effort was set correctly.
+   * Expected result: true, indicating that the effort was set correctly.
    */
 
   @Test
@@ -386,6 +386,28 @@ public class ProjectTest {
     //Assert
     assertTrue(result);
   }
+
+  /**
+   * Tests the ensureEffortIsTheSameForTwoDifferentUserStories() method of the SprintTest class with
+   * two different UserStory objects and the same Effort value.
+   + Expected result: the effort of both UserStories should be equal to the specified Effort value.
+   */
+  @Test
+  void ensureEffortIsTheSameForTwoDifferentUserStories() {
+    // Arrange
+    UserStory userStoryOne = createUserStory("US001", "Manager",
+            "I want to create a profile");
+    UserStory userStoryTwo = createUserStory("US002", "Manager",
+            "I want to create a project");
+
+    // Act
+    userStoryOne.setEffort(Effort.TWO);
+    userStoryTwo.setEffort(Effort.TWO);
+
+    // Assert
+    assertEquals(userStoryOne.getEffort(), userStoryTwo.getEffort());
+  }
+
 
 
   //ISOLATION TESTS

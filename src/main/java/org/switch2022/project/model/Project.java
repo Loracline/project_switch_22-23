@@ -28,7 +28,7 @@ public class Project {
     private String projectStatus;
     private int sprintDuration;
     private List<Sprint> sprints;
-    private Sprint sprint;
+
 
     private ProductBacklog productBacklog;
 
@@ -213,11 +213,12 @@ public class Project {
      * This method sets the effort estimation of a user story.
      * @param userStoryDto The UserStoryDto object to estimate the effort for.
      * @param effort The effort object representing the estimated effort for the user story.
+     * @param sprintNumber The number of the sprint in which the user story is being estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
 
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort) {
-        return (sprint.estimateEffortUserStory(userStoryDto, effort));
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, int sprintNumber) {
+        return (sprints.get(sprintNumber).estimateEffortUserStory(userStoryDto, effort));
     }
 }
 
