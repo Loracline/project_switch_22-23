@@ -114,4 +114,26 @@ public class ProductBacklog {
         }
         return wasRemoved;
     }
+
+    /**
+     * This method makes a deep copy of the User Stories that are in the Product Backlog,
+     * and the copy in a new list.
+     *
+     * @return a list of the copied User Stories.
+     */
+
+    public List<UserStory> getUserStoriesCopy(){
+        List<UserStory> listOfCopies = new ArrayList<>();
+
+        for (UserStory userStory : this.userStories) {
+            UserStory userStoryCopy = this.factoryUserStory.createUserStory(
+                    userStory.getUserStoryNumber(),
+                    userStory.getActor(),
+                    userStory.getUserStoryText());
+            userStoryCopy.setStatus(userStory.getStatus());
+            userStoryCopy.setEffort(userStory.getEffort());
+            listOfCopies.add(userStoryCopy);
+        }
+        return listOfCopies;
+    }
 }

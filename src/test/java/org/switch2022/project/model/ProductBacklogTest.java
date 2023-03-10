@@ -3,9 +3,12 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.factories.FactoryUserStory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -220,5 +223,35 @@ public class ProductBacklogTest {
 
         //ASSERT
         assertFalse(result);
+    }
+
+    /**
+     * METHOD getUserStoriesCopy(). Copy the list of user stories contained in the
+     * product backlog.
+     *
+     * Scenario 1: Verifies that the method returns a list of deep copies of the user
+     * stories that are in the product backlog.
+     */
+    @Test
+    void ensureCopyListEqualsListInProductBacklog() {
+        // ARRANGE
+        FactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = new ProductBacklog(factoryUserStoryDouble);
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        userStoryDouble.setStatus(any());
+        userStoryDouble.setEffort(any());
+        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
+                thenReturn(userStoryDouble);
+        productBacklogDouble.addUserStory(userStoryDouble);
+
+        List<UserStory> expected = new ArrayList<>();
+        expected.add(userStoryDouble);
+
+        // ACT
+        List<UserStory> result = productBacklogDouble.getUserStoriesCopy();
+
+        // ASSERT
+        assertEquals(expected, result);
     }
 }
