@@ -1,5 +1,7 @@
 package org.switch2022.project.utils;
+
 import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 
@@ -33,6 +35,7 @@ public class PeriodTest {
         //Assert
         assertEquals(expectedEndDate, period.getEndDate());
     }
+
     /**
      * Test the calculateEndDate method.
      */
@@ -120,7 +123,7 @@ public class PeriodTest {
      */
     @Test
     public void ensurePeriodEqualsItself() {
-       //Arrange
+        //Arrange
         LocalDate startDate = LocalDate.of(2023, 3, 1);
         int sprintDuration = 2;
         Period period1 = new Period(startDate, sprintDuration);
@@ -213,8 +216,9 @@ public class PeriodTest {
         boolean result = period1.isPeriodNotOverlapping(period2);
 
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
+
     /**
      * Scenario 2: when period 1 do not overlap period 2.
      */
@@ -228,7 +232,7 @@ public class PeriodTest {
         //Act
         boolean result = period2.isPeriodNotOverlapping(period1);
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -247,8 +251,9 @@ public class PeriodTest {
         // Act
         boolean result = period1.isPeriodNotOverlapping(period2);
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
+
     /**
      * Scenario 4: when periods overlap.
      */
@@ -265,8 +270,9 @@ public class PeriodTest {
         // Assert
         boolean result = period1.isPeriodNotOverlapping(period2);
         //Act
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
+
     /**
      * Scenario 5: when periods are adjacent.
      */
@@ -282,8 +288,9 @@ public class PeriodTest {
         //Act
         boolean result = period1.isPeriodNotOverlapping(period2);
         // Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
+
     /**
      * Scenario 6: when periods are the same.
      */
@@ -298,8 +305,9 @@ public class PeriodTest {
         //Act
         boolean result = period1.isPeriodNotOverlapping(period2);
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
+
     /**
      * Scenario 7: not overlapping when given period ens before this period starts.
      */
@@ -320,6 +328,7 @@ public class PeriodTest {
     /*
       METHOD isStartDateBeforeNow()
      */
+
     /**
      * Scenario 1: when start date is in the past.
      */
@@ -334,6 +343,7 @@ public class PeriodTest {
         // Assert
         assertEquals(expect, result);
     }
+
     /**
      * Scenario 2: when start date is in the future.
      */
@@ -347,7 +357,99 @@ public class PeriodTest {
         // Act
         boolean result = futurePeriod.isStartDateBeforeNow();
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
+    /**
+     * Method isDateWithinPeriod(date).
+     * checks if date is equal or greater than start date and equal or lower than end date.
+     * <p>
+     * Scenario 1: Date is within period.
+     */
+    @Test
+    public void ensureDateIsWithinPeriod() {
+        //Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        LocalDate dateToCompare = LocalDate.of(2022, 1, 15);
+
+        //Act
+        boolean result = period1.isDateWithinPeriod(dateToCompare);
+
+        //Assert
+        assertTrue(result);
+
+    }
+
+    /**
+     * Scenario 2: Start date and  date to compare are equal.
+     */
+    @Test
+    public void ensureDateIsWithinPeriodBecauseEqualsStartDate() {
+        //Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        LocalDate dateToCompare = LocalDate.of(2022, 1, 1);
+
+        //Act
+        boolean result = period1.isDateWithinPeriod(dateToCompare);
+
+        //Assert
+        assertTrue(result);
+
+    }
+
+    /**
+     * Scenario 3: End date and date to compare are equal.
+     */
+    @Test
+    public void ensureDateIsWithinPeriodBecauseEqualsEndDate() {
+        //Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        LocalDate dateToCompare = LocalDate.of(2022, 1, 22);
+
+        //Act
+        boolean result = period1.isDateWithinPeriod(dateToCompare);
+
+        //Assert
+        assertTrue(result);
+
+    }
+
+    /**
+     * Scenario 4: Start date is greater than the date to compare.
+     */
+    @Test
+    public void ensureDateIsNotWithinPeriodBecauseIsLowerThenStartDate() {
+        //Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        LocalDate dateToCompare = LocalDate.of(2021, 12, 31);
+
+        //Act
+        boolean result = period1.isDateWithinPeriod(dateToCompare);
+
+        //Assert
+        assertFalse(result);
+
+    }
+
+    /**
+     * Scenario 5: End date is lower than the date to compare.
+     */
+    @Test
+    public void ensureDateIsNotWithinPeriodBecauseIsGreaterThenEndDate() {
+        //Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDate1, 3);
+        LocalDate dateToCompare = LocalDate.of(2022, 1, 23);
+
+        //Act
+        boolean result = period1.isDateWithinPeriod(dateToCompare);
+
+        //Assert
+        assertFalse(result);
+
+    }
 }

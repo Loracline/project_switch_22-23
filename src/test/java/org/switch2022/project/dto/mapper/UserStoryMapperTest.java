@@ -10,13 +10,6 @@ class UserStoryMapperTest {
      * Scenario 1: Verify if a UserStory object is successfully converted
      * into a UserStoryDto.
      */
-    @Test
-    void ensureThatAValidUserStoryDtoIsCreated() {
-        // ARRANGE
-        UserStory userStoryDouble = mock(UserStory.class);
 
-        // ACT
-        UserStoryMapper.userStoryToDto(userStoryDouble);
-    }
 
 }

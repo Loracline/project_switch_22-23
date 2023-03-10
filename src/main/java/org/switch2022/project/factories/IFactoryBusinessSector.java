@@ -3,19 +3,16 @@ package org.switch2022.project.factories;
 import org.switch2022.project.model.BusinessSector;
 
 /**
- * Implementation of the FactoryBusinessSector interface that creates instances of the
- * Business Customer class
+ Interface for a Business Sector factory.
  */
 
-public class IFactoryBusinessSector implements FactoryBusinessSector{
+public interface IFactoryBusinessSector {
+
     /**
-     * This method creates a new Customer object with the specified name and NIF.
-     *
-     * @param businessSectorName the name of the Business Sector
-     * @return a new Business Sector object with the specified name
+     This method creates a new Business Sector object with the specified name with no return.
+     @param businessSectorName the name of the Business Sector
      */
 
-    public BusinessSector createBusinessSector (String businessSectorName) {
-        return new BusinessSector(businessSectorName);
-    }
+    public BusinessSector createBusinessSector (String businessSectorName);
+
 }

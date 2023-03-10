@@ -1,6 +1,9 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.utils.Effort;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -170,8 +173,7 @@ class SprintBacklogTest {
 
     /**
      * METHOD hasUserStory(userStoryNumber)
-     * verifies if any User Story in the Sprint Backlog has a giving user story number.
-     *
+     * <p>
      * Scenario 1: checks that a User Story has the giving User Story Number.
      */
 
@@ -223,6 +225,80 @@ class SprintBacklogTest {
 
         //Act
         boolean result = sprintBacklog.hasUserStory("US001");
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD estimateEffortUserStory(userStoryDto, effort)
+     * <p>
+     * Scenario 1: sets the effort of a UserStory.
+     */
+
+
+    @Test
+    void ensureEffortIsSetForUserStoryTestOne() {
+        //Arrange
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        sprintBacklog.addUserStory(UserStory.createUserStory("US001", "Manager",
+                "I want to create a profile"));
+        sprintBacklog.addUserStory(UserStory.createUserStory("US002", "Manager",
+                "I want to create a profile"));
+        UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
+                "I want to create a profile");
+        Effort effort = Effort.THREE;
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: set the effort of a UserStory.
+     */
+
+    @Test
+    void ensureEffortIsSetForUserStoryTestTwo() {
+        //Arrange
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        sprintBacklog.addUserStory(UserStory.createUserStory("US001", "Manager",
+                "I want to create a profile"));
+        sprintBacklog.addUserStory(UserStory.createUserStory("US002", "Manager",
+                "I want to create a account"));
+        sprintBacklog.addUserStory(UserStory.createUserStory("US003", "Manager",
+                "I want to create a project"));
+        UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
+                "I want to create a profile");
+        Effort effort = Effort.THREE;
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: does not set the effort of a UserStory.
+     */
+
+    @Test
+    void ensureEffortIsNotSetForUserStory() {
+        //Arrange
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        sprintBacklog.addUserStory(UserStory.createUserStory("US001", "Manager",
+                "I want to create a profile"));
+        sprintBacklog.addUserStory(UserStory.createUserStory("US002", "Manager",
+                "I want to create a profile"));
+        UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
+                "I want to create a profile");
+        Effort effort = Effort.THREE;
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
 
         //Assert
         assertFalse(result);

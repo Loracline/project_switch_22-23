@@ -1,8 +1,15 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.factories.IFactoryProductBacklog;
+import org.switch2022.project.factories.IFactoryUserStory;
+import org.switch2022.project.utils.Effort;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Class Project is built to create and manage new projects.
@@ -20,8 +27,14 @@ public class Project {
     private final BusinessSector businessSector;
     private String projectStatus;
     private int sprintDuration;
-    private final ProductBacklog productBacklog = new ProductBacklog();
-    private final List<Sprint> sprints = new ArrayList<>();
+    private List<Sprint> sprints;
+
+
+    private ProductBacklog productBacklog;
+
+    private IFactoryProductBacklog iFactoryProductBacklog;
+    private IFactoryUserStory iFactoryUserStory;
+
 
     /**
      * Constructor
@@ -36,6 +49,23 @@ public class Project {
         this.projectTypology = projectTypology;
         this.businessSector = businessSector;
         this.sprintDuration = 0;
+    }
+
+    /**
+     *This constructor will create a new project receiving also the interface IFactoryProductBacklog and IFactoryUserStory.
+     */
+    public Project(String projectCode, String name, Customer customer,
+                   ProjectTypology projectTypology,
+                   BusinessSector businessSector, IFactoryProductBacklog iFactoryProductBacklog, IFactoryUserStory iFactoryUserStory) {
+        this.projectCode = projectCode;
+        this.projectName = name;
+        this.customer = customer;
+        this.projectStatus = "planned";
+        this.projectTypology = projectTypology;
+        this.businessSector = businessSector;
+        this.sprintDuration = 0;
+        this.productBacklog = iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
+        this.sprints = new ArrayList<>();
     }
 
     @Override
@@ -160,4 +190,35 @@ public class Project {
         }
         return isSprintDurationValid;
     }
+
+    /**
+     * This method returns a Sprint from Project which Period is within the given date.
+     *
+     * @param date within the period of the Sprint.
+     * @return an Optional with a Sprint.
+     */
+    public Optional<Sprint> getSprintByDate(LocalDate date) {
+        Sprint sprint = null;
+        int i = 0;
+        while (i < this.sprints.size() && sprint == null) {
+            if (sprints.get(i).getPeriod().isDateWithinPeriod(date)) {
+                sprint = sprints.get(i);
+            }
+            i++;
+        }
+        return Optional.ofNullable(sprint);
+    }
+
+    /**
+     * This method sets the effort estimation of a user story.
+     * @param userStoryDto The UserStoryDto object to estimate the effort for.
+     * @param effort The effort object representing the estimated effort for the user story.
+     * @param sprintNumber The number of the sprint in which the user story is being estimated.
+     * @return true if the effort estimation is successfully set, false otherwise.
+     */
+
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, int sprintNumber) {
+        return (sprints.get(sprintNumber).estimateEffortUserStory(userStoryDto, effort));
+    }
 }
+

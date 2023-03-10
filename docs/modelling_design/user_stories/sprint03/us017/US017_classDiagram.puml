@@ -52,8 +52,13 @@ class "UserStory"{
 - status
 - effort
 - listOfAcceptanceCriteria
-+ UserStory(userStoryNumber, actor, userStoryText)
+-UserStory(userStoryNumber)
++ createUserStory(userStoryNumber, actor, userStoryText)
+- setActor(String actor)
+- setUserStoryText(String userStoryText)
++ hasUserStoryNumber(String userStoryNumber)
 }
+
 
 interface "FactoryUserStory" {
 + createUserStory( userStoryNumber,actor, userStoryText)

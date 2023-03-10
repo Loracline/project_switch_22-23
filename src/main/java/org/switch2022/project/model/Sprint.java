@@ -1,6 +1,9 @@
 package org.switch2022.project.model;
 
 
+import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.factories.IFactoryPeriod;
+import org.switch2022.project.utils.Effort;
 import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.utils.Period;
@@ -17,7 +20,7 @@ class Sprint {
     private final String sprintNumber;
     private Period period;
     private SprintBacklog sprintBacklog;
-    private FactoryPeriod factoryPeriod;
+    private IFactoryPeriod IFactoryPeriod;
     private IFactorySprintBacklog factorySprintBacklog;
 
     /**
@@ -29,10 +32,11 @@ class Sprint {
      */
     public static Sprint createSprint(LocalDate startDate, int sprintDuration,
                                       String sprintNumber,
-                                      FactoryPeriod factoryPeriod,
+                                      IFactoryPeriod IFactoryPeriod,
                                       IFactorySprintBacklog factorySprintBacklog) {
         Sprint sprint = new Sprint(sprintNumber);
-        sprint.setPeriod(factoryPeriod, sprintDuration, startDate);
+        sprint.IFactoryPeriod = IFactoryPeriod;
+        sprint.setPeriod(IFactoryPeriod, sprintDuration, startDate);
         sprint.setSprintBacklog(factorySprintBacklog);
         return sprint;
     }
@@ -47,28 +51,40 @@ class Sprint {
     }
 
     /**
-     * Creates a new period within the sprint.
+     * This method checks if two instances of Sprint are equal by comparing
+     * the userStoryNumber.
      *
-     * @param startDate      the start date of the period
-     * @param periodDuration the duration of the period in weeks
+     * @param o userStory instance to compare with.
+     * @return TRUE if the two have the same attribute, and FALSE otherwise.
      */
-    public void createPeriod(LocalDate startDate, int periodDuration) {
-        // create a new period object using the FactoryPeriod class
-        this.period = this.factoryPeriod.createPeriod(startDate, periodDuration);
-    }
-
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Sprint sprint = (Sprint) o;
         return sprintNumber.equals(sprint.sprintNumber);
     }
 
+    /**
+     * The hashCode() method is used to generate a unique hash code for an
+     * object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(sprintNumber);
+    }
+
+    /**
+     * Getter method for the attribute: period.
+     */
+    public Period getPeriod() {
+        return period;
     }
 
     /**
@@ -76,15 +92,16 @@ class Sprint {
      * factory period,
      * sprint duration, and start date.
      *
-     * @param factoryPeriod  the factory period to use for creating the period
+     * @param IFactoryPeriod  the factory period to use for creating the period
      * @param sprintDuration the duration of the sprint
      * @param startDate      the start date of the period
      */
 
-    private void setPeriod(FactoryPeriod factoryPeriod, int sprintDuration,
+
+    private void setPeriod(IFactoryPeriod IFactoryPeriod, int sprintDuration,
                            LocalDate startDate) {
-        this.factoryPeriod = factoryPeriod;
-        this.period = factoryPeriod.createPeriod(startDate, sprintDuration);
+        this.IFactoryPeriod = IFactoryPeriod;
+        this.period = IFactoryPeriod.createPeriod(startDate, sprintDuration);
     }
 
     /**
@@ -98,14 +115,6 @@ class Sprint {
     }
 
 
-   /* public isSprintCodeUnique(){
-
-    }
-
-    public isSprintCodeValid() {
-
-
-    }  */
 
     /**
      * This method adds a new User Story to the Sprint Backlog
@@ -117,6 +126,18 @@ class Sprint {
 
     public boolean addUserStoryToSprintBacklog(UserStory userStory) {
         return this.sprintBacklog.addUserStory(userStory);
+    }
+
+    /**
+     * This method sets the effort of a userStory.
+     *
+     * @param userStoryDto to estimate the effort.
+     * @param effort       of the userStory.
+     * @return true if the effort is set and false otherwise.
+     */
+
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort) {
+        return (sprintBacklog.estimateEffortUserStory(userStoryDto, effort));
     }
 
     /**

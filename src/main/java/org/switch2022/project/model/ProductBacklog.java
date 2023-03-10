@@ -1,5 +1,7 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.factories.IFactoryUserStory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +17,14 @@ public class ProductBacklog {
      * Attributes
      */
     private final List<UserStory> userStories = new ArrayList<>();
+    private IFactoryUserStory IFactoryUserStory;
+
+    /**
+     * Constructor to assign class that implements FactoryUserStory
+     */
+    public ProductBacklog(IFactoryUserStory ifactoryUserStory) {
+        this.IFactoryUserStory = ifactoryUserStory;
+    }
 
     /**
      * This method checks if two instances of ProductBacklog are equal by comparing

@@ -2,6 +2,7 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Status;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,10 +25,18 @@ public class UserStory {
     private Status status = Status.PLANNED;
 
     /**
+     * Constructor
+     * It creates an userStory with the defining attribute: userStoryNumber
+     */
+    private UserStory(String userStoryNumber) {
+        this.userStoryNumber = userStoryNumber.toLowerCase().trim();
+    }
+
+    /**
      * This method creates a new UserStory
      *
      * @param userStoryNumber,actor,userStoryText; When an userStory is instantiated,
-     *                                           its default status is PLANNED, its
+     *                                             its default status is PLANNED, its
      *                                             default effort is 1 and hav an empty
      *                                             list of acceptanceCriteria.
      * @return userStory
@@ -39,14 +48,6 @@ public class UserStory {
         userStory.setActor(actor);
         userStory.setUserStoryText(userStoryText);
         return userStory;
-    }
-
-    /**
-     * Constructor
-     * It creates an userStory with the defining attribute: userStoryNumber
-     */
-    private UserStory(String userStoryNumber) {
-        this.userStoryNumber = userStoryNumber.toLowerCase().trim();
     }
 
     /**
@@ -98,6 +99,13 @@ public class UserStory {
     }
 
     /**
+     * Setter method for the attribute: actor
+     */
+    private void setActor(String actor) {
+        this.actor = actor;
+    }
+
+    /**
      * Getter method for the attribute: userStoryText
      */
     public String getUserStoryText() {
@@ -105,10 +113,24 @@ public class UserStory {
     }
 
     /**
+     * Setter method for the attribute: userStoryText
+     */
+    private void setUserStoryText(String userStoryText) {
+        this.userStoryText = userStoryText;
+    }
+
+    /**
      * Getter method for the attribute: status
      */
     public String getStatus() {
         return status.toString();
+    }
+
+    /**
+     * Setter method for the attribute: status
+     */
+    public void setStatus(String status) {
+        this.status.valueOf(status);
     }
 
     /**
@@ -130,27 +152,6 @@ public class UserStory {
 
     void setEffort(Effort effort) {
         this.effort = effort;
-    }
-
-    /**
-     * Setter method for the attribute: actor
-     */
-    private void setActor(String actor) {
-        this.actor = actor;
-    }
-
-    /**
-     * Setter method for the attribute: userStoryText
-     */
-    private void setUserStoryText(String userStoryText) {
-        this.userStoryText = userStoryText;
-    }
-
-    /**
-     * Setter method for the attribute: status
-     */
-    public void setStatus(String status) {
-        this.status.valueOf(status);
     }
 
     /**
