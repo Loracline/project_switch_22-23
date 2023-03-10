@@ -1,7 +1,7 @@
 package org.switch2022.project.model;
 
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.factories.FactoryUserStory;
+import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.utils.Effort;
 
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class SprintBacklog {
      * @param factoryUserStory used to create the copy User Stories.
      * @return a list of the copied User Stories.
      */
-    public List<UserStory> getUserStoriesCopy(FactoryUserStory factoryUserStory) {
+    public List<UserStory> getUserStoriesCopy(IFactoryUserStory factoryUserStory) {
         List<UserStory> copyList = new ArrayList<>();
         int i = 0;
         while (i < this.userStories.size()) {

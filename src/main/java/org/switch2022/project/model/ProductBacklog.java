@@ -1,6 +1,6 @@
 package org.switch2022.project.model;
 
-import org.switch2022.project.factories.FactoryUserStory;
+import org.switch2022.project.factories.IFactoryUserStory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,13 @@ public class ProductBacklog {
      * Attributes
      */
     private final List<UserStory> userStories = new ArrayList<>();
-    private FactoryUserStory factoryUserStory;
+    private IFactoryUserStory IFactoryUserStory;
 
     /**
      * Constructor to assign class that implements FactoryUserStory
      */
-    public ProductBacklog(FactoryUserStory factoryUserStory) {
-        this.factoryUserStory = factoryUserStory;
+    public ProductBacklog(IFactoryUserStory ifactoryUserStory) {
+        this.IFactoryUserStory = ifactoryUserStory;
     }
 
     /**

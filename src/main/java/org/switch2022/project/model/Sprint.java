@@ -2,7 +2,7 @@ package org.switch2022.project.model;
 
 
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.factories.FactoryPeriod;
+import org.switch2022.project.factories.IFactoryPeriod;
 import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Period;
 
@@ -17,7 +17,7 @@ import java.util.Objects;
 class Sprint {
     private final String sprintNumber;
     private final SprintBacklog sprintBacklog = new SprintBacklog();
-    private FactoryPeriod factoryPeriod;
+    private IFactoryPeriod IFactoryPeriod;
     private Period period;
 
     /**
@@ -38,10 +38,10 @@ class Sprint {
      */
     public static Sprint createSprint(LocalDate startDate, int sprintDuration,
                                       String sprintNumber,
-                                      FactoryPeriod factoryPeriod) {
+                                      IFactoryPeriod IFactoryPeriod) {
         Sprint sprint = new Sprint(sprintNumber);
-        sprint.factoryPeriod = factoryPeriod;
-        sprint.setPeriod(factoryPeriod, sprintDuration, startDate);
+        sprint.IFactoryPeriod = IFactoryPeriod;
+        sprint.setPeriod(IFactoryPeriod, sprintDuration, startDate);
         return sprint;
     }
 
@@ -87,16 +87,16 @@ class Sprint {
      * factory period,
      * sprint duration, and start date.
      *
-     * @param factoryPeriod  the factory period to use for creating the period
+     * @param IFactoryPeriod  the factory period to use for creating the period
      * @param sprintDuration the duration of the sprint
      * @param startDate      the start date of the period
      */
 
 
-    private void setPeriod(FactoryPeriod factoryPeriod, int sprintDuration,
+    private void setPeriod(IFactoryPeriod IFactoryPeriod, int sprintDuration,
                            LocalDate startDate) {
-        this.factoryPeriod = factoryPeriod;
-        this.period = factoryPeriod.createPeriod(startDate, sprintDuration);
+        this.IFactoryPeriod = IFactoryPeriod;
+        this.period = IFactoryPeriod.createPeriod(startDate, sprintDuration);
     }
 
 

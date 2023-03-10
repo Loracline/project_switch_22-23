@@ -2,11 +2,10 @@ package org.switch2022.project.factories;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.model.BusinessSector;
-import org.switch2022.project.model.Customer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class IFactoryBusinessSectorTest {
+class FactoryBusinessSectorTest {
 
   /**
    * Method createBusinessSector(String businessSectorName)
@@ -23,9 +22,9 @@ class IFactoryBusinessSectorTest {
   void ensureThatTwoBusinessSectorObjectsHaveTheSameParameters() {
     // Arrange
     String businessSectorName = "Sports";
-    FactoryBusinessSector factoryBusinessSector = new IFactoryBusinessSector();
+    IFactoryBusinessSector IFactoryBusinessSector = new FactoryBusinessSector();
     // Act
-    BusinessSector businessSector = factoryBusinessSector.createBusinessSector(businessSectorName);
+    BusinessSector businessSector = IFactoryBusinessSector.createBusinessSector(businessSectorName);
     BusinessSector businessSectorToCompare = new BusinessSector("Sports");
     // Assert
     assertEquals(businessSector, businessSectorToCompare);
