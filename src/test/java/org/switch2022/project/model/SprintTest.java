@@ -5,6 +5,7 @@ import org.switch2022.project.factories.IFactoryPeriod;
 import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.factories.FactorySprintBacklog;
 import org.switch2022.project.factories.IFactorySprintBacklog;
+import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
 
@@ -223,6 +224,113 @@ class SprintTest {
         boolean result = sprint.hasSprintNumber("S1");
 
         //ASSERT
+        assertFalse(result);
+    }
+
+    /**
+     * Method isDateWithinPeriod(date).
+     * checks if date is equal or greater than start date and equal or lower than end date.
+     * * Scenario 1: Date is within period.
+     */
+    @Test
+    public void ensureDateIsWithinPeriod() {
+        //Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(LocalDate.of(2022, 1, 1), 3)).thenReturn(periodDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2022, 1, 15))).thenReturn(true);
+        when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2022, 1, 15))).thenReturn(true);
+        LocalDate dateToCompare = LocalDate.of(2022, 1, 15);
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001", factoryPeriodDouble, factorySprintBacklogDouble);
+
+        //Act
+        boolean result = sprintToTest.isDateWithinPeriod(dateToCompare);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: Start date and  date to compare are equal.
+     */
+    @Test
+    public void ensureDateIsWithinPeriodBecauseEqualsStartDate() {
+        //Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(LocalDate.of(2022, 1, 1), 3)).thenReturn(periodDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2022, 1, 1))).thenReturn(true);
+        when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2022, 1, 1))).thenReturn(true);
+        LocalDate dateToCompare = LocalDate.of(2022, 1, 1);
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001", factoryPeriodDouble, factorySprintBacklogDouble);
+
+        //Act
+        boolean result = sprintToTest.isDateWithinPeriod(dateToCompare);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: End date and date to compare are equal.
+     */
+    @Test
+    public void ensureDateIsWithinPeriodBecauseEqualsEndDate() {
+        //Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(LocalDate.of(2022, 1, 1), 3)).thenReturn(periodDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2022, 1, 22))).thenReturn(true);
+        when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2022, 1, 22))).thenReturn(true);
+        LocalDate dateToCompare = LocalDate.of(2022, 1, 22);
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001", factoryPeriodDouble, factorySprintBacklogDouble);
+
+        //Act
+        boolean result = sprintToTest.isDateWithinPeriod(dateToCompare);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 4: Start date is greater than the date to compare.
+     */
+    @Test
+    public void ensureDateIsNotWithinPeriodBecauseIsLowerThenStartDate() {
+        //Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(LocalDate.of(2022, 1, 1), 3)).thenReturn(periodDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2021, 12, 31))).thenReturn(false);
+        when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2021, 12, 31))).thenReturn(true);
+        LocalDate dateToCompare = LocalDate.of(2021, 12, 31);
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001", factoryPeriodDouble, factorySprintBacklogDouble);
+
+        //Act
+        boolean result = sprintToTest.isDateWithinPeriod(dateToCompare);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 5: End date is lower than the date to compare.
+     */
+    @Test
+    public void ensureDateIsNotWithinPeriodBecauseIsGreaterThenEndDate() {
+        //Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(LocalDate.of(2022, 1, 1), 3)).thenReturn(periodDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2022, 1, 23))).thenReturn(true);
+        when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2022, 1, 23))).thenReturn(false);
+        LocalDate dateToCompare = LocalDate.of(2022, 1, 23);
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001", factoryPeriodDouble, factorySprintBacklogDouble);
+
+        //Act
+        boolean result = sprintToTest.isDateWithinPeriod(dateToCompare);
+        //Assert
         assertFalse(result);
     }
 }

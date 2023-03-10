@@ -148,4 +148,15 @@ public class Sprint {
     public boolean hasSprintNumber(String sprintNumber) {
         return sprintNumber.equalsIgnoreCase(this.sprintNumber);
     }
+
+    /**
+     * This method checks if date is equal or greater than start date and equal or lower than end date.
+     *
+     * @param date to compare
+     * @return true if date is equal or greater than start date and equal or lower than end date or false otherwise.
+     */
+    public boolean isDateWithinPeriod(LocalDate date) {
+        return this.period.isDateEqualOrGreaterThanStartDate(date) && this.period.isDateEqualOrLowerThanEndDate(date);
+    }
 }
+
