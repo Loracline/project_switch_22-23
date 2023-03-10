@@ -54,6 +54,7 @@ class "Sprint"{
 - period
 - sprintBacklog
 + Sprint(sprintNumber, factoryPeriod)
++ hasSprintNumber(sprintNumber)
 + addUserStoryToSprintBacklog(userStory)
 }
 
