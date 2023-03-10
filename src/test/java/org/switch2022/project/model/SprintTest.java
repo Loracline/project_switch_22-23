@@ -95,6 +95,18 @@ class SprintTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Scenario 5: Verify the same object returns true when comparing the same object.
+     */
+    @Test
+    public void testEqualsShouldReturnTrueWhenComparingTheSameObject() {
+        // Arrange
+        Sprint sprint = Sprint.createSprint(LocalDate.now(), 14, "1", mock(IFactoryPeriod.class), mock(IFactorySprintBacklog.class));
+        // Act
+        boolean result = sprint.equals(sprint);
+        // Assert
+        assertTrue(result);
+    }
     /*
      *METHOD HASHCODE
      */
