@@ -148,4 +148,15 @@ public class Sprint {
     public boolean hasSprintNumber(String sprintNumber) {
         return sprintNumber.equalsIgnoreCase(this.sprintNumber);
     }
+
+    /**
+     * This method verifies if the User Story is already in the list.
+     *
+     * @param userStoryNumber to check the presence in the list through the
+     *                        hasStoryNumber method.
+     * @return TRUE if the User Story is present in the list and FALSE otherwise.
+     */
+    public boolean hasUserStory(String userStoryNumber){
+        return sprintBacklog.hasUserStory(userStoryNumber);
+    }
 }
