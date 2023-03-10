@@ -50,7 +50,7 @@ public class ProductBacklogTest {
         ProductBacklog reference = new ProductBacklog(factoryUserStoryDoubleOne);
 
         UserStory userStoryDouble = mock(UserStory.class);
-        reference.addUserStory(userStoryDouble);
+        reference.addUserStory(userStoryDouble,0);
 
         IFactoryUserStory factoryUserStoryDoubleTwo = mock(FactoryUserStory.class);
         ProductBacklog other = new ProductBacklog(factoryUserStoryDoubleTwo);
@@ -135,7 +135,7 @@ public class ProductBacklogTest {
         ProductBacklog productBacklogOne = new ProductBacklog(factoryUserStoryDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
-        productBacklogOne.addUserStory(userStoryDouble);
+        productBacklogOne.addUserStory(userStoryDouble,0);
 
         ProductBacklog productBacklogTwo = new ProductBacklog(factoryUserStoryDouble);
 
@@ -288,7 +288,7 @@ public class ProductBacklogTest {
         IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDouble);
+        productBacklog.addUserStory(userStoryDouble,0);
 
         //Act
         boolean result = productBacklog.addUserStory(userStoryDouble, 3);
@@ -349,7 +349,7 @@ public class ProductBacklogTest {
     void ensureCopyListEqualsListInProductBacklog() {
         // ARRANGE
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
+        ProductBacklog productBacklogDouble = new ProductBacklog(factoryUserStoryDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
         userStoryDouble.setStatus(any());
@@ -362,7 +362,7 @@ public class ProductBacklogTest {
         expected.add(userStoryDouble);
 
         // ACT
-        List<UserStory> result = productBacklog.getUserStoriesCopy();
+        List<UserStory> result = productBacklogDouble.getUserStoriesCopy();
 
         // ASSERT
         assertEquals(expected, result);
