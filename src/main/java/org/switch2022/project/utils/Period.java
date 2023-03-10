@@ -104,7 +104,7 @@ public class Period {
      * @param date to compare.
      * @return true if date is equal or greater than start date or false otherwise.
      */
-    private boolean isDateEqualOrGreaterThanStartDate(LocalDate date) {
+    public boolean isDateEqualOrGreaterThanStartDate(LocalDate date) {
         return date.isAfter(this.startDate) || date.isEqual(this.startDate);
     }
 
@@ -114,18 +114,7 @@ public class Period {
      * @param date to compare.
      * @return true if date is equal or lower than end date or false otherwise.
      */
-    private boolean isDateEqualOrLowerThanEndDate(LocalDate date) {
+    public boolean isDateEqualOrLowerThanEndDate(LocalDate date) {
         return date.isBefore(this.endDate) || date.isEqual(this.endDate);
     }
-
-    /**
-     * This method checks if date is equal or greater than start date and equal or lower than end date.
-     *
-     * @param date to compare
-     * @return true if date is equal or greater than start date and equal or lower than end date or false otherwise.
-     */
-    public boolean isDateWithinPeriod(LocalDate date) {
-        return isDateEqualOrGreaterThanStartDate(date) && isDateEqualOrLowerThanEndDate(date);
-    }
-
 }

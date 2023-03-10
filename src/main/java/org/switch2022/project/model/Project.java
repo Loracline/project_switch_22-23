@@ -197,17 +197,17 @@ public class Project {
      * @param date within the period of the Sprint.
      * @return an Optional with a Sprint.
      */
-    public Optional<Sprint> getSprintByDate(LocalDate date) {
-        Sprint sprint = null;
-        int i = 0;
-        while (i < this.sprints.size() && sprint == null) {
-            if (sprints.get(i).getPeriod().isDateWithinPeriod(date)) {
-                sprint = sprints.get(i);
-            }
-            i++;
-        }
-        return Optional.ofNullable(sprint);
-    }
+//    public Optional<Sprint> getSprintByDate(LocalDate date) {
+//        Sprint sprint = null;
+//        int i = 0;
+//        while (i < this.sprints.size() && sprint == null) {
+//            if (sprints.get(i).getPeriod().isDateWithinPeriod(date)) {
+//                sprint = sprints.get(i);
+//            }
+//            i++;
+//        }
+//        return Optional.ofNullable(sprint);
+//    }
 
     /**
      * This method sets the effort estimation of a user story.
