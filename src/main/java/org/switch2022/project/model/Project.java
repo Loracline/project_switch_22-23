@@ -214,8 +214,26 @@ public class Project {
      * @return true if the effort estimation is successfully set, false otherwise.
      */
 
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, int sprintNumber) {
-        return (sprints.get(sprintNumber).estimateEffortUserStory(userStoryDto, effort));
+
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String sprintNumber) {
+        if (sprints != null && !sprints.isEmpty()) {
+            for (Sprint sprint : sprints) {
+                if (sprint.hasSprintNumber(sprintNumber)) {
+                    return sprint.estimateEffortUserStory(userStoryDto, effort);
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean addSprint(Sprint sprintNumber) {
+        boolean result = true;
+        if (sprints.contains(sprintNumber)) {
+            result = false;
+        } else {
+            sprints.add(sprintNumber);
+        }
+        return result;
     }
 }
 

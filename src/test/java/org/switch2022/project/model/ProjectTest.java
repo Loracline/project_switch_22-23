@@ -3,8 +3,11 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
 
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -353,28 +356,6 @@ public class ProjectTest {
         assertEquals(0, project.getSprintDuration());
     }
 
-    /**
-     * Tests the ensureEffortIsTheSameForTwoDifferentUserStories() method of the SprintTest class with
-     * two different UserStory objects and the same Effort value.
-     * + Expected result: the effort of both UserStories should be equal to the specified Effort value.
-     */
-    @Test
-    void ensureEffortIsTheSameForTwoDifferentUserStories() {
-        // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager",
-                "I want to create a profile");
-        UserStory userStoryTwo = createUserStory("US002", "Manager",
-                "I want to create a project");
-
-        // Act
-        userStoryOne.setEffort(Effort.TWO);
-        userStoryTwo.setEffort(Effort.TWO);
-
-        // Assert
-        assertEquals(userStoryOne.getEffort(), userStoryTwo.getEffort());
-    }
-
-
     //ISOLATION TESTS
 
     /**
@@ -508,4 +489,142 @@ public class ProjectTest {
         // Assert
         assertFalse(isEquals);
     }
+
+
+    /**
+     * Scenario 1: Verifies that the estimateEffortUserStory() method of the Project class
+     * can correctly estimate the effort for a user story
+     * Expected result: true, indicating that the estimation was successful.
+     */
+
+    @Test
+    void ensureEstimateEffortUserStorySuccessfully() {
+        // Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
+        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
+        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
+        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        Project project = new Project("AA001", "Aptoide",
+                new Customer("John", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("Hunting"),
+                factoryProductBacklog, factoryUserStory);
+        UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
+                "Planned");
+        Effort effort = Effort.TWO;
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
+                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
+        project.addSprint(sprint);
+        sprint.addUserStoryToSprintBacklog(createUserStory("US001", "I want to create a profile",
+                "Planned"));
+
+        // Act
+        boolean result = project.estimateEffortUserStory(reference, effort, "S1");
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: Verifies that the estimateEffortUserStory() method of the Project class
+     * can't correctly estimate the effort for a user story
+     * Expected result: false, indicating that the estimation was unsuccessful.
+     */
+
+    @Test
+    void ensureEstimateEffortUserStoryUnsuccessfully() {
+
+        // Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
+        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
+        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
+        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        Project project = new Project("AA001", "Aptoide",
+                new Customer("John", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("Hunting"),
+                factoryProductBacklog, factoryUserStory);
+        UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
+                "Planned");
+        Effort effort = Effort.TWO;
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
+                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
+        project.addSprint(sprint);
+        sprint.addUserStoryToSprintBacklog(createUserStory("US001", "I want to create a profile",
+                "Planned"));
+
+        // Act
+        boolean result = project.estimateEffortUserStory(reference, effort, "S2");
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 1: Verifies that a Sprint can be successfully added to the project
+     * Expected result: true, indicating that the Sprint was added to the project.
+     */
+
+    @Test
+    void ensureThatSprintIsSuccessfullyAddedToTheProject() {
+        // Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
+        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
+        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
+        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+
+        Project project = new Project("AA001", "Aptoide",
+                new Customer("John", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("Hunting"),
+                factoryProductBacklog, factoryUserStory);
+
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
+                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
+
+        // Act
+        boolean result = project.addSprint(sprint);
+
+        // Assert
+        assertTrue(result);
+
+    }
+
+    /**
+     * Scenario 2: Verifies that a Sprint with the same number can't be added to the project
+     * Expected result: false, indicating that the Sprint was not added to the project.
+     */
+
+    @Test
+    void ensureThatCannotAddSameSprintTwiceToProject() {
+        // Arrange
+        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
+        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
+        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
+        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+
+        Project project = new Project("AA001", "Aptoide",
+                new Customer("John", "228674498"),
+                new ProjectTypology("Fixed cost"),
+                new BusinessSector("Hunting"),
+                factoryProductBacklog, factoryUserStory);
+
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
+                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
+
+        // Act
+        boolean added = project.addSprint(sprint);
+        assertTrue(added);
+        boolean addedAgain = project.addSprint(sprint);
+
+        // Assert
+        assertFalse(addedAgain);
+    }
+
 }
+
+
+
+
+
+
