@@ -3,20 +3,16 @@ package org.switch2022.project.factories;
 import org.switch2022.project.model.ProjectTypology;
 
 /**
- * Class IFactoryProjectTypology implements FactoryProjectTypology ir order to create an object of ProjectTypology.
+ * Factory of ProjectTypology class.
  */
 
-public class IFactoryProjectTypology implements FactoryProjectTypology {
+public interface IFactoryProjectTypology {
 
   /**
-   * This method creates a projectTypology object.
+   * This method creates a ProjectTypology object with no return.
    *
-   * @param projectTypologyName is an attribute of projectTypology.
-   * @return a new object ProjectTypology.
+   * @param projectTypologyName
    */
 
-  @Override
-  public ProjectTypology createProjectTypology(String projectTypologyName) {
-    return new ProjectTypology(projectTypologyName);
-  }
+  public ProjectTypology createProjectTypology(String projectTypologyName);
 }

@@ -4,15 +4,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.factories.IFactoryPeriod;
+import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.switch2022.project.model.UserStory.createUserStory;
 
 public class ProjectTest {
@@ -363,15 +362,15 @@ public class ProjectTest {
    * <p>
    * Scenario 1: Verifies that the effort of a UserStory can be estimated correctly by the estimateEffortUserStory()
    * method of the Sprint class.
-   * Expected result:true, indicating that the effort was set correctly.
+   * Expected result: true, indicating that the effort was set correctly.
    */
 
   @Test
   void ensureEffortIsIsSetForUserStory() {
     //Arrange
     LocalDate date = LocalDate.of(2021, 9, 13);
-    FactoryPeriod factoryPeriod = new IFactoryPeriod();
-    Sprint sprint = Sprint.createSprint(date, 2, "S55", factoryPeriod);
+    IFactoryPeriod IFactoryPeriod = new FactoryPeriod();
+    Sprint sprint = Sprint.createSprint(date, 2, "S55", IFactoryPeriod);
 
     UserStory userStory = createUserStory("US001", "Manager",
             "I want to create a profile");
@@ -387,6 +386,28 @@ public class ProjectTest {
     //Assert
     assertTrue(result);
   }
+
+  /**
+   * Tests the ensureEffortIsTheSameForTwoDifferentUserStories() method of the SprintTest class with
+   * two different UserStory objects and the same Effort value.
+   + Expected result: the effort of both UserStories should be equal to the specified Effort value.
+   */
+  @Test
+  void ensureEffortIsTheSameForTwoDifferentUserStories() {
+    // Arrange
+    UserStory userStoryOne = createUserStory("US001", "Manager",
+            "I want to create a profile");
+    UserStory userStoryTwo = createUserStory("US002", "Manager",
+            "I want to create a project");
+
+    // Act
+    userStoryOne.setEffort(Effort.TWO);
+    userStoryTwo.setEffort(Effort.TWO);
+
+    // Assert
+    assertEquals(userStoryOne.getEffort(), userStoryTwo.getEffort());
+  }
+
 
 
   //ISOLATION TESTS

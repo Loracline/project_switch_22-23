@@ -1,7 +1,7 @@
 package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.factories.FactoryUserStory;
+import org.switch2022.project.factories.IFactoryUserStory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +25,8 @@ public class ProductBacklogTest {
     @Test
     void ensureSameProductBacklogEqualsItself() {
         // Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog reference = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(IFactoryUserStory);
         ProductBacklog other = reference;
         boolean expected = true;
 
@@ -45,8 +45,8 @@ public class ProductBacklogTest {
     @Test
     void ensureProductBacklogDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog reference = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(IFactoryUserStory);
         String other = "User";
         boolean expected = false;
 
@@ -63,8 +63,8 @@ public class ProductBacklogTest {
     @Test
     void ensureProductBacklogDoesNotEqualNull() {
         // Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog reference = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog reference = new ProductBacklog(IFactoryUserStory);
         ProductBacklog other = null;
         boolean expected = false;
 
@@ -85,9 +85,9 @@ public class ProductBacklogTest {
     @Test
     public void ensureTwoProductBacklogsHashcodeAreTheSame() {
         // Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog productBacklogOne = new ProductBacklog(factoryUserStory);
-        ProductBacklog productBacklogTwo = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklogOne = new ProductBacklog(IFactoryUserStory);
+        ProductBacklog productBacklogTwo = new ProductBacklog(IFactoryUserStory);
 
         // Act
         int productBacklogOneHashCode = productBacklogOne.hashCode();
@@ -106,8 +106,8 @@ public class ProductBacklogTest {
     @Test
     void ensureThatReturnsAnOptionalWithAUserStory() {
         //ARRANGE
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         productBacklog.addUserStory(userStoryDouble);
         when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(true);
@@ -126,8 +126,8 @@ public class ProductBacklogTest {
     @Test
     void ensureThatReturnsAnOptionalWithANullObject() {
         //ARRANGE
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         productBacklog.addUserStory(userStoryDouble);
         when(userStoryDouble.hasUserStoryNumber("US002")).thenReturn(false);
@@ -153,8 +153,8 @@ public class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToProductBacklog() {
         //Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
 
         //Act
@@ -172,8 +172,8 @@ public class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsNotAddedToProductBacklog() {
         //Arrange
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         productBacklog.addUserStory(userStoryDouble);
 
@@ -194,8 +194,8 @@ public class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsRemovedFromProductBacklog() {
         //ARRANGE
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         productBacklog.addUserStory(userStoryDouble);
 
@@ -214,8 +214,8 @@ public class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsNotRemovedFromProductBacklogBecauseItIsNotThere() {
         //ARRANGE
-        FactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(factoryUserStory);
+        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
+        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
 
         //ACT

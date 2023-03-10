@@ -5,7 +5,7 @@ import org.switch2022.project.model.Customer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class IFactoryCustomerTest {
+class FactoryCustomerTest {
 
   /**
    * Method createCustomer(String customerName, String customerNIF)
@@ -22,9 +22,9 @@ class IFactoryCustomerTest {
     // Arrange
     String customerName = "John Doe";
     String customerNIF = "123456789";
-    FactoryCustomer factoryCustomer = new IFactoryCustomer();
+    IFactoryCustomer IFactoryCustomer = new FactoryCustomer();
     // Act
-    Customer customer = factoryCustomer.createCustomer(customerName, customerNIF);
+    Customer customer = IFactoryCustomer.createCustomer(customerName, customerNIF);
     Customer customerToCompare = new Customer("John Doe", "123456789");
     // Assert
     assertEquals(customer, customerToCompare);
