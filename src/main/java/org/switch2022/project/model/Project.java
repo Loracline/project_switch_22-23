@@ -1,9 +1,12 @@
 package org.switch2022.project.model;
 
 import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.factories.IFactoryProductBacklog;
+import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,6 +30,11 @@ public class Project {
     private List<Sprint> sprints;
     private Sprint sprint;
 
+    private ProductBacklog productBacklog;
+
+    private IFactoryProductBacklog iFactoryProductBacklog;
+    private IFactoryUserStory iFactoryUserStory;
+
 
     /**
      * Constructor
@@ -41,6 +49,23 @@ public class Project {
         this.projectTypology = projectTypology;
         this.businessSector = businessSector;
         this.sprintDuration = 0;
+    }
+
+    /**
+     *This constructor will create a new project receiving also the interface IFactoryProductBacklog and IFactoryUserStory.
+     */
+    public Project(String projectCode, String name, Customer customer,
+                   ProjectTypology projectTypology,
+                   BusinessSector businessSector, IFactoryProductBacklog iFactoryProductBacklog, IFactoryUserStory iFactoryUserStory) {
+        this.projectCode = projectCode;
+        this.projectName = name;
+        this.customer = customer;
+        this.projectStatus = "planned";
+        this.projectTypology = projectTypology;
+        this.businessSector = businessSector;
+        this.sprintDuration = 0;
+        this.productBacklog = iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
+        this.sprints = new ArrayList<>();
     }
 
     @Override
