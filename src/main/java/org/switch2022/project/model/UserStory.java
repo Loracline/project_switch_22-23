@@ -110,6 +110,62 @@ public class UserStory {
      * Getter method for the attribute: userStoryText
      */
     public String getUserStoryText() {
+        return userStoryText;
+    }
+
+    /**
+     * Setter method for the attribute: userStoryText
+     */
+    private void setUserStoryText(String userStoryText) {
+        this.userStoryText = userStoryText;
+    }
+
+    /**
+     * Getter method for the attribute: status
+     */
+    public String getStatus() {
+        return status.toString();
+    }
+
+    /**
+     * Setter method for the attribute: status
+     */
+    public void setStatus(String status) {
+        this.status.valueOf(status);
+    }
+
+    /**
+     * This method returns the effort of the userStory.
+     *
+     * @return the effort associated to the userStory.
+     */
+
+    Effort getEffort() {
+        return effort;
+    }
+
+    /**
+     * This method sets the effort for the userStory.
+     *
+     * @param effort of the userStory.
+     * @return always true because the effort is fetched from a restricted list.
+     */
+
+    void setEffort(Effort effort) {
+        this.effort = effort;
+    }
+
+    /**
+     * Setter method for the attribute: actor
+     */
+    private void setActor(String actor) {
+        this.actor = actor;
+    }
+
+    /**
+     * Getter method for the attribute: userStoryText
+     */
+    public String getUserStoryText() {
         return userStoryText.toLowerCase().trim();
     }
 

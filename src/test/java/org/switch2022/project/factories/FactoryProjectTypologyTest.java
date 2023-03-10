@@ -1,12 +1,11 @@
 package org.switch2022.project.factories;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.ProjectTypology;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class IFactoryProjectTypologyTest {
+class FactoryProjectTypologyTest {
 
   /**
    * Method createProjectTypology(String projectTypologyName)
@@ -23,9 +22,9 @@ class IFactoryProjectTypologyTest {
   void createProjectTypology() {
     // Arrange
     String projectTypologyName = "Fixed Cost";
-    FactoryProjectTypology factoryprojectTypology = new IFactoryProjectTypology();
+    IFactoryProjectTypology factoryprojectTypologyI = new FactoryProjectTypology();
     // Act
-    ProjectTypology projectTypology = factoryprojectTypology.createProjectTypology(projectTypologyName);
+    ProjectTypology projectTypology = factoryprojectTypologyI.createProjectTypology(projectTypologyName);
     ProjectTypology projectTypologyToCompare = new ProjectTypology("Fixed Cost");
     // Assert
     assertEquals(projectTypology, projectTypologyToCompare);
