@@ -2,16 +2,16 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.utils.Effort;
-import static org.switch2022.project.model.UserStory.createUserStory;
+import org.switch2022.project.utils.Status;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.switch2022.project.model.UserStory.createUserStory;
 
 class UserStoryTest {
-    /*
-      METHOD equals()
-     */
-
     /**
+     * METHOD equals()
+     * <br>
      * Scenario 1: Verify if the same object equals itself.
      */
     @Test
@@ -87,12 +87,9 @@ class UserStoryTest {
         assertEquals(expected, result);
     }
 
-
-    /*
-      METHOD hashCode()
-     */
-
     /**
+     * METHOD hashCode()
+     * <br>
      * Scenario 1: Two UserStory objects are the same.
      */
     @Test
@@ -129,23 +126,101 @@ class UserStoryTest {
         // Assert
         assertNotEquals(userStoryOneHashCode, userStoryThreeHashCode);
     }
-/*
-      METHOD hasUserStoryNumber()
-     */
 
     /**
+     * METHOD getUserStoryNumber()
+     * <br>
+     * Scenario 1: Verify that the user story number returned is the same of the User
+     * Story.
+     */
+    @Test
+    void ensureUserStoryNumberIsRetrievedSuccessfully() {
+        // Arrange
+        UserStory userStoryOne = createUserStory("US001", "Manager",
+                "I want to create a profile");
+        String expected = "US001".toLowerCase();
+
+        // Act
+        String result = userStoryOne.getUserStoryNumber();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD getActor()
+     * <br>
+     * Scenario 1: Verify that the actor returned is the same of the User Story.
+     */
+    @Test
+    void ensureActorIsRetrievedSuccessfully() {
+        // Arrange
+        UserStory userStoryOne = createUserStory("US001", "Manager",
+                "I want to create a profile");
+        String expected = "Manager".toLowerCase();
+
+        // Act
+        String result = userStoryOne.getActor();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD getUserStoryText()
+     * <br>
+     * Scenario 1: Verify that the user story text returned is the same of the User Story.
+     */
+    @Test
+    void ensureUserStoryTextIsRetrievedSuccessfully() {
+        // Arrange
+        UserStory userStoryOne = createUserStory("US001", "Manager",
+                "I want to create a profile");
+        String expected = "I want to create a profile".toLowerCase().trim();
+
+        // Act
+        String result = userStoryOne.getUserStoryText();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD setStatus() and getStatus()
+     * <br>
+     * Scenario 1: Verify that the status returned is the same of the User Story.
+     */
+    @Test
+    void ensureStatusIsSetAndRetrievedSuccessfully() {
+        // Arrange
+        Status status = Status.PLANNED;
+        UserStory userStoryOne = createUserStory("US001", "Manager",
+                "I want to create a profile");
+
+        // Act
+        userStoryOne.setStatus(status.toString());
+        String expected = userStoryOne.getStatus();
+
+        // Assert
+        assertEquals(expected, userStoryOne.getStatus());
+    }
+
+    /**
+     * METHOD hasUserStoryNumber()
+     * <br>
      * Scenario 1: Verify if userStory is the same by checking its userStoryNumber.
      * Expected result:True
      */
-
     @Test
     public void ensureUserStoryNumberIsTheSame() {
         // Arrange
         UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create " +
                 "a profile");
         boolean expected = true;
+
         //Act
         boolean result = userStoryOne.hasUserStoryNumber("US001");
+
         //Assert
         assertEquals(expected, result);
     }
@@ -160,29 +235,30 @@ class UserStoryTest {
         UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create " +
                 "a profile");
         boolean expected = false;
+
         //Act
         boolean result = userStoryOne.hasUserStoryNumber("US002");
+
         //Assert
         assertEquals(expected, result);
     }
 
     /**
      * Method setEffort and getEffort.
-     */
-
-    /**
+     * <br>
      * Scenario 1: Verify if the effort of userStoryOne is set.
      * Expected result: effort of userStoryOne is equal to effort value.
      */
-
     @Test
     void ensureEffortIsSet() {
         // Arrange
         UserStory userStoryOne = createUserStory("US001", "Manager",
                 "I want to create a profile");
+
         // Act
         userStoryOne.setEffort(Effort.TWO);
         Effort effortOfUserStory = userStoryOne.getEffort();
+
         // Assert
         assertEquals(effortOfUserStory, Effort.TWO);
     }
@@ -192,7 +268,6 @@ class UserStoryTest {
      * by setting the efforts respectively.
      * Expected result: effort of userStoryOne is equal to effort of userStoryTwo.
      */
-
     @Test
     void ensureEffortIsNotTheSameForTwoDifferentUserStories() {
         // Arrange
@@ -200,11 +275,13 @@ class UserStoryTest {
                 "I want to create a profile");
         UserStory userStoryTwo = createUserStory("US002", "Manager",
                 "I want to create a project");
+
         // Act
         Effort effortOfUserStoryOne = userStoryOne.getEffort();
         userStoryOne.setEffort(Effort.TWO);
         Effort effortOfUserStoryTwo = userStoryTwo.getEffort();
         userStoryTwo.setEffort(Effort.THIRTEEN);
+
         // Assert
         assertEquals(effortOfUserStoryOne, effortOfUserStoryTwo);
     }

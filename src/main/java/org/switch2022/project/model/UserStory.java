@@ -2,6 +2,7 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Status;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,29 +25,28 @@ public class UserStory {
     private Status status = Status.PLANNED;
 
     /**
+     * Constructor
+     * It creates an userStory with the defining attribute: userStoryNumber
+     */
+    private UserStory(String userStoryNumber) {
+        this.userStoryNumber = userStoryNumber.toLowerCase().trim();
+    }
+
+    /**
      * This method creates a new UserStory
      *
      * @param userStoryNumber,actor,userStoryText; When an userStory is instantiated,
-     *                                           its default status is PLANNED, its
+     *                                             its default status is PLANNED, its
      *                                             default effort is 1 and hav an empty
      *                                             list of acceptanceCriteria.
      * @return userStory
      */
-
     public static UserStory createUserStory(String userStoryNumber, String actor,
                                             String userStoryText) {
         UserStory userStory = new UserStory(userStoryNumber);
         userStory.setActor(actor);
         userStory.setUserStoryText(userStoryText);
         return userStory;
-    }
-
-    /**
-     * Constructor
-     * It creates an userStory with the defining attribute: userStoryNumber
-     */
-    private UserStory(String userStoryNumber) {
-        this.userStoryNumber = userStoryNumber.toLowerCase().trim();
     }
 
     /**
@@ -58,7 +58,9 @@ public class UserStory {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
 
         if (o == null) {
             return false;
@@ -94,42 +96,7 @@ public class UserStory {
      * Getter method for the attribute: actor
      */
     public String getActor() {
-        return actor;
-    }
-
-    /**
-     * Getter method for the attribute: userStoryText
-     */
-    public String getUserStoryText() {
-        return userStoryText;
-    }
-
-    /**
-     * Getter method for the attribute: status
-     */
-    public String getStatus() {
-        return status.toString();
-    }
-
-    /**
-     * This method returns the effort of the userStory.
-     *
-     * @return the effort associated to the userStory.
-     */
-
-    Effort getEffort() {
-        return effort;
-    }
-
-    /**
-     * This method sets the effort for the userStory.
-     *
-     * @param effort of the userStory.
-     * @return always true because the effort is fetched from a restricted list.
-     */
-
-    void setEffort(Effort effort) {
-        this.effort = effort;
+        return actor.toLowerCase();
     }
 
     /**
@@ -140,10 +107,24 @@ public class UserStory {
     }
 
     /**
+     * Getter method for the attribute: userStoryText
+     */
+    public String getUserStoryText() {
+        return userStoryText.toLowerCase().trim();
+    }
+
+    /**
      * Setter method for the attribute: userStoryText
      */
     private void setUserStoryText(String userStoryText) {
         this.userStoryText = userStoryText;
+    }
+
+    /**
+     * Getter method for the attribute: status
+     */
+    public String getStatus() {
+        return status.toString();
     }
 
     /**
@@ -154,13 +135,26 @@ public class UserStory {
     }
 
     /**
+     * Getter method for the attribute: effort
+     */
+    Effort getEffort() {
+        return effort;
+    }
+
+    /**
+     * Setter method for the attribute: effort
+     */
+    void setEffort(Effort effort) {
+        this.effort = effort;
+    }
+
+    /**
      * This method verifies if an userStory is the one intended through it
      * userStoryNumber.
      *
      * @param userStoryNumber of the seeked userStory.
      * @return TRUE if userStory has given userStoryNumber, and FALSE otherwise.
      */
-
     public boolean hasUserStoryNumber(String userStoryNumber) {
         return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
     }
