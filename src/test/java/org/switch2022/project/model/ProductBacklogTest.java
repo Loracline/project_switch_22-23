@@ -210,7 +210,7 @@ public class ProductBacklogTest {
                 "profile", 0);
 
         //Act
-        boolean result = productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
+        boolean result = productBacklog.createUserStory(userStoryCreationDto);
 
         //Assert
         assertTrue(result);
@@ -231,7 +231,7 @@ public class ProductBacklogTest {
                 "Manager", "I want to create a profile", 2);
 
         //Act
-        boolean result = productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
+        boolean result = productBacklog.createUserStory(userStoryCreationDto);
 
         //Assert
         assertFalse(result);
@@ -248,10 +248,10 @@ public class ProductBacklogTest {
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001",
                 "Manager", "I want to create a profile", 0);
-        productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
+        productBacklog.createUserStory(userStoryCreationDto);
 
         //Act
-        boolean result = productBacklog.createUserStory(userStoryCreationDto, iFactoryUserStory);
+        boolean result = productBacklog.createUserStory(userStoryCreationDto);
 
         //Assert
         assertFalse(result);
