@@ -1,9 +1,7 @@
 package org.switch2022.project.container;
 
 
-import org.switch2022.project.dto.AccountDto;
-import org.switch2022.project.dto.AllocationDto;
-import org.switch2022.project.dto.ProjectCreationDto;
+import org.switch2022.project.dto.*;
 import org.switch2022.project.factories.IFactoryProductBacklog;
 import org.switch2022.project.factories.IFactoryProject;
 import org.switch2022.project.factories.IFactoryUserStory;
@@ -270,6 +268,12 @@ public class Company {
   public List<Project> listProjectsByAccount(String emailUser) {
     return accountInProjectContainer.listProjectsByAccount(emailUser);
   }
-
+  /**
+   * This method creates an userStory in the requested project
+   * returns true if the userStory is successfully created
+   */
+  public boolean createUserStory(ProjectDto projectDto, UserStoryCreationDto userStoryCreationDto){
+    return projectContainer.createUserStory(projectDto,userStoryCreationDto);
+  }
 }
 
