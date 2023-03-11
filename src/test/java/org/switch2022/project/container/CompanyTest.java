@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.dto.ProjectCreationDto;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
@@ -40,9 +41,18 @@ class CompanyTest {
   ProjectContainer projectContainer;
   CustomerContainer customerContainer;
   Company company;
+  IFactoryProject factoryProject;
+  IFactoryUserStory factoryUserStory;
+  IFactoryProductBacklog factoryProductBacklog;
 
   @BeforeEach
   void setUp() {
+    //Interfaces implemented
+
+    factoryProductBacklog = new FactoryProductBacklog();
+    factoryProject = new FactoryProject();
+    factoryUserStory = new FactoryUserStory();
+
     // Accounts created.
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
     accountTwo = new Account("Emma", "emma@isep.ipp.pt", 932755688, null);
@@ -104,9 +114,9 @@ class CompanyTest {
 
     // Projects added to the container.
     projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer,
-            businessSectorContainer);
+            businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
     projectContainer.registerProject(projectTwoDTO, projectTypologyContainer, customerContainer,
-            businessSectorContainer);
+            businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
 
     // Accounts allocated to project.
     startDate = LocalDate.of(2023, 1, 23);
@@ -380,7 +390,7 @@ class CompanyTest {
     boolean expected = true;
 
     // Act
-    boolean result = company.registerProject(projectNonExistentDTO);
+    boolean result = company.registerProject(projectNonExistentDTO,factoryProductBacklog,factoryUserStory,factoryProject);
 
     // Assert
     assertEquals(expected, result);
@@ -392,7 +402,7 @@ class CompanyTest {
     boolean expected = false;
 
     // Act
-    boolean result = company.registerProject(projectOneDTO);
+    boolean result = company.registerProject(projectOneDTO,factoryProductBacklog,factoryUserStory,factoryProject);
 
     // Assert
     assertEquals(expected, result);

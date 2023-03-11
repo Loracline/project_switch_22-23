@@ -8,6 +8,7 @@ import org.switch2022.project.dto.AccountDto;
 import org.switch2022.project.dto.AllocationDto;
 import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.dto.mapper.AccountMapper;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
@@ -19,163 +20,175 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AddUserToProjectControllerTest {
 
-  /**
-   * BeforeEach and AfterEach executes common code before/after running the
-   * tests below.
-   */
+    /**
+     * BeforeEach and AfterEach executes common code before/after running the
+     * tests below.
+     */
 
-  Account accountOne, accountTwo;
-  AccountDto accountTwoDTO;
-  Profile profileOne, profileTwo;
-  ProjectTypology projectTypologyOne;
-  BusinessSector businessSectorOne;
-  Project projectOne;
-  ProjectCreationDto projectDTO;
-  AccountInProject accountInProject;
-  List<AccountInProject> accountsInProject;
-  AllocationDto scrumMasterDTO;
-  AccountContainer accountContainer;
-  BusinessSectorContainer businessSectorContainer;
-  CustomerContainer customerContainer;
-  ProjectTypologyContainer projectTypologyContainer;
-  ProjectContainer projectContainer;
-  ProfileContainer profileContainer;
-  AccountInProjectContainer accountInProjectContainer;
-  Company company;
-  AddUserToProjectController addUserToProjectController;
+    Account accountOne, accountTwo;
+    AccountDto accountTwoDTO;
+    Profile profileOne, profileTwo;
+    ProjectTypology projectTypologyOne;
+    BusinessSector businessSectorOne;
+    Project projectOne;
+    ProjectCreationDto projectDTO;
+    AccountInProject accountInProject;
+    List<AccountInProject> accountsInProject;
+    AllocationDto scrumMasterDTO;
+    AccountContainer accountContainer;
+    BusinessSectorContainer businessSectorContainer;
+    CustomerContainer customerContainer;
+    ProjectTypologyContainer projectTypologyContainer;
+    ProjectContainer projectContainer;
+    ProfileContainer profileContainer;
+    AccountInProjectContainer accountInProjectContainer;
+    Company company;
+    AddUserToProjectController addUserToProjectController;
 
-  @BeforeEach
-  void setUp() {
-    //account
-    accountOne = new Account("Mike", "mike@isep.ipp.pt",
-            932755689, null);
-    accountTwo = new Account("Emma", "emma@isep.ipp.pt",
-            972755689, null);
+    IFactoryUserStory factoryUserStory;
+    IFactoryProductBacklog factoryProductBacklog;
+    IFactoryProject factoryProject = new FactoryProject();
 
-    //accountDTO
-    accountTwoDTO = AccountMapper.accountToDto(accountTwo);
+    @BeforeEach
+    void setUp() {
+        //Interfaces implemented
 
-    //accountInProject
-    accountInProject = new AccountInProject(accountOne, projectOne,
-            "Team Member", 1, 34f,
-            LocalDate.of(2020, 1, 8), LocalDate.of(2021, 1, 8));
-    accountsInProject = new ArrayList<>();
-    accountsInProject.add(accountInProject);
+        factoryProductBacklog = new FactoryProductBacklog();
+        factoryProject = new FactoryProject();
+        factoryUserStory = new FactoryUserStory();
+        //account
+        accountOne = new Account("Mike", "mike@isep.ipp.pt",
+                932755689, null);
+        accountTwo = new Account("Emma", "emma@isep.ipp.pt",
+                972755689, null);
 
-    //profile
-    profileOne = new Profile("Administrator");
-    profileTwo = new Profile("Manager");
+        //accountDTO
+        accountTwoDTO = AccountMapper.accountToDto(accountTwo);
 
-    //projectTypology
-    projectTypologyOne = new ProjectTypology("Fixed Cost");
+        //accountInProject
+        accountInProject = new AccountInProject(accountOne, projectOne,
+                "Team Member", 1, 34f,
+                LocalDate.of(2020, 1, 8), LocalDate.of(2021, 1, 8));
+        accountsInProject = new ArrayList<>();
+        accountsInProject.add(accountInProject);
 
-    //businessSector
-    businessSectorOne = new BusinessSector("Fishing");
+        //profile
+        profileOne = new Profile("Administrator");
+        profileTwo = new Profile("Manager");
 
-    //projectDTO
-    projectDTO = new ProjectCreationDto("1A",
-            "Mobile Software", "Genius Software",
-            "228674498", "Fixed cost",
-            "Fishing");
+        //projectTypology
+        projectTypologyOne = new ProjectTypology("Fixed Cost");
 
-    //allocationDTO
-    scrumMasterDTO = new AllocationDto("Scrum Master", 7.5f,
-            45.0f,
-            LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
+        //businessSector
+        businessSectorOne = new BusinessSector("Fishing");
 
-    //containers
-    businessSectorContainer = new BusinessSectorContainer();
-    businessSectorContainer.createBusinessSector("fishing");
-    customerContainer = new CustomerContainer();
-    customerContainer.addCustomer("Genius Software",
-            "234567890");
-    projectTypologyContainer = new ProjectTypologyContainer();
-    projectTypologyContainer.createProjectTypology("Fixed Cost");
-    projectTypologyContainer.createProjectTypology("Fixed time and materials");
+        //projectDTO
+        projectDTO = new ProjectCreationDto("1A",
+                "Mobile Software", "Genius Software",
+                "228674498", "Fixed cost",
+                "Fishing");
 
-    projectContainer = new ProjectContainer();
-    projectContainer.registerProject(projectDTO, projectTypologyContainer, customerContainer,
-            businessSectorContainer);
+        //allocationDTO
+        scrumMasterDTO = new AllocationDto("Scrum Master", 7.5f,
+                45.0f,
+                LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
-    accountContainer = new AccountContainer();
-    accountContainer.addAccount("Mike", "mike@isep.ipp.pt",
-            932755689, null);
-    accountContainer.addAccount("Emma", "emma@isep.ipp.pt",
-            972755689, null);
+        //containers
+        businessSectorContainer = new BusinessSectorContainer();
+        businessSectorContainer.createBusinessSector("fishing");
+        customerContainer = new CustomerContainer();
+        customerContainer.addCustomer("Genius Software",
+                "234567890");
+        projectTypologyContainer = new ProjectTypologyContainer();
+        projectTypologyContainer.createProjectTypology("Fixed Cost");
+        projectTypologyContainer.createProjectTypology("Fixed time and materials");
 
-    accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
-    profileContainer = new ProfileContainer();
-    profileContainer.createProfile("Administrator");
-    profileContainer.createProfile("Manager");
+        projectContainer = new ProjectContainer();
 
-    //company
-    company = new Company(accountContainer, profileContainer,
-            businessSectorContainer, projectContainer,
-            projectTypologyContainer, accountInProjectContainer,
-            customerContainer);
+        projectContainer.registerProject(projectDTO, projectTypologyContainer, customerContainer,
+                businessSectorContainer, factoryProductBacklog, factoryUserStory,factoryProject);
 
-    //controller
-    addUserToProjectController = new AddUserToProjectController(company);
-  }
 
-  @AfterEach
-  void tearDown() {
-    accountOne = null;
-    accountTwo = null;
-    profileOne = null;
-    profileTwo = null;
-    projectTypologyOne = null;
-    businessSectorOne = null;
-    accountTwoDTO = null;
-    projectDTO = null;
-    accountInProject = null;
-    accountsInProject.clear();
-    scrumMasterDTO = null;
-    accountContainer = null;
-    businessSectorContainer = null;
-    customerContainer = null;
-    projectTypologyContainer = null;
-    projectContainer = null;
-    accountInProjectContainer = null;
-    company = null;
-    addUserToProjectController = null;
-    profileContainer = null;
-  }
+        accountContainer = new AccountContainer();
+        accountContainer.addAccount("Mike", "mike@isep.ipp.pt",
+                932755689, null);
+        accountContainer.addAccount("Emma", "emma@isep.ipp.pt",
+                972755689, null);
 
-  /**
-   * This test verifies if an account with the "Manager" profile can
-   * successfully associate a Scrum Master to an existing project.
-   */
-  @Test
-  void ensureScrumMasterIsAssociatedToProjectSuccessfully() {
-    //Arrange
-    company.changeProfile(accountOne.getEmail(), "Manager");
-    String emailActor = accountOne.getEmail();
+        accountInProjectContainer = new AccountInProjectContainer(accountsInProject);
+        profileContainer = new ProfileContainer();
+        profileContainer.createProfile("Administrator");
+        profileContainer.createProfile("Manager");
 
-    //Act
-    boolean result = addUserToProjectController.addUserToProject(emailActor,
-            accountTwoDTO, projectDTO, scrumMasterDTO);
+        //company
+        company = new Company(accountContainer, profileContainer,
+                businessSectorContainer, projectContainer,
+                projectTypologyContainer, accountInProjectContainer,
+                customerContainer);
 
-    //Assert
-    assertTrue(result);
-  }
+        //controller
+        addUserToProjectController = new AddUserToProjectController(company);
 
-  /**
-   * This test verifies the failure of the allocation when the authorization
-   * is not granted to other profile than "Manager" (in this specific case,
-   * "Administrator").
-   */
-  @Test
-  void ensureAllocationFailsBecauseProfileIsNotManager() {
-    //Arrange
-    company.changeProfile(accountOne.getEmail(), "Administrator");
-    String emailActor = accountOne.getEmail();
+    }
 
-    //Act
-    boolean result = addUserToProjectController.addUserToProject(emailActor,
-            accountTwoDTO, projectDTO, scrumMasterDTO);
+    @AfterEach
+    void tearDown() {
+        accountOne = null;
+        accountTwo = null;
+        profileOne = null;
+        profileTwo = null;
+        projectTypologyOne = null;
+        businessSectorOne = null;
+        accountTwoDTO = null;
+        projectDTO = null;
+        accountInProject = null;
+        accountsInProject.clear();
+        scrumMasterDTO = null;
+        accountContainer = null;
+        businessSectorContainer = null;
+        customerContainer = null;
+        projectTypologyContainer = null;
+        projectContainer = null;
+        accountInProjectContainer = null;
+        company = null;
+        addUserToProjectController = null;
+        profileContainer = null;
+    }
 
-    //Assert
-    assertFalse(result);
-  }
+    /**
+     * This test verifies if an account with the "Manager" profile can
+     * successfully associate a Scrum Master to an existing project.
+     */
+    @Test
+    void ensureScrumMasterIsAssociatedToProjectSuccessfully() {
+        //Arrange
+        company.changeProfile(accountOne.getEmail(), "Manager");
+        String emailActor = accountOne.getEmail();
+
+        //Act
+        boolean result = addUserToProjectController.addUserToProject(emailActor,
+                accountTwoDTO, projectDTO, scrumMasterDTO);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * This test verifies the failure of the allocation when the authorization
+     * is not granted to other profile than "Manager" (in this specific case,
+     * "Administrator").
+     */
+    @Test
+    void ensureAllocationFailsBecauseProfileIsNotManager() {
+        //Arrange
+        company.changeProfile(accountOne.getEmail(), "Administrator");
+        String emailActor = accountOne.getEmail();
+
+        //Act
+        boolean result = addUserToProjectController.addUserToProject(emailActor,
+                accountTwoDTO, projectDTO, scrumMasterDTO);
+
+        //Assert
+        assertFalse(result);
+    }
 }

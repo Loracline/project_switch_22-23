@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.BusinessSector;
 import org.switch2022.project.model.Profile;
@@ -30,9 +31,17 @@ class RegisterProjectControllerTest {
     CustomerContainer customerContainer;
     Company company;
     RegisterProjectController registerProjectController;
+    IFactoryProject factoryProject;
+    IFactoryUserStory factoryUserStory;
+    IFactoryProductBacklog factoryProductBacklog;
 
     @BeforeEach
     void setUp() {
+        //Interfaces implemented
+
+        factoryProductBacklog= new FactoryProductBacklog();
+        factoryProject =  new FactoryProject();
+        factoryUserStory= new FactoryUserStory();
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
         accountContainer = new AccountContainer();
         accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
@@ -59,7 +68,7 @@ class RegisterProjectControllerTest {
                 "228674498", "Fixed cost", "Sports");
         projectContainer = new ProjectContainer();
         projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer,
-                businessSectorContainer);
+                businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, null, customerContainer);
@@ -96,7 +105,7 @@ class RegisterProjectControllerTest {
 
         // Act
         boolean result = registerProjectController.registerProject(projectTwoDTO,
-                accountOne.getEmail());
+                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject);
 
         // Assert
         assertEquals(expected, result);
@@ -114,7 +123,7 @@ class RegisterProjectControllerTest {
 
         // Act
         boolean result = registerProjectController.registerProject(projectOneDTO,
-                accountOne.getEmail());
+                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject);
 
         // Assert
         assertEquals(expected, result);
@@ -131,7 +140,7 @@ class RegisterProjectControllerTest {
 
         // Act
         boolean result = registerProjectController.registerProject(projectTwoDTO,
-                accountOne.getEmail());
+                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject);
 
         // Assert
         assertEquals(expected, result);

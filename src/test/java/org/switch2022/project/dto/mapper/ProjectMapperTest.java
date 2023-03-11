@@ -3,6 +3,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
+import org.switch2022.project.factories.FactoryProject;
+import org.switch2022.project.factories.IFactoryProject;
 import org.switch2022.project.model.*;
 import org.switch2022.project.dto.ProjectDto;
 
@@ -19,8 +21,10 @@ public class ProjectMapperTest {
     ProjectTypologyContainer projectTypologyContainer;
     ProjectContainer projectContainer;
     CustomerContainer customerContainer;
+    IFactoryProject factoryProject;
     Company company;
     @BeforeEach    void setUp() {
+        factoryProject= new FactoryProject();
         projectOne = new Project("AA001", "Aptoide", new Customer("ISEP", "228674498"),
                 new ProjectTypology("Fixed Cost"), new BusinessSector("fishing"));
         projectTwo = new Project("AA002", "Aptoide", new Customer("PortoTech", "228674498"),
@@ -37,6 +41,7 @@ public class ProjectMapperTest {
                 "fishing");
         company = new Company(null, null, null,
                 projectContainer, null, null, null);
+
     }
     @AfterEach    void tearDown() {
         accountContainer = null;
