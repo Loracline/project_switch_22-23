@@ -533,11 +533,12 @@ public class ProjectTest {
         IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
         IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
         IFactoryUserStory factoryUserStory = new FactoryUserStory();
-        Project project = new Project("AA001", "Aptoide",
-                new Customer("John", "228674498"),
-                new ProjectTypology("Fixed cost"),
-                new BusinessSector("Hunting"),
-                factoryProductBacklog, factoryUserStory);
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+
+        Project project = new Project("AA001", "Aptoide", customerDouble,
+                projectTypologyDouble, businessSectorDouble, factoryProductBacklog, factoryUserStory);
         UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
                 "Planned");
         Effort effort = Effort.TWO;
@@ -565,11 +566,12 @@ public class ProjectTest {
         IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
         IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
         IFactoryUserStory factoryUserStory = new FactoryUserStory();
-        Project project = new Project("AA001", "Aptoide",
-                new Customer("John", "228674498"),
-                new ProjectTypology("Fixed cost"),
-                new BusinessSector("Hunting"),
-                factoryProductBacklog, factoryUserStory);
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+
+        Project project = new Project("AA001", "Aptoide", customerDouble,
+                projectTypologyDouble, businessSectorDouble, factoryProductBacklog, factoryUserStory);
         UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
                 "Planned");
         Effort effort = Effort.TWO;
@@ -596,12 +598,12 @@ public class ProjectTest {
         IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
         IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
         IFactoryUserStory factoryUserStory = new FactoryUserStory();
-
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
         Project project = new Project("AA001", "Aptoide",
-                new Customer("John", "228674498"),
-                new ProjectTypology("Fixed cost"),
-                new BusinessSector("Hunting"),
-                factoryProductBacklog, factoryUserStory);
+                customerDouble, projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
+                factoryUserStory);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
@@ -626,12 +628,12 @@ public class ProjectTest {
         IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
         IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
         IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
-        Project project = new Project("AA001", "Aptoide",
-                new Customer("John", "228674498"),
-                new ProjectTypology("Fixed cost"),
-                new BusinessSector("Hunting"),
-                factoryProductBacklog, factoryUserStory);
+        Project project = new Project("AA001", "Aptoide",customerDouble,
+                projectTypologyDouble, businessSectorDouble, factoryProductBacklog, factoryUserStory);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);

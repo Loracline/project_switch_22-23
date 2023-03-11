@@ -220,18 +220,27 @@ public class Project {
      *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
-                                           String sprintNumber) {
-        if (sprints != null && !sprints.isEmpty()) {
-            for (Sprint sprint : sprints) {
-                if (sprint.hasSprintNumber(sprintNumber)) {
-                    return sprint.estimateEffortUserStory(userStoryDto, effort);
-                }
+
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String sprintNumber) {
+        boolean result = false;
+        int i = 0;
+        while (i < sprints.size()) {
+            Sprint sprint = sprints.get(i);
+            if (sprint.hasSprintNumber(sprintNumber)) {
+                result = sprint.estimateEffortUserStory(userStoryDto, effort);
+                break;
             }
+            i++;
         }
-        return false;
+        return result;
     }
 
+    /**
+     * This method adds a new sprint to the list of sprints for this project.
+     * @param sprintNumber the sprint to be added
+     * @return true if the sprint was added successfully, false if the sprint was already in the
+     * list of sprints
+     */
     public boolean addSprint(Sprint sprintNumber) {
         boolean result = true;
         if (sprints.contains(sprintNumber)) {
