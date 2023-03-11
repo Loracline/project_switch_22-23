@@ -16,7 +16,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.switch2022.project.model.UserStory.createUserStory;
 
 public class ProjectTest {
     /**
@@ -545,9 +544,7 @@ public class ProjectTest {
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
         project.addSprint(sprint);
-        sprint.addUserStoryToSprintBacklog(createUserStory("US001", "I want to create a" +
-                        " profile",
-                "Planned"));
+        sprint.addUserStoryToSprintBacklog(new UserStory.UserStoryBuilder("US001").build());
 
         // Act
         boolean result = project.estimateEffortUserStory(reference, effort, "S1");
@@ -579,9 +576,7 @@ public class ProjectTest {
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
         project.addSprint(sprint);
-        sprint.addUserStoryToSprintBacklog(createUserStory("US001", "I want to create a" +
-                        " profile",
-                "Planned"));
+        sprint.addUserStoryToSprintBacklog(new UserStory.UserStoryBuilder("US001").build());
 
         // Act
         boolean result = project.estimateEffortUserStory(reference, effort, "S2");

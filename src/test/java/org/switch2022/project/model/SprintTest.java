@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.switch2022.project.model.UserStory.createUserStory;
 
 
 class SprintTest {
@@ -257,8 +256,7 @@ class SprintTest {
         IFactorySprintBacklog factorySprintBacklog = new FactorySprintBacklog();
         Sprint sprint = Sprint.createSprint(date, 2, "S55", factoryPeriod, factorySprintBacklog);
 
-        UserStory userStory = createUserStory("US001", "Manager",
-                "I want to create a profile");
+        UserStory userStory =(new UserStory.UserStoryBuilder("US001").build());
         sprint.addUserStoryToSprintBacklog(userStory);
 
         UserStoryDto userStoryDto = new UserStoryDto("US001", "Manager",
@@ -284,8 +282,7 @@ class SprintTest {
         Sprint sprint = Sprint.createSprint(date, 2, "S55", factoryPeriod, factorySprintBacklog);
 
 
-        UserStory userStory = createUserStory("US001", "Manager",
-                "I want to create a profile");
+        UserStory userStory = (new UserStory.UserStoryBuilder("US001").build());
         sprint.addUserStoryToSprintBacklog(userStory);
 
         UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",

@@ -71,8 +71,7 @@ public class ProductBacklog {
                                    IFactoryUserStory factoryUserStory) {
         boolean isUserStoryCreated = false;
         int priority = userStoryCreationDto.priority;
-        UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto.userStoryNumber,
-                userStoryCreationDto.actor, userStoryCreationDto.userStoryText);
+        UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto);
         if (addUserStory(userStory, priority)) {
             isUserStoryCreated = true;
         }

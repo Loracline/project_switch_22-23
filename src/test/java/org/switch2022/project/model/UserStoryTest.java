@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.utils.Effort;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.switch2022.project.model.UserStory.createUserStory;
-
 class UserStoryTest {
 
     /**
@@ -16,8 +14,7 @@ class UserStoryTest {
     @Test
     void ensureSameUserStoryEqualsItself() {
         // Arrange
-        UserStory reference = createUserStory("US001", "Manager", "I want to create a " +
-                "profile");
+        UserStory reference = (new UserStory.UserStoryBuilder("US001").build());
         UserStory other = reference;
         boolean expected = true;
 
@@ -35,10 +32,8 @@ class UserStoryTest {
     @Test
     void ensureTwoUserStoriesAreNotTheSame() {
         // Arrange
-        UserStory reference = createUserStory("US001", "Manager", "I want to create a " +
-                "profile");
-        UserStory other = createUserStory("US002", "Manager", "I want to create a " +
-                "profile");
+        UserStory reference = (new UserStory.UserStoryBuilder("US001").build());
+        UserStory other = (new UserStory.UserStoryBuilder("US002").build());
         boolean expected = false;
 
         // Act
@@ -56,8 +51,7 @@ class UserStoryTest {
     @Test
     void ensureUserStoryDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        UserStory reference = createUserStory("US001", "Manager", "I want to create a " +
-                "profile");
+        UserStory reference = (new UserStory.UserStoryBuilder("US001").build());
         String other = "User";
         boolean expected = false;
 
@@ -74,8 +68,7 @@ class UserStoryTest {
     @Test
     void ensureUserStoryDoesNotEqualNull() {
         // Arrange
-        UserStory reference = createUserStory("US001", "Manager", "I want to create a " +
-                "profile");
+        UserStory reference = (new UserStory.UserStoryBuilder("US001").build());
         UserStory other = null;
         boolean expected = false;
 
@@ -94,10 +87,8 @@ class UserStoryTest {
     @Test
     public void ensureTwoUserStoriesHashcodeAreTheSame() {
         // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create " +
-                "a profile");
-        UserStory userStoryTwo = createUserStory("US001", "Manager", "I want to create " +
-                "a profile");
+        UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
+        UserStory userStoryTwo = (new UserStory.UserStoryBuilder("US001").build());
 
         // Act
         int userStoryOneHashCode = userStoryOne.hashCode();
@@ -113,10 +104,8 @@ class UserStoryTest {
     @Test
     public void ensureTwoUserStoriesHashcodeAreNotTheSame() {
         // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create " +
-                "a profile");
-        UserStory userStoryThree = createUserStory("US002", "Manager", "I want to " +
-                "create a profile");
+        UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
+        UserStory userStoryThree = (new UserStory.UserStoryBuilder("US002").build());
 
         // Act
         int userStoryOneHashCode = userStoryOne.hashCode();
@@ -135,8 +124,7 @@ class UserStoryTest {
     @Test
     public void ensureUserStoryNumberIsTheSame() {
         // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create " +
-                "a profile");
+        UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         boolean expected = true;
 
         //Act
@@ -153,8 +141,7 @@ class UserStoryTest {
     @Test
     public void ensureUserStoryNumberIsNotTheSame() {
         // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager", "I want to create " +
-                "a profile");
+        UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         boolean expected = false;
 
         //Act
@@ -173,8 +160,7 @@ class UserStoryTest {
     @Test
     void ensureEffortIsSet() {
         // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager",
-                "I want to create a profile");
+        UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         // Act
         userStoryOne.setEffort(Effort.TWO);
 
@@ -190,10 +176,8 @@ class UserStoryTest {
     @Test
     void ensureEffortIsTheSameForTwoDifferentUserStories() {
         // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager",
-                "I want to create a profile");
-        UserStory userStoryTwo = createUserStory("US002", "Manager",
-                "I want to create a project");
+        UserStory userStoryOne =(new UserStory.UserStoryBuilder("US001").build());
+        UserStory userStoryTwo = (new UserStory.UserStoryBuilder("US002").build());
 
         // Act
         userStoryOne.setEffort(Effort.TWO);
@@ -211,10 +195,8 @@ class UserStoryTest {
     @Test
     void ensureEffortIsNotTheSameForTwoDifferentUserStories() {
         // Arrange
-        UserStory userStoryOne = createUserStory("US001", "Manager",
-                "I want to create a profile");
-        UserStory userStoryTwo = createUserStory("US002", "Manager",
-                "I want to create a project");
+        UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
+        UserStory userStoryTwo = (new UserStory.UserStoryBuilder("US002").build());
         // Act
         userStoryOne.setEffort(Effort.TWO);
         userStoryTwo.setEffort(Effort.THIRTEEN);

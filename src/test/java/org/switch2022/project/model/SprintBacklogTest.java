@@ -114,8 +114,7 @@ class SprintBacklogTest {
         SprintBacklog sprintBacklogOne = new SprintBacklog();
         SprintBacklog sprintBacklogTwo = new SprintBacklog();
 
-        UserStory userStory = UserStory.createUserStory("US001", "Manager",
-                "I want to create a profile");
+        UserStory userStory = (new UserStory.UserStoryBuilder("US001").build());
         sprintBacklogTwo.addUserStory(userStory);
         // Act
         int sprintBacklogOneHashCode = sprintBacklogOne.hashCode();
@@ -228,10 +227,8 @@ class SprintBacklogTest {
     void ensureEffortIsSetForUserStoryTestOne() {
         //Arrange
         SprintBacklog sprintBacklog = new SprintBacklog();
-        sprintBacklog.addUserStory(UserStory.createUserStory("US001", "Manager",
-                "I want to create a profile"));
-        sprintBacklog.addUserStory(UserStory.createUserStory("US002", "Manager",
-                "I want to create a profile"));
+        sprintBacklog.addUserStory((new UserStory.UserStoryBuilder("US001").build()));
+        sprintBacklog.addUserStory((new UserStory.UserStoryBuilder("US002").build()));
         UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
                 "I want to create a profile");
         Effort effort = Effort.THREE;
@@ -250,12 +247,9 @@ class SprintBacklogTest {
     void ensureEffortIsSetForUserStoryTestTwo() {
         //Arrange
         SprintBacklog sprintBacklog = new SprintBacklog();
-        sprintBacklog.addUserStory(UserStory.createUserStory("US001", "Manager",
-                "I want to create a profile"));
-        sprintBacklog.addUserStory(UserStory.createUserStory("US002", "Manager",
-                "I want to create a account"));
-        sprintBacklog.addUserStory(UserStory.createUserStory("US003", "Manager",
-                "I want to create a project"));
+        sprintBacklog.addUserStory(new UserStory.UserStoryBuilder("US001").build());
+        sprintBacklog.addUserStory(new UserStory.UserStoryBuilder("US002").build());
+        sprintBacklog.addUserStory(new UserStory.UserStoryBuilder("US003").build());
         UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
                 "I want to create a profile");
         Effort effort = Effort.THREE;
@@ -274,10 +268,8 @@ class SprintBacklogTest {
     void ensureEffortIsNotSetForUserStory() {
         //Arrange
         SprintBacklog sprintBacklog = new SprintBacklog();
-        sprintBacklog.addUserStory(UserStory.createUserStory("US001", "Manager",
-                "I want to create a profile"));
-        sprintBacklog.addUserStory(UserStory.createUserStory("US002", "Manager",
-                "I want to create a profile"));
+        sprintBacklog.addUserStory(new UserStory.UserStoryBuilder("US001").build());
+        sprintBacklog.addUserStory(new UserStory.UserStoryBuilder("US002").build());
         UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
                 "I want to create a profile");
         Effort effort = Effort.THREE;

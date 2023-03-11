@@ -18,35 +18,70 @@ public class UserStory {
      * Attributes
      */
     private final String userStoryNumber;
-    private String actor;
-    private String userStoryText;
+    private final String actor;
+    private final String userStoryText;
     private List<String> acceptanceCriteria = new ArrayList<>();
     private Effort effort = Effort.ONE;
     private Status status = Status.PLANNED;
 
     /**
      * Constructor
-     * It creates an userStory with the defining attribute: userStoryNumber
+     * It creates an userStory using the UserStoryBuilder;
      */
-    private UserStory(String userStoryNumber) {
-        this.userStoryNumber = userStoryNumber.toLowerCase().trim();
+    private UserStory(UserStoryBuilder builder) {
+
+        this.userStoryNumber = builder.userStoryNumber;
+        this.actor = builder.actor;
+        this.userStoryText = builder.userStoryText;
     }
 
     /**
-     * This method creates a new UserStory
-     *
-     * @param userStoryNumber,actor,userStoryText; When an userStory is instantiated,
-     *                                             its default status is PLANNED, its
-     *                                             default effort is 1 and hav an empty
-     *                                             list of acceptanceCriteria.
-     * @return userStory
+     * This class applies the builderPattern to create a new UserStory
      */
-    public static UserStory createUserStory(String userStoryNumber, String actor,
-                                            String userStoryText) {
-        UserStory userStory = new UserStory(userStoryNumber);
-        userStory.setActor(actor);
-        userStory.setUserStoryText(userStoryText);
-        return userStory;
+
+    public static class UserStoryBuilder {
+
+        private final String userStoryNumber;
+        private String actor;
+        private String userStoryText;
+
+        /**
+         * This method creates a userStory the userStoryNumber
+         *
+         * @param userStoryNumber
+         */
+        public UserStoryBuilder(String userStoryNumber) {
+            this.userStoryNumber = userStoryNumber.toLowerCase().trim();
+        }
+
+        /**
+         * This method set the actor of the userStory
+         *
+         * @param actor
+         */
+        public UserStoryBuilder setActor(String actor) {
+            this.actor = actor;
+            return this;
+        }
+
+        /**
+         * This method set the userStoryText of the userStory
+         *
+         * @param userStoryText
+         */
+        public UserStoryBuilder setUserStoryText(String userStoryText) {
+            this.userStoryText = userStoryText;
+            return this;
+        }
+
+        /**
+         * This method creates de userStory with the chosen attributes
+         */
+        public UserStory build() {
+            return new UserStory(this);
+        }
+
+
     }
 
     /**
@@ -100,24 +135,10 @@ public class UserStory {
     }
 
     /**
-     * Setter method for the attribute: actor
-     */
-    private void setActor(String actor) {
-        this.actor = actor;
-    }
-
-    /**
      * Getter method for the attribute: userStoryText
      */
     public String getUserStoryText() {
         return userStoryText;
-    }
-
-    /**
-     * Setter method for the attribute: userStoryText
-     */
-    private void setUserStoryText(String userStoryText) {
-        this.userStoryText = userStoryText;
     }
 
     /**
