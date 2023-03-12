@@ -194,7 +194,8 @@ public class Project {
     }
 
     /**
-     * This method returns a Sprint from Project which Period is within the given date.
+     * This method returns a Sprint Backlog from Project which Period is within the given
+     * date.
      *
      * @param date within the period of the Sprint.
      * @return an Optional with a Sprint.
@@ -268,7 +269,6 @@ public class Project {
      * This method checks if there is any UserStory in the sprints of the project with that userStoryNumber
      * return true if the userStory is present in any sprint.
      */
-
     private boolean hasUserStoryNumberInSprints(String userStoryNumber) {
         boolean result = false;
         int i = 0;

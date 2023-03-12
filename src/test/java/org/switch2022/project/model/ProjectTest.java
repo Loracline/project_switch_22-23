@@ -7,10 +7,16 @@ import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
+import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -535,7 +541,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
-                projectTypologyDouble, businessSectorDouble, factoryProductBacklog, factoryUserStory);
+                projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
+                factoryUserStory);
         UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
                 "Planned");
         Effort effort = Effort.TWO;
@@ -568,7 +575,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
-                projectTypologyDouble, businessSectorDouble, factoryProductBacklog, factoryUserStory);
+                projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
+                factoryUserStory);
         UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
                 "Planned");
         Effort effort = Effort.TWO;
@@ -599,7 +607,8 @@ public class ProjectTest {
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
         Project project = new Project("AA001", "Aptoide",
-                customerDouble, projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
+                customerDouble, projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklog,
                 factoryUserStory);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
@@ -630,7 +639,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
-                projectTypologyDouble, businessSectorDouble, factoryProductBacklog, factoryUserStory);
+                projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
+                factoryUserStory);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
@@ -684,7 +694,6 @@ public class ProjectTest {
      * Scenario 1: Creates a userStory successfully with an empty list of sprints
      * return true
      */
-
     @Test
     public void ensureThatAnUserStoryIsCreatedSuccessfully_emptySprints() {
         //Arrange
@@ -714,7 +723,8 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 2: Creates a userStory unsuccessfully due to the productBacklog can't create it
+     * Scenario 2: Creates a userStory unsuccessfully due to the productBacklog can't
+     * create it
      * return false
      */
     @Test
@@ -840,5 +850,74 @@ public class ProjectTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    /**
+     * METHOD getSprintBacklogByDate().
+     * returns a Sprint Backlog from Project which Period is within the given date.
+     * <br>
+     * Scenario 1: an Optional of Sprint Backlog is returned with a copy of the User
+     * Stories of the Sprint occurring in the given date.
+     */
+    @Test
+    void ensureThatReturnsAnOptionalWithASprintBacklog() {
+        // Arrange
+        // Creation of doubles for customer, business sector and project typology.
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+
+        // Creation of doubles of the Factories needed for testing.
+        IFactoryProductBacklog factoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactorySprintBacklog factorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+
+        // Creation of double of the period of the sprint, and determining its
+        // behaviour in this test.
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(any(LocalDate.class), anyInt())).thenReturn(periodDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(any(LocalDate.class))).thenReturn(true);
+        when(periodDouble.isDateEqualOrLowerThanEndDate(any(LocalDate.class))).thenReturn(true);
+
+        // Creation of the project to test.
+        Project projectToTest = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble);
+
+        // Creation of a double of the Sprint Backlog of the sprint of interest.
+        SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
+        when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
+
+        // Creation of the sprint occurring during the date of interest, and addition
+        // of it to the project to test.
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2022, 12, 1), 3, "SP001",
+                factoryPeriodDouble, factorySprintBacklogDouble);
+        projectToTest.addSprint(sprint);
+
+        // Determining that the previous Sprint Backlog will return a list of copied User
+        // Stories containing a double of User Story.
+        UserStory userStoryDouble = mock(UserStory.class);
+        List<UserStory> expectedList = new ArrayList<>();
+        expectedList.add(userStoryDouble);
+        when(sprintBacklogDouble.getUserStoriesCopy(factoryUserStoryDouble)).thenReturn(expectedList);
+
+        // Creation of the expected Sprint Backlog containing the same double of User
+        // Story used previously, and converting it to an object Optional, in case
+        // there is no Sprint occurring in the given date (which is not the case tested
+        // here).
+        SprintBacklog sprintBacklogExpected = new SprintBacklog();
+        sprintBacklogExpected.addUserStory(userStoryDouble);
+        Optional<SprintBacklog> expected = Optional.of(sprintBacklogExpected);
+
+        // Act
+        Optional<SprintBacklog> sprintBacklogOptional =
+                projectToTest.getSprintBacklogByDate(LocalDate.of(2023, 1, 1),
+                        factoryUserStoryDouble);
+
+        // Assert
+        assertEquals(expected, sprintBacklogOptional);
     }
 }

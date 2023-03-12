@@ -4,9 +4,9 @@ import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
-import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.factories.IFactoryProductBacklog;
 import org.switch2022.project.factories.IFactoryProject;
+import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.SprintBacklog;
 
@@ -58,13 +58,18 @@ public class ProjectContainer {
      * @param projectCreationDto data transfer object of the attributes of project.
      * @return TRUE if registered and FALSE otherwise.
      */
-    public boolean registerProject(ProjectCreationDto projectCreationDto, ProjectTypologyContainer
-            projectTypologyContainer, CustomerContainer customerContainer, BusinessSectorContainer
-                                           businessSectorContainer, IFactoryProductBacklog factoryProductBacklog,
-    IFactoryUserStory factoryUserStory, IFactoryProject factoryProject) {
-        Project project = ProjectCreationMapper.getProjectFromDto(projectCreationDto, projectTypologyContainer,
-                customerContainer, businessSectorContainer,  factoryProductBacklog,
-                 factoryUserStory,factoryProject);
+    public boolean registerProject(ProjectCreationDto projectCreationDto,
+                                   ProjectTypologyContainer
+            projectTypologyContainer, CustomerContainer customerContainer,
+                                   BusinessSectorContainer
+                                           businessSectorContainer,
+                                   IFactoryProductBacklog factoryProductBacklog,
+                                   IFactoryUserStory factoryUserStory,
+                                   IFactoryProject factoryProject) {
+        Project project = ProjectCreationMapper.getProjectFromDto(projectCreationDto,
+                projectTypologyContainer,
+                customerContainer, businessSectorContainer, factoryProductBacklog,
+                factoryUserStory, factoryProject);
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);
@@ -73,33 +78,44 @@ public class ProjectContainer {
         return projectRegistered;
     }
 
-  /**
-   * This method verifies if the project already exists in the container through the project code.
-   *
-   * @param project existence that shall be verified.
-   * @return TRUE if exists, and FALSE otherwise.
-   */
-  private boolean doesProjectExist(Project project) {
-    return projects.contains(project);
-  }
-
-  public Optional<SprintBacklog> getScrumBoard(String projectCode, LocalDate date,
-                                               IFactoryUserStory iFactoryUserStory) {
-    Optional<SprintBacklog> sprintBacklogRequested = Optional.empty();
-    for (Project project : this.projects) {
-      if (project.hasProjectCode(projectCode)) {
-        sprintBacklogRequested = project.getSprintBacklogByDate(date, iFactoryUserStory);
-      }
+    /**
+     * This method verifies if the project already exists in the container through the
+     * project code.
+     *
+     * @param project existence that shall be verified.
+     * @return TRUE if exists, and FALSE otherwise.
+     */
+    private boolean doesProjectExist(Project project) {
+        return projects.contains(project);
     }
-    return sprintBacklogRequested;
-  }
+
+    /**
+     * This method returns the sprint backlog of the project of interest, in a given date.
+     * @param projectCode of interest
+     * @param date of interest
+     * @param iFactoryUserStory interface one must use to copy the User Stories
+     *                          contained in the Sprint Backlog
+     * @return an Optional object of the Sprint Backlog.
+     */
+    public Optional<SprintBacklog> getScrumBoard(String projectCode, LocalDate date,
+                                                 IFactoryUserStory iFactoryUserStory) {
+        Optional<SprintBacklog> sprintBacklogRequested = Optional.empty();
+        for (Project project : this.projects) {
+            if (project.hasProjectCode(projectCode)) {
+                sprintBacklogRequested = project.getSprintBacklogByDate(date,
+                        iFactoryUserStory);
+            }
+        }
+        return sprintBacklogRequested;
+    }
 
     /**
      * This method creates an userStory in the requested project
      * returns true if the userStory is successfully created
      */
-    public boolean createUserStory(ProjectDto projectDto, UserStoryCreationDto userStoryCreationDto) {
+    public boolean createUserStory(ProjectDto projectDto,
+                                   UserStoryCreationDto userStoryCreationDto) {
         Project project = getProjectByCode(projectDto.code);
-         return project != null && project.createUserStory(userStoryCreationDto);
+        return project != null && project.createUserStory(userStoryCreationDto);
     }
 }
