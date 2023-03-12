@@ -2,14 +2,18 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.factories.FactoryUserStory;
 import org.switch2022.project.utils.Effort;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class SprintBacklogTest {
-
     /**
      * Method equals(Object o).
      * <p>
@@ -279,5 +283,61 @@ class SprintBacklogTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    /**
+     * Method getUserStoriesCopy().
+     * makes a deep copy of the User Stories that are in the Sprint Backlog, and the
+     * copy in a new list.
+     * <br>
+     * Scenario 1: Copy list of user stories of the Sprint Backlog is not empty as the
+     * user story was copied to it.
+     */
+    @Test
+    void ensureUserStoryCopyIsAddedToCopyListSuccessfully() {
+        // Arrange
+        SprintBacklog sprintBacklogToTest = new SprintBacklog();
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        sprintBacklogToTest.addUserStory(userStoryDouble);
+
+        FactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
+                thenReturn(userStoryDouble);
+
+        // Act
+        List<UserStory> result =
+                sprintBacklogToTest.getUserStoriesCopy(factoryUserStoryDouble);
+
+        // Assert
+        assertFalse(result.isEmpty());
+
+    }
+
+    /**
+     * Scenario 2: The copied list is equal to the one present in the Sprint Backlog.
+     */
+    @Test
+    void ensureCopyListEqualsListInSprintBacklog() {
+        // Arrange
+        SprintBacklog sprintBacklogToTest = new SprintBacklog();
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        sprintBacklogToTest.addUserStory(userStoryDouble);
+
+        List<UserStory> expectedList = new ArrayList<>();
+        expectedList.add(userStoryDouble);
+
+        FactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
+                thenReturn(userStoryDouble);
+        userStoryDouble.setStatus(any());
+
+        // Act
+        List<UserStory> resultList =
+                sprintBacklogToTest.getUserStoriesCopy(factoryUserStoryDouble);
+
+        // Assert
+        assertEquals(expectedList, resultList);
     }
 }
