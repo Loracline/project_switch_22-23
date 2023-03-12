@@ -117,7 +117,6 @@ class SprintBacklogTest {
         // Arrange
         SprintBacklog sprintBacklogOne = new SprintBacklog();
         SprintBacklog sprintBacklogTwo = new SprintBacklog();
-
         UserStory userStory = (new UserStory.UserStoryBuilder("US001").build());
         sprintBacklogTwo.addUserStory(userStory);
         // Act
@@ -280,6 +279,54 @@ class SprintBacklogTest {
 
         //Act
         boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method estimateEffortUserStory(userStoryDto, effort)
+     * <p>
+     * Scenario 1: the effort of a UserStory is set.
+     */
+
+    @Test
+    void ensureEffortIsSetForUserStoryWithIsolation() {
+        //Arrange
+        UserStoryDto userStoryDto = new UserStoryDto("US55", "Manager",
+                "I want to create a profile");
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(userStoryDouble.hasUserStoryNumber(userStoryDto.userStoryNumber)).thenReturn(true);
+
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        sprintBacklog.addUserStory(userStoryDouble);
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.TWO);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: the effort of a UserStory is not set.
+     */
+
+    @Test
+    void ensureEffortIsNotSetForUserStoryWithIsolation() {
+        //Arrange
+        UserStoryDto userStoryDto = new UserStoryDto("US55", "Manager",
+                "I want to create a profile");
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(userStoryDouble.hasUserStoryNumber("US56")).thenReturn(false);
+
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        sprintBacklog.addUserStory(userStoryDouble);
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.TWO);
 
         //Assert
         assertFalse(result);
