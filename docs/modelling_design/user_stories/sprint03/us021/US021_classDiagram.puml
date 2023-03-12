@@ -22,10 +22,12 @@ class "ProjectContainer" {
 class "Project"{
 - sprints
 + estimateEffortUserStory(userStoryDto, effort)
++ addSprint(Sprint sprintNumber)
 }
 class "Sprint"{
 - sprintBacklog
 + estimateEffortUserStory(userStoryDto, effort)
++ hasSprintNumber(Sprint sprintNumber)
 }
 class "SprintBacklog" {
 - userStories
@@ -35,6 +37,7 @@ class "UserStory"{
 - effort
 + setEffort(effort)
 + getEffort()
++ hasUserStoryNumber(userStoryNumber)
 }
 enum "Effort"{
 - effortValue

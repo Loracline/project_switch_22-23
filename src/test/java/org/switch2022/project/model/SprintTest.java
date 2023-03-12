@@ -6,8 +6,8 @@ import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.factories.FactorySprintBacklog;
 import org.switch2022.project.factories.IFactoryPeriod;
 import org.switch2022.project.factories.IFactorySprintBacklog;
-import org.switch2022.project.utils.Period;
 import org.switch2022.project.utils.Effort;
+import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
 
@@ -256,7 +256,7 @@ class SprintTest {
         IFactorySprintBacklog factorySprintBacklog = new FactorySprintBacklog();
         Sprint sprint = Sprint.createSprint(date, 2, "S55", factoryPeriod, factorySprintBacklog);
 
-        UserStory userStory =(new UserStory.UserStoryBuilder("US001").build());
+        UserStory userStory = (new UserStory.UserStoryBuilder("US001").build());
         sprint.addUserStoryToSprintBacklog(userStory);
 
         UserStoryDto userStoryDto = new UserStoryDto("US001", "Manager",
@@ -318,6 +318,7 @@ class SprintTest {
         //Assert
         assertTrue(result);
     }
+
     /**
      * Scenario 2: returns False
      */
@@ -443,6 +444,38 @@ class SprintTest {
 
         //Act
         boolean result = sprintToTest.isDateWithinPeriod(dateToCompare);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD estimateEffortUserStory(userStoryDto, effort)
+     * <p>
+     * Scenario 1: sets the effort of a UserStory.
+     */
+
+    // to be done
+
+    /**
+     * Scenario 2: does not set the effort of a userStory because userStoryNumber does not exist.
+     */
+    @Test
+    void ensureEffortIsNotSetForUserStoryWithIsolation() {
+        //Arrange
+        UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
+                "I want to create a profile");
+        Effort effort = Effort.THREE;
+        IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
+        SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
+                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+        when(sprintBacklogDouble.hasUserStory(userStoryDto.userStoryNumber)).thenReturn(true);
+
+        //Act
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
 
         //Assert
         assertFalse(result);
