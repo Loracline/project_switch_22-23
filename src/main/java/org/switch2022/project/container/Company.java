@@ -27,7 +27,6 @@ public class Company {
   private final AccountInProjectContainer accountInProjectContainer;
   private final CustomerContainer customerContainer;
 
-
   /**
    * Constructor
    */

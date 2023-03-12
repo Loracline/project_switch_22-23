@@ -2,7 +2,6 @@ package org.switch2022.project.dto.assembler;
 
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.dto.mapper.UserStoryMapper;
-import org.switch2022.project.factories.FactoryUserStory;
 import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.SprintBacklog;

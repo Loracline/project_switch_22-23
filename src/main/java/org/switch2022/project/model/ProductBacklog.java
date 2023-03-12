@@ -166,7 +166,6 @@ public class ProductBacklog {
      *
      * @return a product backlog with list of copies of user stories.
      */
-
     public ProductBacklog getProductBacklogCopy() {
         ProductBacklog productBacklogCopy = new ProductBacklog(this.IFactoryUserStory);
 

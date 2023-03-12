@@ -1,15 +1,15 @@
 package org.switch2022.project.model;
 
-
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryPeriod;
+import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.utils.Effort;
 import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
-
 
 /**
  * Represents a short period of time defined by a Sprint Number, Period and Sprint
@@ -105,7 +105,6 @@ public class Sprint {
         this.sprintBacklog = iFactorySprintBacklog.createSprintBacklog();
     }
 
-
     /**
      * This method adds a new User Story to the Sprint Backlog
      *
@@ -157,6 +156,23 @@ public class Sprint {
      */
     public boolean isDateWithinPeriod(LocalDate date) {
         return this.period.isDateEqualOrGreaterThanStartDate(date) && this.period.isDateEqualOrLowerThanEndDate(date);
+    }
+
+    /**
+     * This method makes a copy of the list of user stories contained in the sprint
+     * backlog and stores it in another instance of sprint backlog.
+     *<br>
+     * @return a sprint backlog with list of copies of user stories.
+     */
+    public SprintBacklog getSprintBacklogCopy(IFactoryUserStory iFactoryUserStory) {
+        SprintBacklog sprintBacklogCopy = new SprintBacklog();
+        List<UserStory> userStoryCopyList =
+                this.sprintBacklog.getUserStoriesCopy(iFactoryUserStory);
+        for (int i = 0; i < userStoryCopyList.size(); i++) {
+            sprintBacklogCopy.addUserStory(userStoryCopyList.get(i));
+            i++;
+        }
+        return sprintBacklogCopy;
     }
 }
 
