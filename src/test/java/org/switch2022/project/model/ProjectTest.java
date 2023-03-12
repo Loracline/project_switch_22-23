@@ -6,14 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
-import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -680,51 +676,5 @@ public class ProjectTest {
 
         //ASSERT
         assertEquals(productBacklogCopyExpected, result);
-    }
-
-    /**
-     * Method getSprintByDate()
-     * <br>
-     * Scenario 1:
-     */
-    @Test
-    void ensureThatReturnsAnOptionalWithASprint() {
-        // Arrange
-        Customer customerDouble = mock(Customer.class);
-        BusinessSector businessSectorDouble = mock(BusinessSector.class);
-        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
-
-        IFactoryProductBacklog factoryProductBacklogDouble =
-                mock(FactoryProductBacklog.class);
-        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        IFactorySprintBacklog factorySprintBacklogDouble =
-                mock(FactorySprintBacklog.class);
-        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
-
-        Period periodDouble = mock(Period.class);
-
-        LocalDate startDate = LocalDate.of(2022, 12, 1);
-        when(factoryPeriodDouble.createPeriod(any(LocalDate.class), anyInt())).thenReturn(periodDouble);
-        when(periodDouble.isDateEqualOrGreaterThanStartDate(any(LocalDate.class))).thenReturn(true);
-        when(periodDouble.isDateEqualOrLowerThanEndDate(any(LocalDate.class))).thenReturn(true);
-
-        LocalDate dateOfInterest = LocalDate.of(2023, 1, 1);
-
-        Project projectToTest = new Project("A001", "Artemis", customerDouble,
-                projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
-
-        Sprint sprint = Sprint.createSprint(startDate, 3, "SP001",
-                factoryPeriodDouble, factorySprintBacklogDouble);
-
-        projectToTest.addSprint(sprint);
-
-        Optional<Sprint> expected = Optional.of(sprint);
-
-        // Act
-        Optional<Sprint> sprintOptional = projectToTest.getSprintByDate(dateOfInterest);
-
-        // Assert
-        assertEquals(expected, sprintOptional);
     }
 }

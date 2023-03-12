@@ -32,7 +32,6 @@ public class Project {
     private IFactoryProductBacklog iFactoryProductBacklog;
     private IFactoryUserStory iFactoryUserStory;
 
-
     /**
      * Constructor
      */
@@ -198,16 +197,17 @@ public class Project {
      * @param date within the period of the Sprint.
      * @return an Optional with a Sprint.
      */
-    public Optional<Sprint> getSprintByDate(LocalDate date) {
-        Sprint sprint = null;
+    public Optional<SprintBacklog> getSprintBacklogByDate(LocalDate date,
+                                                          IFactoryUserStory iFactoryUserStory) {
+        SprintBacklog sprintBacklog = null;
         int i = 0;
-        while (i < this.sprints.size() && sprint == null) {
+        while (i < this.sprints.size() && sprintBacklog == null) {
             if (sprints.get(i).isDateWithinPeriod(date)) {
-                sprint = sprints.get(i);
+                sprintBacklog = sprints.get(i).getSprintBacklogCopy(iFactoryUserStory);
             }
             i++;
         }
-        return Optional.ofNullable(sprint);
+        return Optional.ofNullable(sprintBacklog);
     }
 
     /**
@@ -220,7 +220,6 @@ public class Project {
      *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
-
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String sprintNumber) {
         boolean result = false;
         int i = 0;
