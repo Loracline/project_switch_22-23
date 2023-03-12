@@ -2,10 +2,14 @@ package org.switch2022.project.container;
 
 import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
+import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.model.Project;
+import org.switch2022.project.model.SprintBacklog;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class ProjectContainer is built to access and manipulate the set of projects
@@ -71,5 +75,16 @@ public class ProjectContainer {
    */
   private boolean doesProjectExist(Project project) {
     return projects.contains(project);
+  }
+
+  public Optional<SprintBacklog> getScrumBoard(String projectCode, LocalDate date,
+                                               IFactoryUserStory iFactoryUserStory) {
+    Optional<SprintBacklog> sprintBacklogRequested = Optional.empty();
+    for (Project project : this.projects) {
+      if (project.hasProjectCode(projectCode)) {
+        sprintBacklogRequested = project.getSprintBacklogByDate(date, iFactoryUserStory);
+      }
+    }
+    return sprintBacklogRequested;
   }
 }
