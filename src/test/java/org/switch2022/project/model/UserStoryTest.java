@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.utils.Effort;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 class UserStoryTest {
 
     /**
@@ -14,7 +15,8 @@ class UserStoryTest {
     @Test
     void ensureSameUserStoryEqualsItself() {
         // Arrange
-        UserStory reference = (new UserStory.UserStoryBuilder("US001").build());
+        UserStory reference = (new UserStory.UserStoryBuilder("US001").setUserStoryText("Hello").
+                setActor("Manager").build());
         UserStory other = reference;
         boolean expected = true;
 
@@ -153,7 +155,7 @@ class UserStoryTest {
 
     /**
      * Method setEffort and getEffort.
-     *<br>
+     * <br>
      * Scenario 1: Verify if the effort of userStoryOne is set.
      * Expected result: effort of userStoryOne is equal to effort value.
      */
@@ -176,7 +178,7 @@ class UserStoryTest {
     @Test
     void ensureEffortIsTheSameForTwoDifferentUserStories() {
         // Arrange
-        UserStory userStoryOne =(new UserStory.UserStoryBuilder("US001").build());
+        UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         UserStory userStoryTwo = (new UserStory.UserStoryBuilder("US002").build());
 
         // Act

@@ -1,9 +1,10 @@
 package org.switch2022.project.container;
 
 
-import org.switch2022.project.dto.AccountDto;
-import org.switch2022.project.dto.AllocationDto;
-import org.switch2022.project.dto.ProjectCreationDto;
+import org.switch2022.project.dto.*;
+import org.switch2022.project.factories.IFactoryProductBacklog;
+import org.switch2022.project.factories.IFactoryProject;
+import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Project;
 
@@ -147,9 +148,10 @@ public class Company {
    * @param projectDto data transfer object of projects information.
    * @return TRUE if registered, and FALSE otherwise.
    */
-  public boolean registerProject(ProjectCreationDto projectDto) {
+  public boolean registerProject(ProjectCreationDto projectDto, IFactoryProductBacklog factoryProductBacklog,
+                                 IFactoryUserStory factoryUserStory, IFactoryProject factoryProject) {
     return (projectContainer.registerProject(projectDto, projectTypologyContainer, customerContainer,
-            businessSectorContainer));
+            businessSectorContainer,factoryProductBacklog, factoryUserStory, factoryProject));
   }
 
   /**
@@ -265,6 +267,12 @@ public class Company {
   public List<Project> listProjectsByAccount(String emailUser) {
     return accountInProjectContainer.listProjectsByAccount(emailUser);
   }
-
+  /**
+   * This method creates an userStory in the requested project
+   * returns true if the userStory is successfully created
+   */
+  public boolean createUserStory(ProjectDto projectDto, UserStoryCreationDto userStoryCreationDto){
+    return projectContainer.createUserStory(projectDto,userStoryCreationDto);
+  }
 }
 

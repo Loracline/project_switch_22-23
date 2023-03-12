@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
@@ -628,7 +629,7 @@ public class ProjectTest {
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
-        Project project = new Project("AA001", "Aptoide",customerDouble,
+        Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog, factoryUserStory);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
@@ -676,5 +677,168 @@ public class ProjectTest {
 
         //ASSERT
         assertEquals(productBacklogCopyExpected, result);
+    }
+
+    /**
+     * METHOD createUserStory
+     * Scenario 1: Creates a userStory successfully with an empty list of sprints
+     * return true
+     */
+
+    @Test
+    public void ensureThatAnUserStoryIsCreatedSuccessfully_emptySprints() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        IFactoryProductBacklog factoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
+                "create Project", "manager", 0);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+
+        when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
+
+        Project projectToTest = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble);
+
+        when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(true);
+
+        //Act
+        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: Creates a userStory unsuccessfully due to the productBacklog can't create it
+     * return false
+     */
+    @Test
+    public void ensureThatAnUserStoryIsCreatedUnsuccessfully_ProductBacklog() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        IFactoryProductBacklog factoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
+                "create Project", "manager", 0);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+
+        when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
+
+        Project projectToTest = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble);
+
+        when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(false);
+
+        //Act
+        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: Creates a userStory successfully
+     * return true
+     */
+    @Test
+    public void ensureThatAnUserStoryIsCreatedSuccessfully() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        IFactoryProductBacklog factoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
+                "create Project", "manager", 0);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        Sprint sprintDouble = mock(Sprint.class);
+
+        when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
+
+        Project projectToTest = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble);
+        projectToTest.addSprint(sprintDouble);
+
+        when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(true);
+
+        //Act
+        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 4: Creates a userStory unsuccessfully due to userStoryCreationDto be null
+     * return false
+     */
+    @Test
+    public void ensureThatAnUserStoryIsCreatedUnsuccessfully_userStoryNull() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        IFactoryProductBacklog factoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        UserStoryCreationDto userStoryCreationDto = null;
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        Sprint sprintDouble = mock(Sprint.class);
+
+        when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
+
+        Project projectToTest = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble);
+        projectToTest.addSprint(sprintDouble);
+
+        //Act
+        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 4: Creates a userStory unsuccessfully due to be already in a sprint
+     * return false
+     */
+    @Test
+    public void ensureThatAnUserStoryIsCreatedUnsuccessfully_userStoryRepeated() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        IFactoryProductBacklog factoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        UserStoryCreationDto userStoryCreationDto = mock(UserStoryCreationDto.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        Sprint sprintDouble = mock(Sprint.class);
+
+        when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
+
+        Project projectToTest = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble);
+        projectToTest.addSprint(sprintDouble);
+        when(sprintDouble.hasUserStory("01")).thenReturn(true);
+
+        //Act
+        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+
+        //Assert
+        assertFalse(result);
     }
 }

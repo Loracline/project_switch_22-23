@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryProductBacklog;
 import org.switch2022.project.factories.IFactoryUserStory;
@@ -63,8 +64,9 @@ public class Project {
         this.projectTypology = projectTypology;
         this.businessSector = businessSector;
         this.sprintDuration = 0;
-        this.productBacklog =
-                iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
+        this.iFactoryProductBacklog = iFactoryProductBacklog;
+        this.iFactoryUserStory = iFactoryUserStory;
+        this.productBacklog = this.iFactoryProductBacklog.createProductBacklog(this.iFactoryUserStory);
         this.sprints = new ArrayList<>();
     }
 
@@ -236,6 +238,7 @@ public class Project {
 
     /**
      * This method adds a new sprint to the list of sprints for this project.
+     *
      * @param sprintNumber the sprint to be added
      * @return true if the sprint was added successfully, false if the sprint was already in the
      * list of sprints
@@ -259,6 +262,34 @@ public class Project {
      */
     public ProductBacklog getProductBacklog() {
         return this.productBacklog.getProductBacklogCopy();
+    }
+
+    /**
+     * This method checks if there is any UserStory in the sprints of the project with that userStoryNumber
+     * return true if the userStory is present in any sprint.
+     */
+
+    private boolean hasUserStoryNumberInSprints(String userStoryNumber) {
+        boolean result = false;
+        int i = 0;
+        while (i < sprints.size() && !result && userStoryNumber != null) {
+            if (sprints.get(i).hasUserStory(userStoryNumber)) {
+                result = true;
+            }
+            i++;
+        }
+        return result;
+    }
+
+    /**
+     * This method creates an userStory by checking if the userStory is not present in any sprint and
+     * makes use of the method createUserStory from productBacklog.
+     * return true if the userStory was created with success.
+     */
+    public boolean createUserStory(UserStoryCreationDto userStoryCreationDto) {
+        return userStoryCreationDto != null &&
+                !hasUserStoryNumberInSprints(userStoryCreationDto.userStoryNumber) &&
+                productBacklog.createUserStory(userStoryCreationDto);
     }
 }
 

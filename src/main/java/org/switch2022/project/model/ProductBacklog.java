@@ -18,13 +18,13 @@ public class ProductBacklog {
      * Attributes
      */
     private final List<UserStory> userStories = new ArrayList<>();
-    private final IFactoryUserStory IFactoryUserStory;
+    private final IFactoryUserStory iFactoryUserStory;
 
     /**
      * Constructor to assign class that implements FactoryUserStory
      */
     public ProductBacklog(IFactoryUserStory ifactoryUserStory) {
-        this.IFactoryUserStory = ifactoryUserStory;
+        this.iFactoryUserStory = ifactoryUserStory;
     }
 
     /**
@@ -67,11 +67,10 @@ public class ProductBacklog {
      * @return true if the userStory is created and added to the ProductBacklog.
      */
 
-    public boolean createUserStory(UserStoryCreationDto userStoryCreationDto,
-                                   IFactoryUserStory factoryUserStory) {
+    public boolean createUserStory(UserStoryCreationDto userStoryCreationDto) {
         boolean isUserStoryCreated = false;
         int priority = userStoryCreationDto.priority;
-        UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto);
+        UserStory userStory = iFactoryUserStory.createUserStory(userStoryCreationDto);
         if (addUserStory(userStory, priority)) {
             isUserStoryCreated = true;
         }
@@ -149,7 +148,7 @@ public class ProductBacklog {
         List<UserStory> listOfCopies = new ArrayList<>();
 
         for (UserStory userStory : this.userStories) {
-            UserStory userStoryCopy = this.IFactoryUserStory.createUserStory(
+            UserStory userStoryCopy = this.iFactoryUserStory.createUserStory(
                     userStory.getUserStoryNumber(),
                     userStory.getActor(),
                     userStory.getUserStoryText());
@@ -167,7 +166,7 @@ public class ProductBacklog {
      * @return a product backlog with list of copies of user stories.
      */
     public ProductBacklog getProductBacklogCopy() {
-        ProductBacklog productBacklogCopy = new ProductBacklog(this.IFactoryUserStory);
+        ProductBacklog productBacklogCopy = new ProductBacklog(this.iFactoryUserStory);
 
         List<UserStory> userStoriesCopy =
                 getUserStoriesCopy();
