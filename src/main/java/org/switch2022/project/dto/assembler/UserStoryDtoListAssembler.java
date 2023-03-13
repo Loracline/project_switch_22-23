@@ -14,7 +14,8 @@ public class UserStoryDtoListAssembler {
     /**
      * Constructor of the class UserStoryDtoListAssembler.
      */
-    private UserStoryDtoListAssembler() {}
+    private UserStoryDtoListAssembler() {
+    }
 
     /**
      * This method converts a list of user stories within a Product Backlog into a list
@@ -22,14 +23,22 @@ public class UserStoryDtoListAssembler {
      *
      * @return a list of User Story DTOs.
      */
-    public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog){
+    public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog) {
 
         List<UserStory> userStories = productBacklog.getUserStoriesCopy();
         List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
         return userStoryDtos;
     }
+
+    /**
+     * This method converts a list of user stories within a Sprint Backlog into a list
+     * of user story DTOs.
+     *
+     * @param factoryUserStory used to create the copy User Stories.
+     * @return a list of User Story DTOs.
+     */
     public static List<UserStoryDto> backlogToDto(SprintBacklog sprintBacklog,
-                                                  IFactoryUserStory factoryUserStory){
+                                                  IFactoryUserStory factoryUserStory) {
         List<UserStory> userStories = sprintBacklog.getUserStoriesCopy(factoryUserStory);
         List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
         return userStoryDtos;
