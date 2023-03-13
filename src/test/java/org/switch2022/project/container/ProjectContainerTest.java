@@ -242,4 +242,37 @@ public class ProjectContainerTest {
         //Assert
         assertFalse(result);
     }
+
+    /**
+     * Scenario 1: Verifies that the estimateEffortUserStory() method of the Project Container class
+     * can correctly estimate the effort for a user story
+     * Expected result: true, indicating that the estimation was successful.
+     */
+
+    @Test    void ensureEstimateEffortUserStorySuccessfully() {
+        // Arrange
+        UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a project", "ongoing");
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        Project projectDouble = mock(Project.class);
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(ProjectTypologyContainer.class);
+        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(BusinessSectorContainer.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        when(factoryProjectDouble.createProject(any(), any(), any(), any(), any(), any())).thenReturn(projectDouble);
+        when(projectDouble.estimateEffortUserStory(any(), any(), any())).thenReturn(true);
+        when(projectDouble.hasProjectCode(any())).thenReturn(true);
+        projectContainerTest.registerProject(projectCreationDtoDouble, projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble);
+
+        // Act
+        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, "AA001");
+
+        // Assert
+        assertTrue(result);
+    }
+
 }
