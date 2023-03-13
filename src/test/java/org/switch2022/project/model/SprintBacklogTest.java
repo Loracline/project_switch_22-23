@@ -285,6 +285,24 @@ class SprintBacklogTest {
     }
 
     /**
+     * Scenario 4: userStories list is empty thus the effort of a UserStory isn't set.
+     */
+    @Test
+    void ensureEffortIsNotSetUserStoriesListEmpty() {
+        //Arrange
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
+                "I want to create a profile");
+        Effort effort = Effort.THREE;
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
      * Method estimateEffortUserStory(userStoryDto, effort)
      * <p>
      * Scenario 1: the effort of a UserStory is set.
