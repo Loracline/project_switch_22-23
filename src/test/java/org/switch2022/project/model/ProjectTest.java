@@ -538,10 +538,13 @@ public class ProjectTest {
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
         Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
-                factoryUserStory);
+                factoryUserStory, factoryPeriod,factorySprintBacklog,factorySprint);
         UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a profile",
                 "Planned");
         Effort effort = Effort.TWO;
@@ -570,10 +573,13 @@ public class ProjectTest {
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
         Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
-                factoryUserStory);
+                factoryUserStory, factoryPeriod,factorySprintBacklog,factorySprint);
         UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a profile",
                 "Planned");
         Effort effort = Effort.TWO;
@@ -602,10 +608,14 @@ public class ProjectTest {
         Customer customerDouble = mock(Customer.class);
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
+
         Project project = new Project("AA001", "Aptoide",
                 customerDouble, projectTypologyDouble, businessSectorDouble,
                 factoryProductBacklog,
-                factoryUserStory);
+                factoryUserStory, factoryPeriod,factorySprintBacklog,factorySprint);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
@@ -633,10 +643,13 @@ public class ProjectTest {
         Customer customerDouble = mock(Customer.class);
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
-                factoryUserStory);
+                factoryUserStory, factoryPeriod,factorySprintBacklog,factorySprint);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
@@ -672,11 +685,14 @@ public class ProjectTest {
 
         ProductBacklog productBacklogCopyExpected = mock(ProductBacklog.class);
         when(productBacklogDouble.getProductBacklogCopy()).thenReturn(productBacklogCopyExpected);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         Project project = new Project("AP01", "Artemis", customerDouble,
                 projectTypologyDouble,
                 businessSectorDouble, factoryProductBacklogDouble,
-                factoryUserStoryDouble);
+                factoryUserStoryDouble, factoryPeriod,factorySprintBacklog,factorySprint);
 
         //ACT
         ProductBacklog result = project.getProductBacklog();
@@ -702,12 +718,15 @@ public class ProjectTest {
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
                 "create Project", "manager", 0);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,factorySprintBacklog,factorySprint);
 
         when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(true);
 
@@ -735,12 +754,15 @@ public class ProjectTest {
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
                 "create Project", "manager", 0);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,factorySprintBacklog,factorySprint);
 
         when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(false);
 
@@ -768,12 +790,15 @@ public class ProjectTest {
                 "create Project", "manager", 0);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,factorySprintBacklog,factorySprint);
         projectToTest.addSprint(sprintDouble);
 
         when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(true);
@@ -801,12 +826,15 @@ public class ProjectTest {
         UserStoryCreationDto userStoryCreationDto = null;
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,factorySprintBacklog,factorySprint);
         projectToTest.addSprint(sprintDouble);
 
         //Act
@@ -832,12 +860,15 @@ public class ProjectTest {
         UserStoryCreationDto userStoryCreationDto = mock(UserStoryCreationDto.class);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,factorySprintBacklog,factorySprint);
         projectToTest.addSprint(sprintDouble);
         when(sprintDouble.hasUserStory("01")).thenReturn(true);
 
@@ -870,6 +901,9 @@ public class ProjectTest {
                 mock(FactorySprintBacklog.class);
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
         IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         // Creation of double of the period of the sprint, and determining its
         // behaviour in this test.
@@ -881,7 +915,7 @@ public class ProjectTest {
         // Creation of the project to test.
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,factorySprintBacklog,factorySprint);
 
         // Creation of a double of the Sprint Backlog of the sprint of interest.
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);

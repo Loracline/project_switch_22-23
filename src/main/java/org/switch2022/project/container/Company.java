@@ -2,9 +2,7 @@ package org.switch2022.project.container;
 
 
 import org.switch2022.project.dto.*;
-import org.switch2022.project.factories.IFactoryProductBacklog;
-import org.switch2022.project.factories.IFactoryProject;
-import org.switch2022.project.factories.IFactoryUserStory;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Project;
 
@@ -149,9 +147,11 @@ public class Company {
    * @return TRUE if registered, and FALSE otherwise.
    */
   public boolean registerProject(ProjectCreationDto projectDto, IFactoryProductBacklog factoryProductBacklog,
-                                 IFactoryUserStory factoryUserStory, IFactoryProject factoryProject) {
+                                 IFactoryUserStory factoryUserStory, IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
+                                 IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
     return (projectContainer.registerProject(projectDto, projectTypologyContainer, customerContainer,
-            businessSectorContainer,factoryProductBacklog, factoryUserStory, factoryProject));
+            businessSectorContainer,factoryProductBacklog, factoryUserStory, factoryProject, iFactoryPeriod,
+             iFactorySprintBacklog,  iFactorySprint));
   }
 
   /**

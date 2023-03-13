@@ -26,9 +26,10 @@ public class FactoryProject implements IFactoryProject {
 
     public Project createProject(ProjectCreationDto projectCreationDto, Customer customer,
                                  ProjectTypology projectTypology, BusinessSector businessSector, IFactoryProductBacklog factoryProductBacklog,
-                                 IFactoryUserStory factoryUserStory) {
+                                 IFactoryUserStory factoryUserStory,IFactoryPeriod iFactoryPeriod,
+                                 IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
         return new Project(projectCreationDto.code, projectCreationDto.name, customer, projectTypology, businessSector,factoryProductBacklog,
-                factoryUserStory);
+                factoryUserStory,iFactoryPeriod,iFactorySprintBacklog,iFactorySprint);
     }
 
 }

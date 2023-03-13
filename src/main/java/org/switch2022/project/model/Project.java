@@ -1,9 +1,10 @@
 package org.switch2022.project.model;
 
 import org.switch2022.project.dto.UserStoryCreationDto;
+
+import org.switch2022.project.dto.SprintCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.factories.IFactoryProductBacklog;
-import org.switch2022.project.factories.IFactoryUserStory;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
@@ -32,7 +33,9 @@ public class Project {
     private ProductBacklog productBacklog;
     private IFactoryProductBacklog iFactoryProductBacklog;
     private IFactoryUserStory iFactoryUserStory;
-
+    private IFactoryPeriod iFactoryPeriod;
+    private IFactorySprintBacklog iFactorySprintBacklog;
+    private IFactorySprint iFactorySprint;
     /**
      * Constructor
      */
@@ -56,7 +59,8 @@ public class Project {
                    ProjectTypology projectTypology,
                    BusinessSector businessSector,
                    IFactoryProductBacklog iFactoryProductBacklog,
-                   IFactoryUserStory iFactoryUserStory) {
+                   IFactoryUserStory iFactoryUserStory,IFactoryPeriod iFactoryPeriod,
+                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint){
         this.projectCode = projectCode;
         this.projectName = name;
         this.customer = customer;
@@ -67,7 +71,11 @@ public class Project {
         this.iFactoryProductBacklog = iFactoryProductBacklog;
         this.iFactoryUserStory = iFactoryUserStory;
         this.productBacklog = this.iFactoryProductBacklog.createProductBacklog(this.iFactoryUserStory);
+        this.iFactoryPeriod = iFactoryPeriod;
+        this.iFactorySprintBacklog = iFactorySprintBacklog;
+        this.iFactorySprint = iFactorySprint;
         this.sprints = new ArrayList<>();
+
     }
 
     @Override
@@ -291,5 +299,20 @@ public class Project {
                 !hasUserStoryNumberInSprints(userStoryCreationDto.userStoryNumber) &&
                 productBacklog.createUserStory(userStoryCreationDto);
     }
+
+    /**
+     * This method creates an object Sprint.
+     * @param sprintCreationDto The SprintCreationDto object.
+     * @return true if the Sprint is created.
+     */
+    public boolean createSprint(SprintCreationDto sprintCreationDto) {
+        Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.startDate, sprintCreationDto.sprintDuration,
+                sprintCreationDto.sprintNumber , iFactoryPeriod,
+                iFactorySprintBacklog);
+        return sprintCreationDto != null && sprint !=null;
+    }
+
+
+
 }
 

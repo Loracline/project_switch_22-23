@@ -5,9 +5,7 @@ import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
-import org.switch2022.project.factories.IFactoryProductBacklog;
-import org.switch2022.project.factories.IFactoryProject;
-import org.switch2022.project.factories.IFactoryUserStory;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.SprintBacklog;
 import org.switch2022.project.utils.Effort;
@@ -67,11 +65,13 @@ public class ProjectContainer {
                                            businessSectorContainer,
                                    IFactoryProductBacklog factoryProductBacklog,
                                    IFactoryUserStory factoryUserStory,
-                                   IFactoryProject factoryProject) {
+                                   IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
+                                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
         Project project = ProjectCreationMapper.getProjectFromDto(projectCreationDto,
                 projectTypologyContainer,
                 customerContainer, businessSectorContainer, factoryProductBacklog,
-                factoryUserStory, factoryProject);
+                factoryUserStory, factoryProject, iFactoryPeriod,
+                 iFactorySprintBacklog,  iFactorySprint);
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);

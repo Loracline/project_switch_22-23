@@ -49,6 +49,10 @@ class AddUserToProjectControllerTest {
     IFactoryProductBacklog factoryProductBacklog;
     IFactoryProject factoryProject = new FactoryProject();
 
+    IFactoryPeriod factoryPeriod;
+    IFactorySprintBacklog factorySprintBacklog;
+    IFactorySprint factorySprint;
+
     @BeforeEach
     void setUp() {
         //Interfaces implemented
@@ -106,7 +110,7 @@ class AddUserToProjectControllerTest {
         projectContainer = new ProjectContainer();
 
         projectContainer.registerProject(projectDTO, projectTypologyContainer, customerContainer,
-                businessSectorContainer, factoryProductBacklog, factoryUserStory,factoryProject);
+                businessSectorContainer, factoryProductBacklog, factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
 
 
         accountContainer = new AccountContainer();

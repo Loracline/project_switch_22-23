@@ -10,6 +10,7 @@ public interface IFactoryProject {
     Project createProject (ProjectCreationDto projectCreationDto, Customer customer,
                            ProjectTypology projectTypology,
                            BusinessSector businessSector, IFactoryProductBacklog factoryProductBacklog,
-                           IFactoryUserStory factoryUserStory);
+                           IFactoryUserStory factoryUserStory,IFactoryPeriod iFactoryPeriod,
+                           IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint);
 
 }
