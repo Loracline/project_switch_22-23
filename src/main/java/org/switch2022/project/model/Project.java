@@ -1,8 +1,9 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.dto.SprintCreationDto;
+import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.factories.IFactoryProductBacklog;
-import org.switch2022.project.factories.IFactoryUserStory;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
@@ -31,8 +32,9 @@ public class Project {
     private ProductBacklog productBacklog;
     private IFactoryProductBacklog iFactoryProductBacklog;
     private IFactoryUserStory iFactoryUserStory;
-
-
+    private IFactoryPeriod iFactoryPeriod;
+    private IFactorySprintBacklog iFactorySprintBacklog;
+    private IFactorySprint iFactorySprint;
     /**
      * Constructor
      */
@@ -56,7 +58,8 @@ public class Project {
                    ProjectTypology projectTypology,
                    BusinessSector businessSector,
                    IFactoryProductBacklog iFactoryProductBacklog,
-                   IFactoryUserStory iFactoryUserStory) {
+                   IFactoryUserStory iFactoryUserStory,IFactoryPeriod iFactoryPeriod,
+                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint){
         this.projectCode = projectCode;
         this.projectName = name;
         this.customer = customer;
@@ -64,8 +67,13 @@ public class Project {
         this.projectTypology = projectTypology;
         this.businessSector = businessSector;
         this.sprintDuration = 0;
+        this.iFactoryProductBacklog = iFactoryProductBacklog;
+        this.iFactoryUserStory = iFactoryUserStory;
         this.productBacklog =
                 iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
+        this.iFactoryPeriod = iFactoryPeriod;
+        this.iFactorySprintBacklog = iFactorySprintBacklog;
+        this.iFactorySprint = iFactorySprint;
         this.sprints = new ArrayList<>();
     }
 
@@ -193,21 +201,23 @@ public class Project {
     }
 
     /**
-     * This method returns a Sprint from Project which Period is within the given date.
+     * This method returns a Sprint Backlog from Project which Period is within the given
+     * date.
      *
      * @param date within the period of the Sprint.
      * @return an Optional with a Sprint.
      */
-    public Optional<Sprint> getSprintByDate(LocalDate date) {
-        Sprint sprint = null;
+    public Optional<SprintBacklog> getSprintBacklogByDate(LocalDate date,
+                                                          IFactoryUserStory iFactoryUserStory) {
+        SprintBacklog sprintBacklog = null;
         int i = 0;
-        while (i < this.sprints.size() && sprint == null) {
-            if (sprints.get(i).getPeriod().isDateWithinPeriod(date)) {
-                sprint = sprints.get(i);
+        while (i < this.sprints.size() && sprintBacklog == null) {
+            if (sprints.get(i).isDateWithinPeriod(date)) {
+                sprintBacklog = sprints.get(i).getSprintBacklogCopy(iFactoryUserStory);
             }
             i++;
         }
-        return Optional.ofNullable(sprint);
+        return Optional.ofNullable(sprintBacklog);
     }
 
     /**
@@ -220,10 +230,68 @@ public class Project {
      *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String sprintNumber) {
+        boolean result = false;
+        int i = 0;
+        while (i < sprints.size()) {
+            Sprint sprint = sprints.get(i);
+            if (sprint.hasSprintNumber(sprintNumber)) {
+                result = sprint.estimateEffortUserStory(userStoryDto, effort);
+                break;
+            }
+            i++;
+        }
+        return result;
+    }
 
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
-                                           int sprintNumber) {
-        return (sprints.get(sprintNumber).estimateEffortUserStory(userStoryDto, effort));
+    /**
+     * This method verifies if a copy of a Product Backlog with list of copies of user
+     * stories is
+     * correctly returned.
+     *
+     * @return a product backlog.
+     */
+    public ProductBacklog getProductBacklog() {
+        return this.productBacklog.getProductBacklogCopy();
+    }
+
+    /**
+     * This method checks if there is any UserStory in the sprints of the project with that userStoryNumber
+     * return true if the userStory is present in any sprint.
+     */
+    private boolean hasUserStoryNumberInSprints(String userStoryNumber) {
+        boolean result = false;
+        int i = 0;
+        while (i < sprints.size() && !result && userStoryNumber != null) {
+            if (sprints.get(i).hasUserStory(userStoryNumber)) {
+                result = true;
+            }
+            i++;
+        }
+        return result;
+    }
+
+    /**
+     * This method creates an userStory by checking if the userStory is not present in any sprint and
+     * makes use of the method createUserStory from productBacklog.
+     * return true if the userStory was created with success.
+     */
+    public boolean createUserStory(UserStoryCreationDto userStoryCreationDto) {
+        return userStoryCreationDto != null &&
+                !hasUserStoryNumberInSprints(userStoryCreationDto.userStoryNumber) &&
+                productBacklog.createUserStory(userStoryCreationDto);
+    }
+
+    /**
+     * This method creates an object Sprint.
+     * @param sprintCreationDto The SprintCreationDto object.
+     * @return true if the Sprint is created.
+     */
+    public boolean createSprint(SprintCreationDto sprintCreationDto) {
+        Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.startDate, sprintCreationDto.sprintDuration,
+                sprintCreationDto.sprintNumber , iFactoryPeriod,
+                iFactorySprintBacklog);
+        return sprintCreationDto != null && sprint !=null;
     }
 
     /**
@@ -288,5 +356,6 @@ public class Project {
         }
         return result;
     }
+
 }
 

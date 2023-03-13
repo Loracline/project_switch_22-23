@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.factories.IFactoryUserStory;
 
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ public class ProductBacklog {
      * Attributes
      */
     private final List<UserStory> userStories = new ArrayList<>();
-    private IFactoryUserStory IFactoryUserStory;
+    private final IFactoryUserStory iFactoryUserStory;
 
     /**
      * Constructor to assign class that implements FactoryUserStory
      */
     public ProductBacklog(IFactoryUserStory ifactoryUserStory) {
-        this.IFactoryUserStory = ifactoryUserStory;
+        this.iFactoryUserStory = ifactoryUserStory;
     }
 
     /**
@@ -59,19 +60,40 @@ public class ProductBacklog {
     }
 
     /**
+     * This method creates an UserStory from a Dto, and checks if the userStory is unique
+     * and had it to the ProductBacklog according to the priority defined.
+     *
+     * @param userStoryCreationDto and factoryUserStory
+     * @return true if the userStory is created and added to the ProductBacklog.
+     */
+
+    public boolean createUserStory(UserStoryCreationDto userStoryCreationDto) {
+        boolean isUserStoryCreated = false;
+        int priority = userStoryCreationDto.priority;
+        UserStory userStory = iFactoryUserStory.createUserStory(userStoryCreationDto);
+        if (addUserStory(userStory, priority)) {
+            isUserStoryCreated = true;
+        }
+        return isUserStoryCreated;
+    }
+
+
+    /**
      * This method adds a new User Story to the userStories list if the User Story
      * doesn't already exist.
+     * The priority is defined being 0 as the most important.
      *
-     * @param userStory the new User Story to be added
+     * @param userStory the new User Story to be added, priority
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise.
      */
-    public boolean addUserStory(UserStory userStory) {
+    public boolean addUserStory(UserStory userStory, int priority) {
         boolean result = true;
-        if (userStories.contains(userStory)) {
+
+        if (userStories.contains(userStory) || priority > userStories.size()) {
             result = false;
         } else {
-            userStories.add(userStory);
+            userStories.add(priority, userStory);
         }
         return result;
     }
@@ -113,5 +135,46 @@ public class ProductBacklog {
             i++;
         }
         return wasRemoved;
+    }
+
+    /**
+     * This method makes a deep copy of the User Stories that are in the Product Backlog,
+     * and the copy in a new list.
+     *
+     * @return a list of the copied User Stories.
+     */
+
+    public List<UserStory> getUserStoriesCopy() {
+        List<UserStory> listOfCopies = new ArrayList<>();
+
+        for (UserStory userStory : this.userStories) {
+            UserStory userStoryCopy = this.iFactoryUserStory.createUserStory(
+                    userStory.getUserStoryNumber(),
+                    userStory.getActor(),
+                    userStory.getUserStoryText());
+            userStoryCopy.setStatus(userStory.getStatus());
+            userStoryCopy.setEffort(userStory.getEffort());
+            listOfCopies.add(userStoryCopy);
+        }
+        return listOfCopies;
+    }
+
+    /**
+     * This method makes a copy the list of user stories contained in the product backlog and
+     * stores them in another instance of product backlog.
+     *
+     * @return a product backlog with list of copies of user stories.
+     */
+    public ProductBacklog getProductBacklogCopy() {
+        ProductBacklog productBacklogCopy = new ProductBacklog(this.iFactoryUserStory);
+
+        List<UserStory> userStoriesCopy =
+                getUserStoriesCopy();
+
+        for (int i = 0; i < userStoriesCopy.size(); i++) {
+            productBacklogCopy.addUserStory(userStoriesCopy.get(i), i);
+            i++;
+        }
+        return productBacklogCopy;
     }
 }

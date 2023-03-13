@@ -7,7 +7,6 @@ import java.util.Objects;
  * Represents a period of time defined by a start date and an end date.
  */
 public class Period {
-
     /**
      * The start date of the period.
      */
@@ -58,7 +57,6 @@ public class Period {
         return startDate.plusWeeks(sprintDuration);
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,7 +65,6 @@ public class Period {
         return Objects.equals(startDate, period.startDate) &&
                 Objects.equals(endDate, period.endDate);
     }
-
 
     @Override
     public int hashCode() {
@@ -84,7 +81,6 @@ public class Period {
      * @param period the period to compare with
      * @return true if the periods do not overlap, false otherwise
      */
-
     public boolean isPeriodNotOverlapping(Period period) {
         // check if this period ends before the start of the given period
         if (this.endDate.isBefore(period.getStartDate())) {
@@ -104,7 +100,7 @@ public class Period {
      * @param date to compare.
      * @return true if date is equal or greater than start date or false otherwise.
      */
-    private boolean isDateEqualOrGreaterThanStartDate(LocalDate date) {
+    public boolean isDateEqualOrGreaterThanStartDate(LocalDate date) {
         return date.isAfter(this.startDate) || date.isEqual(this.startDate);
     }
 
@@ -114,18 +110,7 @@ public class Period {
      * @param date to compare.
      * @return true if date is equal or lower than end date or false otherwise.
      */
-    private boolean isDateEqualOrLowerThanEndDate(LocalDate date) {
+    public boolean isDateEqualOrLowerThanEndDate(LocalDate date) {
         return date.isBefore(this.endDate) || date.isEqual(this.endDate);
     }
-
-    /**
-     * This method checks if date is equal or greater than start date and equal or lower than end date.
-     *
-     * @param date to compare
-     * @return true if date is equal or greater than start date and equal or lower than end date or false otherwise.
-     */
-    public boolean isDateWithinPeriod(LocalDate date) {
-        return isDateEqualOrGreaterThanStartDate(date) && isDateEqualOrLowerThanEndDate(date);
-    }
-
 }

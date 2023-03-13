@@ -1,11 +1,11 @@
 package org.switch2022.project.container;
 
 
-import org.switch2022.project.dto.AccountDto;
-import org.switch2022.project.dto.AllocationDto;
-import org.switch2022.project.dto.ProjectCreationDto;
+import org.switch2022.project.dto.*;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Project;
+import org.switch2022.project.utils.Effort;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -26,7 +26,6 @@ public class Company {
   private final ProjectTypologyContainer projectTypologyContainer;
   private final AccountInProjectContainer accountInProjectContainer;
   private final CustomerContainer customerContainer;
-
 
   /**
    * Constructor
@@ -148,9 +147,12 @@ public class Company {
    * @param projectDto data transfer object of projects information.
    * @return TRUE if registered, and FALSE otherwise.
    */
-  public boolean registerProject(ProjectCreationDto projectDto) {
+  public boolean registerProject(ProjectCreationDto projectDto, IFactoryProductBacklog factoryProductBacklog,
+                                 IFactoryUserStory factoryUserStory, IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
+                                 IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
     return (projectContainer.registerProject(projectDto, projectTypologyContainer, customerContainer,
-            businessSectorContainer));
+            businessSectorContainer,factoryProductBacklog, factoryUserStory, factoryProject, iFactoryPeriod,
+             iFactorySprintBacklog,  iFactorySprint));
   }
 
   /**
@@ -266,6 +268,25 @@ public class Company {
   public List<Project> listProjectsByAccount(String emailUser) {
     return accountInProjectContainer.listProjectsByAccount(emailUser);
   }
+  /**
+   * This method creates an userStory in the requested project
+   * returns true if the userStory is successfully created
+   */
+  public boolean createUserStory(ProjectDto projectDto, UserStoryCreationDto userStoryCreationDto){
+    return projectContainer.createUserStory(projectDto,userStoryCreationDto);
+  }
+
+  /**
+   * This method sets the effort of an userStory.
+   * @param userStoryDto to estimate the effort.
+   * @param effort       of the userStory.
+   * @param projectCode
+   * @return true if the effort is set and false otherwise.
+   */
+  public boolean estimateEffortUserStory (UserStoryDto userStoryDto, Effort effort, String projectCode){
+    return projectContainer.estimateEffortUserStory(userStoryDto, effort, projectCode);
+  }
+
 
 }
 

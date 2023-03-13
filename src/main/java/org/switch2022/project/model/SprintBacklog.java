@@ -11,13 +11,10 @@ import java.util.Objects;
 /**
  * Class SprintBacklog, holds a set of userStories.
  */
-
 public class SprintBacklog {
-
     /**
      * Attributes of the class SprintBacklog, according to the Class Diagram.
      */
-
     private final List<UserStory> userStories = new ArrayList<>();
 
     /**
@@ -27,7 +24,6 @@ public class SprintBacklog {
      * @param o SprintBacklog instance to compare with.
      * @return TRUE if the two have the same attributes, and FALSE otherwise.
      */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -46,7 +42,6 @@ public class SprintBacklog {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(userStories);
@@ -117,11 +112,10 @@ public class SprintBacklog {
      * This method checks if the userStory number exists in the SprintBacklog,
      * if so it'll then set the effort for the userStory.
      *
-     * @param userStoryDto
-     * @param effort
+     * @param userStoryDto containing data about the object UserStory
+     * @param effort to be set
      * @return true if the userStory number exists and false otherwise.
      */
-
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort) {
         int i = 0;
         boolean isEffortSet = false;

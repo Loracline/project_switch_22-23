@@ -13,61 +13,58 @@ class Project
 class Sprint
 class SprintBacklog
 class ProjectDto
-interface FactoryUserStory
+interface IFactoryUserStory
 class UserStory
 class UserStoryDtoListAssembler
-class UserStoryDtoMapper
+class UserStoryMapper
 class UserStoryDto
 
 class ViewScrumBoardController {
 -company
-+getScrumBoard(projectDto, date)
++getScrumBoard(projectDto, date, iFactoryUserStory)
 }
 
 class Company {
 -projectContainer
-+getScrumBoard(projectDto, date)
++getScrumBoard(projectCode, date, iFactoryUserStory)
 }
 
 class ProjectContainer {
 -projects
--getProjectByCode(projectCode)
-+getScrumBoard(date)
++getScrumBoard(projectCode, date, iFactoryUserStory)
 }
 
 class Project {
 -projectCode
 -sprints
 +hasProjectCode(projectCode)
-+getSprintByDate(date)
-+getScrumBoard()
++getSprintBacklogByDate(date, iFactoryUserStory)
 }
 
 class Sprint {
 -sprintBacklog
 -period
-+getSprintBacklogCopy(factoryUserStory)
-+getPeriodByDate(date)
++isDateWithinPeriod(date)
++getSprintBacklogCopy(iFactoryUserStory)
 }
 
 class Period {
 -startDate
 -endDate
-+isDateWithinPeriod(date)
 +isDateEqualOrGreaterThanStartDate(date)
 +isDateEqualOrLowerThanEndDate(date)
 }
 
 class SprintBacklog {
 -userStories
-+getUserStoriesCopy(factoryUserStory)
++getUserStoriesCopy(iFactoryUserStory)
 }
 
 class ProjectDto {
 +projectCode
 }
 
-interface FactoryUserStory {
+interface IFactoryUserStory {
 +createUserStory(userStoryNumber, actor, userStoryText)
 }
 
@@ -76,10 +73,10 @@ class UserStory {
 -userStoryText
 -status
 -actor
-+getUsNumber()
-+getUsStatus()
-+setUsStatus()
-+getUsText()
++getUserStoryNumber()
++getStatus()
++setStatus()
++getUserStoryText()
 +getActor()
 }
 
@@ -89,12 +86,12 @@ class UserStoryDto {
 +status
 }
 
-class UserStoryDtoMapper {
+class UserStoryMapper {
 +userStoriesToDto(userStory)
 }
 
 class UserStoryDtoListAssembler {
-+backlogToDto(sprintBacklog)
++backlogToDto(sprintBacklog, iFactoryUserStory)
 }
 
 "ViewScrumBoardController" --> "Company"
@@ -103,13 +100,13 @@ class UserStoryDtoListAssembler {
 "Project" "1" --> "*" "Sprint": has
 "Sprint" "1" --> "1" "SprintBacklog": has
 "Sprint" "1" --> "1" "Period": has
-"SprintBacklog" --> "FactoryUserStory"
+"SprintBacklog" .--> "IFactoryUserStory"
 "SprintBacklog" "1" --> "*" "UserStory": has
-"FactoryUserStory" .--> "UserStory"
-"ProjectContainer" .--> "ProjectDto": accesses
-"ViewScrumBoardController" .--> "UserStoryDtoListAssembler"
-"UserStoryDtoListAssembler" .--> "UserStoryDtoMapper"
-"UserStoryDtoMapper" .--> "UserStoryDto": instantiates
-"UserStoryDtoMapper" .--> "UserStory"
+"IFactoryUserStory" .--> "UserStory"
+"ViewScrumBoardController" .--> "ProjectDto": extracts
+"ViewScrumBoardController" .--> "UserStoryDtoListAssembler": uses
+"UserStoryDtoListAssembler" .--> "UserStoryMapper"
+"UserStoryMapper" .--> "UserStoryDto": converts
+"UserStoryMapper" .--> "UserStory"
 
 @enduml
