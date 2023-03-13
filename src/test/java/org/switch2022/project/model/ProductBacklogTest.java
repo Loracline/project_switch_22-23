@@ -356,7 +356,7 @@ public class ProductBacklogTest {
         ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         UserStory userStoryDoubleTwo = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDoubleTwo);
+        productBacklog.addUserStory(userStoryDoubleTwo,0);
 
         //ACT
         boolean result = productBacklog.removeUserStory(userStoryDouble);
