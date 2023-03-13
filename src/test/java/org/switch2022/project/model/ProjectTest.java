@@ -532,27 +532,25 @@ public class ProjectTest {
     @Test
     void ensureEstimateEffortUserStorySuccessfully() {
         // Arrange
-        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
-        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
-        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        IFactoryProductBacklog factoryProductBacklog = mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         Customer customerDouble = mock(Customer.class);
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        Sprint sprintDouble = mock(Sprint.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
                 factoryUserStory);
-        UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
+        UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a profile",
                 "Planned");
         Effort effort = Effort.TWO;
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
-        project.addSprint(sprint);
-        sprint.addUserStoryToSprintBacklog(new UserStory.UserStoryBuilder("US001").build());
+        project.addSprint(sprintDouble);
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(true);
+        when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(true);
 
         // Act
-        boolean result = project.estimateEffortUserStory(reference, effort, "S1");
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort, "S1");
 
         // Assert
         assertTrue(result);
@@ -566,27 +564,25 @@ public class ProjectTest {
     @Test
     void ensureEstimateEffortUserStoryUnsuccessfully() {
         // Arrange
-        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
-        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
-        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        IFactoryProductBacklog factoryProductBacklog = mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         Customer customerDouble = mock(Customer.class);
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        Sprint sprintDouble = mock(Sprint.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
                 factoryUserStory);
-        UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
+        UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a profile",
                 "Planned");
         Effort effort = Effort.TWO;
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
-        project.addSprint(sprint);
-        sprint.addUserStoryToSprintBacklog(new UserStory.UserStoryBuilder("US001").build());
+        project.addSprint(sprintDouble);
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(false);
+        when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(false);
 
         // Act
-        boolean result = project.estimateEffortUserStory(reference, effort, "S2");
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort, "S1");
 
         // Assert
         assertFalse(result);

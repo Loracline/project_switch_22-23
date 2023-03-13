@@ -3,12 +3,14 @@ package org.switch2022.project.container;
 import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
+import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
 import org.switch2022.project.factories.IFactoryProductBacklog;
 import org.switch2022.project.factories.IFactoryProject;
 import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.SprintBacklog;
+import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -117,5 +119,26 @@ public class ProjectContainer {
                                    UserStoryCreationDto userStoryCreationDto) {
         Project project = getProjectByCode(projectDto.code);
         return project != null && project.createUserStory(userStoryCreationDto);
+    }
+
+    /**
+     * This method sets the effort of a userStory.
+     *
+     * @param userStoryDto to estimate the effort.
+     * @param effort       of the userStory.
+     * @param projectCode  code of the project.
+     * @return true if the effort is set and false otherwise.
+     */
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode) {
+        boolean isEffortSet = false;
+        int i = 0;
+        while (i < projects.size() && !isEffortSet) {
+            Project project = projects.get(i);
+            if (project.hasProjectCode(projectCode)) {
+                isEffortSet = project.estimateEffortUserStory(userStoryDto, effort, projectCode);
+            }
+            i++;
+        }
+        return isEffortSet;
     }
 }
