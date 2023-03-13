@@ -3,11 +3,15 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
 
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.switch2022.project.model.UserStory.createUserStory;
 
 public class ProjectTest {
@@ -99,7 +103,8 @@ public class ProjectTest {
     @Test
     void ensureTwoProjectsAreEqual() {
         // Arrange
-        Project project = new Project("AA001", "Aptoide", new Customer("john", "228674498"),
+        Project project = new Project("AA001", "Aptoide", new Customer("john",
+                "228674498"),
                 new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
 
         // Assert
@@ -224,7 +229,8 @@ public class ProjectTest {
     }
 
     /**
-     * Test to ensure that project typology requested from a given project is not retrieved
+     * Test to ensure that project typology requested from a given project is not
+     * retrieved
      */
     @Test
     void ensureProjectTypologyIsNotEqual() {
@@ -354,9 +360,11 @@ public class ProjectTest {
     }
 
     /**
-     * Tests the ensureEffortIsTheSameForTwoDifferentUserStories() method of the SprintTest class with
+     * Tests the ensureEffortIsTheSameForTwoDifferentUserStories() method of the
+     * SprintTest class with
      * two different UserStory objects and the same Effort value.
-     * + Expected result: the effort of both UserStories should be equal to the specified Effort value.
+     * + Expected result: the effort of both UserStories should be equal to the
+     * specified Effort value.
      */
     @Test
     void ensureEffortIsTheSameForTwoDifferentUserStories() {
@@ -378,10 +386,13 @@ public class ProjectTest {
     //ISOLATION TESTS
 
     /**
-     * Scenario 1: Verifies if it's possible to create a valid instance of {@link Project} with isolated objects.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * Scenario 1: Verifies if it's possible to create a valid instance of
+     * {@link Project} with isolated objects.
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology}
      * are created.
-     * Then, an instance of {@link Project} is created with the isolated objects and verify if the created
+     * Then, an instance of {@link Project} is created with the isolated objects and
+     * verify if the created
      * instance is not null, indicating that it was created correctly.
      */
 
@@ -393,16 +404,20 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble, businessSectorDouble);
+        Project project = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble);
 
         // Assert
         assertNotNull(project);
     }
 
     /**
-     * Scenario 2: Verifies if the method {@link Project#equals(Object)} returns {@code true} when compared to the same object.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology} are created.
-     * Then, an instance of {@link Project} is created with the isolated objects and compared to itself using the
+     * Scenario 2: Verifies if the method {@link Project#equals(Object)} returns {@code
+     * true} when compared to the same object.
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology} are created.
+     * Then, an instance of {@link Project} is created with the isolated objects and
+     * compared to itself using the
      * {@link Project#equals(Object)} method.
      * Expected result:true, indicating that the comparison was successful.
      */
@@ -415,7 +430,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project project = new Project("A001", "Artemis", customerDouble, projectTypologyDouble, businessSectorDouble);
+        Project project = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble, businessSectorDouble);
 
         boolean isEquals = project.equals(project);
 
@@ -424,11 +440,14 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 3: Verifies if the method {@link Project#equals(Object)} returns {@code true} when compared to the
+     * Scenario 3: Verifies if the method {@link Project#equals(Object)} returns {@code
+     * true} when compared to the
      * same type of object and with the same parameters.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology}
      * are created.
-     * Then, two instances of {@link Project} are created with the isolated objects and compared using the
+     * Then, two instances of {@link Project} are created with the isolated objects and
+     * compared using the
      * {@link Project#equals(Object)} method.
      * Expected result:true, indicating that the comparison was successful.
      */
@@ -441,7 +460,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+        Project projectDouble = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble,
                 businessSectorDouble);
         Project projectDoubleToCompare = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble);
@@ -453,11 +473,14 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 4: Verifies if the method {@link Project#equals(Object)} returns {@code false} when compared to the
+     * Scenario 4: Verifies if the method {@link Project#equals(Object)} returns {@code
+     * false} when compared to the
      * same type of object and with the different parameters.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology}
      * are created.
-     * Then, two instances of {@link Project} are created with the isolated objects and compared using the
+     * Then, two instances of {@link Project} are created with the isolated objects and
+     * compared using the
      * {@link Project#equals(Object)} method.
      * Expected result:false, indicating that the comparison was successful.
      */
@@ -470,7 +493,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+        Project projectDouble = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble,
                 businessSectorDouble);
         Project projectDoubleToCompare = new Project("A002", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble);
@@ -482,11 +506,14 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 5: Verifies if the method {@link Project#equals(Object)} returns {@code false} when compared to the
+     * Scenario 5: Verifies if the method {@link Project#equals(Object)} returns {@code
+     * false} when compared to the
      * different type of object.
-     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and {@link ProjectTypology}
+     * For this test, isolated objects of {@link Customer}, {@link BusinessSector} and
+     * {@link ProjectTypology}
      * are created.
-     * Then, one instance of {@link Project} is created with the isolated objects and compared to an instance of the
+     * Then, one instance of {@link Project} is created with the isolated objects and
+     * compared to an instance of the
      * {@link Object} with {@link Project#equals(Object)} method.
      * Expected result:false, indicating that the comparison was successful.
      */
@@ -499,7 +526,8 @@ public class ProjectTest {
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
 
         // Act
-        Project projectDouble = new Project("A001", "Artemis", customerDouble, projectTypologyDouble,
+        Project projectDouble = new Project("A001", "Artemis", customerDouble,
+                projectTypologyDouble,
                 businessSectorDouble);
         Object projectToCompare = new Object();
 
@@ -507,5 +535,226 @@ public class ProjectTest {
 
         // Assert
         assertFalse(isEquals);
+    }
+
+    /**
+     * METHOD addUserStoryToSprintBacklog(String userStoryNumber, String sprintNumber)
+     * verifies if a User Story is added to the Sprint Backlog and removed from the
+     * Product Backlog.
+     * <p>
+     * Scenario 1: verifies that User Story is added to Sprint Backlog since the User
+     * Story and the Sprint are not null objects.
+     */
+
+    @Test
+    void addUserStoryIsSuccessfullyAddedToSprintBacklog() {
+        //Arrange
+        //Project creation
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory);
+
+        //Sprint
+        Sprint sprintDouble = mock(Sprint.class);
+        project.addSprint(sprintDouble);
+
+        //User story
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(productBacklogDouble.getUserStoryByNumber(any())).
+                thenReturn(Optional.ofNullable(userStoryDouble));
+
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(true);
+        when(sprintDouble.addUserStoryToSprintBacklog(userStoryDouble)).thenReturn
+                (true);
+        when(productBacklogDouble.removeUserStory(userStoryDouble)).thenReturn(true);
+
+        //Act
+        boolean result = project.addUserStoryToSprintBacklog("US003", "S1");
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verifies that User Story is not added to Sprint Backlog since the
+     * Sprint is a null object.
+     */
+    @Test
+    void addUserStoryIsNotAddedToSprintBacklogBecauseSprintIsNull() {
+        //Arrange
+        //Project creation
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory);
+
+        //Sprint
+        Sprint sprintDouble = mock(Sprint.class);
+        project.addSprint(sprintDouble);
+
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(false);
+
+        //User story
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(productBacklogDouble.getUserStoryByNumber(any())).
+                thenReturn(Optional.ofNullable(userStoryDouble));
+
+        //Act
+        boolean result = project.addUserStoryToSprintBacklog("US003", "S1");
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: verifies that User Story is not added to Sprint Backlog since the
+     * User Story is a null object.
+     */
+
+    @Test
+    void addUserStoryIsNotAddedToSprintBacklogBecauseUserStoryIsNull() {
+        //Arrange
+        //Project creation
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory);
+
+        //Sprint
+        Sprint sprintDouble = mock(Sprint.class);
+        project.addSprint(sprintDouble);
+
+        //User story
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(userStoryDouble.hasUserStoryNumber(any())).thenReturn(false);
+
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(true);
+
+        //Act
+        boolean result = project.addUserStoryToSprintBacklog("US003", "S1");
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD addSprint(sprint)
+     * adds a Sprint to the list of Sprints of the Project
+     * <p>
+     * Scenario 1: verify if a Sprint is added to the list os Sprints if it is not
+     * already there. Should return TRUE.
+     */
+
+    @Test
+    void ensureThatSprintIsSuccessfullyAddedToSprintsList() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory);
+
+        Sprint sprintDouble = mock(Sprint.class);
+        Sprint sprintDoubleOther = mock(Sprint.class);
+        project.addSprint(sprintDoubleOther);
+
+        //Act
+        boolean result = project.addSprint(sprintDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a Sprint is added to the list os Sprints because the list
+     * is empty. Should return FALSE.
+     */
+
+    @Test
+    void ensureSprintIsSuccessfullyAddedToSprintsListBecauseListIsEmpty() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory);
+
+        Sprint sprintDouble = mock(Sprint.class);
+
+        //Act
+        boolean result = project.addSprint(sprintDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: verify if a Sprint is not added to the list os Sprints because it is
+     * already there. Should return FALSE.
+     */
+
+    @Test
+    void ensureSprintIsNotAddedToSprintsListBecauseItAlreadyExists() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory);
+
+        Sprint sprintDouble = mock(Sprint.class);
+        project.addSprint(sprintDouble);
+
+        //Act
+        boolean result = project.addSprint(sprintDouble);
+
+        //Assert
+        assertFalse(result);
     }
 }

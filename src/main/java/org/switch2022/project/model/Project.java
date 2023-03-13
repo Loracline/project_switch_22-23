@@ -49,11 +49,14 @@ public class Project {
     }
 
     /**
-     *This constructor will create a new project receiving also the interface IFactoryProductBacklog and IFactoryUserStory.
+     * This constructor will create a new project receiving also the interface
+     * IFactoryProductBacklog and IFactoryUserStory.
      */
     public Project(String projectCode, String name, Customer customer,
                    ProjectTypology projectTypology,
-                   BusinessSector businessSector, IFactoryProductBacklog iFactoryProductBacklog, IFactoryUserStory iFactoryUserStory) {
+                   BusinessSector businessSector,
+                   IFactoryProductBacklog iFactoryProductBacklog,
+                   IFactoryUserStory iFactoryUserStory) {
         this.projectCode = projectCode;
         this.projectName = name;
         this.customer = customer;
@@ -61,7 +64,8 @@ public class Project {
         this.projectTypology = projectTypology;
         this.businessSector = businessSector;
         this.sprintDuration = 0;
-        this.productBacklog = iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
+        this.productBacklog =
+                iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
         this.sprints = new ArrayList<>();
     }
 
@@ -208,14 +212,81 @@ public class Project {
 
     /**
      * This method sets the effort estimation of a user story.
+     *
      * @param userStoryDto The UserStoryDto object to estimate the effort for.
-     * @param effort The effort object representing the estimated effort for the user story.
-     * @param sprintNumber The number of the sprint in which the user story is being estimated.
+     * @param effort       The effort object representing the estimated effort for the
+     *                     user story.
+     * @param sprintNumber The number of the sprint in which the user story is being
+     *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
 
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, int sprintNumber) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
+                                           int sprintNumber) {
         return (sprints.get(sprintNumber).estimateEffortUserStory(userStoryDto, effort));
+    }
+
+    /**
+     * This method adds a new User Story to the Sprint Backlog
+     *
+     * @param userStoryNumber the number of User Story to be added.
+     * @param sprintNumber    the number of the sprint.
+     * @return TRUE if the User Story was successfully added to the list and FALSE
+     * otherwise.
+     */
+
+    public boolean addUserStoryToSprintBacklog(String userStoryNumber,
+                                               String sprintNumber) {
+        boolean result = false;
+        if (getSprintByNumber(sprintNumber).isPresent() &&
+                this.productBacklog.getUserStoryByNumber(userStoryNumber).isPresent()) {
+            Sprint sprint = getSprintByNumber(sprintNumber).get();
+            UserStory userStory =
+                    this.productBacklog.getUserStoryByNumber(userStoryNumber).get();
+            sprint.addUserStoryToSprintBacklog(userStory);
+            productBacklog.removeUserStory(userStory);
+            result = true;
+        }
+        return result;
+    }
+
+    /**
+     * This method returns a Sprint from the list of sprints.
+     *
+     * @param sprintNumber of the Story one searches for.
+     * @return an Optional with a Sprint.
+     */
+
+    private Optional<Sprint> getSprintByNumber(String sprintNumber) {
+        int i = 0;
+        Sprint sprint = null;
+        while (i < sprints.size() && sprint == null) {
+            if (sprints.get(i).hasSprintNumber(sprintNumber)) {
+                sprint = sprints.get(i);
+            }
+            i++;
+        }
+        return Optional.ofNullable(sprint);
+    }
+
+    /**
+     * This method adds a Sprint to the list of sprints.
+     *
+     * @param sprint to be added.
+     * @return TRUE if sprint is added to the list of sprints or FALSE otherwise.
+     */
+
+    public boolean addSprint(Sprint sprint) {
+        boolean result = false;
+        int i = 0;
+        while (i <= sprints.size() && !result) {
+            if (!sprints.contains(sprint)) {
+                sprints.add(sprint);
+                result = true;
+            }
+            i++;
+        }
+        return result;
     }
 }
 

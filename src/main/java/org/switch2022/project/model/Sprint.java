@@ -15,7 +15,7 @@ import java.util.Objects;
  * Represents a short period of time defined by a Sprint Number, Period and Sprint
  * Backlog.
  */
-class Sprint {
+public class Sprint {
     private final String sprintNumber;
     private Period period;
     private SprintBacklog sprintBacklog;
@@ -44,8 +44,9 @@ class Sprint {
                                       IFactorySprintBacklog iFactorySprintBacklog) {
         Sprint sprint = new Sprint(sprintNumber);
         sprint.iFactoryPeriod = iFactoryPeriod;
-        sprint.setPeriod(iFactoryPeriod, sprintDuration, startDate);
-        sprint.setSprintBacklog(iFactorySprintBacklog);
+        sprint.setPeriod(sprintDuration, startDate);
+        sprint.iFactorySprintBacklog = iFactorySprintBacklog;
+        sprint.setSprintBacklog();
         return sprint;
     }
 
@@ -91,26 +92,19 @@ class Sprint {
      * factory period,
      * sprint duration, and start date.
      *
-     * @param iFactoryPeriod the factory period to use for creating the period
      * @param sprintDuration the duration of the sprint
      * @param startDate      the start date of the period
      */
 
 
-    private void setPeriod(IFactoryPeriod iFactoryPeriod, int sprintDuration,
-                           LocalDate startDate) {
-        this.iFactoryPeriod = iFactoryPeriod;
+    private void setPeriod(int sprintDuration, LocalDate startDate) {
         this.period = iFactoryPeriod.createPeriod(startDate, sprintDuration);
     }
 
     /**
      * Set method for the attribute Sprint Backlog.
-     *
-     * @param iFactorySprintBacklog the factory Sprint Backlog to use for creating a
-     *                              Sprint Backlog.
      */
-    private void setSprintBacklog(IFactorySprintBacklog iFactorySprintBacklog) {
-        this.iFactorySprintBacklog = iFactorySprintBacklog;
+    private void setSprintBacklog() {
         this.sprintBacklog = iFactorySprintBacklog.createSprintBacklog();
     }
 
