@@ -5,6 +5,7 @@ import org.switch2022.project.dto.*;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Account;
 import org.switch2022.project.model.Project;
+import org.switch2022.project.utils.Effort;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -274,5 +275,18 @@ public class Company {
   public boolean createUserStory(ProjectDto projectDto, UserStoryCreationDto userStoryCreationDto){
     return projectContainer.createUserStory(projectDto,userStoryCreationDto);
   }
+
+  /**
+   * This method sets the effort of an userStory.
+   * @param userStoryDto to estimate the effort.
+   * @param effort       of the userStory.
+   * @param projectCode
+   * @return true if the effort is set and false otherwise.
+   */
+  public boolean estimateEffortUserStory (UserStoryDto userStoryDto, Effort effort, String projectCode){
+    return projectContainer.estimateEffortUserStory(userStoryDto, effort, projectCode);
+  }
+
+
 }
 
