@@ -62,7 +62,7 @@ public class ProjectContainer {
      */
     public boolean registerProject(ProjectCreationDto projectCreationDto,
                                    ProjectTypologyContainer
-            projectTypologyContainer, CustomerContainer customerContainer,
+                                           projectTypologyContainer, CustomerContainer customerContainer,
                                    BusinessSectorContainer
                                            businessSectorContainer,
                                    IFactoryProductBacklog factoryProductBacklog,
@@ -93,8 +93,9 @@ public class ProjectContainer {
 
     /**
      * This method returns the sprint backlog of the project of interest, in a given date.
-     * @param projectCode of interest
-     * @param date of interest
+     *
+     * @param projectCode       of interest
+     * @param date              of interest
      * @param iFactoryUserStory interface one must use to copy the User Stories
      *                          contained in the Sprint Backlog
      * @return an Optional object of the Sprint Backlog.
@@ -130,15 +131,7 @@ public class ProjectContainer {
      * @return true if the effort is set and false otherwise.
      */
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode) {
-        boolean isEffortSet = false;
-        int i = 0;
-        while (i < projects.size() && !isEffortSet) {
-            Project project = projects.get(i);
-            if (project.hasProjectCode(projectCode)) {
-                isEffortSet = project.estimateEffortUserStory(userStoryDto, effort, projectCode);
-            }
-            i++;
-        }
-        return isEffortSet;
+        Project project = getProjectByCode(projectCode);
+        return project != null && project.estimateEffortUserStory(userStoryDto, effort, projectCode);
     }
 }
