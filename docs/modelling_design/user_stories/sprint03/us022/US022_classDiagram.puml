@@ -106,6 +106,7 @@ class UserStoryDtoListAssembler {
 "ViewScrumBoardController" .--> "ProjectDto": extracts
 "ViewScrumBoardController" .--> "UserStoryDtoListAssembler": uses
 "UserStoryDtoListAssembler" .--> "UserStoryMapper"
+"UserStoryDtoListAssembler" .--> "SprintBacklog"
 "UserStoryMapper" .--> "UserStoryDto": converts
 "UserStoryMapper" .--> "UserStory"
 
