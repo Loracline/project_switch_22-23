@@ -7,25 +7,25 @@ package org.switch2022.project.utils;
 
 public enum Effort {
 
-  ONE(1),
-  TWO(2),
-  THREE(3),
-  FIVE(5),
-  EIGHT(8),
-  THIRTEEN(13),
-  THIRTY_FOUR(34);
+    ONE(1),
+    TWO(2),
+    THREE(3),
+    FIVE(5),
+    EIGHT(8),
+    THIRTEEN(13),
+    THIRTY_FOUR(34);
 
-  /**
-   * Attributes of the enum Effort, according to the Class Diagram.
-   */
+    /**
+     * Attributes of the enum Effort, according to the Class Diagram.
+     */
 
-  final int effort;
+    final int effort;
 
-  /**
-   * Constructor used to pass data to Enum constants.
-   */
+    /**
+     * Constructor used to pass data to Enum constants.
+     */
 
-  Effort(int effort) {
-    this.effort = effort;
-  }
+    Effort(int effort) {
+        this.effort = effort;
+    }
 }

@@ -12,27 +12,34 @@ import org.switch2022.project.model.ProjectTypology;
 
 public final class ProjectCreationMapper {
 
-  private ProjectCreationMapper() {
-  }
+    private ProjectCreationMapper() {
+    }
 
-  public static Project getProjectFromDto(ProjectCreationDto projectCreationDto, ProjectTypologyContainer
-          projectTypologyContainer, CustomerContainer customerContainer, BusinessSectorContainer
-                                                  businessSectorContainer, IFactoryProductBacklog factoryProductBacklog,
-                                          IFactoryUserStory factoryUserStory, IFactoryProject factoryProject,IFactoryPeriod iFactoryPeriod,
-                                          IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
+    public static Project getProjectFromDto(ProjectCreationDto projectCreationDto,
+                                            ProjectTypologyContainer
+            projectTypologyContainer, CustomerContainer customerContainer,
+                                            BusinessSectorContainer
+                                                    businessSectorContainer,
+                                            IFactoryProductBacklog factoryProductBacklog,
+                                            IFactoryUserStory factoryUserStory,
+                                            IFactoryProject factoryProject,
+                                            IFactoryPeriod iFactoryPeriod,
+                                            IFactorySprintBacklog iFactorySprintBacklog
+            , IFactorySprint iFactorySprint) {
 
-    Customer customer = customerContainer.getCustomer(projectCreationDto.customerName,
-            projectCreationDto.customerNif);
+        Customer customer = customerContainer.getCustomer(projectCreationDto.customerName,
+                projectCreationDto.customerNif);
 
-    ProjectTypology projectTypology =
-            projectTypologyContainer.getProjectTypology(projectCreationDto.projectTypology);
+        ProjectTypology projectTypology =
+                projectTypologyContainer.getProjectTypology(projectCreationDto.projectTypology);
 
-    BusinessSector businessSector =
-            businessSectorContainer.getBusinessSector(projectCreationDto.businessSector);
+        BusinessSector businessSector =
+                businessSectorContainer.getBusinessSector(projectCreationDto.businessSector);
 
-    return factoryProject.createProject(projectCreationDto,customer,projectTypology,businessSector,
-            factoryProductBacklog,factoryUserStory, iFactoryPeriod,
-             iFactorySprintBacklog,  iFactorySprint);
-  }
+        return factoryProject.createProject(projectCreationDto, customer,
+                projectTypology, businessSector,
+                factoryProductBacklog, factoryUserStory, iFactoryPeriod,
+                iFactorySprintBacklog, iFactorySprint);
+    }
 }
 
