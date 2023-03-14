@@ -172,11 +172,11 @@ public class Sprint {
 
     /**
      * Determines if this period does not overlap with the given period.
-     * @param period the period to compare with.
+     * @param sprint the period to compare with.
      * @return true if the periods do not overlap, false otherwise.
      */
-    public boolean isPeriodNotOverlapping(Period period) {
-        return this.period.isPeriodNotOverlapping(period);
+    public boolean isPeriodNotOverlapping(Sprint sprint) {
+        return this.period.isPeriodNotOverlapping(sprint.period);
     }
 
 

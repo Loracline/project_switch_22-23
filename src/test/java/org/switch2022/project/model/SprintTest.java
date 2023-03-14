@@ -590,8 +590,9 @@ class SprintTest {
         when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
         Sprint sprint = Sprint.createSprint(localDate,2,"S001",iFactoryPeriod,iFactorySprintBacklog);
         when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(true);
+        Sprint sprintOne = Sprint.createSprint(localDate,3,"S002",iFactoryPeriod,iFactorySprintBacklog);
         //Act
-        boolean result = sprint.isPeriodNotOverlapping(periodDouble);
+        boolean result = sprint.isPeriodNotOverlapping(sprintOne);
 
         //Assert
         assertTrue(result);
@@ -610,8 +611,9 @@ class SprintTest {
         when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
         Sprint sprint = Sprint.createSprint(localDate,2,"S001",iFactoryPeriod,iFactorySprintBacklog);
         when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(false);
+        Sprint sprintOne = Sprint.createSprint(localDate,3,"S003",iFactoryPeriod,iFactorySprintBacklog);
         //Act
-        boolean result = sprint.isPeriodNotOverlapping(periodDouble);
+        boolean result = sprint.isPeriodNotOverlapping(sprintOne);
 
         //Assert
         assertFalse(result);
