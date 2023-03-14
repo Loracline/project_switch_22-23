@@ -6,7 +6,6 @@ import org.switch2022.project.utils.Effort;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserStoryTest {
-
     /**
      * METHOD equals()
      * <br>
@@ -129,10 +128,10 @@ class UserStoryTest {
         UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         boolean expected = true;
 
-        //Act
+        // Act
         boolean result = userStoryOne.hasUserStoryNumber("US001");
 
-        //Assert
+        // Assert
         assertEquals(expected, result);
     }
 
@@ -146,10 +145,10 @@ class UserStoryTest {
         UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         boolean expected = false;
 
-        //Act
+        // Act
         boolean result = userStoryOne.hasUserStoryNumber("US002");
 
-        //Assert
+        // Assert
         assertEquals(expected, result);
     }
 
@@ -163,11 +162,12 @@ class UserStoryTest {
     void ensureEffortIsSet() {
         // Arrange
         UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
+
         // Act
         userStoryOne.setEffort(Effort.TWO);
 
         // Assert
-        assertEquals(userStoryOne.getEffort(), Effort.TWO);
+        assertEquals(Effort.TWO, userStoryOne.getEffort());
     }
 
     /**
@@ -199,6 +199,7 @@ class UserStoryTest {
         // Arrange
         UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         UserStory userStoryTwo = (new UserStory.UserStoryBuilder("US002").build());
+
         // Act
         userStoryOne.setEffort(Effort.TWO);
         userStoryTwo.setEffort(Effort.THIRTEEN);
