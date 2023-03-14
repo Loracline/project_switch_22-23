@@ -72,7 +72,7 @@ public class ProjectContainer {
                 projectTypologyContainer,
                 customerContainer, businessSectorContainer, factoryProductBacklog,
                 factoryUserStory, factoryProject, iFactoryPeriod,
-                 iFactorySprintBacklog,  iFactorySprint);
+                iFactorySprintBacklog, iFactorySprint);
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);

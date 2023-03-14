@@ -15,21 +15,24 @@ public class FactoryProject implements IFactoryProject {
      * This method creates a new Project object with the specified code, name, customer, project typology and
      * business sector
      *
-     * @param projectCreationDto     with all the attributes needed for the construction of a project
-     * @param customer
-     * @param projectTypology
-     * @param businessSector
-     * @param factoryProductBacklog
-     * @param factoryUserStory
-     * @return
+     * @param projectCreationDto    with all the attributes needed for the construction of a project
+     * @param customer Object Costumer
+     * @param projectTypology Object ProjectTypology
+     * @param businessSector Object BusinessSector
+     * @param factoryProductBacklog implementation FactoryProductBacklog
+     * @param factoryUserStory implementation FactoryUserStory
+     * @param iFactoryPeriod implementation FactoryPeriod
+     * @param iFactorySprint implementation FactorySprint
+     * @param iFactorySprintBacklog implementation FactorySprintBacklog
+     * @return project
      */
 
     public Project createProject(ProjectCreationDto projectCreationDto, Customer customer,
                                  ProjectTypology projectTypology, BusinessSector businessSector, IFactoryProductBacklog factoryProductBacklog,
-                                 IFactoryUserStory factoryUserStory,IFactoryPeriod iFactoryPeriod,
+                                 IFactoryUserStory factoryUserStory, IFactoryPeriod iFactoryPeriod,
                                  IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
-        return new Project(projectCreationDto.code, projectCreationDto.name, customer, projectTypology, businessSector,factoryProductBacklog,
-                factoryUserStory,iFactoryPeriod,iFactorySprintBacklog,iFactorySprint);
+        return new Project(projectCreationDto.code, projectCreationDto.name, customer, projectTypology, businessSector, factoryProductBacklog,
+                factoryUserStory, iFactoryPeriod, iFactorySprintBacklog, iFactorySprint);
     }
 
 }

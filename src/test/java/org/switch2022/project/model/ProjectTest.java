@@ -784,7 +784,7 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 4: Creates a userStory unsuccessfully due to be already in a sprint
+     * Scenario 5¬: Creates a userStory unsuccessfully due to be already in a sprint
      * return false
      */
     @Test

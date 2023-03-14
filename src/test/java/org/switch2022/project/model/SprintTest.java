@@ -313,7 +313,7 @@ class SprintTest {
      * Scenario 1: returns True
      */
     @Test
-    void ensureThatUserStoryIsNotPresentInTheSprintBacklog() {
+    void ensureThatUserStoryIsPresentInTheSprintBacklog() {
         //Arrange
         IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
@@ -335,7 +335,7 @@ class SprintTest {
      * Scenario 2: returns False
      */
     @Test
-    void ensureThatUserStoryIsPresentInTheSprintBacklog() {
+    void ensureThatUserStoryIsNotPresentInTheSprintBacklog() {
         //Arrange
         IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
