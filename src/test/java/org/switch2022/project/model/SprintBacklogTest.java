@@ -62,7 +62,7 @@ class SprintBacklogTest {
         SprintBacklog reference = new SprintBacklog();
         UserStory userStoryDouble = mock(UserStory.class);
         reference.addUserStory(userStoryDouble);
-        Object other = new SprintBacklog();
+        Profile other = new Profile("John");
         boolean expected = false;
 
         // Act
@@ -352,7 +352,7 @@ class SprintBacklogTest {
      */
 
     @Test
-    void testing() {
+    void ensureEffortIsNotSetForUserStoryWithIsolationWithRunTimeException() {
         //Arrange
         UserStoryDto userStoryDto = new UserStoryDto("US55", "Manager",
                 "I want to create a profile");
