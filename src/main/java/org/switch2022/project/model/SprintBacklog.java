@@ -21,21 +21,21 @@ public class SprintBacklog {
      * This method checks if two instances of SprintBacklog are equal by comparing
      * the userStories.
      *
-     * @param toCompare SprintBacklog instance to compare with.
+     * @param o SprintBacklog instance to compare with.
      * @return TRUE if the two have the same attributes, and FALSE otherwise.
      */
     @Override
-    public boolean equals(Object toCompare) {
-        if (this == toCompare) {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (toCompare == null) {
+        if (o == null) {
             return false;
         }
-        if (this.getClass() != toCompare.getClass()) {
+        if (this.getClass() != o.getClass()) {
             return false;
         }
-        SprintBacklog that = (SprintBacklog) toCompare;
+        SprintBacklog that = (SprintBacklog) o;
         return Objects.equals(userStories, that.userStories);
     }
 
@@ -112,7 +112,7 @@ public class SprintBacklog {
 
     /**
      * This method checks if the userStory number exists in the SprintBacklog,
-     * if so it'll then set the effort for the userStory.
+     * if so it'll then try to set the effort for the userStory.
      *
      * @param userStoryDto containing data about the object UserStory
      * @param effort       to be set
@@ -123,7 +123,11 @@ public class SprintBacklog {
         boolean isEffortSet = false;
         while (i < userStories.size()) {
             if (userStories.get(i).hasUserStoryNumber(userStoryDto.userStoryNumber)) {
-                userStories.get(i).setEffort(effort);
+                try {
+                    userStories.get(i).setEffort(effort);
+                } catch (Exception ignored) {
+                    return false;
+                }
                 isEffortSet = true;
             }
             i++;

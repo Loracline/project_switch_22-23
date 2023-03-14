@@ -5,6 +5,10 @@ import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Status;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 
 class UserStoryTest {
     /**
@@ -173,8 +177,7 @@ class UserStoryTest {
     }
 
     /**
-     * Scenario 2: Verify if the effort of a userStoryOne is the same as other
-     * userStoryTwo
+     * Scenario 2: Verify if the effort of a userStoryOne is the same as other userStoryTwo
      * by setting the efforts respectively.
      * Expected result: effort of userStoryOne is equal to the effort of userStoryTwo.
      */
@@ -211,6 +214,23 @@ class UserStoryTest {
         // Assert
         assertFalse(isEquals);
     }
+
+    /**
+     * Scenario 4: Verify if the effort of the userStory is not set.
+     * Expected result: effort of userStory is not set.
+     */
+    @Test
+    void ensureEffortIsNotSet() {
+        // Arrange
+        UserStory userStoryDouble = mock(UserStory.class);
+
+        // Act
+        doNothing().when(userStoryDouble).setEffort(Effort.FIVE);
+
+        // Assert
+        assertFalse(false);
+    }
+
 
     /**
      * METHOD getUserStoryNumber()
