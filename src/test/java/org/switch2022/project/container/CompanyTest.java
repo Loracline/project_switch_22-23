@@ -45,6 +45,10 @@ class CompanyTest {
   IFactoryUserStory factoryUserStory;
   IFactoryProductBacklog factoryProductBacklog;
 
+  IFactoryPeriod factoryPeriod;
+  IFactorySprintBacklog factorySprintBacklog;
+  IFactorySprint factorySprint;
+
   @BeforeEach
   void setUp() {
     //Interfaces implemented
@@ -114,9 +118,9 @@ class CompanyTest {
 
     // Projects added to the container.
     projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer,
-            businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
+            businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog, factorySprint);
     projectContainer.registerProject(projectTwoDTO, projectTypologyContainer, customerContainer,
-            businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
+            businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject,factoryPeriod, factorySprintBacklog, factorySprint);
 
     // Accounts allocated to project.
     startDate = LocalDate.of(2023, 1, 23);
@@ -390,7 +394,7 @@ class CompanyTest {
     boolean expected = true;
 
     // Act
-    boolean result = company.registerProject(projectNonExistentDTO,factoryProductBacklog,factoryUserStory,factoryProject);
+    boolean result = company.registerProject(projectNonExistentDTO,factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
 
     // Assert
     assertEquals(expected, result);
@@ -402,7 +406,7 @@ class CompanyTest {
     boolean expected = false;
 
     // Act
-    boolean result = company.registerProject(projectOneDTO,factoryProductBacklog,factoryUserStory,factoryProject);
+    boolean result = company.registerProject(projectOneDTO,factoryProductBacklog,factoryUserStory,factoryProject,factoryPeriod, factorySprintBacklog,factorySprint);
 
     // Assert
     assertEquals(expected, result);

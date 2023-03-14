@@ -10,8 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class SprintBacklogTest {
     /**
@@ -63,7 +62,7 @@ class SprintBacklogTest {
         SprintBacklog reference = new SprintBacklog();
         UserStory userStoryDouble = mock(UserStory.class);
         reference.addUserStory(userStoryDouble);
-        Object other = new SprintBacklog();
+        Profile other = new Profile("John");
         boolean expected = false;
 
         // Act
@@ -129,7 +128,7 @@ class SprintBacklogTest {
 
     /**
      * METHOD addUserStory(userStory)
-     * adds a User Story is added to Sprint Backlog
+     * adds a User Story to Sprint Backlog
      * <p>
      * Scenario 1: verify if a User Story is added to Sprint Backlog if it is not
      * already there. Should return True.
@@ -285,11 +284,28 @@ class SprintBacklogTest {
     }
 
     /**
+     * Scenario 4: userStories list is empty thus the effort of a UserStory isn't set.
+     */
+    @Test
+    void ensureEffortIsNotSetUserStoriesListEmpty() {
+        //Arrange
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
+                "I want to create a profile");
+        Effort effort = Effort.THREE;
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
      * Method estimateEffortUserStory(userStoryDto, effort)
      * <p>
      * Scenario 1: the effort of a UserStory is set.
      */
-
     @Test
     void ensureEffortIsSetForUserStoryWithIsolation() {
         //Arrange
@@ -312,7 +328,6 @@ class SprintBacklogTest {
     /**
      * Scenario 2: the effort of a UserStory is not set.
      */
-
     @Test
     void ensureEffortIsNotSetForUserStoryWithIsolation() {
         //Arrange
@@ -327,6 +342,30 @@ class SprintBacklogTest {
 
         //Act
         boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.TWO);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: the effort of a UserStory is not set.
+     */
+
+    @Test
+    void ensureEffortIsNotSetForUserStoryWithIsolationWithRunTimeException() {
+        //Arrange
+        UserStoryDto userStoryDto = new UserStoryDto("US55", "Manager",
+                "I want to create a profile");
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(userStoryDouble.hasUserStoryNumber(userStoryDto.userStoryNumber)).thenReturn(true);
+        doThrow(new RuntimeException()).when(userStoryDouble).setEffort(Effort.FIVE);
+
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        sprintBacklog.addUserStory(userStoryDouble);
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.FIVE);
 
         //Assert
         assertFalse(result);

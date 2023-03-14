@@ -3,12 +3,13 @@ package org.switch2022.project.container;
 import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
+import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
-import org.switch2022.project.factories.IFactoryProductBacklog;
-import org.switch2022.project.factories.IFactoryProject;
-import org.switch2022.project.factories.IFactoryUserStory;
+import org.switch2022.project.factories.*;
+import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.SprintBacklog;
+import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -60,16 +61,18 @@ public class ProjectContainer {
      */
     public boolean registerProject(ProjectCreationDto projectCreationDto,
                                    ProjectTypologyContainer
-            projectTypologyContainer, CustomerContainer customerContainer,
+                                           projectTypologyContainer, CustomerContainer customerContainer,
                                    BusinessSectorContainer
                                            businessSectorContainer,
                                    IFactoryProductBacklog factoryProductBacklog,
                                    IFactoryUserStory factoryUserStory,
-                                   IFactoryProject factoryProject) {
+                                   IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
+                                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
         Project project = ProjectCreationMapper.getProjectFromDto(projectCreationDto,
                 projectTypologyContainer,
                 customerContainer, businessSectorContainer, factoryProductBacklog,
-                factoryUserStory, factoryProject);
+                factoryUserStory, factoryProject, iFactoryPeriod,
+                iFactorySprintBacklog, iFactorySprint);
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);
@@ -91,8 +94,9 @@ public class ProjectContainer {
 
     /**
      * This method returns the sprint backlog of the project of interest, in a given date.
-     * @param projectCode of interest
-     * @param date of interest
+     *
+     * @param projectCode       of interest
+     * @param date              of interest
      * @param iFactoryUserStory interface one must use to copy the User Stories
      *                          contained in the Sprint Backlog
      * @return an Optional object of the Sprint Backlog.
@@ -117,5 +121,26 @@ public class ProjectContainer {
                                    UserStoryCreationDto userStoryCreationDto) {
         Project project = getProjectByCode(projectDto.code);
         return project != null && project.createUserStory(userStoryCreationDto);
+    }
+
+    /**
+     * This method sets the effort of a userStory.
+     *
+     * @param userStoryDto to estimate the effort.
+     * @param effort       of the userStory.
+     * @param projectCode  code of the project.
+     * @return true if the effort is set and false otherwise.
+     */
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode) {
+        Project project = getProjectByCode(projectCode);
+        return project != null && project.estimateEffortUserStory(userStoryDto, effort, projectCode);
+    }
+
+    /**
+     * This method should return the Product Backlog of a given Project.
+     */
+    public ProductBacklog getProductBacklog(ProjectDto projectDto) {
+        Project project = getProjectByCode(projectDto.code);
+        return project.getProductBacklog();
     }
 }

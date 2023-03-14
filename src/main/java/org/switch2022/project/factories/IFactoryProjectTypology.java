@@ -8,11 +8,11 @@ import org.switch2022.project.model.ProjectTypology;
 
 public interface IFactoryProjectTypology {
 
-  /**
-   * This method creates a ProjectTypology object with no return.
-   *
-   * @param projectTypologyName
-   */
+    /**
+     * This method creates a ProjectTypology object with no return.
+     *
+     * @param projectTypologyName of the Project Typology to create
+     */
 
-  public ProjectTypology createProjectTypology(String projectTypologyName);
+    ProjectTypology createProjectTypology(String projectTypologyName);
 }

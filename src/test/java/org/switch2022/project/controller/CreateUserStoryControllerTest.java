@@ -35,6 +35,10 @@ class CreateUserStoryControllerTest {
     IFactoryUserStory factoryUserStory;
     IFactoryProductBacklog factoryProductBacklog;
 
+    IFactoryPeriod factoryPeriod;
+    IFactorySprintBacklog factorySprintBacklog;
+    IFactorySprint factorySprint;
+
     @BeforeEach
     void setUp() {
         //Interfaces implemented
@@ -64,7 +68,7 @@ class CreateUserStoryControllerTest {
 
         projectContainer = new ProjectContainer();
         projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer,
-                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject);
+                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject, factoryPeriod, factorySprintBacklog, factorySprint);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, null, customerContainer);

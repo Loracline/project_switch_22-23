@@ -34,6 +34,9 @@ class RegisterProjectControllerTest {
     IFactoryProject factoryProject;
     IFactoryUserStory factoryUserStory;
     IFactoryProductBacklog factoryProductBacklog;
+    IFactoryPeriod factoryPeriod;
+    IFactorySprintBacklog factorySprintBacklog;
+    IFactorySprint factorySprint;
 
     @BeforeEach
     void setUp() {
@@ -68,7 +71,7 @@ class RegisterProjectControllerTest {
                 "228674498", "Fixed cost", "Sports");
         projectContainer = new ProjectContainer();
         projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer,
-                businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
+                businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, null, customerContainer);
@@ -105,7 +108,7 @@ class RegisterProjectControllerTest {
 
         // Act
         boolean result = registerProjectController.registerProject(projectTwoDTO,
-                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject);
+                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
 
         // Assert
         assertEquals(expected, result);
@@ -123,7 +126,7 @@ class RegisterProjectControllerTest {
 
         // Act
         boolean result = registerProjectController.registerProject(projectOneDTO,
-                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject);
+                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
 
         // Assert
         assertEquals(expected, result);
@@ -140,7 +143,7 @@ class RegisterProjectControllerTest {
 
         // Act
         boolean result = registerProjectController.registerProject(projectTwoDTO,
-                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject);
+                accountOne.getEmail(),factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
 
         // Assert
         assertEquals(expected, result);

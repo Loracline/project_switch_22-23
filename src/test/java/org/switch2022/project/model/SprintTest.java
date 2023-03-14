@@ -313,7 +313,7 @@ class SprintTest {
      * Scenario 1: returns True
      */
     @Test
-    void ensureThatUserStoryIsNotPresentInTheSprintBacklog() {
+    void ensureThatUserStoryIsPresentInTheSprintBacklog() {
         //Arrange
         IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
@@ -335,7 +335,7 @@ class SprintTest {
      * Scenario 2: returns False
      */
     @Test
-    void ensureThatUserStoryIsPresentInTheSprintBacklog() {
+    void ensureThatUserStoryIsNotPresentInTheSprintBacklog() {
         //Arrange
         IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
@@ -478,7 +478,29 @@ class SprintTest {
      * Scenario 1: sets the effort of a UserStory.
      */
 
-    // to be done
+    @Test
+    void ensureEffortIsSetForUserStoryWithIsolation() {
+        //Arrange
+        UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
+                "I want to create a profile");
+        Effort effort = Effort.THREE;
+
+        IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+
+        SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
+        when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
+
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
+                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+        when(sprintBacklogDouble.estimateEffortUserStory(userStoryDto,effort)).thenReturn(true);
+
+        //Act
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
+
+        //Assert
+        assertTrue(result);
+    }
 
     /**
      * Scenario 2: does not set the effort of a userStory because userStoryNumber does not exist.

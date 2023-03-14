@@ -38,6 +38,9 @@ class ProjectCreationMapperTest {
     IFactoryProject factoryProject;
     IFactoryUserStory factoryUserStory;
     IFactoryProductBacklog factoryProductBacklog;
+    IFactoryPeriod factoryPeriod;
+    IFactorySprintBacklog factorySprintBacklog;
+    IFactorySprint factorySprint;
 
     @BeforeEach
     void setUp() {
@@ -92,7 +95,7 @@ class ProjectCreationMapperTest {
         Project expected = projectOne;
         // ACT
         Project result = ProjectCreationMapper.getProjectFromDto(projectCreationDTO, projectTypologyContainer,
-                customerContainer, businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
+                customerContainer, businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
         // ASSERT
         assertEquals(expected, result);
     }

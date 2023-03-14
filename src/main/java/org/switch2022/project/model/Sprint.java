@@ -45,7 +45,8 @@ public class Sprint {
         Sprint sprint = new Sprint(sprintNumber);
         sprint.iFactoryPeriod = iFactoryPeriod;
         sprint.setPeriod(iFactoryPeriod, sprintDuration, startDate);
-        sprint.setSprintBacklog(iFactorySprintBacklog);
+        sprint.iFactorySprintBacklog = iFactorySprintBacklog;
+        sprint.setSprintBacklog();
         return sprint;
     }
 
@@ -84,7 +85,6 @@ public class Sprint {
      * factory period,
      * sprint duration, and start date.
      *
-     * @param iFactoryPeriod the factory period to use for creating the period
      * @param sprintDuration the duration of the sprint
      * @param startDate      the start date of the period
      */
@@ -96,12 +96,8 @@ public class Sprint {
 
     /**
      * Set method for the attribute Sprint Backlog.
-     *
-     * @param iFactorySprintBacklog the factory Sprint Backlog to use for creating a
-     *                              Sprint Backlog.
      */
-    private void setSprintBacklog(IFactorySprintBacklog iFactorySprintBacklog) {
-        this.iFactorySprintBacklog = iFactorySprintBacklog;
+    private void setSprintBacklog() {
         this.sprintBacklog = iFactorySprintBacklog.createSprintBacklog();
     }
 
@@ -144,15 +140,17 @@ public class Sprint {
      *                        hasStoryNumber method.
      * @return TRUE if the User Story is present in the list and FALSE otherwise.
      */
-    public boolean hasUserStory(String userStoryNumber){
+    public boolean hasUserStory(String userStoryNumber) {
         return sprintBacklog.hasUserStory(userStoryNumber);
     }
 
     /**
-     * This method checks if date is equal or greater than start date and equal or lower than end date.
+     * This method checks if date is equal or greater than start date and equal or
+     * lower than end date.
      *
      * @param date to compare
-     * @return true if date is equal or greater than start date and equal or lower than end date or false otherwise.
+     * @return true if date is equal or greater than start date and equal or lower than
+     * end date or false otherwise.
      */
     public boolean isDateWithinPeriod(LocalDate date) {
         return this.period.isDateEqualOrGreaterThanStartDate(date) && this.period.isDateEqualOrLowerThanEndDate(date);
@@ -161,7 +159,8 @@ public class Sprint {
     /**
      * This method makes a copy of the list of user stories contained in the sprint
      * backlog and stores it in another instance of sprint backlog.
-     *<br>
+     * <br>
+     *
      * @return a sprint backlog with list of copies of user stories.
      */
     public SprintBacklog getSprintBacklogCopy(IFactoryUserStory iFactoryUserStory) {
@@ -175,4 +174,3 @@ public class Sprint {
         return sprintBacklogCopy;
     }
 }
-

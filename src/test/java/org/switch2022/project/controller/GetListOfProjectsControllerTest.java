@@ -32,6 +32,9 @@ public class GetListOfProjectsControllerTest {
     IFactoryProject factoryProject;
     IFactoryUserStory factoryUserStory;
     IFactoryProductBacklog factoryProductBacklog;
+    IFactoryPeriod factoryPeriod;
+    IFactorySprintBacklog factorySprintBacklog;
+    IFactorySprint factorySprint;
 
     @BeforeEach
     void setUp() {
@@ -84,9 +87,9 @@ public class GetListOfProjectsControllerTest {
                 projectTwo.getBusinessSector().getBusinessSectorName());
         projectContainer = new ProjectContainer();
         projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer,
-                businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
+                businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
         projectContainer.registerProject(projectOneTwo, projectTypologyContainer, customerContainer,
-                businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject);
+                businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject, factoryPeriod, factorySprintBacklog,factorySprint);
         //company
         company = new Company(accountContainer, profileContainer, null,
                 projectContainer, null, null, null);

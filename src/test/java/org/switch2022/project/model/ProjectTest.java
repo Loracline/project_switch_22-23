@@ -3,16 +3,16 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.factories.*;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Period;
 
+import java.util.Optional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -532,27 +532,29 @@ public class ProjectTest {
     @Test
     void ensureEstimateEffortUserStorySuccessfully() {
         // Arrange
-        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
-        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
-        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        IFactoryProductBacklog factoryProductBacklog = mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         Customer customerDouble = mock(Customer.class);
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
-                factoryUserStory);
-        UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
+                factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
+        UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a " +
+                "profile",
                 "Planned");
         Effort effort = Effort.TWO;
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
-        project.addSprint(sprint);
-        sprint.addUserStoryToSprintBacklog(new UserStory.UserStoryBuilder("US001").build());
+        project.addSprint(sprintDouble);
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(true);
+        when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(true);
 
         // Act
-        boolean result = project.estimateEffortUserStory(reference, effort, "S1");
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort, "S1");
 
         // Assert
         assertTrue(result);
@@ -566,92 +568,32 @@ public class ProjectTest {
     @Test
     void ensureEstimateEffortUserStoryUnsuccessfully() {
         // Arrange
-        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
-        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
-        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        IFactoryProductBacklog factoryProductBacklog = mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
         Customer customerDouble = mock(Customer.class);
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
-                factoryUserStory);
-        UserStoryDto reference = new UserStoryDto("US001", "I want to create a profile",
+                factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
+        UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a " +
+                "profile",
                 "Planned");
         Effort effort = Effort.TWO;
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
-        project.addSprint(sprint);
-        sprint.addUserStoryToSprintBacklog(new UserStory.UserStoryBuilder("US001").build());
+        project.addSprint(sprintDouble);
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(false);
+        when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(false);
 
         // Act
-        boolean result = project.estimateEffortUserStory(reference, effort, "S2");
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort, "S1");
 
         // Assert
         assertFalse(result);
-    }
-
-    /**
-     * Scenario 1: Verifies that a Sprint can be successfully added to the project
-     * Expected result: true, indicating that the Sprint was added to the project.
-     */
-    @Test
-    void ensureThatSprintIsSuccessfullyAddedToTheProject() {
-        // Arrange
-        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
-        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
-        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        IFactoryUserStory factoryUserStory = new FactoryUserStory();
-        Customer customerDouble = mock(Customer.class);
-        BusinessSector businessSectorDouble = mock(BusinessSector.class);
-        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
-        Project project = new Project("AA001", "Aptoide",
-                customerDouble, projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklog,
-                factoryUserStory);
-
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
-
-        // Act
-        boolean result = project.addSprint(sprint);
-
-        // Assert
-        assertTrue(result);
-
-    }
-
-    /**
-     * Scenario 2: Verifies that a Sprint with the same number can't be added to the
-     * project
-     * Expected result: false, indicating that the Sprint was not added to the project.
-     */
-    @Test
-    void ensureThatCannotAddSameSprintTwiceToProject() {
-        // Arrange
-        IFactorySprintBacklog factorySprintBacklogDouble = new FactorySprintBacklog();
-        IFactoryPeriod factoryPeriodDouble = new FactoryPeriod();
-        IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        IFactoryUserStory factoryUserStory = new FactoryUserStory();
-        Customer customerDouble = mock(Customer.class);
-        BusinessSector businessSectorDouble = mock(BusinessSector.class);
-        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
-
-        Project project = new Project("AA001", "Aptoide", customerDouble,
-                projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
-                factoryUserStory);
-
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
-
-        // Act
-        boolean added = project.addSprint(sprint);
-        assertTrue(added);
-        boolean addedAgain = project.addSprint(sprint);
-
-        // Assert
-        assertFalse(addedAgain);
     }
 
     /**
@@ -676,11 +618,15 @@ public class ProjectTest {
 
         ProductBacklog productBacklogCopyExpected = mock(ProductBacklog.class);
         when(productBacklogDouble.getProductBacklogCopy()).thenReturn(productBacklogCopyExpected);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         Project project = new Project("AP01", "Artemis", customerDouble,
                 projectTypologyDouble,
                 businessSectorDouble, factoryProductBacklogDouble,
-                factoryUserStoryDouble);
+                factoryUserStoryDouble, factoryPeriod, factorySprintBacklog,
+                factorySprint);
 
         //ACT
         ProductBacklog result = project.getProductBacklog();
@@ -706,12 +652,16 @@ public class ProjectTest {
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
                 "create Project", "manager", 0);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
+                factorySprintBacklog, factorySprint);
 
         when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(true);
 
@@ -739,12 +689,16 @@ public class ProjectTest {
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
                 "create Project", "manager", 0);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
+                factorySprintBacklog, factorySprint);
 
         when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(false);
 
@@ -772,12 +726,16 @@ public class ProjectTest {
                 "create Project", "manager", 0);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
+                factorySprintBacklog, factorySprint);
         projectToTest.addSprint(sprintDouble);
 
         when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(true);
@@ -805,12 +763,16 @@ public class ProjectTest {
         UserStoryCreationDto userStoryCreationDto = null;
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
+                factorySprintBacklog, factorySprint);
         projectToTest.addSprint(sprintDouble);
 
         //Act
@@ -821,7 +783,7 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 4: Creates a userStory unsuccessfully due to be already in a sprint
+     * Scenario 5¬: Creates a userStory unsuccessfully due to be already in a sprint
      * return false
      */
     @Test
@@ -836,12 +798,16 @@ public class ProjectTest {
         UserStoryCreationDto userStoryCreationDto = mock(UserStoryCreationDto.class);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
+                factorySprintBacklog, factorySprint);
         projectToTest.addSprint(sprintDouble);
         when(sprintDouble.hasUserStory("01")).thenReturn(true);
 
@@ -874,6 +840,9 @@ public class ProjectTest {
                 mock(FactorySprintBacklog.class);
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
         IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
 
         // Creation of double of the period of the sprint, and determining its
         // behaviour in this test.
@@ -885,7 +854,8 @@ public class ProjectTest {
         // Creation of the project to test.
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
-                factoryProductBacklogDouble, factoryUserStoryDouble);
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
+                factorySprintBacklog, factorySprint);
 
         // Creation of a double of the Sprint Backlog of the sprint of interest.
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
@@ -919,5 +889,251 @@ public class ProjectTest {
 
         // Assert
         assertEquals(expected, sprintBacklogOptional);
+    }
+
+    /**
+     * METHOD addUserStoryToSprintBacklog(String userStoryNumber, String sprintNumber)
+     * verifies if a User Story is added to the Sprint Backlog and removed from the
+     * Product Backlog.
+     * <p>
+     * Scenario 1: verifies that User Story is added to Sprint Backlog since the User
+     * Story and the Sprint are not null objects.
+     */
+    @Test
+    void addUserStoryIsSuccessfullyAddedToSprintBacklog() {
+        //Arrange
+        //Project creation
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+
+        //Sprint
+        Sprint sprintDouble = mock(Sprint.class);
+        project.addSprint(sprintDouble);
+
+        //User story
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(productBacklogDouble.getUserStoryByNumber(any())).
+                thenReturn(Optional.ofNullable(userStoryDouble));
+
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(true);
+        when(sprintDouble.addUserStoryToSprintBacklog(userStoryDouble)).thenReturn
+                (true);
+        when(productBacklogDouble.removeUserStory(userStoryDouble)).thenReturn(true);
+
+        //Act
+        boolean result = project.addUserStoryToSprintBacklog("US003", "S1");
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verifies that User Story is not added to Sprint Backlog since the
+     * Sprint is a null object.
+     */
+    @Test
+    void addUserStoryIsNotAddedToSprintBacklogBecauseSprintIsNull() {
+        //Arrange
+        //Project creation
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+
+        //Sprint
+        Sprint sprintDouble = mock(Sprint.class);
+        project.addSprint(sprintDouble);
+
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(false);
+
+        //User story
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(productBacklogDouble.getUserStoryByNumber(any())).
+                thenReturn(Optional.ofNullable(userStoryDouble));
+
+        //Act
+        boolean result = project.addUserStoryToSprintBacklog("US003", "S1");
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: verifies that User Story is not added to Sprint Backlog since the
+     * User Story is a null object.
+     */
+    @Test
+    void addUserStoryIsNotAddedToSprintBacklogBecauseUserStoryIsNull() {
+        //Arrange
+        //Project creation
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+
+        //Sprint
+        Sprint sprintDouble = mock(Sprint.class);
+        project.addSprint(sprintDouble);
+
+        //User story
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(userStoryDouble.hasUserStoryNumber(any())).thenReturn(false);
+
+        when(sprintDouble.hasSprintNumber(any())).thenReturn(true);
+
+        //Act
+        boolean result = project.addUserStoryToSprintBacklog("US003", "S1");
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD addSprint(sprint)
+     * adds a Sprint to the list of Sprints of the Project
+     * <p>
+     * Scenario 1: verify if a Sprint is added to the list os Sprints if it is not
+     * already there. Should return TRUE.
+     */
+    @Test
+    void ensureThatSprintIsSuccessfullyAddedToSprintsList() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+
+        Sprint sprintDouble = mock(Sprint.class);
+        Sprint sprintDoubleOther = mock(Sprint.class);
+        project.addSprint(sprintDoubleOther);
+
+        //Act
+        boolean result = project.addSprint(sprintDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a Sprint is added to the list os Sprints because the list
+     * is empty. Should return FALSE.
+     */
+    @Test
+    void ensureSprintIsSuccessfullyAddedToSprintsListBecauseListIsEmpty() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+
+        Sprint sprintDouble = mock(Sprint.class);
+
+        //Act
+        boolean result = project.addSprint(sprintDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: verify if a Sprint is not added to the list os Sprints because it is
+     * already there. Should return FALSE.
+     */
+    @Test
+    void ensureSprintIsNotAddedToSprintsListBecauseItAlreadyExists() {
+        //Arrange
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(iFactoryUserStory)).thenReturn(productBacklogDouble);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+
+        Sprint sprintDouble = mock(Sprint.class);
+        project.addSprint(sprintDouble);
+
+        //Act
+        boolean result = project.addSprint(sprintDouble);
+
+        //Assert
+        assertFalse(result);
     }
 }
