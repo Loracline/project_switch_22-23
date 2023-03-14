@@ -9,7 +9,6 @@ public class CreateUserStoryController {
 
     /**
      * Constructor
-     * @param company it receives a Company to be created
      */
 
     public CreateUserStoryController(Company company) {

@@ -35,6 +35,7 @@ public class Project {
     private IFactoryPeriod iFactoryPeriod;
     private IFactorySprintBacklog iFactorySprintBacklog;
     private IFactorySprint iFactorySprint;
+
     /**
      * Constructor
      */
@@ -58,8 +59,8 @@ public class Project {
                    ProjectTypology projectTypology,
                    BusinessSector businessSector,
                    IFactoryProductBacklog iFactoryProductBacklog,
-                   IFactoryUserStory iFactoryUserStory,IFactoryPeriod iFactoryPeriod,
-                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint){
+                   IFactoryUserStory iFactoryUserStory, IFactoryPeriod iFactoryPeriod,
+                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
         this.projectCode = projectCode;
         this.projectName = name;
         this.customer = customer;
@@ -70,7 +71,7 @@ public class Project {
         this.iFactoryProductBacklog = iFactoryProductBacklog;
         this.iFactoryUserStory = iFactoryUserStory;
         this.productBacklog =
-                iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
+                this.iFactoryProductBacklog.createProductBacklog(this.iFactoryUserStory);
         this.iFactoryPeriod = iFactoryPeriod;
         this.iFactorySprintBacklog = iFactorySprintBacklog;
         this.iFactorySprint = iFactorySprint;
@@ -284,14 +285,15 @@ public class Project {
 
     /**
      * This method creates an object Sprint.
+     *
      * @param sprintCreationDto The SprintCreationDto object.
      * @return true if the Sprint is created.
      */
     public boolean createSprint(SprintCreationDto sprintCreationDto) {
         Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.startDate, sprintCreationDto.sprintDuration,
-                sprintCreationDto.sprintNumber , iFactoryPeriod,
+                sprintCreationDto.sprintNumber, iFactoryPeriod,
                 iFactorySprintBacklog);
-        return sprintCreationDto != null && sprint !=null;
+        return sprintCreationDto != null && sprint != null;
     }
 
     /**

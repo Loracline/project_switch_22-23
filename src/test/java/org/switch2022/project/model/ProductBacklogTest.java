@@ -212,7 +212,7 @@ public class ProductBacklogTest {
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001", "Manager",
                 "I want to create a " +
-                "profile", 0);
+                        "profile", 0);
 
         //Act
         boolean result = productBacklog.createUserStory(userStoryCreationDto);
@@ -356,7 +356,7 @@ public class ProductBacklogTest {
         ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
         UserStory userStoryDouble = mock(UserStory.class);
         UserStory userStoryDoubleTwo = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDoubleTwo,0);
+        productBacklog.addUserStory(userStoryDoubleTwo, 0);
 
         //ACT
         boolean result = productBacklog.removeUserStory(userStoryDouble);

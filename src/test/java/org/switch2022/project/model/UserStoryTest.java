@@ -138,7 +138,7 @@ class UserStoryTest {
     }
 
     /**
-     * Scenario 1: Verify if userStory is not the same by checking its userStoryNumber.
+     * Scenario 2l: Verify if userStory is not the same by checking its userStoryNumber.
      * Expected result:false
      */
     @Test
