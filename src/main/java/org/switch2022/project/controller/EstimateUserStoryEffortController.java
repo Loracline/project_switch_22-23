@@ -1,5 +1,10 @@
 package org.switch2022.project.controller;
 import org.switch2022.project.container.Company;
+import org.switch2022.project.dto.ProjectDto;
+import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.utils.Effort;
+
+import java.time.LocalDate;
 
 
 /**
@@ -9,7 +14,7 @@ import org.switch2022.project.container.Company;
  * the sprint planning ceremony."
  */
 
-public class EstimateUserStoryEffortController {
+public class  EstimateUserStoryEffortController {
 
     /**
      * Attributes of the class EstimateUserStoryEffortController, according to the Class Diagram.
@@ -24,5 +29,17 @@ public class EstimateUserStoryEffortController {
         this.company = company;
     }
 
+    /**
+     * This method sets the effort of a userStory.
+     * @param userStoryDto to estimate the effort.
+     * @param effort       of the userStory.
+     * @param projectDto  code of the project.
+     * @return true if the effort is set and false otherwise.
+     */
 
+    public boolean estimateEffortUserStory (UserStoryDto userStoryDto, Effort effort, ProjectDto projectDto) {
+        LocalDate date = LocalDate.now();
+        return userStoryDto != null && projectDto.code != null &&
+                company.estimateEffortUserStory(userStoryDto, effort, projectDto.code, date);
+    }
 }
