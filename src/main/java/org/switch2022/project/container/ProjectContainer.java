@@ -6,6 +6,7 @@ import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
 import org.switch2022.project.factories.*;
+import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.SprintBacklog;
 import org.switch2022.project.utils.Effort;
@@ -133,5 +134,13 @@ public class ProjectContainer {
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode) {
         Project project = getProjectByCode(projectCode);
         return project != null && project.estimateEffortUserStory(userStoryDto, effort, projectCode);
+    }
+
+    /**
+     * This method should return the Product Backlog of a given Project.
+     */
+    public ProductBacklog getProductBacklog(ProjectDto projectDto) {
+        Project project = getProjectByCode(projectDto.code);
+        return project.getProductBacklog();
     }
 }
