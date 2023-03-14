@@ -10,8 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class SprintBacklogTest {
     /**
@@ -345,6 +344,30 @@ class SprintBacklogTest {
 
         //Act
         boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.TWO);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: the effort of a UserStory is not set.
+     */
+
+    @Test
+    void testing() {
+        //Arrange
+        UserStoryDto userStoryDto = new UserStoryDto("US55", "Manager",
+                "I want to create a profile");
+
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(userStoryDouble.hasUserStoryNumber(userStoryDto.userStoryNumber)).thenReturn(true);
+        doThrow(new RuntimeException()).when(userStoryDouble).setEffort(Effort.FIVE);
+
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        sprintBacklog.addUserStory(userStoryDouble);
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.FIVE);
 
         //Assert
         assertFalse(result);

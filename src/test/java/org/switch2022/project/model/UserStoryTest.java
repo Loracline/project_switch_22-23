@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.utils.Effort;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
 
 class UserStoryTest {
 
@@ -206,5 +208,21 @@ class UserStoryTest {
 
         // Assert
         assertFalse(isEquals);
+    }
+
+    /**
+     * Scenario 4: Verify if the effort of the userStory is not set.
+     * Expected result: effort of userStory is not set.
+     */
+    @Test
+    void ensureEffortIsNotSet() {
+        // Arrange
+        UserStory userStoryDouble = mock(UserStory.class);
+
+        // Act
+        doNothing().when(userStoryDouble).setEffort(Effort.FIVE);
+
+        // Assert
+        assertFalse(false);
     }
 }

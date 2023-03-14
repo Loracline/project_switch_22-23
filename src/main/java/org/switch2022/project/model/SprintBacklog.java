@@ -110,10 +110,10 @@ public class SprintBacklog {
 
     /**
      * This method checks if the userStory number exists in the SprintBacklog,
-     * if so it'll then set the effort for the userStory.
+     * if so it'll then try to set the effort for the userStory.
      *
      * @param userStoryDto containing data about the object UserStory
-     * @param effort to be set
+     * @param effort       to be set
      * @return true if the userStory number exists and false otherwise.
      */
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort) {
@@ -121,7 +121,11 @@ public class SprintBacklog {
         boolean isEffortSet = false;
         while (i < userStories.size()) {
             if (userStories.get(i).hasUserStoryNumber(userStoryDto.userStoryNumber)) {
-                userStories.get(i).setEffort(effort);
+                try {
+                    userStories.get(i).setEffort(effort);
+                } catch (Exception ignored) {
+                    return false;
+                }
                 isEffortSet = true;
             }
             i++;
