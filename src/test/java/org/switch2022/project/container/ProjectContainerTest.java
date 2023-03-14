@@ -373,4 +373,65 @@ public class ProjectContainerTest {
         assertFalse(result);
     }
 
+    /**
+     * METHOD getProductBacklog
+     * Scenario 1: this test ensure that a Product Backlog of a give Project is successfully
+     * returned.
+     */
+    @Test
+    void ensureThatProductBacklogIsSuccessfullyReturned() {
+        //ARRANGE
+        // Create ProjectContainer
+        ProjectContainer projectContainer = new ProjectContainer();
+
+        // Create ProjectDto to be used
+        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
+                "Fixed cost", "Media");
+
+        // Create and Add Project to Projects
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(ProjectTypologyContainer.class);
+        CustomerContainer customerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(BusinessSectorContainer.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
+
+        Customer customerDouble = mock(Customer.class);
+        when(customerContainerDouble.getCustomer(any(), any())).thenReturn(customerDouble);
+
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        when(projectTypologyContainerDouble.getProjectTypology(any())).thenReturn(projectTypologyDouble);
+
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        when(businessSectorContainerDouble.getBusinessSector(any())).thenReturn(businessSectorDouble);
+
+        Project projectDouble = mock(Project.class);
+        when(factoryProjectDouble.createProject(projectCreationDtoDouble, customerDouble,
+                projectTypologyDouble, businessSectorDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryPeriodDouble, factorySprintBacklogDouble,
+                factorySprintDouble))
+                .thenReturn(projectDouble);
+
+        projectContainer.registerProject(projectCreationDtoDouble, projectTypologyContainerDouble,
+                customerContainerDouble, businessSectorContainerDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryProjectDouble,
+                factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
+
+        // Get Project and get Product Backlog
+        when(projectDouble.hasProjectCode("P001")).thenReturn(true);
+
+        ProductBacklog expected = mock(ProductBacklog.class);
+        when(projectDouble.getProductBacklog()).thenReturn(expected);
+
+        //ACT
+        ProductBacklog result = projectContainer.getProductBacklog(projectDto);
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
 }
