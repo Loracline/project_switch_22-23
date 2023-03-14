@@ -27,9 +27,9 @@ member -> ui : requests to view the Scrum Board of current sprint
 activate ui
 "ui" -> controller : getScrumBoard(projectDto, date, iFactoryUserStory)
 activate controller
-"controller" -> company : getScrumBoard(projectDto, date, iFactoryUserStory)
+"controller" -> company : getScrumBoard(projectCode, date, iFactoryUserStory)
 activate company
-"company" -> projectContainer : getScrumBoard(projectDto, date, iFactoryUserStory)
+"company" -> projectContainer : getScrumBoard(projectCode, date, iFactoryUserStory)
 activate projectContainer
 "projectContainer" -> project: getSprintBacklogByDate(date, iFactoryUserStory)
 activate project
@@ -37,8 +37,8 @@ activate project
 activate sprint
 "sprint"-> backlog: getUserStoriesCopy(iFactoryUserStory)
 activate backlog
-"backlog"-> backlog : getUserStoriesCopy(iFactoryUserStory)
-"backlog"-> sprint : sprintBacklog
+
+"backlog"-> sprint : userStories
 deactivate backlog
 "sprint" -> project : sprintBacklog
 deactivate sprint
@@ -50,7 +50,7 @@ company-> controller : sprintBacklog
 deactivate company
 controller-> dto : backlogToDto(sprintBacklog, iFactoryUserStory)
 activate dto
-"dto" ->backlog: getUserStories()
+"dto" ->backlog: getUserStoriesCopy(iFactoryUserStory))
 activate backlog
 "backlog" -> dto: userStories
 deactivate backlog
