@@ -53,21 +53,23 @@ public class Period {
      * @param sprintDuration the duration of the period in sprints
      * @return the end date of the period
      */
-    private LocalDate calculateEndDate(LocalDate startDate, int sprintDuration) {
+    protected final LocalDate calculateEndDate(LocalDate startDate, int sprintDuration) {
         return startDate.plusWeeks(sprintDuration);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (toCompare == null) {
             return false;
         }
-        Period period = (Period) o;
-        return Objects.equals(startDate, period.startDate) &&
-                Objects.equals(endDate, period.endDate);
+        if (toCompare.getClass() != this.getClass()) {
+            return false;
+        }
+        Period period = (Period) toCompare;
+        return startDate.equals(period.startDate) && endDate.equals(period.endDate);
     }
 
     @Override
@@ -105,7 +107,12 @@ public class Period {
      * @return true if date is equal or greater than start date or false otherwise.
      */
     public boolean isDateEqualOrGreaterThanStartDate(LocalDate date) {
-        return date.isAfter(this.startDate) || date.isEqual(this.startDate);
+        boolean isEqualOrGreater = false;
+        if (date != null) {
+            isEqualOrGreater =
+                    date.isAfter(this.startDate) || date.isEqual(this.startDate);
+        }
+        return isEqualOrGreater;
     }
 
     /**
@@ -115,6 +122,10 @@ public class Period {
      * @return true if date is equal or lower than end date or false otherwise.
      */
     public boolean isDateEqualOrLowerThanEndDate(LocalDate date) {
-        return date.isBefore(this.endDate) || date.isEqual(this.endDate);
+        boolean isEqualOrLower = false;
+        if (date != null) {
+            isEqualOrLower = date.isBefore(this.endDate) || date.isEqual(this.endDate);
+        }
+        return isEqualOrLower;
     }
 }
