@@ -1,9 +1,8 @@
 package org.switch2022.project.utils;
 
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -87,7 +86,7 @@ public class PeriodTest {
         LocalDate result = period.getStartDate();
 
         //Assert
-        assertEquals(startDate,result);
+        assertEquals(startDate, result);
     }
 
     /**
@@ -135,14 +134,11 @@ public class PeriodTest {
         LocalDate startDate = LocalDate.of(2023, 3, 1);
         int sprintDuration = 2;
         Period period1 = new Period(startDate, sprintDuration);
-        Period period2 = period1;
-        boolean expected = true;
-
+        Period period2 = new Period(startDate, sprintDuration);
         //Act
-        boolean result = period1.equals(period2);
-
+        boolean result = (period1.equals(period2));
         //Assert
-        assertEquals(expected, result);
+        assertTrue(result);
     }
 
     /**
@@ -169,10 +165,6 @@ public class PeriodTest {
      * the same.
      */
     @Test
-    void ensureTwoPeriodsAreNotTheSame() {
-        // Arrange
-        Period reference = new Period(LocalDate.of(2023, 1, 1), 3);
-        Period other = new Period(LocalDate.of(2022, 1, 1), 3);
     void ensureSprintDoesNotEqualOtherTypeOfObject() {
         //Arrange
         LocalDate startDate = LocalDate.of(2023, 3, 1);
@@ -183,12 +175,11 @@ public class PeriodTest {
         //Act
         boolean result = period.equals(other);
         //Assert
-        assertEquals(result,expected);
+        assertEquals(result, expected);
     }
 
     /**
      * Scenario 4: Verify if a Sprint and a null object are not the same.
-     * Scenario 4: Verify if a Period and a null object are not the same.
      */
     @Test
     void ensureSprintDoesNotEqualNull() {
@@ -196,32 +187,11 @@ public class PeriodTest {
         LocalDate startDate = LocalDate.of(2023, 3, 1);
         int sprintDuration = 2;
         Period period = new Period(startDate, sprintDuration);
-    void ensureUserStoryDoesNotEqualNull() {
-        // Arrange
-        Period reference = new Period(LocalDate.of(2023, 1, 1),
-                3);
         Period other = null;
         boolean expected = false;
         //Act
         boolean result = period.equals(other);
         //Assert
-        assertEquals(expected,result);
-    }
-
-    /**
-     * Scenario 5: Two periods with the same attributes are equal to each other.
-     */
-    @Test
-    void ensureThatTwoPeriodsAreEqual() {
-        // Arrange
-        Period reference = new Period(LocalDate.now(), 3);
-        Period other = new Period(LocalDate.now(), 3);
-        boolean expected = true;
-
-        // Act
-        boolean result = reference.equals(other);
-
-        // Assert
         assertEquals(expected, result);
     }
 
@@ -278,7 +248,7 @@ public class PeriodTest {
         // Arrange
         LocalDate startDate1 = LocalDate.of(2022, 1, 1);
         Period period1 = new Period(startDate1, 3);
-        LocalDate startDate2 = LocalDate.of(2022,3,19);
+        LocalDate startDate2 = LocalDate.of(2022, 3, 19);
         Period period2 = new Period(startDate2, 3);
         boolean expected = true;
 
@@ -402,7 +372,7 @@ public class PeriodTest {
     }
 
     /**
-     *Scenario 8: verify Period2 is inside Period1 duration.
+     * Scenario 8: verify Period2 is inside Period1 duration.
      * should return false.
      */
     @Test

@@ -78,7 +78,8 @@ public class Period {
     }
 
     /**
-     *Verifies the startDate is not before today date.
+     * Verifies the startDate is not before today date.
+     *
      * @return true if the startDate is before present day.
      */
     public boolean isStartDateBeforeNow() {
@@ -93,7 +94,8 @@ public class Period {
      */
     public boolean isPeriodNotOverlapping(Period period) {
         // check if this period ends before the start of the given period
-        return this.endDate.isBefore(period.getStartDate()) || period.getEndDate().isBefore(this.startDate);}
+        return this.endDate.isBefore(period.getStartDate()) || period.getEndDate().isBefore(this.startDate);
+    }
 
 
     /**
