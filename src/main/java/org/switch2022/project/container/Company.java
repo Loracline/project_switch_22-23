@@ -8,6 +8,7 @@ import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.Effort;
 
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -285,8 +286,8 @@ public class Company {
      * @param projectCode
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode) {
-        return projectContainer.estimateEffortUserStory(userStoryDto, effort, projectCode);
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode, LocalDate date) {
+        return projectContainer.estimateEffortUserStory(userStoryDto, effort, projectCode, date);
     }
 
 

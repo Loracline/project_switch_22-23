@@ -226,17 +226,16 @@ public class Project {
      * @param userStoryDto The UserStoryDto object to estimate the effort for.
      * @param effort       The effort object representing the estimated effort for the
      *                     user story.
-     * @param sprintNumber The number of the sprint in which the user story is being
+     * @param date The number of the sprint in which the user story is being
      *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
-                                           String sprintNumber) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, LocalDate date) {
         boolean result = false;
         int i = 0;
         while (i < sprints.size()) {
             Sprint sprint = sprints.get(i);
-            if (sprint.hasSprintNumber(sprintNumber)) {
+            if (sprint.isDateWithinPeriod(date)) {
                 result = sprint.estimateEffortUserStory(userStoryDto, effort);
                 break;
             }

@@ -12,6 +12,8 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.utils.Effort;
 
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -293,7 +295,7 @@ public class ProjectContainerTest {
                 factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
 
         // Act
-        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, "AA001");
+        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, "AA001", LocalDate.of(2023, 3, 8));
 
         // Assert
         assertTrue(result);
@@ -331,7 +333,7 @@ public class ProjectContainerTest {
 
 
         // Act
-        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, "AA001");
+        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, "AA001", LocalDate.of(2023, 3, 8));
 
         // Assert
         assertFalse(result);
@@ -344,7 +346,7 @@ public class ProjectContainerTest {
      */
 
     @Test
-    void ensureRegisterProjectUnsuccessfullyProjectCodeAlreadyExists() {
+    void ensureEstimateEffortUserStoryUnsuccessfullyProjectCodeAlreadyExists() {
         // Arrange
         UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a project", "ongoing");
         ProjectContainer projectContainerTest = new ProjectContainer();
@@ -368,7 +370,7 @@ public class ProjectContainerTest {
 
 
         // Act
-        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, "");
+        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, "", LocalDate.of(2023, 3, 8));
 
         // Assert
         assertFalse(result);
@@ -380,7 +382,7 @@ public class ProjectContainerTest {
      * Expected result: false, indicating that the estimation was unsuccessful.
      */
     @Test
-    void ensureRegisterProjectUnsuccessfullyProjectNull() {
+    void ensureEstimateEffortUserStoryUnsuccessfullyProjectNull() {
         // Arrange
         UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a project", "ongoing");
         ProjectContainer projectContainerTest = new ProjectContainer();
@@ -404,7 +406,7 @@ public class ProjectContainerTest {
 
 
         // Act
-        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, null);
+        boolean result = projectContainerTest.estimateEffortUserStory(userStoryDto, Effort.FIVE, null, LocalDate.of(2023, 3, 8));
 
         // Assert
         assertFalse(result);

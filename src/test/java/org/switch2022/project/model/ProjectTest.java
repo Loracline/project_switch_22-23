@@ -547,14 +547,14 @@ public class ProjectTest {
                 factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
         UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a " +
                 "profile",
-                "Planned");
+        "Planned");
         Effort effort = Effort.TWO;
         project.addSprint(sprintDouble);
-        when(sprintDouble.hasSprintNumber(any())).thenReturn(true);
+        when(sprintDouble.isDateWithinPeriod(any())).thenReturn(true);
         when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(true);
 
         // Act
-        boolean result = project.estimateEffortUserStory(userStoryDto, effort, "S1");
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort, LocalDate.of(2023, 3, 8));
 
         // Assert
         assertTrue(result);
@@ -586,11 +586,11 @@ public class ProjectTest {
                 "Planned");
         Effort effort = Effort.TWO;
         project.addSprint(sprintDouble);
-        when(sprintDouble.hasSprintNumber(any())).thenReturn(false);
+        when(sprintDouble.isDateWithinPeriod(any())).thenReturn(false);
         when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(false);
 
         // Act
-        boolean result = project.estimateEffortUserStory(userStoryDto, effort, "S1");
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort, LocalDate.of(2023, 3, 8));
 
         // Assert
         assertFalse(result);
