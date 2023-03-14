@@ -31,7 +31,7 @@ public class ProjectContainer {
      *
      * @return the project with given code.
      */
-    private Project getProjectByCode(String code) {
+    private Optional<Project> getProjectByCode(String code) {
         Project projectRequested = null;
         int i = 0;
         while (i < this.projects.size() && (projectRequested != (projects.get(i)))) {
@@ -40,7 +40,7 @@ public class ProjectContainer {
             }
             i++;
         }
-        return projectRequested;
+        return Optional.ofNullable(projectRequested);
     }
 
     /**
@@ -61,13 +61,16 @@ public class ProjectContainer {
      */
     public boolean registerProject(ProjectCreationDto projectCreationDto,
                                    ProjectTypologyContainer
-                                           projectTypologyContainer, CustomerContainer customerContainer,
+                                           projectTypologyContainer,
+                                   CustomerContainer customerContainer,
                                    BusinessSectorContainer
                                            businessSectorContainer,
                                    IFactoryProductBacklog factoryProductBacklog,
                                    IFactoryUserStory factoryUserStory,
-                                   IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
-                                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
+                                   IFactoryProject factoryProject,
+                                   IFactoryPeriod iFactoryPeriod,
+                                   IFactorySprintBacklog iFactorySprintBacklog,
+                                   IFactorySprint iFactorySprint) {
         Project project = ProjectCreationMapper.getProjectFromDto(projectCreationDto,
                 projectTypologyContainer,
                 customerContainer, businessSectorContainer, factoryProductBacklog,
@@ -119,8 +122,13 @@ public class ProjectContainer {
      */
     public boolean createUserStory(ProjectDto projectDto,
                                    UserStoryCreationDto userStoryCreationDto) {
-        Project project = getProjectByCode(projectDto.code);
-        return project != null && project.createUserStory(userStoryCreationDto);
+        boolean isUserStoryCreated = false;
+        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            isUserStoryCreated = project.createUserStory(userStoryCreationDto);
+        }
+        return isUserStoryCreated;
     }
 
     /**
@@ -131,17 +139,24 @@ public class ProjectContainer {
      * @param projectCode  code of the project.
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode,
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
+                                           String projectCode,
                                            LocalDate date) {
-        Project project = getProjectByCode(projectCode);
-        return project != null && project.estimateEffortUserStory(userStoryDto, effort, date);
+        boolean isEffortSet = false;
+        Optional<Project> projectOptional = getProjectByCode(projectCode);
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            isEffortSet = project.estimateEffortUserStory(userStoryDto, effort, date);
+        }
+        return isEffortSet;
     }
 
     /**
      * This method should return the Product Backlog of a given Project.
      */
     public ProductBacklog getProductBacklog(ProjectDto projectDto) {
-        Project project = getProjectByCode(projectDto.code);
+        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
+        Project project = projectOptional.get();
         return project.getProductBacklog();
     }
 }
