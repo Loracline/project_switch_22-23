@@ -1,9 +1,8 @@
 package org.switch2022.project.utils;
 
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -135,15 +134,16 @@ public class PeriodTest {
         Period period2 = new Period(startDate, sprintDuration);
 
         //Assert
-        assertTrue(period1.equals(period2));
+        assertEquals(period1, period2);
     }
 
     /**
-     * Scenario 2: Scenario 2: Verify if two objects of the same class are different from
-     * each other.
+     * Scenario 2: Scenario 2: Verify if two objects of different classes are not the
+     * same.
      */
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     @Test
-    void ensurePeriodsAreNotTheSame() {
+    void ensurePeriodDoesNotEqualOtherTypeOfObject() {
         // Arrange
         LocalDate startDate = LocalDate.now();
         int sprintDuration = 2;
@@ -155,6 +155,41 @@ public class PeriodTest {
 
         // Assert
         assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: Verify if two objects of the same class are different from each other.
+     */
+    @Test
+    void ensureTwoPeriodsAreNotTheSame() {
+        // Arrange
+        Period reference = new Period(LocalDate.of(2023,1,1), 3);
+        Period other = new Period(LocalDate.of(2022,1,1), 3);
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 4: Verify if a UserStory and a null object are not the same.
+     */
+    @Test
+    void ensureUserStoryDoesNotEqualNull() {
+        // Arrange
+        Period reference = new Period(LocalDate.of(2023,1,1),
+                3);
+        Period other = null;
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
     }
 
     /**
