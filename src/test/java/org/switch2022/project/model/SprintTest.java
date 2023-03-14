@@ -1,5 +1,6 @@
 package org.switch2022.project.model;
 
+import net.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -571,5 +573,47 @@ class SprintTest {
 
         // Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD isPeriodNotOverlapping()
+     *
+     * Scenario 1 : return true if period is no overlapping
+     */
+    @Test
+    void ensurePeriodIsNotOverlapping() {
+        //Arrange
+        LocalDate localDate = mock(LocalDate.class);
+        IFactoryPeriod iFactoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklog = mock(FactorySprintBacklog.class);
+        Period periodDouble = mock(Period.class);
+        when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
+        Sprint sprint = Sprint.createSprint(localDate,2,"S001",iFactoryPeriod,iFactorySprintBacklog);
+        when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(true);
+        //Act
+        boolean result = sprint.isPeriodNotOverlapping(periodDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: return false if period is overlapping.
+     */
+    @Test
+    void ensurePeriodIsOverlapping() {
+        //Arrange
+        LocalDate localDate = mock(LocalDate.class);
+        IFactoryPeriod iFactoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklog = mock(FactorySprintBacklog.class);
+        Period periodDouble = mock(Period.class);
+        when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
+        Sprint sprint = Sprint.createSprint(localDate,2,"S001",iFactoryPeriod,iFactorySprintBacklog);
+        when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(false);
+        //Act
+        boolean result = sprint.isPeriodNotOverlapping(periodDouble);
+
+        //Assert
+        assertFalse(result);
     }
 }

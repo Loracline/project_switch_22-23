@@ -7,6 +7,7 @@ import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.dto.mapper.ProjectCreationMapper;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.*;
 import org.switch2022.project.utils.Effort;
@@ -725,5 +726,41 @@ public class ProjectContainerTest {
         assertEquals(expected, result);
 
     }
+    /**
+     * Method: registerProject()
+     * <p>
+     * Scenario 1: Project is registered successfully with isolation.
+     * Expected result: true.
+     */
 
+    @Test
+    void ensureProjectIsRegisteredWithIsolation() {
+        // Arrange
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        Project projectDouble = mock(Project.class);
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(ProjectTypologyContainer.class);
+        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(BusinessSectorContainer.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
+        ProjectCreationMapper projectCreationMapperDouble = mock(ProjectCreationMapper.class);
+        when(projectCreationMapperDouble.getProjectFromDto(projectCreationDtoDouble, projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
+                factorySprintDouble)).thenReturn(projectDouble);
+
+        // Act
+        boolean result = projectContainerTest.registerProject(projectCreationDtoDouble, projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
+                factorySprintDouble);
+
+        // Assert
+        assertTrue(result);
+    }
 }

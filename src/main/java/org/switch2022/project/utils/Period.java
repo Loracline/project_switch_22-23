@@ -58,16 +58,18 @@ public class Period {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (toCompare == null) {
             return false;
         }
-        Period period = (Period) o;
-        return Objects.equals(startDate, period.startDate) &&
-                Objects.equals(endDate, period.endDate);
+        if (toCompare.getClass() != this.getClass()) {
+            return false;
+        }
+        Period period = (Period) toCompare;
+        return startDate.equals(period.startDate) && endDate.equals(period.endDate);
     }
 
     @Override
@@ -76,7 +78,8 @@ public class Period {
     }
 
     /**
-     *Verifies the startDate is not before today date.
+     * Verifies the startDate is not before today date.
+     *
      * @return true if the startDate is before present day.
      */
     public boolean isStartDateBeforeNow() {
@@ -90,9 +93,9 @@ public class Period {
      * @return true if the periods do not overlap, false otherwise
      */
     public boolean isPeriodNotOverlapping(Period period) {
-
         // check if this period ends before the start of the given period
-        return this.endDate.isBefore(period.getStartDate()) || period.getEndDate().isBefore(this.startDate);}
+        return this.endDate.isBefore(period.getStartDate()) || period.getEndDate().isBefore(this.startDate);
+    }
 
 
     /**
@@ -102,7 +105,12 @@ public class Period {
      * @return true if date is equal or greater than start date or false otherwise.
      */
     public boolean isDateEqualOrGreaterThanStartDate(LocalDate date) {
-        return date.isAfter(this.startDate) || date.isEqual(this.startDate);
+        boolean isEqualOrGreater = false;
+        if (date != null) {
+            isEqualOrGreater =
+                    date.isAfter(this.startDate) || date.isEqual(this.startDate);
+        }
+        return isEqualOrGreater;
     }
 
     /**
@@ -112,6 +120,10 @@ public class Period {
      * @return true if date is equal or lower than end date or false otherwise.
      */
     public boolean isDateEqualOrLowerThanEndDate(LocalDate date) {
-        return date.isBefore(this.endDate) || date.isEqual(this.endDate);
+        boolean isEqualOrLower = false;
+        if (date != null) {
+            isEqualOrLower = date.isBefore(this.endDate) || date.isEqual(this.endDate);
+        }
+        return isEqualOrLower;
     }
 }

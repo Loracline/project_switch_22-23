@@ -215,21 +215,6 @@ class UserStoryTest {
         assertFalse(isEquals);
     }
 
-    /**
-     * Scenario 4: Verify if the effort of the userStory is not set.
-     * Expected result: effort of userStory is not set.
-     */
-    @Test
-    void ensureEffortIsNotSet() {
-        // Arrange
-        UserStory userStoryDouble = mock(UserStory.class);
-
-        // Act
-        doNothing().when(userStoryDouble).setEffort(Effort.FIVE);
-
-        // Assert
-        assertFalse(false);
-    }
 
 
     /**

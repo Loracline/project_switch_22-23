@@ -8,21 +8,22 @@ skinparam sequenceMessageAlign center
 
 class "EstimateUserStoryEffortController" {
 - company
-+ estimateEffortUserStory(userStoryDto, effort)
++ estimateEffortUserStory(userStoryDto, effort, projectDto)
 }
 
 class "Company" {
 - projectContainer
-+ estimateEffortUserStory(userStoryDto, effort)
++ estimateEffortUserStory(userStoryDto, effort, projectCode, date)
 }
 class "ProjectContainer" {
 - projects
-+ estimateEffortUserStory(userStoryDto, effort)
++ estimateEffortUserStory(userStoryDto, effort, projectCode, date)
++ getProjectByCode(projectCode)
 }
 class "Project"{
 - sprints
-+ estimateEffortUserStory(userStoryDto, effort)
-+ addSprint(Sprint sprintNumber)
++ estimateEffortUserStory(userStoryDto, effort, date)
++ isDateWithinPeriod(date)
 }
 class "Sprint"{
 - sprintBacklog
