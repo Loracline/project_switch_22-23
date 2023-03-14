@@ -307,7 +307,6 @@ class SprintBacklogTest {
      * <p>
      * Scenario 1: the effort of a UserStory is set.
      */
-
     @Test
     void ensureEffortIsSetForUserStoryWithIsolation() {
         //Arrange
@@ -330,7 +329,6 @@ class SprintBacklogTest {
     /**
      * Scenario 2: the effort of a UserStory is not set.
      */
-
     @Test
     void ensureEffortIsNotSetForUserStoryWithIsolation() {
         //Arrange
