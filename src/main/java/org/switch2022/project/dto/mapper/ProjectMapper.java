@@ -6,7 +6,7 @@ import org.switch2022.project.dto.ProjectDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectMapper {
+public final class ProjectMapper {
     /**
      * Constructor of the class ListOfProjectsMapper.
      */
