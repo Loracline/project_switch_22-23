@@ -2,9 +2,9 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryPeriod;
+import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.utils.Effort;
-import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
@@ -167,9 +167,8 @@ public class Sprint {
         SprintBacklog sprintBacklogCopy = new SprintBacklog();
         List<UserStory> userStoryCopyList =
                 this.sprintBacklog.getUserStoriesCopy(iFactoryUserStory);
-        for (int i = 0; i < userStoryCopyList.size(); i++) {
-            sprintBacklogCopy.addUserStory(userStoryCopyList.get(i));
-            i++;
+        for (UserStory userStory : userStoryCopyList) {
+            sprintBacklogCopy.addUserStory(userStory);
         }
         return sprintBacklogCopy;
     }
