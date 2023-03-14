@@ -53,7 +53,7 @@ public class Period {
      * @param sprintDuration the duration of the period in sprints
      * @return the end date of the period
      */
-    private LocalDate calculateEndDate(LocalDate startDate, int sprintDuration) {
+    private final LocalDate calculateEndDate(LocalDate startDate, int sprintDuration) {
         return startDate.plusWeeks(sprintDuration);
     }
 
@@ -75,8 +75,12 @@ public class Period {
         return Objects.hash(startDate, endDate);
     }
 
+    /**
+     *Verifies the startDate is not before today date.
+     * @return true if the startDate is before present day.
+     */
     public boolean isStartDateBeforeNow() {
-        return this.startDate.isBefore(LocalDate.now()) || this.startDate.isEqual(LocalDate.now());
+        return this.startDate.isBefore(LocalDate.now());
     }
 
     /**
@@ -86,17 +90,10 @@ public class Period {
      * @return true if the periods do not overlap, false otherwise
      */
     public boolean isPeriodNotOverlapping(Period period) {
+
         // check if this period ends before the start of the given period
-        if (this.endDate.isBefore(period.getStartDate())) {
-            return true;
-        }
-        // check if the given period ends before the start of this period
-        if (period.getEndDate().isBefore(this.startDate)) {
-            return true;
-        }
-        // the periods overlap
-        return false;
-    }
+        return this.endDate.isBefore(period.getStartDate()) || period.getEndDate().isBefore(this.startDate);}
+
 
     /**
      * This method checks if date is equal or greater than start date.
