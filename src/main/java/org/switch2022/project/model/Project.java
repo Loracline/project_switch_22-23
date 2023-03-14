@@ -35,6 +35,7 @@ public class Project {
     private IFactoryPeriod iFactoryPeriod;
     private IFactorySprintBacklog iFactorySprintBacklog;
     private IFactorySprint iFactorySprint;
+
     /**
      * Constructor
      */
@@ -58,8 +59,9 @@ public class Project {
                    ProjectTypology projectTypology,
                    BusinessSector businessSector,
                    IFactoryProductBacklog iFactoryProductBacklog,
-                   IFactoryUserStory iFactoryUserStory,IFactoryPeriod iFactoryPeriod,
-                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint){
+                   IFactoryUserStory iFactoryUserStory, IFactoryPeriod iFactoryPeriod,
+                   IFactorySprintBacklog iFactorySprintBacklog,
+                   IFactorySprint iFactorySprint) {
         this.projectCode = projectCode;
         this.projectName = name;
         this.customer = customer;
@@ -70,7 +72,7 @@ public class Project {
         this.iFactoryProductBacklog = iFactoryProductBacklog;
         this.iFactoryUserStory = iFactoryUserStory;
         this.productBacklog =
-                iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
+                this.iFactoryProductBacklog.createProductBacklog(this.iFactoryUserStory);
         this.iFactoryPeriod = iFactoryPeriod;
         this.iFactorySprintBacklog = iFactorySprintBacklog;
         this.iFactorySprint = iFactorySprint;
@@ -210,12 +212,10 @@ public class Project {
     public Optional<SprintBacklog> getSprintBacklogByDate(LocalDate date,
                                                           IFactoryUserStory iFactoryUserStory) {
         SprintBacklog sprintBacklog = null;
-        int i = 0;
-        while (i < this.sprints.size() && sprintBacklog == null) {
-            if (sprints.get(i).isDateWithinPeriod(date)) {
-                sprintBacklog = sprints.get(i).getSprintBacklogCopy(iFactoryUserStory);
+        for (Sprint sprint : this.sprints) {
+            if (sprint.isDateWithinPeriod(date)) {
+                sprintBacklog = sprint.getSprintBacklogCopy(iFactoryUserStory);
             }
-            i++;
         }
         return Optional.ofNullable(sprintBacklog);
     }
@@ -230,7 +230,8 @@ public class Project {
      *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String sprintNumber) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
+                                           String sprintNumber) {
         boolean result = false;
         int i = 0;
         while (i < sprints.size()) {
@@ -256,7 +257,8 @@ public class Project {
     }
 
     /**
-     * This method checks if there is any UserStory in the sprints of the project with that userStoryNumber
+     * This method checks if there is any UserStory in the sprints of the project with
+     * that userStoryNumber
      * return true if the userStory is present in any sprint.
      */
     private boolean hasUserStoryNumberInSprints(String userStoryNumber) {
@@ -272,7 +274,8 @@ public class Project {
     }
 
     /**
-     * This method creates an userStory by checking if the userStory is not present in any sprint and
+     * This method creates an userStory by checking if the userStory is not present in
+     * any sprint and
      * makes use of the method createUserStory from productBacklog.
      * return true if the userStory was created with success.
      */
@@ -284,14 +287,16 @@ public class Project {
 
     /**
      * This method creates an object Sprint.
+     *
      * @param sprintCreationDto The SprintCreationDto object.
      * @return true if the Sprint is created.
      */
     public boolean createSprint(SprintCreationDto sprintCreationDto) {
-        Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.startDate, sprintCreationDto.sprintDuration,
-                sprintCreationDto.sprintNumber , iFactoryPeriod,
+        Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.startDate,
+                sprintCreationDto.sprintDuration,
+                sprintCreationDto.sprintNumber, iFactoryPeriod,
                 iFactorySprintBacklog);
-        return sprintCreationDto != null && sprint !=null;
+        return sprintCreationDto != null && sprint != null;
     }
 
     /**
@@ -302,7 +307,6 @@ public class Project {
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise.
      */
-
     public boolean addUserStoryToSprintBacklog(String userStoryNumber,
                                                String sprintNumber) {
         boolean result = false;
@@ -324,7 +328,6 @@ public class Project {
      * @param sprintNumber of the Story one searches for.
      * @return an Optional with a Sprint.
      */
-
     private Optional<Sprint> getSprintByNumber(String sprintNumber) {
         int i = 0;
         Sprint sprint = null;
@@ -343,7 +346,6 @@ public class Project {
      * @param sprint to be added.
      * @return TRUE if sprint is added to the list of sprints or FALSE otherwise.
      */
-
     public boolean addSprint(Sprint sprint) {
         boolean result = false;
         int i = 0;
@@ -356,6 +358,5 @@ public class Project {
         }
         return result;
     }
-
 }
 

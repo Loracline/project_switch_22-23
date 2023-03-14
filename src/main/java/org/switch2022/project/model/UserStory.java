@@ -48,7 +48,7 @@ public class UserStory {
         /**
          * This method creates a userStory the userStoryNumber
          *
-         * @param userStoryNumber
+         * @param userStoryNumber of User Story to create
          */
         public UserStoryBuilder(String userStoryNumber) {
             this.userStoryNumber = userStoryNumber.toLowerCase().trim();
@@ -57,20 +57,20 @@ public class UserStory {
         /**
          * This method set the actor of the userStory
          *
-         * @param actor
+         * @param actor of the User Story to create
          */
         public UserStoryBuilder setActor(String actor) {
-            this.actor = actor;
+            this.actor = actor.toLowerCase();
             return this;
         }
 
         /**
          * This method set the userStoryText of the userStory
          *
-         * @param userStoryText
+         * @param userStoryText of the User Story to create
          */
         public UserStoryBuilder setUserStoryText(String userStoryText) {
-            this.userStoryText = userStoryText;
+            this.userStoryText = userStoryText.toLowerCase().trim();
             return this;
         }
 

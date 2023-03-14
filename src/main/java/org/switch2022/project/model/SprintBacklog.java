@@ -21,18 +21,21 @@ public class SprintBacklog {
      * This method checks if two instances of SprintBacklog are equal by comparing
      * the userStories.
      *
-     * @param o SprintBacklog instance to compare with.
+     * @param toCompare SprintBacklog instance to compare with.
      * @return TRUE if the two have the same attributes, and FALSE otherwise.
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) {
             return true;
         }
-        if (!(o instanceof SprintBacklog)) {
+        if (toCompare == null) {
             return false;
         }
-        SprintBacklog that = (SprintBacklog) o;
+        if (this.getClass() != toCompare.getClass()) {
+            return false;
+        }
+        SprintBacklog that = (SprintBacklog) toCompare;
         return Objects.equals(userStories, that.userStories);
     }
 
@@ -106,7 +109,6 @@ public class SprintBacklog {
         }
         return copyList;
     }
-
 
     /**
      * This method checks if the userStory number exists in the SprintBacklog,

@@ -377,7 +377,6 @@ public class ProjectTest {
      * the created
      * instance is not null, indicating that it was created correctly.
      */
-
     @Test
     public void shouldCreateAValidProjectWithIsolation() {
         // Arrange
@@ -784,7 +783,7 @@ public class ProjectTest {
     }
 
     /**
-     * Scenario 4: Creates a userStory unsuccessfully due to be already in a sprint
+     * Scenario 5¬: Creates a userStory unsuccessfully due to be already in a sprint
      * return false
      */
     @Test
@@ -900,7 +899,6 @@ public class ProjectTest {
      * Scenario 1: verifies that User Story is added to Sprint Backlog since the User
      * Story and the Sprint are not null objects.
      */
-
     @Test
     void addUserStoryIsSuccessfullyAddedToSprintBacklog() {
         //Arrange
@@ -992,7 +990,6 @@ public class ProjectTest {
      * Scenario 3: verifies that User Story is not added to Sprint Backlog since the
      * User Story is a null object.
      */
-
     @Test
     void addUserStoryIsNotAddedToSprintBacklogBecauseUserStoryIsNull() {
         //Arrange
@@ -1039,7 +1036,6 @@ public class ProjectTest {
      * Scenario 1: verify if a Sprint is added to the list os Sprints if it is not
      * already there. Should return TRUE.
      */
-
     @Test
     void ensureThatSprintIsSuccessfullyAddedToSprintsList() {
         //Arrange
@@ -1076,7 +1072,6 @@ public class ProjectTest {
      * Scenario 2: verify if a Sprint is added to the list os Sprints because the list
      * is empty. Should return FALSE.
      */
-
     @Test
     void ensureSprintIsSuccessfullyAddedToSprintsListBecauseListIsEmpty() {
         //Arrange
@@ -1111,7 +1106,6 @@ public class ProjectTest {
      * Scenario 3: verify if a Sprint is not added to the list os Sprints because it is
      * already there. Should return FALSE.
      */
-
     @Test
     void ensureSprintIsNotAddedToSprintsListBecauseItAlreadyExists() {
         //Arrange
