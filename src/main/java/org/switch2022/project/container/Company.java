@@ -4,6 +4,7 @@ package org.switch2022.project.container;
 import org.switch2022.project.dto.*;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Account;
+import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.utils.Effort;
 
@@ -290,6 +291,11 @@ public class Company {
         return projectContainer.estimateEffortUserStory(userStoryDto, effort, projectCode, date);
     }
 
-
+    /**
+     * This method should return the Product Backlog of a given Project.
+     */
+    public ProductBacklog getProductBacklog(ProjectDto projectDto) {
+        return projectContainer.getProductBacklog(projectDto);
+    }
 }
 
