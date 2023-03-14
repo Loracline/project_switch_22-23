@@ -149,12 +149,13 @@ public class PeriodTest {
     void ensurePeriodsAreNotTheSame() {
         // Arrange
         LocalDate startDate = LocalDate.now();
+
         int sprintDuration = 2;
         Period period = new Period(startDate, sprintDuration);
-        String str = "some string";
+        Period periodOne = new Period(startDate.plusDays(7),3);
 
         // Act
-        boolean result = period.equals(str);
+        boolean result = period.equals(periodOne);
 
         // Assert
         assertFalse(result);
@@ -165,7 +166,7 @@ public class PeriodTest {
      * the same.
      */
     @Test
-    void ensureSprintDoesNotEqualOtherTypeOfObject() {
+    void ensurePeriodDoesNotEqualOtherTypeOfObject() {
         //Arrange
         LocalDate startDate = LocalDate.of(2023, 3, 1);
         int sprintDuration = 2;
@@ -179,10 +180,10 @@ public class PeriodTest {
     }
 
     /**
-     * Scenario 4: Verify if a Sprint and a null object are not the same.
+     * Scenario 4: Verify if a Period and a null object are not the same.
      */
     @Test
-    void ensureSprintDoesNotEqualNull() {
+    void ensurePeriodDoesNotEqualNull() {
         //Arrange
         LocalDate startDate = LocalDate.of(2023, 3, 1);
         int sprintDuration = 2;
@@ -193,6 +194,23 @@ public class PeriodTest {
         boolean result = period.equals(other);
         //Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 5: Verify if a Period is equal to it self.
+     */
+    @Test
+    void ensurePeriodEqualsItSelf() {
+        //Arrange
+        LocalDate startDate = LocalDate.of(2023, 3, 1);
+        int sprintDuration = 2;
+        Period period = new Period(startDate, sprintDuration);
+        Period other = period;
+        boolean expected = true;
+        //Act
+        boolean result = period.equals(other);
+        //Assert
+        assertEquals(expected,result);
     }
 
     /**
@@ -381,6 +399,45 @@ public class PeriodTest {
         LocalDate startDate1 = LocalDate.of(2022, 1, 1);
         Period period1 = new Period(startDate1, 3);
         Period period2 = new Period(startDate1.plusWeeks(1), 1);
+        boolean expected = false;
+
+        // Act
+        boolean result = period1.isPeriodNotOverlapping(period2);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+    /**
+    *Scenario 9: verify endDate of Period2 is before startDate of Period1.
+    * should return true.
+    */
+    @Test
+    void ensureEndDateOfPeriodTwoIsBeforeStartDateOfPeriodOne() {
+        //Arrange
+        LocalDate startDateOne = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDateOne, 3);
+        LocalDate startDateTwo = LocalDate.of(2022,1,23);
+        Period period2 = new Period(startDateTwo, 1);
+        boolean expected = true;
+
+        // Act
+        boolean result = period1.isPeriodNotOverlapping(period2);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     *Scenario 10: verify endDate of Period2 is after startDate of Period1.
+     * should return true.
+     */
+    @Test
+    void ensureEndDateOfPeriodTwoIsAfterStartDateOfPeriodOne() {
+        //Arrange
+        LocalDate startDateOne = LocalDate.of(2022, 1, 1);
+        Period period1 = new Period(startDateOne, 3);
+        LocalDate startDateTwo = LocalDate.of(2022,1,21);
+        Period period2 = new Period(startDateTwo, 1);
         boolean expected = false;
 
         // Act
