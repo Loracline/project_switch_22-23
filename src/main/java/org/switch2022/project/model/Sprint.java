@@ -19,7 +19,6 @@ public class Sprint {
     private final String sprintNumber;
     private Period period;
     private SprintBacklog sprintBacklog;
-    private IFactoryPeriod iFactoryPeriod;
     private IFactorySprintBacklog iFactorySprintBacklog;
 
     /**
@@ -43,7 +42,6 @@ public class Sprint {
                                       IFactoryPeriod iFactoryPeriod,
                                       IFactorySprintBacklog iFactorySprintBacklog) {
         Sprint sprint = new Sprint(sprintNumber);
-        sprint.iFactoryPeriod = iFactoryPeriod;
         sprint.setPeriod(iFactoryPeriod, sprintDuration, startDate);
         sprint.iFactorySprintBacklog = iFactorySprintBacklog;
         sprint.setSprintBacklog();
@@ -90,7 +88,6 @@ public class Sprint {
      */
     private void setPeriod(IFactoryPeriod iFactoryPeriod, int sprintDuration,
                            LocalDate startDate) {
-        this.iFactoryPeriod = iFactoryPeriod;
         this.period = iFactoryPeriod.createPeriod(startDate, sprintDuration);
     }
 
@@ -172,4 +169,15 @@ public class Sprint {
         }
         return sprintBacklogCopy;
     }
+
+    /**
+     * Determines if this period does not overlap with the given period.
+     * @param period the period to compare with.
+     * @return true if the periods do not overlap, false otherwise.
+     */
+    public boolean isPeriodNotOverlapping(Period period) {
+        return this.period.isPeriodNotOverlapping(period);
+    }
+
+
 }
