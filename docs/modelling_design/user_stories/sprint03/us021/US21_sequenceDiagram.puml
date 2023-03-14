@@ -27,20 +27,20 @@ ref over ui: US022: As Team Member, I want to view the Scrum Board of current sp
 
 
 ui --> TeamMember: request data
-TeamMember -> ui: selects data and estimate effort (userStoryDto, effort)
+TeamMember -> ui: selects data and estimate effort (userStoryDto, effort, projectDto)
 
 
 
-ui -> controller: estimateEffortUserStory(userStoryDto, effort)
+ui -> controller: estimateEffortUserStory(userStoryDto, effort, projectDto)
 activate controller
 
-controller -> company: estimateEffortUserStory (userStoryDto, effort)
+controller -> company: estimateEffortUserStory (UseruserStoryDto, effort, projectCode, date)
 activate company
 
-company -> pc: estimateEffortUserStory (userStoryDto, effort)
+company -> pc: estimateEffortUserStory (userStoryDto, effort, projectCode, date)
 activate pc
 
-pc --> project: estimateEffortUserStory (userStoryDto, effort)
+pc --> project: estimateEffortUserStory (userStoryDto, effort, date)
 activate project
 
 project --> sprint: estimateEffortUserStory (userStoryDto, effort)
