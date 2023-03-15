@@ -24,13 +24,13 @@ ref over ui: us018: consult the product backlog_sequenceDiagram
 activate ui
 ui --> "Team Member": requests data (userStoryDto, sprintNumber)
 "Team Member" -> ui: sends requested data
-ui -> ct: addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
+ui -> ct: addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
 activate ct
-ct -> c: addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
+ct -> c: addUserStoryToSprintBacklog(projectCode, userStoryNumber, sprintNumber)
 activate c
-c -> pc: addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
+c -> pc: addUserStoryToSprintBacklog(projectCode, userStoryNumber, sprintNumber)
 activate pc
-
+pc -> pc : project = getProjectByCode(projectCode)
 pc -> p : addUserStoryToSprintBacklog(userStoryNumber, sprintNumber)
 activate p
 p -> containner : getUserStoryByNumber(userStoryNumber)

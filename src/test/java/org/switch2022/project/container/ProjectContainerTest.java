@@ -3,10 +3,7 @@ package org.switch2022.project.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.dto.ProjectCreationDto;
-import org.switch2022.project.dto.ProjectDto;
-import org.switch2022.project.dto.UserStoryCreationDto;
-import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.dto.*;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.*;
@@ -763,4 +760,317 @@ public class ProjectContainerTest {
         // Assert
         assertTrue(result);
     }
+    /**
+     * Method: createSprint()
+     * <p>
+     * Scenario 1: Sprint is not created because of project null.
+     * Expected result: false.
+     */
+
+    @Test
+    void ensureSprintIsNotCreatedInAProject_ProjectNull() {
+        //Arrange
+        SprintCreationDto sprintCreationDto = mock(SprintCreationDto.class);
+        ProjectDto projectDto = mock( ProjectDto.class);
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(
+                ProjectTypologyContainer.class);
+        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(
+                BusinessSectorContainer.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(
+                FactoryProductBacklog.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(
+                FactorySprintBacklog.class);
+        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        Customer costumerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        when(factoryProjectDouble.createProject(projectCreationDtoDouble, costumerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriodDouble,
+                factorySprintBacklogDouble, factorySprintDouble)).thenReturn(null);
+        projectContainerTest.registerProject(projectCreationDtoDouble,
+                projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryProjectDouble,
+                factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
+        //Act
+        boolean result = projectContainerTest.createSprint(sprintCreationDto,projectDto);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 2: Sprint is created in a given Project.
+     * return true.
+     */
+    @Test
+    void ensureSprintIsCreatedInAProject() {
+        //Arrange
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
+        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
+                "Fixed cost", "Media");
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(
+                ProjectTypologyContainer.class);
+        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(
+                BusinessSectorContainer.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(
+                FactoryProductBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(
+                FactorySprintBacklog.class);
+        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
+        Project projectDouble = mock(Project.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        when(factoryProjectDouble.createProject(any(), any(), any(), any(), any(), any(),
+                any(), any(), any())).
+                thenReturn(projectDouble);
+        when(projectDouble.createSprint(sprintCreationDtoDouble)).thenReturn(true);
+        when(projectDouble.hasProjectCode("P001")).thenReturn(true);
+        projectContainerTest.registerProject(projectCreationDtoDouble,
+                projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble,
+                factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble,
+                factorySprintBacklogDouble, factorySprintDouble);
+        //Act
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble,projectDto);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: this test doesn't create a Sprint in a given project
+     * due to project not be in the container
+     */
+    @Test
+    void ensureSprintIsNotCreatedInAProject() {
+        //Arrange
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
+        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
+                "Fixed cost", "Media");
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(
+                ProjectTypologyContainer.class);
+        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(
+                BusinessSectorContainer.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(
+                FactoryProductBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(
+                FactorySprintBacklog.class);
+        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
+        Project projectDouble = mock(Project.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        Customer costumerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        when(factoryProjectDouble.createProject(projectCreationDtoDouble, costumerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriodDouble,
+                factorySprintBacklogDouble, factorySprintDouble)).thenReturn(
+                projectDouble);
+        projectContainerTest.registerProject(projectCreationDtoDouble,
+                projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryProjectDouble,
+                factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
+        when(projectDouble.createSprint(sprintCreationDtoDouble)).thenReturn(true);
+        //Act
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble,projectDto);
+        //Assert
+        assertFalse(result);
+    }
+    /**
+     * Scenario 4: this test doesn't create a Sprint in a given project
+     * due to Sprint be repeated
+     */
+    @Test
+    void ensureSprintIsNotCreatedInAProject_RepeatedSprint() {
+        //Arrange
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
+        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
+                "Fixed cost", "Media");
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(
+                ProjectTypologyContainer.class);
+        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(
+                BusinessSectorContainer.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(
+                FactoryProductBacklog.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(
+                FactorySprintBacklog.class);
+        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
+        Project projectDouble = mock(Project.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        Customer costumerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        when(factoryProjectDouble.createProject(projectCreationDtoDouble, costumerDouble,
+                projectTypologyDouble, businessSectorDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriodDouble,
+                factorySprintBacklogDouble, factorySprintDouble)).thenReturn(
+                projectDouble);
+        projectContainerTest.registerProject(projectCreationDtoDouble,
+                projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble,
+                factoryProductBacklogDouble, factoryUserStoryDouble, factoryProjectDouble,
+                factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
+        when(projectDouble.createSprint(sprintCreationDtoDouble)).thenReturn(false);
+        //Act
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble,projectDto);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD addUserStoryToSprintBacklog(projectCode, UserStoryNumber, SprintNumber)
+     * adds a User Story to Sprint Backlog
+     * <p>
+     * Scenario 1: verify if a User Story is added to Sprint Backlog if it is not
+     * already there. Should return TRUE.
+     */
+    @Test
+    void ensureThatUserStoryIsAddedToSprintBacklog() {
+        //ARRANGE
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        Project projectDouble = mock(Project.class);
+        projectContainerTest.addProjectToProjectContainer(projectDouble);
+
+        when(projectDouble.hasProjectCode("P1")).thenReturn(true);
+
+        when(projectDouble.addUserStoryToSprintBacklog("US001", "SP10")).thenReturn(true);
+
+        //ACT
+        boolean result = projectContainerTest.addUserStoryToSprintBacklog("P1", "US001",
+                "SP10");
+
+        //ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a User Story is not added to the Sprint Backlog of a
+     * Project that does not exist.
+     *
+     * Should return FALSE.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseProjectDoesNotExist() {
+        //ARRANGE
+        ProjectContainer projectContainerTest = new ProjectContainer();
+
+        //ACT
+        boolean result = projectContainerTest.addUserStoryToSprintBacklog("P1", "US001",
+                "SP10");
+
+        //ASSERT
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: verify if a User Story is not added to the Sprint Backlog of a
+     * Project because the User Story or The Sprint does not exist.
+     *
+     * Should return FALSE.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryOrSprintDoesNotExist() {
+        //ARRANGE
+        ProjectContainer projectContainerTest = new ProjectContainer();
+
+        Project projectDouble = mock(Project.class);
+
+        projectContainerTest.addProjectToProjectContainer(projectDouble);
+
+        when(projectDouble.hasProjectCode("P1")).thenReturn(true);
+
+        when(projectDouble.addUserStoryToSprintBacklog("US001", "SP10")).thenReturn(false);
+
+        //ACT
+        boolean result = projectContainerTest.addUserStoryToSprintBacklog("P1", "US001",
+                "SP10");
+
+        //ASSERT
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD addProjectToProjectContainer(project)
+     * adds a Project to Project Container
+     * <p>
+     * Scenario 1: verify if a Project is added to the list of Projects if it is not
+     * already there. Should return TRUE.
+     */
+    @Test
+    void ensureThatSprintIsSuccessfullyAddedToSprintsList() {
+        //Arrange
+        Project projectDouble = mock(Project.class);
+        ProjectContainer projectContainer = new ProjectContainer();
+
+        Project projectDoubleTest = mock(Project.class);
+
+        projectContainer.addProjectToProjectContainer(projectDoubleTest);
+
+        //Act
+        boolean result = projectContainer.addProjectToProjectContainer(projectDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a Project is added to the list os Projects because project
+     * list is empty.
+     * Should return TRUE.
+     */
+    @Test
+    void ensureProjectIsSuccessfullyAddedToProjectContainerBecauseProjectListIsEmpty() {
+        //Arrange
+        Project projectDouble = mock(Project.class);
+        ProjectContainer projectContainer = new ProjectContainer();
+
+        //Act
+        boolean result = projectContainer.addProjectToProjectContainer(projectDouble);
+
+        //Assert
+        assertTrue(result);
+
+    }
+
+    /**
+     * Scenario 3: verify if a Project is not added to the list os Projects because
+     * project is already there. Should return FALSE.
+     */
+    @Test
+    void ensureSprintIsNotAddedToSprintsListBecauseItAlreadyExists() {
+        //Arrange
+        Project projectDouble = mock(Project.class);
+        ProjectContainer projectContainer = new ProjectContainer();
+
+        projectContainer.addProjectToProjectContainer(projectDouble);
+
+        //Act
+        boolean result = projectContainer.addProjectToProjectContainer(projectDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
 }
