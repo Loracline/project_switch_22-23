@@ -6,6 +6,7 @@ import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.utils.Effort;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -226,17 +227,16 @@ public class Project {
      * @param userStoryDto The UserStoryDto object to estimate the effort for.
      * @param effort       The effort object representing the estimated effort for the
      *                     user story.
-     * @param sprintNumber The number of the sprint in which the user story is being
+     * @param date         The number of the sprint in which the user story is being
      *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
-                                           String sprintNumber) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, LocalDate date) {
         boolean result = false;
         int i = 0;
         while (i < sprints.size()) {
             Sprint sprint = sprints.get(i);
-            if (sprint.hasSprintNumber(sprintNumber)) {
+            if (sprint.isDateWithinPeriod(date)) {
                 result = sprint.estimateEffortUserStory(userStoryDto, effort);
                 break;
             }
@@ -296,8 +296,28 @@ public class Project {
                 sprintCreationDto.sprintDuration,
                 sprintCreationDto.sprintNumber, iFactoryPeriod,
                 iFactorySprintBacklog);
-        return sprintCreationDto != null && sprint != null;
+        return isPeriodValid(sprint) && addSprint(sprint);
     }
+
+    /**
+     * This method checks if there is any Sprint in the sprint list of the project has an overlapping period with the
+     * sprint created.
+     * return true if the Sprint period is valid.
+     */
+    private boolean isPeriodValid(Sprint sprint) {
+        boolean result = false;
+        int i = 0;
+        if (sprints.size() == 0) {
+            result = true;
+        }
+        else {
+        while (i < sprints.size() && !result) {
+            result = sprints.get(i).isPeriodNotOverlapping(sprint);
+            i++;
+        }
+    }
+        return result;
+}
 
     /**
      * This method adds a new User Story to the Sprint Backlog

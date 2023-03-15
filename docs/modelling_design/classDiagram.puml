@@ -74,7 +74,7 @@ class ListAllUsersController {
 +listAllUsers(actorEmail)
 }
 
-class ListProjectsInAccountController {
+class ListProjectInAccountController {
 -company
 +listProjectsByAccount(emailUser)
 }
@@ -91,7 +91,7 @@ class RegisterProjectController {
 
 class ViewScrumBoardController {
 -company
-+getScrumBoard(projectDto, date)
++getScrumBoard(projectDto, date, iFactoryUserStory)
 }
 
 class Company {
@@ -119,13 +119,12 @@ class Company {
 +listProjectsByAccount(emailUser)
 +addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
 +createSprint(projectDto,sprintDto)
-+getScrumBoard(projectDto, date)
++getScrumBoard(projectCode, date, iFactoryUserStory)
 -userStoryContainer
 +createUserStory(projectDto,userStoryCreationDto)
 +getProductBacklog(projectDto)
 +estimateEffortUserStory(userStoryDto, effort)
 }
-
 
 class AccountContainer {
 -accounts
@@ -195,7 +194,7 @@ class ProjectContainer {
 -getProjectByProjectCode(projectCode)
 +createSprint(sprintDto)
 -getProjectByCode(projectDto)
-+getScrumBoard(date)
++getScrumBoard(projectCode, date, iFactoryUserStory)
 + createUserStory(projectDto,userStoryCreationDto)
 -getProjectByCode(projectCode)
 +getProductBacklog(projectDto)
@@ -284,7 +283,6 @@ class Period {
 +Period(startDate, sprintDuration)
 +getStartDate()
 +getEndDate()
-+isDateWithinPeriod(date)
 +isDateEqualOrGreaterThanStartDate(date)
 +isDateEqualOrLowerThanEndDate(date)
 }
@@ -322,10 +320,10 @@ class Project {
 +estimateEffortUserStory(userStoryDto, effort)
 +addUserStoryToSprintBacklog(userStoryNumber, sprintNumber)
 -getSprint(sprintNumber)
-+createSprint(sprintNumber,\n startDate, projectCode)
++createSprint(sprintNumber, startDate, projectCode)
 +isSprintUnique(sprint)
 +isPeriodValid(sprint, existingSprint)
-+getScrumBoard()
++getScrumBoard(date, iFactoryUserStory)
 +createUserStory(userStoryCreationDto)
 +getProductBacklog()
 }
@@ -350,7 +348,8 @@ class "Sprint"{
 +createPeriod(startDate,sprintDuration)
 +getStartDate()
 +getEndDate()
-+getSprintBacklogCopy()
++isDateWithinPeriod(date)
++getSprintBacklogCopy(iFactoryUserStory)
 +getPeriodByDate(date)
 +hasUserStory(userStoryNumber)
 
@@ -377,7 +376,7 @@ class "SprintBacklog" {
 +estimateEffortUserStory(userStoryDto, effort)
 +addUserStory(userStory)
 -isUserStoryAlreadyAdded(userStory)
-+getUserStoriesCopy(factoryUserStory)
++getUserStoriesCopy(iFactoryUserStory)
 +hasUserStory(userStoryNumber)
 }
 
@@ -420,7 +419,7 @@ class UserStoryDtoMapper {
 
 class UserStoryDtoListAssembler {
 +backlogToDto(productBacklog)
-+backlogToDto(sprintBacklog)
++backlogToDto(sprintBacklog, iFactoryUserStory)
 }
 
 class AccountDTO {
@@ -499,7 +498,7 @@ enum "Status"{
 'US011_US012_US013'
 "AddUserToProjectController" "1"-->"1" "Company" :has
 “ListAllUsersController” "1"-->"1" "Company" :has
-“ListProjectsInAccountController” "1"-->"1" "Company" :has
+“ListProjectInAccountController” "1"-->"1" "Company" :has
 'US010'
 "RegisterProjectController" "1"-->"1" "Company": has
 'US009'
@@ -562,7 +561,6 @@ CreateSprintController "1"-->"1" Company: has
 "Company" "1"-->"1" "CustomerContainer": has
 "Company" "1"-->"1" "AccountInProjectContainer": has
 "Company" "1"--> "1" "ProjectContainer": has
-"Company" "1"--> "1" "UserStoryContainer": has
 
 
 'Container model link'

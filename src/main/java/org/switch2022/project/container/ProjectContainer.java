@@ -61,13 +61,16 @@ public class ProjectContainer {
      */
     public boolean registerProject(ProjectCreationDto projectCreationDto,
                                    ProjectTypologyContainer
-                                           projectTypologyContainer, CustomerContainer customerContainer,
+                                           projectTypologyContainer,
+                                   CustomerContainer customerContainer,
                                    BusinessSectorContainer
                                            businessSectorContainer,
                                    IFactoryProductBacklog factoryProductBacklog,
                                    IFactoryUserStory factoryUserStory,
-                                   IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
-                                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
+                                   IFactoryProject factoryProject,
+                                   IFactoryPeriod iFactoryPeriod,
+                                   IFactorySprintBacklog iFactorySprintBacklog,
+                                   IFactorySprint iFactorySprint) {
         Project project = ProjectCreationMapper.getProjectFromDto(projectCreationDto,
                 projectTypologyContainer,
                 customerContainer, businessSectorContainer, factoryProductBacklog,
@@ -104,10 +107,10 @@ public class ProjectContainer {
     /**
      * This method returns the sprint backlog of the project of interest, in a given date.
      *
-     * @param projectCode       of interest
-     * @param date              of interest
+     * @param projectCode       of interest.
+     * @param date              of interest.
      * @param iFactoryUserStory interface one must use to copy the User Stories
-     *                          contained in the Sprint Backlog
+     *                          contained in the Sprint Backlog.
      * @return an Optional object of the Sprint Backlog.
      */
     public Optional<SprintBacklog> getScrumBoard(String projectCode, LocalDate date,

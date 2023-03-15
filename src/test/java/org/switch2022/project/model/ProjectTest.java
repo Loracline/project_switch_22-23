@@ -3,6 +3,7 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.dto.SprintCreationDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
@@ -17,8 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ProjectTest {
     /**
@@ -547,14 +547,14 @@ public class ProjectTest {
                 factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
         UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a " +
                 "profile",
-                "Planned");
+        "Planned");
         Effort effort = Effort.TWO;
         project.addSprint(sprintDouble);
-        when(sprintDouble.hasSprintNumber(any())).thenReturn(true);
+        when(sprintDouble.isDateWithinPeriod(any())).thenReturn(true);
         when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(true);
 
         // Act
-        boolean result = project.estimateEffortUserStory(userStoryDto, effort, "S1");
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort, LocalDate.of(2023, 3, 8));
 
         // Assert
         assertTrue(result);
@@ -586,11 +586,11 @@ public class ProjectTest {
                 "Planned");
         Effort effort = Effort.TWO;
         project.addSprint(sprintDouble);
-        when(sprintDouble.hasSprintNumber(any())).thenReturn(false);
+        when(sprintDouble.isDateWithinPeriod(any())).thenReturn(false);
         when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(false);
 
         // Act
-        boolean result = project.estimateEffortUserStory(userStoryDto, effort, "S1");
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort, LocalDate.of(2023, 3, 8));
 
         // Assert
         assertFalse(result);
@@ -1136,4 +1136,172 @@ public class ProjectTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * METHOD createSprint(sprint)
+     * Scenario 1: verify if a Sprint is created and added to the list os Sprints because Sprint List is empty.
+     * should return true.
+     */
+    @Test
+    void ensureSprintIsCreatedAndAddedToTheList_EmptyList() {
+    //Arrange
+        LocalDate startDate = mock(LocalDate.class);
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        //ACT
+        boolean result = project.createSprint(sprintCreationDto);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     *
+     * Scenario 2: Verify if a Sprint is created but not added to the list of Sprints because Period not valid.
+     * it should return false.
+     */
+    @Test
+    void ensureSprintIsCreatedButNotAddedToTheList() {
+        //Arrange
+        LocalDate startDate = mock(LocalDate.class);
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        Sprint sprintDoubleTwo = mock(Sprint.class);
+        when (iFactorySprintDouble.createSprint(startDate,3,"S001",iFactoryPeriodDouble,
+                iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        project.addSprint(sprintDoubleTwo);
+        when (sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(false);
+        //ACT
+        boolean result = project.createSprint(sprintCreationDto);
+        //Assert
+        assertFalse(result);
+    }
+    /**
+     * Scenario 3: Verify if a Sprint is created and added to the list of Sprints.
+     * it should return true.
+     */
+    @Test
+    void ensureSprintIsCreatedAndAddedToTheList() {
+        //Arrange
+        LocalDate startDate = mock(LocalDate.class);
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        Sprint sprintDoubleTwo = mock(Sprint.class);
+        when (iFactorySprintDouble.createSprint(startDate,3,"S001",iFactoryPeriodDouble,
+                iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        project.addSprint(sprintDoubleTwo);
+        when (sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(true);
+        //ACT
+        boolean result = project.createSprint(sprintCreationDto);
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * Scenario 4: Verify if a Sprint is created and not added to the list of Sprints because Period is not valid and
+     * Sprint is already in the Sprint List.
+     * it should return false.
+     */
+    @Test
+    void ensureSprintIsCreatedButNotAddedToTheList_PeriodNotValidAndSprintAlreadyInTheList() {
+        //Arrange
+        LocalDate startDate = mock(LocalDate.class);
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        when (iFactorySprintDouble.createSprint(startDate,3,"S001",iFactoryPeriodDouble,
+                iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        project.addSprint(sprintDouble);
+        when (sprintDouble.isPeriodNotOverlapping(any())).thenReturn(false);
+        //ACT
+        boolean result = project.createSprint(sprintCreationDto);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 5: Verify if a Sprint is created but not added to the List because it already exists there.
+     * it should return false.
+     */
+    @Test
+    void ensureSprintIsCreatedAndNotAddedToTheListBecauseItAlreadyExists() {
+        //Arrange
+        LocalDate startDate = mock(LocalDate.class);
+        Customer customerDouble = mock(Customer.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        IFactoryProductBacklog iFactoryProductBacklogDouble =
+                mock(FactoryProductBacklog.class);
+        IFactoryUserStory iFactoryUserStory = mock(FactoryUserStory.class);
+        IFactoryPeriod iFactoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklogDouble =
+                mock(FactorySprintBacklog.class);
+        IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
+        Sprint sprintDoubleTwo = mock(Sprint.class);
+        when (iFactorySprintDouble.createSprint(startDate,3,"S001",iFactoryPeriodDouble,
+                iFactorySprintBacklogDouble)).thenReturn(sprintDoubleTwo);
+        Project project = new Project("Proj01", "Project Switch", customerDouble,
+                projectTypologyDouble,
+                businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
+                iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        project.addSprint(sprintDoubleTwo);
+        when (sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(true);
+        //ACT
+        boolean result = project.createSprint(sprintCreationDto);
+        //Assert
+        assertFalse(result);
+    }
+
 }

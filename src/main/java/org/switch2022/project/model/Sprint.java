@@ -2,9 +2,9 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryPeriod;
+import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.utils.Effort;
-import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
@@ -19,7 +19,6 @@ public class Sprint {
     private final String sprintNumber;
     private Period period;
     private SprintBacklog sprintBacklog;
-    private IFactoryPeriod iFactoryPeriod;
     private IFactorySprintBacklog iFactorySprintBacklog;
 
     /**
@@ -43,7 +42,6 @@ public class Sprint {
                                       IFactoryPeriod iFactoryPeriod,
                                       IFactorySprintBacklog iFactorySprintBacklog) {
         Sprint sprint = new Sprint(sprintNumber);
-        sprint.iFactoryPeriod = iFactoryPeriod;
         sprint.setPeriod(iFactoryPeriod, sprintDuration, startDate);
         sprint.iFactorySprintBacklog = iFactorySprintBacklog;
         sprint.setSprintBacklog();
@@ -90,7 +88,6 @@ public class Sprint {
      */
     private void setPeriod(IFactoryPeriod iFactoryPeriod, int sprintDuration,
                            LocalDate startDate) {
-        this.iFactoryPeriod = iFactoryPeriod;
         this.period = iFactoryPeriod.createPeriod(startDate, sprintDuration);
     }
 
@@ -167,10 +164,20 @@ public class Sprint {
         SprintBacklog sprintBacklogCopy = new SprintBacklog();
         List<UserStory> userStoryCopyList =
                 this.sprintBacklog.getUserStoriesCopy(iFactoryUserStory);
-        for (int i = 0; i < userStoryCopyList.size(); i++) {
-            sprintBacklogCopy.addUserStory(userStoryCopyList.get(i));
-            i++;
+        for (UserStory userStory : userStoryCopyList) {
+            sprintBacklogCopy.addUserStory(userStory);
         }
         return sprintBacklogCopy;
     }
+
+    /**
+     * Determines if this period does not overlap with the given period.
+     * @param sprint the period to compare with.
+     * @return true if the periods do not overlap, false otherwise.
+     */
+    public boolean isPeriodNotOverlapping(Sprint sprint) {
+        return this.period.isPeriodNotOverlapping(sprint.period);
+    }
+
+
 }

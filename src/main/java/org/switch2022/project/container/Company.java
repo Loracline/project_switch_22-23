@@ -4,11 +4,15 @@ package org.switch2022.project.container;
 import org.switch2022.project.dto.*;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Account;
+import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
+import org.switch2022.project.model.SprintBacklog;
 import org.switch2022.project.utils.Effort;
 
 import java.awt.image.BufferedImage;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class Company is built to create and manipulate the containers.
@@ -250,6 +254,20 @@ public class Company {
     }
 
     /**
+     * This method returns the scrum board (composed of the sprint backlog) of the project of interest, in a given date.
+     *
+     * @param projectCode       of the project of interest.
+     * @param date              of interest.
+     * @param iFactoryUserStory interface one must use to copy the User Stories
+     *                          contained in the Sprint Backlog.
+     * @return an Optional object of the Sprint Backlog.
+     */
+    public Optional<SprintBacklog> getScrumBoard(String projectCode, LocalDate date,
+                                                 IFactoryUserStory iFactoryUserStory) {
+        return projectContainer.getScrumBoard(projectCode, date, iFactoryUserStory);
+    }
+
+    /**
      * This method lists the accounts working in a specific project.
      *
      * @param projectCode of the project one searches for.
@@ -282,13 +300,18 @@ public class Company {
      *
      * @param userStoryDto to estimate the effort.
      * @param effort       of the userStory.
-     * @param projectCode
+     * @param projectCode code of the project.
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode) {
-        return projectContainer.estimateEffortUserStory(userStoryDto, effort, projectCode);
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode, LocalDate date) {
+        return projectContainer.estimateEffortUserStory(userStoryDto, effort, projectCode, date);
     }
 
-
+    /**
+     * This method should return the Product Backlog of a given Project.
+     */
+    public ProductBacklog getProductBacklog(ProjectDto projectDto) {
+        return projectContainer.getProductBacklog(projectDto);
+    }
 }
 

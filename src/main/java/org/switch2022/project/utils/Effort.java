@@ -19,13 +19,13 @@ public enum Effort {
      * Attributes of the enum Effort, according to the Class Diagram.
      */
 
-    final int effort;
+    final int effortValue;
 
     /**
      * Constructor used to pass data to Enum constants.
      */
 
-    Effort(int effort) {
-        this.effort = effort;
+    Effort(int effortValue) {
+        this.effortValue = effortValue;
     }
 }

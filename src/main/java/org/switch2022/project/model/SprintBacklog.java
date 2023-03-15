@@ -125,7 +125,7 @@ public class SprintBacklog {
             if (userStories.get(i).hasUserStoryNumber(userStoryDto.userStoryNumber)) {
                 try {
                     userStories.get(i).setEffort(effort);
-                } catch (Exception ignored) {
+                } catch (RuntimeException exception) {
                     return false;
                 }
                 isEffortSet = true;
