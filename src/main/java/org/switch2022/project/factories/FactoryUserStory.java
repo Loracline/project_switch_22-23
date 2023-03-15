@@ -7,12 +7,18 @@ public class FactoryUserStory implements IFactoryUserStory {
     public UserStory createUserStory(UserStoryCreationDto userStoryCreationDto) {
         return new UserStory.UserStoryBuilder(userStoryCreationDto.userStoryNumber)
                 .setUserStoryText(userStoryCreationDto.userStoryText)
-                .setActor(userStoryCreationDto.actor).build();
+                .setActor(userStoryCreationDto.actor)
+                .build();
     }
 
-    public UserStory createUserStory(String userStoryNumber, String actor, String userStoryText) {
+    public UserStory createUserStory(String userStoryNumber, String actor,
+                                     String userStoryText) {
         return new UserStory.UserStoryBuilder(userStoryNumber)
                 .setActor(actor)
-                .setUserStoryText(userStoryText).build();
+                .setUserStoryText(userStoryText)
+                .setStatus()
+                .setAcceptanceCriteria()
+                .setEffort()
+                .build();
     }
 }

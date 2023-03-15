@@ -20,68 +20,21 @@ public class UserStory {
     private final String userStoryNumber;
     private final String actor;
     private final String userStoryText;
-    private List<String> acceptanceCriteria = new ArrayList<>();
-    private Effort effort = Effort.ONE;
-    private Status status = Status.PLANNED;
+    private final Status status;
+    private final List<String> acceptanceCriteria;
+    private Effort effort;
 
     /**
      * Constructor
      * It creates an userStory using the UserStoryBuilder;
      */
     private UserStory(UserStoryBuilder builder) {
-
         this.userStoryNumber = builder.userStoryNumber;
         this.actor = builder.actor;
         this.userStoryText = builder.userStoryText;
-    }
-
-    /**
-     * This class applies the builderPattern to create a new UserStory
-     */
-
-    public static class UserStoryBuilder {
-
-        private final String userStoryNumber;
-        private String actor;
-        private String userStoryText;
-
-        /**
-         * This method creates a userStory the userStoryNumber
-         *
-         * @param userStoryNumber of User Story to create
-         */
-        public UserStoryBuilder(String userStoryNumber) {
-            this.userStoryNumber = userStoryNumber.toLowerCase().trim();
-        }
-
-        /**
-         * This method set the actor of the userStory
-         *
-         * @param actor of the User Story to create
-         */
-        public UserStoryBuilder setActor(String actor) {
-            this.actor = actor.toLowerCase();
-            return this;
-        }
-
-        /**
-         * This method set the userStoryText of the userStory
-         *
-         * @param userStoryText of the User Story to create
-         */
-        public UserStoryBuilder setUserStoryText(String userStoryText) {
-            this.userStoryText = userStoryText.toLowerCase().trim();
-            return this;
-        }
-
-        /**
-         * This method creates de userStory with the chosen attributes
-         */
-        public UserStory build() {
-            return new UserStory(this);
-        }
-
-
+        this.status = builder.status;
+        this.acceptanceCriteria = builder.acceptanceCriteria;
+        this.effort = builder.effort;
     }
 
     /**
@@ -145,14 +98,14 @@ public class UserStory {
      * Getter method for the attribute: status
      */
     public String getStatus() {
-        return status.toString();
+        return status.toString().toLowerCase();
     }
 
     /**
-     * Setter method for the attribute: status
+     * Getter method for the attribute: acceptanceCriteria
      */
-    public void setStatus(String status) {
-        this.status.valueOf(status);
+    public List<String> getAcceptanceCriteria() {
+        return acceptanceCriteria;
     }
 
     /**
@@ -182,5 +135,77 @@ public class UserStory {
      */
     public boolean hasUserStoryNumber(String userStoryNumber) {
         return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
+    }
+
+    /**
+     * This class applies the builderPattern to create a new UserStory
+     */
+    public static class UserStoryBuilder {
+        private final String userStoryNumber;
+        private String actor;
+        private String userStoryText;
+        private Status status;
+        private Effort effort;
+        private List<String> acceptanceCriteria;
+
+        /**
+         * This method creates a userStory the userStoryNumber
+         *
+         * @param userStoryNumber of User Story to create
+         */
+        public UserStoryBuilder(String userStoryNumber) {
+            this.userStoryNumber = userStoryNumber.toLowerCase().trim();
+        }
+
+        /**
+         * This method set the actor of the userStory
+         *
+         * @param actor of the User Story to create
+         */
+        public UserStoryBuilder setActor(String actor) {
+            this.actor = actor.toLowerCase();
+            return this;
+        }
+
+        /**
+         * This method set the userStoryText of the userStory
+         *
+         * @param userStoryText of the User Story to create
+         */
+        public UserStoryBuilder setUserStoryText(String userStoryText) {
+            this.userStoryText = userStoryText.toLowerCase().trim();
+            return this;
+        }
+
+        /**
+         * This method sets the Status of the User Story
+         */
+        public UserStoryBuilder setStatus() {
+            this.status = Status.PLANNED;
+            return this;
+        }
+
+        /**
+         * This method sets a new and empty Acceptance Criteria List of the User Story
+         */
+        public UserStoryBuilder setAcceptanceCriteria() {
+            this.acceptanceCriteria = new ArrayList<>();
+            return this;
+        }
+
+        /**
+         * This method sets the effort of the User Story as number one.
+         */
+        public UserStoryBuilder setEffort() {
+            this.effort = Effort.ONE;
+            return this;
+        }
+
+        /**
+         * This method creates de userStory with the chosen attributes
+         */
+        public UserStory build() {
+            return new UserStory(this);
+        }
     }
 }
