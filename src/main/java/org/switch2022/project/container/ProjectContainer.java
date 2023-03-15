@@ -148,12 +148,13 @@ public class ProjectContainer {
      * @param projectCode  code of the project.
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
+                                           String projectCode, LocalDate date) {
         boolean isEffortSet = false;
         Optional<Project> projectOptional = getProjectByCode(projectCode);
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
-            isEffortSet = project.estimateEffortUserStory(userStoryDto, effort, projectCode);
+            isEffortSet = project.estimateEffortUserStory(userStoryDto, effort, date);
         }
         return isEffortSet;
     }
