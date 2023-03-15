@@ -8,16 +8,16 @@ title  To add a user story in the product backlog to the sprint backlog, during 
 
 class "AddUserStoryToSprintBacklogController" {
 - company
-+ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++ addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
 }
 
 class "Company" {
 - projectContainer
-+ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++ addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
 }
 class "ProjectContainer" {
 - projects
-+ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++ addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
 - getProjectByProjectCode(projectCode)
 
 }
