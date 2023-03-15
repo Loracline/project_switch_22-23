@@ -281,7 +281,7 @@ public class Project {
      */
     public boolean createUserStory(UserStoryCreationDto userStoryCreationDto) {
         return userStoryCreationDto != null &&
-                !hasUserStoryNumberInSprints(userStoryCreationDto.userStoryNumber) &&
+                !hasUserStoryNumberInSprints(userStoryCreationDto.getUserStoryNumber()) &&
                 productBacklog.createUserStory(userStoryCreationDto);
     }
 

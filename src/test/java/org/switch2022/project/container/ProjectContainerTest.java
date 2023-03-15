@@ -136,8 +136,8 @@ public class ProjectContainerTest {
         //Arrange
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
-        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -166,7 +166,7 @@ public class ProjectContainerTest {
                 factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble,
                 factorySprintBacklogDouble, factorySprintDouble);
         //Act
-        boolean result = projectContainerTest.createUserStory(projectDto,
+        boolean result = projectContainerTest.createUserStory(projectDtoDouble,
                 userStoryCreationDtoDouble);
         //Assert
         assertTrue(result);
@@ -181,8 +181,8 @@ public class ProjectContainerTest {
         //Arrange
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
-        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -214,7 +214,7 @@ public class ProjectContainerTest {
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
         when(projectDouble.createUserStory(userStoryCreationDtoDouble)).thenReturn(true);
         //Act
-        boolean result = projectContainerTest.createUserStory(projectDto,
+        boolean result = projectContainerTest.createUserStory(projectDtoDouble,
                 userStoryCreationDtoDouble);
         //Assert
         assertFalse(result);
@@ -229,8 +229,8 @@ public class ProjectContainerTest {
         //Arrange
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
-        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -262,7 +262,7 @@ public class ProjectContainerTest {
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
         when(projectDouble.createUserStory(userStoryCreationDtoDouble)).thenReturn(false);
         //Act
-        boolean result = projectContainerTest.createUserStory(projectDto,
+        boolean result = projectContainerTest.createUserStory(projectDtoDouble,
                 userStoryCreationDtoDouble);
         //Assert
         assertFalse(result);
@@ -277,8 +277,8 @@ public class ProjectContainerTest {
         //Arrange
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
-        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -307,7 +307,7 @@ public class ProjectContainerTest {
                 factoryProductBacklogDouble, factoryUserStoryDouble, factoryProjectDouble,
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
         //Act
-        boolean result = projectContainerTest.createUserStory(projectDto,
+        boolean result = projectContainerTest.createUserStory(projectDtoDouble,
                 userStoryCreationDtoDouble);
         //Assert
         assertFalse(result);
@@ -968,7 +968,6 @@ public class ProjectContainerTest {
     /**
      * Scenario 2: verify if a User Story is not added to the Sprint Backlog of a
      * Project that does not exist.
-     *
      * Should return FALSE.
      */
     @Test
@@ -987,7 +986,6 @@ public class ProjectContainerTest {
     /**
      * Scenario 3: verify if a User Story is not added to the Sprint Backlog of a
      * Project because the User Story or The Sprint does not exist.
-     *
      * Should return FALSE.
      */
     @Test
