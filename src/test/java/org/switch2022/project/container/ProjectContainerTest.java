@@ -10,6 +10,7 @@ import org.switch2022.project.model.*;
 import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -723,43 +724,7 @@ public class ProjectContainerTest {
         assertEquals(expected, result);
 
     }
-    /**
-     * Method: registerProject()
-     * <p>
-     * Scenario 1: Project is registered successfully with isolation.
-     * Expected result: true.
-     */
 
-    @Test
-    void ensureProjectIsRegisteredWithIsolation() {
-        // Arrange
-        ProjectContainer projectContainerTest = new ProjectContainer();
-        Project projectDouble = mock(Project.class);
-        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
-        ProjectTypologyContainer projectTypologyContainerDouble = mock(ProjectTypologyContainer.class);
-        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
-        BusinessSectorContainer businessSectorContainerDouble = mock(BusinessSectorContainer.class);
-        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
-        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
-        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
-        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
-        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
-        ProjectCreationMapper projectCreationMapperDouble = mock(ProjectCreationMapper.class);
-        when(projectCreationMapperDouble.getProjectFromDto(projectCreationDtoDouble, projectTypologyContainerDouble,
-                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
-                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
-                factorySprintDouble)).thenReturn(projectDouble);
-
-        // Act
-        boolean result = projectContainerTest.registerProject(projectCreationDtoDouble, projectTypologyContainerDouble,
-                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
-                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
-                factorySprintDouble);
-
-        // Assert
-        assertTrue(result);
-    }
     /**
      * Method: createSprint()
      * <p>
@@ -771,7 +736,7 @@ public class ProjectContainerTest {
     void ensureSprintIsNotCreatedInAProject_ProjectNull() {
         //Arrange
         SprintCreationDto sprintCreationDto = mock(SprintCreationDto.class);
-        ProjectDto projectDto = mock( ProjectDto.class);
+        ProjectDto projectDto = mock(ProjectDto.class);
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -800,7 +765,7 @@ public class ProjectContainerTest {
                 factoryProductBacklogDouble, factoryUserStoryDouble, factoryProjectDouble,
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
         //Act
-        boolean result = projectContainerTest.createSprint(sprintCreationDto,projectDto);
+        boolean result = projectContainerTest.createSprint(sprintCreationDto, projectDto);
         //Assert
         assertFalse(result);
     }
@@ -843,7 +808,7 @@ public class ProjectContainerTest {
                 factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble,
                 factorySprintBacklogDouble, factorySprintDouble);
         //Act
-        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble,projectDto);
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDto);
         //Assert
         assertTrue(result);
     }
@@ -889,10 +854,11 @@ public class ProjectContainerTest {
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
         when(projectDouble.createSprint(sprintCreationDtoDouble)).thenReturn(true);
         //Act
-        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble,projectDto);
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDto);
         //Assert
         assertFalse(result);
     }
+
     /**
      * Scenario 4: this test doesn't create a Sprint in a given project
      * due to Sprint be repeated
@@ -934,7 +900,7 @@ public class ProjectContainerTest {
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
         when(projectDouble.createSprint(sprintCreationDtoDouble)).thenReturn(false);
         //Act
-        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble,projectDto);
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDto);
         //Assert
         assertFalse(result);
     }
@@ -1071,4 +1037,131 @@ public class ProjectContainerTest {
         assertFalse(result);
     }
 
+    /**
+     * Method: registerProject()
+     * <p>
+     * Scenario 1: Project is registered successfully with isolation.
+     * Expected result: true.
+     */
+
+    @Test
+    void ensureProjectIsRegisteredWithIsolation() {
+        // Arrange
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        Project projectDouble = mock(Project.class);
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(ProjectTypologyContainer.class);
+        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(BusinessSectorContainer.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
+        ProjectCreationMapper projectCreationMapperDouble = mock(ProjectCreationMapper.class);
+        when(projectCreationMapperDouble.getProjectFromDto(projectCreationDtoDouble, projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
+                factorySprintDouble)).thenReturn(projectDouble);
+
+        // Act
+        boolean result = projectContainerTest.registerProject(projectCreationDtoDouble, projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
+                factorySprintDouble);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Method: registerProject()
+     * <p>
+     * Scenario 2: Project is not registered successfully with isolation.
+     * Expected result: false.
+     */
+
+    @Test
+    void ensureProjectIsNotRegisteredWithIsolation() {
+        // Arrange
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        Project projectDouble = mock(Project.class);
+        ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
+        ProjectTypologyContainer projectTypologyContainerDouble = mock(ProjectTypologyContainer.class);
+        CustomerContainer costumerContainerDouble = mock(CustomerContainer.class);
+        BusinessSectorContainer businessSectorContainerDouble = mock(BusinessSectorContainer.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+        IFactoryProject factoryProjectDouble = mock(FactoryProject.class);
+        IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprintDouble = mock(FactorySprint.class);
+        ProjectCreationMapper projectCreationMapperDouble = mock(ProjectCreationMapper.class);
+        when(projectCreationMapperDouble.getProjectFromDto(projectCreationDtoDouble, projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
+                factorySprintDouble)).thenReturn(projectDouble);
+        projectContainerTest.registerProject(projectCreationDtoDouble, projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
+                factorySprintDouble);
+        // Act
+        boolean result = projectContainerTest.registerProject(projectCreationDtoDouble, projectTypologyContainerDouble,
+                costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble,
+                factorySprintDouble);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method: getProjects()
+     * <p>
+     * Scenario 1: Lists of projects with isolation are equal.
+     * Expected result: true.
+     */
+
+    @Test
+    void ensureAllProjectsAreListedSuccessfullyTwo() {
+        // Arrange
+        Project projectDouble = mock(Project.class);
+        ProjectContainer projectContainerDouble = new ProjectContainer();
+        ProjectContainer projectContainerDoubleTwo = new ProjectContainer();
+        projectContainerDouble.addProjectToProjectContainer(projectDouble);
+        projectContainerDoubleTwo.addProjectToProjectContainer(projectDouble);
+
+        // Act
+        List<Project> expectedList = projectContainerDoubleTwo.getProjects();
+        List<Project> resultList = projectContainerDouble.getProjects();
+        boolean isEquals = expectedList.equals(resultList);
+
+        // Assert
+        assertTrue(isEquals);
+    }
+
+    /**
+     * Method: getProjects()
+     * <p>
+     * Scenario 2: Lists of projects with isolation are different.
+     * Expected result: false.
+     */
+
+    @Test
+    void ensureAllProjectsAreListedSuccessfullyTwso() {
+        // Arrange
+        Project projectDouble = mock(Project.class);
+        ProjectContainer projectContainerDouble = new ProjectContainer();
+        ProjectContainer projectContainerDoubleTwo = new ProjectContainer();
+        projectContainerDouble.addProjectToProjectContainer(projectDouble);
+
+        // Act
+        List<Project> expectedList = projectContainerDoubleTwo.getProjects();
+        List<Project> resultList = projectContainerDouble.getProjects();
+        boolean isEquals = expectedList.equals(resultList);
+
+        // Assert
+        assertFalse(isEquals);
+    }
 }
