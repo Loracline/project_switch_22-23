@@ -1124,7 +1124,7 @@ public class ProjectContainerTest {
      */
 
     @Test
-    void ensureAllProjectsAreListedSuccessfullyTwo() {
+    void ensureAllProjectsAreListedSuccessfully_listsAreEqual() {
         // Arrange
         Project projectDouble = mock(Project.class);
         ProjectContainer projectContainerDouble = new ProjectContainer();
@@ -1149,7 +1149,7 @@ public class ProjectContainerTest {
      */
 
     @Test
-    void ensureAllProjectsAreListedSuccessfullyTwso() {
+    void ensureAllProjectsAreListedSuccessfully_listsAreNotEqual() {
         // Arrange
         Project projectDouble = mock(Project.class);
         ProjectContainer projectContainerDouble = new ProjectContainer();
