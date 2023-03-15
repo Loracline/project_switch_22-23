@@ -342,7 +342,6 @@ public class ProjectContainerTest {
      * can't correctly estimate the effort for a user story, because project isn't registered in the system
      * Expected result: false, indicating that the estimation was unsuccessful.
      */
-
     @Test
     void ensureRegisterProjectUnsuccessfullyProjectCodeAlreadyExists() {
         // Arrange
@@ -395,12 +394,12 @@ public class ProjectContainerTest {
         IFactoryPeriod factoryPeriodDouble = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprintDouble = mock(FactorySprint.class);
-        when(factoryProjectDouble.createProject(any(), any(), any(), any(), any(), any(),any(),any(),any())).thenReturn(null);
+        when(factoryProjectDouble.createProject(any(), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(null);
         when(projectDouble.estimateEffortUserStory(any(), any(), any())).thenReturn(true);
         when(projectDouble.hasProjectCode(any())).thenReturn(false);
         projectContainerTest.registerProject(projectCreationDtoDouble, projectTypologyContainerDouble,
                 costumerContainerDouble, businessSectorContainerDouble, factoryProductBacklogDouble,
-                factoryUserStoryDouble, factoryProjectDouble,factoryPeriodDouble, factorySprintBacklogDouble,factorySprintDouble);
+                factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
 
 
         // Act
@@ -471,4 +470,123 @@ public class ProjectContainerTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void ensureThatUserStoryIsAddedToSprintBacklog() {
+        //ARRANGE
+        ProjectContainer projectContainerTest = new ProjectContainer();
+        Project projectDouble = mock(Project.class);
+        projectContainerTest.addProjectToProjectContainer(projectDouble);
+
+        when(projectDouble.hasProjectCode("P1")).thenReturn(true);
+
+        when(projectDouble.addUserStoryToSprintBacklog("US001", "SP10")).thenReturn(true);
+
+        //ACT
+        boolean result = projectContainerTest.addUserStoryToSprintBacklog("P1", "US001",
+                "SP10");
+
+        //ASSERT
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseProjectDoesNotExist() {
+        //ARRANGE
+        ProjectContainer projectContainerTest = new ProjectContainer();
+
+        //ACT
+        boolean result = projectContainerTest.addUserStoryToSprintBacklog("P1", "US001",
+                "SP10");
+
+        //ASSERT
+        assertFalse(result);
+    }
+
+
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryOrSprintDoesNotExist() {
+        //ARRANGE
+        ProjectContainer projectContainerTest = new ProjectContainer();
+
+        Project projectDouble = mock(Project.class);
+
+        projectContainerTest.addProjectToProjectContainer(projectDouble);
+
+        when(projectDouble.hasProjectCode("P1")).thenReturn(true);
+
+        when(projectDouble.addUserStoryToSprintBacklog("US001", "SP10")).thenReturn(false);
+
+        //ACT
+        boolean result = projectContainerTest.addUserStoryToSprintBacklog("P1", "US001",
+                "SP10");
+
+        //ASSERT
+        assertFalse(result);
+    }
+
+    @Test
+    void ensureThatProjectIsSuccessfullyAddedToProjectContainer() {
+    }
+
+    /**
+     * METHOD addProjectToProjectContainer(project)
+     * adds a Project to Project Container
+     * <p>
+     * Scenario 1: verify if a Project is added to the list os Projects if it is not
+     * already there. Should return TRUE.
+     */
+    @Test
+    void ensureThatSprintIsSuccessfullyAddedToSprintsList() {
+        //Arrange
+        Project projectDouble = mock(Project.class);
+        ProjectContainer projectContainer = new ProjectContainer();
+
+        Project projectDoubleTest = mock(Project.class);
+
+        projectContainer.addProjectToProjectContainer(projectDoubleTest);
+
+        //Act
+        boolean result = projectContainer.addProjectToProjectContainer(projectDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a Project is added to the list os Projects because project
+     * list is empty.
+     * Should return TRUE.
+     */
+    @Test
+    void ensureProjectIsSuccessfullyAddedToProjectContainerBecauseProjectListIsEmpty() {
+        //Arrange
+        Project projectDouble = mock(Project.class);
+        ProjectContainer projectContainer = new ProjectContainer();
+
+        //Act
+        boolean result = projectContainer.addProjectToProjectContainer(projectDouble);
+
+        //Assert
+        assertTrue(result);
+
+    }
+
+    /**
+     * Scenario 3: verify if a Project is not added to the list os Projects because
+     * project is already there. Should return FALSE.
+     */
+    @Test
+    void ensureSprintIsNotAddedToSprintsListBecauseItAlreadyExists() {
+        //Arrange
+        Project projectDouble = mock(Project.class);
+        ProjectContainer projectContainer = new ProjectContainer();
+
+        projectContainer.addProjectToProjectContainer(projectDouble);
+
+        //Act
+        boolean result = projectContainer.addProjectToProjectContainer(projectDouble);
+
+        //Assert
+        assertFalse(result);
+    }
 }

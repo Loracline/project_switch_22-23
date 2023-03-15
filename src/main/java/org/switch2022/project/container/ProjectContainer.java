@@ -31,7 +31,7 @@ public class ProjectContainer {
      *
      * @return the project with given code.
      */
-    private Project getProjectByCode(String code) {
+    private Optional<Project> getProjectByCode(String code) {
         Project projectRequested = null;
         int i = 0;
         while (i < this.projects.size() && (projectRequested != (projects.get(i)))) {
@@ -40,7 +40,7 @@ public class ProjectContainer {
             }
             i++;
         }
-        return projectRequested;
+        return Optional.ofNullable(projectRequested);
     }
 
     /**
@@ -73,6 +73,15 @@ public class ProjectContainer {
                 customerContainer, businessSectorContainer, factoryProductBacklog,
                 factoryUserStory, factoryProject, iFactoryPeriod,
                 iFactorySprintBacklog, iFactorySprint);
+        return addProjectToProjectContainer(project);
+    }
+
+    /**This method adds a Project to Project Container if the Project does not exist.
+     *
+     * @param project to be added.
+     * @return TRUE if the Project was added to Project Container and FALSE otherwise.
+     */
+    protected boolean addProjectToProjectContainer(Project project){
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);
@@ -119,8 +128,13 @@ public class ProjectContainer {
      */
     public boolean createUserStory(ProjectDto projectDto,
                                    UserStoryCreationDto userStoryCreationDto) {
-        Project project = getProjectByCode(projectDto.code);
-        return project != null && project.createUserStory(userStoryCreationDto);
+        boolean isUserStoryCreated = false;
+        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            isUserStoryCreated = project.createUserStory(userStoryCreationDto);
+        }
+        return isUserStoryCreated;
     }
 
     /**
@@ -132,15 +146,39 @@ public class ProjectContainer {
      * @return true if the effort is set and false otherwise.
      */
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode) {
-        Project project = getProjectByCode(projectCode);
-        return project != null && project.estimateEffortUserStory(userStoryDto, effort, projectCode);
+        boolean isEffortSet = false;
+        Optional<Project> projectOptional = getProjectByCode(projectCode);
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            isEffortSet = project.estimateEffortUserStory(userStoryDto, effort, projectCode);
+        }
+        return isEffortSet;
     }
 
     /**
      * This method should return the Product Backlog of a given Project.
      */
     public ProductBacklog getProductBacklog(ProjectDto projectDto) {
-        Project project = getProjectByCode(projectDto.code);
+        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
+        Project project = projectOptional.get();
         return project.getProductBacklog();
+    }
+
+    /**This method adds a User Story to Sprint Backlog if the Project exists.
+     *
+     * @param projectCode of the project one searches for.
+     * @param userStoryNumber of the user story to be added.
+     * @param sprintNumber of the Sprint that contains the sprint backlog.
+     * @return TRUE if the User Story was added to Sprint Backlog and FALSE otherwise.
+     */
+    public boolean addUserStoryToSprintBacklog(String projectCode, String userStoryNumber,
+                                               String sprintNumber){
+        boolean result = false;
+        Optional<Project> projectOptional = getProjectByCode(projectCode);
+        if(projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            result = project.addUserStoryToSprintBacklog(userStoryNumber, sprintNumber);
+        }
+        return result;
     }
 }
