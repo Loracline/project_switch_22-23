@@ -1,9 +1,6 @@
 package org.switch2022.project.container;
 
-import org.switch2022.project.dto.ProjectCreationDto;
-import org.switch2022.project.dto.ProjectDto;
-import org.switch2022.project.dto.UserStoryCreationDto;
-import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.dto.*;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.ProductBacklog;
@@ -168,6 +165,20 @@ public class ProjectContainer {
         return project.getProductBacklog();
     }
 
+    /**
+     * This method creates a Sprint in the requested project.
+     * returns true if the Sprint is successfully created.
+     */
+    public boolean createSprint(SprintCreationDto sprintCreationDto, ProjectDto projectDto) {
+        boolean isSprintCreated = false;
+        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            isSprintCreated = project.createSprint(sprintCreationDto);
+        }
+        return isSprintCreated;
+    }
+
     /**This method adds a User Story to Sprint Backlog if the Project exists.
      *
      * @param projectCode of the project one searches for.
@@ -176,10 +187,10 @@ public class ProjectContainer {
      * @return TRUE if the User Story was added to Sprint Backlog and FALSE otherwise.
      */
     public boolean addUserStoryToSprintBacklog(String projectCode, String userStoryNumber,
-                                               String sprintNumber){
+                                               String sprintNumber) {
         boolean result = false;
         Optional<Project> projectOptional = getProjectByCode(projectCode);
-        if(projectOptional.isPresent()) {
+        if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             result = project.addUserStoryToSprintBacklog(userStoryNumber, sprintNumber);
         }
