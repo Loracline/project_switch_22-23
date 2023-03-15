@@ -1,9 +1,6 @@
 package org.switch2022.project.container;
 
-import org.switch2022.project.dto.ProjectCreationDto;
-import org.switch2022.project.dto.ProjectDto;
-import org.switch2022.project.dto.UserStoryCreationDto;
-import org.switch2022.project.dto.UserStoryDto;
+import org.switch2022.project.dto.*;
 import org.switch2022.project.dto.mapper.ProjectCreationMapper;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.ProductBacklog;
@@ -76,6 +73,15 @@ public class ProjectContainer {
                 customerContainer, businessSectorContainer, factoryProductBacklog,
                 factoryUserStory, factoryProject, iFactoryPeriod,
                 iFactorySprintBacklog, iFactorySprint);
+        return addProjectToProjectContainer(project);
+    }
+
+    /**This method adds a Project to Project Container if the Project does not exist.
+     *
+     * @param project to be added.
+     * @return TRUE if the Project was added to Project Container and FALSE otherwise.
+     */
+    protected boolean addProjectToProjectContainer(Project project){
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);
@@ -140,8 +146,7 @@ public class ProjectContainer {
      * @return true if the effort is set and false otherwise.
      */
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
-                                           String projectCode,
-                                           LocalDate date) {
+                                           String projectCode, LocalDate date) {
         boolean isEffortSet = false;
         Optional<Project> projectOptional = getProjectByCode(projectCode);
         if (projectOptional.isPresent()) {
@@ -158,5 +163,38 @@ public class ProjectContainer {
         Optional<Project> projectOptional = getProjectByCode(projectDto.code);
         Project project = projectOptional.get();
         return project.getProductBacklog();
+    }
+
+    /**
+     * This method creates a Sprint in the requested project.
+     * returns true if the Sprint is successfully created.
+     */
+    public boolean createSprint(SprintCreationDto sprintCreationDto, ProjectDto projectDto) {
+        boolean isSprintCreated = false;
+        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            isSprintCreated = project.createSprint(sprintCreationDto);
+        }
+        return isSprintCreated;
+    }
+
+    /**
+     * This method adds a User Story to Sprint Backlog if the Project exists.
+     *
+     * @param projectCode of the project one searches for.
+     * @param userStoryNumber of the user story to be added.
+     * @param sprintNumber of the Sprint that contains the sprint backlog.
+     * @return TRUE if the User Story was added to Sprint Backlog and FALSE otherwise.
+     */
+    public boolean addUserStoryToSprintBacklog(String projectCode, String userStoryNumber,
+                                               String sprintNumber) {
+        boolean result = false;
+        Optional<Project> projectOptional = getProjectByCode(projectCode);
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            result = project.addUserStoryToSprintBacklog(userStoryNumber, sprintNumber);
+        }
+        return result;
     }
 }

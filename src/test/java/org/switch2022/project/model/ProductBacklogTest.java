@@ -14,16 +14,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 public class ProductBacklogTest {
-    /*
-      METHOD equals()
-     */
-
     /**
+     * METHOD equals()
+     * <br>
      * Scenario 1: Verify if the same object equals itself.
      */
-
     @Test
     void ensureSameProductBacklogEqualsItself() {
         // Arrange
@@ -102,11 +98,9 @@ public class ProductBacklogTest {
         assertEquals(expected, result);
     }
 
-    /*
-      METHOD hashCode()
-     */
-
     /**
+     * METHOD hashCode()
+     * <br>
      * Scenario 1: Two ProductBacklog objects are the same.
      */
     @Test
@@ -127,7 +121,6 @@ public class ProductBacklogTest {
     /**
      * Scenario 2: Two different ProductBacklog objects are not the same.
      */
-
     @Test
     public void ensureTwoProductBacklogsHashcodeAreNotTheSame() {
         // Arrange
@@ -204,7 +197,6 @@ public class ProductBacklogTest {
      * Scenario 1: verify if a User Story is added to Product Backlog if it is not
      * already there. Should return True.
      */
-
     @Test
     void ensureThatUserStoryIsSuccessfullyCreated() {
         //Arrange
@@ -226,7 +218,6 @@ public class ProductBacklogTest {
      * is bigger than the size of the list already there.
      * Should return False.
      */
-
     @Test
     void ensureThatUserStoryIsUnsuccessfullyCreated() {
         //Arrange
@@ -269,7 +260,6 @@ public class ProductBacklogTest {
      * Scenario 1: verify if a User Story is added to Product Backlog if it is not
      * already there. Should return True.
      */
-
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToProductBacklog() {
         //Arrange
@@ -288,7 +278,6 @@ public class ProductBacklogTest {
      * Scenario 2: verify if a User Story is not added to Product Backlog if it is
      * already there. Should return false.
      */
-
     @Test
     void ensureThatUserStoryIsNotAddedToProductBacklog() {
         //Arrange
@@ -379,8 +368,6 @@ public class ProductBacklogTest {
         ProductBacklog productBacklogDouble = new ProductBacklog(factoryUserStoryDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
-        userStoryDouble.setStatus(any());
-        userStoryDouble.setEffort(any());
         when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
                 thenReturn(userStoryDouble);
         productBacklogDouble.addUserStory(userStoryDouble, 0);
@@ -409,8 +396,6 @@ public class ProductBacklogTest {
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
-        userStoryDouble.setStatus(any());
-        userStoryDouble.setEffort(any());
         when(factoryUserStoryDouble.createUserStory(any(), any(), any())).thenReturn(userStoryDouble);
         productBacklog.addUserStory(userStoryDouble, 0);
 

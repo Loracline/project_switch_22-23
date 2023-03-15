@@ -350,7 +350,6 @@ class SprintBacklogTest {
     /**
      * Scenario 3: the effort of a UserStory is not set.
      */
-
     @Test
     void ensureEffortIsNotSetForUserStoryWithIsolationWithRunTimeException() {
         //Arrange
@@ -417,7 +416,6 @@ class SprintBacklogTest {
         FactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
         when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
                 thenReturn(userStoryDouble);
-        userStoryDouble.setStatus(any());
 
         // Act
         List<UserStory> resultList =

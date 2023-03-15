@@ -103,7 +103,6 @@ public class SprintBacklog {
                             this.userStories.get(i).getUserStoryNumber(),
                             this.userStories.get(i).getActor(),
                             this.userStories.get(i).getUserStoryText());
-            copyUserStory.setStatus(this.userStories.get(i).getStatus());
             copyList.add(copyUserStory);
             i++;
         }

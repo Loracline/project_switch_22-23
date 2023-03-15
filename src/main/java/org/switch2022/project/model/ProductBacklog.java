@@ -152,10 +152,9 @@ public class ProductBacklog {
                     userStory.getUserStoryNumber(),
                     userStory.getActor(),
                     userStory.getUserStoryText());
-            userStoryCopy.setStatus(userStory.getStatus());
-            userStoryCopy.setEffort(userStory.getEffort());
             listOfCopies.add(userStoryCopy);
         }
+
         return listOfCopies;
     }
 
