@@ -202,12 +202,11 @@ public class ProductBacklogTest {
         //Arrange
         IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001", "Manager",
-                "I want to create a " +
-                        "profile", 0);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock (UserStoryCreationDto.class);
+        when(userStoryCreationDtoDouble.getPriority()).thenReturn(0);
 
         //Act
-        boolean result = productBacklog.createUserStory(userStoryCreationDto);
+        boolean result = productBacklog.createUserStory(userStoryCreationDtoDouble);
 
         //Assert
         assertTrue(result);
@@ -223,11 +222,10 @@ public class ProductBacklogTest {
         //Arrange
         IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001",
-                "Manager", "I want to create a profile", 2);
-
+        UserStoryCreationDto userStoryCreationDtoDouble = mock (UserStoryCreationDto.class);
+        when(userStoryCreationDtoDouble.getPriority()).thenReturn(2);
         //Act
-        boolean result = productBacklog.createUserStory(userStoryCreationDto);
+        boolean result = productBacklog.createUserStory(userStoryCreationDtoDouble);
 
         //Assert
         assertFalse(result);
@@ -242,12 +240,12 @@ public class ProductBacklogTest {
         //Arrange
         IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("US001",
-                "Manager", "I want to create a profile", 0);
-        productBacklog.createUserStory(userStoryCreationDto);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock (UserStoryCreationDto.class);
+        when(userStoryCreationDtoDouble.getPriority()).thenReturn(0);
+        productBacklog.createUserStory(userStoryCreationDtoDouble);
 
         //Act
-        boolean result = productBacklog.createUserStory(userStoryCreationDto);
+        boolean result = productBacklog.createUserStory(userStoryCreationDtoDouble);
 
         //Assert
         assertFalse(result);

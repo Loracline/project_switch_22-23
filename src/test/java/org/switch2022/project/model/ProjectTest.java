@@ -547,7 +547,7 @@ public class ProjectTest {
                 factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
         UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a " +
                 "profile",
-        "Planned");
+                "Planned");
         Effort effort = Effort.TWO;
         project.addSprint(sprintDouble);
         when(sprintDouble.isDateWithinPeriod(any())).thenReturn(true);
@@ -649,24 +649,23 @@ public class ProjectTest {
         IFactoryProductBacklog factoryProductBacklogDouble =
                 mock(FactoryProductBacklog.class);
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
-                "create Project", "manager", 0);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
-
+        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
                 factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
                 factorySprintBacklog, factorySprint);
 
-        when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(true);
+        when(productBacklogDouble.createUserStory(userStoryCreationDtoDouble)).thenReturn(true);
 
         //Act
-        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+        boolean result = projectToTest.createUserStory(userStoryCreationDtoDouble);
 
         //Assert
         assertTrue(result);
@@ -686,13 +685,12 @@ public class ProjectTest {
         IFactoryProductBacklog factoryProductBacklogDouble =
                 mock(FactoryProductBacklog.class);
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
-                "create Project", "manager", 0);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock (UserStoryCreationDto.class);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprint = mock(FactorySprint.class);
-
+        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
@@ -700,10 +698,10 @@ public class ProjectTest {
                 factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
                 factorySprintBacklog, factorySprint);
 
-        when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(false);
+        when(productBacklogDouble.createUserStory(userStoryCreationDtoDouble)).thenReturn(false);
 
         //Act
-        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+        boolean result = projectToTest.createUserStory(userStoryCreationDtoDouble);
 
         //Assert
         assertFalse(result);
@@ -722,14 +720,13 @@ public class ProjectTest {
         IFactoryProductBacklog factoryProductBacklogDouble =
                 mock(FactoryProductBacklog.class);
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("us001",
-                "create Project", "manager", 0);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         Sprint sprintDouble = mock(Sprint.class);
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprint = mock(FactorySprint.class);
-
+        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
@@ -738,10 +735,10 @@ public class ProjectTest {
                 factorySprintBacklog, factorySprint);
         projectToTest.addSprint(sprintDouble);
 
-        when(productBacklogDouble.createUserStory(userStoryCreationDto)).thenReturn(true);
+        when(productBacklogDouble.createUserStory(userStoryCreationDtoDouble)).thenReturn(true);
 
         //Act
-        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+        boolean result = projectToTest.createUserStory(userStoryCreationDtoDouble);
 
         //Assert
         assertTrue(result);
@@ -795,7 +792,7 @@ public class ProjectTest {
         IFactoryProductBacklog factoryProductBacklogDouble =
                 mock(FactoryProductBacklog.class);
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        UserStoryCreationDto userStoryCreationDto = mock(UserStoryCreationDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         Sprint sprintDouble = mock(Sprint.class);
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
@@ -803,16 +800,16 @@ public class ProjectTest {
         IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
-
+        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
                 factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
                 factorySprintBacklog, factorySprint);
         projectToTest.addSprint(sprintDouble);
-        when(sprintDouble.hasUserStory("01")).thenReturn(true);
+        when(sprintDouble.hasUserStory(any())).thenReturn(true);
 
         //Act
-        boolean result = projectToTest.createUserStory(userStoryCreationDto);
+        boolean result = projectToTest.createUserStory(userStoryCreationDtoDouble);
 
         //Assert
         assertFalse(result);
@@ -1136,6 +1133,7 @@ public class ProjectTest {
         //Assert
         assertFalse(result);
     }
+
     /**
      * METHOD createSprint(sprint)
      * Scenario 1: verify if a Sprint is created and added to the list os Sprints because Sprint List is empty.
@@ -1143,7 +1141,7 @@ public class ProjectTest {
      */
     @Test
     void ensureSprintIsCreatedAndAddedToTheList_EmptyList() {
-    //Arrange
+        //Arrange
         LocalDate startDate = mock(LocalDate.class);
         Customer customerDouble = mock(Customer.class);
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
@@ -1159,7 +1157,7 @@ public class ProjectTest {
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
         //ACT
         boolean result = project.createSprint(sprintCreationDto);
         //Assert
@@ -1167,7 +1165,6 @@ public class ProjectTest {
     }
 
     /**
-     *
      * Scenario 2: Verify if a Sprint is created but not added to the list of Sprints because Period not valid.
      * it should return false.
      */
@@ -1187,20 +1184,21 @@ public class ProjectTest {
         IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
         Sprint sprintDouble = mock(Sprint.class);
         Sprint sprintDoubleTwo = mock(Sprint.class);
-        when (iFactorySprintDouble.createSprint(startDate,3,"S001",iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 3, "S001", iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
         Project project = new Project("Proj01", "Project Switch", customerDouble,
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
         project.addSprint(sprintDoubleTwo);
-        when (sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(false);
+        when(sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(false);
         //ACT
         boolean result = project.createSprint(sprintCreationDto);
         //Assert
         assertFalse(result);
     }
+
     /**
      * Scenario 3: Verify if a Sprint is created and added to the list of Sprints.
      * it should return true.
@@ -1221,20 +1219,21 @@ public class ProjectTest {
         IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
         Sprint sprintDouble = mock(Sprint.class);
         Sprint sprintDoubleTwo = mock(Sprint.class);
-        when (iFactorySprintDouble.createSprint(startDate,3,"S001",iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 3, "S001", iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
         Project project = new Project("Proj01", "Project Switch", customerDouble,
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
         project.addSprint(sprintDoubleTwo);
-        when (sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(true);
+        when(sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(true);
         //ACT
         boolean result = project.createSprint(sprintCreationDto);
         //Assert
         assertTrue(result);
     }
+
     /**
      * Scenario 4: Verify if a Sprint is created and not added to the list of Sprints because Period is not valid and
      * Sprint is already in the Sprint List.
@@ -1255,15 +1254,15 @@ public class ProjectTest {
                 mock(FactorySprintBacklog.class);
         IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
         Sprint sprintDouble = mock(Sprint.class);
-        when (iFactorySprintDouble.createSprint(startDate,3,"S001",iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 3, "S001", iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
         Project project = new Project("Proj01", "Project Switch", customerDouble,
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
         project.addSprint(sprintDouble);
-        when (sprintDouble.isPeriodNotOverlapping(any())).thenReturn(false);
+        when(sprintDouble.isPeriodNotOverlapping(any())).thenReturn(false);
         //ACT
         boolean result = project.createSprint(sprintCreationDto);
         //Assert
@@ -1289,15 +1288,15 @@ public class ProjectTest {
                 mock(FactorySprintBacklog.class);
         IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
         Sprint sprintDoubleTwo = mock(Sprint.class);
-        when (iFactorySprintDouble.createSprint(startDate,3,"S001",iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 3, "S001", iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDoubleTwo);
         Project project = new Project("Proj01", "Project Switch", customerDouble,
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
         project.addSprint(sprintDoubleTwo);
-        when (sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(true);
+        when(sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(true);
         //ACT
         boolean result = project.createSprint(sprintCreationDto);
         //Assert
