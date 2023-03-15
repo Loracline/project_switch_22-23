@@ -300,7 +300,7 @@ public class Company {
      *
      * @param userStoryDto to estimate the effort.
      * @param effort       of the userStory.
-     * @param projectCode code of the project.
+     * @param projectCode  code of the project.
      * @return true if the effort is set and false otherwise.
      */
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, String projectCode, LocalDate date) {
@@ -312,6 +312,19 @@ public class Company {
      */
     public ProductBacklog getProductBacklog(ProjectDto projectDto) {
         return projectContainer.getProductBacklog(projectDto);
+    }
+
+    /**
+     *This method adds a User Story to Sprint Backlog.
+     * @param projectCode of the project one searches for.
+     * @param userStoryNumber of the user story to be added.
+     * @param sprintNumber of the Sprint that contains the sprint backlog.
+     * @return TRUE if the User Story was added to Sprint Backlog and FALSE otherwise.
+     */
+    public boolean addUserStoryToSprintBacklog(String projectCode, String userStoryNumber,
+                                               String sprintNumber) {
+        return this.projectContainer.addUserStoryToSprintBacklog(projectCode,
+                userStoryNumber, sprintNumber);
     }
 }
 

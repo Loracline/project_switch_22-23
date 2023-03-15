@@ -179,7 +179,8 @@ public class ProjectContainer {
         return isSprintCreated;
     }
 
-    /**This method adds a User Story to Sprint Backlog if the Project exists.
+    /**
+     * This method adds a User Story to Sprint Backlog if the Project exists.
      *
      * @param projectCode of the project one searches for.
      * @param userStoryNumber of the user story to be added.
