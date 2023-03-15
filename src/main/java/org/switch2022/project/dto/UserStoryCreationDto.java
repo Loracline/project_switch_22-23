@@ -18,4 +18,12 @@ public class UserStoryCreationDto {
         this.actor = actor;
         this.priority = priority;
     }
+
+    public int getPriority(){
+        return this.priority;
+    }
+
+    public String getUserStoryNumber(){
+        return this.userStoryNumber;
+    }
 }

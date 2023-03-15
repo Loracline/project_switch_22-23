@@ -61,4 +61,10 @@ public class ProjectDto {
     public int hashCode() {
         return Objects.hash(code, name, customer, status, projectTypology, businessSector);
     }
+
+    public String getProjectCode() {
+        return this.code;
+    }
 }
+
+
