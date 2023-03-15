@@ -2,13 +2,11 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.utils.Effort;
-import org.switch2022.project.utils.Status;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
 
 class UserStoryTest {
     /**
@@ -142,7 +140,7 @@ class UserStoryTest {
     }
 
     /**
-     * Scenario 2l: Verify if userStory is not the same by checking its userStoryNumber.
+     * Scenario 2: Verify if userStory is not the same by checking its userStoryNumber.
      * Expected result:false
      */
     @Test
@@ -177,7 +175,8 @@ class UserStoryTest {
     }
 
     /**
-     * Scenario 2: Verify if the effort of a userStoryOne is the same as other userStoryTwo
+     * Scenario 2: Verify if the effort of a userStoryOne is the same as other
+     * userStoryTwo
      * by setting the efforts respectively.
      * Expected result: effort of userStoryOne is equal to the effort of userStoryTwo.
      */
@@ -214,8 +213,6 @@ class UserStoryTest {
         // Assert
         assertFalse(isEquals);
     }
-
-
 
     /**
      * METHOD getUserStoryNumber()
@@ -276,22 +273,42 @@ class UserStoryTest {
     }
 
     /**
-     * METHOD setStatus() and getStatus()
+     * METHOD getAcceptanceCriteria()
+     * <br>
+     * Scenario 1: Verify that the acceptance criteria list is empty.
+     */
+    @Test
+    void ensureIsRetrievedAnEmptyListOfAcceptanceCriteria() {
+        // Arrange
+        UserStory userStoryOne =
+                new UserStory.UserStoryBuilder("US001")
+                        .setAcceptanceCriteria().build();
+
+        List<String> expected = new ArrayList<>();
+
+        // Act
+        List<String> result = userStoryOne.getAcceptanceCriteria();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD getStatus()
      * <br>
      * Scenario 1: Verify that the status returned is the same of the User Story.
      */
     @Test
-    void ensureStatusIsSetAndRetrievedSuccessfully() {
+    void ensureStatusIsRetrievedSuccessfully() {
         // Arrange
-        Status status = Status.PLANNED;
         UserStory userStoryOne = new
-                UserStory.UserStoryBuilder("US001").build();
+                UserStory.UserStoryBuilder("US001").setStatus().build();
+        String expected = "planned";
 
         // Act
-        userStoryOne.setStatus(status.toString());
-        String expected = userStoryOne.getStatus();
+        String result = userStoryOne.getStatus();
 
         // Assert
-        assertEquals(expected, userStoryOne.getStatus());
+        assertEquals(expected, result);
     }
 }
