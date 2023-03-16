@@ -11,14 +11,9 @@ public class FactoryUserStory implements IFactoryUserStory {
                 .build();
     }
 
-    public UserStory createUserStory(String userStoryNumber, String actor,
-                                     String userStoryText) {
+    public UserStory createUserStory(String userStoryNumber, String userStoryText) {
         return new UserStory.UserStoryBuilder(userStoryNumber)
-                .setActor(actor)
                 .setUserStoryText(userStoryText)
-                .setStatus()
-                .setAcceptanceCriteria()
-                .setEffort()
                 .build();
     }
 }

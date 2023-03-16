@@ -96,15 +96,13 @@ public class SprintBacklog {
      */
     public List<UserStory> getUserStoriesCopy(IFactoryUserStory iFactoryUserStory) {
         List<UserStory> copyList = new ArrayList<>();
-        int i = 0;
-        while (i < this.userStories.size()) {
+        for (UserStory userStory : this.userStories) {
             UserStory copyUserStory =
                     iFactoryUserStory.createUserStory(
-                            this.userStories.get(i).getUserStoryNumber(),
-                            this.userStories.get(i).getActor(),
-                            this.userStories.get(i).getUserStoryText());
+                            userStory.getUserStoryNumber(),
+                            userStory.getUserStoryText());
+            copyUserStory.setStatus(userStory.getStatus());
             copyList.add(copyUserStory);
-            i++;
         }
         return copyList;
     }

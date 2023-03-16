@@ -12,7 +12,6 @@ import java.util.Optional;
  * Class ProductBacklog is built to access and manipulate the set of User Stories
  * of a given Project.
  */
-
 public class ProductBacklog {
     /**
      * Attributes
@@ -34,7 +33,6 @@ public class ProductBacklog {
      * @param o ProductBacklog instance to compare with.
      * @return TRUE if the two have the same attributes, and FALSE otherwise.
      */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -53,7 +51,6 @@ public class ProductBacklog {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(userStories);
@@ -66,7 +63,6 @@ public class ProductBacklog {
      * @param userStoryCreationDto and factoryUserStory
      * @return true if the userStory is created and added to the ProductBacklog.
      */
-
     public boolean createUserStory(UserStoryCreationDto userStoryCreationDto) {
         boolean isUserStoryCreated = false;
         int priority = userStoryCreationDto.getPriority();
@@ -76,7 +72,6 @@ public class ProductBacklog {
         }
         return isUserStoryCreated;
     }
-
 
     /**
      * This method adds a new User Story to the userStories list if the User Story
@@ -99,13 +94,12 @@ public class ProductBacklog {
     }
 
     /**
-     * This method returns a User Story from the Product Backlog with a given User Story number.
+     * This method returns a User Story from the Product Backlog with a given User
+     * Story number.
      *
      * @param userStoryNumber of the User Story one searches for.
      * @return an Optional with a User Story.
      */
-
-
     public Optional<UserStory> getUserStoryByNumber(String userStoryNumber) {
         int i = 0;
         UserStory userStory = null;
@@ -119,10 +113,12 @@ public class ProductBacklog {
     }
 
     /**
-     * This method removes a User Story from the userStories list if the User Story exists.
+     * This method removes a User Story from the userStories list if the User Story
+     * exists.
      *
      * @param userStory to be deleted
-     * @return TRUE if the User Story is removed from UserStories list and FALSE otherwise.
+     * @return TRUE if the User Story is removed from UserStories list and FALSE
+     * otherwise.
      */
     public boolean removeUserStory(UserStory userStory) {
         int i = 0;
@@ -143,15 +139,14 @@ public class ProductBacklog {
      *
      * @return a list of the copied User Stories.
      */
-
     public List<UserStory> getUserStoriesCopy() {
         List<UserStory> listOfCopies = new ArrayList<>();
 
         for (UserStory userStory : this.userStories) {
             UserStory userStoryCopy = this.iFactoryUserStory.createUserStory(
                     userStory.getUserStoryNumber(),
-                    userStory.getActor(),
                     userStory.getUserStoryText());
+            userStoryCopy.setStatus(userStory.getStatus());
             listOfCopies.add(userStoryCopy);
         }
 
@@ -159,7 +154,8 @@ public class ProductBacklog {
     }
 
     /**
-     * This method makes a copy the list of user stories contained in the product backlog and
+     * This method makes a copy the list of user stories contained in the product
+     * backlog and
      * stores them in another instance of product backlog.
      *
      * @return a product backlog with list of copies of user stories.
