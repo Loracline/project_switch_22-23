@@ -34,7 +34,7 @@ TeamMember -> ui: selects data and estimate effort (userStoryDto, effort, projec
 ui -> controller: estimateEffortUserStory(userStoryDto, effort, projectDto)
 activate controller
 
-controller -> company: estimateEffortUserStory (UseruserStoryDto, effort, projectCode, date)
+controller -> company: estimateEffortUserStory (UseruserStoryDto, effort, projectDto, date)
 activate company
 
 company -> pc: estimateEffortUserStory (userStoryDto, effort, projectCode, date)
