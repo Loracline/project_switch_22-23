@@ -13,7 +13,7 @@ class "EstimateUserStoryEffortController" {
 
 class "Company" {
 - projectContainer
-+ estimateEffortUserStory(userStoryDto, effort, projectCode, date)
++ estimateEffortUserStory(userStoryDto, effort, projectDto, date)
 }
 class "ProjectContainer" {
 - projects
