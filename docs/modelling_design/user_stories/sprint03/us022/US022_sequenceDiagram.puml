@@ -38,21 +38,21 @@ activate sprint
 "sprint"-> backlog: getUserStoriesCopy(iFactoryUserStory)
 activate backlog
 
-"backlog"-> sprint : userStories
+"backlog"--> sprint : userStories
 deactivate backlog
-"sprint" -> project : sprintBacklog
+"sprint" --> project : sprintBacklog
 deactivate sprint
-project -> projectContainer : sprintBacklog
+project --> projectContainer : sprintBacklog
 deactivate project
-projectContainer -> company : sprintBacklog
+projectContainer --> company : sprintBacklog
 deactivate projectContainer
-company-> controller : sprintBacklog
+company --> controller : sprintBacklog
 deactivate company
 controller-> dto : backlogToDto(sprintBacklog, iFactoryUserStory)
 activate dto
 "dto" ->backlog: getUserStoriesCopy(iFactoryUserStory))
 activate backlog
-"backlog" -> dto: userStories
+"backlog" --> dto: userStories
 deactivate backlog
 
 ref over dto: To create a user story DTO

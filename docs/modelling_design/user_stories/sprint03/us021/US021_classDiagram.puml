@@ -28,17 +28,17 @@ class "Project"{
 class "Sprint"{
 - sprintBacklog
 + estimateEffortUserStory(userStoryDto, effort)
-+ hasSprintNumber(Sprint sprintNumber)
 }
 class "SprintBacklog" {
 - userStories
 + estimateEffortUserStory(userStoryDto, effort)
++ hasUserStoryNumber(userStoryNumber)
++ setEffort(effort)
 }
 class "UserStory"{
 - effort
-+ setEffort(effort)
 + getEffort()
-+ hasUserStoryNumber(userStoryNumber)
++ setEffort(effort)
 }
 enum "Effort"{
 - effortValue
