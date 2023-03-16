@@ -542,19 +542,19 @@ public class ProjectTest {
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprint = mock(FactorySprint.class);
 
-        Project project = new Project("AA001", "Aptoide", customerDouble,
-                projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
-                factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
-        UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a " +
-                "profile",
-                "Planned");
+        Project project = new Project("AA001", "Aptoide", customerDouble, projectTypologyDouble,
+                businessSectorDouble, factoryProductBacklog, factoryUserStory, factoryPeriod, factorySprintBacklog,
+                factorySprint);
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
         Effort effort = Effort.TWO;
+
         project.addSprint(sprintDouble);
         when(sprintDouble.isDateWithinPeriod(any())).thenReturn(true);
         when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(true);
 
         // Act
-        boolean result = project.estimateEffortUserStory(userStoryDto, effort, LocalDate.of(2023, 3, 8));
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort,
+                LocalDate.of(2023, 3, 8));
 
         // Assert
         assertTrue(result);
@@ -581,16 +581,16 @@ public class ProjectTest {
         Project project = new Project("AA001", "Aptoide", customerDouble,
                 projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
                 factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
-        UserStoryDto userStoryDto = new UserStoryDto("US001", "I want to create a " +
-                "profile",
-                "Planned");
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
+
         Effort effort = Effort.TWO;
         project.addSprint(sprintDouble);
         when(sprintDouble.isDateWithinPeriod(any())).thenReturn(false);
         when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(false);
 
         // Act
-        boolean result = project.estimateEffortUserStory(userStoryDto, effort, LocalDate.of(2023, 3, 8));
+        boolean result = project.estimateEffortUserStory(userStoryDto, effort,
+                LocalDate.of(2023, 3, 8));
 
         // Assert
         assertFalse(result);
