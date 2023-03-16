@@ -23,8 +23,6 @@ public class UserStoryDtoListAssembler {
      *
      * @return a list of User Story DTOs.
      */
-
-
     public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog) {
         List<UserStoryDto> userStoryDtos = new ArrayList<>();
         if (productBacklog != null) {

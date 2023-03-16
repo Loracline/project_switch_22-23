@@ -6,6 +6,7 @@ import org.switch2022.project.factories.IFactoryUserStory;
 import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.SprintBacklog;
 import org.switch2022.project.model.UserStory;
+import org.switch2022.project.utils.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +35,12 @@ class UserStoryDtoListAssemblerTest {
 
         when(userStoryOne.getUserStoryNumber()).thenReturn("US001");
         when(userStoryOne.getUserStoryText()).thenReturn("I want to create a project");
-        when(userStoryOne.getStatus()).thenReturn("planned");
+        when(userStoryOne.getStatus()).thenReturn(Status.PLANNED);
 
         when(userStoryTwo.getUserStoryNumber()).thenReturn("US002");
         when(userStoryTwo.getUserStoryText()).thenReturn("I want to create a user " +
                 "story");
-        when(userStoryTwo.getStatus()).thenReturn("planned");
+        when(userStoryTwo.getStatus()).thenReturn(Status.PLANNED);
 
         //behavior of product backlog
         List<UserStory> userStories = new ArrayList<>();

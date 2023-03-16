@@ -24,9 +24,6 @@ public class SprintCreationDto {
         return this.sprintNumber;
     }
 
-    public int getSprintDuration() {
-        return this.sprintDuration;
-    }
 
     public LocalDate getStartDate() {
         return this.startDate;
