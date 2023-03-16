@@ -25,7 +25,7 @@ deactivate userStories
 builder -> mapper: userStoriesToDto(userStory)
 activate mapper
 create usDto
-mapper --> usDto: create(number, text, status)
+mapper --> usDto: create(userStoryNumber, userStoryText, status)
 mapper --> builder: userStoryDto
 deactivate mapper
 builder -> listUsDto: add(userStoryDto)

@@ -21,21 +21,20 @@ activate ui
 ref over ui: US016: list of all projects a user is currently allocated to
 
 ui --> actor: shows list of all projects
-actor -> ui: selects project
 deactivate ui
 
 actor -> ui: requests product backlog (list of all US) from selected project
 activate ui
 ui -> controller: getProductBacklog(projectDto)
 activate controller
-controller -> company: getProductBacklog(projectDto)
+controller -> company: getProductBacklog(projectCode)
 activate company
-company -> container: getProductBacklog(projectDto)
+company -> container: getProductBacklog(projectCode)
 activate container
 
 container -> project: getProductBacklog()
 activate project
-project -> backlog: getBacklogCopy()
+project -> backlog: getProductBacklogCopy()
 
 loop for each user story in userStories
 activate backlog

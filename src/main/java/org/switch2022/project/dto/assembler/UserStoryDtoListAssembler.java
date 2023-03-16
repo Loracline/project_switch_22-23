@@ -26,12 +26,12 @@ public class UserStoryDtoListAssembler {
 
 
     public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog) {
-        List<UserStoryDto> userStoryDtos = new ArrayList<>();
+        List<UserStoryDto> userStoryDto = new ArrayList<>();
         if (productBacklog != null) {
             List<UserStory> userStories = productBacklog.getUserStoriesCopy();
-            userStoryDtos.addAll(getUserStoryDtos(userStories));
+            userStoryDto.addAll(getUserStoryDtos(userStories));
         }
-        return userStoryDtos;
+        return userStoryDto;
     }
 
     /**
