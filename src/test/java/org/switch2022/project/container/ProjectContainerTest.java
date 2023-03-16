@@ -159,7 +159,7 @@ public class ProjectContainerTest {
                 any(), any(), any())).
                 thenReturn(projectDouble);
         when(projectDouble.createUserStory(userStoryCreationDtoDouble)).thenReturn(true);
-        when(projectDouble.hasProjectCode("P001")).thenReturn(true);
+        when(projectDouble.hasProjectCode(any())).thenReturn(true);
         projectContainerTest.registerProject(projectCreationDtoDouble,
                 projectTypologyContainerDouble,
                 costumerContainerDouble, businessSectorContainerDouble,
