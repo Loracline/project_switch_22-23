@@ -23,12 +23,7 @@ public class UserStoryDtoListAssembler {
      *
      * @return a list of User Story DTOs.
      */
-   /* public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog) {
 
-        List<UserStory> userStories = productBacklog.getUserStoriesCopy();
-        List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
-        return userStoryDtos;
-    }*/
 
     public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog) {
         List<UserStoryDto> userStoryDtos = new ArrayList<>();
