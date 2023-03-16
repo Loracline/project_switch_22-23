@@ -1157,9 +1157,9 @@ public class ProjectTest {
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
         //ACT
-        boolean result = project.createSprint(sprintCreationDto);
+        boolean result = project.createSprint(sprintCreationDtoDouble);
         //Assert
         assertTrue(result);
     }
@@ -1190,11 +1190,11 @@ public class ProjectTest {
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
         project.addSprint(sprintDoubleTwo);
         when(sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(false);
         //ACT
-        boolean result = project.createSprint(sprintCreationDto);
+        boolean result = project.createSprint(sprintCreationDtoDouble);
         //Assert
         assertFalse(result);
     }
@@ -1225,11 +1225,11 @@ public class ProjectTest {
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
         project.addSprint(sprintDoubleTwo);
         when(sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(true);
         //ACT
-        boolean result = project.createSprint(sprintCreationDto);
+        boolean result = project.createSprint(sprintCreationDtoDouble);
         //Assert
         assertTrue(result);
     }
@@ -1260,11 +1260,11 @@ public class ProjectTest {
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
         project.addSprint(sprintDouble);
         when(sprintDouble.isPeriodNotOverlapping(any())).thenReturn(false);
         //ACT
-        boolean result = project.createSprint(sprintCreationDto);
+        boolean result = project.createSprint(sprintCreationDtoDouble);
         //Assert
         assertFalse(result);
     }
@@ -1294,11 +1294,12 @@ public class ProjectTest {
                 projectTypologyDouble,
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
         project.addSprint(sprintDoubleTwo);
-        when(sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(true);
+        when(sprintCreationDtoDouble.getSprintNumber()).thenReturn("S001");
+        when(sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(false);
         //ACT
-        boolean result = project.createSprint(sprintCreationDto);
+        boolean result = project.createSprint(sprintCreationDtoDouble);
         //Assert
         assertFalse(result);
     }

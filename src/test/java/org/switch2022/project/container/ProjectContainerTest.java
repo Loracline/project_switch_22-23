@@ -773,8 +773,9 @@ public class ProjectContainerTest {
     void ensureSprintIsCreatedInAProject() {
         //Arrange
         SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
-        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -803,7 +804,7 @@ public class ProjectContainerTest {
                 factoryUserStoryDouble, factoryProjectDouble, factoryPeriodDouble,
                 factorySprintBacklogDouble, factorySprintDouble);
         //Act
-        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDto);
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDtoDouble);
         //Assert
         assertTrue(result);
     }
@@ -816,8 +817,8 @@ public class ProjectContainerTest {
     void ensureSprintIsNotCreatedInAProject() {
         //Arrange
         SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
-        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -849,7 +850,7 @@ public class ProjectContainerTest {
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
         when(projectDouble.createSprint(sprintCreationDtoDouble)).thenReturn(true);
         //Act
-        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDto);
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDtoDouble);
         //Assert
         assertFalse(result);
     }
@@ -862,8 +863,8 @@ public class ProjectContainerTest {
     void ensureSprintIsNotCreatedInAProject_RepeatedSprint() {
         //Arrange
         SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
-        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -895,7 +896,7 @@ public class ProjectContainerTest {
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
         when(projectDouble.createSprint(sprintCreationDtoDouble)).thenReturn(false);
         //Act
-        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDto);
+        boolean result = projectContainerTest.createSprint(sprintCreationDtoDouble, projectDtoDouble);
         //Assert
         assertFalse(result);
     }
