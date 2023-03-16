@@ -42,7 +42,7 @@ public class EstimateUserStoryEffortController {
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto,
                                            Effort effort, ProjectDto projectDto) {
         LocalDate date = LocalDate.now();
-        return userStoryDto != null && projectDto.code != null &&
-                company.estimateEffortUserStory(userStoryDto, effort, projectDto.code, date);
+        return userStoryDto != null && projectDto != null &&
+                company.estimateEffortUserStory(userStoryDto, effort, projectDto, date);
     }
 }
