@@ -208,13 +208,14 @@ public class Company {
     public boolean createProjectTypology(String projectTypology) {
         return projectTypologyContainer.createProjectTypology(projectTypology);
     }
-  /**
-   * This method creates a Sprint in the requested project
-   * returns true if the Sprint is successfully created
-   */
-  public boolean createSprint( ProjectDto projectDto, SprintCreationDto sprintCreationDto) {
-    return projectContainer.createSprint(sprintCreationDto,projectDto);
-  }
+
+    /**
+     * This method creates a Sprint in the requested project
+     * returns true if the Sprint is successfully created
+     */
+    public boolean createSprint(ProjectDto projectDto, SprintCreationDto sprintCreationDto) {
+        return projectContainer.createSprint(sprintCreationDto, projectDto);
+    }
 
     // ACCOUNT IN PROJECT METHODS
 
@@ -313,7 +314,7 @@ public class Company {
      *
      * @param userStoryDto to estimate the effort.
      * @param effort       of the userStory.
-     * @param projectCode  code of the project.
+     * @param projectDto  code of the project.
      * @return true if the effort is set and false otherwise.
      */
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
