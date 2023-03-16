@@ -310,10 +310,13 @@ public class Company {
     }
 
     /**
-     * This method should return the Product Backlog of a given Project.
+     * This method returns the product backlog of the project of interest.
+     *
+     * @param projectCode       of interest.
+     * @return an Optional object of the Product Backlog.
      */
-    public ProductBacklog getProductBacklog(ProjectDto projectDto) {
-        return projectContainer.getProductBacklog(projectDto);
+    public Optional<ProductBacklog> getProductBacklog(String projectCode) {
+        return projectContainer.getProductBacklog(projectCode);
     }
 
     /**
