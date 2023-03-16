@@ -292,9 +292,9 @@ public class Project {
      * @return true if the Sprint is created.
      */
     public boolean createSprint(SprintCreationDto sprintCreationDto) {
-        Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.startDate,
-                sprintCreationDto.sprintDuration,
-                sprintCreationDto.sprintNumber, iFactoryPeriod,
+        Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.getStartDate(),
+                sprintCreationDto.getSprintDuration(),
+                sprintCreationDto.getSprintNumber(), iFactoryPeriod,
                 iFactorySprintBacklog);
         return isPeriodValid(sprint) && addSprint(sprint);
     }

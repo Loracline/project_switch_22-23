@@ -208,7 +208,13 @@ public class Company {
     public boolean createProjectTypology(String projectTypology) {
         return projectTypologyContainer.createProjectTypology(projectTypology);
     }
-
+  /**
+   * This method creates a Sprint in the requested project
+   * returns true if the Sprint is successfully created
+   */
+  public boolean createSprint( ProjectDto projectDto, SprintCreationDto sprintCreationDto) {
+    return projectContainer.createSprint(sprintCreationDto,projectDto);
+  }
 
     // ACCOUNT IN PROJECT METHODS
 
