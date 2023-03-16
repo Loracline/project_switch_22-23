@@ -16,7 +16,7 @@ class AddUserToProjectController {
 
 class "AddUserStoryToSprintBacklogController" {
 - company
-+ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++ addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
 }
 
 class ChangeProfileController {
@@ -117,7 +117,7 @@ class Company {
 +addUserToProject(accountDTO, projectCreationDto,allocationDTO)
 +listAccountsByProject(projectCode)
 +listProjectsByAccount(emailUser)
-+addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++addUserStoryToSprintBacklog(projectCode, userStoryNumber, sprintNumber)
 +createSprint(projectDto,sprintDto)
 +getScrumBoard(projectCode, date, iFactoryUserStory)
 -userStoryContainer
@@ -190,7 +190,7 @@ class ProjectContainer {
 +registerProject(ProjectCreationDto)
 -doesProjectExist(project)
 +estimateEffortUserStory(userStoryDto, effort, projectCode, date)
-+addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++addUserStoryToSprintBacklog(projectCode, userStoryNumber, sprintNumber)
 -getProjectByProjectCode(projectCode)
 +createSprint(sprintDto)
 -getProjectByCode(projectCode)
@@ -319,7 +319,7 @@ class Project {
 +isProjectOpen()
 +estimateEffortUserStory(userStoryDto, effort, date)
 +addUserStoryToSprintBacklog(userStoryNumber, sprintNumber)
--getSprint(sprintNumber)
+-getSprintByNumber(sprintNumber)
 +createSprint(sprintNumber, startDate, projectCode)
 +isSprintUnique(sprint)
 +isPeriodValid(sprint, existingSprint)
