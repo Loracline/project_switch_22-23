@@ -45,11 +45,11 @@ enum "Effort"{
 + Effort(effortValue)
 }
 
-"EstimateUserStoryEffortController" "1" --> "1" "Company"
-"Company" "1" --> "1" "ProjectContainer"
-"ProjectContainer" "1" --> "*" "Project"
-"Project" "1" --> "*" "Sprint"
-"Sprint" "1" --> "1" "SprintBacklog"
+"EstimateUserStoryEffortController" "1" --> "1" "Company" : has
+"Company" "1" --> "1" "ProjectContainer" : has
+"ProjectContainer" "1" --> "*" "Project" : contains
+"Project" "1" --> "*" "Sprint" : has
+"Sprint" "1" --> "1" "SprintBacklog" : contains
 "SprintBacklog" "1" --> "*" "UserStory" : contains
 "UserStory" "1" --> "1" "Effort" : has
 @enduml
