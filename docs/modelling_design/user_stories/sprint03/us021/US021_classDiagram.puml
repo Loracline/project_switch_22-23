@@ -13,7 +13,7 @@ class "EstimateUserStoryEffortController" {
 
 class "Company" {
 - projectContainer
-+ estimateEffortUserStory(userStoryDto, effort, projectCode, date)
++ estimateEffortUserStory(userStoryDto, effort, projectDto, date)
 }
 class "ProjectContainer" {
 - projects
@@ -28,28 +28,28 @@ class "Project"{
 class "Sprint"{
 - sprintBacklog
 + estimateEffortUserStory(userStoryDto, effort)
-+ hasSprintNumber(Sprint sprintNumber)
 }
 class "SprintBacklog" {
 - userStories
 + estimateEffortUserStory(userStoryDto, effort)
++ hasUserStoryNumber(userStoryNumber)
++ setEffort(effort)
 }
 class "UserStory"{
 - effort
-+ setEffort(effort)
 + getEffort()
-+ hasUserStoryNumber(userStoryNumber)
++ setEffort(effort)
 }
 enum "Effort"{
 - effortValue
 + Effort(effortValue)
 }
 
-"EstimateUserStoryEffortController" "1" --> "1" "Company"
-"Company" "1" --> "1" "ProjectContainer"
-"ProjectContainer" "1" --> "*" "Project"
-"Project" "1" --> "*" "Sprint"
-"Sprint" "1" --> "1" "SprintBacklog"
+"EstimateUserStoryEffortController" "1" --> "1" "Company" : has
+"Company" "1" --> "1" "ProjectContainer" : has
+"ProjectContainer" "1" --> "*" "Project" : contains
+"Project" "1" --> "*" "Sprint" : has
+"Sprint" "1" --> "1" "SprintBacklog" : contains
 "SprintBacklog" "1" --> "*" "UserStory" : contains
 "UserStory" "1" --> "1" "Effort" : has
 @enduml

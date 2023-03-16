@@ -11,6 +11,8 @@ participant ":CreateUserStoryController" as controller
 participant ":Company" as company
 participant ":ProjectContainer" as container
 participant ":Project" as project
+participant ":Sprint" as sprint
+participant ":SprintBacklog" as sprintBacklog
 participant ":ProductBacklog" as backlog
 participant ":FactoryUserStory" as factory
 participant "userStory:UserStory" as userStory
@@ -35,7 +37,15 @@ company -> container: createUserStory((projectDto,userStoryCreationDto)
 activate container
 container -> project: createUserStory(userStoryCreationDto)
 activate project
-project ->backlog: createUserStory(userStoryCreationDto,sprints)
+project ->sprint:hasUserStory (userStoryNumber)
+activate sprint
+sprint -> sprintBacklog: hasUserStory (userStoryNumber)
+activate sprintBacklog
+sprintBacklog --> sprint: false
+deactivate sprintBacklog
+sprint --> project: false
+deactivate sprint
+project ->backlog: createUserStory(userStoryCreationDto)
 activate backlog
 backlog -> factory: createUserStory( userStoryNumber,userStoryText, actor)
 activate factory

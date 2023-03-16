@@ -172,7 +172,6 @@ public class ProductBacklog {
 
         for (int i = 0; i < userStoriesCopy.size(); i++) {
             productBacklogCopy.addUserStory(userStoriesCopy.get(i), i);
-            i++;
         }
         return productBacklogCopy;
     }

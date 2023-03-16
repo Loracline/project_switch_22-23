@@ -19,4 +19,14 @@ public class SprintCreationDto {
         this.sprintDuration = sprintDuration;
         this.sprintNumber = sprintNumber;
     }
+
+    public String getSprintNumber() {
+        return this.sprintNumber;
+    }
+
+
+    public LocalDate getStartDate() {
+        return this.startDate;
+    }
+
 }

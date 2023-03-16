@@ -76,7 +76,8 @@ public class ProjectContainer {
         return addProjectToProjectContainer(project);
     }
 
-    /**This method adds a Project to Project Container if the Project does not exist.
+    /**
+     * This method adds a Project to Project Container if the Project does not exist.
      *
      * @param project to be added.
      * @return TRUE if the Project was added to Project Container and FALSE otherwise.
@@ -157,12 +158,23 @@ public class ProjectContainer {
     }
 
     /**
-     * This method should return the Product Backlog of a given Project.
+     * This method returns the product backlog of the project of interest.
+     *
+     * @param projectCode of interest.
+     * @return an Optional object of the Product Backlog.
      */
-    public ProductBacklog getProductBacklog(ProjectDto projectDto) {
-        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
-        Project project = projectOptional.get();
-        return project.getProductBacklog();
+
+    public Optional<ProductBacklog> getProductBacklog(String projectCode) {
+        Optional<ProductBacklog> productBacklogOptional = Optional.empty();
+
+        Optional<Project> projectOptional = getProjectByCode(projectCode);
+
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            ProductBacklog productBacklog = project.getProductBacklog();
+            productBacklogOptional = Optional.ofNullable(productBacklog);
+        }
+        return productBacklogOptional;
     }
 
     /**
@@ -171,7 +183,7 @@ public class ProjectContainer {
      */
     public boolean createSprint(SprintCreationDto sprintCreationDto, ProjectDto projectDto) {
         boolean isSprintCreated = false;
-        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
+        Optional<Project> projectOptional = getProjectByCode(projectDto.getProjectCode());
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             isSprintCreated = project.createSprint(sprintCreationDto);
@@ -182,9 +194,9 @@ public class ProjectContainer {
     /**
      * This method adds a User Story to Sprint Backlog if the Project exists.
      *
-     * @param projectCode of the project one searches for.
+     * @param projectCode     of the project one searches for.
      * @param userStoryNumber of the user story to be added.
-     * @param sprintNumber of the Sprint that contains the sprint backlog.
+     * @param sprintNumber    of the Sprint that contains the sprint backlog.
      * @return TRUE if the User Story was added to Sprint Backlog and FALSE otherwise.
      */
     public boolean addUserStoryToSprintBacklog(String projectCode, String userStoryNumber,

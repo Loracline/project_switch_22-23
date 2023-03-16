@@ -23,10 +23,14 @@ public class UserStoryDtoListAssembler {
      *
      * @return a list of User Story DTOs.
      */
-    public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog) {
 
-        List<UserStory> userStories = productBacklog.getUserStoriesCopy();
-        List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
+
+    public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog) {
+        List<UserStoryDto> userStoryDtos = new ArrayList<>();
+        if (productBacklog != null) {
+            List<UserStory> userStories = productBacklog.getUserStoriesCopy();
+            userStoryDtos.addAll(getUserStoryDtos(userStories));
+        }
         return userStoryDtos;
     }
 
@@ -44,6 +48,13 @@ public class UserStoryDtoListAssembler {
         return userStoryDtos;
     }
 
+    /**
+     * This method converts a list of user stories into a list
+     * of user story DTOs.
+     *
+     * @param userStories to convert into User Story DTOs.
+     * @return a list of User Story DTOs.
+     */
     private static List<UserStoryDto> getUserStoryDtos(List<UserStory> userStories) {
         List<UserStoryDto> userStoryDtos = new ArrayList<>();
 

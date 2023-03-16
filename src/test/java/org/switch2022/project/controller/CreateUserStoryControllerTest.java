@@ -6,11 +6,16 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.dto.ProjectCreationDto;
 import org.switch2022.project.dto.ProjectDto;
+import org.switch2022.project.dto.SprintCreationDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.BusinessSector;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CreateUserStoryControllerTest {
     /**
@@ -45,6 +50,9 @@ class CreateUserStoryControllerTest {
         factoryProductBacklog = new FactoryProductBacklog();
         factoryProject = new FactoryProject();
         factoryUserStory = new FactoryUserStory();
+        factorySprint= new FactorySprint();
+        factorySprintBacklog= new FactorySprintBacklog();
+        factoryPeriod= new FactoryPeriod();
 
         //Dto
         userStoryCreationDtoOne = new UserStoryCreationDto("US001",
@@ -68,7 +76,8 @@ class CreateUserStoryControllerTest {
 
         projectContainer = new ProjectContainer();
         projectContainer.registerProject(projectOneDTO, projectTypologyContainer, customerContainer,
-                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject, factoryPeriod, factorySprintBacklog, factorySprint);
+                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject, factoryPeriod,
+                factorySprintBacklog, factorySprint);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, null, customerContainer);
@@ -88,9 +97,45 @@ class CreateUserStoryControllerTest {
         customerContainer = null;
         company = null;
     }
+    /**
+     * METHOD createUserStory with isolation
+     * Scenario 1: it should return true
+     */
+    @Test
+    void ensureUserStoryIsCreatedSuccessfully_WithIsolation(){
+        //Assert
+        ProjectDto projectDtoDouble= mock(ProjectDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble= mock(UserStoryCreationDto.class);
+        Company companyDouble= mock(Company.class);
+        CreateUserStoryController createUserStoryControllerDouble= new CreateUserStoryController(companyDouble);
+        when(companyDouble.createUserStory(projectDtoDouble,userStoryCreationDtoDouble)).thenReturn(true);
+        //Act
+        boolean result = createUserStoryControllerDouble.createUserStory(projectDtoDouble,userStoryCreationDtoDouble);
+
+        //Arrange
+        assertTrue(result);
+    }
+    /**
+     * METHOD createUserStory with isolation
+     * Scenario 2: it should return false
+     */
+    @Test
+    void ensureUserStoryIsNotCreatedSuccessfully_WithIsolation(){
+        //Assert
+        ProjectDto projectDtoDouble= mock(ProjectDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble= mock(UserStoryCreationDto.class);
+        Company companyDouble= mock(Company.class);
+        CreateUserStoryController createUserStoryControllerDouble= new CreateUserStoryController(companyDouble);
+        when(companyDouble.createUserStory(projectDtoDouble,userStoryCreationDtoDouble)).thenReturn(false);
+        //Act
+        boolean result = createUserStoryControllerDouble.createUserStory(projectDtoDouble,userStoryCreationDtoDouble);
+
+        //Arrange
+        assertFalse(result);
+    }
 
     /**
-     * METHOD createUserStory
+     * METHOD createUserStory without isolation
      * Scenario 1: it should return true when an userStory is created
      * empty ProductBacklog and empty SprintBacklog
      */
@@ -203,4 +248,26 @@ class CreateUserStoryControllerTest {
         //Assert
         assertFalse(result);
     }
+
+    /**
+     * Scenario 7: it should return false when an userStory is created
+     * because the userStory is already in a sprint
+     */
+    @Test
+    void ensureUserStoryIsCreatedUnsuccessfully_PresentInTheSprint() {
+        //Arrange
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(" us002",
+                "I want to create a project", "Manager", 10);
+        company.createUserStory(projectDto, userStoryCreationDtoOne);
+        LocalDate startDate= LocalDate.now();
+        SprintCreationDto sprintCreationDto= new SprintCreationDto(startDate,3, "SP001");
+        projectContainer.createSprint(sprintCreationDto,projectDto);
+        projectContainer.addUserStoryToSprintBacklog(projectDto.code," us002","SP001");
+
+        //Act
+        boolean result = createUserStoryController.createUserStory(projectDto, userStoryCreationDto);
+        //Assert
+        assertFalse(result);
+    }
+
 }
