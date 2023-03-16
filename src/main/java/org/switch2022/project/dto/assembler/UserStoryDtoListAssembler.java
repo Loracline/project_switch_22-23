@@ -10,7 +10,7 @@ import org.switch2022.project.model.UserStory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserStoryDtoListAssembler {
+public final class UserStoryDtoListAssembler {
     /**
      * Constructor of the class UserStoryDtoListAssembler.
      */
@@ -43,7 +43,8 @@ public class UserStoryDtoListAssembler {
                                                   IFactoryUserStory factoryUserStory) {
         List<UserStoryDto> userStoryDtos = new ArrayList<>();
         if (sprintBacklog != null) {
-            List<UserStory> userStories = sprintBacklog.getUserStoriesCopy(factoryUserStory);
+            List<UserStory> userStories = sprintBacklog.getUserStoriesCopy(
+                    factoryUserStory);
             userStoryDtos.addAll(getUserStoryDtos(userStories));
         }
         return userStoryDtos;
