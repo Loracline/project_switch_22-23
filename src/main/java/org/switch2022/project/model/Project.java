@@ -289,7 +289,7 @@ public class Project {
      */
     public boolean createSprint(SprintCreationDto sprintCreationDto) {
         Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.getStartDate(),
-                sprintCreationDto.getSprintDuration(),
+                sprintCreationDto.sprintDuration,
                 sprintCreationDto.getSprintNumber(), iFactoryPeriod,
                 iFactorySprintBacklog);
         return isPeriodValid(sprint) && addSprint(sprint);
