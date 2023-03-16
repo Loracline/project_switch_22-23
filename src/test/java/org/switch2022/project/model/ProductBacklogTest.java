@@ -202,7 +202,8 @@ public class ProductBacklogTest {
         //Arrange
         IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
-        UserStoryCreationDto userStoryCreationDtoDouble = mock (UserStoryCreationDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble =
+                mock(UserStoryCreationDto.class);
         when(userStoryCreationDtoDouble.getPriority()).thenReturn(0);
 
         //Act
@@ -213,7 +214,8 @@ public class ProductBacklogTest {
     }
 
     /**
-     * Scenario 2: verify if a User Story is added to Product Backlog if the priority value
+     * Scenario 2: verify if a User Story is added to Product Backlog if the priority
+     * value
      * is bigger than the size of the list already there.
      * Should return False.
      */
@@ -222,7 +224,8 @@ public class ProductBacklogTest {
         //Arrange
         IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
-        UserStoryCreationDto userStoryCreationDtoDouble = mock (UserStoryCreationDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble =
+                mock(UserStoryCreationDto.class);
         when(userStoryCreationDtoDouble.getPriority()).thenReturn(2);
         //Act
         boolean result = productBacklog.createUserStory(userStoryCreationDtoDouble);
@@ -240,7 +243,8 @@ public class ProductBacklogTest {
         //Arrange
         IFactoryUserStory iFactoryUserStory = mock(IFactoryUserStory.class);
         ProductBacklog productBacklog = new ProductBacklog(iFactoryUserStory);
-        UserStoryCreationDto userStoryCreationDtoDouble = mock (UserStoryCreationDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble =
+                mock(UserStoryCreationDto.class);
         when(userStoryCreationDtoDouble.getPriority()).thenReturn(0);
         productBacklog.createUserStory(userStoryCreationDtoDouble);
 
@@ -366,7 +370,7 @@ public class ProductBacklogTest {
         ProductBacklog productBacklogDouble = new ProductBacklog(factoryUserStoryDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
-        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
+        when(factoryUserStoryDouble.createUserStory(any(), any())).
                 thenReturn(userStoryDouble);
         productBacklogDouble.addUserStory(userStoryDouble, 0);
 
@@ -384,7 +388,8 @@ public class ProductBacklogTest {
      * METHOD getProductBacklogCopy(). Copy the list of user stories contained in the
      * product backlog and stores them in another instance of product backlog.
      * <p>
-     * Scenario 1: Verifies that the method returns a product backlog with a list of deep copies
+     * Scenario 1: Verifies that the method returns a product backlog with a list of
+     * deep copies
      * of the user stories that are in the original product backlog.
      */
     @Test
@@ -394,7 +399,7 @@ public class ProductBacklogTest {
         ProductBacklog productBacklog = new ProductBacklog(factoryUserStoryDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
-        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).thenReturn(userStoryDouble);
+        when(factoryUserStoryDouble.createUserStory(any(), any())).thenReturn(userStoryDouble);
         productBacklog.addUserStory(userStoryDouble, 0);
 
         ProductBacklog expected = new ProductBacklog(factoryUserStoryDouble);
@@ -405,6 +410,5 @@ public class ProductBacklogTest {
 
         //ASSERT
         assertEquals(expected, result);
-
     }
 }
