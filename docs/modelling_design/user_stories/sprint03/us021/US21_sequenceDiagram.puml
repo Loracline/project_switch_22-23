@@ -40,23 +40,23 @@ activate company
 company -> pc: estimateEffortUserStory (userStoryDto, effort, projectCode, date)
 activate pc
 
-pc --> project: estimateEffortUserStory (userStoryDto, effort, date)
+pc -> project: estimateEffortUserStory (userStoryDto, effort, date)
 activate project
 
-project --> sprint: estimateEffortUserStory (userStoryDto, effort)
+project -> sprint: estimateEffortUserStory (userStoryDto, effort)
 activate sprint
 
-sprint --> sb: estimateEffortUserStory (userStoryDto, effort)
+sprint -> sb: estimateEffortUserStory (userStoryDto, effort)
 activate sb
 note right of us: fetches in class enum the effort value pretended
 
-sb --> us: setEffort(effort)
+sb -> us: setEffort(effort)
 activate us
 
+us -> us: setEffort
 
-us --> sb: true
-deactivate us
 sb --> sprint: true
+deactivate us
 deactivate sb
 sprint --> project: true
 deactivate sprint
