@@ -157,12 +157,23 @@ public class ProjectContainer {
     }
 
     /**
-     * This method should return the Product Backlog of a given Project.
+     * This method returns the product backlog of the project of interest.
+     *
+     * @param projectCode       of interest.
+     * @return an Optional object of the Product Backlog.
      */
-    public ProductBacklog getProductBacklog(ProjectDto projectDto) {
-        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
-        Project project = projectOptional.get();
-        return project.getProductBacklog();
+
+    public Optional<ProductBacklog> getProductBacklog(String projectCode) {
+        Optional<ProductBacklog> productBacklogOptional = Optional.empty();
+
+        Optional<Project> projectOptional = getProjectByCode(projectCode);
+
+        if (projectOptional.isPresent()) {
+            Project project = projectOptional.get();
+            ProductBacklog productBacklog = project.getProductBacklog();
+            productBacklogOptional = Optional.ofNullable(productBacklog);
+        }
+        return productBacklogOptional;
     }
 
     /**

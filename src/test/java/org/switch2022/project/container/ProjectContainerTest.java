@@ -511,19 +511,18 @@ public class ProjectContainerTest {
 
     /**
      * METHOD getProductBacklog
-     * Scenario 1: this test ensure that a Product Backlog of a give Project is
-     * successfully
-     * returned.
+     * Scenario 1: This test ensures that the Product Backlog (composed by user stories) of a
+     * given project (with respective projectCode) is successfully returned.
      */
+
     @Test
     void ensureThatProductBacklogIsSuccessfullyReturned() {
         //ARRANGE
         // Create ProjectContainer
         ProjectContainer projectContainer = new ProjectContainer();
 
-        // Create ProjectDto to be used
-        ProjectDto projectDto = new ProjectDto("P001", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+        // ProjectCode to be used
+        String projectCode = "P001";
 
         // Create and Add Project to Projects
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
@@ -573,7 +572,7 @@ public class ProjectContainerTest {
         when(projectDouble.getProductBacklog()).thenReturn(expected);
 
         //ACT
-        ProductBacklog result = projectContainer.getProductBacklog(projectDto);
+        ProductBacklog result = projectContainer.getProductBacklog(projectCode).get();
 
         //ASSERT
         assertEquals(expected, result);
@@ -581,18 +580,18 @@ public class ProjectContainerTest {
 
     /**
      * METHOD getProductBacklog
-     * Scenario 2: this test ensures that an exception is thrown if the Project is not
-     * successfully returned.
+     * Scenario 2: This test ensures that no Product Backlog (composed by user stories) is returned
+     * when a given projectCode doesn't match any existent Project.
      */
+
     @Test
-    void ensureThatProductBacklogIsNotSuccessfullyReturnedIfProjectDoesNotExist() {
+    void ensureThatProductBacklogIsNotReturnedIfProjectCodeDoesNotMatchAnyProject() {
         //ARRANGE
         // Create ProjectContainer
         ProjectContainer projectContainer = new ProjectContainer();
 
-        // Create ProjectDto to be used
-        ProjectDto projectDtoTwo = new ProjectDto("P002", "Project1", "ITV", "Panned",
-                "Fixed cost", "Media");
+        // ProjectCode to be used
+        String projectCodeTwo = "P002";
 
         // Create and Add Project to Projects
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
@@ -636,19 +635,15 @@ public class ProjectContainerTest {
                 factoryPeriodDouble, factorySprintBacklogDouble, factorySprintDouble);
 
         // Get Project and get Product Backlog
-        when(projectDouble.hasProjectCode("P002")).thenReturn(false);
+        when(projectDouble.hasProjectCode(projectCodeTwo)).thenReturn(false);
 
-        ProductBacklog expected = mock(ProductBacklog.class);
-        when(projectDouble.getProductBacklog()).thenReturn(expected);
+        Optional<ProductBacklog> expected = Optional.empty();
 
-        Exception exception = assertThrows(Exception.class, () -> {
-            projectContainer.getProductBacklog(projectDtoTwo);
-        });
-        String expectedMessage = "No value present";
         //ACT
-        String actualMessage = exception.getMessage();
+        Optional<ProductBacklog> result = projectContainer.getProductBacklog(projectCodeTwo);
+
         //ASSERT
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertEquals(expected, result);
     }
 
     /**
