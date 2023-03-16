@@ -103,12 +103,12 @@ class UserStoryDtoListAssemblerTest {
 
         when(userStoryOne.getUserStoryNumber()).thenReturn("US001");
         when(userStoryOne.getUserStoryText()).thenReturn("I want to create a project");
-        when(userStoryOne.getStatus()).thenReturn("planned");
+        when(userStoryOne.getStatus()).thenReturn(Status.PLANNED);
 
         when(userStoryTwo.getUserStoryNumber()).thenReturn("US002");
         when(userStoryTwo.getUserStoryText()).thenReturn("I want to create a user " +
                 "story");
-        when(userStoryTwo.getStatus()).thenReturn("planned");
+        when(userStoryTwo.getStatus()).thenReturn(Status.PLANNED);
 
         //behavior of product backlog
         List<UserStory> userStories = new ArrayList<>();

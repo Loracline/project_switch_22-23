@@ -9,6 +9,7 @@ import org.switch2022.project.dto.*;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.SprintBacklog;
 import org.switch2022.project.model.UserStory;
+import org.switch2022.project.utils.Status;
 
 
 import java.time.LocalDate;
@@ -147,11 +148,11 @@ class ViewScrumBoardControllerTest {
         UserStory userStoryTwo = mock(UserStory.class);
         when(userStoryOne.getUserStoryNumber()).thenReturn("US001");
         when(userStoryOne.getUserStoryText()).thenReturn("I want to create a project");
-        when(userStoryOne.getStatus()).thenReturn("Planned");
+        when(userStoryOne.getStatus()).thenReturn(Status.PLANNED);
 
         when(userStoryTwo.getUserStoryNumber()).thenReturn("US002");
         when(userStoryTwo.getUserStoryText()).thenReturn("I want to create a user story");
-        when(userStoryTwo.getStatus()).thenReturn("Planned");
+        when(userStoryTwo.getStatus()).thenReturn(Status.PLANNED);
 
         List<UserStory> userStories = new ArrayList<>();
         userStories.add(userStoryOne);
@@ -186,11 +187,11 @@ class ViewScrumBoardControllerTest {
         UserStory userStoryTwo = mock(UserStory.class);
         when(userStoryOne.getUserStoryNumber()).thenReturn("US001");
         when(userStoryOne.getUserStoryText()).thenReturn("I want to create a project");
-        when(userStoryOne.getStatus()).thenReturn("Planned");
+        when(userStoryOne.getStatus()).thenReturn(Status.PLANNED);
 
         when(userStoryTwo.getUserStoryNumber()).thenReturn("US002");
         when(userStoryTwo.getUserStoryText()).thenReturn("I want to create a user story");
-        when(userStoryTwo.getStatus()).thenReturn("Planned");
+        when(userStoryTwo.getStatus()).thenReturn(Status.PLANNED);
 
         List<UserStory> userStories = new ArrayList<>();
         userStories.add(userStoryOne);
