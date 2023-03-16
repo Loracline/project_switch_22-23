@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -144,15 +145,14 @@ class GetProductBacklogControllerTest {
     void ensureThatProductBacklogIsSuccessfullyReturnedIfProjectCodeExists_WithIsolation() {
         //ARRANGE
         ProjectDto projectDto = mock(ProjectDto.class);
-        when(projectDto.getProjectCode()).thenReturn("AA001");
 
-        Optional<ProductBacklog> productBacklogOptional = mock(Optional.class);
         Company company = mock(Company.class);
-        when(company.getProductBacklog("AA001")).thenReturn(productBacklogOptional);
-
-        when(productBacklogOptional.isPresent()).thenReturn(true);
+        GetProductBacklogController controller = new GetProductBacklogController(company);
 
         ProductBacklog productBacklog = mock(ProductBacklog.class);
+        Optional<ProductBacklog> productBacklogOptional =
+                Optional.ofNullable(productBacklog);
+        when(company.getProductBacklog(any())).thenReturn(productBacklogOptional);
 
         UserStory userStoryOne = mock(UserStory.class);
         UserStory userStoryTwo = mock(UserStory.class);
@@ -162,25 +162,20 @@ class GetProductBacklogControllerTest {
         when(userStoryOne.getStatus()).thenReturn(Status.PLANNED);
 
         when(userStoryTwo.getUserStoryNumber()).thenReturn("US002");
-        when(userStoryTwo.getUserStoryText()).thenReturn("I want to create a user " +
-                "story");
+        when(userStoryTwo.getUserStoryText()).thenReturn("I want to create a project");
         when(userStoryTwo.getStatus()).thenReturn(Status.PLANNED);
 
         List<UserStory> userStories = new ArrayList<>();
         userStories.add(userStoryOne);
         userStories.add(userStoryTwo);
-
         when(productBacklog.getUserStoriesCopy()).thenReturn(userStories);
-
-        when(productBacklogOptional.get()).thenReturn(productBacklog);
 
         List<UserStoryDto> expected = new ArrayList<>();
         expected.add(userStoryDtoOne);
         expected.add(userStoryDtoTwo);
 
         //ACT
-        List<UserStoryDto> result = getProductBacklogController.getProductBacklog(
-                projectDto);
+        List<UserStoryDto> result = controller.getProductBacklog(projectDto);
 
         //ASSERT
         assertEquals(expected, result);
@@ -197,27 +192,18 @@ class GetProductBacklogControllerTest {
     void ensureThatProductBacklogIsNotSuccessfullyReturnedIfProjectCodeDoesNotExist_WithIsolation() {
         //ARRANGE
         ProjectDto projectDto = mock(ProjectDto.class);
-        when(projectDto.getProjectCode()).thenReturn("AA002");
 
-        Optional<ProductBacklog> productBacklogOptional = mock(Optional.class);
         Company company = mock(Company.class);
-        when(company.getProductBacklog("AA002")).thenReturn(productBacklogOptional);
+        GetProductBacklogController controller = new GetProductBacklogController(company);
 
-        when(productBacklogOptional.isPresent()).thenReturn(false);
-
-        ProductBacklog productBacklog = mock(ProductBacklog.class);
-
-        List<UserStory> userStories = new ArrayList<>();
-
-        when(productBacklog.getUserStoriesCopy()).thenReturn(userStories);
-
-        when(productBacklogOptional.get()).thenReturn(productBacklog);
+        Optional<ProductBacklog> productBacklogOptional =
+                Optional.ofNullable(null);
+        when(company.getProductBacklog(any())).thenReturn(productBacklogOptional);
 
         List<UserStoryDto> expected = new ArrayList<>();
 
         //ACT
-        List<UserStoryDto> result = getProductBacklogController.getProductBacklog(
-                projectDto);
+        List<UserStoryDto> result = controller.getProductBacklog(projectDto);
 
         //ASSERT
         assertEquals(expected, result);
