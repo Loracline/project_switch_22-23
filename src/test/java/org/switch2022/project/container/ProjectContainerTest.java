@@ -138,7 +138,7 @@ public class ProjectContainerTest {
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
+
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -159,7 +159,7 @@ public class ProjectContainerTest {
                 any(), any(), any())).
                 thenReturn(projectDouble);
         when(projectDouble.createUserStory(userStoryCreationDtoDouble)).thenReturn(true);
-        when(projectDouble.hasProjectCode("P001")).thenReturn(true);
+        when(projectDouble.hasProjectCode(any())).thenReturn(true);
         projectContainerTest.registerProject(projectCreationDtoDouble,
                 projectTypologyContainerDouble,
                 costumerContainerDouble, businessSectorContainerDouble,
@@ -183,7 +183,7 @@ public class ProjectContainerTest {
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
+
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -231,7 +231,7 @@ public class ProjectContainerTest {
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
+
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -279,7 +279,7 @@ public class ProjectContainerTest {
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
+
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(

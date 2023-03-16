@@ -11,7 +11,7 @@ import java.util.Objects;
  * projectCode,an actor, an userStoryText,
  * an effort and a status.
  */
-public class UserStory {
+public final class UserStory {
     /**
      * Attributes
      */
@@ -132,7 +132,7 @@ public class UserStory {
      * @return TRUE if userStory has given userStoryNumber, and FALSE otherwise.
      */
     public boolean hasUserStoryNumber(String userStoryNumber) {
-        return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
+        return this.userStoryNumber.equalsIgnoreCase(userStoryNumber.trim());
     }
 
     /**

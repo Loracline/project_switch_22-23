@@ -12,6 +12,7 @@ public class CreateSprintController {
      *
      * @param company it receives a Company to be created
      */
+
     public CreateSprintController(Company company) {
         this.company = company;
     }
