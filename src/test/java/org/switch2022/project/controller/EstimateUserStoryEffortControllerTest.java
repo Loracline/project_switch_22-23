@@ -106,7 +106,7 @@ class EstimateUserStoryEffortControllerTest {
     }
 
     /**
-     * Method ensureEstimateEffortUserStory (userStoryDto, effort, projectCode)
+     * Method ensureEstimateEffortUserStory (userStoryDto, effort, projectDto)
      * Scenario 1: Verifies that the estimateEffortUserStory() method of the
      * EstimateUserStoryEffortController class can correctly estimate the effort
      * for a user story.
@@ -124,7 +124,7 @@ class EstimateUserStoryEffortControllerTest {
     }
 
     /**
-     * Scenario 2: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectCode)
+     * Scenario 2: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
      * method of the EstimateUserStoryEffortController class can't correctly estimate the effort for
      * a user story, because userStoryNumber doesn't exist.
      * Expected result: false, indicating that the estimation was unsuccessful.
@@ -139,21 +139,21 @@ class EstimateUserStoryEffortControllerTest {
     }
 
     /**
-     * Scenario 3: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectCode)
+     * Scenario 3: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
      * method of the EstimateUserStoryEffortController class can't correctly estimate the effort
      * for a user story, because project isn't registered in the system.
      * Expected result: false, indicating that the estimation was unsuccessful.
      */
 
     @Test
-    void ensureEstimateEffortUserStoryUnsuccessfullyProjectCodeNotFound() {
+    void ensureEstimateEffortUserStoryUnsuccessfullyProjectNotFound() {
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
                 Effort.TWO, projectDtoTwo);
         assertFalse(result);
     }
 
     /**
-     * Scenario 4: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectCode)
+     * Scenario 4: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
      * method of the EstimateUserStoryEffortController class can't correctly estimate the effort for
      * a user story, because userStory is null.
      * Expected result: false, indicating that the estimation was unsuccessful.
@@ -163,6 +163,56 @@ class EstimateUserStoryEffortControllerTest {
     void ensureUserStoryEffortIsNotEstimatedUserStoryIsNull() {
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoTwo,
                 Effort.TWO, projectDtoTwo);
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 5: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
+     * method of the EstimateUserStoryEffortController class can correctly estimate the effort
+     * for a user story.
+     * Expected result: true, indicating that the estimation was successful.
+     */
+
+    @Test
+    void ensureUserStoryEffortIsEstimatedSuccessfullyWithIsolation(){
+        //Assert
+        UserStoryDto userStoryDtoDouble=mock(UserStoryDto.class);
+        ProjectDto projectDtoDouble=mock(ProjectDto.class);
+        Company companyDouble=mock(Company.class);
+        EstimateUserStoryEffortController estimateUserStoryEffortControllerDouble =
+                new EstimateUserStoryEffortController(companyDouble);
+        when(companyDouble.estimateEffortUserStory(userStoryDtoDouble, Effort.TWO,
+                projectDtoDouble, LocalDate.now())).thenReturn(true);
+        //Act
+        boolean result = estimateUserStoryEffortControllerDouble.estimateEffortUserStory(userStoryDtoDouble,
+                Effort.TWO, projectDtoDouble);
+
+        //Arrange
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 6: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
+     * method of the EstimateUserStoryEffortController class can't correctly estimate the effort
+     * for a user story.
+     * Expected result: false, indicating that the estimation was unsuccessful.
+     */
+
+    @Test
+    void ensureUserStoryEffortIsEstimatedUnSuccessfullyWithIsolation(){
+        //Assert
+        UserStoryDto userStoryDtoDouble=mock(UserStoryDto.class);
+        ProjectDto projectDtoDouble=mock(ProjectDto.class);
+        Company companyDouble=mock(Company.class);
+        EstimateUserStoryEffortController estimateUserStoryEffortControllerDouble =
+                new EstimateUserStoryEffortController(companyDouble);
+        when(companyDouble.estimateEffortUserStory(userStoryDtoDouble, Effort.TWO,
+                projectDtoDouble, LocalDate.now())).thenReturn(false);
+        //Act
+        boolean result = estimateUserStoryEffortControllerDouble.estimateEffortUserStory(userStoryDtoDouble,
+                Effort.TWO, projectDtoDouble);
+
+        //Arrange
         assertFalse(result);
     }
 }
