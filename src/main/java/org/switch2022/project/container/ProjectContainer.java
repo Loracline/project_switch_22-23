@@ -76,12 +76,13 @@ public class ProjectContainer {
         return addProjectToProjectContainer(project);
     }
 
-    /**This method adds a Project to Project Container if the Project does not exist.
+    /**
+     * This method adds a Project to Project Container if the Project does not exist.
      *
      * @param project to be added.
      * @return TRUE if the Project was added to Project Container and FALSE otherwise.
      */
-    protected boolean addProjectToProjectContainer(Project project){
+    protected boolean addProjectToProjectContainer(Project project) {
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);
@@ -159,7 +160,7 @@ public class ProjectContainer {
     /**
      * This method returns the product backlog of the project of interest.
      *
-     * @param projectCode       of interest.
+     * @param projectCode of interest.
      * @return an Optional object of the Product Backlog.
      */
 
@@ -193,9 +194,9 @@ public class ProjectContainer {
     /**
      * This method adds a User Story to Sprint Backlog if the Project exists.
      *
-     * @param projectCode of the project one searches for.
+     * @param projectCode     of the project one searches for.
      * @param userStoryNumber of the user story to be added.
-     * @param sprintNumber of the Sprint that contains the sprint backlog.
+     * @param sprintNumber    of the Sprint that contains the sprint backlog.
      * @return TRUE if the User Story was added to Sprint Backlog and FALSE otherwise.
      */
     public boolean addUserStoryToSprintBacklog(String projectCode, String userStoryNumber,

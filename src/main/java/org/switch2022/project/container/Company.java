@@ -151,11 +151,16 @@ public class Company {
      * @param projectDto data transfer object of projects information.
      * @return TRUE if registered, and FALSE otherwise.
      */
-    public boolean registerProject(ProjectCreationDto projectDto, IFactoryProductBacklog factoryProductBacklog,
-                                   IFactoryUserStory factoryUserStory, IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
-                                   IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint) {
-        return (projectContainer.registerProject(projectDto, projectTypologyContainer, customerContainer,
-                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject, iFactoryPeriod,
+    public boolean registerProject(ProjectCreationDto projectDto,
+                                   IFactoryProductBacklog factoryProductBacklog,
+                                   IFactoryUserStory factoryUserStory,
+                                   IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
+                                   IFactorySprintBacklog iFactorySprintBacklog,
+                                   IFactorySprint iFactorySprint) {
+        return (projectContainer.registerProject(projectDto, projectTypologyContainer,
+                customerContainer,
+                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject,
+                iFactoryPeriod,
                 iFactorySprintBacklog, iFactorySprint));
     }
 
@@ -254,7 +259,8 @@ public class Company {
     }
 
     /**
-     * This method returns the scrum board (composed of the sprint backlog) of the project of interest, in a given date.
+     * This method returns the scrum board (composed of the sprint backlog) of the project of
+     * interest, in a given date.
      *
      * @param projectCode       of the project of interest.
      * @param date              of interest.
@@ -291,7 +297,8 @@ public class Company {
      * This method creates an userStory in the requested project
      * returns true if the userStory is successfully created
      */
-    public boolean createUserStory(ProjectDto projectDto, UserStoryCreationDto userStoryCreationDto) {
+    public boolean createUserStory(ProjectDto projectDto,
+                                   UserStoryCreationDto userStoryCreationDto) {
         return projectContainer.createUserStory(projectDto, userStoryCreationDto);
     }
 
@@ -312,7 +319,7 @@ public class Company {
     /**
      * This method returns the product backlog of the project of interest.
      *
-     * @param projectCode       of interest.
+     * @param projectCode of interest.
      * @return an Optional object of the Product Backlog.
      */
     public Optional<ProductBacklog> getProductBacklog(String projectCode) {
@@ -320,10 +327,11 @@ public class Company {
     }
 
     /**
-     *This method adds a User Story to Sprint Backlog.
-     * @param projectCode of the project one searches for.
+     * This method adds a User Story to Sprint Backlog.
+     *
+     * @param projectCode     of the project one searches for.
      * @param userStoryNumber of the user story to be added.
-     * @param sprintNumber of the Sprint that contains the sprint backlog.
+     * @param sprintNumber    of the Sprint that contains the sprint backlog.
      * @return TRUE if the User Story was added to Sprint Backlog and FALSE otherwise.
      */
     public boolean addUserStoryToSprintBacklog(String projectCode, String userStoryNumber,
