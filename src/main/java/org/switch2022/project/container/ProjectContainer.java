@@ -183,7 +183,7 @@ public class ProjectContainer {
      */
     public boolean createSprint(SprintCreationDto sprintCreationDto, ProjectDto projectDto) {
         boolean isSprintCreated = false;
-        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
+        Optional<Project> projectOptional = getProjectByCode(projectDto.getProjectCode());
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             isSprintCreated = project.createSprint(sprintCreationDto);

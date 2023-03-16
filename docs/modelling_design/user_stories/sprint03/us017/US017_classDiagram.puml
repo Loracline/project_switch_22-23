@@ -26,24 +26,27 @@ class "ProjectContainer" {
 class "Project"{
 - productBacklog
 - sprints
++ hasProjectCode(projectCode)
+- hasUserStoryNumberInSprints(String userStoryNumber)
 + createUserStory(userStoryCreationDto)
-- hasProjectCode(projectCode)
+
 
 }
 class "Sprint"{
--SprintBackolg
+-SprintBacklog
 +hasUserStory (userStoryNumber)
 }
 
 class "SprintBacklog"{
 -userStories
-+hasUserStory((userStoryNumber)
++hasUserStory(userStoryNumber)
 }
 
 class "ProductBacklog" {
 - userStories
-+ createUserStory(userStoryCreationDto,sprints)
-- isUserStoryUnique(userStoryNumber)
+-iFactoryUserStory
++ createUserStory(userStoryCreationDto)
++ addUserStory(UserStory userStory, int priority)
 }
 class "UserStory"{
 - userStoryNumber
@@ -52,24 +55,28 @@ class "UserStory"{
 - status
 - effort
 - listOfAcceptanceCriteria
--UserStory(userStoryNumber)
-+ createUserStory(userStoryNumber, actor, userStoryText)
-- setActor(String actor)
-- setUserStoryText(String userStoryText)
-+ hasUserStoryNumber(String userStoryNumber)
+-UserStory(builder)
++UserStoryBuilder(userStoryNumber)
++setActor( actor)
++setUserStoryText( userStoryText)
++hasUserStoryNumber(userStoryNumber)
 }
 
 
 interface "FactoryUserStory" {
-+ createUserStory( userStoryNumber,actor, userStoryText)
++ createUserStory(userStoryCreationDto)
 }
 class "UserStoryCreationDto"{
 +userStoryNumber
 +actor
 +userStoryText
++getPriority()
++getUserStoryNumber()
 }
 class "ProjectDto"{
--projectCode
++projectCode
++getProjectCode()
+
 }
 
 "CreateUserStoryController""1"-->"1" "Company"
@@ -80,7 +87,10 @@ class "ProjectDto"{
 "ProductBacklog" "*" --> "1""FactoryUserStory"
 "FactoryUserStory" ..> "UserStory"
 "ProjectDto"<.. "ProjectContainer"
-"UserStoryCreationDto"<.."UserStoryContainer"
 "ProductBacklog" ..> "Sprint"
 "Sprint" "1"-->"1" "SprintBacklog"
+"Project" ..> "UserStoryCreationDto"
+"ProductBacklog" ..> "UserStoryCreationDto"
+"FactoryUserStory" ..> "UserStoryCreationDto"
+
 @enduml
