@@ -8,32 +8,31 @@ end legend
 
 class CreateSprintController {
 - company
-+ createSprint(projectDto,sprintDto)
++ createSprint(projectDto,sprintCreationDto)
 }
-CreateSprintController "1"-->"1" Company: has
+CreateSprintController "1"-->"1" Company
 
 class Company {
 -projectContainer
-+createSprint(projectDto,sprintDto)
++createSprint(projectDto,sprintCreationDto)
 }
-Company "1"-->"1" ProjectContainer : has
+Company "1"-->"1" ProjectContainer
 
 class ProjectContainer {
--project
-+createSprint(sprintDto)
--getProjectByCode(projectDto)
+-projects
++ createSprint(sprintCreationDto,projectDto)
+-getProjectByCode(projectCode)
 }
-ProjectContainer "1"-->"*" Project: has
+ProjectContainer "1"-->"*" Project
 
 class Project {
 -factorySprint
 -sprints
-+createSprint(sprintNumber,startDate, projectCode)
-+isSprintUnique(sprint)
-+isPeriodValid(sprint, existingSprint)
-+hasProjectCode(projectCode)
++createSprint(sprintCreationDto)
++isPeriodValid(sprint)
++addSprint(sprint)
 }
-Project "1"-->"1" FactorySprint: has
+Project "1"-->"1" FactorySprint
 
 interface FactorySprint {
 +createSprint(startDate, sprintDuration)
@@ -41,11 +40,12 @@ interface FactorySprint {
 
 class Sprint {
 -sprintNumber
--FactoryPeriod
--Period
--SprintBacklog
-+Sprint(startDate, sprintDuration, sprintNumber)
-+createPeriod(startDate,sprintDuration)
+-period
+-sprintBacklog
+-iFactorySprintBacklog
++createSprint(startDate, sprintDuration, sprintNumber,
+iFactoryPeriod,iFactorySprintBacklog)
++setPeriod(iFactoryPeriod,startDate,sprintDuration)
 +getStartDate()
 +getEndDate()
 }
@@ -54,7 +54,7 @@ Sprint -> FactoryPeriod
 FactorySprint "1"..> "*"Sprint
 
 interface FactoryPeriod {
-+create(startDate, sprintDuration)
++createSprint(startDate, sprintDuration)
 }
 
 FactoryPeriod ..> Period
@@ -67,4 +67,25 @@ class Period {
 +getStartDate()
 +getEndDate()
 }
+
+class "SprintCreationDto"{
++startDate
++sprintDuration
++sprintNumber
++getSprintNumber()
++getSprintDuration()
++getStartDate()
+}
+
+
+class "ProjectDto"{
++projectCode
++getProjectByCode()
+}
+"ProjectDto"<.. "ProjectContainer"
+
+"ProjectContainer"..>"SprintCreationDto"
+"Project"..> "SprintCreationDto"
+
+
 @enduml
