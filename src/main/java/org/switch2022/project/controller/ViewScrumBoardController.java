@@ -27,14 +27,16 @@ public class ViewScrumBoardController {
     }
 
     /**
-     * This method shows the Scrum board which has a list of all user stories and their status that are in a sprint backlog of a sprint of a project.
+     * This method shows the Scrum board which has a list of all user stories and their status that are in a sprint
+     * backlog of a sprint of a project.
      *
      * @param projectDto        of the project
      * @param iFactoryUserStory interface one must use to copy the User Stories
      *                          contained in the Sprint Backlog.
      * @return a list of userStoriesDto that carry data about user stories and their status.
      */
-    public List<UserStoryDto> getScrumBoard(ProjectDto projectDto, LocalDate date, IFactoryUserStory iFactoryUserStory) {
+    public List<UserStoryDto> getScrumBoard(ProjectDto projectDto, LocalDate date, IFactoryUserStory iFactoryUserStory)
+    {
         List<UserStoryDto> result = new ArrayList<>();
 
         Optional<SprintBacklog> sprintBacklogOptional = company.getScrumBoard(projectDto.code, date, iFactoryUserStory);
