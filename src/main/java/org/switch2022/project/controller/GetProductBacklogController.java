@@ -38,8 +38,10 @@ public class GetProductBacklogController {
     public List<UserStoryDto> getProductBacklog(ProjectDto projectDto) {
         List<UserStoryDto> userStoryDtoList = new ArrayList<>();
 
+        String projectCode = projectDto.getProjectCode();
+
         Optional<ProductBacklog> productBacklogOptional =
-                company.getProductBacklog(projectDto.code);
+                company.getProductBacklog(projectCode);
 
         if (productBacklogOptional.isPresent()) {
             ProductBacklog productBacklog = productBacklogOptional.get();

@@ -67,7 +67,7 @@ class UserStoryDtoListAssemblerTest {
     /**
      * METHOD backlogToDto(productBacklog)
      * Scenario 2: it should return an empty list of user story DTOs if no product
-     * backlog is retrieved
+     * backlog is retrieved.
      */
     @Test
     void ensureThatItReturnsAnEmptyListOfUserStoryDtosIfProductBacklogIsNull() {
