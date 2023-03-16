@@ -138,7 +138,7 @@ public class ProjectContainerTest {
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
+
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -183,7 +183,7 @@ public class ProjectContainerTest {
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
+
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -231,7 +231,7 @@ public class ProjectContainerTest {
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
+
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
@@ -279,7 +279,7 @@ public class ProjectContainerTest {
         UserStoryCreationDto userStoryCreationDtoDouble = mock(
                 UserStoryCreationDto.class);
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        when(projectDtoDouble.getProjectCode()).thenReturn("P001");
+
         ProjectContainer projectContainerTest = new ProjectContainer();
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
         ProjectTypologyContainer projectTypologyContainerDouble = mock(
