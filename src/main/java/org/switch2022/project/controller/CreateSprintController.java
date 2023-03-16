@@ -5,7 +5,6 @@ import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.SprintCreationDto;
 
 public class CreateSprintController {
-
     private final Company company;
 
     /**
@@ -22,7 +21,8 @@ public class CreateSprintController {
      * This method creates an userStory in the requested project
      * returns true if the userStory is successfully created
      */
-    public boolean createSprint(ProjectDto projectDto, SprintCreationDto sprintCreationDto) {
+    public boolean createSprint(ProjectDto projectDto,
+                                SprintCreationDto sprintCreationDto) {
         return projectDto != null && sprintCreationDto != null &&
                 company.createSprint(projectDto, sprintCreationDto);
     }

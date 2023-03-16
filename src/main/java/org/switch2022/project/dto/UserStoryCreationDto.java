@@ -22,8 +22,4 @@ public class UserStoryCreationDto {
     public int getPriority(){
         return this.priority;
     }
-
-    public String getUserStoryNumber(){
-        return this.userStoryNumber;
-    }
 }

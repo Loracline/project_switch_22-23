@@ -260,9 +260,10 @@ public class Project {
     private boolean hasUserStoryNumberInSprints(String userStoryNumber) {
         boolean result = false;
         int i = 0;
-        while (i < sprints.size() && !result) {
+        while (i < sprints.size()) {
             if (sprints.get(i).hasUserStory(userStoryNumber)) {
                 result = true;
+                i=sprints.size();
             }
             i++;
         }
@@ -277,7 +278,7 @@ public class Project {
      */
     public boolean createUserStory(UserStoryCreationDto userStoryCreationDto) {
         return userStoryCreationDto != null &&
-                !hasUserStoryNumberInSprints(userStoryCreationDto.getUserStoryNumber()) &&
+                !hasUserStoryNumberInSprints(userStoryCreationDto.userStoryNumber) &&
                 productBacklog.createUserStory(userStoryCreationDto);
     }
 

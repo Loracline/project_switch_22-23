@@ -3,7 +3,7 @@ package org.switch2022.project.dto.mapper;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.model.UserStory;
 
-public class UserStoryMapper {
+public final class UserStoryMapper {
     /**
      * Constructor of the class UserStoryMapper.
      */

@@ -7,7 +7,7 @@ import org.switch2022.project.model.Account;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountListEmailStatusMapper {
+public final class AccountListEmailStatusMapper {
     /**
      * Constructor of the class AccountMapper.
      */
@@ -27,6 +27,7 @@ public class AccountListEmailStatusMapper {
     }
 
     // LIST OF ACCOUNTS -> LIST OF DTO
+
     /**
      * This method converts a list of accounts into a list of accountDto's.
      *
