@@ -39,8 +39,9 @@ public class ViewScrumBoardController {
                                             IFactoryUserStory iFactoryUserStory) {
         List<UserStoryDto> result = new ArrayList<>();
 
-        Optional<SprintBacklog> sprintBacklogOptional =
-                company.getScrumBoard(projectDto.code, date, iFactoryUserStory);
+        String projectCode = projectDto.getProjectCode();
+
+        Optional<SprintBacklog> sprintBacklogOptional = company.getScrumBoard(projectCode, date, iFactoryUserStory);
         if (sprintBacklogOptional.isPresent()) {
             SprintBacklog sprintBacklog = sprintBacklogOptional.get();
             List<UserStoryDto> userStories =
