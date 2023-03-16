@@ -16,7 +16,7 @@ class AddUserToProjectController {
 
 class "AddUserStoryToSprintBacklogController" {
 - company
-+ addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++ addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
 }
 
 class ChangeProfileController {
@@ -117,13 +117,13 @@ class Company {
 +addUserToProject(accountDTO, projectCreationDto,allocationDTO)
 +listAccountsByProject(projectCode)
 +listProjectsByAccount(emailUser)
-+addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++addUserStoryToSprintBacklog(projectCode, userStoryNumber, sprintNumber)
 +createSprint(projectDto,sprintDto)
 +getScrumBoard(projectCode, date, iFactoryUserStory)
 -userStoryContainer
 +createUserStory(projectDto,userStoryCreationDto)
 +getProductBacklog(projectDto)
-+estimateEffortUserStory(userStoryDto, effort, projectCode, date)
++estimateEffortUserStory(userStoryDto, effort, projectDto, date)
 }
 
 class AccountContainer {
@@ -190,7 +190,7 @@ class ProjectContainer {
 +registerProject(ProjectCreationDto)
 -doesProjectExist(project)
 +estimateEffortUserStory(userStoryDto, effort, projectCode, date)
-+addUserStoryToSprintBacklog(userStoryDto, sprintNumber)
++addUserStoryToSprintBacklog(projectCode, userStoryNumber, sprintNumber)
 -getProjectByProjectCode(projectCode)
 +createSprint(sprintDto)
 -getProjectByCode(projectCode)
@@ -304,6 +304,12 @@ class Project {
 -factorySprint
 -sprints
 +Project(projectCode, name, customer, projectTypology, businessSector)
++Project( projectCode,  name,  customer,
+           projectTypology,
+          businessSector,
+          iFactoryProductBacklog,
+          iFactoryUserStory,  iFactoryPeriod,
+          iFactorySprintBacklo, iFactorySprint)
 +equals()
 +hashCode()
 +getProjectCode()
@@ -319,13 +325,14 @@ class Project {
 +isProjectOpen()
 +estimateEffortUserStory(userStoryDto, effort, date)
 +addUserStoryToSprintBacklog(userStoryNumber, sprintNumber)
--getSprint(sprintNumber)
+-getSprintByNumber(sprintNumber)
 +createSprint(sprintNumber, startDate, projectCode)
 +isSprintUnique(sprint)
 +isPeriodValid(sprint, existingSprint)
 +getScrumBoard(date, iFactoryUserStory)
 +createUserStory(userStoryCreationDto)
 +getProductBacklog()
+-hasUserStoryNumberInSprints(String userStoryNumber)
 +isDateWithinPeriod(date)
 }
 
@@ -361,8 +368,8 @@ class "ProductBacklog" {
 -factoryUserStory
 +equals()
 +hashCode()
-+ createUserStory(userStoryCreationDto,sprints)
--isUserStoryUnique(userStory)
++ createUserStory(userStoryCreationDto)
++ addUserStory(UserStory userStory, int priority)
 +getUserStories()
 +getUserStoryByNumber(userStoryNumber)
 +removeUserStory(userStory)
@@ -390,11 +397,11 @@ class "UserStory"{
 -status
 -listOfAcceptanceCriteria
 -projectCode
--UserStory(userStoryNumber)
-+ createUserStory(userStoryNumber, actor, userStoryText)
-- setActor(String actor)
-- setUserStoryText(String userStoryText)
-+ hasUserStoryNumber(String userStoryNumber)
+-UserStory(builder)
++UserStoryBuilder(userStoryNumber)
++setActor( actor)
++setUserStoryText( userStoryText)
++hasUserStoryNumber(userStoryNumber)
 +getEffort()
 +setEffort(effort)
 +getUsNumber()
@@ -444,6 +451,7 @@ class ProjectDto {
 +ProjectDto(code, name, customer, status, projectTypology, businessSector)
 +equals()
 +hashCode()
++getProjectCode()
 }
 
 class ProjectCreationDto {
@@ -461,6 +469,8 @@ class "UserStoryCreationDto"{
 +userStoryNumber
 +actor
 +userStoryText
++getPriority()
++getUserStoryNumber()
 }
 
 class UserStoryDto {
@@ -477,9 +487,22 @@ class FactorySprint {
 +createSprint(startDate, sprintDuration)
 }
 
-interface "FactoryUserStory"{
-createUserStory(userStoryNumber, actor, userStoryText)
+interface FactoryUserStory{
++ createUserStory(userStoryCreationDto)
 }
+
+interface FactoryProject{
++ createProject(ProjectCreationDto projectCreationDto, Customer customer,
+                                 ProjectTypology projectTypology, BusinessSector businessSector,
+                                 IFactoryProductBacklog factoryProductBacklog,
+                                 IFactoryUserStory factoryUserStory, IFactoryPeriod iFactoryPeriod,
+                                 IFactorySprintBacklog iFactorySprintBacklog, IFactorySprint iFactorySprint)
+                                 }
+
+ interface FactoryProductBacklog{
+ + createProductBacklog( factoryUserStory)
+ }
+
 
 enum "Effort"{
 -effortValue
@@ -575,7 +598,7 @@ CreateSprintController "1"-->"1" Company: has
 "AccountInProjectContainer" "1"--> "*" "AccountInProject" : has
 "ProjectContainer" .--> "ProjectDto": accesses
 "ProjectContainer" "1" -left-> "*" "Project" : contains
-
+"ProjectContainer" "1" -->"1" "FactoryProject": has
 
 'Account Profile Link'
 "Account" "*"--> "1""Profile": contains
@@ -585,6 +608,7 @@ CreateSprintController "1"-->"1" Company: has
 
 'Project Link'
 "Project" "1" --> "*" "Sprint"
+"Project" "1"-->"1" "FactoryProductBacklog": has
 "Project" "1" -->"1" "ProductBacklog": has
 "Project" "1"-->"1" "FactorySprint": has
 
@@ -615,6 +639,9 @@ FactorySprint "1"..> "*"Sprint
 
 'Dto Link'
 "UserStoryDtoMapper" .--> "UserStoryDto": instantiates
-"UserStoryCreationDto"<.."UserStoryContainer"
+"Project" ..> "UserStoryCreationDto"
+"ProductBacklog" ..> "UserStoryCreationDto"
+"FactoryUserStory" ..> "UserStoryCreationDto"
+"ProjectDto"<.. "ProjectContainer"
 
 @enduml
