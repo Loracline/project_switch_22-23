@@ -154,12 +154,14 @@ public class Company {
     public boolean registerProject(ProjectCreationDto projectDto,
                                    IFactoryProductBacklog factoryProductBacklog,
                                    IFactoryUserStory factoryUserStory,
-                                   IFactoryProject factoryProject, IFactoryPeriod iFactoryPeriod,
+                                   IFactoryProject factoryProject,
+                                   IFactoryPeriod iFactoryPeriod,
                                    IFactorySprintBacklog iFactorySprintBacklog,
                                    IFactorySprint iFactorySprint) {
         return (projectContainer.registerProject(projectDto, projectTypologyContainer,
                 customerContainer,
-                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject,
+                businessSectorContainer, factoryProductBacklog, factoryUserStory,
+                factoryProject,
                 iFactoryPeriod,
                 iFactorySprintBacklog, iFactorySprint));
     }
@@ -208,13 +210,15 @@ public class Company {
     public boolean createProjectTypology(String projectTypology) {
         return projectTypologyContainer.createProjectTypology(projectTypology);
     }
-  /**
-   * This method creates a Sprint in the requested project
-   * returns true if the Sprint is successfully created
-   */
-  public boolean createSprint( ProjectDto projectDto, SprintCreationDto sprintCreationDto) {
-    return projectContainer.createSprint(sprintCreationDto,projectDto);
-  }
+
+    /**
+     * This method creates a Sprint in the requested project
+     * returns true if the Sprint is successfully created
+     */
+    public boolean createSprint(ProjectDto projectDto,
+                                SprintCreationDto sprintCreationDto) {
+        return projectContainer.createSprint(sprintCreationDto, projectDto);
+    }
 
     // ACCOUNT IN PROJECT METHODS
 
@@ -238,7 +242,8 @@ public class Company {
 
         if (account != null && project != null) {
             if (account.isProfileRequired("user") && project.isProjectOpen()) {
-                addUserToProject = this.accountInProjectContainer.addUserToProject(account, project,
+                addUserToProject = this.accountInProjectContainer.addUserToProject(
+                        account, project,
                         allocationDto);
             }
         }
@@ -265,7 +270,8 @@ public class Company {
     }
 
     /**
-     * This method returns the scrum board (composed of the sprint backlog) of the project of
+     * This method returns the scrum board (composed of the sprint backlog) of the
+     * project of
      * interest, in a given date.
      *
      * @param projectCode       of the project of interest.

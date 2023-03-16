@@ -234,7 +234,7 @@ public class AccountInProjectContainer {
      * @return TRUE if there is no overlapping periods between the allocations, and
      * FALSE otherwise
      */
-    private boolean isPeriodValid(AccountInProject newAccountInProject,
+    private static boolean isPeriodValid(AccountInProject newAccountInProject,
                                   AccountInProject existingAccountInProject) {
         boolean isPeriodValid = true;
         LocalDate startDateNewAllocation = newAccountInProject.getStartDate();
