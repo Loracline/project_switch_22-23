@@ -31,8 +31,8 @@ public class ProjectContainer {
     private Optional<Project> getProjectByCode(String code) {
         Project projectRequested = null;
         int i = 0;
-        while (i < this.projects.size() && (projectRequested != (projects.get(i)))) {
-            if (projects.get(i).hasProjectCode(code)) {
+        while (i < this.projects.size() && projectRequested == null) {
+            if (projects.get(i) != null && projects.get(i).hasProjectCode(code)) {
                 projectRequested = projects.get(i);
             }
             i++;
@@ -81,7 +81,7 @@ public class ProjectContainer {
      * @param project to be added.
      * @return TRUE if the Project was added to Project Container and FALSE otherwise.
      */
-    protected boolean addProjectToProjectContainer(Project project){
+    public boolean addProjectToProjectContainer(Project project){
         boolean projectRegistered = false;
         if (!doesProjectExist(project)) {
             projects.add(project);

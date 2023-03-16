@@ -330,11 +330,11 @@ public class Project {
     public boolean addUserStoryToSprintBacklog(String userStoryNumber,
                                                String sprintNumber) {
         boolean result = false;
-        if (getSprintByNumber(sprintNumber).isPresent() &&
-                this.productBacklog.getUserStoryByNumber(userStoryNumber).isPresent()) {
-            Sprint sprint = getSprintByNumber(sprintNumber).get();
-            UserStory userStory =
-                    this.productBacklog.getUserStoryByNumber(userStoryNumber).get();
+        Optional<Sprint> sprintOptional= getSprintByNumber(sprintNumber);
+        Optional<UserStory> userStoryOptional= this.productBacklog.getUserStoryByNumber(userStoryNumber);
+        if (sprintOptional.isPresent() && userStoryOptional.isPresent()) {
+            Sprint sprint = sprintOptional.get();
+            UserStory userStory = userStoryOptional.get();
             sprint.addUserStoryToSprintBacklog(userStory);
             productBacklog.removeUserStory(userStory);
             result = true;
