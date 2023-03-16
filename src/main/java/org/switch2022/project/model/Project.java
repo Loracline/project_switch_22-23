@@ -31,8 +31,6 @@ public class Project {
     private int sprintDuration;
     private List<Sprint> sprints;
     private ProductBacklog productBacklog;
-    private IFactoryProductBacklog iFactoryProductBacklog;
-    private IFactoryUserStory iFactoryUserStory;
     private IFactoryPeriod iFactoryPeriod;
     private IFactorySprintBacklog iFactorySprintBacklog;
     private IFactorySprint iFactorySprint;
@@ -70,10 +68,8 @@ public class Project {
         this.projectTypology = projectTypology;
         this.businessSector = businessSector;
         this.sprintDuration = 0;
-        this.iFactoryProductBacklog = iFactoryProductBacklog;
-        this.iFactoryUserStory = iFactoryUserStory;
         this.productBacklog =
-                this.iFactoryProductBacklog.createProductBacklog(this.iFactoryUserStory);
+                iFactoryProductBacklog.createProductBacklog(iFactoryUserStory);
         this.iFactoryPeriod = iFactoryPeriod;
         this.iFactorySprintBacklog = iFactorySprintBacklog;
         this.iFactorySprint = iFactorySprint;
@@ -264,7 +260,7 @@ public class Project {
     private boolean hasUserStoryNumberInSprints(String userStoryNumber) {
         boolean result = false;
         int i = 0;
-        while (i < sprints.size() && !result && userStoryNumber != null) {
+        while (i < sprints.size() && !result) {
             if (sprints.get(i).hasUserStory(userStoryNumber)) {
                 result = true;
             }
@@ -293,7 +289,7 @@ public class Project {
      */
     public boolean createSprint(SprintCreationDto sprintCreationDto) {
         Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.getStartDate(),
-                sprintCreationDto.getSprintDuration(),
+                sprintCreationDto.sprintDuration,
                 sprintCreationDto.getSprintNumber(), iFactoryPeriod,
                 iFactorySprintBacklog);
         return isPeriodValid(sprint) && addSprint(sprint);
