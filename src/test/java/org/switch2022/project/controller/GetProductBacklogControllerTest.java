@@ -9,11 +9,16 @@ import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
+import org.switch2022.project.model.ProductBacklog;
+import org.switch2022.project.model.UserStory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class GetProductBacklogControllerTest {
 
@@ -84,12 +89,14 @@ class GetProductBacklogControllerTest {
 
         customerContainer.addCustomer(projectCreationDto.customerName,
                 projectCreationDto.customerNif);
-        projectTypologyContainer.createProjectTypology(projectCreationDto.projectTypology);
+        projectTypologyContainer.createProjectTypology(
+                projectCreationDto.projectTypology);
         businessSectorContainer.createBusinessSector(projectCreationDto.projectTypology);
 
         projectContainer.registerProject(projectCreationDto, projectTypologyContainer,
                 customerContainer,
-                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject,
+                businessSectorContainer, factoryProductBacklog, factoryUserStory,
+                factoryProject,
                 factoryPeriod, factorySprintBacklog, factorySprint);
 
         projectContainer.createUserStory(projectDto, userStoryCreationDtoOne);
@@ -123,10 +130,105 @@ class GetProductBacklogControllerTest {
         getProductBacklogController = null;
     }
 
+    //UNIT TESTS
+
+    /**
+     * METHOD getProductBacklog - with isolation
+     * Scenario 1: This test ensures that a list of User Stories Dto extracted from a
+     * Product Backlog of a Project is returned when a given projectCode match with an
+     * existent Project.
+     */
+
+    @Test
+    void ensureThatProductBacklogIsSuccessfullyReturnedIfProjectCodeExists_WithIsolation() {
+        //ARRANGE
+        ProjectDto projectDto = mock(ProjectDto.class);
+        when(projectDto.getProjectCode()).thenReturn("AA001");
+
+        Optional<ProductBacklog> productBacklogOptional = mock(Optional.class);
+        Company company = mock(Company.class);
+        when(company.getProductBacklog("AA001")).thenReturn(productBacklogOptional);
+
+        when(productBacklogOptional.isPresent()).thenReturn(true);
+
+        ProductBacklog productBacklog = mock(ProductBacklog.class);
+
+        UserStory userStoryOne = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        when(userStoryOne.getUserStoryNumber()).thenReturn("US001");
+        when(userStoryOne.getUserStoryText()).thenReturn("I want to create a project");
+        when(userStoryOne.getStatus()).thenReturn("planned");
+
+        when(userStoryTwo.getUserStoryNumber()).thenReturn("US002");
+        when(userStoryTwo.getUserStoryText()).thenReturn("I want to create a user " +
+                "story");
+        when(userStoryTwo.getStatus()).thenReturn("planned");
+
+        List<UserStory> userStories = new ArrayList<>();
+        userStories.add(userStoryOne);
+        userStories.add(userStoryTwo);
+
+        when(productBacklog.getUserStoriesCopy()).thenReturn(userStories);
+
+        when(productBacklogOptional.get()).thenReturn(productBacklog);
+
+        List<UserStoryDto> expected = new ArrayList<>();
+        expected.add(userStoryDtoOne);
+        expected.add(userStoryDtoTwo);
+
+        //ACT
+        List<UserStoryDto> result = getProductBacklogController.getProductBacklog(
+                projectDto);
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD getProductBacklog - with isolation
+     * Scenario 2: This test ensures that an empty list of User Stories Dto extracted
+     * from a Product Backlog of a Project is returned when a given projectCode doesn't
+     * match any existent Project.
+     */
+
+    @Test
+    void ensureThatProductBacklogIsNotSuccessfullyReturnedIfProjectCodeDoesNotExist_WithIsolation() {
+        //ARRANGE
+        ProjectDto projectDto = mock(ProjectDto.class);
+        when(projectDto.getProjectCode()).thenReturn("AA002");
+
+        Optional<ProductBacklog> productBacklogOptional = mock(Optional.class);
+        Company company = mock(Company.class);
+        when(company.getProductBacklog("AA002")).thenReturn(productBacklogOptional);
+
+        when(productBacklogOptional.isPresent()).thenReturn(false);
+
+        ProductBacklog productBacklog = mock(ProductBacklog.class);
+
+        List<UserStory> userStories = new ArrayList<>();
+
+        when(productBacklog.getUserStoriesCopy()).thenReturn(userStories);
+
+        when(productBacklogOptional.get()).thenReturn(productBacklog);
+
+        List<UserStoryDto> expected = new ArrayList<>();
+
+        //ACT
+        List<UserStoryDto> result = getProductBacklogController.getProductBacklog(
+                projectDto);
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    //INTEGRATION TESTS
+
     /**
      * METHOD getProductBacklog
-     * Scenario 1: This test ensures that a list of User Stories Dto extracted from a Product
-     * Backlog of a Project is returned when a given projectCode match with an existent Project.
+     * Scenario 1: This test ensures that a list of User Stories Dto extracted from a
+     * Product Backlog of a Project is returned when a given projectCode match with an
+     * existent Project.
      */
 
     @Test
@@ -137,7 +239,8 @@ class GetProductBacklogControllerTest {
         expected.add(userStoryDtoTwo);
 
         //ACT
-        List<UserStoryDto> result = getProductBacklogController.getProductBacklog(projectDto);
+        List<UserStoryDto> result = getProductBacklogController.getProductBacklog(
+                projectDto);
 
         //ASSERT
         assertEquals(expected, result);
@@ -145,9 +248,9 @@ class GetProductBacklogControllerTest {
 
     /**
      * METHOD getProductBacklog
-     * Scenario 2: This test ensures that no list of User Stories Dto extracted from a Product
-     * Backlog of a Project is returned when a given projectCode doesn't match any existent
-     * Project.
+     * Scenario 2: This test ensures that an empty list of User Stories Dto extracted
+     * from a Product Backlog of a Project is returned when a given projectCode doesn't
+     * match any existent Project.
      */
 
     @Test

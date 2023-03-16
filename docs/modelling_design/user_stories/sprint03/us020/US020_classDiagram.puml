@@ -13,25 +13,31 @@ class "AddUserStoryToSprintBacklogController" {
 
 class "Company" {
 - projectContainer
-+ addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
++ addUserStoryToSprintBacklog(projectCode, userStoryNUmber, sprintNumber)
 }
 class "ProjectContainer" {
 - projects
-+ addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
++ addUserStoryToSprintBacklog(projectCode, userStoryNumber, sprintNumber)
 - getProjectByProjectCode(projectCode)
 
 }
 
 class "Project"{
-- productBacklog
-- sprints
+- projectCode;
+- sprints;
+- productBacklog;
+- iFactoryProductBacklog;
+- iFactoryUserStory;
+- iFactorySprintBacklog;
+- iFactorySprint;
 + addUserStoryToSprintBacklog(userStoryNumber, sprintNumber)
 + hasProjectCode(projectCode)
-- getSprint(sprintNumber)
+- getSprintByNumber(sprintNumber)
 }
 
 class "ProductBacklog" {
 - userStories
+- iFactoryUserStory
 + getUserStoryByNumber(userStoryNumber)
 + removeUserStory(userStory)
 }
@@ -41,18 +47,16 @@ class "UserStory"{
 - actor
 - userStoryText
 - status
-- effort
 - listOfAcceptanceCriteria
-- projectCode
-+ UserStory(userStoryNumber, actor, userStoryText)
+- effort
 + hasUserStoryNumber(userStoryNumber)
 }
 
 class "Sprint"{
 - sprintNumber
-- factoryPeriod
 - period
 - sprintBacklog
+- iFactorySprintBacklog
 + Sprint(sprintNumber, factoryPeriod)
 + hasSprintNumber(sprintNumber)
 + addUserStoryToSprintBacklog(userStory)
