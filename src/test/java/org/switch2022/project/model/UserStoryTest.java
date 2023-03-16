@@ -2,9 +2,7 @@ package org.switch2022.project.model;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.utils.Effort;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.switch2022.project.utils.Status;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -273,27 +271,6 @@ class UserStoryTest {
     }
 
     /**
-     * METHOD getAcceptanceCriteria()
-     * <br>
-     * Scenario 1: Verify that the acceptance criteria list is empty.
-     */
-    @Test
-    void ensureIsRetrievedAnEmptyListOfAcceptanceCriteria() {
-        // Arrange
-        UserStory userStoryOne =
-                new UserStory.UserStoryBuilder("US001")
-                        .setAcceptanceCriteria().build();
-
-        List<String> expected = new ArrayList<>();
-
-        // Act
-        List<String> result = userStoryOne.getAcceptanceCriteria();
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    /**
      * METHOD getStatus()
      * <br>
      * Scenario 1: Verify that the status returned is the same of the User Story.
@@ -302,11 +279,11 @@ class UserStoryTest {
     void ensureStatusIsRetrievedSuccessfully() {
         // Arrange
         UserStory userStoryOne = new
-                UserStory.UserStoryBuilder("US001").setStatus().build();
-        String expected = "planned";
+                UserStory.UserStoryBuilder("US001").build();
+        Status expected = Status.PLANNED;
 
         // Act
-        String result = userStoryOne.getStatus();
+        Status result = userStoryOne.getStatus();
 
         // Assert
         assertEquals(expected, result);

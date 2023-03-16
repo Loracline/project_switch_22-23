@@ -3,25 +3,22 @@ package org.switch2022.project.model;
 import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Status;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
- * The class UserStory was built to create and manager new userStories.
+ * The class UserStory was built to create and manage new userStories.
  * An UserStory is defined by: an userStoryNumber, which is it unique ID, a
  * projectCode,an actor, an userStoryText,
- * an effort, a status and a list of  acceptanceCriteria.
+ * an effort and a status.
  */
-public class UserStory {
+public final class UserStory {
     /**
      * Attributes
      */
     private final String userStoryNumber;
     private final String actor;
     private final String userStoryText;
-    private final Status status;
-    private final List<String> acceptanceCriteria;
+    private Status status;
     private Effort effort;
 
     /**
@@ -32,9 +29,8 @@ public class UserStory {
         this.userStoryNumber = builder.userStoryNumber;
         this.actor = builder.actor;
         this.userStoryText = builder.userStoryText;
-        this.status = builder.status;
-        this.acceptanceCriteria = builder.acceptanceCriteria;
-        this.effort = builder.effort;
+        this.status = Status.PLANNED;
+        this.effort = Effort.ONE;
     }
 
     /**
@@ -97,15 +93,17 @@ public class UserStory {
     /**
      * Getter method for the attribute: status
      */
-    public String getStatus() {
-        return status.toString().toLowerCase();
+    public Status getStatus() {
+        return status;
     }
 
     /**
-     * Getter method for the attribute: acceptanceCriteria
+     * Setter method for the status attribute.
+     *
+     * @param status to change to in the User Story.
      */
-    public List<String> getAcceptanceCriteria() {
-        return acceptanceCriteria;
+    void setStatus(Status status) {
+        this.status = status;
     }
 
     /**
@@ -134,7 +132,7 @@ public class UserStory {
      * @return TRUE if userStory has given userStoryNumber, and FALSE otherwise.
      */
     public boolean hasUserStoryNumber(String userStoryNumber) {
-        return this.userStoryNumber.equalsIgnoreCase(userStoryNumber);
+        return this.userStoryNumber.equalsIgnoreCase(userStoryNumber.trim());
     }
 
     /**
@@ -144,9 +142,6 @@ public class UserStory {
         private final String userStoryNumber;
         private String actor;
         private String userStoryText;
-        private Status status;
-        private Effort effort;
-        private List<String> acceptanceCriteria;
 
         /**
          * This method creates a userStory the userStoryNumber
@@ -174,30 +169,6 @@ public class UserStory {
          */
         public UserStoryBuilder setUserStoryText(String userStoryText) {
             this.userStoryText = userStoryText.toLowerCase().trim();
-            return this;
-        }
-
-        /**
-         * This method sets the Status of the User Story
-         */
-        public UserStoryBuilder setStatus() {
-            this.status = Status.PLANNED;
-            return this;
-        }
-
-        /**
-         * This method sets a new and empty Acceptance Criteria List of the User Story
-         */
-        public UserStoryBuilder setAcceptanceCriteria() {
-            this.acceptanceCriteria = new ArrayList<>();
-            return this;
-        }
-
-        /**
-         * This method sets the effort of the User Story as number one.
-         */
-        public UserStoryBuilder setEffort() {
-            this.effort = Effort.ONE;
             return this;
         }
 

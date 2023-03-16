@@ -387,7 +387,7 @@ class SprintBacklogTest {
         sprintBacklogToTest.addUserStory(userStoryDouble);
 
         FactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
+        when(factoryUserStoryDouble.createUserStory(any(), any())).
                 thenReturn(userStoryDouble);
 
         // Act
@@ -414,7 +414,7 @@ class SprintBacklogTest {
         expectedList.add(userStoryDouble);
 
         FactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        when(factoryUserStoryDouble.createUserStory(any(), any(), any())).
+        when(factoryUserStoryDouble.createUserStory(any(), any())).
                 thenReturn(userStoryDouble);
 
         // Act

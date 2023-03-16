@@ -656,7 +656,6 @@ public class ProjectTest {
         IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
-        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
                 factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
@@ -691,7 +690,6 @@ public class ProjectTest {
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprint = mock(FactorySprint.class);
-        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
@@ -729,7 +727,6 @@ public class ProjectTest {
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprint = mock(FactorySprint.class);
-        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
 
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
@@ -803,7 +800,7 @@ public class ProjectTest {
         IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
-        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
+
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
                 factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,
@@ -837,7 +834,6 @@ public class ProjectTest {
         IFactorySprint factorySprint = mock(FactorySprint.class);
 
         when(factoryProductBacklogDouble.createProductBacklog(factoryUserStoryDouble)).thenReturn(productBacklogDouble);
-        when(userStoryCreationDtoDouble.getUserStoryNumber()).thenReturn("Us001");
         Project projectToTest = new Project("A001", "Artemis", customerDouble,
                 projectTypologyDouble, businessSectorDouble,
                 factoryProductBacklogDouble, factoryUserStoryDouble, factoryPeriod,

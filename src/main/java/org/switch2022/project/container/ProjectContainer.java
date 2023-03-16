@@ -130,7 +130,7 @@ public class ProjectContainer {
     public boolean createUserStory(ProjectDto projectDto,
                                    UserStoryCreationDto userStoryCreationDto) {
         boolean isUserStoryCreated = false;
-        Optional<Project> projectOptional = getProjectByCode(projectDto.getProjectCode());
+        Optional<Project> projectOptional = getProjectByCode(projectDto.code);
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             isUserStoryCreated = project.createUserStory(userStoryCreationDto);

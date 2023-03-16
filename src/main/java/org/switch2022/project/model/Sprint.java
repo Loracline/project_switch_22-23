@@ -15,7 +15,7 @@ import java.util.Objects;
  * Represents a short period of time defined by a Sprint Number, Period and Sprint
  * Backlog.
  */
-public class Sprint {
+public final class Sprint {
     private final String sprintNumber;
     private Period period;
     private SprintBacklog sprintBacklog;
