@@ -62,6 +62,7 @@ class SprintBacklog {
 
 class ProjectDto {
 +projectCode
++getProjectCode()
 }
 
 interface IFactoryUserStory {
