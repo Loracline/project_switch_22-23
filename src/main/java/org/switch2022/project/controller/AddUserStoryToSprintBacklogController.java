@@ -32,7 +32,11 @@ public class AddUserStoryToSprintBacklogController {
 
     public boolean addUserStoryToSprintBacklog(String projectCode, UserStoryDto userStoryDto,
                                                String sprintNumber) {
-        return company.addUserStoryToSprintBacklog(projectCode,
-                userStoryDto.userStoryNumber, sprintNumber);
+        boolean result = false;
+        if (projectCode != null && userStoryDto != null && sprintNumber != null) {
+            result = company.addUserStoryToSprintBacklog(projectCode,
+                    userStoryDto.userStoryNumber, sprintNumber);
+        }
+        return result;
     }
 }
