@@ -1,1 +1,0 @@
-Put here deprecated artifacts related to US006.
