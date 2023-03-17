@@ -32,7 +32,13 @@ class "Project"{
 
 class "ProductBacklog"{
 -userStories
-+getUserStories()
+-iFactoryUserStory
++getProductBacklogCopy()
++getUserStoriesCopy()
+}
+
+interface IFactoryUserStory{
++createUserStory(userStoryNumber, userStoryText)
 }
 
 class "UserStory"{
@@ -41,6 +47,7 @@ class "UserStory"{
 -status
 +getUserStoryNumber()
 +getStatus()
++setStatus()
 +getUserStoryText()
 }
 
@@ -65,14 +72,17 @@ class "ProjectDto"{
 }
 
 "GetProductBacklogController" "1"-->"1" "Company": has
-"GetProductBacklogController" ..> "UserStoryDtoListAssembler"
+"GetProductBacklogController" ..> "UserStoryDtoListAssembler": uses
 "UserStoryDtoListAssembler" ..> "UserStoryDtoMapper"
+"UserStoryDtoListAssembler" ..> "ProductBacklog"
 "UserStoryDtoMapper" ..> "UserStory"
 "Company" "1"-->"1" "ProjectContainer": has
 "ProjectContainer" "1"-->"*" Project: contains
 "GetProductBacklogController" ..> ProjectDto: extracts
 "Project" "1"-->"*" ProductBacklog: contains
 "ProductBacklog" "1"-->"*" UserStory: contains
+"ProductBacklog" ..> IFactoryUserStory
+IFactoryUserStory ..> "UserStory"
 "UserStoryDtoMapper" ..> "UserStoryDto": instantiates
 
 @enduml
