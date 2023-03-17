@@ -39,9 +39,9 @@ class "UserStory"{
 -userStoryNumber
 -userStoryText
 -status
-+getUsNumber()
-+getUsStatus()
-+getUsText()
++getUserStoryNumber()
++getStatus()
++getUserStoryText()
 }
 
 
