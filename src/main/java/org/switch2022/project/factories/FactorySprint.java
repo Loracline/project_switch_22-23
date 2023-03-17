@@ -24,5 +24,6 @@ public class FactorySprint implements IFactorySprint {
                                String sprintNumber,
                                IFactoryPeriod iFactoryPeriod,
                                IFactorySprintBacklog iFactorySprintBacklog) {
-    return Sprint.createSprint(startDate,sprintDuration,sprintNumber, iFactoryPeriod,iFactorySprintBacklog);}
+    return Sprint.createSprint(startDate,sprintDuration,sprintNumber, iFactoryPeriod,iFactorySprintBacklog);
+    }
 }
