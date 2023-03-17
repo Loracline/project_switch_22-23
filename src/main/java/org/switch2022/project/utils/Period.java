@@ -53,7 +53,7 @@ public class Period {
      * @param sprintDuration the duration of the period in sprints
      * @return the end date of the period
      */
-    private final LocalDate calculateEndDate(LocalDate startDate, int sprintDuration) {
+    private final static LocalDate calculateEndDate(LocalDate startDate, int sprintDuration) {
         return startDate.plusWeeks(sprintDuration);
     }
 
