@@ -10,13 +10,14 @@ import java.time.LocalDate;
 public class FactorySprint implements IFactorySprint {
 
     /**
-     * This method creates a new Sprint object with the start date, sprint duration, sprint number, iFactoryPeriod and
+     * This method creates a new Sprint object with the start date, sprint duration, sprint
+     * number, iFactoryPeriod and
      * iFactorySprintBacklog
      *
-     * @param startDate  the start date of the Sprint
-     * @param sprintDuration duration of the Sprint
-     * @param sprintNumber number of the Sprint
-     * @param iFactoryPeriod implementation FactoryPeriod
+     * @param startDate             the start date of the Sprint
+     * @param sprintDuration        duration of the Sprint
+     * @param sprintNumber          number of the Sprint
+     * @param iFactoryPeriod        implementation FactoryPeriod
      * @param iFactorySprintBacklog implementation FactorySprintBacklog
      * @return project
      */
@@ -24,6 +25,7 @@ public class FactorySprint implements IFactorySprint {
                                String sprintNumber,
                                IFactoryPeriod iFactoryPeriod,
                                IFactorySprintBacklog iFactorySprintBacklog) {
-    return Sprint.createSprint(startDate,sprintDuration,sprintNumber, iFactoryPeriod,iFactorySprintBacklog);
+        return Sprint.createSprint(startDate, sprintDuration, sprintNumber, iFactoryPeriod,
+                iFactorySprintBacklog);
     }
 }

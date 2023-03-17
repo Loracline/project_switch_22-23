@@ -240,12 +240,12 @@ public class Company {
         Project project =
                 getProjectToAllocation(projectCreationDto.code);
 
-            if (areAccountAndProjectValid(account, project) && account.isProfileRequired(
-                    "user") && project.isProjectOpen()) {
-                addUserToProject = this.accountInProjectContainer.addUserToProject(
-                        account, project,
-                        allocationDto);
-            }
+        if (areAccountAndProjectValid(account, project) && account.isProfileRequired(
+                "user") && project.isProjectOpen()) {
+            addUserToProject = this.accountInProjectContainer.addUserToProject(
+                    account, project,
+                    allocationDto);
+        }
         return addUserToProject;
     }
 
