@@ -23,7 +23,7 @@ class EstimateUserStoryEffortControllerTest {
      */
 
     UserStoryDto userStoryDtoOne, userStoryDtoTwo;
-    ProjectDto projectDtoOne, projectDtoTwo;
+    ProjectDto projectDtoOne, projectDtoTwo, projectDtoThree;
     SprintCreationDto sprintCreationDto;
     ProjectCreationDto projectCreationDto;
     UserStoryCreationDto userStoryCreationDto;
@@ -53,6 +53,9 @@ class EstimateUserStoryEffortControllerTest {
                 "Peter", "228674498",
                 "Fixed cost", "Fishing");
         projectDtoTwo = new ProjectDto("AA002", "software development" + "management",
+                "Peter", "228674498",
+                "Fixed cost", "Fishing");
+        projectDtoThree = new ProjectDto("AA002", "software development" + "management",
                 "Peter", "228674498",
                 "Fixed cost", "Fishing");
         projectCreationDto = new ProjectCreationDto("AA001",
@@ -162,12 +165,26 @@ class EstimateUserStoryEffortControllerTest {
     @Test
     void ensureUserStoryEffortIsNotEstimatedUserStoryIsNull() {
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoTwo,
-                Effort.TWO, projectDtoTwo);
+                Effort.TWO, projectDtoOne);
         assertFalse(result);
     }
 
     /**
      * Scenario 5: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
+     * method of the EstimateUserStoryEffortController class can't correctly estimate the effort for
+     * a user story, because project is null.
+     * Expected result: false, indicating that the estimation was unsuccessful.
+     */
+
+    @Test
+    void ensureUserStoryEffortIsNotEstimatedProjectIsNull() {
+        boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoTwo,
+                Effort.TWO, projectDtoThree);
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 6: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
      * method of the EstimateUserStoryEffortController class can correctly estimate the effort
      * for a user story.
      * Expected result: true, indicating that the estimation was successful.
@@ -192,7 +209,7 @@ class EstimateUserStoryEffortControllerTest {
     }
 
     /**
-     * Scenario 6: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
+     * Scenario 7: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
      * method of the EstimateUserStoryEffortController class can't correctly estimate the effort
      * for a user story.
      * Expected result: false, indicating that the estimation was unsuccessful.
