@@ -103,7 +103,7 @@ class CreateSprintControllerTest {
      * Scenario 1: it should return true
      */
     @Test
-    void ensureUserStoryIsCreatedSuccessfully_WithIsolation(){
+    void ensureSprintIsCreatedSuccessfully_WithIsolation(){
         //Assert
         ProjectDto projectDtoDouble= mock(ProjectDto.class);
         SprintCreationDto sprintCreationDtoDouble= mock(SprintCreationDto.class);
@@ -121,7 +121,7 @@ class CreateSprintControllerTest {
      * Scenario 2: it should return false
      */
     @Test
-    void ensureUserStoryIsNotCreatedSuccessfully_WithIsolation(){
+    void ensureSprintIsNotCreatedSuccessfully_WithIsolation(){
         //Assert
         ProjectDto projectDtoDouble= mock(ProjectDto.class);
         SprintCreationDto sprintCreationDtoDouble= mock(SprintCreationDto.class);
@@ -153,7 +153,7 @@ class CreateSprintControllerTest {
         assertFalse(result);
     }
     /**
-     * Scenario 2: it should return false when an userStory is created.
+     * Scenario 2: it should return false when a Sprint is created.
      * because the projectDto is null.
      */
     @Test
@@ -226,20 +226,4 @@ class CreateSprintControllerTest {
         //Assert
         assertTrue(result);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
