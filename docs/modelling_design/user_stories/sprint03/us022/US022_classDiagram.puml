@@ -66,7 +66,7 @@ class ProjectDto {
 }
 
 interface IFactoryUserStory {
-+createUserStory(userStoryNumber, actor, userStoryText)
++createUserStory(userStoryNumber, userStoryText)
 }
 
 class UserStory {
@@ -78,7 +78,7 @@ class UserStory {
 +getStatus()
 +setStatus()
 +getUserStoryText()
-+getActor()
+
 }
 
 class UserStoryDto {

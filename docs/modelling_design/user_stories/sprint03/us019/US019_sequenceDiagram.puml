@@ -19,11 +19,13 @@ participant ":FactoryPeriod" as fp
 participant "period:Period" as pp
 
 activate pm
+activate ui
 pm -> ui: requests list of projects
 ref over pm : US016:list all projects the user is allocated as authenticated
 pm -> ui : create sprint
-ui --> pm : requests data (sprintNumber,startDate)
 
+ui --> pm : requests data (sprintNumber,startDate)
+deactivate ui
 pm -> ui: types requested data
 activate ui
 

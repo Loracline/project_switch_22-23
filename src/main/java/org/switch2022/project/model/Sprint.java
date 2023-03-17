@@ -31,7 +31,7 @@ public final class Sprint {
     }
 
     /**
-     * Constructor for Sprint class.
+     * Builder for Sprint class.
      *
      * @param startDate      the start date of the sprint.
      * @param sprintDuration the duration of the sprint in days.

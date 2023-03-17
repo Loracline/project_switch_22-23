@@ -12,19 +12,24 @@ public class SprintCreationDto {
     public final String sprintNumber;
 
     /**
-     * This method creates an SprintCreationDto
+     * This method creates an SprintCreationDto.
      */
-    public SprintCreationDto(LocalDate startDate,int sprintDuration,String sprintNumber) {
+    public SprintCreationDto(LocalDate startDate, int sprintDuration, String sprintNumber) {
         this.startDate = startDate;
         this.sprintDuration = sprintDuration;
         this.sprintNumber = sprintNumber;
     }
 
+    /**
+     * This method returns the Sprint Number.
+     */
     public String getSprintNumber() {
         return this.sprintNumber;
     }
 
-
+    /**
+     * This method returns the Start Date.
+     */
     public LocalDate getStartDate() {
         return this.startDate;
     }
