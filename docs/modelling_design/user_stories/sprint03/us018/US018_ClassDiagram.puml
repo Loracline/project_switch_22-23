@@ -14,13 +14,13 @@ class "GetProductBacklogController" {
 
 class "Company"{
 -projectContainer
-+getProductBacklog(projectDto)
++getProductBacklog(projectCode)
 }
 
 class "ProjectContainer"{
 -projects
 -getProjectByCode(code)
-+getProductBacklog(projectDto)
++getProductBacklog(projectCode)
 }
 
 class "Project"{
@@ -39,9 +39,9 @@ class "UserStory"{
 -userStoryNumber
 -userStoryText
 -status
-+getUsNumber()
-+getUsStatus()
-+getUsText()
++getUserStoryNumber()
++getStatus()
++getUserStoryText()
 }
 
 
@@ -61,6 +61,7 @@ class "UserStoryDto"{
 
 class "ProjectDto"{
 +projectCode
++getProjectCode()
 }
 
 "GetProductBacklogController" "1"-->"1" "Company": has
@@ -69,7 +70,7 @@ class "ProjectDto"{
 "UserStoryDtoMapper" ..> "UserStory"
 "Company" "1"-->"1" "ProjectContainer": has
 "ProjectContainer" "1"-->"*" Project: contains
-"ProjectContainer" ..> ProjectDto: accesses
+"GetProductBacklogController" ..> ProjectDto: extracts
 "Project" "1"-->"*" ProductBacklog: contains
 "ProductBacklog" "1"-->"*" UserStory: contains
 "UserStoryDtoMapper" ..> "UserStoryDto": instantiates

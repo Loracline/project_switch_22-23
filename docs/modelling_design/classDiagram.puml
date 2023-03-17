@@ -122,7 +122,7 @@ class Company {
 +getScrumBoard(projectCode, date, iFactoryUserStory)
 -userStoryContainer
 +createUserStory(projectDto,userStoryCreationDto)
-+getProductBacklog(projectDto)
++getProductBacklog(projectCode)
 +estimateEffortUserStory(userStoryDto, effort, projectDto, date)
 }
 
@@ -404,10 +404,10 @@ class "UserStory"{
 +hasUserStoryNumber(userStoryNumber)
 +getEffort()
 +setEffort(effort)
-+getUsNumber()
-+getUsStatus()
-+setUsStatus()
-+getUsText()
++getUserStoryNumber()
++getStatus()
++setStatus()
++getUserStoryText()
 +getActor()
 +getProjectCode()
 +UserStory(projectCode,userStoryNumber, actor, userStoryText)
@@ -548,6 +548,7 @@ enum "Status"{
 'US018'
 "GetProductBacklogController" "1"-->"1" "Company": has
 "GetProductBacklogController" ..> "UserStoryDtoListAssembler"
+"GetProductBacklogController" ..> "ProjectDto": extracts
 'US019'
 CreateSprintController "1"-->"1" Company: has
 'US020'

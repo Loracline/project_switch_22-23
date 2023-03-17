@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AccountMapper {
+public final class AccountMapper {
     /**
      * Constructor of the class AccountMapper.
      */
-    private AccountMapper(){}
+    private AccountMapper() {
+    }
 
     // DTO -> ACCOUNT
+
     /**
      * This method converts an account into a Dto.
      *
@@ -21,10 +23,12 @@ public class AccountMapper {
      * @return Dto carrying data.
      */
     public static AccountDto accountToDto(Account account) {
-        return new AccountDto(account.getAccountName(),account.getEmail(),account.isAccountStatus());
+        return new AccountDto(account.getAccountName(), account.getEmail(),
+                account.isAccountStatus());
     }
 
     // LIST OF ACCOUNTS -> LIST OF DTO
+
     /**
      * This method converts a list of accounts into a list of accountDto's.
      *

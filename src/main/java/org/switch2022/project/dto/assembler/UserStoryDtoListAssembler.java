@@ -10,7 +10,7 @@ import org.switch2022.project.model.UserStory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserStoryDtoListAssembler {
+public final class UserStoryDtoListAssembler {
     /**
      * Constructor of the class UserStoryDtoListAssembler.
      */
@@ -23,15 +23,13 @@ public class UserStoryDtoListAssembler {
      *
      * @return a list of User Story DTOs.
      */
-
-
     public static List<UserStoryDto> backlogToDto(ProductBacklog productBacklog) {
-        List<UserStoryDto> userStoryDtos = new ArrayList<>();
+        List<UserStoryDto> userStoryDto = new ArrayList<>();
         if (productBacklog != null) {
             List<UserStory> userStories = productBacklog.getUserStoriesCopy();
-            userStoryDtos.addAll(getUserStoryDtos(userStories));
+            userStoryDto.addAll(getUserStoryDtos(userStories));
         }
-        return userStoryDtos;
+        return userStoryDto;
     }
 
     /**
@@ -43,8 +41,12 @@ public class UserStoryDtoListAssembler {
      */
     public static List<UserStoryDto> backlogToDto(SprintBacklog sprintBacklog,
                                                   IFactoryUserStory factoryUserStory) {
-        List<UserStory> userStories = sprintBacklog.getUserStoriesCopy(factoryUserStory);
-        List<UserStoryDto> userStoryDtos = getUserStoryDtos(userStories);
+        List<UserStoryDto> userStoryDtos = new ArrayList<>();
+        if (sprintBacklog != null) {
+            List<UserStory> userStories = sprintBacklog.getUserStoriesCopy(
+                    factoryUserStory);
+            userStoryDtos.addAll(getUserStoryDtos(userStories));
+        }
         return userStoryDtos;
     }
 

@@ -71,11 +71,9 @@ class "UserStoryCreationDto"{
 +actor
 +userStoryText
 +getPriority()
-+getUserStoryNumber()
 }
 class "ProjectDto"{
 +projectCode
-+getProjectCode()
 
 }
 

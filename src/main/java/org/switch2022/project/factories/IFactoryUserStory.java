@@ -6,6 +6,5 @@ import org.switch2022.project.model.UserStory;
 public interface IFactoryUserStory {
     UserStory createUserStory(UserStoryCreationDto userStoryCreationDto);
 
-    UserStory createUserStory(String userStoryNumber, String actor,
-                              String userStoryText);
+    UserStory createUserStory(String userStoryNumber, String userStoryText);
 }

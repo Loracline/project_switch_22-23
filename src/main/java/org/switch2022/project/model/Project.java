@@ -260,9 +260,10 @@ public class Project {
     private boolean hasUserStoryNumberInSprints(String userStoryNumber) {
         boolean result = false;
         int i = 0;
-        while (i < sprints.size() && !result) {
+        while (i < sprints.size()) {
             if (sprints.get(i).hasUserStory(userStoryNumber)) {
                 result = true;
+                i=sprints.size();
             }
             i++;
         }
@@ -277,7 +278,7 @@ public class Project {
      */
     public boolean createUserStory(UserStoryCreationDto userStoryCreationDto) {
         return userStoryCreationDto != null &&
-                !hasUserStoryNumberInSprints(userStoryCreationDto.getUserStoryNumber()) &&
+                !hasUserStoryNumberInSprints(userStoryCreationDto.userStoryNumber) &&
                 productBacklog.createUserStory(userStoryCreationDto);
     }
 
@@ -326,11 +327,11 @@ public class Project {
     public boolean addUserStoryToSprintBacklog(String userStoryNumber,
                                                String sprintNumber) {
         boolean result = false;
-        if (getSprintByNumber(sprintNumber).isPresent() &&
-                this.productBacklog.getUserStoryByNumber(userStoryNumber).isPresent()) {
-            Sprint sprint = getSprintByNumber(sprintNumber).get();
-            UserStory userStory =
-                    this.productBacklog.getUserStoryByNumber(userStoryNumber).get();
+        Optional<Sprint> sprintOptional= getSprintByNumber(sprintNumber);
+        Optional<UserStory> userStoryOptional= this.productBacklog.getUserStoryByNumber(userStoryNumber);
+        if (sprintOptional.isPresent() && userStoryOptional.isPresent()) {
+            Sprint sprint = sprintOptional.get();
+            UserStory userStory = userStoryOptional.get();
             sprint.addUserStoryToSprintBacklog(userStory);
             productBacklog.removeUserStory(userStory);
             result = true;

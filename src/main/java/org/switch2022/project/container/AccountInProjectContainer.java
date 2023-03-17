@@ -27,6 +27,24 @@ public class AccountInProjectContainer {
     }
 
     /**
+     * Method that checks if two periods are overlapping. Each period is characterized
+     * by a start date and an end date. Two periods are overlapping if the start
+     * date one is before the end date two, and start date two is before end date one.
+     *
+     * @param startDateOne as the start date of period one.
+     * @param endDateOne   as the end date of period one.
+     * @param startDateTwo as the start date of period two.
+     * @param endDateTwo   as the end date of period two.
+     * @return TRUE if two periods are overlapping, and FALSE otherwise.
+     */
+    private static boolean isPeriodOverlapping(LocalDate startDateOne,
+                                               LocalDate endDateOne,
+                                               LocalDate startDateTwo,
+                                               LocalDate endDateTwo) {
+        return startDateOne.isBefore(endDateTwo) && startDateTwo.isBefore(endDateOne);
+    }
+
+    /**
      * Method that adds a new instance of AccountInProject to the list of accounts in
      * project if the instance is in a valid state.
      * <p>
@@ -101,7 +119,8 @@ public class AccountInProjectContainer {
                                          AllocationDto allocationDto,
                                          AccountInProject accountInProject,
                                          AccountInProject otherAccountInProject) {
-        return isPeriodValid(accountInProject, otherAccountInProject) && isRoleValidInProject(project,
+        return isPeriodValid(accountInProject,
+                otherAccountInProject) && isRoleValidInProject(project,
                 allocationDto, accountInProject);
     }
 
@@ -141,7 +160,6 @@ public class AccountInProjectContainer {
             i++;
         }
     }
-
 
     /**
      * Method that checks if an instance of AccountInProject is valid (not
@@ -186,24 +204,6 @@ public class AccountInProjectContainer {
     }
 
     /**
-     * Method that checks if two periods are overlapping. Each period is characterized
-     * by a start date and an end date. Two periods are overlapping if the start
-     * date one is before the end date two, and start date two is before end date one.
-     *
-     * @param startDateOne as the start date of period one.
-     * @param endDateOne   as the end date of period one.
-     * @param startDateTwo as the start date of period two.
-     * @param endDateTwo   as the end date of period two.
-     * @return TRUE if two periods are overlapping, and FALSE otherwise.
-     */
-    private boolean isPeriodOverlapping(LocalDate startDateOne,
-                                        LocalDate endDateOne,
-                                        LocalDate startDateTwo,
-                                        LocalDate endDateTwo) {
-        return startDateOne.isBefore(endDateTwo) && startDateTwo.isBefore(endDateOne);
-    }
-
-    /**
      * Method that checks whether a Scrum Master(SM) or Product Owner(PO) is unique in a
      * project during the allocation period (startDate and endDate of the
      * accountInProject).
@@ -217,7 +217,8 @@ public class AccountInProjectContainer {
 
         int i = 0;
         while (i < accountsInProject.size() && isUnique) {
-            if (accountsInProject.get(i).hasProject(project) && accountsInProject.get(i).hasRole(role) &&
+            if (accountsInProject.get(i).hasProject(project) && accountsInProject.get(
+                    i).hasRole(role) &&
                     !isPeriodValid(accountInProject, accountsInProject.get(i))) {
                 isUnique = false;
             }
@@ -233,7 +234,7 @@ public class AccountInProjectContainer {
      * @return TRUE if there is no overlapping periods between the allocations, and
      * FALSE otherwise
      */
-    private boolean isPeriodValid(AccountInProject newAccountInProject,
+    private static boolean isPeriodValid(AccountInProject newAccountInProject,
                                   AccountInProject existingAccountInProject) {
         boolean isPeriodValid = true;
         LocalDate startDateNewAllocation = newAccountInProject.getStartDate();
@@ -314,7 +315,8 @@ public class AccountInProjectContainer {
      * @return TRUE if it includes the current date, and FALSE otherwise.
      */
     private boolean doesPeriodIncludeCurrentDate(int i) {
-        return accountsInProject.get(i).isStartDateBeforeNow() && accountsInProject.get(i).isEndDateAfterNow();
+        return accountsInProject.get(i).isStartDateBeforeNow() && accountsInProject.get(
+                i).isEndDateAfterNow();
     }
 
     /**

@@ -27,19 +27,20 @@ ui --> pm : requests data (sprintNumber,startDate)
 pm -> ui: types requested data
 activate ui
 
-ui -> ct: createSprint(projectDto,sprintDto)
+ui -> ct: createSprint(projectDto,sprintCreationDto)
 activate ct
 
-ct -> c: createSprint(projectDto,sprintDto)
+
+ct -> c: createSprint(projectDto,sprintCreationDto)
 activate c
 
-c -> pc: createSprint(sprintDto, projectDto)
+c -> pc: createSprint(sprintCreationDto, projectDto)
 activate pc
 
-pc -> p: createSprint(sprintDto)
+pc -> p: createSprint(sprintCreationDto)
 activate p
 
-p -> fact: createSprint( sprintNumber,\nstartDate, sprintDuration)
+p -> fact: createSprint( startDate,sprintDuration,\nsprintNumber,iFactoryPeriod,\niFactorySprintBacklog)
 activate fact
 
 create ss

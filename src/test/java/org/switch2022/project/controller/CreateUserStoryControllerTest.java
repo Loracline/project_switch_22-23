@@ -50,9 +50,9 @@ class CreateUserStoryControllerTest {
         factoryProductBacklog = new FactoryProductBacklog();
         factoryProject = new FactoryProject();
         factoryUserStory = new FactoryUserStory();
-        factorySprint= new FactorySprint();
-        factorySprintBacklog= new FactorySprintBacklog();
-        factoryPeriod= new FactoryPeriod();
+        factorySprint = new FactorySprint();
+        factorySprintBacklog = new FactorySprintBacklog();
+        factoryPeriod = new FactoryPeriod();
 
         //Dto
         userStoryCreationDtoOne = new UserStoryCreationDto("US001",
@@ -97,38 +97,40 @@ class CreateUserStoryControllerTest {
         customerContainer = null;
         company = null;
     }
+
     /**
      * METHOD createUserStory with isolation
      * Scenario 1: it should return true
      */
     @Test
-    void ensureUserStoryIsCreatedSuccessfully_WithIsolation(){
+    void ensureUserStoryIsCreatedSuccessfully_WithIsolation() {
         //Assert
-        ProjectDto projectDtoDouble= mock(ProjectDto.class);
-        UserStoryCreationDto userStoryCreationDtoDouble= mock(UserStoryCreationDto.class);
-        Company companyDouble= mock(Company.class);
-        CreateUserStoryController createUserStoryControllerDouble= new CreateUserStoryController(companyDouble);
-        when(companyDouble.createUserStory(projectDtoDouble,userStoryCreationDtoDouble)).thenReturn(true);
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
+        Company companyDouble = mock(Company.class);
+        CreateUserStoryController createUserStoryControllerDouble = new CreateUserStoryController(companyDouble);
+        when(companyDouble.createUserStory(projectDtoDouble, userStoryCreationDtoDouble)).thenReturn(true);
         //Act
-        boolean result = createUserStoryControllerDouble.createUserStory(projectDtoDouble,userStoryCreationDtoDouble);
+        boolean result = createUserStoryControllerDouble.createUserStory(projectDtoDouble, userStoryCreationDtoDouble);
 
         //Arrange
         assertTrue(result);
     }
+
     /**
      * METHOD createUserStory with isolation
      * Scenario 2: it should return false
      */
     @Test
-    void ensureUserStoryIsNotCreatedSuccessfully_WithIsolation(){
+    void ensureUserStoryIsNotCreatedSuccessfully_WithIsolation() {
         //Assert
-        ProjectDto projectDtoDouble= mock(ProjectDto.class);
-        UserStoryCreationDto userStoryCreationDtoDouble= mock(UserStoryCreationDto.class);
-        Company companyDouble= mock(Company.class);
-        CreateUserStoryController createUserStoryControllerDouble= new CreateUserStoryController(companyDouble);
-        when(companyDouble.createUserStory(projectDtoDouble,userStoryCreationDtoDouble)).thenReturn(false);
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
+        Company companyDouble = mock(Company.class);
+        CreateUserStoryController createUserStoryControllerDouble = new CreateUserStoryController(companyDouble);
+        when(companyDouble.createUserStory(projectDtoDouble, userStoryCreationDtoDouble)).thenReturn(false);
         //Act
-        boolean result = createUserStoryControllerDouble.createUserStory(projectDtoDouble,userStoryCreationDtoDouble);
+        boolean result = createUserStoryControllerDouble.createUserStory(projectDtoDouble, userStoryCreationDtoDouble);
 
         //Arrange
         assertFalse(result);
@@ -256,18 +258,86 @@ class CreateUserStoryControllerTest {
     @Test
     void ensureUserStoryIsCreatedUnsuccessfully_PresentInTheSprint() {
         //Arrange
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(" us002",
-                "I want to create a project", "Manager", 10);
         company.createUserStory(projectDto, userStoryCreationDtoOne);
-        LocalDate startDate= LocalDate.now();
-        SprintCreationDto sprintCreationDto= new SprintCreationDto(startDate,3, "SP001");
-        projectContainer.createSprint(sprintCreationDto,projectDto);
-        projectContainer.addUserStoryToSprintBacklog(projectDto.code," us002","SP001");
+        LocalDate startDate = LocalDate.now();
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "SP001");
+        projectContainer.createSprint(sprintCreationDto, projectDto);
+        projectContainer.addUserStoryToSprintBacklog(projectDto.code, " us001", "SP001");
 
         //Act
-        boolean result = createUserStoryController.createUserStory(projectDto, userStoryCreationDto);
+        boolean result = createUserStoryController.createUserStory(projectDto, userStoryCreationDtoOne);
         //Assert
         assertFalse(result);
     }
 
+    /**
+     * Scenario 8: it should catch an exception when an userStory is created
+     * because the userStoryNumber can't be a null
+     */
+    @Test
+    void ensureUserStoryIsCreatedUnsuccessfully_UserStoryNumberNull() {
+        Exception exception = assertThrows(Exception.class, () -> {
+            UserStoryCreationDto userStoryCreationDtoNull =  new UserStoryCreationDto(null,
+                    "I want to create a user Story", "Manager", 0);
+            company.createUserStory(projectDto,userStoryCreationDtoNull);
+        });
+
+        String expectedMessage = "Valor não pode ser null.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+    /**
+     * Scenario 9: it should catch an exception when an userStory is created
+     * because the userStoryText can't be a null
+     */
+    @Test
+    void ensureUserStoryIsCreatedUnsuccessfully_UserStoryTextNull() {
+        Exception exception = assertThrows(Exception.class, () -> {
+            UserStoryCreationDto userStoryCreationDtoNull =  new UserStoryCreationDto("US001",
+                    null, "Manager", 0);
+            company.createUserStory(projectDto,userStoryCreationDtoNull);
+        });
+
+        String expectedMessage = "Valor não pode ser null.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+    /**
+     * Scenario 10: it should catch an exception when an userStory is created
+     * because the userStoryActor can't be a null
+     */
+    @Test
+    void ensureUserStoryIsCreatedUnsuccessfully_ActorNull()  {
+        Exception exception = assertThrows(Exception.class, () -> {
+            UserStoryCreationDto userStoryCreationDtoNull =  new UserStoryCreationDto("US001",
+                    "I want to create a user Story", null, 0);
+            company.createUserStory(projectDto,userStoryCreationDtoNull);
+        });
+
+        String expectedMessage = "Valor não pode ser null.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+    /**
+     * Scenario 11: it should return true when an userStory is created
+     * with a sprint with userStory
+     */
+    @Test
+    void ensureUserStoryIsCreatedSuccessfully_WithSprint() {
+        //Arrange
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(" us002",
+                "I want to create a project", "Manager", 0);
+        LocalDate startDate = LocalDate.now();
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "SP001");
+        projectContainer.createSprint(sprintCreationDto, projectDto);
+        projectContainer.addUserStoryToSprintBacklog(projectDto.code, " us001", "SP001");
+
+        //Act
+        boolean result = createUserStoryController.createUserStory(projectDto, userStoryCreationDto);
+        //Assert
+        assertTrue(result);
+    }
 }
