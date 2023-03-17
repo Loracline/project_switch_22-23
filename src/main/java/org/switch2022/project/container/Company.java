@@ -240,14 +240,21 @@ public class Company {
         Project project =
                 getProjectToAllocation(projectCreationDto.code);
 
-        if (account != null && project != null) {
-            if (account.isProfileRequired("user") && project.isProjectOpen()) {
-                addUserToProject = this.accountInProjectContainer.addUserToProject(
-                        account, project,
-                        allocationDto);
-            }
+        if (areAccountAndProjectValid(account, project) && account.isProfileRequired(
+                "user") && project.isProjectOpen()) {
+            addUserToProject = this.accountInProjectContainer.addUserToProject(
+                    account, project,
+                    allocationDto);
         }
         return addUserToProject;
+    }
+
+    /**
+     * This method checks if an instance of account and an instance of project are
+     * valid (i.e. not null).
+     */
+    public boolean areAccountAndProjectValid(Account account, Project project) {
+        return account != null && project != null;
     }
 
     /**

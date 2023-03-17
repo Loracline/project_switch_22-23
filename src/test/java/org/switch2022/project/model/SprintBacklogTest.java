@@ -309,9 +309,7 @@ class SprintBacklogTest {
     @Test
     void ensureEffortIsSetForUserStoryWithIsolation() {
         //Arrange
-        UserStoryDto userStoryDto = new UserStoryDto("US55", "Manager",
-                "I want to create a profile");
-
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
         UserStory userStoryDouble = mock(UserStory.class);
         when(userStoryDouble.hasUserStoryNumber(userStoryDto.userStoryNumber)).thenReturn(true);
 
@@ -331,9 +329,7 @@ class SprintBacklogTest {
     @Test
     void ensureEffortIsNotSetForUserStoryWithIsolation() {
         //Arrange
-        UserStoryDto userStoryDto = new UserStoryDto("US55", "Manager",
-                "I want to create a profile");
-
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
         UserStory userStoryDouble = mock(UserStory.class);
         when(userStoryDouble.hasUserStoryNumber("US56")).thenReturn(false);
 
@@ -353,9 +349,7 @@ class SprintBacklogTest {
     @Test
     void ensureEffortIsNotSetForUserStoryWithIsolationWithRunTimeException() {
         //Arrange
-        UserStoryDto userStoryDto = new UserStoryDto("US55", "Manager",
-                "I want to create a profile");
-
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
         UserStory userStoryDouble = mock(UserStory.class);
         when(userStoryDouble.hasUserStoryNumber(userStoryDto.userStoryNumber)).thenReturn(true);
         doThrow(new RuntimeException()).when(userStoryDouble).setEffort(Effort.FIVE);

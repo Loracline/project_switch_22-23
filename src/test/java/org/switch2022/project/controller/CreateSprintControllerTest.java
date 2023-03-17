@@ -19,9 +19,9 @@ import static org.mockito.Mockito.when;
 
 class CreateSprintControllerTest {
     /**
-    * BeforeEach and AfterEach executes common code before/after running
-    * the tests below.
-    */
+     * BeforeEach and AfterEach executes common code before/after running
+     * the tests below.
+     */
 
     BusinessSector businessSector;
     ProjectCreationDto projectOneDTO, projectTwoDTO;
@@ -50,13 +50,13 @@ class CreateSprintControllerTest {
         factoryProductBacklog = new FactoryProductBacklog();
         factoryProject = new FactoryProject();
         factoryUserStory = new FactoryUserStory();
-        factorySprint= new FactorySprint();
-        factorySprintBacklog= new FactorySprintBacklog();
-        factoryPeriod= new FactoryPeriod();
+        factorySprint = new FactorySprint();
+        factorySprintBacklog = new FactorySprintBacklog();
+        factoryPeriod = new FactoryPeriod();
 
         //Dto
         LocalDate startDate = LocalDate.now();
-        sprintCreationDtoOne = new SprintCreationDto(startDate,3,"S001");
+        sprintCreationDtoOne = new SprintCreationDto(startDate, 3, "S001");
 
         projectDto = new ProjectDto("AA001", "software development " +
                 "management", "Peter", "228674498",
@@ -84,6 +84,7 @@ class CreateSprintControllerTest {
 
         createSprintController = new CreateSprintController(company);
     }
+
     @AfterEach
     void tearDown() {
         accountContainer = null;
@@ -103,33 +104,34 @@ class CreateSprintControllerTest {
      * Scenario 1: it should return true
      */
     @Test
-    void ensureSprintIsCreatedSuccessfully_WithIsolation(){
+    void ensureSprintIsCreatedSuccessfully_WithIsolation() {
         //Assert
-        ProjectDto projectDtoDouble= mock(ProjectDto.class);
-        SprintCreationDto sprintCreationDtoDouble= mock(SprintCreationDto.class);
-        Company companyDouble= mock(Company.class);
-        CreateSprintController createSprintControllerDouble= new CreateSprintController(companyDouble);
-        when(companyDouble.createSprint(projectDtoDouble,sprintCreationDtoDouble)).thenReturn(true);
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
+        Company companyDouble = mock(Company.class);
+        CreateSprintController createSprintControllerDouble = new CreateSprintController(companyDouble);
+        when(companyDouble.createSprint(projectDtoDouble, sprintCreationDtoDouble)).thenReturn(true);
         //Act
-        boolean result = createSprintControllerDouble.createSprint(projectDtoDouble,sprintCreationDtoDouble);
+        boolean result = createSprintControllerDouble.createSprint(projectDtoDouble, sprintCreationDtoDouble);
 
         //Arrange
         assertTrue(result);
     }
+
     /**
      * METHOD createSprint with isolation
      * Scenario 2: it should return false
      */
     @Test
-    void ensureSprintIsNotCreatedSuccessfully_WithIsolation(){
+    void ensureSprintIsNotCreatedSuccessfully_WithIsolation() {
         //Assert
-        ProjectDto projectDtoDouble= mock(ProjectDto.class);
-        SprintCreationDto sprintCreationDtoDouble= mock(SprintCreationDto.class);
-        Company companyDouble= mock(Company.class);
-        CreateSprintController createSprintControllerDouble= new CreateSprintController(companyDouble);
-        when(companyDouble.createSprint(projectDtoDouble,sprintCreationDtoDouble)).thenReturn(false);
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
+        Company companyDouble = mock(Company.class);
+        CreateSprintController createSprintControllerDouble = new CreateSprintController(companyDouble);
+        when(companyDouble.createSprint(projectDtoDouble, sprintCreationDtoDouble)).thenReturn(false);
         //Act
-        boolean result = createSprintControllerDouble.createSprint(projectDtoDouble,sprintCreationDtoDouble);
+        boolean result = createSprintControllerDouble.createSprint(projectDtoDouble, sprintCreationDtoDouble);
 
         //Arrange
         assertFalse(result);
@@ -152,6 +154,7 @@ class CreateSprintControllerTest {
         //Assert
         assertFalse(result);
     }
+
     /**
      * Scenario 2: it should return false when a Sprint is created.
      * because the projectDto is null.
@@ -167,8 +170,8 @@ class CreateSprintControllerTest {
     }
 
     /**
-    * Scenario 3: it should return false when the sprintCreationDto is null.
-    */
+     * Scenario 3: it should return false when the sprintCreationDto is null.
+     */
 
     @Test
     void ensureSprintIsCreatedUnsuccessfully_SprintCreationDtoNull() {
@@ -211,19 +214,101 @@ class CreateSprintControllerTest {
         //Assert
         assertFalse(result);
     }
+
     /**
      * Scenario 6: it should return true when a Sprint is created.
      */
 
-  @Test
+    @Test
     void ensureUserStoryIsCreatedSuccessfully() {
         //Arrange
-        LocalDate startDate = LocalDate.of(2024,3,19);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate,3,"S002");
-        company.createSprint(projectDto,sprintCreationDto);
+        LocalDate startDate = LocalDate.of(2024, 3, 19);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S002");
+        company.createSprint(projectDto, sprintCreationDto);
         //Act
         boolean result = createSprintController.createSprint(projectDto, sprintCreationDtoOne);
         //Assert
         assertTrue(result);
+    }
+
+    /**
+     * Scenario 7: fail to create a Sprint if that Sprint already exists.
+     * should return false.
+     */
+
+    @Test
+    void ensureSprintIsNotCreatedIfAlreadyExists() {
+        //Arrange
+        LocalDate startDate = LocalDate.now();
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        company.createSprint(projectDto, sprintCreationDto);
+        //Act
+        boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 8: fail to create a Sprint because the Period is overlapping with a existing Sprint.
+     * should return false.
+     */
+    @Test
+    void ensureSprintIsNotCreatedBecausePeriodIsOverlapping() {
+        //Arrange
+        LocalDate startDate = LocalDate.of(2023,3,20);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, "S002");
+        company.createSprint(projectDto, sprintCreationDto);
+        //Act
+        boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 9: fail to create a Sprint because the Period date is set before the Present date.
+     * should return false.
+     */
+    @Test
+    void ensureSprintIsNotCreatedBecausePeriodDateIsBeforePresentDate() {
+        //Arrange
+        LocalDate startDate = LocalDate.of(2022,3,20);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, "S002");
+        company.createSprint(projectDto, sprintCreationDto);
+        //Act
+        boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 10: fail to create a Sprint because the Number already exists but the date is valid.
+     * should return false.
+     */
+    @Test
+    void ensureSprintIsNotCreatedBecauseSprintNumberAlreadyExistsButDateIsValid() {
+        //Arrange
+        LocalDate startDate = LocalDate.of(2024,3,20);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, "S001");
+        company.createSprint(projectDto, sprintCreationDto);
+        //Act
+        boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 11: fail to create a Sprint because the start date is the same as the end date of an existing sprint.
+     * should return false.
+     */
+    @Test
+    void ensureSprintIsNotCreatedBecauseSprintDateIsTheSameAsEndDateOfAnExistingSprint() {
+        //Arrange
+        LocalDate startDate = LocalDate.of(2023,4,7);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        company.createSprint(projectDto, sprintCreationDto);
+        //Act
+        boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
+        //Assert
+        assertFalse(result);
     }
 }

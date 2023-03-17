@@ -140,9 +140,9 @@ public class Account {
      * Setter method for the attribute: profile.
      */
     public void setProfile(ProfileContainer profileContainer, String profileName) {
-        Profile profile = profileContainer.getProfileByName(profileName);
-        if (profile != null) {
-            this.profile = profile;
+        Profile newProfile = profileContainer.getProfileByName(profileName);
+        if (newProfile != null) {
+            this.profile = newProfile;
         }
     }
 
