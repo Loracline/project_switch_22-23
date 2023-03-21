@@ -32,12 +32,13 @@ public class AccountEmailStatusDto {
         if (this == toCompare) {
             return true;
         }
-        if (!(toCompare instanceof AccountEmailStatusDto)) {
+        if (toCompare.getClass() != this.getClass()) {
             return false;
         }
         AccountEmailStatusDto that = (AccountEmailStatusDto) toCompare;
         return status == that.status && email.equals(that.email);
     }
+
     /**
      * The hashCode() method is used to generate a unique hash code for an
      * object, based on the object's state.
