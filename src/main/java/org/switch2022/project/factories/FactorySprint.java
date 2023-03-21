@@ -19,7 +19,7 @@ public class FactorySprint implements IFactorySprint {
      * @param sprintNumber          number of the Sprint
      * @param iFactoryPeriod        implementation FactoryPeriod
      * @param iFactorySprintBacklog implementation FactorySprintBacklog
-     * @return project
+     * @return Sprint
      */
     public Sprint createSprint(LocalDate startDate, int sprintDuration,
                                String sprintNumber,
