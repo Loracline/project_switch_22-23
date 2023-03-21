@@ -167,6 +167,12 @@ public class Project {
         return this.businessSector;
     }
 
+    /**
+     * This method verifies if the Project has the given Project code
+     *
+     * @param projectCode of the seeked Project.
+     * @return TRUE if Project has the given Project Code, and FALSE otherwise.
+     */
     public boolean hasProjectCode(String projectCode) {
         return projectCode.equals(this.projectCode);
     }

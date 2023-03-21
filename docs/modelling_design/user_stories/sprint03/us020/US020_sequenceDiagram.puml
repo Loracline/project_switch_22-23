@@ -20,9 +20,9 @@ participant ":Sprint Backlog" as sb
 activate "Team Member"
 
 "Team Member"-> ui: starts adding a User Story to Sprint Backlog
-ref over ui: us018: consult the product backlog_sequenceDiagram
+ref over ui: US018: consult the product backlog_sequenceDiagram
 activate ui
-ui --> "Team Member": requests data (userStoryDto, sprintNumber)
+ui --> "Team Member": requests data (projectCode, userStoryDto, sprintNumber)
 "Team Member" -> ui: sends requested data
 ui -> ct: addUserStoryToSprintBacklog(projectCode, userStoryDto, sprintNumber)
 activate ct
@@ -47,7 +47,6 @@ deactivate sb
 s --> p : true
 deactivate s
 p -> containner : removeUserStory(userStory)
-
 activate containner
 containner --> p : true
 deactivate containner
