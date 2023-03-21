@@ -282,7 +282,7 @@ class CreateUserStoryControllerTest {
             company.createUserStory(projectDto,userStoryCreationDtoNull);
         });
 
-        String expectedMessage = "Valor não pode ser null.";
+        String expectedMessage = "This value can't be null.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -299,7 +299,7 @@ class CreateUserStoryControllerTest {
             company.createUserStory(projectDto,userStoryCreationDtoNull);
         });
 
-        String expectedMessage = "Valor não pode ser null.";
+        String expectedMessage = "This value can't be null.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -316,7 +316,7 @@ class CreateUserStoryControllerTest {
             company.createUserStory(projectDto,userStoryCreationDtoNull);
         });
 
-        String expectedMessage = "Valor não pode ser null.";
+        String expectedMessage = "This value can't be null.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
