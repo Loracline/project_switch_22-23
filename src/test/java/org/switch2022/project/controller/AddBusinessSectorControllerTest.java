@@ -3,13 +3,19 @@ package org.switch2022.project.controller;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.*;
 import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.BusinessSectorContainer;
 import org.switch2022.project.container.Company;
 import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.model.Account;
+import org.switch2022.project.model.BusinessSector;
+import org.switch2022.project.model.Profile;
+import org.switch2022.project.model.Project;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class AddBusinessSectorControllerTest {
 
@@ -133,5 +139,68 @@ class AddBusinessSectorControllerTest {
                 emailActor);
         //Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * Tests done with isolation using mockito framework.
+     */
+
+    /**
+     * Tests if the addition of a business sector is performed successfully if the actor is an administrator.
+     * Expected return: true
+     */
+    @Test
+    void ensureThatNewBusinessSectorIsAddedSuccessfullyIfActorIsAdministratorWithIsolation() {
+        //Arrange
+        Company companyDouble = mock(Company.class);
+        AddBusinessSectorController addBusinessSectorControllerDouble = new AddBusinessSectorController(companyDouble);
+        when(companyDouble.validateProfileRequired(any(), any())).thenReturn(true);
+        when(companyDouble.addBusinessSector(any())).thenReturn(true);
+
+        //Act
+        boolean result = addBusinessSectorControllerDouble.addBusinessSector("mining",
+                "mike@isep.ipp.pt");
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Tests if the addition of a business sector is not performed.
+     * Expected return: false
+     */
+
+    @Test
+    void ensureThatNewBusinessSectorIsNotAddedWithIsolation() {
+        //Arrange
+        Company companyDouble = mock(Company.class);
+        AddBusinessSectorController addBusinessSectorControllerDouble = new AddBusinessSectorController(companyDouble);
+        when(companyDouble.validateProfileRequired(any(), any())).thenReturn(true);
+        when(companyDouble.addBusinessSector(any())).thenReturn(false);
+
+        //Act
+        boolean result = addBusinessSectorControllerDouble.addBusinessSector("fishing",
+                "mike@isep.ipp.pt");
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Tests if the addition of a business sector is not performed if the actor is not an administrator.
+     * Expected return: false
+     */
+    @Test
+    void ensureThatNewBusinessSectorIsNotAddedIfActorIsNotAdministratorWithIsolation() {
+        //Arrange
+        Company companyDouble = mock(Company.class);
+        AddBusinessSectorController addBusinessSectorControllerDouble = new AddBusinessSectorController(companyDouble);
+        when(companyDouble.validateProfileRequired(any(), any())).thenReturn(false);
+        when(companyDouble.addBusinessSector(any())).thenReturn(true);
+
+        //Act
+        //"paul@isep.ipp.pt" is not the administrator
+        boolean result = addBusinessSectorControllerDouble.addBusinessSector("mining",
+                "paul@isep.ipp.pt");
+        //Assert
+        assertFalse(result);
     }
 }
