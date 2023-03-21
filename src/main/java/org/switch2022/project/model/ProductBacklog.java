@@ -121,16 +121,7 @@ public class ProductBacklog {
      * otherwise.
      */
     public boolean removeUserStory(UserStory userStory) {
-        int i = 0;
-        boolean wasRemoved = false;
-        while (i < userStories.size() && !wasRemoved) {
-            if (userStories.contains(userStory)) {
-                userStories.remove(i);
-                wasRemoved = true;
-            }
-            i++;
-        }
-        return wasRemoved;
+        return this.userStories.remove(userStory);
     }
 
     /**
