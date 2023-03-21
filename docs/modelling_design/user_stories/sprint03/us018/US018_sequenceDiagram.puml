@@ -62,6 +62,6 @@ deactivate assembler
 controller --> ui: userStoryDtoList
 deactivate controller
 
-ui -> actor: shows list of all US
+ui --> actor: shows list of all US
 deactivate ui
 @enduml

@@ -678,14 +678,25 @@ title TO ESTIMATE THE EFFORT OF A USER STORY IN A SPRINT, DURING THE SPRINT PLAN
 
 actor "Team Member"
 autonumber
-"Team Member" -> ":System": requests list of user stories
+
+
+
+"Team Member" -> ":System": requests list of projects
 note left
 Account is authenticated.
 ":System" grants access.
 end note
 
 note right
-Team Member resquests to see all
+Team Member requests to see all
+projects and select one (US016).
+end note
+"Team Member" <-- ":System": requests data
+"Team Member" -> ":System": requests list of user stories
+
+
+note right
+Team Member requests to see all
 user stories and select one (US022).
 end note
 "Team Member" <-- ":System": requests data

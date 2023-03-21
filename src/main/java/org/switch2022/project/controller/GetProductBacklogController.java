@@ -45,9 +45,8 @@ public class GetProductBacklogController {
 
         if (productBacklogOptional.isPresent()) {
             ProductBacklog productBacklog = productBacklogOptional.get();
-            List<UserStoryDto> userStoriesDto =
+            userStoryDtoList =
                     UserStoryDtoListAssembler.backlogToDto(productBacklog);
-            userStoryDtoList.addAll(userStoriesDto);
         }
         return userStoryDtoList;
     }

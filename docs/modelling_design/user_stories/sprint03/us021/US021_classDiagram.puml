@@ -18,7 +18,7 @@ class "Company" {
 class "ProjectContainer" {
 - projects
 + estimateEffortUserStory(userStoryDto, effort, projectCode, date)
-+ getProjectByCode(projectCode)
+- getProjectByCode(projectCode)
 }
 class "Project"{
 - sprints

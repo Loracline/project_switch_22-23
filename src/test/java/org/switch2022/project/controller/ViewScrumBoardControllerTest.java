@@ -176,6 +176,7 @@ class ViewScrumBoardControllerTest {
     @Test
     void ensureIsReturnedAnEmptyListBecauseThereIsNoSprint_WithIsolation() {
         //Arrange
+        ProjectDto projectDto = mock(ProjectDto.class);
         Company company = mock(Company.class);
         ViewScrumBoardController controller = new ViewScrumBoardController(company);
 

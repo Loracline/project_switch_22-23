@@ -22,7 +22,7 @@ class AddUserStoryToSprintBacklogControllerTest {
      */
     Project projectOne, projectTwo, projectThree;
     ProjectContainer projectContainer;
-    UserStoryDto userStoryDto;
+    UserStoryDto userStoryDto, userStoryDtoTwo;
     IFactoryPeriod iFactoryPeriod;
     IFactorySprintBacklog iFactorySprintBacklog;
     IFactoryProductBacklog iFactoryProductBacklog;
@@ -54,6 +54,7 @@ class AddUserStoryToSprintBacklogControllerTest {
 
         //UserStoryDto
         userStoryDto = new UserStoryDto("US001", "null", "null");
+        userStoryDtoTwo = new UserStoryDto("US002", "null", "null");
 
         // UserStoryCreationDto
         userStoryCreationDto = new UserStoryCreationDto("US001", "Text", "actor", 0);
@@ -124,6 +125,68 @@ class AddUserStoryToSprintBacklogControllerTest {
         assertFalse(result);
     }
 
+    /**
+     * Scenario 4: verify that a User Story is not added to the Sprint Backlog because the
+     * User Story does not exist.
+     * Should return FALSE.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryDoesNotExist() {
+        //ACT
+        boolean result=
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1A",
+                        userStoryDtoTwo,
+                        "S3");
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 5: verify that a User Story is not added to the Sprint Backlog because the
+     * Project parameter is null.
+     * Should return FALSE.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseProjectCodeIsNull() {
+        //ACT
+        boolean result=
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(null,
+                        userStoryDto,
+                        "S3");
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 6: verify that a User Story is not added to the Sprint Backlog because the
+     * UserStoryDto parameter is null.
+     * Should return FALSE.
+     */
+
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryDtoIsNull() {
+        //ACT
+        boolean result=
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1A",
+                        null,
+                        "S3");
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 7: verify that a User Story is not added to the Sprint Backlog because the
+     * Sprint parameter is null.
+     * Should return FALSE.
+     */
+
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseSprintIsNull() {
+        //ACT
+        boolean result=
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1A",
+                        userStoryDto,
+                        null);
+        assertFalse(result);
+    }
+
 
     //Unit tests
 
@@ -169,6 +232,73 @@ class AddUserStoryToSprintBacklogControllerTest {
         boolean result =
                 addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("P3",
                         userStoryDtoDouble, "S3");
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: verify that a User Story is not added to the Sprint Backlog because the
+     * Project parameter is null.
+     * Should return FALSE.
+     */
+
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBecauseProjectIsNull() {
+        //Arrange
+        Company companyDouble = mock(Company.class);
+        AddUserStoryToSprintBacklogController addUserStoryToSprintBacklogController =
+                new AddUserStoryToSprintBacklogController(companyDouble);
+        UserStoryDto userStoryDtoDouble = mock(UserStoryDto.class);
+
+        //Act
+        boolean result =
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(null,
+                        userStoryDtoDouble, "S3");
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 4: verify that a User Story is not added to the Sprint Backlog because the
+     * UserStoryDto parameter is null.
+     * Should return FALSE.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryDtoIsNull_UnitTest() {
+        //Arrange
+        Company companyDouble = mock(Company.class);
+        AddUserStoryToSprintBacklogController addUserStoryToSprintBacklogController =
+                new AddUserStoryToSprintBacklogController(companyDouble);
+
+        //Act
+        boolean result =
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("P3",
+                        null, "S3");
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 8: verify that a User Story is not added to the Sprint Backlog because the
+     * Sprint parameter is null.
+     * Should return FALSE.
+     */
+
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseSprintIsNull_UnitTest() {
+        //Arrange
+        Company companyDouble = mock(Company.class);
+        UserStoryDto userStoryDtoDouble = mock(UserStoryDto.class);
+        AddUserStoryToSprintBacklogController addUserStoryToSprintBacklogController =
+                new AddUserStoryToSprintBacklogController(companyDouble);
+
+        //Act
+        boolean result =
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("P3",
+                        userStoryDtoDouble, null);
 
         //Assert
         assertFalse(result);

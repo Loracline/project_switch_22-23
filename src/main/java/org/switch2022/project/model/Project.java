@@ -269,7 +269,7 @@ public class Project {
         while (i < sprints.size()) {
             if (sprints.get(i).hasUserStory(userStoryNumber)) {
                 result = true;
-                i=sprints.size();
+                i = sprints.size();
             }
             i++;
         }
@@ -310,17 +310,16 @@ public class Project {
     private boolean isPeriodValid(Sprint sprint) {
         boolean result = false;
         int i = 0;
-        if (sprints.size() == 0) {
+        if (sprints.isEmpty()) {
             result = true;
+        } else {
+            while (i < sprints.size() && !result) {
+                result = sprints.get(i).isPeriodNotOverlapping(sprint);
+                i++;
+            }
         }
-        else {
-        while (i < sprints.size() && !result) {
-            result = sprints.get(i).isPeriodNotOverlapping(sprint);
-            i++;
-        }
-    }
         return result;
-}
+    }
 
     /**
      * This method adds a new User Story to the Sprint Backlog
@@ -333,9 +332,8 @@ public class Project {
     public boolean addUserStoryToSprintBacklog(String userStoryNumber,
                                                String sprintNumber) {
         boolean result = false;
-        Optional<Sprint> sprintOptional= getSprintByNumber(sprintNumber);
-        Optional<UserStory> userStoryOptional= this.productBacklog.getUserStoryByNumber(userStoryNumber);
-
+        Optional<Sprint> sprintOptional = getSprintByNumber(sprintNumber);
+        Optional<UserStory> userStoryOptional = this.productBacklog.getUserStoryByNumber(userStoryNumber);
         if (sprintOptional.isPresent() && userStoryOptional.isPresent()) {
             Sprint sprint = sprintOptional.get();
             UserStory userStory = userStoryOptional.get();
