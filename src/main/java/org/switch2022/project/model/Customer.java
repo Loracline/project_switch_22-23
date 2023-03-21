@@ -10,7 +10,7 @@ public class Customer {
     /**
      * Attributes
      */
-    private final String customerName;
+    private String customerName;
     private final String customerNIF;
 
     /**
@@ -21,6 +21,35 @@ public class Customer {
         this.customerNIF = customerNIF;
     }
 
+    /**
+     * Private constructor od the class sprint
+     * @param customerNIF is the object identifier
+     */
+    private Customer(String customerNIF) {
+        this.customerNIF = customerNIF;
+    }
+
+    /**
+     * Static method to create a new Customer
+     * @param customerName is the Customer Name
+     * @param customerNIF is the Customer NIF
+     * @return a new Customer
+     */
+
+    public static Customer createCustomer(String customerName, String customerNIF) {
+        Customer customer = new Customer(customerNIF);
+        customer.setCustomerName(customerName);
+        return customer;
+    }
+
+    /**
+     * Private set method to set Customer name when method createCustomer is executed.
+     * @param customerName is the Customer Name.
+     */
+
+    private void setCustomerName(String customerName) {
+        this.customerName = customerName.toLowerCase();
+    }
 
     /**
      * This method checks if two instances of Customer are equal by comparing
@@ -57,4 +86,6 @@ public class Customer {
     public String getCustomerName() {
         return customerName;
     }
+
+    public boolean hasCustomerNif(String nif) { return this.customerNIF.equals(nif); }
 }

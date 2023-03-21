@@ -16,7 +16,7 @@ public class FactoryCustomer implements IFactoryCustomer {
      * @return a new Customer object with the specified name and NIF
      */
     public Customer createCustomer(String customerName, String customerNIF) {
-        return new Customer(customerName, customerNIF);
+        return Customer.createCustomer(customerName, customerNIF);
     }
 }
 

@@ -35,6 +35,7 @@ public class GetListOfProjectsControllerTest {
     IFactoryPeriod factoryPeriod;
     IFactorySprintBacklog factorySprintBacklog;
     IFactorySprint factorySprint;
+    IFactoryCustomer factoryCustomer;
 
     @BeforeEach
     void setUp() {
@@ -43,6 +44,7 @@ public class GetListOfProjectsControllerTest {
         factoryProductBacklog = new FactoryProductBacklog();
         factoryProject = new FactoryProject();
         factoryUserStory = new FactoryUserStory();
+        factoryCustomer = new FactoryCustomer();
 
         //accounts
         accountOne = new Account("Paul", "paul@isep.ipp.pt", 939855689, null);
@@ -61,7 +63,8 @@ public class GetListOfProjectsControllerTest {
         //customer
         customer = new Customer("isep", "222333444");
         customerContainer = new CustomerContainer();
-        customerContainer.addCustomer(customer.getCustomerName(), customer.getCustomerNif());
+        customerContainer.addCustomer(customer.getCustomerName(),
+                customer.getCustomerNif(), factoryCustomer);
         //project typology
         projectTypology = new ProjectTypology("Fixed cost");
         projectTypologyContainer = new ProjectTypologyContainer();

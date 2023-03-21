@@ -49,6 +49,7 @@ class GetProductBacklogControllerTest {
     IFactoryPeriod factoryPeriod;
     IFactorySprintBacklog factorySprintBacklog;
     IFactorySprint factorySprint;
+    IFactoryCustomer factoryCustomer;
 
     @BeforeEach
     void setUp() {
@@ -59,6 +60,8 @@ class GetProductBacklogControllerTest {
         factoryPeriod = new FactoryPeriod();
         factorySprintBacklog = new FactorySprintBacklog();
         factorySprint = new FactorySprint();
+        factoryCustomer = new FactoryCustomer();
+
 
         //Dtos
         userStoryCreationDtoOne = new UserStoryCreationDto("US001",
@@ -90,7 +93,7 @@ class GetProductBacklogControllerTest {
         projectContainer = new ProjectContainer();
 
         customerContainer.addCustomer(projectCreationDto.customerName,
-                projectCreationDto.customerNif);
+                projectCreationDto.customerNif, factoryCustomer);
         projectTypologyContainer.createProjectTypology(
                 projectCreationDto.projectTypology);
         businessSectorContainer.createBusinessSector(projectCreationDto.projectTypology);

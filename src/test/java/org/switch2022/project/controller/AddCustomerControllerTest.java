@@ -7,6 +7,8 @@ import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.Company;
 import org.switch2022.project.container.CustomerContainer;
 import org.switch2022.project.container.ProfileContainer;
+import org.switch2022.project.factories.FactoryCustomer;
+import org.switch2022.project.factories.IFactoryCustomer;
 import org.switch2022.project.model.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +31,8 @@ class AddCustomerControllerTest {
     Company company;
     AddCustomerController addCustomerController;
 
+    IFactoryCustomer iFactoryCustomer;
+
     @BeforeEach
     void setUp() {
         //account
@@ -48,6 +52,9 @@ class AddCustomerControllerTest {
         projectOne = new Project("1A", "Mobile Software",new Customer ("Genius Software", "234567890"),
                 projectTypologyOne, businessSectorOne);
 
+        //Factory
+        iFactoryCustomer = new FactoryCustomer();
+
         //containers
         accountContainer = new AccountContainer();
         accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
@@ -55,7 +62,7 @@ class AddCustomerControllerTest {
         profileContainer.createProfile("Administrator");
         profileContainer.createProfile("Manager");
         customerContainer = new CustomerContainer();
-        customerContainer.addCustomer("Genius Software","234567890");
+        customerContainer.addCustomer("Genius Software","234567890", iFactoryCustomer);
 
 
         //company
@@ -98,7 +105,8 @@ class AddCustomerControllerTest {
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
-        boolean result = addCustomerController.addCustomer("Critical","233444000", emailActor);
+        boolean result = addCustomerController.addCustomer("Critical","233444000",
+                emailActor, iFactoryCustomer);
         //Assert
         assertEquals(expected,result);
     }
@@ -117,7 +125,8 @@ class AddCustomerControllerTest {
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("", "234345456", emailActor);
+        boolean result = addCustomerController.addCustomer("", "234345456", emailActor,
+                iFactoryCustomer);
         // Assert
         assertEquals(expected, result);
     }
@@ -137,7 +146,7 @@ class AddCustomerControllerTest {
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("Critical", "", emailActor);
+        boolean result = addCustomerController.addCustomer("Critical", "", emailActor, iFactoryCustomer);
         // Assert
         assertEquals(expected, result);
     }
@@ -156,7 +165,8 @@ class AddCustomerControllerTest {
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("Critical", "2223334444", emailActor);
+        boolean result = addCustomerController.addCustomer("Critical", "2223334444",
+                emailActor, iFactoryCustomer);
         // Assert
         assertEquals(expected, result);
     }
@@ -176,7 +186,8 @@ class AddCustomerControllerTest {
         String emailActor = accountOne.getEmail(); //Manager
         boolean expected = false;
         //Act
-        boolean result = addCustomerController.addCustomer("Critical", "255666777", emailActor);
+        boolean result = addCustomerController.addCustomer("Critical", "255666777",
+                emailActor, iFactoryCustomer);
         // Assert
         assertEquals(expected, result);
     }

@@ -27,8 +27,7 @@ public final class ProjectCreationMapper {
                                             IFactorySprintBacklog iFactorySprintBacklog
             , IFactorySprint iFactorySprint) {
 
-        Customer customer = customerContainer.getCustomer(projectCreationDto.customerName,
-                projectCreationDto.customerNif);
+        Customer customer = customerContainer.getCustomer(projectCreationDto.customerNif);
 
         ProjectTypology projectTypology =
                 projectTypologyContainer.getProjectTypology(projectCreationDto.projectTypology);
