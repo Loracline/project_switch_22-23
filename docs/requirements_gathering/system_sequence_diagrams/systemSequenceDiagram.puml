@@ -1,362 +1,7 @@
 @startuml
-skinparam sequenceMessageAlign center
-title TO CREATE NEW PROFILE
 legend top
-US001 - As Administrator, I want to create user profiles.
+US0 - .
 end legend
-autonumber
-actor Administrator
-Administrator  -> ":System": Starts creating new profile
-note left
-Account is authenticated.
-":System" grants access.
-end note
-":System" --> Administrator: requests data (profileName)
-Administrator -> ":System": Types requested data
-":System" --> Administrator: informs operation success
-@enduml
-
-@startuml
-skinparam sequenceMessageAlign center
-title TO REGISTER NEW ACCOUNT
-legend top
-US002 - As Administrator, I want to register a user.
-end legend
-autonumber
-actor Administrator
-Administrator -> ":System": Registers new account
-note left
-Account is authenticated.
-":System" grants access.
-end note
-Administrator <-- ":System": requests data (name, email, \n phoneNumber, photo)
-Administrator  -> ":System": types requested data
-":System" --> Administrator: informs operation success
-@enduml
-
-
-@startuml
-skinparam sequenceMessageAlign center
-title TO CHANGE PROFILE
-legend top
-US003 - As Administrator, I want to change the profile of a user account.
-end legend
-actor Administrator
-autonumber
-Administrator -> ":System": Changes account profile
-note left
-Account is authenticated.
-":System" grants access.
-end note
-":System" --> Administrator: requests data (email, profileName)
-Administrator -> ":System": Enters account data
-":System" --> Administrator: informs account profile updated
-@enduml
-
-
-@startuml
-skinparam sequenceMessageAlign center
-title TO LIST ALL ACCOUNTS
-legend top
-US004 - As Administrator, I want to get a list of all user accounts and their status.
-end legend
-actor Administrator
-autonumber
-Administrator -> ":System": Lists all accounts
-note left
-Account is authenticated.
-":System" grants access.
-end note
-":System" --> Administrator: returns accounts
-@enduml
-
-
-@startuml
-legend top
-US005 - As Administrator, I want to inactivate a user account.
-end legend
-skinparam sequenceMessageAlign center
-title TO INACTIVATE USER ACCOUNT
-actor Administrator
-autonumber
-Administrator -> ":System": Changes account status to "Inactive"
-note left
-Account is authenticated.
-":System" grants access.
-end note
-Administrator <-- ":System": requests data (email, status)
-Administrator -> ":System": Enters requested data
-":System" --> Administrator: informs account status updated
-@enduml
-
-
-@startuml
-legend top
-US006 - As Administrator, I want to activate a user account.
-end legend
-skinparam sequenceMessageAlign center
-title TO ACTIVATE USER ACCOUNT
-actor Administrator
-autonumber
-Administrator -> ":System": Changes account status to "Active"
-note left
-Account is authenticated.
-":System" grants access.
-end note
-":System" --> Administrator: requests data (email, status)
-Administrator -> ":System": Enters requested data
-":System" --> Administrator: informs account status updated
-@enduml
-
-
-@startuml
-legend top
-US007 - As Administrator, I want to create a new Project Typology.
-end legend
-skinparam sequenceMessageAlign center
-title TO CREATE NEW PROJECT TYPOLOGY
-actor Administrator
-autonumber
-Administrator -> ":System": starts creating new project typology
-note left
-Account is authenticated.
-":System" grants access.
-end note
-":System" --> "Administrator": requests data (projectTypology)
-Administrator -> ":System": types requested data
-Administrator <-- ":System": informs operation success
-@enduml
-
-
-@startuml
-legend top
-US008 - As Administrator, I want to add a business sector.
-end legend
-skinparam sequenceMessageAlign center
-title TO CREATE A NEW BUSINESS SECTOR
-actor "Administrator"
-autonumber
-Administrator -> ":System": starts adding new business sector
-note left
-Account is authenticated.
-":System" grants access.
-end note
-Administrator <-- ":System": requests data (name)
-Administrator -> ":System": types requested data
-Administrator <-- ":System":informs operation success
-@enduml
-
-
-@startuml
-legend top
-US009 - As Administrator, I want to add a customer.
-end legend
-skinparam sequenceMessageAlign center
-title TO ADD A CUSTOMER
-actor "Administrator"
-autonumber
-Administrator -> ":System": starts adding new customer
-note left
-Account is authenticated.
-":System" grants access.
-end note
-Administrator <-- ":System": requests data (customerName, customerNIF)
-Administrator-> ":System": sends requested data
-Administrator <-- ":System":informs operation success
-@enduml
-
-
-@startuml
-legend top
-US010 - As Manager, I want to register/create a new project.
-end legend
-skinparam sequenceMessageAlign center
-title TO REGISTER NEW PROJECT
-autonumber
-actor "Manager"
-"Manager" -> ":System": registers new project
-note left
-Account is authenticated.
-":System" grants access.
-end note
-"Manager" <-- ":System": requests data (code, name, ...)
-"Manager" -> ":System":  types requested data
-"Manager" <-- ":System": informs project created
-@enduml
-
-@startuml
-legend top
-US011 - As Manager, I want to associate a user as Team Member of a project.
-US012 - As Manager, I want to define the PO of a project.
-US013 - As Manager, I want to define the SM of a project.
-end legend
-skinparam sequenceMessageAlign center
-title TO ASSOCIATE USER AS TEAM MEMBER/PRODUCT OWNER/SCRUM MASTER TO A PROJECT
-actor "Manager"
-autonumber
-"Manager" -> ":System": requests list of all User accounts
-note left
-Account is authenticated.
-":System" grants access.
-end note
-"Manager" <-- ":System": requests to select User account
-"Manager" -> ":System": selects User account
-"Manager" -> ":System": requests list of all projects
-"Manager" <-- ":System": requests to select project
-"Manager" -> ":System": selects project
-"Manager" -> ":System": starts the association of the selected User with the selected project and a role
-"Manager" <-- ":System": requests data
-"Manager" -> ":System": sends data (role, costPerHour, percentageAllocation, startDate)
-"Manager" <-- ":System": informs team member/product owner/scrum master associated/defined
-@enduml
-
-@startuml
-legend top
-US014 - As Manager, I want to get a list of all human resources in a project.
-end legend
-skinparam sequenceMessageAlign center
-title TO GET A LIST OF ALL HUMAN RESOURCES IN PROJECT
-actor "Manager"
-autonumber
-"Manager" -> ":System": requests a list of all human resources in project
-note left
-Account is authenticated.
-":System" grants access.
-end note
-":System" --> Manager: request data (projectCode)
-"Manager" -> ":System": types requested data
-"Manager" <-- ":System": shows list of accounts
-@enduml
-
-@startuml
-legend top
-US015 - As Manager, I want to get a list of all projects.
-end legend
-skinparam sequenceMessageAlign center
-title TO GET A LIST OF ALL PROJECTS
-actor "Manager"
-autonumber
-"Manager" -> ":System": get list of all projects
-note left
-Account is authenticated.
-":System" grants access.
-end note
-"Manager" <-- ":System": request data (email)
-"Manager" -> ":System": types requested data
-"Manager" <-- ":System": shows list all projects
-@enduml
-
-
-@startuml
-legend top
-US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to.
-end legend
-skinparam sequenceMessageAlign center
-title TO GET A LIST OF ALL PROJECTS
-actor actor
-autonumber
-actor -> ":System": lists all projects the user is allocated to
-note left
-Account is authenticated.
-":System" grants access.
-end note
-actor <-- ":System": request data (email)
-actor -> ":System": types requested data
-actor <-- ":System": shows list of projects
-
-@enduml
-@startuml
-legend top
-US017 - As a Product Owner, I want to create a user story and add it to the Product Backlog.
-end legend
-skinparam sequenceMessageAlign center
-title TO CREATE USER STORY (US)
-actor "Product Owner" as PO
-autonumber
-"PO" -> ":System": creates User Story
-note left
-Account is authenticated.
-":System" grants access.
-end note
-note right
-User requests to see all projects,
- and selects one (US016).
-end note
-PO <-- ":System": requests data (US_number, actor, US_text)
-
-PO -> ":System": enters User Story data
-PO <-- ":System": informs operation success
-@enduml
-
-@startuml
-legend top
-US018 - As PO/SM/Team Member, I want to consult the product backlog, i.e. to get the list of user stories sorted by priority.
-end legend
-skinparam sequenceMessageAlign center
-title TO CONSULT THE PRODUCT BACKLOG
-actor "PO/SM/Team Member" as actor
-autonumber
-actor -> ":System": requests product backlog (list of all US) from selected project
-note left
-Account is authenticated.
-":System" grants access.
-end note
-note right
-Team member request to see all projects,
-and selects one (US016).
-end note
-actor <-- ":System": shows list of all US
-
-@enduml
-
-@startuml
-title TO ADD A USER STORY TO THE SPRINT BACKLOG
-legend top
-US020 - As Team Member, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
-end legend
-skinparam sequenceMessageAlign center
-
-actor "Team Member"
-autonumber
-
-"Team Member" -> ":System": starts adding a User Story to Sprint Backlog
-note left
-Account is authenticated.
-":System" grants access.
-end note
-
-note right
-Team Member resquests to see
-the Product Backlog and selects
-a User Story. See US018
-end note
-"Team Member" <-- ":System": requests data (projectCode, userStoryDto, sprintNumber)
-"Team Member" -> ":System": sends requested data
-"Team Member" <-- ":System": User Story was added to Sprint Backlog
-@enduml
-
-@startuml
-legend top
-US022 - As Team Member, I want to view the Scrum Board of current sprint.
-end legend
-skinparam sequenceMessageAlign center
-title TO VIEW THE SCRUM BOARD OF SPRINT
-actor "Team Member"
-autonumber
-"Team Member" -> ":System": request to view the Scrum Board of current sprint.
-note left
-Account is authenticated.
-":System" grants access.
-end note
-note right
-Team member request to see all projects,
-and select one (US0016).
-end note
-"Team Member" <-- ":System": shows Scrum Board of current sprint
-@enduml
-
-
-@startuml
 skinparam sequenceMessageAlign center
 title TO SEARCH ACCOUNT BY E-MAIL
 actor Administrator
@@ -369,8 +14,10 @@ end note
 ":System" --> Administrator: returns account matching
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO SEARCH ACCOUNT BY PROFILE
 actor Administrator
@@ -383,8 +30,10 @@ end note
 ":System" --> Administrator: returns list of accounts
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO MANAGE PROJECT
 actor "Project Manager" as PM
@@ -397,8 +46,10 @@ end note
 PM <-- ":System": project info updated
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO SEARCH PROJECT BY MANAGER
 actor "Manager"
@@ -411,8 +62,10 @@ end note
 "Manager" <-- ":System": lists all projects matching
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO SEARCH PROJECT BY USER
 actor "User in Project" as UIP
@@ -425,8 +78,10 @@ end note
 UIP <-- ":System": lists projects User is / was enrolled
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO CREATE SPRINT
 actor "User in Project" as UIP
@@ -441,12 +96,14 @@ UIP -> ":System": Defines US for sprint
 UIP <-- ":System": new sprint created
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO GROOM USER STORY
 actor "Product Owner" as PO
-PO -> ":System": Requests product backlog data
+"PO" -> ":System": Requests product backlog data
 note left
 Account is authenticated.
 ":System" grants access.
@@ -456,12 +113,14 @@ PO -> ":System": Decomposes US
 PO <-- ":System": US replaced
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO REVIEW SPRINT
 actor "Product Owner" as PO
-PO -> ":System": Accesses all sprint's US
+"PO" -> ":System": Accesses all sprint's US
 note left
 Account is authenticated.
 ":System" grants access.
@@ -471,12 +130,14 @@ PO -> ":System": Returns not finished US to product backlog
 PO <-- ":System": US remains in product backlog
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO CREATE TASK FOR USER STORY
 actor "User in Project" as UIP
-UIP -> ":System": Creates task related to US
+"UIP" -> ":System": Creates task related to US
 note left
 Account is authenticated.
 ":System" grants access.
@@ -486,12 +147,14 @@ UIP -> ":System": Enters task data
 UIP <-- ":System": new task created
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO UPDATE TASK IN USER STORY
 actor "User in Project" as UIP
-UIP -> ":System": Updates info about task
+"UIP" -> ":System": Updates info about task
 note left
 Account is authenticated.
 ":System" grants access.
@@ -501,12 +164,14 @@ UIP -> ":System": Enters data
 UIP <-- ":System": task updated
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO FINISH TASK IN USER STORY
 actor "User in Project" as UIP
-UIP -> ":System": Registers task finished during sprint
+"UIP" -> ":System": Registers task finished during sprint
 note left
 Account is authenticated.
 ":System" grants access.
@@ -514,8 +179,10 @@ end note
 UIP <-- ":System": returns unfinished US to product backlog
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO ALLOCATE RESOURCE IN PROJECT
 actor "Manager"
@@ -529,8 +196,10 @@ end note
 "Manager" <-- ":System": resource added to project
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO GENERATE ALLOCATION REPORT BY MANAGER
 actor "Manager"
@@ -542,12 +211,14 @@ end note
 "Manager" <-- ":System": generates allocation report
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO GENERATE ALLOCATION REPORT BY \n PROJECT MANAGER, PRODUCT OWNER OR SCRUM MASTER
 actor "PM, PO or SM" as PPS
-PPS -> ":System": Requests allocation report of any member \n of projects he / she / they are involved in
+"PPS" -> ":System": Requests allocation report of any member \n of projects he / she / they are involved in
 note left
 Account is authenticated.
 ":System" grants access.
@@ -555,12 +226,14 @@ end note
 PPS <-- ":System": generates allocation report
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO GENERATE ALLOCATION REPORT BY TEAM MEMBER
 actor "Team Member" as TM
-TM -> ":System": Requests personal allocation report \n of projects he / she / they are involved in
+"TM" -> ":System": Requests personal allocation report \n of projects he / she / they are involved in
 note left
 Account is authenticated.
 ":System" grants access.
@@ -568,8 +241,10 @@ end note
 TM <-- ":System": generates allocation report
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO GENERATE KPI REPORT BY MANAGER
 actor "Manager"
@@ -582,8 +257,10 @@ end note
 "Manager" <-- ":System": reports CPI and SPO in chosen format
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO GENERATE KPI REPORT BY PROJECT MANAGER OR PRODUCT OWNER
 actor "PM or PO" as PP
@@ -596,8 +273,10 @@ end note
 PP <-- ":System": reports CPI and SPO in chosen format
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO KEEP RECORD OF SCRUM CEREMONY
 actor "User in Project" as UIP
@@ -613,6 +292,9 @@ UIP <-- ":System": stops recording / keeps record
 @enduml
 
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO SEARCH All PROJECTS BY MANAGER
 actor "Manager"
@@ -625,9 +307,10 @@ end note
 "Manager" <-- ":System": ShowListAllProjects
 @enduml
 
-
 @startuml
-
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO ADD A CUSTOMER
 actor "Administrator" as adm
@@ -639,13 +322,13 @@ Account is authenticated.
 end note
 adm <-- ":System": requests data (customerName, customerNIF)
 adm -> ":System": types requested data
-adm <-- ":System":informs operation success
-
+adm <-- :System:informs operation success
 @enduml
 
-
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title AS A MANAGER, TO LIST ALL HUMAN RESOURCES IN A PROJECT
 actor "Manager"
@@ -659,6 +342,9 @@ end note
 @enduml
 
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO LIST ALL PROJECTS THE USER IS ALLOCATED AS AUTHENTICATED
 actor "User"
@@ -671,30 +357,25 @@ end note
 "User" <-- ":System": shows list of all projects the user is allocated
 @enduml
 
-
 @startuml
+legend top
+US0 - .
+end legend
 skinparam sequenceMessageAlign center
 title TO ESTIMATE THE EFFORT OF A USER STORY IN A SPRINT, DURING THE SPRINT PLANNING CEREMONY.
-
 actor "Team Member"
 autonumber
-
-
-
 "Team Member" -> ":System": requests list of projects
 note left
 Account is authenticated.
 ":System" grants access.
 end note
-
 note right
 Team Member requests to see all
 projects and select one (US016).
 end note
 "Team Member" <-- ":System": requests data
 "Team Member" -> ":System": requests list of user stories
-
-
 note right
 Team Member requests to see all
 user stories and select one (US022).
@@ -703,7 +384,3 @@ end note
 "Team Member" -> ":System": selects data and estimate user story effort
 "Team Member" <-- ":System": shows success message
 @enduml
-
-
-
-
