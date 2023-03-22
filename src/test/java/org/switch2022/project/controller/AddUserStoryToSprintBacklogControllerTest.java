@@ -50,7 +50,7 @@ class AddUserStoryToSprintBacklogControllerTest {
                 null);
 
         //Sprint
-        sprint = Sprint.createSprint(LocalDate.now(), 2, "S1", iFactoryPeriod, iFactorySprintBacklog);
+        sprint = Sprint.createSprint(LocalDate.now(), 2, 1, iFactoryPeriod, iFactorySprintBacklog);
 
         //UserStoryDto
         userStoryDto = new UserStoryDto("US001", "null", "null");
@@ -90,7 +90,7 @@ class AddUserStoryToSprintBacklogControllerTest {
         boolean result= addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(
                 "1A",
                 userStoryDto,
-                "S1");
+                "s001");
 
         assertTrue(result);
     }

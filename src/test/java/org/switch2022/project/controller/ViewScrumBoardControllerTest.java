@@ -217,9 +217,9 @@ class ViewScrumBoardControllerTest {
         //Arrange
 
         LocalDate startDate = LocalDate.of(2022, 1, 1);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "SP001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, 1);
         projectContainer.createSprint(sprintCreationDto, projectDto);
-        projectContainer.addUserStoryToSprintBacklog(projectDto.code, "US001", "SP001");
+        projectContainer.addUserStoryToSprintBacklog(projectDto.code, "US001", "s001");
         LocalDate date = LocalDate.of(2022, 1, 2);
         List<UserStoryDto> expected = new ArrayList<>();
         expected.add(userStoryDtoOne);
@@ -237,7 +237,7 @@ class ViewScrumBoardControllerTest {
         //Arrange
 
         LocalDate startDate = LocalDate.of(2022, 1, 1);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "SP001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, 1);
         projectContainer.createSprint(sprintCreationDto, projectDto);
         projectContainer.addUserStoryToSprintBacklog(projectDto.code, "US001", "SP001");
         LocalDate date = LocalDate.of(2022, 3, 2);

@@ -22,7 +22,7 @@ public class FactorySprint implements IFactorySprint {
      * @return Sprint
      */
     public Sprint createSprint(LocalDate startDate, int sprintDuration,
-                               String sprintNumber,
+                               int sprintNumber,
                                IFactoryPeriod iFactoryPeriod,
                                IFactorySprintBacklog iFactorySprintBacklog) {
         return Sprint.createSprint(startDate, sprintDuration, sprintNumber, iFactoryPeriod,

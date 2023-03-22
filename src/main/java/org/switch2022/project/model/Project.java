@@ -257,6 +257,13 @@ public class Project {
     public ProductBacklog getProductBacklog() {
         return this.productBacklog.getProductBacklogCopy();
     }
+    /**
+     * Returns the next sprint number by getting the size of the current sprints list and adding 1 to it.
+     * @return an integer representing the next sprint number
+     */
+    public int getNextSprintNumber() {
+        return this.sprints.size()+1;
+    }
 
     /**
      * This method checks if there is any UserStory in the sprints of the project with
@@ -297,9 +304,9 @@ public class Project {
     public boolean createSprint(SprintCreationDto sprintCreationDto) {
         Sprint sprint = iFactorySprint.createSprint(sprintCreationDto.getStartDate(),
                 sprintCreationDto.sprintDuration,
-                sprintCreationDto.getSprintNumber(), iFactoryPeriod,
+                getNextSprintNumber(), iFactoryPeriod,
                 iFactorySprintBacklog);
-        return isPeriodValid(sprint) && addSprint(sprint);
+        return isPeriodValid(sprint) && addSprint(sprint) ;
     }
 
     /**
@@ -320,7 +327,6 @@ public class Project {
         }
         return result;
     }
-
     /**
      * This method adds a new User Story to the Sprint Backlog
      *

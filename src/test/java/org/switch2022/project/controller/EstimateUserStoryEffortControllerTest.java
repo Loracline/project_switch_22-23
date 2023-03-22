@@ -63,7 +63,7 @@ class EstimateUserStoryEffortControllerTest {
                         "management", "Peter", "228674498",
                 "Fixed cost", "Fishing");
         sprintCreationDto = new SprintCreationDto(LocalDate.now(), 2,
-                "S1");
+                1);
         userStoryCreationDto = new UserStoryCreationDto("US001",
                 "I want to create a " +
                         "profile", "planned", 0);
@@ -120,7 +120,7 @@ class EstimateUserStoryEffortControllerTest {
     void ensureUserStoryEffortIsEstimatedSuccessfully() {
         projectContainer.createUserStory(projectDtoOne, userStoryCreationDto);
         projectContainer.addUserStoryToSprintBacklog(projectDtoOne.code,
-                "US001", "S1");
+                "US001", "s001");
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
                 Effort.TWO, projectDtoOne);
         assertTrue(result);

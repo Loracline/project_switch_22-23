@@ -18,7 +18,7 @@ public interface IFactorySprint {
      * @param iFactorySprintBacklog implementation FactorySprintBacklog
      */
     Sprint createSprint(LocalDate startDate, int sprintDuration,
-                        String sprintNumber,
-                        IFactoryPeriod iFactoryPeriod,
-                        IFactorySprintBacklog iFactorySprintBacklog);
+                               int sprintNumber,
+                               IFactoryPeriod iFactoryPeriod,
+                               IFactorySprintBacklog iFactorySprintBacklog);
 }

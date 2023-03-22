@@ -56,7 +56,7 @@ class CreateSprintControllerTest {
 
         //Dto
         LocalDate startDate = LocalDate.now();
-        sprintCreationDtoOne = new SprintCreationDto(startDate, 3, "S001");
+        sprintCreationDtoOne = new SprintCreationDto(startDate, 3, 1);
 
         projectDto = new ProjectDto("AA001", "software development " +
                 "management", "Peter", "228674498",
@@ -208,7 +208,7 @@ class CreateSprintControllerTest {
         //Arrange
         ProjectDto projectDtoEmpty = new ProjectDto("", "", "", "", "",
                 "");
-        SprintCreationDto sprintCreationDtoEmpty = new SprintCreationDto(null, 0, "");
+        SprintCreationDto sprintCreationDtoEmpty = new SprintCreationDto(null, 0, 0);
         //Act
         boolean result = createSprintController.createSprint(projectDtoEmpty, sprintCreationDtoEmpty);
         //Assert
@@ -220,10 +220,10 @@ class CreateSprintControllerTest {
      */
 
     @Test
-    void ensureUserStoryIsCreatedSuccessfully() {
+    void ensureSprintIsCreatedSuccessfully() {
         //Arrange
         LocalDate startDate = LocalDate.of(2024, 3, 19);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S002");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3 ,2);
         company.createSprint(projectDto, sprintCreationDto);
         //Act
         boolean result = createSprintController.createSprint(projectDto, sprintCreationDtoOne);
@@ -240,7 +240,7 @@ class CreateSprintControllerTest {
     void ensureSprintIsNotCreatedIfAlreadyExists() {
         //Arrange
         LocalDate startDate = LocalDate.now();
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, 1);
         company.createSprint(projectDto, sprintCreationDto);
         //Act
         boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
@@ -256,7 +256,7 @@ class CreateSprintControllerTest {
     void ensureSprintIsNotCreatedBecausePeriodIsOverlapping() {
         //Arrange
         LocalDate startDate = LocalDate.of(2023,3,20);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, "S002");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, 2);
         company.createSprint(projectDto, sprintCreationDto);
         //Act
         boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
@@ -272,7 +272,7 @@ class CreateSprintControllerTest {
     void ensureSprintIsNotCreatedBecausePeriodDateIsBeforePresentDate() {
         //Arrange
         LocalDate startDate = LocalDate.of(2022,3,20);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, "S002");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, 2);
         company.createSprint(projectDto, sprintCreationDto);
         //Act
         boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
@@ -281,14 +281,14 @@ class CreateSprintControllerTest {
     }
 
     /**
-     * Scenario 10: fail to create a Sprint because the Number already exists but the date is valid.
+     * Scenario 10: fail to create a Sprint because the Sprint Number already exists but the date is valid.
      * should return false.
      */
     @Test
     void ensureSprintIsNotCreatedBecauseSprintNumberAlreadyExistsButDateIsValid() {
         //Arrange
         LocalDate startDate = LocalDate.of(2024,3,20);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, "S001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 2, 1);
         company.createSprint(projectDto, sprintCreationDto);
         //Act
         boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
@@ -304,7 +304,7 @@ class CreateSprintControllerTest {
     void ensureSprintIsNotCreatedBecauseSprintDateIsTheSameAsEndDateOfAnExistingSprint() {
         //Arrange
         LocalDate startDate = LocalDate.of(2023,4,7);
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "S001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, 1);
         company.createSprint(projectDto, sprintCreationDto);
         //Act
         boolean result = createSprintController.createSprint(projectDto, sprintCreationDto);
