@@ -1,6 +1,7 @@
-package org.switch2022.project.utils;
+package org.switch2022.project.ddd.utils;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.utils.Validate;
 
 import static org.junit.jupiter.api.Assertions.*;
 

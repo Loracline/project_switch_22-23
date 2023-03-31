@@ -1,4 +1,4 @@
-package org.switch2022.project.utils;
+package org.switch2022.project.ddd.utils;
 
 public class Validate {
     /**
@@ -48,6 +48,22 @@ public class Validate {
         if (string.isBlank()) {
             throw new IllegalArgumentException(message);
         }
+    }
+
+    /**
+     * <p>Validate that the specified argument is not <code>null</code> or <code>empty</code> or <code>blank</code>;
+     * otherwise throwing an exception with the specified message.
+     *
+     * <pre>Validate.notNullOrEmptyOrBlank(myString, myStringName);</pre>
+     *
+     * @param string the string to check.
+     * @param argumentName the name of the argument to check.
+     * @throws IllegalArgumentException if the string is null or empty or blank.
+     */
+    public static void notNullOrEmptyOrBlank(String string, String argumentName) {
+        notNull(string, String.format("The %s must not be null",argumentName));
+        notEmpty(string, String.format("The %s must not be empty",argumentName));
+        notBlank(string, String.format("The %s must not be blank",argumentName));
     }
 
     /**
