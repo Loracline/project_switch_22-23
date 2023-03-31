@@ -5,7 +5,7 @@ public class Validate {
      * <p>Validate that the specified argument is not <code>null</code>;
      * otherwise throwing an exception with the specified message.
      *
-     * <pre>Validate.notNull(myObject, "The string must not be null");</pre>
+     * <pre>Validate.notNull(myString, "The string must not be null");</pre>
      *
      * @param string  the string to check
      * @param message the exception message if invalid
@@ -54,7 +54,7 @@ public class Validate {
      * <p>Validate that the specified argument is not <code>negative</code>;
      * otherwise throwing an exception with the specified message.
      *
-     * <pre>Validate.notNegative(myInteger, "The integer must not be negative");</pre>
+     * <pre>Validate.notNegative(myInteger, "The int must not be negative");</pre>
      *
      * @param integer the int to check
      * @param message the exception message if invalid

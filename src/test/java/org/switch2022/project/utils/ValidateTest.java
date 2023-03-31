@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidateTest {
-
+    /**
+     * METHOD Validate.notNull(myString, "The string must not be null")
+     * Scenario 1: verifies if a String is null.
+     * Should throw an IllegalArgumentException.
+     */
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsNull() {
         //Arrange
@@ -17,6 +21,10 @@ class ValidateTest {
                 Validate.notNull(stringToTest, message));
     }
 
+    /**
+     * Scenario 2: verifies if a String is not null.
+     * Should not throw an IllegalArgumentException.
+     */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenStringIsNotNull() {
         //Arrange
@@ -28,6 +36,11 @@ class ValidateTest {
                 Validate.notNull(stringToTest, message));
     }
 
+    /**
+     * METHOD Validate.notEmpty(myString, "The string must not be empty")
+     * Scenario 1: verifies if a String is empty.
+     * Should throw an IllegalArgumentException.
+     */
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsEmpty() {
         //Arrange
@@ -39,6 +52,10 @@ class ValidateTest {
                 Validate.notEmpty(stringToTest, message));
     }
 
+    /**
+     * Scenario 2: verifies if a String is empty.
+     * Should not throw an IllegalArgumentException.
+     */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenStringIsNotEmpty() {
         //Arrange
@@ -50,7 +67,11 @@ class ValidateTest {
                 Validate.notEmpty(stringToTest, message));
     }
 
-
+    /**
+     * METHOD Validate.notBlank(myString, "The string must not be blank")
+     * Scenario 1: verifies if a String is blank.
+     * Should throw an IllegalArgumentException.
+     */
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsBlank() {
         //Arrange
@@ -62,6 +83,10 @@ class ValidateTest {
                 Validate.notBlank(stringToTest, message));
     }
 
+    /**
+     * Scenario 2: verifies if a String is blank.
+     * Should not throw an IllegalArgumentException.
+     */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenStringIsNotBlank() {
         //Arrange
@@ -73,6 +98,11 @@ class ValidateTest {
                 Validate.notBlank(stringToTest, message));
     }
 
+    /**
+     * METHOD Validate.notNegative(myInt, "The int must not be negative")
+     * Scenario 1: verifies if an int is negative.
+     * Should throw an IllegalArgumentException.
+     */
     @Test
     void ensureThatAnExceptionIsThrownWhenIntegerIsNegative() {
         //Arrange
@@ -84,6 +114,10 @@ class ValidateTest {
                 Validate.notNegative(integerToTest, message));
     }
 
+    /**
+     * Scenario 2: verifies if an int is negative.
+     * Should not throw an IllegalArgumentException.
+     */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenIntegerIsNotNegative() {
         //Arrange
