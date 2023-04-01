@@ -2,6 +2,11 @@ package org.switch2022.project.ddd.dto;
 
 import java.util.Objects;
 
+/**
+ * Represents a project data transfer object.
+ * This class contains information about the project such as its code, name,
+ * customer, status, typology, and business sector.
+ */
 public class ProjectDto {
 
     /**
@@ -28,7 +33,7 @@ public class ProjectDto {
     }
 
     /**
-     *  The equals() method is used to determine whether two objects are equal in
+     * The equals() method is used to determine whether two objects are equal in
      * terms of their content. This method compares the content of the two objects,
      * which means that two objects are considered equal if they have the same
      * state or values, even if they are not the same object in memory.
