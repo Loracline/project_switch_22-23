@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.utils;
 
 public class Validate {
+
     /**
      * <p>Validate that the specified argument is not <code>null</code>;
      * otherwise throwing an exception with the specified message.
@@ -13,6 +14,22 @@ public class Validate {
      */
     public static void notNull(String string, String message) {
         if (string == null) {
+            throw new IllegalArgumentException(message);
+        }
+    }
+
+    /**
+     * <p>Validate that the specified argument is not <code>null</code>;
+     * otherwise throwing an exception with the specified message.
+     *
+     * <pre>Validate.notNull(myObject, "The object must not be null");</pre>
+     *
+     * @param object  the object to check
+     * @param message the exception message if invalid
+     * @throws IllegalArgumentException if the object is null
+     */
+    public static void notNull(Object object, String message) {
+        if (object == null) {
             throw new IllegalArgumentException(message);
         }
     }

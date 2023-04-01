@@ -1,9 +1,9 @@
 package org.switch2022.project.ddd.utils;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.utils.Validate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidateTest {
     /**
@@ -128,5 +128,36 @@ class ValidateTest {
         //Act and Assert
         assertDoesNotThrow(() ->
                 Validate.notNegative(integerToTest, message));
+    }
+
+    /**
+     * METHOD Validate.notNull(myObject, "The object must not be null")
+     * Scenario 1: verifies if an Object is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenObjectIsNull() {
+        //Arrange
+        String message = "The string must not be null";
+        Object objectToTest = null;
+
+        //Act and Assert
+        assertThrows(IllegalArgumentException.class, () ->
+                Validate.notNull(objectToTest, message));
+    }
+
+    /**
+     * Scenario 2: verifies if an Object is not null.
+     * Should not throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenObjectIsNotNull() {
+        //Arrange
+        String message = "The string must not be null";
+        Object objectToTest = new Object();
+
+        //Act and Assert
+        assertDoesNotThrow(() ->
+                Validate.notNull(objectToTest, message));
     }
 }
