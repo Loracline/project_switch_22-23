@@ -20,11 +20,11 @@ public class UsId implements ValueObject<UsId> {
     }
 
     /**
-     * Getter method for the attribute: id.
+     * Getter method for the attribute: userStoryId.
      *
      * @return String representation of the user story ID.
      */
-    public String getUserStoryId(){
+    public String getUserStoryId() {
         return userStoryId;
     }
 
@@ -47,8 +47,12 @@ public class UsId implements ValueObject<UsId> {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         UsId other = (UsId) o;
 
@@ -65,8 +69,5 @@ public class UsId implements ValueObject<UsId> {
     public int hashCode() {
         return userStoryId.hashCode();
     }
-
-
-
 
 }

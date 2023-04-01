@@ -1,25 +1,24 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.model.UserStory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UsIdTest {
 
     /**
-     * METHOD getId()
+     * METHOD getUserStoryId()
      * <br>
      * Scenario 1: Verify that the value returned is the same as the value of the id attribute of the UsId value object.
      */
     @Test
     void ensureUserStoryIdIsRetrievedSuccessfully() {
         // Arrange
-        UsId usId = new UsId("P001","US001");
+        UsId usId = new UsId("P001", "US001");
         String expected = "P001_US001".toLowerCase();
 
         // Act
-            String result = usId.getUserStoryId();
+        String result = usId.getUserStoryId();
 
         // Assert
         assertEquals(expected, result);
@@ -34,8 +33,8 @@ class UsIdTest {
     @Test
     void ensureThatReturnsTrueIfTwoUsIdInstancesHaveTheSameIdValue() {
         //Arrange
-        UsId usId = new UsId("P001","US001");
-        UsId otherUsId = new UsId("P001","US001");
+        UsId usId = new UsId("P001", "US001");
+        UsId otherUsId = new UsId("P001", "US001");
         //Act
         boolean result = usId.sameValueAs(otherUsId);
         //Assert
@@ -49,8 +48,8 @@ class UsIdTest {
     @Test
     void ensureThatReturnsFalseIfTwoUsIdInstancesHaveDifferentIdValues() {
         //Arrange
-        UsId usId = new UsId("P001","US001");
-        UsId otherUsId = new UsId("P002","US001");
+        UsId usId = new UsId("P001", "US001");
+        UsId otherUsId = new UsId("P002", "US001");
         //Act
         boolean result = usId.sameValueAs(otherUsId);
         //Assert
@@ -65,7 +64,7 @@ class UsIdTest {
     @Test
     void ensureSameUsIdEqualsItself() {
         // Arrange
-        UsId reference = new UsId("P001","US001");
+        UsId reference = new UsId("P001", "US001");
         UsId other = reference;
 
         // Act
@@ -82,8 +81,8 @@ class UsIdTest {
     @Test
     void ensureTwoDifferentUsIdInstancesAreNotTheSame() {
         // Arrange
-        UsId reference = new UsId("P001","US001");
-        UsId other = new UsId("P002","US001");
+        UsId reference = new UsId("P001", "US001");
+        UsId other = new UsId("P002", "US001");
 
         // Act
         boolean result = reference.equals(other);
@@ -100,7 +99,7 @@ class UsIdTest {
     @Test
     void ensureUsIdDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        UsId reference = new UsId("P001","US001");
+        UsId reference = new UsId("P001", "US001");
         String other = "User";
 
         // Act
@@ -116,7 +115,7 @@ class UsIdTest {
     @Test
     void ensureUsIdInstanceDoesNotEqualNull() {
         // Arrange
-        UsId reference = new UsId("P001","US001");
+        UsId reference = new UsId("P001", "US001");
         UsId other = null;
 
         // Act
@@ -134,8 +133,8 @@ class UsIdTest {
     @Test
     public void ensureTwoUsIdInstancesHashcodeAreTheSame() {
         // Arrange
-        UsId usIdOne = new UsId("P001","US001");
-        UsId usIdTwo= new UsId("P001","US001");
+        UsId usIdOne = new UsId("P001", "US001");
+        UsId usIdTwo = new UsId("P001", "US001");
 
         // Act
         int usIdOneHashCode = usIdOne.hashCode();
@@ -151,8 +150,8 @@ class UsIdTest {
     @Test
     public void ensureTwoUsIdInstancesHashcodeAreNotTheSame() {
         // Arrange
-        UsId usIdOne = new UsId("P001","US001");
-        UsId usIdThree= new UsId("P003","US001");
+        UsId usIdOne = new UsId("P001", "US001");
+        UsId usIdThree = new UsId("P003", "US001");
 
         // Act
         int usIdOneHashCode = usIdOne.hashCode();
