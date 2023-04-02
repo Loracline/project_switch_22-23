@@ -6,6 +6,59 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UsNumberTest {
     /**
+     * METHOD constructor
+     * <p>
+     * Scenario 1: verifies if an instance of UsNumber is not created because the string passed as argument is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsNull() {
+        //Arrange
+        String expected = "The user story number must not be null";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsNumber(null));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if an instance of UsNumber is not created because the string passed as argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsEmpty() {
+        //Arrange
+        String expected = "The user story number must not be empty";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsNumber(""));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 3: verifies if an instance of UsNumber is not created because the string passed as argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsBlank() {
+        //Arrange
+        String expected = "The user story number must not be blank";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsNumber(" "));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
      * METHOD getUserStoryNumber()
      * <br>
      * Scenario 1: Verify that the value returned is the same as the value of the user story number attribute of the
@@ -75,7 +128,23 @@ class UsNumberTest {
     }
 
     /**
-     * Scenario 2: Verify if two different objects of the same class are different from
+     * Scenario 2: Verify that two objects with the same id are equal.
+     */
+    @Test
+    void ensureTwoInstancesWithSameIdAreEqual() {
+        // Arrange
+        UsNumber reference = new UsNumber("US001");
+        UsNumber other = new UsNumber("US001");
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: Verify if two different objects of the same class are different from
      * each other.
      */
     @Test
@@ -92,7 +161,7 @@ class UsNumberTest {
     }
 
     /**
-     * Scenario 3: Verify if a UsNumber instance and a different type of object are not
+     * Scenario 4: Verify if a UsNumber instance and a different type of object are not
      * the same.
      */
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
@@ -110,7 +179,7 @@ class UsNumberTest {
     }
 
     /**
-     * Scenario 4: Verify if a UsNumber and a null object are not the same.
+     * Scenario 5: Verify if a UsNumber and a null object are not the same.
      */
     @Test
     void ensureUsNumberInstanceDoesNotEqualNull() {

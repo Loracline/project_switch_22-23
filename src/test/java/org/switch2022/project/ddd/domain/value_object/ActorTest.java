@@ -6,6 +6,62 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ActorTest {
     /**
+     * METHOD constructor
+     * <p>
+     * Scenario 1: verifies if an instance of Actor is not created because the string passed as
+     * argument is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsNull() {
+        //Arrange
+        String expected = "The actor must not be null";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new Actor(null));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if an instance of Actor is not created because the string passed as
+     * argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsEmpty() {
+        //Arrange
+        String expected = "The actor must not be empty";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new Actor(""));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 3: verifies if an instance of Actor is not created because the string passed as
+     * argument is blank.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsBlank() {
+        //Arrange
+        String expected = "The actor must not be blank";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new Actor(" "));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
      * METHOD getActor()
      * <br>
      * Scenario 1: Verify that the value returned is the same as the value of the actor attribute of the
@@ -75,7 +131,23 @@ class ActorTest {
     }
 
     /**
-     * Scenario 2: Verify if two different objects of the same class are different from
+     * Scenario 2: Verify that two objects with the same id are equal.
+     */
+    @Test
+    void ensureTwoInstancesWithSameIdAreEqual() {
+        // Arrange
+        Actor reference = new Actor("Manager");
+        Actor other = new Actor("Manager");
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: Verify if two different objects of the same class are different from
      * each other.
      */
     @Test
@@ -92,7 +164,7 @@ class ActorTest {
     }
 
     /**
-     * Scenario 3: Verify if an Actor instance and a different type of object are not
+     * Scenario 4: Verify if an Actor instance and a different type of object are not
      * the same.
      */
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
@@ -110,7 +182,7 @@ class ActorTest {
     }
 
     /**
-     * Scenario 4: Verify if an Actor and a null object are not the same.
+     * Scenario 5: Verify if an Actor and a null object are not the same.
      */
     @Test
     void ensureActorInstanceDoesNotEqualNull() {

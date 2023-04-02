@@ -1,11 +1,66 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.value_object.AcceptanceCriteria;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class AcceptanceCriteriaTest {
+    /**
+     * METHOD constructor
+     * <p>
+     * Scenario 1: verifies if an instance of AcceptanceCriteria is not created because the string passed as
+     * argument is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsNull() {
+        //Arrange
+        String expected = "The acceptance criteria must not be null";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new AcceptanceCriteria(null));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if an instance of AcceptanceCriteria is not created because the string passed as
+     * argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsEmpty() {
+        //Arrange
+        String expected = "The acceptance criteria must not be empty";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new AcceptanceCriteria(""));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 3: verifies if an instance of AcceptanceCriteria is not created because the string passed as
+     * argument is blank.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsBlank() {
+        //Arrange
+        String expected = "The acceptance criteria must not be blank";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new AcceptanceCriteria(" "));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
     /**
      * METHOD getAcceptanceCriteria()
      * <br>
@@ -76,7 +131,23 @@ class AcceptanceCriteriaTest {
     }
 
     /**
-     * Scenario 2: Verify if two different objects of the same class are different from
+     * Scenario 2: Verify that two objects with the same id are equal.
+     */
+    @Test
+    void ensureTwoInstancesWithSameIdAreEqual() {
+        // Arrange
+        AcceptanceCriteria reference = new AcceptanceCriteria("Example acceptance criteria");
+        AcceptanceCriteria other = new AcceptanceCriteria("Example acceptance criteria");
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: Verify if two different objects of the same class are different from
      * each other.
      */
     @Test
@@ -93,7 +164,7 @@ class AcceptanceCriteriaTest {
     }
 
     /**
-     * Scenario 3: Verify if an AcceptanceCriteria instance and a different type of object are not
+     * Scenario 4: Verify if an AcceptanceCriteria instance and a different type of object are not
      * the same.
      */
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
@@ -111,7 +182,7 @@ class AcceptanceCriteriaTest {
     }
 
     /**
-     * Scenario 4: Verify if an AcceptanceCriteria and a null object are not the same.
+     * Scenario 5: Verify if an AcceptanceCriteria and a null object are not the same.
      */
     @Test
     void ensureAcceptanceCriteriaInstanceDoesNotEqualNull() {

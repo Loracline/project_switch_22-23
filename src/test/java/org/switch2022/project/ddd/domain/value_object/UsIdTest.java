@@ -5,6 +5,115 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UsIdTest {
+    /**
+     * METHOD constructor
+     * <p>
+     * Scenario 1: verifies if an instance of UsId is not created because the string corresponding to the project code
+     * passed as argument is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenProjectCodeIsNull() {
+        //Arrange
+        String expected = "The project code must not be null";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsId(null, "US001"));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if an instance of UsId is not created because the string corresponding to the user story
+     * number passed as argument is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenUsNumberIsNull() {
+        //Arrange
+        String expected = "The user story number must not be null";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsId("P001", null));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 3: verifies if an instance of UsId is not created because the string corresponding to the project code
+     * passed as argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenProjectCodeIsEmpty() {
+        //Arrange
+        String expected = "The project code must not be empty";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsId("", "US001"));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 4: verifies if an instance of UsId is not created because the string corresponding to the user story
+     * number passed as argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenUsNumberIsEmpty() {
+        //Arrange
+        String expected = "The user story number must not be empty";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsId("P001", ""));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 3: verifies if an instance of UsId is not created because the string corresponding to the project code
+     * passed as argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenProjectCodeIsBlank() {
+        //Arrange
+        String expected = "The project code must not be blank";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsId(" ", "US001"));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 4: verifies if an instance of UsId is not created because the string corresponding to the user story
+     * number passed as argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenUsNumberIsBlank() {
+        //Arrange
+        String expected = "The user story number must not be blank";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                new UsId("P001", " "));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
 
     /**
      * METHOD getUserStoryId()
@@ -75,7 +184,23 @@ class UsIdTest {
     }
 
     /**
-     * Scenario 2: Verify if two different objects of the same class are different from
+     * Scenario 2: Verify that two objects with the same id are equal.
+     */
+    @Test
+    void ensureTwoInstancesWithSameIdAreEqual() {
+        // Arrange
+        UsId reference = new UsId("P001", "US001");
+        UsId other = new UsId("P001", "US001");
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: Verify if two different objects of the same class are different from
      * each other.
      */
     @Test
@@ -92,7 +217,7 @@ class UsIdTest {
     }
 
     /**
-     * Scenario 3: Verify if a UsId instance and a different type of object are not
+     * Scenario 4: Verify if a UsId instance and a different type of object are not
      * the same.
      */
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
@@ -110,7 +235,7 @@ class UsIdTest {
     }
 
     /**
-     * Scenario 4: Verify if a UsId and a null object are not the same.
+     * Scenario 5: Verify if a UsId and a null object are not the same.
      */
     @Test
     void ensureUsIdInstanceDoesNotEqualNull() {

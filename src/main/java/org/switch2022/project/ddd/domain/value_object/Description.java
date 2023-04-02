@@ -12,7 +12,7 @@ public class Description implements ValueObject<Description> {
      * @param projectDescription Description of the project.
      */
     public Description(final String projectDescription) {
-        Validate.notNullOrEmptyOrBlank(projectDescription, "project name");
+        Validate.notNullOrEmptyOrBlank(projectDescription, "project description");
 
         this.description = projectDescription.toLowerCase();
     }
