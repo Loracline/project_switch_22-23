@@ -1,132 +1,243 @@
 package org.switch2022.project.ddd.utils;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.utils.Validate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidateTest {
     /**
-     * METHOD Validate.notNull(myString, "The string must not be null")
+     * METHOD Validate.notNullOrEmptyOrBlank(myString, "The string must not be null/empty/blank")
      * Scenario 1: verifies if a String is null.
      * Should throw an IllegalArgumentException.
      */
     @Test
-    void ensureThatAnExceptionIsThrownWhenStringIsNull() {
+    void ensureThatAnExceptionIsThrownWhenStringIsNullInTheNotNullOrEmptyOrBlankMethod() {
         //Arrange
-        String message = "The string must not be null";
-        String stringToTest = null;
+        String argumentName = "string";
+        String expected = "The string must not be null";
 
-        //Act and Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                Validate.notNull(stringToTest, message));
-    }
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.notNullOrEmptyOrBlank(null, argumentName));
 
-    /**
-     * Scenario 2: verifies if a String is not null.
-     * Should not throw an IllegalArgumentException.
-     */
-    @Test
-    void ensureThatAnExceptionIsNotThrownWhenStringIsNotNull() {
-        //Arrange
-        String message = "The string must not be null";
-        String stringToTest = "Not a null String";
-
-        //Act and Assert
-        assertDoesNotThrow(() ->
-                Validate.notNull(stringToTest, message));
-    }
-
-    /**
-     * METHOD Validate.notEmpty(myString, "The string must not be empty")
-     * Scenario 1: verifies if a String is empty.
-     * Should throw an IllegalArgumentException.
-     */
-    @Test
-    void ensureThatAnExceptionIsThrownWhenStringIsEmpty() {
-        //Arrange
-        String message = "The string must not be empty";
-        String stringToTest = "";
-
-        //Act and Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                Validate.notEmpty(stringToTest, message));
+        //Assert
+        assertEquals(expected, exception.getMessage());
     }
 
     /**
      * Scenario 2: verifies if a String is empty.
-     * Should not throw an IllegalArgumentException.
-     */
-    @Test
-    void ensureThatAnExceptionIsNotThrownWhenStringIsNotEmpty() {
-        //Arrange
-        String message = "The string must not be empty";
-        String stringToTest = "Not an empty String";
-
-        //Act and Assert
-        assertDoesNotThrow(() ->
-                Validate.notEmpty(stringToTest, message));
-    }
-
-    /**
-     * METHOD Validate.notBlank(myString, "The string must not be blank")
-     * Scenario 1: verifies if a String is blank.
      * Should throw an IllegalArgumentException.
      */
     @Test
-    void ensureThatAnExceptionIsThrownWhenStringIsBlank() {
+    void ensureThatAnExceptionIsThrownWhenStringIsEmptyInTheNotNullOrEmptyOrBlankMethod() {
         //Arrange
-        String message = "The string must not be blank";
-        String stringToTest = "    ";
+        String argumentName = "string";
+        String expected = "The string must not be empty";
 
-        //Act and Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                Validate.notBlank(stringToTest, message));
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.notNullOrEmptyOrBlank("", argumentName));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
     }
 
     /**
-     * Scenario 2: verifies if a String is blank.
-     * Should not throw an IllegalArgumentException.
-     */
-    @Test
-    void ensureThatAnExceptionIsNotThrownWhenStringIsNotBlank() {
-        //Arrange
-        String message = "The string must not be blank";
-        String stringToTest = "Not a blank String";
-
-        //Act and Assert
-        assertDoesNotThrow(() ->
-                Validate.notBlank(stringToTest, message));
-    }
-
-    /**
-     * METHOD Validate.notNegative(myInt, "The int must not be negative")
-     * Scenario 1: verifies if an int is negative.
+     * Scenario 3: verifies if a String is blank.
      * Should throw an IllegalArgumentException.
      */
     @Test
-    void ensureThatAnExceptionIsThrownWhenIntegerIsNegative() {
+    void ensureThatAnExceptionIsThrownWhenStringIsBlankInTheNotNullOrEmptyOrBlankMethod() {
         //Arrange
-        String message = "The integer must not be negative";
-        int integerToTest = -1;
+        String argumentName = "string";
+        String expected = "The string must not be blank";
 
-        //Act and Assert
-        assertThrows(IllegalArgumentException.class, () ->
-                Validate.notNegative(integerToTest, message));
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.notNullOrEmptyOrBlank(" ", argumentName));
+
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
     }
 
     /**
-     * Scenario 2: verifies if an int is negative.
+     * Scenario 6: verifies if a String is not null nor empty nor blank.
      * Should not throw an IllegalArgumentException.
      */
     @Test
-    void ensureThatAnExceptionIsNotThrownWhenIntegerIsNotNegative() {
+    void ensureThatAnExceptionIsNotThrownWhenStringIsNotNullEmptyOrBlankInTheNotNullOrEmptyOrBlankMethod() {
         //Arrange
-        String message = "The integer must not be negative";
-        int integerToTest = 0;
+        String argumentName = "string";
+        String stringToTest = "Not an null/empty/blank String";
 
         //Act and Assert
         assertDoesNotThrow(() ->
-                Validate.notNegative(integerToTest, message));
+                Validate.notNullOrEmptyOrBlank(stringToTest, argumentName));
     }
+
+    /**
+     * METHOD Validate.notNull(myNumber, "The number must not be null")
+     * Scenario 1: verifies if a number is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenNumberIsNull() {
+        //Arrange
+        String argumentName = "number";
+        Number numberToTest = null;
+        String expected = "The number must not be null";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.notNull(numberToTest, argumentName));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+
+    /**
+     * Scenario 2: verifies if a number is not null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenNumberIsNotNull() {
+        //Arrange
+        String argumentName = "number";
+        Number numberToTest = 5;
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.notNull(numberToTest, argumentName));
+    }
+
+    /**
+     * METHOD Validate.notNegative(myNumber, "The number must not be negative")
+     * Scenario 1: verifies if a number is negative.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenNumberIsNegative() {
+        //Arrange
+        String argumentName = "number";
+        Number numberToTest = -1;
+        String expected = "The number must not be negative";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.notNegative(numberToTest, argumentName));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if a number is negative.
+     * Should not throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenNumberIsNotNegative() {
+        //Arrange
+        String argumentName = "integer";
+        Number numberToTest = 0;
+
+        //Act and Assert
+        assertDoesNotThrow(() ->
+                Validate.notNegative(numberToTest, argumentName));
+    }
+
+    /**
+     * METHOD Validate.withinInterval(myValueToCheck, "The valueToCheck must be between lowerLimit and upperLimit")
+     * Scenario 1: verifies if a number is not located within an interval because it's lower than the lower limit.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenNumberIsBelowInterval() {
+        //Arrange
+        String argumentName = "number";
+        Number lowerLimit = 1;
+        Number upperLimit = 4;
+        Number numberToTest = -1;
+        String expected = "The number must be between 1 and 4";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if a number is not located within an interval because it's higher than the upper limit.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenNumberIsAboveInterval() {
+        //Arrange
+        String argumentName = "number";
+        Number lowerLimit = 1;
+        Number upperLimit = 4;
+        Number numberToTest = 5;
+        String expected = "The number must be between 1 and 4";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 3: verifies if a number is located within an interval.
+     * Should not throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenNumberIsWithinInterval() {
+        //Arrange
+        String argumentName = "number";
+        Number lowerLimit = 1;
+        Number upperLimit = 4;
+        Number numberToTest = 3;
+
+        //Act and Assert
+        assertDoesNotThrow(() ->
+                Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
+    }
+
+    /**
+     * Scenario 4: verifies if a number is located within an interval if is equal to the lower limit.
+     * Should not throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenNumberIsWithinIntervalAndEqualToLowerLimit() {
+        //Arrange
+        String argumentName = "number";
+        Number lowerLimit = 1;
+        Number upperLimit = 4;
+        Number numberToTest = 1;
+
+        //Act and Assert
+        assertDoesNotThrow(() ->
+                Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
+    }
+
+    /**
+     * Scenario 5: verifies if a number is located within an interval if is equal to the upper limit.
+     * Should not throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenNumberIsWithinIntervalAndEqualToUpperLimit() {
+        //Arrange
+        String argumentName = "number";
+        Number lowerLimit = 1;
+        Number upperLimit = 4;
+        Number numberToTest = 4;
+
+        //Act and Assert
+        assertDoesNotThrow(() ->
+                Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
+    }
+
 }
