@@ -81,7 +81,7 @@ class UsIdTest {
 
     /**
      * Scenario 3: verifies if an instance of UsId is not created because the string corresponding to the project code
-     * passed as argument is empty.
+     * passed as argument is blank.
      * Should throw an IllegalArgumentException.
      */
     @Test
@@ -99,7 +99,7 @@ class UsIdTest {
 
     /**
      * Scenario 4: verifies if an instance of UsId is not created because the string corresponding to the user story
-     * number passed as argument is empty.
+     * number passed as argument is blank.
      * Should throw an IllegalArgumentException.
      */
     @Test
