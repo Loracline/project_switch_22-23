@@ -96,7 +96,6 @@ class ValidateTest {
         assertEquals(expected, exception.getMessage());
     }
 
-
     /**
      * Scenario 2: verifies if a number is not null.
      * Should throw an IllegalArgumentException.
@@ -240,4 +239,34 @@ class ValidateTest {
                 Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
     }
 
+    /**
+     * METHOD Validate.notNull(myObject, "The object must not be null")
+     * Scenario 1: verifies if an Object is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenObjectIsNull() {
+        //Arrange
+        String message = "The string must not be null";
+        Object objectToTest = null;
+
+        //Act and Assert
+        assertThrows(IllegalArgumentException.class, () ->
+                Validate.notNull(objectToTest, message));
+    }
+
+    /**
+     * Scenario 2: verifies if an Object is not null.
+     * Should not throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenObjectIsNotNull() {
+        //Arrange
+        String message = "The string must not be null";
+        Object objectToTest = new Object();
+
+        //Act and Assert
+        assertDoesNotThrow(() ->
+                Validate.notNull(objectToTest, message));
+    }
 }

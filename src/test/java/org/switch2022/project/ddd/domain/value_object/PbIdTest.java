@@ -1,27 +1,64 @@
 package org.switch2022.project.ddd.domain.value_object;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class PbIdTest {
 
     /**
-     * METHOD getProductBacklogId()
+     * Constructor
      * <br>
-     * Scenario 1: Verify thar the value returned os the same as the value of the id attribute of the PbId value object.
+     * Scenario 1: An ID is not created because the project code is null.
      */
     @Test
-    void ensureProductBacklogIdIsRetrievedSuccessfully() {
+    void ensureAnIdIsNotCreatedBecauseProjectCodeIsNull() {
         // Arrange
-        PbId pbId = new PbId("P001");
-        String expected = "p001_pb";
+        String projectCode = null;
+        String expected = "Project code can't be null.";
 
         // Act
-        String result = pbId.getProductBacklogId();
+        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new PbId(projectCode));
 
         // Assert
-        assertEquals(expected, result);
+        assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * Scenario 2: An ID is not created because the project code is empty.
+     */
+    @Test
+    void ensureAnIdIsNotCreatedBecauseProjectCodeIsEmpty() {
+        // Arrange
+        String projectCode = "";
+        String expected = "Project code can't be empty.";
+
+        // Act
+        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new PbId(projectCode));
+
+        // Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * Scenario 3: An ID is not created because the project code is blank.
+     */
+    @Test
+    void ensureAnIdIsNotCreatedBecauseProjectCodeIsBlank() {
+        // Arrange
+        String projectCode = "      ";
+        String expected = "Project code can't be blank.";
+
+        // Act
+        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new PbId(projectCode));
+
+        // Assert
+        assertEquals(expected, result.getMessage());
     }
 
     /**
@@ -65,7 +102,7 @@ class PbIdTest {
     /**
      * METHOD equals()
      * <br>
-     * Scenario 1: Verify that same object equals itself.
+     * Scenario 1: Verify that the same object equals itself.
      */
     @Test
     void ensureSamePbIdEqualsItself() {
@@ -182,5 +219,23 @@ class PbIdTest {
 
         // Assert
         assertNotEquals(expected, result);
+    }
+
+    /**
+     * METHOD toString()
+     * <br>
+     * Scenario 1: Verify that the string returned is the same of the id attribute of PbId value object.
+     */
+    @Test
+    void ensureProductBacklogIdStringIsRetrievedSuccessfully() {
+        // Arrange
+        PbId pbId = new PbId("P001");
+        String expected = "p001_pb";
+
+        // Act
+        String result = pbId.toString();
+
+        // Assert
+        assertEquals(expected, result);
     }
 }

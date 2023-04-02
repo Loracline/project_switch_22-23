@@ -4,6 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class PbId implements ValueObject<PbId> {
+
     private final String productBacklogId;
 
     /**
@@ -12,18 +13,11 @@ public class PbId implements ValueObject<PbId> {
      * @param projectCode project code.
      */
     public PbId(final String projectCode) {
-        Validate.notNullOrEmptyOrBlank(projectCode, "project code");
+        Validate.notNull(projectCode, "Project code can't be null.");
+        Validate.notEmpty(projectCode, "Project code can't be empty.");
+        Validate.notBlank(projectCode, "Project code can't be blank.");
 
         this.productBacklogId = (projectCode + "_pb").toLowerCase();
-    }
-
-    /**
-     * Getter method for the attribute: productBacklogId.
-     *
-     * @return String representation of the product backlog ID.
-     */
-    public String getProductBacklogId() {
-        return productBacklogId;
     }
 
     /**
@@ -48,7 +42,7 @@ public class PbId implements ValueObject<PbId> {
         if (this == other) {
             return true;
         }
-        if (other == null ) {
+        if (other == null) {
             return false;
         }
         if (this.getClass() != other.getClass()) {
@@ -67,5 +61,16 @@ public class PbId implements ValueObject<PbId> {
     @Override
     public int hashCode() {
         return productBacklogId.hashCode();
+    }
+
+    /**
+     * This method returns a string representation of this product backlog. The string representation consists of the product
+     * backlog ID as a string.
+     *
+     * @return a string representation of this product backlog.
+     */
+    @Override
+    public String toString() {
+        return productBacklogId;
     }
 }
