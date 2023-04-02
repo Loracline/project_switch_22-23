@@ -2,6 +2,8 @@ package org.switch2022.project.ddd.utils;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ValidateTest {
@@ -268,5 +270,40 @@ class ValidateTest {
         //Act and Assert
         assertDoesNotThrow(() ->
                 Validate.notNull(objectToTest, message));
+    }
+
+    /**
+     * METHOD Validate.isDateAfter(myLocalDate, "The dateOfInterest must be after the dateToCompare")
+     * Scenario 1: verifies that a date is not after another date.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenDateIsBeforeAnotherDate() {
+        //Arrange
+        LocalDate dateOfInterest = LocalDate.of(2023,01,01);
+        LocalDate dateToCompare = LocalDate.of(2024,02,02);
+        String expected = "The date must be after 2024-02-02";
+
+        //Act
+        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.isAfter(dateOfInterest,dateToCompare));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies that a date is after another date.
+     * Should not throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenDateIsAfterAnotherDate() {
+        //Arrange
+        LocalDate dateOfInterest = LocalDate.of(2024,02,02);
+        LocalDate dateToCompare = LocalDate.of(2023,01,01);
+
+        //Act and Assert
+        assertDoesNotThrow(() ->
+                Validate.isAfter(dateOfInterest,dateToCompare));
     }
 }

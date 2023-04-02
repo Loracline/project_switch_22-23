@@ -1,5 +1,7 @@
 package org.switch2022.project.ddd.utils;
 
+import java.time.LocalDate;
+
 public class Validate {
 
     //STRING VALIDATIONS
@@ -137,6 +139,23 @@ public class Validate {
     public static void notNull(Object object, String message) {
         if (object == null) {
             throw new IllegalArgumentException(message);
+        }
+    }
+
+    //DATE VALIDATIONS
+    /**
+     * <p>Validate that the specified date is not before another date;
+     * otherwise throwing an exception with the specified message.
+     *
+     * <pre>Validate.isDateAfter(myLocalDate, "The dateOfInterest must be after the dateToCompare");</pre>
+     *
+     * @param dateOfInterest  the date to check.
+     * @param dateToCompare the data to compare to.
+     * @throws IllegalArgumentException if the date to check is before the date to compare to.
+     */
+    public static void isAfter(LocalDate dateOfInterest, LocalDate dateToCompare) {
+        if (dateOfInterest.isBefore(dateToCompare)) {
+            throw new IllegalArgumentException(String.format("The date must be after %s", dateToCompare));
         }
     }
 }
