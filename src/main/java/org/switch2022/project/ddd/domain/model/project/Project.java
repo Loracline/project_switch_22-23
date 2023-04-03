@@ -30,8 +30,8 @@ public class Project implements Entity<Project> {
     /**
      * Constructor: the constructor only has the attribute that defines it, in this case, the project code.
      */
-    protected Project(final String projectCode) {
-        this.projectCode = new Code (projectCode);
+    protected Project(final Code projectCode) {
+        this.projectCode = projectCode;
     }
 
     /**
