@@ -10,7 +10,6 @@ public class ProjectCreationDto {
     /**
      * Attributes.
      */
-    public final String projectCode;
     public final String projectName;
     public final String projectDescription;
     public final String businessSectorName;
@@ -22,7 +21,6 @@ public class ProjectCreationDto {
      * Constructor.
      * <br>
      *
-     * @param projectCode        the unique code identifying the project.
      * @param projectName        the name of the project.
      * @param projectDescription a brief description of the project.
      * @param businessSectorName the name of the business sector to which the project belongs.
@@ -30,9 +28,8 @@ public class ProjectCreationDto {
      * @param typologyName       the name of the project typology.
      * @param sprintDuration     the duration of each sprint in the project.
      */
-    public ProjectCreationDto(String projectCode, String projectName, String projectDescription,
+    public ProjectCreationDto(String projectName, String projectDescription,
                               String businessSectorName, String customerName, String typologyName, int sprintDuration) {
-        this.projectCode = projectCode;
         this.projectName = projectName;
         this.projectDescription = projectDescription;
         this.businessSectorName = businessSectorName;
