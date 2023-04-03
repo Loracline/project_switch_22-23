@@ -78,6 +78,7 @@ class ProjectRepositoryTest {
 
     /**
      * Method: addProjectToProjectRepository(project).
+     * <br>
      * Scenario 02: verify if a Project is added to the list of Projects, after project
      * list is empty.
      * Expected result: true.
@@ -98,6 +99,7 @@ class ProjectRepositoryTest {
 
     /**
      * Method: addProjectToProjectRepository(project)
+     * <br>
      * Scenario 03: verify if a Project is not added to the list os Projects because
      * the project is already on the list.
      * Expected result: false.
