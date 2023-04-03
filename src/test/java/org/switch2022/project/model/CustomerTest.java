@@ -167,6 +167,41 @@ class CustomerTest {
         //Assert
         assertNotEquals(expected, result);
     }
+
+    /**
+     * METHOD hasCustomerNif(nif) checks if a customer has a given Nif Number.
+     *
+     * Scenario 1: verifies that customer has the given nif number. Should return TRUE.
+     */
+
+    @Test
+    void ensureThatCustomerHasTheGivenNif() {
+        //Arrange
+        Customer customer = Customer.createCustomer("Ana", "222333444");
+
+        //Act
+        boolean result = customer.hasCustomerNif("222333444");
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verifies that customer has not the given nif number. Should return
+     * FALSE.
+     */
+
+    @Test
+    void ensureThatCustomerDoesNotHaveTheGivenNif() {
+        //Arrange
+        Customer customer = Customer.createCustomer("Ana", "222333444");
+
+        //Act
+        boolean result = customer.hasCustomerNif("333444555");
+
+        //Assert
+        assertFalse(result);
+    }
 }
 
 

@@ -53,6 +53,8 @@ class AddUserToProjectControllerTest {
     IFactorySprintBacklog factorySprintBacklog;
     IFactorySprint factorySprint;
 
+    IFactoryCustomer iFactoryCustomer;
+
     @BeforeEach
     void setUp() {
         //Interfaces implemented
@@ -97,12 +99,15 @@ class AddUserToProjectControllerTest {
                 45.0f,
                 LocalDate.of(2023, 1, 19), LocalDate.of(2024, 1, 19));
 
+        //Factory
+        iFactoryCustomer = new FactoryCustomer();
+
         //containers
         businessSectorContainer = new BusinessSectorContainer();
         businessSectorContainer.createBusinessSector("fishing");
         customerContainer = new CustomerContainer();
         customerContainer.addCustomer("Genius Software",
-                "234567890");
+                "228674498", iFactoryCustomer);
         projectTypologyContainer = new ProjectTypologyContainer();
         projectTypologyContainer.createProjectTypology("Fixed Cost");
         projectTypologyContainer.createProjectTypology("Fixed time and materials");

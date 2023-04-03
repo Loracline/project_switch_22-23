@@ -41,6 +41,7 @@ class ProjectCreationMapperTest {
     IFactoryPeriod factoryPeriod;
     IFactorySprintBacklog factorySprintBacklog;
     IFactorySprint factorySprint;
+    IFactoryCustomer iFactoryCustomer;
 
     @BeforeEach
     void setUp() {
@@ -49,6 +50,7 @@ class ProjectCreationMapperTest {
         factoryProductBacklog = new FactoryProductBacklog();
         factoryProject = new FactoryProject();
         factoryUserStory = new FactoryUserStory();
+        iFactoryCustomer = new FactoryCustomer();
         projectOne = new Project("AA001", "Aptoide",
                 new Customer("ISEP", "228674498"),
                 new ProjectTypology("Fixed Cost"),
@@ -62,7 +64,7 @@ class ProjectCreationMapperTest {
         typology = new ProjectTypology("Fixed cost");
 
         customerContainer = new CustomerContainer();
-        customerContainer.addCustomer("ISEP", "228674498");
+        customerContainer.addCustomer("ISEP", "228674498", iFactoryCustomer);
         customer = new Customer("ISEP", "228674498");
 
         businessSectorContainer = new BusinessSectorContainer();

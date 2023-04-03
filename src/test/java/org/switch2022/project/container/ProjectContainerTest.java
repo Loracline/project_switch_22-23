@@ -584,8 +584,7 @@ public class ProjectContainerTest {
         IFactorySprint factorySprintDouble = mock(FactorySprint.class);
 
         Customer customerDouble = mock(Customer.class);
-        when(customerContainerDouble.getCustomer(any(), any())).thenReturn(
-                customerDouble);
+        when(customerContainerDouble.getCustomer(any())).thenReturn(customerDouble);
 
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
         when(projectTypologyContainerDouble.getProjectTypology(any())).thenReturn(
@@ -653,8 +652,7 @@ public class ProjectContainerTest {
         IFactorySprint factorySprintDouble = mock(FactorySprint.class);
 
         Customer customerDouble = mock(Customer.class);
-        when(customerContainerDouble.getCustomer(any(), any())).thenReturn(
-                customerDouble);
+        when(customerContainerDouble.getCustomer(any())).thenReturn(customerDouble);
 
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
         when(projectTypologyContainerDouble.getProjectTypology(any())).thenReturn(
@@ -722,8 +720,7 @@ public class ProjectContainerTest {
         IFactorySprint factorySprintDouble = mock(FactorySprint.class);
 
         Customer customerDouble = mock(Customer.class);
-        when(customerContainerDouble.getCustomer(any(), any())).thenReturn(
-                customerDouble);
+        when(customerContainerDouble.getCustomer(any())).thenReturn(customerDouble);
 
         ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
         when(projectTypologyContainerDouble.getProjectTypology(any())).thenReturn(

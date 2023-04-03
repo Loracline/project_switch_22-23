@@ -48,6 +48,7 @@ class CompanyTest {
   IFactoryPeriod factoryPeriod;
   IFactorySprintBacklog factorySprintBacklog;
   IFactorySprint factorySprint;
+  IFactoryCustomer factoryCustomer;
 
   @BeforeEach
   void setUp() {
@@ -56,6 +57,7 @@ class CompanyTest {
     factoryProductBacklog = new FactoryProductBacklog();
     factoryProject = new FactoryProject();
     factoryUserStory = new FactoryUserStory();
+    factoryCustomer = new FactoryCustomer();
 
     // Accounts created.
     accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
@@ -99,8 +101,8 @@ class CompanyTest {
 
     // Container of customers created.
     customerContainer = new CustomerContainer();
-    customerContainer.addCustomer("ISEP", "222333444");
-    customerContainer.addCustomer("PortoTech", "222333445");
+    customerContainer.addCustomer("ISEP", "222333444", factoryCustomer);
+    customerContainer.addCustomer("PortoTech", "222333445", factoryCustomer);
 
     // Projects created.
     project = new Project("AA002", "software development management", new Customer("John", "228674498"), new ProjectTypology("Fixed cost"), new BusinessSector("Hunting"));
@@ -552,7 +554,7 @@ class CompanyTest {
   void ensureCustomerIsNotAddedSuccessfully_LessThanNineDigits() {
     //Arrange
     boolean expected = false;
-    boolean result = company.addCustomer("critical", "2223334");
+    boolean result = company.addCustomer("critical", "2223334", factoryCustomer);
     //Assert
     assertEquals(expected, result);
   }
@@ -562,7 +564,7 @@ class CompanyTest {
     //Arrange
     boolean expected = false;
     //Act
-    boolean result = company.addCustomer("critical", "2223334488");
+    boolean result = company.addCustomer("critical", "2223334488", factoryCustomer);
     //Assert
     assertEquals(expected, result);
 
@@ -573,7 +575,7 @@ class CompanyTest {
     //Arrange
     boolean expected = true;
     //Act
-    boolean result = company.addCustomer("Critical", "142356678");
+    boolean result = company.addCustomer("Critical", "142356678", factoryCustomer);
     //Assert
     assertEquals(expected, result);
   }
@@ -583,7 +585,7 @@ class CompanyTest {
     //Arrange
     boolean expected = false;
     //Act
-    boolean result = company.addCustomer("", "222333445");
+    boolean result = company.addCustomer("", "222333445", factoryCustomer);
     //Assert
     assertEquals(expected, result);
 
@@ -594,7 +596,7 @@ class CompanyTest {
     //Arrange
     boolean expected = false;
     //Act
-    boolean result = company.addCustomer("", "222333444");
+    boolean result = company.addCustomer("", "222333444", factoryCustomer);
     //Assert
     assertEquals(expected, result);
 
