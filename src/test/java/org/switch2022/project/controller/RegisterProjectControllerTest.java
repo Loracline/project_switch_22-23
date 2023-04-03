@@ -37,6 +37,7 @@ class RegisterProjectControllerTest {
     IFactoryPeriod factoryPeriod;
     IFactorySprintBacklog factorySprintBacklog;
     IFactorySprint factorySprint;
+    IFactoryCustomer factoryCustomer;
 
     @BeforeEach
     void setUp() {
@@ -45,6 +46,8 @@ class RegisterProjectControllerTest {
         factoryProductBacklog= new FactoryProductBacklog();
         factoryProject =  new FactoryProject();
         factoryUserStory= new FactoryUserStory();
+        factoryCustomer = new FactoryCustomer();
+
         accountOne = new Account("Mike", "mike@isep.ipp.pt", 932755689, null);
         accountContainer = new AccountContainer();
         accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
@@ -59,6 +62,9 @@ class RegisterProjectControllerTest {
         projectTypologyContainer = new ProjectTypologyContainer();
 
         customerContainer = new CustomerContainer();
+        customerContainer.addCustomer("Mary",
+                "228674498",factoryCustomer);
+        customerContainer.addCustomer("Peter", "228674498", factoryCustomer);
 
         businessSector = new BusinessSector("fishing");
         businessSectorContainer = new BusinessSectorContainer();

@@ -1,10 +1,10 @@
 package org.switch2022.project.container;
 
+import org.switch2022.project.factories.IFactoryCustomer;
 import org.switch2022.project.model.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Class CustomerContainer is built to access and manipulate set of customers
@@ -16,15 +16,14 @@ public class CustomerContainer {
      */
     private final List<Customer> customers = new ArrayList<>();
 
-
     /**
      * This method validates if customer already exists by checking the NIF.
      *
-     * @param customerNIF of the intended costumer.
+     * @param customer of the intended costumer.
      * @return TRUE if exists and FALSE otherwise.
      */
-    private boolean doesCustomerNIFExist(Customer customerNIF) {
-        return this.customers.contains(customerNIF);
+    private boolean doesCustomerExist(Customer customer) {
+        return this.customers.contains(customer);
     }
 
     /**
@@ -34,14 +33,24 @@ public class CustomerContainer {
      * @param customerNIF of the costumer to add.
      * @return TRUE if costumer is added and FALSE otherwise.
      */
-    public boolean addCustomer(String customerName, String customerNIF) {
-        Customer newCustomer = new Customer(customerName, customerNIF);
+    public boolean addCustomer(String customerName, String customerNIF,
+                               IFactoryCustomer iFactoryCustomer) {
+        Customer newCustomer = iFactoryCustomer.createCustomer(customerName, customerNIF);
         boolean isAddedToList = false;
-        if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerNIFExist(newCustomer)) {
-            customers.add(newCustomer);
+        if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerExist(newCustomer))
+        {
+            addCustomerToList(newCustomer);
             isAddedToList = true;
         }
         return isAddedToList;
+    }
+
+    /**
+     * This method just add a Customer to the Customer List
+     * @param customer to be added
+     */
+    protected void addCustomerToList(Customer customer) {
+        customers.add(customer);
     }
 
     /**
@@ -49,7 +58,8 @@ public class CustomerContainer {
      * the NIF contains only digits.
      *
      * @param customerNIF of the costumer to add.
-     * @return TRUE if costumerNIF has the correct length and contains only digits and FALSE otherwise.
+     * @return TRUE if costumerNIF has the correct length and contains only digits and
+     * FALSE otherwise.
      */
     private static boolean isValidNIF(String customerNIF) {
         boolean isValidNIF = false;
@@ -65,11 +75,18 @@ public class CustomerContainer {
         return isValidNIF;
     }
 
-    public Customer getCustomer(String customerName, String nif) {
-        Customer requestedCustomer = new Customer(customerName, nif);
+    /**
+     * This method returns a Customer one searches for by its Nif number.
+     *
+     * @param nif from the Customer one searches for.
+     * @return the Customer or a null object.
+     */
+
+    public Customer getCustomer(String nif) {
+        Customer requestedCustomer = null;
         int i = 0;
         while (i < customers.size()) {
-            if (customers.get(i).getCustomerNif().equals(nif)) {
+            if (customers.get(i).hasCustomerNif(nif)) {
                 requestedCustomer = customers.get(i);
             }
             i++;

@@ -196,8 +196,9 @@ public class Company {
      *
      * @return TRUE if added and FALSE otherwise.
      */
-    public boolean addCustomer(String customerName, String customerNIF) {
-        return customerContainer.addCustomer(customerName, customerNIF);
+    public boolean addCustomer(String customerName, String customerNIF,
+                               IFactoryCustomer iFactoryCustomer) {
+        return customerContainer.addCustomer(customerName, customerNIF, iFactoryCustomer);
     }
     // PROJECT TYPOLOGY METHODS
 
