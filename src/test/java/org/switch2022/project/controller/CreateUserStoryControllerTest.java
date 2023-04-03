@@ -260,9 +260,9 @@ class CreateUserStoryControllerTest {
         //Arrange
         company.createUserStory(projectDto, userStoryCreationDtoOne);
         LocalDate startDate = LocalDate.now();
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "SP001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, 1);
         projectContainer.createSprint(sprintCreationDto, projectDto);
-        projectContainer.addUserStoryToSprintBacklog(projectDto.code, " us001", "SP001");
+        projectContainer.addUserStoryToSprintBacklog(projectDto.code, " us001", "s001");
 
         //Act
         boolean result = createUserStoryController.createUserStory(projectDto, userStoryCreationDtoOne);
@@ -282,7 +282,7 @@ class CreateUserStoryControllerTest {
             company.createUserStory(projectDto,userStoryCreationDtoNull);
         });
 
-        String expectedMessage = "Valor não pode ser null.";
+        String expectedMessage = "This value can't be null.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -299,7 +299,7 @@ class CreateUserStoryControllerTest {
             company.createUserStory(projectDto,userStoryCreationDtoNull);
         });
 
-        String expectedMessage = "Valor não pode ser null.";
+        String expectedMessage = "This value can't be null.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -316,7 +316,7 @@ class CreateUserStoryControllerTest {
             company.createUserStory(projectDto,userStoryCreationDtoNull);
         });
 
-        String expectedMessage = "Valor não pode ser null.";
+        String expectedMessage = "This value can't be null.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
@@ -331,9 +331,9 @@ class CreateUserStoryControllerTest {
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(" us002",
                 "I want to create a project", "Manager", 0);
         LocalDate startDate = LocalDate.now();
-        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, "SP001");
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, 1);
         projectContainer.createSprint(sprintCreationDto, projectDto);
-        projectContainer.addUserStoryToSprintBacklog(projectDto.code, " us001", "SP001");
+        projectContainer.addUserStoryToSprintBacklog(projectDto.code, " us001", "sP001");
 
         //Act
         boolean result = createUserStoryController.createUserStory(projectDto, userStoryCreationDto);

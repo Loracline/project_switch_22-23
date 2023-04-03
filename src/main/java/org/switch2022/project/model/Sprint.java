@@ -11,12 +11,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Represents a short period of time defined by a Sprint Number, Period and Sprint
  * Backlog.
  */
 public final class Sprint {
-    private final String sprintNumber;
+
+    private String sprintNumber;
     private Period period;
     private SprintBacklog sprintBacklog;
     private IFactorySprintBacklog iFactorySprintBacklog;
@@ -26,8 +29,8 @@ public final class Sprint {
      *
      * @param sprintNumber the number of the sprint.
      */
-    private Sprint(String sprintNumber) {
-        this.sprintNumber = sprintNumber.toLowerCase().trim();
+    private Sprint( int sprintNumber) {
+        this.sprintNumber = String.format("S%03d", sprintNumber);
     }
 
     /**
@@ -38,7 +41,7 @@ public final class Sprint {
      * @param sprintNumber   the number of the sprint.
      */
     public static Sprint createSprint(LocalDate startDate, int sprintDuration,
-                                      String sprintNumber,
+                                      int sprintNumber,
                                       IFactoryPeriod iFactoryPeriod,
                                       IFactorySprintBacklog iFactorySprintBacklog) {
         Sprint sprint = new Sprint(sprintNumber);
@@ -179,5 +182,14 @@ public final class Sprint {
         return this.period.isPeriodNotOverlapping(sprint.period);
     }
 
-
+    /**
+     * Returns the sprint number of the current object.
+     * This method splits the sprint number string using "S" as a delimiter and returns the second element of the resulting array
+     * as an integer value.
+     * @return the sprint number as an integer value.
+     */
+    public int getSprintNumber() {
+       String[] array = this.sprintNumber.split("S",-2);
+       return parseInt(array[1]);
+    }
 }

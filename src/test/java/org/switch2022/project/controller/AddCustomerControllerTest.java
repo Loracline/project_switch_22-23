@@ -7,15 +7,16 @@ import org.switch2022.project.container.AccountContainer;
 import org.switch2022.project.container.Company;
 import org.switch2022.project.container.CustomerContainer;
 import org.switch2022.project.container.ProfileContainer;
-import org.switch2022.project.factories.FactoryCustomer;
-import org.switch2022.project.factories.IFactoryCustomer;
 import org.switch2022.project.model.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 class AddCustomerControllerTest {
-   /**
+    /**
      * BeforeEach and AfterEach executes common code before/after running the tests below.
      */
 
@@ -30,8 +31,6 @@ class AddCustomerControllerTest {
     CustomerContainer customerContainer;
     Company company;
     AddCustomerController addCustomerController;
-
-    IFactoryCustomer iFactoryCustomer;
 
     @BeforeEach
     void setUp() {
@@ -49,20 +48,17 @@ class AddCustomerControllerTest {
         businessSectorOne = new BusinessSector("Fishing");
 
         //project
-        projectOne = new Project("1A", "Mobile Software",new Customer ("Genius Software", "234567890"),
+        projectOne = new Project("1A", "Mobile Software", new Customer("Genius Software", "234567890"),
                 projectTypologyOne, businessSectorOne);
-
-        //Factory
-        iFactoryCustomer = new FactoryCustomer();
 
         //containers
         accountContainer = new AccountContainer();
         accountContainer.addAccount("Mike", "mike@isep.ipp.pt", 932755689, null);
-        profileContainer=new ProfileContainer();
+        profileContainer = new ProfileContainer();
         profileContainer.createProfile("Administrator");
         profileContainer.createProfile("Manager");
         customerContainer = new CustomerContainer();
-        customerContainer.addCustomer("Genius Software","234567890", iFactoryCustomer);
+        customerContainer.addCustomer("Genius Software", "234567890");
 
 
         //company
@@ -85,7 +81,7 @@ class AddCustomerControllerTest {
         projectOne = null;
         accountContainer = null;
         customerContainer = null;
-        profileContainer=null;
+        profileContainer = null;
         company = null;
         addCustomerController = null;
     }
@@ -98,17 +94,16 @@ class AddCustomerControllerTest {
      */
 
     @Test
-    void ensureThatNewCustomerIsSuccessfullyAddedIfActorIsAdministrator(){
+    void ensureThatNewCustomerIsSuccessfullyAddedIfActorIsAdministrator() {
         //Arrange
         //set profileOne (Administrator) to accountOne
-        company.changeProfile("mike@isep.ipp.pt","Administrator");
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = true;
         //Act
-        boolean result = addCustomerController.addCustomer("Critical","233444000",
-                emailActor, iFactoryCustomer);
+        boolean result = addCustomerController.addCustomer("Critical", "233444000", emailActor);
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -121,12 +116,11 @@ class AddCustomerControllerTest {
     void ensureThatNewCustomerIsNotAddedIfNameIsEmpty() {
         // Arrange
         //set profileOne (Administrator) to accountOne
-        company.changeProfile("mike@isep.ipp.pt","Administrator");
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("", "234345456", emailActor,
-                iFactoryCustomer);
+        boolean result = addCustomerController.addCustomer("", "234345456", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -142,11 +136,11 @@ class AddCustomerControllerTest {
     void ensureThatNewCustomerIsNotAddedIfNIFIsEmpty() {
         // Arrange
         //set profileOne (Administrator) to accountOne
-        company.changeProfile("mike@isep.ipp.pt","Administrator");
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("Critical", "", emailActor, iFactoryCustomer);
+        boolean result = addCustomerController.addCustomer("Critical", "", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -161,12 +155,11 @@ class AddCustomerControllerTest {
     void ensureThatNewCustomerIsNotAddedIfNIFIsInvalid() {
         // Arrange
         //set profileOne (Administrator) to accountOne
-        company.changeProfile("mike@isep.ipp.pt","Administrator");
+        company.changeProfile("mike@isep.ipp.pt", "Administrator");
         String emailActor = accountOne.getEmail(); //Administrator
         boolean expected = false;
         // Act
-        boolean result = addCustomerController.addCustomer("Critical", "2223334444",
-                emailActor, iFactoryCustomer);
+        boolean result = addCustomerController.addCustomer("Critical", "2223334444", emailActor);
         // Assert
         assertEquals(expected, result);
     }
@@ -182,14 +175,78 @@ class AddCustomerControllerTest {
     void addCustomerUnsuccessfullyInvalidProfile() {
         //Arrange
         //set profileTwo (Manager) to accountOne
-        company.changeProfile("mike@isep.ipp.pt","Manager");
+        company.changeProfile("mike@isep.ipp.pt", "Manager");
         String emailActor = accountOne.getEmail(); //Manager
         boolean expected = false;
         //Act
-        boolean result = addCustomerController.addCustomer("Critical", "255666777",
-                emailActor, iFactoryCustomer);
+        boolean result = addCustomerController.addCustomer("Critical", "255666777", emailActor);
         // Assert
         assertEquals(expected, result);
     }
 
+    /**
+     * Tests done with isolation using mockito framework.
+     */
+
+    /**
+     * Tests if the addition of a new customer is performed successfully if the actor is an administrator.
+     * Expected return: true
+     */
+
+    @Test
+    void ensureThatNewCustomerIsSuccessfullyAddedIfActorIsAdministratorWithIsolation() {
+        //Arrange
+        Company companyDouble = mock(Company.class);
+        AddCustomerController addCustomerControllerDouble = new AddCustomerController(companyDouble);
+        when(companyDouble.validateProfileRequired(any(), any())).thenReturn(true);
+        when(companyDouble.addCustomer(any(), any())).thenReturn(true);
+
+        //Act
+        boolean result = addCustomerControllerDouble.addCustomer("Critical", "233444000",
+                "mike@isep.ipp.pt");
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Tests if the addition of a new customer is not performed.
+     * Expected return: false
+     */
+    @Test
+    void ensureThatNewCustomerIsNotAddedWithIsolation() {
+        // Arrange
+        Company companyDouble = mock(Company.class);
+        AddCustomerController addCustomerControllerDouble = new AddCustomerController(companyDouble);
+        when(companyDouble.validateProfileRequired(any(), any())).thenReturn(true);
+        when(companyDouble.addCustomer(any(), any())).thenReturn(false);
+
+        // Act
+        boolean result = addCustomerControllerDouble.addCustomer("Mike", "234345456",
+                "mike@isep.ipp.pt");
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Tests if the addition of a new customer is not performed if the actor is not an administrator.
+     * Expected return: false
+     */
+
+    @Test
+    void ensureAddCustomerIsNotSuccessfulInvalidProfileWithIsolation() {
+        //Arrange
+        Company companyDouble = mock(Company.class);
+        AddCustomerController addCustomerControllerDouble = new AddCustomerController(companyDouble);
+        when(companyDouble.validateProfileRequired(any(), any())).thenReturn(false);
+        when(companyDouble.addCustomer(any(), any())).thenReturn(true);
+
+        // Act
+        boolean result = addCustomerControllerDouble.addCustomer("Mike", "234345456",
+                "mike@isep.ipp.pt");
+
+        // Assert
+        assertFalse(result);
+    }
 }

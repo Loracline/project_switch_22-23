@@ -894,7 +894,7 @@ public class ProjectTest {
 
         // Creation of the sprint occurring during the date of interest, and addition
         // of it to the project to test.
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2022, 12, 1), 3, "SP001",
+        Sprint sprint = Sprint.createSprint(LocalDate.of(2022, 12, 1), 3, projectToTest.getNextSprintNumber(),
                 factoryPeriodDouble, factorySprintBacklogDouble);
         projectToTest.addSprint(sprint);
 
@@ -1192,6 +1192,15 @@ public class ProjectTest {
                 businessSectorDouble, iFactoryProductBacklogDouble, iFactoryUserStory,
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
         SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
+        Sprint sprintDouble = mock(Sprint.class);
+
+        when(iFactorySprintDouble.createSprint(startDate,2, 1, iFactoryPeriodDouble,
+                iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
+        when(sprintDouble.getSprintNumber()).thenReturn(1);
+
+
+
+
         //ACT
         boolean result = project.createSprint(sprintCreationDtoDouble);
         //Assert
@@ -1218,7 +1227,7 @@ public class ProjectTest {
         IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
         Sprint sprintDouble = mock(Sprint.class);
         Sprint sprintDoubleTwo = mock(Sprint.class);
-        when(iFactorySprintDouble.createSprint(startDate, 3, "S001", iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 3, 1, iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
         Project project = new Project("Proj01", "Project Switch", customerDouble,
                 projectTypologyDouble,
@@ -1253,7 +1262,7 @@ public class ProjectTest {
         IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
         Sprint sprintDouble = mock(Sprint.class);
         Sprint sprintDoubleTwo = mock(Sprint.class);
-        when(iFactorySprintDouble.createSprint(startDate, 3, "S001", iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 3, 1, iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
         Project project = new Project("Proj01", "Project Switch", customerDouble,
                 projectTypologyDouble,
@@ -1288,7 +1297,7 @@ public class ProjectTest {
                 mock(FactorySprintBacklog.class);
         IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
         Sprint sprintDouble = mock(Sprint.class);
-        when(iFactorySprintDouble.createSprint(startDate, 3, "S001", iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 3, 1, iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
         Project project = new Project("Proj01", "Project Switch", customerDouble,
                 projectTypologyDouble,
@@ -1322,7 +1331,7 @@ public class ProjectTest {
                 mock(FactorySprintBacklog.class);
         IFactorySprint iFactorySprintDouble = mock(FactorySprint.class);
         Sprint sprintDoubleTwo = mock(Sprint.class);
-        when(iFactorySprintDouble.createSprint(startDate, 3, "S001", iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 3, 1, iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDoubleTwo);
         Project project = new Project("Proj01", "Project Switch", customerDouble,
                 projectTypologyDouble,
@@ -1330,12 +1339,11 @@ public class ProjectTest {
                 iFactoryPeriodDouble, iFactorySprintBacklogDouble, iFactorySprintDouble);
         SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
         project.addSprint(sprintDoubleTwo);
-        when(sprintCreationDtoDouble.getSprintNumber()).thenReturn("S001");
+        when(sprintCreationDtoDouble.getSprintNumber()).thenReturn(1);
         when(sprintDoubleTwo.isPeriodNotOverlapping(any())).thenReturn(false);
         //ACT
         boolean result = project.createSprint(sprintCreationDtoDouble);
         //Assert
         assertFalse(result);
     }
-
 }

@@ -1,6 +1,6 @@
 package org.switch2022.project.model;
 
-import net.bytebuddy.asm.Advice;
+
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
@@ -34,9 +34,9 @@ class SprintTest {
         // Arrange
         IFactorySprintBacklog factorySprintBacklogDouble =
                 mock(FactorySprintBacklog.class);
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "S001", IFactoryPeriod
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, 1, IFactoryPeriod
                 , factorySprintBacklogDouble);
-        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, "S002", IFactoryPeriod
+        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, 2, IFactoryPeriod
                 , factorySprintBacklogDouble);
         boolean expected = false;
         // Act
@@ -53,9 +53,9 @@ class SprintTest {
         // Arrange
         IFactorySprintBacklog factorySprintBacklogDouble =
                 mock(FactorySprintBacklog.class);
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, 1,
                 IFactoryPeriod, factorySprintBacklogDouble);
-        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, 1,
                 IFactoryPeriod, factorySprintBacklogDouble);
         boolean expected = true;
         // Act
@@ -72,7 +72,7 @@ class SprintTest {
         // Arrange
         IFactorySprintBacklog factorySprintBacklogDouble =
                 mock(FactorySprintBacklog.class);
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 4, "SP001",
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 4, 1,
                 IFactoryPeriod, factorySprintBacklogDouble);
         Object object = new Object();
         boolean expected = false;
@@ -90,7 +90,7 @@ class SprintTest {
         //Arrange
         IFactorySprintBacklog factorySprintBacklogDouble =
                 mock(FactorySprintBacklog.class);
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 4, "SP001",
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 4, 1,
                 IFactoryPeriod, factorySprintBacklogDouble);
         Sprint other = null;
         boolean expected = false;
@@ -106,7 +106,7 @@ class SprintTest {
     @Test
     public void testEqualsShouldReturnTrueWhenComparingTheSameObject() {
         // Arrange
-        Sprint sprint = Sprint.createSprint(LocalDate.now(), 14, "1",
+        Sprint sprint = Sprint.createSprint(LocalDate.now(), 14, 1,
                 mock(IFactoryPeriod.class), mock(IFactorySprintBacklog.class));
         // Act
         boolean result = sprint.equals(sprint);
@@ -124,9 +124,9 @@ class SprintTest {
         //Arrange
         IFactorySprintBacklog factorySprintBacklogDouble =
                 mock(FactorySprintBacklog.class);
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, 1,
                 IFactoryPeriod, factorySprintBacklogDouble);
-        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+        Sprint sprintTwo = Sprint.createSprint(LocalDate.now(), 3, 1,
                 IFactoryPeriod, factorySprintBacklogDouble);
         //Act
         int sprintOneHashCode = sprintOne.hashCode();
@@ -143,9 +143,9 @@ class SprintTest {
         //Arrange
         IFactorySprintBacklog factorySprintBacklogDouble =
                 mock(FactorySprintBacklog.class);
-        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, "SP001",
+        Sprint sprintOne = Sprint.createSprint(LocalDate.now(), 3, 1,
                 IFactoryPeriod, factorySprintBacklogDouble);
-        Sprint sprintThree = Sprint.createSprint(LocalDate.now(), 4, "SP003",
+        Sprint sprintThree = Sprint.createSprint(LocalDate.now(), 4, 3,
                 IFactoryPeriod, factorySprintBacklogDouble);
         //Act
         int sprintOneHashCode = sprintOne.hashCode();
@@ -171,7 +171,7 @@ class SprintTest {
         when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklog);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+                3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
         when(sprintBacklog.addUserStory(userStoryDouble)).thenReturn(true);
@@ -198,7 +198,7 @@ class SprintTest {
                 mock(FactorySprintBacklog.class);
         when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+                3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
         sprint.addUserStoryToSprintBacklog(userStoryDouble);
         when(sprintBacklogDouble.addUserStory(userStoryDouble)).thenReturn(false);
 
@@ -223,33 +223,13 @@ class SprintTest {
         IFactoryPeriod factoryPeriodDouble = mock(IFactoryPeriod.class);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S1", factoryPeriodDouble, factorySprintBacklogDouble);
+                3, 1, factoryPeriodDouble, factorySprintBacklogDouble);
 
         //ACT
-        boolean result = sprint.hasSprintNumber("S1");
+        boolean result = sprint.hasSprintNumber("s001");
 
         //ASSERT
         assertTrue(result);
-    }
-
-    /**
-     * Scenario 2: returns False
-     */
-    @Test
-    void ensureThatReturnsFalseIfSprintDoesNotHaveSprintNumber() {
-        //ARRANGE
-        IFactorySprintBacklog factorySprintBacklogDouble =
-                mock(FactorySprintBacklog.class);
-        IFactoryPeriod factoryPeriodDouble = mock(IFactoryPeriod.class);
-
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S2", factoryPeriodDouble, factorySprintBacklogDouble);
-
-        //ACT
-        boolean result = sprint.hasSprintNumber("S1");
-
-        //ASSERT
-        assertFalse(result);
     }
 
     /**
@@ -264,7 +244,7 @@ class SprintTest {
 
         IFactoryPeriod factoryPeriod = new FactoryPeriod();
         IFactorySprintBacklog factorySprintBacklog = new FactorySprintBacklog();
-        Sprint sprint = Sprint.createSprint(date, 2, "S55", factoryPeriod,
+        Sprint sprint = Sprint.createSprint(date, 2, 55, factoryPeriod,
                 factorySprintBacklog);
 
         UserStory userStory = (new UserStory.UserStoryBuilder("US001").build());
@@ -291,7 +271,7 @@ class SprintTest {
         LocalDate date = LocalDate.of(2021, 9, 13);
         IFactoryPeriod factoryPeriod = new FactoryPeriod();
         IFactorySprintBacklog factorySprintBacklog = new FactorySprintBacklog();
-        Sprint sprint = Sprint.createSprint(date, 2, "S55", factoryPeriod,
+        Sprint sprint = Sprint.createSprint(date, 2, 55, factoryPeriod,
                 factorySprintBacklog);
 
 
@@ -323,7 +303,7 @@ class SprintTest {
                 mock(FactorySprintBacklog.class);
         when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+                3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
         when(sprintBacklogDouble.hasUserStory("US001")).thenReturn(true);
 
         //Act
@@ -345,7 +325,7 @@ class SprintTest {
                 mock(FactorySprintBacklog.class);
         when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+                3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
         when(sprintBacklogDouble.hasUserStory("US001")).thenReturn(false);
 
         //Act
@@ -372,7 +352,7 @@ class SprintTest {
         when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2022, 1, 15))).thenReturn(true);
         when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2022, 1, 15))).thenReturn(true);
         LocalDate dateToCompare = LocalDate.of(2022, 1, 15);
-        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001",
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, 1,
                 factoryPeriodDouble, factorySprintBacklogDouble);
 
         //Act
@@ -395,7 +375,7 @@ class SprintTest {
         when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2022, 1, 1))).thenReturn(true);
         when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2022, 1, 1))).thenReturn(true);
         LocalDate dateToCompare = LocalDate.of(2022, 1, 1);
-        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001",
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, 1,
                 factoryPeriodDouble, factorySprintBacklogDouble);
 
         //Act
@@ -418,7 +398,7 @@ class SprintTest {
         when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2022, 1, 22))).thenReturn(true);
         when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2022, 1, 22))).thenReturn(true);
         LocalDate dateToCompare = LocalDate.of(2022, 1, 22);
-        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001",
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, 1,
                 factoryPeriodDouble, factorySprintBacklogDouble);
 
         //Act
@@ -441,7 +421,7 @@ class SprintTest {
         when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2021, 12, 31))).thenReturn(false);
         when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2021, 12, 31))).thenReturn(true);
         LocalDate dateToCompare = LocalDate.of(2021, 12, 31);
-        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001",
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, 1,
                 factoryPeriodDouble, factorySprintBacklogDouble);
 
         //Act
@@ -464,7 +444,7 @@ class SprintTest {
         when(periodDouble.isDateEqualOrGreaterThanStartDate(LocalDate.of(2022, 1, 23))).thenReturn(true);
         when(periodDouble.isDateEqualOrLowerThanEndDate(LocalDate.of(2022, 1, 23))).thenReturn(false);
         LocalDate dateToCompare = LocalDate.of(2022, 1, 23);
-        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, "SP001",
+        Sprint sprintToTest = Sprint.createSprint(LocalDate.of(2022, 1, 1), 3, 1,
                 factoryPeriodDouble, factorySprintBacklogDouble);
 
         //Act
@@ -494,7 +474,7 @@ class SprintTest {
         when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+                3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
         when(sprintBacklogDouble.estimateEffortUserStory(userStoryDto,effort)).thenReturn(true);
 
         //Act
@@ -518,7 +498,7 @@ class SprintTest {
         IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
         when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, "S035", IFactoryPeriodDouble, factorySprintBacklogDouble);
+                3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
         when(sprintBacklogDouble.hasUserStory(userStoryDto.userStoryNumber)).thenReturn(true);
 
         //Act
@@ -560,7 +540,7 @@ class SprintTest {
         when(sprintBacklogDouble.getUserStoriesCopy(factoryUserStoryDouble)).thenReturn(expectedList);
 
         // Creation of Sprint to test.
-        Sprint toTest = Sprint.createSprint(LocalDate.of(2023,1,1), 3, "SP001",
+        Sprint toTest = Sprint.createSprint(LocalDate.of(2023,1,1), 3, 1,
                 factoryPeriodDouble, factorySprintBacklogDouble);
 
         // Creation of expected Sprint Backlog populated with the same double of User
@@ -577,7 +557,6 @@ class SprintTest {
 
     /**
      * METHOD isPeriodNotOverlapping()
-     *
      * Scenario 1 : return true if period is no overlapping
      */
     @Test
@@ -588,9 +567,9 @@ class SprintTest {
         IFactorySprintBacklog iFactorySprintBacklog = mock(FactorySprintBacklog.class);
         Period periodDouble = mock(Period.class);
         when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
-        Sprint sprint = Sprint.createSprint(localDate,2,"S001",iFactoryPeriod,iFactorySprintBacklog);
+        Sprint sprint = Sprint.createSprint(localDate,2,1,iFactoryPeriod,iFactorySprintBacklog);
         when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(true);
-        Sprint sprintOne = Sprint.createSprint(localDate,3,"S002",iFactoryPeriod,iFactorySprintBacklog);
+        Sprint sprintOne = Sprint.createSprint(localDate,3,2,iFactoryPeriod,iFactorySprintBacklog);
         //Act
         boolean result = sprint.isPeriodNotOverlapping(sprintOne);
 
@@ -609,13 +588,31 @@ class SprintTest {
         IFactorySprintBacklog iFactorySprintBacklog = mock(FactorySprintBacklog.class);
         Period periodDouble = mock(Period.class);
         when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
-        Sprint sprint = Sprint.createSprint(localDate,2,"S001",iFactoryPeriod,iFactorySprintBacklog);
+        Sprint sprint = Sprint.createSprint(localDate,2,1,iFactoryPeriod,iFactorySprintBacklog);
         when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(false);
-        Sprint sprintOne = Sprint.createSprint(localDate,3,"S003",iFactoryPeriod,iFactorySprintBacklog);
+        Sprint sprintOne = Sprint.createSprint(localDate,3,3,iFactoryPeriod,iFactorySprintBacklog);
         //Act
         boolean result = sprint.isPeriodNotOverlapping(sprintOne);
 
         //Assert
         assertFalse(result);
+    }
+
+    @Test
+    void ensureGetSprintNumber() {
+        //Arrange
+        LocalDate localDate = mock(LocalDate.class);
+        IFactoryPeriod iFactoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog iFactorySprintBacklog = mock(FactorySprintBacklog.class);
+        Period periodDouble = mock(Period.class);
+        when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
+        Sprint sprint = Sprint.createSprint(localDate,2,1,iFactoryPeriod,iFactorySprintBacklog);
+        when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(false);
+        int expected = 1;
+        //Act
+        int result = sprint.getSprintNumber();
+
+        //Assert
+        assertEquals(expected,result);
     }
 }
