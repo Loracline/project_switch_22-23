@@ -2,7 +2,8 @@ package org.switch2022.project.ddd.domain.model.user_story;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.domain.value_object.Effort;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -217,7 +218,7 @@ class UserStoryTest {
         String expected = usId.toString();
 
         // Act
-        String result = userStory.getUsId();
+        String result = userStory.getUsId().toString();
 
         //Assert
         assertEquals(expected, result);
@@ -246,4 +247,37 @@ class UserStoryTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * METHOD setEffort()
+     * <br>
+     * Scenario 1: Verify that the effort is set successfully.
+     */
+    @Test
+    void ensureEffortIsSet() {
+        // Arrange
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+
+        // Act
+        userStory.setEffort(2);
+
+        // Assert
+        assertEquals(Effort.TWO, userStory.getEffort());
+    }
+
+    /**
+     * Scenario 2: Verify that the effort is not set successfully.
+     */
+    @Test
+    void ensureEffortIsNotSet() {
+        // Arrange
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+
+        // Act
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            userStory.setEffort(41);
+        });
+        assertEquals("Effort estimate was not successful", exception.getMessage());
+    }
 }
