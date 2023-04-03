@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.model.user_story;
 
-import org.switch2022.project.dto.UserStoryCreationDto;
+
+import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 public interface IFactoryUserStory {
     /**
