@@ -64,8 +64,8 @@ public class PbId implements ValueObject<PbId> {
     }
 
     /**
-     * This method returns a string representation of this product backlog. The string representation consists of the product
-     * backlog ID as a string.
+     * This method returns a string representation of this product backlog. The string representation consists of the
+     * product backlog ID as a string.
      *
      * @return a string representation of this product backlog.
      */
