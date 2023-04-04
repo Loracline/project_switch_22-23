@@ -78,4 +78,37 @@ public class ProductBacklog implements Entity<ProductBacklog> {
     public List<UsId> getUserStories() {
         return Collections.unmodifiableList(userStories);
     }
+
+    /**
+     * This method adds a new User Story to the userStories list if the User Story
+     * doesn't already exist.
+     * The priority is defined being 0 as the most important.
+     *
+     * @param usId is the id of the User Story to be added to the product backlog.
+     * @param priority is the priority of the user story, which means the position in
+     *                 which it should be added. If the user doesn't specify it the UI
+     *                 will send the parameter as -1, so that the User Story should be
+     *                 added by the end of the list.
+     *
+     * @return TRUE if the User Story was successfully added to the list and FALSE
+     * otherwise. If the id is already in the Product backlog it returns and exception.
+     */
+
+    public boolean addUserStory(int priority, UsId usId) {
+        boolean result = true;
+
+        if (priority > userStories.size()) {
+            throw new IndexOutOfBoundsException("This position doesn't exist, since it's" +
+                    " bigger than the list of User Stories.");
+        }
+
+        if (userStories.contains(usId)) {
+            result = false;
+        } else if (priority == -1) {
+            userStories.add(usId);
+        } else {
+            userStories.add(priority, usId);
+        }
+        return result;
+    }
 }
