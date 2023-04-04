@@ -2,6 +2,9 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
+import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.PbId;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
@@ -9,7 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProductBacklogTest {
 
@@ -311,8 +316,6 @@ class ProductBacklogTest {
         assertFalse(result);
     }
 
-
-
     /**
      * Scenario 5: verify if a User Story is not added to Product Backlog if the index
      * is bigger than the list. Should throw an exception.
@@ -335,5 +338,110 @@ class ProductBacklogTest {
 
         //Assert
         assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * METHOD getProductBacklog().
+     * Scenario 1: Tests the method getProductBacklog()ProductBacklog class,
+     * verifying that it returns a copy of the current product backlog object with a new ID.
+     */
+    @Test
+    void ensureProductBacklogReturnsCopyWithNewId() {
+        // ARRANGE
+        PbId pbId = mock(PbId.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = new ProductBacklog(pbId);
+
+        UsId usId = new UsId("P001","P1US001");
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(factoryUserStoryDouble.createUserStory(any(), any())).thenReturn(userStoryDouble);
+        productBacklogDouble.addUserStory(0, usId);
+
+        // ACT
+        ProductBacklog result = productBacklogDouble.getProductBacklog();
+
+        // ASSERT
+        assertNotEquals(productBacklogDouble, result);
+
+    }
+
+    /**
+     * Scenario 2: Tests the method getProductBacklog()ProductBacklog class,
+     * verifying that it returns a copy of the current product backlog object with a new ID.
+     */
+    @Test
+    void ensureProductBacklogReturnsCopyWithNewIdWithSameUserStories() {
+        // ARRANGE
+        PbId pbId = mock(PbId.class);
+        IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
+        ProductBacklog productBacklogDouble = new ProductBacklog(pbId);
+
+        UsId usId = new UsId("P001","P1US001");
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(factoryUserStoryDouble.createUserStory(any(), any())).thenReturn(userStoryDouble);
+        productBacklogDouble.addUserStory(0, usId);
+
+        // ACT
+        ProductBacklog result = productBacklogDouble.getProductBacklog();
+
+        // ASSERT
+        assertEquals(productBacklogDouble.getUserStories(), result.getUserStories());
+
+    }
+
+
+    /** Scenario 2: verifying that it returns a new product backlog object with a different
+     * ID than the original.
+     */
+    @Test
+    void ensureNewProductBacklogHasDifferentID() {
+        // ARRANGE
+        ProductBacklog expected = new ProductBacklog(new PbId("Pb-1"));
+
+        // ACT
+        ProductBacklog result = expected.getProductBacklog();
+
+        // ASSERT
+        assertNotEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: This test ensure that a new product backlog object is returned with
+     * the same list of user stories and in the same order.
+     */
+    @Test
+    void ensureNewProductBacklogHasSameUserStoriesOrderInSameOrderAsOriginal() {
+        // ARRANGE
+        ProductBacklog expected = new ProductBacklog(new PbId("Pb-1"));
+        UsId usId1 = new UsId("P001","P1US001");
+        UsId usId2 = new UsId("P001","P1US002");
+        expected.addUserStory(0, usId1);
+        expected.addUserStory(1, usId2);
+
+        // ACT
+        ProductBacklog result = expected.getProductBacklog();
+
+        // ASSERT
+        assertEquals(expected.getUserStories(), result.getUserStories());
+    }
+
+    /**
+     * Scenario 4: Tests that a new product backlog object has the same list of user stories as the
+     * current product backlog object.
+     */
+    @Test
+    void ensureNewProductBacklogHasSameUserStories() {
+        // ARRANGE
+        ProductBacklog expected = new ProductBacklog(new PbId("Pb-1"));
+        UsId usId1 = new UsId("P001","P1US001");
+        UsId usId2 = new UsId("P001","P1US002");
+        expected.addUserStory(0, usId1);
+        expected.addUserStory(1,usId2);
+
+        // ACT
+        ProductBacklog result = expected.getProductBacklog();
+
+        // ASSERT
+        assertEquals(expected.getUserStories(), result.getUserStories());
     }
 }
