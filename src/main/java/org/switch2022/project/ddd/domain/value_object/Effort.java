@@ -30,6 +30,10 @@ public enum Effort implements ValueObject<Effort> {
         this.effortValue = effortValue;
     }
 
+    public int getEffortValue() {
+        return effortValue;
+    }
+
     @Override
     public boolean sameValueAs(Effort other) {
         return this.equals(other);

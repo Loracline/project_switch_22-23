@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
+
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * A project is defined by code, it's your ID. Its other attributes are budget, name, description, project Status, <br>
  * number of planned sprints, period, sprint duration, sprints (list of sprints), business sector, customer, project <br>
  * typology and product backlog .
- *The project status attribute defaults to "Planned"
+ * The project status attribute defaults to "Planned"
  */
 public class Project implements Entity<Project> {
 
@@ -30,8 +31,8 @@ public class Project implements Entity<Project> {
     /**
      * Constructor: the constructor only has the attribute that defines it, in this case, the project code.
      */
-    protected Project(final String projectCode) {
-        this.projectCode = new Code (projectCode);
+    protected Project(final Code projectCode) {
+        this.projectCode = projectCode;
     }
 
     /**
@@ -77,56 +78,70 @@ public class Project implements Entity<Project> {
         return other != null && this.projectCode.equals(other.projectCode);
     }
 
+    /**
+     * Getter method for the attribute: projectCode.
+     *
+     * @return the code of the project.
+     */
+    public Code getProjectCode() {
+        return this.projectCode;
+    }
 
 //    /**
 //     * Setter method for the attribute: productBacklog.
-//     *
+//     * <p>
 //     * This method creates a Product backlog for the project
 //     */
-//    protected void setProductBacklog(IFactoryProductBacklog iFactoryProductBacklog){
-//        this.productBacklog= iFactoryProductBacklog.createProductBacklog(this.projectCode);
+//    protected void setProductBacklog(IFactoryProductBacklog iFactoryProductBacklog) {
+//        this.productBacklog = iFactoryProductBacklog.createProductBacklog(this.projectCode);
 //    }
 
     /**
      * This method sets the project name attribute to a new Name value object created with the projectName parameter.
+     *
      * @param projectName the name of the project
      */
-    protected void setName(String projectName){
-        this.projectName= new Name (projectName);
+    protected void setName(String projectName) {
+        this.projectName = new Name(projectName);
     }
 
     /**
      * This method sets the project description attribute to a new Description value object created with the description
      * parameter.
+     *
      * @param description the description of the project.
      */
-    protected void setDescription(String description){
-        this.description= new Description(description);
+    protected void setDescription(String description) {
+        this.description = new Description(description);
     }
 
     /**
      * This method sets the business sector ID attribute to the businessSectorId parameter.
+     *
      * @param businessSectorId is the identifier attribute of type value object of the business sector entity.
      */
-    protected void setBusinessSector(BusinessSectorId businessSectorId){
-        this.businessSectorId= businessSectorId;
+    protected void setBusinessSector(BusinessSectorId businessSectorId) {
+        this.businessSectorId = businessSectorId;
     }
 
     /**
      * This method sets the customer ID attribute to the customerId parameter.
+     *
      * @param customerId is the identifier attribute of type value object of the Customer entity.
      */
-    protected void setCustomer(CustomerId customerId){
-        this.customerId= customerId;
+    protected void setCustomer(CustomerId customerId) {
+        this.customerId = customerId;
     }
 
     /**
      * This method sets the project typology ID attribute to the projectTypologyId parameter.
+     *
      * @param projectTypologyId is the identifier attribute of type value object of the Project Typology entity.
      */
-    protected void setTypology(ProjectTypologyId projectTypologyId){
-        this.projectTypologyId=projectTypologyId;
+    protected void setTypology(ProjectTypologyId projectTypologyId) {
+        this.projectTypologyId = projectTypologyId;
     }
+
 }
 
 
