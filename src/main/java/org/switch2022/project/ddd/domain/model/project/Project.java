@@ -160,6 +160,14 @@ public class Project implements Entity<Project> {
         return projectCode.equals(this.projectCode);
     }
 
+    /**
+     * This method adds a new User Story to the userStories list if the User Story
+     * doesn't already exist.
+     * return true if the userStory was created with success.
+     */
+    public boolean addUserStory(int priority, UsId usId) {
+        return productBacklog.addUserStory(priority, usId);
+    }
 }
 
 

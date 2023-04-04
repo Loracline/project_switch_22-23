@@ -4,9 +4,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProjectTest {
     /**
@@ -153,28 +156,30 @@ class ProjectTest {
         //Assert
         assertNotEquals(expected, result);
     }
+
     /**
      * Method: hasProjectCode()
      * Scenario 01: make sure they have the same code
      */
     @Test
-    public void makeSureTheyHaveTheSameCode(){
+    public void makeSureTheyHaveTheSameCode() {
         //Arrange
-        Code codeOne= projectCodeOne;
+        Code codeOne = projectCodeOne;
         //Act
         boolean result = projectOne.hasProjectCode(codeOne);
         //Assert
         assertTrue(result);
 
     }
+
     /**
      * Method: hasProjectCode()
      * Scenario 02: make sure they have different codes
      */
     @Test
-    public void makeSureTheyHaveDifferentCodes(){
+    public void makeSureTheyHaveDifferentCodes() {
         //Arrange
-        Code codeOne= projectCodeOne;
+        Code codeOne = projectCodeOne;
         //Act
         boolean result = projectTwo.hasProjectCode(codeOne);
         //Assert
@@ -318,4 +323,63 @@ class ProjectTest {
         //Assert
         assertNotEquals(projectCodeOne, result);
     }
+
+    /**
+     * Method: addUserStory()
+     * Scenario 01: verify if a User Story is added to Product Backlog.
+     * Expected result: true.
+     */
+    @Test
+    void ensureThatUserStoryIsSuccessfullyAdded() {
+        //Arrange
+        Code codeOne = mock(Code.class);
+        Project projectOne = new Project(codeOne);
+
+        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+
+        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
+        projectOne.setProductBacklog(iFactoryProductBacklogDouble);
+
+        int priority=0;
+        UsId usId = mock(UsId.class);
+
+        when(productBacklogDouble.addUserStory(priority, usId)).thenReturn(true);
+
+        //Act
+        boolean result = projectOne.addUserStory(priority,usId);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Method: addUserStory()
+     * Scenario 02: verify if a User Story is not added to Product Backlog.
+     * Expected result: false.
+     */
+    @Test
+    void ensureThatUserStoryIsUnsuccessfullyAdded() {
+        //Arrange
+        Code codeOne = mock(Code.class);
+        Project projectOne = new Project(codeOne);
+
+        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+
+        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
+        projectOne.setProductBacklog(iFactoryProductBacklogDouble);
+
+        int priority=0;
+        UsId usId = mock(UsId.class);
+
+        when(productBacklogDouble.addUserStory(priority, usId)).thenReturn(false);
+
+        //Act
+        boolean result = projectOne.addUserStory(priority,usId);
+
+        //Assert
+        assertFalse(result);
+    }
+
 }
