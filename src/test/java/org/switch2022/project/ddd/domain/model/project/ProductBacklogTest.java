@@ -8,8 +8,7 @@ import org.switch2022.project.ddd.domain.value_object.UsId;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class ProductBacklogTest {
@@ -223,5 +222,173 @@ class ProductBacklogTest {
 
         // Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: Verify that is returned a list of IDs of User Stories when the Product Backlog has UsId listed - the
+     * User Stories were added without priority defined.
+     */
+    @Test
+    void ensureProductBacklogReturnsAListOfUserStoryIDsWhenThereAreUsIdInItAddedWithoutPriority() {
+        // Arrange
+        PbId pbId = mock(PbId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        List<UsId> expected = new ArrayList<>();
+
+        UsId usIdOne = mock(UsId.class);
+        UsId usIdTwo = mock(UsId.class);
+        UsId usIdThree = mock(UsId.class);
+
+        expected.add(usIdOne);
+        expected.add(usIdTwo);
+        expected.add(usIdThree);
+
+        productBacklog.addUserStory(-1,usIdOne);
+        productBacklog.addUserStory(-1,usIdTwo);
+        productBacklog.addUserStory(-1, usIdThree);
+
+        // Act
+        List<UsId> result = productBacklog.getUserStories();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: Verify that is returned a list of IDs of User Stories when the Product Backlog has UsId listed - the
+     * User Stories were added with priority defined.
+     */
+    @Test
+    void ensureProductBacklogReturnsAListOfUserStoryIDsWhenThereAreUsIdInItAddedWithPriority() {
+        // Arrange
+        PbId pbId = mock(PbId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        List<UsId> expected = new ArrayList<>();
+
+        UsId usIdOne = mock(UsId.class);
+        UsId usIdTwo = mock(UsId.class);
+        UsId usIdThree = mock(UsId.class);
+
+        expected.add(usIdOne);
+        expected.add(usIdTwo);
+        expected.add(usIdThree);
+
+        productBacklog.addUserStory(0,usIdOne);
+        productBacklog.addUserStory(1,usIdTwo);
+        productBacklog.addUserStory(2, usIdThree);
+
+        // Act
+        List<UsId> result = productBacklog.getUserStories();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD addUserStory(userStory)
+     * adds a User Story to Product Backlog
+     * <p>
+     * Scenario 1: verify if a User Story is added to Product Backlog in the specified
+     * position if it is not already there. Should return True.
+     */
+    @Test
+    void ensureThatUserStoryIsSuccessfullyAddedToProductBacklog() {
+        //Arrange
+        PbId pbId = mock(PbId.class);
+        UsId usId = mock(UsId.class);
+        UsId otherUsId = mock(UsId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        productBacklog.addUserStory(0, otherUsId);
+
+        //Act
+        boolean result = productBacklog.addUserStory(0, usId);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verify if a User Story is added to Product Backlog at the end of the
+     * list because priority was not specified (-1 is the parameter given from the
+     * front end when user doesn't specify the User Story priority. Should return
+     * true).
+     */
+    @Test
+    void ensureThatUserStoryIsSuccessfullyAddedToTheEndOfTheProductBacklog() {
+        //Arrange
+        PbId pbId = mock(PbId.class);
+        UsId usId = mock(UsId.class);
+        UsId otherUsId = mock(UsId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        productBacklog.addUserStory(0, otherUsId);
+
+        //Act
+        boolean result = productBacklog.addUserStory(-1, usId);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: verify if a User Story is added to Product Backlog when priority
+     * equals list size. Should return true.
+     */
+    @Test
+    void ensureThatUserStoryIsSuccessfullyAddedToTheProductBacklogWhenPriorityEqualsListSize() {
+        //Arrange
+        PbId pbId = mock(PbId.class);
+        UsId usId = mock(UsId.class);
+        UsId otherUsId = mock(UsId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        productBacklog.addUserStory(0, otherUsId);
+
+        //Act
+        boolean result = productBacklog.addUserStory(1, usId);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 4: verify if a User Story is not added to Product Backlog if it is
+     * already there. Should return false.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToTheProductBacklogBecauseItIsAlreadyThere() {
+        //Arrange
+        PbId pbId = mock(PbId.class);
+        UsId usId = mock(UsId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        productBacklog.addUserStory(0, usId);
+
+        //Act
+        boolean result = productBacklog.addUserStory(0, usId);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 5: verify if a User Story is not added to Product Backlog if the index
+     * is bigger than the list. Should throw an exception.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToTheProductBacklogBecausePriorityIsBiggerThanListSize() {
+        //Arrange
+        String expected = "This position doesn't exist, since it's" +
+                " bigger than the list of User Stories.";
+
+        PbId pbId = mock(PbId.class);
+        UsId usId = mock(UsId.class);
+        UsId otherUsId = mock(UsId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        productBacklog.addUserStory(0, otherUsId);
+
+        //Act
+        IndexOutOfBoundsException exception = assertThrowsExactly(IndexOutOfBoundsException.class, () ->
+                productBacklog.addUserStory(2, usId));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
     }
 }

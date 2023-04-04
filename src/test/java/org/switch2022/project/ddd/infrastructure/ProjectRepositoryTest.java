@@ -1,58 +1,18 @@
-package org.switch2022.project.ddd.domain.model.project;
+package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.project.Project;
+import org.switch2022.project.ddd.domain.value_object.Code;
 
-import java.util.List;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProjectRepositoryTest {
 
-    /**
-     * Method: getProject().
-     * <br>
-     * Scenario 01: Lists of projects with isolation are equal.
-     * Expected result: true.
-     */
-    @Test
-    void ensureAllProjectsAreListedSuccessfullyListsAreEqual() {
-        // Arrange
-        Project projectDouble = mock(Project.class);
-        ProjectRepository projectRepositoryDouble = new ProjectRepository();
-        ProjectRepository projectRepositoryDoubleTwo = new ProjectRepository();
-        projectRepositoryDouble.addProjectToProjectRepository(projectDouble);
-        projectRepositoryDoubleTwo.addProjectToProjectRepository(projectDouble);
-
-        // Act
-        List<Project> expectedList = projectRepositoryDoubleTwo.getProjects();
-        List<Project> resultList = projectRepositoryDouble.getProjects();
-        boolean isEquals = expectedList.equals(resultList);
-
-        // Assert
-        assertTrue(isEquals);
-    }
-    /**
-     * Method: getProjects()
-     * <br>
-     * Scenario 02: Lists of projects with isolation are different.
-     * Expected result: false.
-     */
-    @Test
-    void ensureAllProjectsAreListedSuccessfullyListsAreNotEqual() {
-        // Arrange
-        Project projectDouble = mock(Project.class);
-        ProjectRepository projectRepositoryDouble = new ProjectRepository();
-        ProjectRepository projectRepositoryDoubleTwo = new ProjectRepository();
-        projectRepositoryDouble.addProjectToProjectRepository(projectDouble);
-
-        // Act
-        List<Project> expectedList = projectRepositoryDoubleTwo.getProjects();
-        List<Project> resultList = projectRepositoryDouble.getProjects();
-        boolean isEquals = expectedList.equals(resultList);
-
-        // Assert
-        assertFalse(isEquals);
-    }
     /**
      * Method: addProjectToProjectRepository(project).
      * adds a Project to Project Repository
@@ -117,5 +77,54 @@ class ProjectRepositoryTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    /**
+     * Method: getProjectByCode()
+     * <br>
+     * Scenario 01: check if I can select the project by your code
+     */
+    @Test
+    void ensureSelectTheProjectByCode() {
+        //Arrange
+
+        Project projectOne = mock(Project.class);
+        Project projectTwo = mock(Project.class);
+
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        projectRepositoryOne.addProjectToProjectRepository(projectTwo);
+
+        Code codeOne = mock(Code.class);
+        when(projectOne.hasProjectCode(any())).thenReturn(true);
+
+        //Act
+        Optional<Project> optionalResult = projectRepositoryOne.getProjectByCode(codeOne);
+
+        //Assert
+        assertEquals(Optional.of(projectOne), optionalResult);
+    }
+
+    /**
+     * Method: getProjectNumber().
+     * <br>
+     * Scenario 01: return the number of projects from a list
+     * Expected result: true.
+     */
+    @Test
+    void theNumberOfProjectsOnTheList() {
+        //Arrange
+        Project projectOne = mock(Project.class);
+        Project projectTwo = mock(Project.class);
+
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        projectRepositoryOne.addProjectToProjectRepository(projectTwo);
+
+        int expected = 2;
+        int result = projectRepositoryOne.getProjectNumber();
+
+        assertEquals(expected, result);
+
     }
 }
