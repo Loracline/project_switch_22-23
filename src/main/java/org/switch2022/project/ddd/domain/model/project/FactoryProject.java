@@ -12,7 +12,8 @@ public class FactoryProject implements IFactoryProject {
      * @param businessSectorId      the ID object of the business sector.
      * @param customerId            the ID object of the customer.
      * @param projectTypologyId     the ID object of the project typology.
-     * @param factoryProductBacklog the factory product backlog object used to create the product backlog for the project.
+     * @param factoryProductBacklog the factory product backlog object used to create the product backlog for the
+     *                              project.
      * @return the newly created Project object.
      */
     @Override
