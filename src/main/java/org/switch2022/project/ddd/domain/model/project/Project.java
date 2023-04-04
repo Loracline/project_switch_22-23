@@ -150,6 +150,16 @@ public class Project implements Entity<Project> {
     protected void setSprintDuration(int sprintDuration) {
         this.sprintDuration = new SprintDuration(sprintDuration);
     }
+    /**
+     * This method verifies if the Project has the given Project code
+     *
+     * @param projectCode of the Project.
+     * @return TRUE if Project has the given Project Code, and FALSE otherwise.
+     */
+    public boolean hasProjectCode(Code projectCode) {
+        return projectCode.equals(this.projectCode);
+    }
+
 }
 
 
