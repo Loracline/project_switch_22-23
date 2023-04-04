@@ -230,13 +230,72 @@ class ProductBacklogTest {
     }
 
     /**
+     * Scenario 2: Verify that is returned a list of IDs of User Stories when the Product Backlog has UsId listed - the
+     * User Stories were added without priority defined.
+     */
+    @Test
+    void ensureProductBacklogReturnsAListOfUserStoryIDsWhenThereAreUsIdInItAddedWithoutPriority() {
+        // Arrange
+        PbId pbId = mock(PbId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        List<UsId> expected = new ArrayList<>();
+
+        UsId usIdOne = mock(UsId.class);
+        UsId usIdTwo = mock(UsId.class);
+        UsId usIdThree = mock(UsId.class);
+
+        expected.add(usIdOne);
+        expected.add(usIdTwo);
+        expected.add(usIdThree);
+
+        productBacklog.addUserStory(-1,usIdOne);
+        productBacklog.addUserStory(-1,usIdTwo);
+        productBacklog.addUserStory(-1, usIdThree);
+
+        // Act
+        List<UsId> result = productBacklog.getUserStories();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: Verify that is returned a list of IDs of User Stories when the Product Backlog has UsId listed - the
+     * User Stories were added with priority defined.
+     */
+    @Test
+    void ensureProductBacklogReturnsAListOfUserStoryIDsWhenThereAreUsIdInItAddedWithPriority() {
+        // Arrange
+        PbId pbId = mock(PbId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        List<UsId> expected = new ArrayList<>();
+
+        UsId usIdOne = mock(UsId.class);
+        UsId usIdTwo = mock(UsId.class);
+        UsId usIdThree = mock(UsId.class);
+
+        expected.add(usIdOne);
+        expected.add(usIdTwo);
+        expected.add(usIdThree);
+
+        productBacklog.addUserStory(0,usIdOne);
+        productBacklog.addUserStory(1,usIdTwo);
+        productBacklog.addUserStory(2, usIdThree);
+
+        // Act
+        List<UsId> result = productBacklog.getUserStories();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
      * METHOD addUserStory(userStory)
      * adds a User Story to Product Backlog
      * <p>
      * Scenario 1: verify if a User Story is added to Product Backlog in the specified
      * position if it is not already there. Should return True.
      */
-
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToProductBacklog() {
         //Arrange
@@ -257,9 +316,8 @@ class ProductBacklogTest {
      * Scenario 2: verify if a User Story is added to Product Backlog at the end of the
      * list because priority was not specified (-1 is the parameter given from the
      * front end when user doesn't specify the User Story priority. Should return
-     * true.
+     * true).
      */
-
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToTheEndOfTheProductBacklog() {
         //Arrange
@@ -280,7 +338,6 @@ class ProductBacklogTest {
      * Scenario 3: verify if a User Story is added to Product Backlog when priority
      * equals list size. Should return true.
      */
-
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToTheProductBacklogWhenPriorityEqualsListSize() {
         //Arrange
@@ -344,8 +401,6 @@ class ProductBacklogTest {
      * METHOD getProductBacklog().
      * Scenario 1: verifies that the copied product backlog has a new ID and contains the same user stories as
      * the original product backlog.
-     * @return a new product backlog object with a new ID and the same list of user stories as
-     * the current product backlog.
      */
     @Test
     void ensureProductBacklogReturnsCopyWithNewId() {
@@ -354,7 +409,7 @@ class ProductBacklogTest {
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
         ProductBacklog productBacklogDouble = new ProductBacklog(pbId);
 
-        UsId usId = new UsId("P001","P1US001");
+        UsId usId = new UsId("P001", "P1US001");
         UserStory userStoryDouble = mock(UserStory.class);
         when(factoryUserStoryDouble.createUserStory(any(), any())).thenReturn(userStoryDouble);
         productBacklogDouble.addUserStory(0, usId);
@@ -379,7 +434,7 @@ class ProductBacklogTest {
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
         ProductBacklog productBacklogDouble = new ProductBacklog(pbId);
 
-        UsId usId = new UsId("P001","P1US001");
+        UsId usId = new UsId("P001", "P1US001");
         UserStory userStoryDouble = mock(UserStory.class);
         when(factoryUserStoryDouble.createUserStory(any(), any())).thenReturn(userStoryDouble);
         productBacklogDouble.addUserStory(0, usId);
@@ -392,8 +447,8 @@ class ProductBacklogTest {
 
     }
 
-
-    /** Scenario 3: This test verifying that it returns a new product backlog object with a different ID than
+    /**
+     * Scenario 3: This test verifying that it returns a new product backlog object with a different ID than
      * the original.
      * This method creates a new instance of the ProductBacklog class with a new ID and adds
      * all the user stories from the current product backlog in the same order. The new product backlog
@@ -419,8 +474,8 @@ class ProductBacklogTest {
     void ensureNewProductBacklogHasSameUserStoriesOrderInSameOrderAsOriginal() {
         // ARRANGE
         ProductBacklog expected = new ProductBacklog(new PbId("Pb-1"));
-        UsId usId1 = new UsId("P001","P1US001");
-        UsId usId2 = new UsId("P001","P1US002");
+        UsId usId1 = new UsId("P001", "P1US001");
+        UsId usId2 = new UsId("P001", "P1US002");
         expected.addUserStory(0, usId1);
         expected.addUserStory(1, usId2);
 
@@ -442,10 +497,10 @@ class ProductBacklogTest {
     void ensureNewProductBacklogHasSameUserStories() {
         // ARRANGE
         ProductBacklog expected = new ProductBacklog(new PbId("Pb-1"));
-        UsId usId1 = new UsId("P001","P1US001");
-        UsId usId2 = new UsId("P001","P1US002");
+        UsId usId1 = new UsId("P001", "P1US001");
+        UsId usId2 = new UsId("P001", "P1US002");
         expected.addUserStory(0, usId1);
-        expected.addUserStory(1,usId2);
+        expected.addUserStory(1, usId2);
 
         // ACT
         ProductBacklog result = expected.getProductBacklog();
