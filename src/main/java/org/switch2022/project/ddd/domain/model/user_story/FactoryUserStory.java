@@ -4,8 +4,8 @@ import org.switch2022.project.ddd.domain.value_object.Actor;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.domain.value_object.UsNumber;
 import org.switch2022.project.ddd.domain.value_object.UsText;
+import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.utils.Validate;
-import org.switch2022.project.dto.UserStoryCreationDto;
 
 public class FactoryUserStory implements IFactoryUserStory {
     /**
