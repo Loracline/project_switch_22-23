@@ -19,6 +19,11 @@ public class ProductBacklog implements Entity<ProductBacklog> {
     private final String productBacklogId;
     private final List<UsId> userStories = new ArrayList<>();
 
+    /**
+     * Constructor.
+     *
+     * @param productBacklogId the ID of the product backlog to be created.
+     */
     protected ProductBacklog(final PbId productBacklogId) {
         Validate.notNull(productBacklogId, "Product Backlog's ID can't be null.");
 
@@ -84,16 +89,14 @@ public class ProductBacklog implements Entity<ProductBacklog> {
      * doesn't already exist.
      * The priority is defined being 0 as the most important.
      *
-     * @param usId is the id of the User Story to be added to the product backlog.
+     * @param usId     is the id of the User Story to be added to the product backlog.
      * @param priority is the priority of the user story, which means the position in
      *                 which it should be added. If the user doesn't specify it the UI
      *                 will send the parameter as -1, so that the User Story should be
      *                 added by the end of the list.
-     *
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise. If the id is already in the Product backlog it returns and exception.
      */
-
     public boolean addUserStory(int priority, UsId usId) {
         boolean result = true;
 
@@ -117,10 +120,10 @@ public class ProductBacklog implements Entity<ProductBacklog> {
      * list of user stories.
      * Each user story is added to the new product backlog copy using the same order as
      * the current product backlog.
+     *
      * @return a new product backlog object with a new ID and the same list of user stories as
      * the current product backlog.
      */
-
     public ProductBacklog getProductBacklog() {
         int counter = 0;
         PbId newPbId = new PbId("Pb-" + counter);
