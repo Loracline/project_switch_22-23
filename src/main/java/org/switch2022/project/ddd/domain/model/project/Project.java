@@ -142,6 +142,16 @@ public class Project implements Entity<Project> {
         this.projectTypologyId = projectTypologyId;
     }
 
+    /**
+     * This method verifies if the Project has the given Project code
+     *
+     * @param projectCode of the Project.
+     * @return TRUE if Project has the given Project Code, and FALSE otherwise.
+     */
+    public boolean hasProjectCode(Code projectCode) {
+        return projectCode.equals(this.projectCode);
+    }
+
 }
 
 
