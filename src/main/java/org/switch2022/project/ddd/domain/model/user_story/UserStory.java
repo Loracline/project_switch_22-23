@@ -23,6 +23,7 @@ public class UserStory implements Entity<UserStory> {
     private UsText usText;
     private Status status;
     private AcceptanceCriteria acceptanceCriteria;
+    private Effort effort;
 
     /**
      * Constructor
@@ -33,6 +34,7 @@ public class UserStory implements Entity<UserStory> {
         Validate.notNull(usId, "User Story's ID can't be null.");
         this.usId = usId;
     }
+
     /**
      * This method checks if two instances of User Story are equal by comparing the
      * value of the attribute user story id.
@@ -79,9 +81,48 @@ public class UserStory implements Entity<UserStory> {
      * This getter method returns the User Story Id.
      */
 
-    public String getUsId() {
-        return usId.toString();
+    public UsId getUsId() {
+        return usId;
     }
+
+    /**
+     * This getter method returns the User Story status.
+     */
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
+     * This protected method sets the status of the userStory.
+     *
+     * @param status of the User Story to be altered.
+     */
+    void setStatus(Status status) {
+        this.status = status;
+    }
+
+    /**
+     * This getter method returns the User Story effort.
+     */
+    public Effort getEffort() {
+        return effort;
+    }
+
+    /**
+     * This method sets the effort of the userStory.
+     *
+     * @param effortEstimate of the User Story to be set.
+     */
+    void setEffort(int effortEstimate) {
+        for (Effort effort : Effort.values()) {
+            if (effort.getEffortValue() == effortEstimate) {
+                this.effort = effort;
+                return;
+            }
+        }
+        throw new RuntimeException("Effort estimate was not successful");
+    }
+
 
     /**
      * This protected method sets the user story number of the userStory.
@@ -108,15 +149,6 @@ public class UserStory implements Entity<UserStory> {
      */
     protected void setUsText(UsText usText) {
         this.usText = usText;
-    }
-
-    /**
-     * This protected method sets the status of the userStory.
-     *
-     * @param status of the User Story to be altered.
-     */
-    void setStatus(Status status) {
-        this.status = status;
     }
 
     /**
