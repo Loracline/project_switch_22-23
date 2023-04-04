@@ -4,6 +4,17 @@ import java.time.LocalDate;
 
 public class Validate {
 
+    /**
+     * Utility classes typically provide a set of related functionality that can be used across different parts of an
+     * application. They are designed to be stateless and provide only static methods. Since utility classes only
+     * provide static methods, there is no need to create instances of the class.
+     * <br>
+     * By making the constructor of the utility class private, we prevent any instances of the class from being
+     * created. This ensures that the utility class remains stateless and can only be used through its static methods.
+     */
+    private Validate() {
+    }
+
     //STRING VALIDATIONS
 
     /**
@@ -112,20 +123,21 @@ public class Validate {
      * <pre>Validate.withinInterval(myValueToCheck, "The valueToCheck must be between lowerLimit and upperLimit");
      * </pre>
      *
-     * @param lowerLimit the lower limit of the interval.
-     * @param upperLimit the upper limit of the interval.
-     * @param valueToCheck      the number to check.
+     * @param lowerLimit   the lower limit of the interval.
+     * @param upperLimit   the upper limit of the interval.
+     * @param valueToCheck the number to check.
      * @param argumentName the name of the argument to check.
      * @throws IllegalArgumentException if the number is outside the interval
      */
-    public static <T extends Number> void withinInterval(T lowerLimit, T upperLimit, T valueToCheck, String argumentName){
-        if (valueToCheck.doubleValue() < lowerLimit.doubleValue() || valueToCheck.doubleValue() > upperLimit.doubleValue()){
+    public static <T extends Number> void withinInterval(T lowerLimit, T upperLimit, T valueToCheck, String argumentName) {
+        if (valueToCheck.doubleValue() < lowerLimit.doubleValue() || valueToCheck.doubleValue() > upperLimit.doubleValue()) {
             throw new IllegalArgumentException(String.format("The %s must be between %s and %s", argumentName,
                     lowerLimit, upperLimit));
         }
     }
 
     //OBJECT VALIDATIONS
+
     /**
      * <p>Validate that the specified argument is not <code>null</code>;
      * otherwise throwing an exception with the specified message.
@@ -143,14 +155,15 @@ public class Validate {
     }
 
     //DATE VALIDATIONS
+
     /**
      * <p>Validate that the specified date is not before another date;
      * otherwise throwing an exception with the specified message.
      *
      * <pre>Validate.isDateAfter(myLocalDate, "The dateOfInterest must be after the dateToCompare");</pre>
      *
-     * @param dateOfInterest  the date to check.
-     * @param dateToCompare the data to compare to.
+     * @param dateOfInterest the date to check.
+     * @param dateToCompare  the data to compare to.
      * @throws IllegalArgumentException if the date to check is before the date to compare to.
      */
     public static void isAfter(LocalDate dateOfInterest, LocalDate dateToCompare) {
