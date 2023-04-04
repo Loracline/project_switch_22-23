@@ -2,8 +2,7 @@ package org.switch2022.project.ddd.domain.model.user_story;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.value_object.Effort;
-import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.domain.value_object.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -223,7 +222,66 @@ class UserStoryTest {
         //Assert
         assertEquals(expected, result);
     }
+    /**
+     * METHOD getUsText()
+     * <br>
+     * Scenario 1: Verify that the returned user story text is the same of the User
+     * Story.
+     */
 
+    @Test
+    void ensureUserStoryTextIsRetrievedSuccessfully() {
+        // Arrange
+        UsText usText = mock(UsText.class);
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+        userStory.setUsText(usText);
+        // Act
+        UsText result = userStory.getUsText();
+
+        //Assert
+        assertEquals(usText, result);
+    }
+    /**
+     * METHOD getUsNumber()
+     * <br>
+     * Scenario 1: Verify that the returned user story number is the same of the User
+     * Story.
+     */
+
+    @Test
+    void ensureUserStoryNumberIsRetrievedSuccessfully() {
+        // Arrange
+        UsNumber usNumber = mock(UsNumber.class);
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+        userStory.setUsNumber(usNumber);
+        // Act
+        UsNumber result = userStory.getUsNumber();
+
+        //Assert
+        assertEquals(usNumber, result);
+    }
+    /**
+     * METHOD getUsStatus()
+     * <br>
+     * Scenario 1: Verify that the returned user story status is the same of the User
+     * Story.
+     */
+
+    @Test
+    void ensureUserStoryStatusIsRetrievedSuccessfully() {
+        // Arrange
+        Status usStatus = mock(Status.class);
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+        userStory.setStatus(usStatus);
+        // Act
+        Status result = userStory.getStatus();
+
+        //Assert
+        assertEquals(usStatus, result);
+    }
     /**
      * METHOD toString()
      * <br>

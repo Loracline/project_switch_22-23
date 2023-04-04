@@ -93,6 +93,21 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
+     * This getter method returns the User Story Text.
+     */
+
+    public UsText getUsText() {
+        return usText;
+    }
+
+    /**
+     * This getter method returns the User Story Number.
+     */
+    public UsNumber getUsNumber() {
+        return usNumber;
+    }
+
+    /**
      * This protected method sets the status of the userStory.
      *
      * @param status of the User Story to be altered.
