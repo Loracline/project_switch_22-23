@@ -87,14 +87,14 @@ public class Project implements Entity<Project> {
         return this.projectCode;
     }
 
-//    /**
-//     * Setter method for the attribute: productBacklog.
-//     * <p>
-//     * This method creates a Product backlog for the project
-//     */
-//    protected void setProductBacklog(IFactoryProductBacklog iFactoryProductBacklog) {
-//        this.productBacklog = iFactoryProductBacklog.createProductBacklog(this.projectCode);
-//    }
+    /**
+     * Setter method for the attribute: productBacklog.
+     * <p>
+     * This method creates a Product backlog for the project
+     */
+    protected void setProductBacklog(IFactoryProductBacklog iFactoryProductBacklog) {
+        this.productBacklog = iFactoryProductBacklog.createProductBacklog(this.projectCode.toString());
+    }
 
     /**
      * This method sets the project name attribute to a new Name value object created with the projectName parameter.
@@ -142,6 +142,14 @@ public class Project implements Entity<Project> {
         this.projectTypologyId = projectTypologyId;
     }
 
+    /**
+     * This method sets the sprint duration for this project to the specified sprint duration object.
+     *
+     * @param sprintDuration the sprint duration object to set for this project.
+     */
+    protected void setSprintDuration(int sprintDuration) {
+        this.sprintDuration = new SprintDuration(sprintDuration);
+    }
     /**
      * This method verifies if the Project has the given Project code
      *
