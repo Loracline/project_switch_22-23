@@ -222,6 +222,7 @@ class UserStoryTest {
         //Assert
         assertEquals(expected, result);
     }
+
     /**
      * METHOD getUsText()
      * <br>
@@ -242,6 +243,7 @@ class UserStoryTest {
         //Assert
         assertEquals(usText, result);
     }
+
     /**
      * METHOD getUsNumber()
      * <br>
@@ -262,6 +264,7 @@ class UserStoryTest {
         //Assert
         assertEquals(usNumber, result);
     }
+
     /**
      * METHOD getUsStatus()
      * <br>
@@ -282,6 +285,7 @@ class UserStoryTest {
         //Assert
         assertEquals(usStatus, result);
     }
+
     /**
      * METHOD toString()
      * <br>
