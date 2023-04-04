@@ -233,7 +233,7 @@ public class Project {
      *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort, LocalDate date) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort, LocalDate date) {
         boolean result = false;
         int i = 0;
         while (i < sprints.size()) {

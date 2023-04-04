@@ -278,6 +278,8 @@ class UserStoryTest {
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             userStory.setEffort(41);
         });
+
+        // Assert
         assertEquals("Effort estimate was not successful", exception.getMessage());
     }
 }

@@ -252,10 +252,9 @@ class SprintTest {
 
         UserStoryDto userStoryDto = new UserStoryDto("US001", "Manager",
                 "I want to create a profile");
-        Effort effort = Effort.THREE;
 
         //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3);
 
         //Assert
         assertTrue(result);
@@ -280,9 +279,9 @@ class SprintTest {
 
         UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
                 "I want to create a profile");
-        Effort effort = Effort.THREE;
+
         //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3);
 
         //Assert
         assertFalse(result);
@@ -465,7 +464,6 @@ class SprintTest {
         //Arrange
         UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
                 "I want to create a profile");
-        Effort effort = Effort.THREE;
 
         IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
@@ -475,10 +473,10 @@ class SprintTest {
 
         Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
                 3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
-        when(sprintBacklogDouble.estimateEffortUserStory(userStoryDto,effort)).thenReturn(true);
+        when(sprintBacklogDouble.estimateEffortUserStory(userStoryDto,3)).thenReturn(true);
 
         //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3);
 
         //Assert
         assertTrue(result);
@@ -492,7 +490,6 @@ class SprintTest {
         //Arrange
         UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
                 "I want to create a profile");
-        Effort effort = Effort.THREE;
         IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
         IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
@@ -502,7 +499,7 @@ class SprintTest {
         when(sprintBacklogDouble.hasUserStory(userStoryDto.userStoryNumber)).thenReturn(true);
 
         //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, effort);
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3);
 
         //Assert
         assertFalse(result);

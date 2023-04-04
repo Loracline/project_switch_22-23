@@ -28,4 +28,14 @@ public enum Effort {
     Effort(int effortValue) {
         this.effortValue = effortValue;
     }
+
+    /**
+     * This method returns the effortValue associated to the ordinal position of the enum.
+     *
+     * @return effortValue
+     */
+
+    public int getEffortValue() {
+        return effortValue;
+    }
 }

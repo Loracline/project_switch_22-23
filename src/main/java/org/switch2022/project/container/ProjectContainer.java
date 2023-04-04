@@ -146,7 +146,7 @@ public class ProjectContainer {
      * @param projectCode  code of the project.
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort,
                                            String projectCode, LocalDate date) {
         boolean isEffortSet = false;
         Optional<Project> projectOptional = getProjectByCode(projectCode);

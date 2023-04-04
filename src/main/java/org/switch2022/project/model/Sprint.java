@@ -119,7 +119,7 @@ public final class Sprint {
      * @param effort       of the userStory.
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort) {
         return (sprintBacklog.estimateEffortUserStory(userStoryDto, effort));
     }
 

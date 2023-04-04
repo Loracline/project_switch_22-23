@@ -122,7 +122,7 @@ class EstimateUserStoryEffortControllerTest {
         projectContainer.addUserStoryToSprintBacklog(projectDtoOne.code,
                 "US001", "s001");
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
-                Effort.TWO, projectDtoOne);
+                2, projectDtoOne);
         assertTrue(result);
     }
 
@@ -137,7 +137,7 @@ class EstimateUserStoryEffortControllerTest {
     void ensureEstimateEffortUserStoryUnsuccessfullyUserStoryNotFound() {
         projectContainer.createUserStory(projectDtoOne, userStoryCreationDto);
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
-                Effort.TWO, projectDtoOne);
+                2, projectDtoOne);
         assertFalse(result);
     }
 
@@ -151,7 +151,7 @@ class EstimateUserStoryEffortControllerTest {
     @Test
     void ensureEstimateEffortUserStoryUnsuccessfullyProjectNotFound() {
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
-                Effort.TWO, projectDtoTwo);
+                2, projectDtoTwo);
         assertFalse(result);
     }
 
@@ -165,7 +165,7 @@ class EstimateUserStoryEffortControllerTest {
     @Test
     void ensureUserStoryEffortIsNotEstimatedUserStoryIsNull() {
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoTwo,
-                Effort.TWO, projectDtoOne);
+                2, projectDtoOne);
         assertFalse(result);
     }
 
@@ -179,7 +179,7 @@ class EstimateUserStoryEffortControllerTest {
     @Test
     void ensureUserStoryEffortIsNotEstimatedProjectIsNull() {
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoTwo,
-                Effort.TWO, projectDtoThree);
+                2, projectDtoThree);
         assertFalse(result);
     }
 
@@ -198,11 +198,11 @@ class EstimateUserStoryEffortControllerTest {
         Company companyDouble=mock(Company.class);
         EstimateUserStoryEffortController estimateUserStoryEffortControllerDouble =
                 new EstimateUserStoryEffortController(companyDouble);
-        when(companyDouble.estimateEffortUserStory(userStoryDtoDouble, Effort.TWO,
+        when(companyDouble.estimateEffortUserStory(userStoryDtoDouble, 2,
                 projectDtoDouble, LocalDate.now())).thenReturn(true);
         //Act
         boolean result = estimateUserStoryEffortControllerDouble.estimateEffortUserStory(userStoryDtoDouble,
-                Effort.TWO, projectDtoDouble);
+                2, projectDtoDouble);
 
         //Arrange
         assertTrue(result);
@@ -223,11 +223,11 @@ class EstimateUserStoryEffortControllerTest {
         Company companyDouble=mock(Company.class);
         EstimateUserStoryEffortController estimateUserStoryEffortControllerDouble =
                 new EstimateUserStoryEffortController(companyDouble);
-        when(companyDouble.estimateEffortUserStory(userStoryDtoDouble, Effort.TWO,
+        when(companyDouble.estimateEffortUserStory(userStoryDtoDouble, 2,
                 projectDtoDouble, LocalDate.now())).thenReturn(false);
         //Act
         boolean result = estimateUserStoryEffortControllerDouble.estimateEffortUserStory(userStoryDtoDouble,
-                Effort.TWO, projectDtoDouble);
+                2, projectDtoDouble);
 
         //Arrange
         assertFalse(result);

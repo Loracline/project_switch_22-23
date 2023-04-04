@@ -546,14 +546,13 @@ public class ProjectTest {
                 businessSectorDouble, factoryProductBacklog, factoryUserStory, factoryPeriod, factorySprintBacklog,
                 factorySprint);
         UserStoryDto userStoryDto = mock(UserStoryDto.class);
-        Effort effort = Effort.TWO;
 
         project.addSprint(sprintDouble);
         when(sprintDouble.isDateWithinPeriod(any())).thenReturn(true);
-        when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(true);
+        when(sprintDouble.estimateEffortUserStory(userStoryDto, 2)).thenReturn(true);
 
         // Act
-        boolean result = project.estimateEffortUserStory(userStoryDto, effort,
+        boolean result = project.estimateEffortUserStory(userStoryDto, 2,
                 LocalDate.of(2023, 3, 8));
 
         // Assert
@@ -583,13 +582,12 @@ public class ProjectTest {
                 factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
         UserStoryDto userStoryDto = mock(UserStoryDto.class);
 
-        Effort effort = Effort.TWO;
         project.addSprint(sprintDouble);
         when(sprintDouble.isDateWithinPeriod(any())).thenReturn(false);
-        when(sprintDouble.estimateEffortUserStory(userStoryDto, effort)).thenReturn(false);
+        when(sprintDouble.estimateEffortUserStory(userStoryDto, 2)).thenReturn(false);
 
         // Act
-        boolean result = project.estimateEffortUserStory(userStoryDto, effort,
+        boolean result = project.estimateEffortUserStory(userStoryDto, 2,
                 LocalDate.of(2023, 3, 8));
 
         // Assert

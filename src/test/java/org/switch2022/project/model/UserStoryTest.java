@@ -166,7 +166,7 @@ class UserStoryTest {
         UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
 
         // Act
-        userStoryOne.setEffort(Effort.TWO);
+        userStoryOne.setEffort(2);
 
         // Assert
         assertEquals(Effort.TWO, userStoryOne.getEffort());
@@ -185,8 +185,8 @@ class UserStoryTest {
         UserStory userStoryTwo = (new UserStory.UserStoryBuilder("US002").build());
 
         // Act
-        userStoryOne.setEffort(Effort.TWO);
-        userStoryTwo.setEffort(Effort.TWO);
+        userStoryOne.setEffort(2);
+        userStoryTwo.setEffort(2);
 
         // Assert
         assertEquals(userStoryOne.getEffort(), userStoryTwo.getEffort());
@@ -204,12 +204,28 @@ class UserStoryTest {
         UserStory userStoryTwo = (new UserStory.UserStoryBuilder("US002").build());
 
         // Act
-        userStoryOne.setEffort(Effort.TWO);
-        userStoryTwo.setEffort(Effort.THIRTEEN);
+        userStoryOne.setEffort(2);
+        userStoryTwo.setEffort(13);
         boolean isEquals = (userStoryOne.getEffort().equals(userStoryTwo.getEffort()));
 
         // Assert
         assertFalse(isEquals);
+    }
+
+    /**
+     * Scenario 4: Verify if the effort of userStoryOne is not set.
+     * Expected result: effort of userStoryOne is not set.
+     */
+    @Test
+    void ensureEffortIsNotSet() {
+        // Arrange
+        UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
+
+        // Act
+        boolean result = userStoryOne.setEffort(4);
+
+        // Assert
+        assertFalse(result);
     }
 
     /**

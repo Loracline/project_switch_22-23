@@ -233,10 +233,9 @@ class SprintBacklogTest {
         sprintBacklog.addUserStory((new UserStory.UserStoryBuilder("US002").build()));
         UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
                 "I want to create a profile");
-        Effort effort = Effort.THREE;
 
         //Act
-        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, 3);
 
         //Assert
         assertTrue(result);
@@ -254,10 +253,9 @@ class SprintBacklogTest {
         sprintBacklog.addUserStory(new UserStory.UserStoryBuilder("US003").build());
         UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
                 "I want to create a profile");
-        Effort effort = Effort.THREE;
 
         //Act
-        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, 3);
 
         //Assert
         assertTrue(result);
@@ -274,10 +272,9 @@ class SprintBacklogTest {
         sprintBacklog.addUserStory(new UserStory.UserStoryBuilder("US002").build());
         UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
                 "I want to create a profile");
-        Effort effort = Effort.THREE;
 
         //Act
-        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, 3);
 
         //Assert
         assertFalse(result);
@@ -292,10 +289,9 @@ class SprintBacklogTest {
         SprintBacklog sprintBacklog = new SprintBacklog();
         UserStoryDto userStoryDto = new UserStoryDto("US003", "Manager",
                 "I want to create a profile");
-        Effort effort = Effort.THREE;
 
         //Act
-        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, 3);
 
         //Assert
         assertFalse(result);
@@ -317,7 +313,7 @@ class SprintBacklogTest {
         sprintBacklog.addUserStory(userStoryDouble);
 
         //Act
-        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.TWO);
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, 2);
 
         //Assert
         assertTrue(result);
@@ -337,7 +333,7 @@ class SprintBacklogTest {
         sprintBacklog.addUserStory(userStoryDouble);
 
         //Act
-        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.TWO);
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, 2);
 
         //Assert
         assertFalse(result);
@@ -352,13 +348,13 @@ class SprintBacklogTest {
         UserStoryDto userStoryDto = mock(UserStoryDto.class);
         UserStory userStoryDouble = mock(UserStory.class);
         when(userStoryDouble.hasUserStoryNumber(userStoryDto.userStoryNumber)).thenReturn(true);
-        doThrow(new RuntimeException()).when(userStoryDouble).setEffort(Effort.FIVE);
+        doThrow(new RuntimeException()).when(userStoryDouble).setEffort(5);
 
         SprintBacklog sprintBacklog = new SprintBacklog();
         sprintBacklog.addUserStory(userStoryDouble);
 
         //Act
-        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, Effort.FIVE);
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, 5);
 
         //Assert
         assertFalse(result);

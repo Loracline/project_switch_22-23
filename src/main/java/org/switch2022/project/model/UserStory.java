@@ -116,12 +116,18 @@ public final class UserStory {
     }
 
     /**
-     * This method sets the effort for the userStory.
+     * This method sets the effort of the userStory.
      *
-     * @param effort of the userStory.
+     * @param effortEstimate of the User Story to be set.
      */
-    void setEffort(Effort effort) {
-        this.effort = effort;
+    boolean setEffort(int effortEstimate) {
+        for (Effort effort : Effort.values()) {
+            if (effort.getEffortValue() == effortEstimate) {
+                this.effort = effort;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

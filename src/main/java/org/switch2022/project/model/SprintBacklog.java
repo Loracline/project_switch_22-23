@@ -115,7 +115,7 @@ public class SprintBacklog {
      * @param effort       to be set
      * @return true if the userStory number exists and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort) {
         int i = 0;
         boolean isEffortSet = false;
         while (i < userStories.size()) {

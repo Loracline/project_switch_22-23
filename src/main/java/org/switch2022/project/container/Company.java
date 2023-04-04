@@ -329,7 +329,7 @@ public class Company {
      * @param effort       of the userStory.
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, Effort effort,
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort,
                                            ProjectDto projectDto, LocalDate date) {
         String projectCode = projectDto.code;
         return projectContainer.estimateEffortUserStory(userStoryDto, effort,
