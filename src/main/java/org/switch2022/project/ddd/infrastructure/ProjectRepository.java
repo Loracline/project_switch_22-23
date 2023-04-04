@@ -1,4 +1,7 @@
-package org.switch2022.project.ddd.domain.model.project;
+package org.switch2022.project.ddd.infrastructure;
+
+import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
+import org.switch2022.project.ddd.domain.model.project.Project;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +11,7 @@ import java.util.List;
  * Class ProjectRepository is built to access and manipulate the set of projects
  * of this company.
  */
-public class ProjectRepository {
+public class ProjectRepository implements IProjectRepository {
     /**
      * Attributes
      */
@@ -48,5 +51,4 @@ public class ProjectRepository {
     private boolean doesProjectExist(Project project) {
         return projects.contains(project);
     }
-
 }

@@ -1,8 +1,10 @@
-package org.switch2022.project.ddd.domain.model.project;
+package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.project.Project;
 
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -31,6 +33,7 @@ class ProjectRepositoryTest {
         // Assert
         assertTrue(isEquals);
     }
+
     /**
      * Method: getProjects()
      * <br>
@@ -53,6 +56,7 @@ class ProjectRepositoryTest {
         // Assert
         assertFalse(isEquals);
     }
+
     /**
      * Method: addProjectToProjectRepository(project).
      * adds a Project to Project Repository

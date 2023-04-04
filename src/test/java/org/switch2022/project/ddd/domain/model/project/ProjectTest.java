@@ -42,6 +42,7 @@ class ProjectTest {
     }
 
     /**
+     * Method: equals()
      * Scenario 01: Test to ensure the object equals itself
      */
     @Test
@@ -58,6 +59,7 @@ class ProjectTest {
     }
 
     /**
+     * Method: equals()
      * Scenario 02:Test to ensure that two objects are from different classes
      */
     @Test
@@ -74,6 +76,7 @@ class ProjectTest {
     }
 
     /**
+     * Method: equals()
      * Scenario 03: Test to ensure that the object to compare is equal to null
      */
     @Test
@@ -90,6 +93,7 @@ class ProjectTest {
     }
 
     /**
+     * Method: equals()
      * Scenario 04: Test to ensure that two objects from the same class are different
      */
     @Test
@@ -103,6 +107,7 @@ class ProjectTest {
     }
 
     /**
+     * Method:hashCode()
      * Scenario 01:Two objects with the different code and different hash codes are two different objects
      */
     @Test
@@ -115,6 +120,38 @@ class ProjectTest {
 
         //Assert
         assertNotEquals(projectOne.hashCode(), projectTwo.hashCode());
+    }
+
+    /**
+     * Method: getProjectCode().
+     * Scenario 01: test to ensure that project code requested from a given project is retrieved.
+     */
+    @Test
+    public void ensureProjectCodeIsEqual() {
+        //Arrange
+        Code expected = projectCodeOne;
+
+        //Act
+        Code result = projectOne.getProjectCode();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: getProjectCode().
+     * Scenario 02: test to ensure that the requested project code is not the same as another project.
+     */
+    @Test
+    public void ensureProjectCodeIsNotEqual() {
+        //Arrange
+        Code expected = projectCodeOne;
+
+        //Act
+        Code result = projectTwo.getProjectCode();
+
+        //Assert
+        assertNotEquals(expected, result);
     }
 
     //ISOLATION TESTS
@@ -135,6 +172,7 @@ class ProjectTest {
     }
 
     /**
+     * Method: equals()
      * Scenario 02: Verifies if the method equals() returns
      * true, when compared to the same object.
      */
@@ -152,6 +190,7 @@ class ProjectTest {
     }
 
     /**
+     * Method: equals()
      * Scenario 03: Verifies if the method equals() returns
      * true, when compared to the
      * same type of object and with the same parameters.
@@ -172,6 +211,7 @@ class ProjectTest {
     }
 
     /**
+     * Method: equals()
      * Scenario 04: Verifies if the method equals() returns
      * false, when compared to the
      * same type of object and with the different parameters.
@@ -192,6 +232,7 @@ class ProjectTest {
     }
 
     /**
+     * Method: equals()
      * Scenario 05: Verifies if the method equals() returns
      * false, when compared to the
      * different type of object.
@@ -208,5 +249,45 @@ class ProjectTest {
 
         // Assert
         assertFalse(isEquals);
+    }
+
+    /**
+     * Method: getProjectCode().
+     * Scenario 01: test to ensure that project code requested from a given project is retrieved.
+     */
+    @Test
+    public void ensureProjectCodeIsEqual_IsolationTest() {
+        //Arrange
+        Code projectCodeOne = mock(Code.class);
+        Code projectCodeTwo = mock(Code.class);
+
+        Project projectOne = new Project(projectCodeOne);
+
+        //Act
+        Code result = projectOne.getProjectCode();
+
+        //Assert
+        assertEquals(projectCodeOne, result);
+    }
+
+    /**
+     * Method: getProjectCode().
+     * Scenario 02: test to ensure that the requested project code is not the same as another project.
+     */
+    @Test
+    public void ensureProjectCodeIsNotEqual_IsolationTest() {
+        //Arrange
+
+        //Code
+        Code projectCodeOne = mock(Code.class);
+        Code projectCodeTwo = mock(Code.class);
+        //Project
+        Project projectTwo = new Project(projectCodeTwo);
+
+        //Act
+        Code result = projectTwo.getProjectCode();
+
+        //Assert
+        assertNotEquals(projectCodeOne, result);
     }
 }
