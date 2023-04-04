@@ -342,8 +342,10 @@ class ProductBacklogTest {
 
     /**
      * METHOD getProductBacklog().
-     * Scenario 1: Tests the method getProductBacklog()ProductBacklog class,
-     * verifying that it returns a copy of the current product backlog object with a new ID.
+     * Scenario 1: verifies that the copied product backlog has a new ID and contains the same user stories as
+     * the original product backlog.
+     * @return a new product backlog object with a new ID and the same list of user stories as
+     * the current product backlog.
      */
     @Test
     void ensureProductBacklogReturnsCopyWithNewId() {
@@ -366,8 +368,9 @@ class ProductBacklogTest {
     }
 
     /**
-     * Scenario 2: Tests the method getProductBacklog()ProductBacklog class,
-     * verifying that it returns a copy of the current product backlog object with a new ID.
+     * Scenario 2: This test scenario verifies the behavior of the getProductBacklog() method in the ProductBacklog class.
+     * It tests that the method returns a new instance of the ProductBacklog class, with a new ID and containing
+     * the same list of user stories as the original product backlog.
      */
     @Test
     void ensureProductBacklogReturnsCopyWithNewIdWithSameUserStories() {
@@ -390,8 +393,11 @@ class ProductBacklogTest {
     }
 
 
-    /** Scenario 2: verifying that it returns a new product backlog object with a different
-     * ID than the original.
+    /** Scenario 3: This test verifying that it returns a new product backlog object with a different ID than
+     * the original.
+     * This method creates a new instance of the ProductBacklog class with a new ID and adds
+     * all the user stories from the current product backlog in the same order. The new product backlog
+     * is returned with a new ID, while the original remains unchanged.
      */
     @Test
     void ensureNewProductBacklogHasDifferentID() {
@@ -406,7 +412,7 @@ class ProductBacklogTest {
     }
 
     /**
-     * Scenario 3: This test ensure that a new product backlog object is returned with
+     * Scenario 4: This test ensure that a new product backlog object is returned with
      * the same list of user stories and in the same order.
      */
     @Test
@@ -426,8 +432,11 @@ class ProductBacklogTest {
     }
 
     /**
-     * Scenario 4: Tests that a new product backlog object has the same list of user stories as the
+     * Scenario 5: This test verifies that a new product backlog object has the same list of user stories as the
      * current product backlog object.
+     * This method creates a new instance of the ProductBacklog class and adds all the user stories from the current
+     * product backlog in the same order. The user stories of the new product backlog are compared to the user stories
+     * of the current product backlog to ensure that they are the same.
      */
     @Test
     void ensureNewProductBacklogHasSameUserStories() {
