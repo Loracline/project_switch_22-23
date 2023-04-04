@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -341,13 +344,13 @@ class ProjectTest {
         when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
         projectOne.setProductBacklog(iFactoryProductBacklogDouble);
 
-        int priority=0;
+        int priority = 0;
         UsId usId = mock(UsId.class);
 
         when(productBacklogDouble.addUserStory(priority, usId)).thenReturn(true);
 
         //Act
-        boolean result = projectOne.addUserStory(priority,usId);
+        boolean result = projectOne.addUserStory(priority, usId);
 
         //Assert
         assertTrue(result);
@@ -370,16 +373,138 @@ class ProjectTest {
         when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
         projectOne.setProductBacklog(iFactoryProductBacklogDouble);
 
-        int priority=0;
+        int priority = 0;
         UsId usId = mock(UsId.class);
 
         when(productBacklogDouble.addUserStory(priority, usId)).thenReturn(false);
 
         //Act
-        boolean result = projectOne.addUserStory(priority,usId);
+        boolean result = projectOne.addUserStory(priority, usId);
 
         //Assert
         assertFalse(result);
     }
 
+    /**
+     * Method: getProductBacklog()
+     * Scenario 1: This test verifies that the getProductBacklog() method in the Project class returns a list
+     * of User Stories in the Product Backlog.
+     * It sets up a mock object for the IFactoryProductBacklog interface and a mock object for the
+     * ProductBacklog class to simulate a Product Backlog with two User Stories. It then sets up the expected
+     * User Story list with the same two User Stories.
+     * The method under test is then called to get the list of User Stories in the Product Backlog. The actual
+     * list is compared to the expected list to ensure that they are equal. If they are, the test passes.
+     */
+    @Test
+    void ensureGetProductBacklogReturnsListOfUserStories() {
+        // Arrange
+        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+
+        List<UsId> expectedUserStories = new ArrayList<>();
+        expectedUserStories.add(new UsId("P001", "P1US001"));
+        expectedUserStories.add(new UsId("P001", "P1US002"));
+
+        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
+        when(productBacklogDouble.getUserStories()).thenReturn(expectedUserStories);
+
+        Code code = mock(Code.class);
+        Project project = new Project(code);
+        project.setProductBacklog(iFactoryProductBacklogDouble);
+
+        // Act
+        List<UsId> result = project.getProductBacklog();
+
+        // Assert
+        assertEquals(expectedUserStories, result);
+    }
+
+    /**
+     * Scenario 2: This test verifies that the getProductBacklog() method in the Project class returns an empty list
+     * when there are no User Stories in the Product Backlog.
+     * It sets up a mock object for the IFactoryProductBacklog interface and a mock object for the
+     * ProductBacklog class to simulate an empty Product Backlog. It then sets up an empty expected User Story list.
+     * The method under test is then called to get the list of User Stories in the Product Backlog. The actual
+     * list is compared to the expected empty list to ensure that they are equal. If they are, the test passes.
+     */
+    @Test
+    void ensureGetProductBacklogReturnsEmptyListWhenProductBacklogIsEmpty() {
+        // Arrange
+        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+
+        List<UsId> expectedUserStories = new ArrayList<>();
+
+        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
+        when(productBacklogDouble.getUserStories()).thenReturn(new ArrayList<UsId>());
+
+        Code code = mock(Code.class);
+        Project project = new Project(code);
+        project.setProductBacklog(iFactoryProductBacklogDouble);
+
+        // Act
+        List<UsId> result = project.getProductBacklog();
+
+        // Assert
+        assertEquals(expectedUserStories, result);
+    }
+
+    /**
+     * Scenario 3: This test verifies that the getProductBacklog() method in the Project class returns a list
+     * of User Stories in the order they were added to the Product Backlog.
+     * It sets up a mock object for the IFactoryProductBacklog interface and a mock object for the
+     * ProductBacklog class to simulate a Product Backlog with three User Stories added in a specific order.
+     * It then sets up the expected User Story list with the same three User Stories in the order they were added.
+     * The method under test is then called to get the list of User Stories in the Product Backlog. The actual
+     * list is compared to the expected list to ensure that they are equal and in the same order. If they are,
+     * the test passes.
+     */
+    @Test
+    void ensureGetProductBacklogReturnsListOfUserStoriesInCorrectOrder() {
+        // Arrange
+        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
+        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+
+        List<UsId> expectedUserStories = new ArrayList<>();
+        expectedUserStories.add(new UsId("P001", "P1US001"));
+        expectedUserStories.add(new UsId("P001", "P1US003"));
+        expectedUserStories.add(new UsId("P001", "P1US002"));
+
+        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
+        when(productBacklogDouble.getUserStories()).thenReturn(new ArrayList<UsId>() {{
+            add(new UsId("P001", "P1US001"));
+            add(new UsId("P001", "P1US003"));
+            add(new UsId("P001", "P1US002"));
+        }});
+
+        Code code = mock(Code.class);
+        Project project = new Project(code);
+        project.setProductBacklog(iFactoryProductBacklogDouble);
+
+        // Act
+        List<UsId> result = project.getProductBacklog();
+
+        // Assert
+        assertEquals(expectedUserStories, result);
+    }
+
+    /**
+     * Scenario 4: Test the behavior of the getProductBacklog() method in the Project class when the Product Backlog is null.
+     * It sets up a mock object for the IFactoryProductBacklog interface to simulate a null Product Backlog.
+     * The method under test is then called to get the list of User Stories in the Product Backlog.
+     * An exception is expected to be thrown since there is no Product Backlog to get User Stories from.
+     */
+    @Test
+    void ensureGetProductBacklogThrowsExceptionWhenProductBacklogIsNull() {
+        // Arrange
+        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
+        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(null);
+
+        Code code = mock(Code.class);
+        Project project = new Project(code);
+        project.setProductBacklog(iFactoryProductBacklogDouble);
+
+        // Act and Assert
+        assertThrows(NullPointerException.class, () -> project.getProductBacklog());
+    }
 }

@@ -168,6 +168,15 @@ public class Project implements Entity<Project> {
     public boolean addUserStory(int priority, UsId usId) {
         return productBacklog.addUserStory(priority, usId);
     }
+
+    /**
+     * This method returns the list of user stories in the product backlog.
+     @return a list of {@link UsId} representing the user stories in the product backlog.
+     */
+    public List<UsId> getProductBacklog() {
+        return productBacklog.getUserStories();
+    }
 }
+
 
 

@@ -114,27 +114,6 @@ public class ProductBacklog implements Entity<ProductBacklog> {
         }
         return result;
     }
-
-    /**
-     * Returns a copy of the current product backlog object with a new ID and the same
-     * list of user stories.
-     * Each user story is added to the new product backlog copy using the same order as
-     * the current product backlog.
-     *
-     * @return a new product backlog object with a new ID and the same list of user stories as
-     * the current product backlog.
-     */
-    public ProductBacklog getProductBacklog() {
-        int counter = 0;
-        PbId newPbId = new PbId("Pb-" + counter);
-        ProductBacklog productBacklogCopy = new ProductBacklog(newPbId);
-
-        for (int i = 0; i < this.userStories.size(); i++) {
-            UsId userStory = this.userStories.get(i);
-            productBacklogCopy.addUserStory(i, userStory);
-        }
-        return productBacklogCopy;
-    }
 }
 
 
