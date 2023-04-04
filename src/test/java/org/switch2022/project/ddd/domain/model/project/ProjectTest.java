@@ -153,6 +153,35 @@ class ProjectTest {
         //Assert
         assertNotEquals(expected, result);
     }
+    /**
+     * Method: hasProjectCode()
+     * Scenario 01: make sure they have the same code
+     */
+    @Test
+    public void makeSureTheyHaveTheSameCode(){
+        //Arrange
+        Code codeOne= projectCodeOne;
+        //Act
+        boolean result = projectOne.hasProjectCode(codeOne);
+        //Assert
+        assertTrue(result);
+
+    }
+    /**
+     * Method: hasProjectCode()
+     * Scenario 02: make sure they have different codes
+     */
+    @Test
+    public void makeSureTheyHaveDifferentCodes(){
+        //Arrange
+        Code codeOne= projectCodeOne;
+        //Act
+        boolean result = projectTwo.hasProjectCode(codeOne);
+        //Assert
+        assertFalse(result);
+
+    }
+
 
     //ISOLATION TESTS
 
@@ -259,7 +288,6 @@ class ProjectTest {
     public void ensureProjectCodeIsEqual_IsolationTest() {
         //Arrange
         Code projectCodeOne = mock(Code.class);
-        Code projectCodeTwo = mock(Code.class);
 
         Project projectOne = new Project(projectCodeOne);
 
