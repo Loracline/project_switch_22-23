@@ -47,7 +47,8 @@ public class ProjectService {
 
 
     public String createProject(ProjectCreationDto projectCreationDto, CustomerId customerId,
-                                BusinessSectorId businessSectorId, ProjectTypologyId projectTypologyId) throws Exception {
+                                BusinessSectorId businessSectorId, ProjectTypologyId projectTypologyId)
+            throws Exception {
         String projectCode = "P" + createCode();
         Code code = new Code(projectCode);
         Project project = factoryProject.createProject(code, projectCreationDto, businessSectorId, customerId,
