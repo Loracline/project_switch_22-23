@@ -8,7 +8,6 @@ import org.switch2022.project.factories.FactoryPeriod;
 import org.switch2022.project.factories.FactorySprintBacklog;
 import org.switch2022.project.factories.IFactoryPeriod;
 import org.switch2022.project.factories.IFactorySprintBacklog;
-import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
@@ -17,6 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -240,11 +240,12 @@ class SprintTest {
     @Test
     void ensureEffortIsSetForUserStory() {
         //Arrange
-        LocalDate date = LocalDate.of(2021, 9, 13);
+        LocalDate startDate = LocalDate.of(2021, 9, 13);
+        LocalDate date = LocalDate.of(2021, 9, 1);
 
         IFactoryPeriod factoryPeriod = new FactoryPeriod();
         IFactorySprintBacklog factorySprintBacklog = new FactorySprintBacklog();
-        Sprint sprint = Sprint.createSprint(date, 2, 55, factoryPeriod,
+        Sprint sprint = Sprint.createSprint(startDate, 2, 55, factoryPeriod,
                 factorySprintBacklog);
 
         UserStory userStory = (new UserStory.UserStoryBuilder("US001").build());
@@ -254,7 +255,7 @@ class SprintTest {
                 "I want to create a profile");
 
         //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3);
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3, date);
 
         //Assert
         assertTrue(result);
@@ -267,10 +268,11 @@ class SprintTest {
     @Test
     void ensureEffortIsNotSetForUserStory() {
         //Arrange
-        LocalDate date = LocalDate.of(2021, 9, 13);
+        LocalDate startDate = LocalDate.of(2021, 9, 13);
+        LocalDate date = LocalDate.of(2021, 9, 1);
         IFactoryPeriod factoryPeriod = new FactoryPeriod();
         IFactorySprintBacklog factorySprintBacklog = new FactorySprintBacklog();
-        Sprint sprint = Sprint.createSprint(date, 2, 55, factoryPeriod,
+        Sprint sprint = Sprint.createSprint(startDate, 2, 55, factoryPeriod,
                 factorySprintBacklog);
 
 
@@ -281,7 +283,7 @@ class SprintTest {
                 "I want to create a profile");
 
         //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3);
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3, date);
 
         //Assert
         assertFalse(result);
@@ -462,44 +464,78 @@ class SprintTest {
     @Test
     void ensureEffortIsSetForUserStoryWithIsolation() {
         //Arrange
-        UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
-                "I want to create a profile");
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
+        LocalDate date = mock(LocalDate.class);
+        IFactoryPeriod factoryPeriodDouble = mock(IFactoryPeriod.class);
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(any(), eq(3))).thenReturn(periodDouble);
 
-        IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
-
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
         when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
 
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
-        when(sprintBacklogDouble.estimateEffortUserStory(userStoryDto,3)).thenReturn(true);
+        Sprint sprint = Sprint.createSprint(date, 3, 35,
+                factoryPeriodDouble, factorySprintBacklogDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(any())).thenReturn(false);
+        when(sprintBacklogDouble.estimateEffortUserStory(userStoryDto, 3)).thenReturn(true);
 
         //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3);
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3, date);
 
         //Assert
         assertTrue(result);
     }
 
     /**
-     * Scenario 2: does not set the effort of a userStory because userStoryNumber does not exist.
+     * Scenario 2: does not set the effort of a userStory because can't set the effort
      */
     @Test
     void ensureEffortIsNotSetForUserStoryWithIsolation() {
         //Arrange
-        UserStoryDto userStoryDto = new UserStoryDto("US002", "Manager",
-                "I want to create a profile");
-        IFactoryPeriod IFactoryPeriodDouble = mock(IFactoryPeriod.class);
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
+        LocalDate date = mock(LocalDate.class);
+        IFactoryPeriod factoryPeriodDouble = mock(IFactoryPeriod.class);
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(any(), eq(3))).thenReturn(periodDouble);
         SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
         IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
         when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
-        Sprint sprint = Sprint.createSprint(LocalDate.of(2023, 3, 9),
-                3, 35, IFactoryPeriodDouble, factorySprintBacklogDouble);
-        when(sprintBacklogDouble.hasUserStory(userStoryDto.userStoryNumber)).thenReturn(true);
+        Sprint sprint = Sprint.createSprint(date, 3, 35,
+                factoryPeriodDouble, factorySprintBacklogDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(any())).thenReturn(false);
+        when(sprintBacklogDouble.estimateEffortUserStory(userStoryDto, 3)).thenReturn(false);
 
         //Act
-        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3);
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3, date);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * scenario3: does not set the effort of a userStory because date is the same as startDate
+     */
+
+    @Test
+    void ensureEffortIsNotSetForUserStoryWithIsolation_DateEqualsStartDate() {
+        //Arrange
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
+        LocalDate date = mock(LocalDate.class);
+        IFactoryPeriod factoryPeriodDouble = mock(IFactoryPeriod.class);
+        Period periodDouble = mock(Period.class);
+        when(factoryPeriodDouble.createPeriod(any(), eq(3))).thenReturn(periodDouble);
+
+        IFactorySprintBacklog factorySprintBacklogDouble = mock(FactorySprintBacklog.class);
+        SprintBacklog sprintBacklogDouble = mock(SprintBacklog.class);
+        when(factorySprintBacklogDouble.createSprintBacklog()).thenReturn(sprintBacklogDouble);
+
+        Sprint sprint = Sprint.createSprint(date, 3, 35,
+                factoryPeriodDouble, factorySprintBacklogDouble);
+        when(periodDouble.isDateEqualOrGreaterThanStartDate(any())).thenReturn(true);
+        when(sprintBacklogDouble.estimateEffortUserStory(userStoryDto, 3)).thenReturn(true);
+
+        //Act
+        boolean result = sprint.estimateEffortUserStory(userStoryDto, 3, date);
 
         //Assert
         assertFalse(result);
@@ -537,7 +573,7 @@ class SprintTest {
         when(sprintBacklogDouble.getUserStoriesCopy(factoryUserStoryDouble)).thenReturn(expectedList);
 
         // Creation of Sprint to test.
-        Sprint toTest = Sprint.createSprint(LocalDate.of(2023,1,1), 3, 1,
+        Sprint toTest = Sprint.createSprint(LocalDate.of(2023, 1, 1), 3, 1,
                 factoryPeriodDouble, factorySprintBacklogDouble);
 
         // Creation of expected Sprint Backlog populated with the same double of User
@@ -563,10 +599,10 @@ class SprintTest {
         IFactoryPeriod iFactoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog iFactorySprintBacklog = mock(FactorySprintBacklog.class);
         Period periodDouble = mock(Period.class);
-        when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
-        Sprint sprint = Sprint.createSprint(localDate,2,1,iFactoryPeriod,iFactorySprintBacklog);
-        when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(true);
-        Sprint sprintOne = Sprint.createSprint(localDate,3,2,iFactoryPeriod,iFactorySprintBacklog);
+        when(iFactoryPeriod.createPeriod(localDate, 2)).thenReturn(periodDouble);
+        Sprint sprint = Sprint.createSprint(localDate, 2, 1, iFactoryPeriod, iFactorySprintBacklog);
+        when(periodDouble.isPeriodNotOverlapping(any())).thenReturn(true);
+        Sprint sprintOne = Sprint.createSprint(localDate, 3, 2, iFactoryPeriod, iFactorySprintBacklog);
         //Act
         boolean result = sprint.isPeriodNotOverlapping(sprintOne);
 
@@ -584,10 +620,10 @@ class SprintTest {
         IFactoryPeriod iFactoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog iFactorySprintBacklog = mock(FactorySprintBacklog.class);
         Period periodDouble = mock(Period.class);
-        when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
-        Sprint sprint = Sprint.createSprint(localDate,2,1,iFactoryPeriod,iFactorySprintBacklog);
-        when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(false);
-        Sprint sprintOne = Sprint.createSprint(localDate,3,3,iFactoryPeriod,iFactorySprintBacklog);
+        when(iFactoryPeriod.createPeriod(localDate, 2)).thenReturn(periodDouble);
+        Sprint sprint = Sprint.createSprint(localDate, 2, 1, iFactoryPeriod, iFactorySprintBacklog);
+        when(periodDouble.isPeriodNotOverlapping(any())).thenReturn(false);
+        Sprint sprintOne = Sprint.createSprint(localDate, 3, 3, iFactoryPeriod, iFactorySprintBacklog);
         //Act
         boolean result = sprint.isPeriodNotOverlapping(sprintOne);
 
@@ -602,14 +638,14 @@ class SprintTest {
         IFactoryPeriod iFactoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog iFactorySprintBacklog = mock(FactorySprintBacklog.class);
         Period periodDouble = mock(Period.class);
-        when (iFactoryPeriod.createPeriod(localDate,2)).thenReturn(periodDouble);
-        Sprint sprint = Sprint.createSprint(localDate,2,1,iFactoryPeriod,iFactorySprintBacklog);
-        when (periodDouble.isPeriodNotOverlapping(any())).thenReturn(false);
+        when(iFactoryPeriod.createPeriod(localDate, 2)).thenReturn(periodDouble);
+        Sprint sprint = Sprint.createSprint(localDate, 2, 1, iFactoryPeriod, iFactorySprintBacklog);
+        when(periodDouble.isPeriodNotOverlapping(any())).thenReturn(false);
         int expected = 1;
         //Act
         int result = sprint.getSprintNumber();
 
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 }
