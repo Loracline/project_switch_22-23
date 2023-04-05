@@ -4,7 +4,6 @@ import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryPeriod;
 import org.switch2022.project.factories.IFactorySprintBacklog;
 import org.switch2022.project.factories.IFactoryUserStory;
-import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Period;
 
 import java.time.LocalDate;
@@ -29,7 +28,7 @@ public final class Sprint {
      *
      * @param sprintNumber the number of the sprint.
      */
-    private Sprint( int sprintNumber) {
+    private Sprint(int sprintNumber) {
         this.sprintNumber = String.format("S%03d", sprintNumber);
     }
 
@@ -117,10 +116,15 @@ public final class Sprint {
      *
      * @param userStoryDto to estimate the effort.
      * @param effort       of the userStory.
+     * @param date to check of the date is before the start date of the sprint
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort) {
-        return (sprintBacklog.estimateEffortUserStory(userStoryDto, effort));
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort, LocalDate date) {
+        boolean result = false;
+        if (isDateBeforeStartDate(date)) {
+            result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
+        }
+        return result;
     }
 
     /**
@@ -175,6 +179,7 @@ public final class Sprint {
 
     /**
      * Determines if this period does not overlap with the given period.
+     *
      * @param sprint the period to compare with.
      * @return true if the periods do not overlap, false otherwise.
      */
@@ -186,10 +191,22 @@ public final class Sprint {
      * Returns the sprint number of the current object.
      * This method splits the sprint number string using "S" as a delimiter and returns the second element of the resulting array
      * as an integer value.
+     *
      * @return the sprint number as an integer value.
      */
     public int getSprintNumber() {
-       String[] array = this.sprintNumber.split("S",-2);
-       return parseInt(array[1]);
+        String[] array = this.sprintNumber.split("S", -2);
+        return parseInt(array[1]);
     }
+
+    /**
+     * This method checks if date is equal or greater than start date
+     *
+     * @param date to compare
+     * @return true if date is equal or greater than start date or false otherwise.
+     */
+    private boolean isDateBeforeStartDate(LocalDate date) {
+        return !this.period.isDateEqualOrGreaterThanStartDate(date);
+    }
+
 }

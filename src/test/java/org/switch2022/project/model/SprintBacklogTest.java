@@ -3,7 +3,6 @@ package org.switch2022.project.model;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.FactoryUserStory;
-import org.switch2022.project.utils.Effort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -308,6 +307,7 @@ class SprintBacklogTest {
         UserStoryDto userStoryDto = mock(UserStoryDto.class);
         UserStory userStoryDouble = mock(UserStory.class);
         when(userStoryDouble.hasUserStoryNumber(userStoryDto.userStoryNumber)).thenReturn(true);
+        when(userStoryDouble.setEffort(2)).thenReturn(true);
 
         SprintBacklog sprintBacklog = new SprintBacklog();
         sprintBacklog.addUserStory(userStoryDouble);
@@ -359,7 +359,26 @@ class SprintBacklogTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Scenario 4: the effort of a UserStory is not set because the effort doesn't match the criteria
+     */
+    @Test
+    void ensureEffortIsNotSetForUserStoryWithIsolation_EffortDoesntMatch() {
+        //Arrange
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
+        UserStory userStoryDouble = mock(UserStory.class);
+        when(userStoryDouble.hasUserStoryNumber(userStoryDto.userStoryNumber)).thenReturn(true);
+        when(userStoryDouble.setEffort(4)).thenReturn(false);
 
+        SprintBacklog sprintBacklog = new SprintBacklog();
+        sprintBacklog.addUserStory(userStoryDouble);
+
+        //Act
+        boolean result = sprintBacklog.estimateEffortUserStory(userStoryDto, 4);
+
+        //Assert
+        assertFalse(result);
+    }
     /**
      * Method getUserStoriesCopy().
      * makes a deep copy of the User Stories that are in the Sprint Backlog, and the

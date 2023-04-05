@@ -7,7 +7,6 @@ import org.switch2022.project.dto.SprintCreationDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Period;
 
 import java.util.Optional;
@@ -541,19 +540,19 @@ public class ProjectTest {
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprint = mock(FactorySprint.class);
-
+        LocalDate date = mock(LocalDate.class);
         Project project = new Project("AA001", "Aptoide", customerDouble, projectTypologyDouble,
                 businessSectorDouble, factoryProductBacklog, factoryUserStory, factoryPeriod, factorySprintBacklog,
                 factorySprint);
         UserStoryDto userStoryDto = mock(UserStoryDto.class);
 
         project.addSprint(sprintDouble);
-        when(sprintDouble.isDateWithinPeriod(any())).thenReturn(true);
-        when(sprintDouble.estimateEffortUserStory(userStoryDto, 2)).thenReturn(true);
+        when(sprintDouble.hasUserStory(any())).thenReturn(true);
+        when(sprintDouble.estimateEffortUserStory(userStoryDto, 2, date)).thenReturn(true);
 
         // Act
         boolean result = project.estimateEffortUserStory(userStoryDto, 2,
-                LocalDate.of(2023, 3, 8));
+                date);
 
         // Assert
         assertTrue(result);
@@ -576,19 +575,53 @@ public class ProjectTest {
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
         IFactorySprint factorySprint = mock(FactorySprint.class);
-
-        Project project = new Project("AA001", "Aptoide", customerDouble,
-                projectTypologyDouble, businessSectorDouble, factoryProductBacklog,
-                factoryUserStory, factoryPeriod, factorySprintBacklog, factorySprint);
+        LocalDate date = mock(LocalDate.class);
+        Project project = new Project("AA001", "Aptoide", customerDouble, projectTypologyDouble,
+                businessSectorDouble, factoryProductBacklog, factoryUserStory, factoryPeriod, factorySprintBacklog,
+                factorySprint);
         UserStoryDto userStoryDto = mock(UserStoryDto.class);
 
         project.addSprint(sprintDouble);
-        when(sprintDouble.isDateWithinPeriod(any())).thenReturn(false);
-        when(sprintDouble.estimateEffortUserStory(userStoryDto, 2)).thenReturn(false);
+        when(sprintDouble.hasUserStory(any())).thenReturn(true);
+        when(sprintDouble.estimateEffortUserStory(userStoryDto, 2, date)).thenReturn(false);
 
         // Act
         boolean result = project.estimateEffortUserStory(userStoryDto, 2,
-                LocalDate.of(2023, 3, 8));
+                date);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: Verifies that the estimateEffortUserStory() method of the Project class
+     * can't correctly estimate the effort for a user story due to UserStory not in Sprint
+     * Expected result: false, indicating that the estimation was unsuccessful.
+     */
+    @Test
+    void ensureEstimateEffortUserStoryUnsuccessfully_NoUserStory() {
+        // Arrange
+        IFactoryProductBacklog factoryProductBacklog = mock(FactoryProductBacklog.class);
+        IFactoryUserStory factoryUserStory = mock(FactoryUserStory.class);
+        Customer customerDouble = mock(Customer.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        ProjectTypology projectTypologyDouble = mock(ProjectTypology.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
+        IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
+        IFactorySprint factorySprint = mock(FactorySprint.class);
+        LocalDate date = mock(LocalDate.class);
+        Project project = new Project("AA001", "Aptoide", customerDouble, projectTypologyDouble,
+                businessSectorDouble, factoryProductBacklog, factoryUserStory, factoryPeriod, factorySprintBacklog,
+                factorySprint);
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
+
+        project.addSprint(sprintDouble);
+        when(sprintDouble.hasUserStory(any())).thenReturn(false);
+
+        // Act
+        boolean result = project.estimateEffortUserStory(userStoryDto, 2,
+                date);
 
         // Assert
         assertFalse(result);
@@ -683,7 +716,7 @@ public class ProjectTest {
         IFactoryProductBacklog factoryProductBacklogDouble =
                 mock(FactoryProductBacklog.class);
         IFactoryUserStory factoryUserStoryDouble = mock(FactoryUserStory.class);
-        UserStoryCreationDto userStoryCreationDtoDouble = mock (UserStoryCreationDto.class);
+        UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
         ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
         IFactoryPeriod factoryPeriod = mock(FactoryPeriod.class);
         IFactorySprintBacklog factorySprintBacklog = mock(FactorySprintBacklog.class);
@@ -812,6 +845,7 @@ public class ProjectTest {
         //Assert
         assertFalse(result);
     }
+
     /**
      * Scenario 6: Creates a userStory unsuccessfully with an empty list of sprints
      * return false
@@ -1192,11 +1226,9 @@ public class ProjectTest {
         SprintCreationDto sprintCreationDtoDouble = mock(SprintCreationDto.class);
         Sprint sprintDouble = mock(Sprint.class);
 
-        when(iFactorySprintDouble.createSprint(startDate,2, 1, iFactoryPeriodDouble,
+        when(iFactorySprintDouble.createSprint(startDate, 2, 1, iFactoryPeriodDouble,
                 iFactorySprintBacklogDouble)).thenReturn(sprintDouble);
         when(sprintDouble.getSprintNumber()).thenReturn(1);
-
-
 
 
         //ACT

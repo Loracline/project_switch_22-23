@@ -2,7 +2,6 @@ package org.switch2022.project.model;
 
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.IFactoryUserStory;
-import org.switch2022.project.utils.Effort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,14 +117,15 @@ public class SprintBacklog {
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort) {
         int i = 0;
         boolean isEffortSet = false;
-        while (i < userStories.size()) {
+        while (i < userStories.size() && !isEffortSet) {
             if (userStories.get(i).hasUserStoryNumber(userStoryDto.userStoryNumber)) {
                 try {
-                    userStories.get(i).setEffort(effort);
+                    if (userStories.get(i).setEffort(effort)) {
+                        isEffortSet = true;
+                    }
                 } catch (RuntimeException exception) {
-                    return false;
+                    i = userStories.size();
                 }
-                isEffortSet = true;
             }
             i++;
         }

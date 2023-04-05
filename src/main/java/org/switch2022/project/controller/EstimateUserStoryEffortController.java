@@ -3,7 +3,6 @@ package org.switch2022.project.controller;
 import org.switch2022.project.container.Company;
 import org.switch2022.project.dto.ProjectDto;
 import org.switch2022.project.dto.UserStoryDto;
-import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
 
@@ -40,8 +39,7 @@ public class EstimateUserStoryEffortController {
      */
 
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto,
-                                           int effort, ProjectDto projectDto) {
-        LocalDate date = LocalDate.now();
+                                           int effort, ProjectDto projectDto, LocalDate date) {
         return userStoryDto != null && projectDto != null &&
                 company.estimateEffortUserStory(userStoryDto, effort, projectDto, date);
     }
