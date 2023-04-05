@@ -4,6 +4,7 @@ package org.switch2022.project.ddd.domain.interfaces;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.dto.UserStoryDto;
 
 import java.util.List;
 
@@ -26,16 +27,16 @@ public interface IUsService {
     /**
      * This method deletes the userStory or throws an exception if the userStory does not exist.
      *
-     * @param userStory to be deleted from the repository.
+     * @param usId of userStory to be deleted from the repository.
      * @return userStory deletion.
      */
-    void deleteUs(UserStory userStory) throws Exception;
+    void deleteUs(UsId usId) throws Exception;
 
     /**
-     * Requests a list of userStories with the status planned or throws an exception if empty.
+     * Requests a list of userStories with the status planned.
      *
      * @param usId ID of the userStory.
      * @return a list of all userStories with the status planned.
      */
-    List<UserStory> requestAllPlannedUs(List usId) throws Exception;
+    List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) throws Exception;
 }

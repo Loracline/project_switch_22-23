@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.interfaces;
 
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.List;
 
@@ -16,21 +17,24 @@ public interface IUsRepository {
      * @param userStory to be added to the repository.
      * @return the addition of the userStory to the repository or an exception otherwise.
      */
+
     public void add(UserStory userStory) throws Exception;
 
     /**
      * This method deletes a userStory from the repository of userStories if it exists.
      *
-     * @param userStory to be deleted from the repository.
+     * @param usId of the userStory to be deleted from the repository.
      * @return the elimination of the userStory of the repository or an exception otherwise.
      */
-    public void delete(UserStory userStory) throws Exception;
+
+    public void delete(UsId usId) throws Exception;
 
     /**
-     * Lists all userStories with the status planned.
+     * Lists all userStories with a matching ID.
      *
      * @param usId will filter the userStories present in the repository by ID.
      * @return all planned userStories with a corresponding ID.
      */
-    List<UserStory> getAllPlannedUs(List usId) throws Exception;
+
+    List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId) throws Exception;
 }

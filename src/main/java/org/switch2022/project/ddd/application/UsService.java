@@ -1,15 +1,17 @@
 package org.switch2022.project.ddd.application;
 
-import org.switch2022.project.ddd.domain.infrastructure.UsRepository;
 import org.switch2022.project.ddd.domain.interfaces.IUsRepository;
 import org.switch2022.project.ddd.domain.interfaces.IUsService;
-import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Class UsService allows to create a new userStory.
@@ -19,17 +21,38 @@ public class UsService implements IUsService {
 
     private final IUsRepository usRepository;
     private final IFactoryUserStory factoryUserStory;
+    private final UserStoryMapper userStoryMapper;
 
     /**
      * Constructor.
      *
      * @param usRepository     where the userStory will be saved.
      * @param factoryUserStory allows to create a userStory.
+     * @param userStoryMapper  converts userStory to userStoryDto.
      */
 
-    public UsService(UsRepository usRepository, FactoryUserStory factoryUserStory) {
+    protected UsService(IUsRepository usRepository, IFactoryUserStory factoryUserStory,
+                        UserStoryMapper userStoryMapper) {
         this.usRepository = usRepository;
         this.factoryUserStory = factoryUserStory;
+        this.userStoryMapper = userStoryMapper;
+    }
+
+    /**
+     * This method checks if an instance of UsService is equal to another object.
+     *
+     * @param o object to compare with.
+     * @return <code>true</code> if the two have the same attribute value, and <code>false</code> otherwise.
+     */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UsService)) return false;
+        UsService usService = (UsService) o;
+        return Objects.equals(usRepository, usService.usRepository) &&
+                Objects.equals(factoryUserStory, usService.factoryUserStory)
+                && Objects.equals(userStoryMapper, usService.userStoryMapper);
     }
 
     /**
@@ -51,24 +74,31 @@ public class UsService implements IUsService {
     /**
      * This method deletes the userStory or throws an exception if the userStory does not exist.
      *
-     * @param userStory to be deleted from the repository.
+     * @param usId of userStory to be deleted from the repository.
      * @return userStory deletion.
      */
 
     @Override
-    public void deleteUs(UserStory userStory) throws Exception {
-        usRepository.delete(userStory);
+    public void deleteUs(UsId usId) throws Exception {
+        usRepository.delete(usId);
     }
 
     /**
-     * Requests a list of userStories with the status planned or throws an exception if empty.
+     * Requests a list of userStories with the status planned.
      *
      * @param usId ID of the userStory.
-     * @return a list of all userStories with the status planned.
+     * @return a list of all userStoriesDto with the status planned.
      */
 
     @Override
-    public List<UserStory> requestAllPlannedUs(List usId) throws Exception {
-        return usRepository.getAllPlannedUs(usId);
+    public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) throws Exception {
+        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
+        List<UserStoryDto> userStoriesDto = new ArrayList<>();
+        for (UserStory userStory : userStories) {
+            if (userStory.getStatus().toString().equals("PLANNED")) {
+                userStoriesDto.add(userStoryMapper.userStoryToDto(userStory));
+            }
+        }
+        return userStoriesDto;
     }
 }
