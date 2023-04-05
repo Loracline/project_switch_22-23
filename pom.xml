@@ -132,12 +132,14 @@
                         <param>org.switch2022.project.factories.*</param>
                         <param>org.switch2022.project.model.*</param>
                         <param>org.switch2022.project.utils.*</param>
+                        <pram>org.switch2022.project.ddd.*</pram>
                     </targetClasses>
                     <targetTests>
                         <param>org.switch2022.project.container.*</param>
                         <param>org.switch2022.project.controller.*</param>
                         <param>org.switch2022.project.dto.*</param>
                         <param>org.switch2022.project.model.*</param>
+                        <pram>org.switch2022.project.ddd.*</pram>
                     </targetTests>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>
