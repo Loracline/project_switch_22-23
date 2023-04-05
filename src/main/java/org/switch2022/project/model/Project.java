@@ -4,7 +4,6 @@ import org.switch2022.project.dto.SprintCreationDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
-import org.switch2022.project.utils.Effort;
 
 
 import java.time.LocalDate;
@@ -236,11 +235,10 @@ public class Project {
     public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort, LocalDate date) {
         boolean result = false;
         int i = 0;
-        while (i < sprints.size()) {
+        while (i < sprints.size() && !result) {
             Sprint sprint = sprints.get(i);
-            if (sprint.isDateWithinPeriod(date)) {
-                result = sprint.estimateEffortUserStory(userStoryDto, effort);
-                break;
+            if (sprint.hasUserStory(userStoryDto.userStoryNumber)) {
+                result = sprint.estimateEffortUserStory(userStoryDto, effort,date);
             }
             i++;
         }
