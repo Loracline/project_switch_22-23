@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.dto.*;
 import org.switch2022.project.factories.*;
-import org.switch2022.project.utils.Effort;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -41,9 +41,16 @@ class EstimateUserStoryEffortControllerTest {
     IFactoryPeriod factoryPeriod;
     IFactorySprintBacklog factorySprintBacklog;
     IFactorySprint factorySprint;
+    LocalDate date;
+    LocalDate endDate;
 
     @BeforeEach
     void setUp() {
+        //Date
+        date = mock(LocalDate.class);
+        endDate = mock(LocalDate.class);
+        when(date.plusWeeks(2)).thenReturn(endDate);
+        when(endDate.isBefore(any())).thenReturn(true);
         //Dto
         userStoryDtoOne = new UserStoryDto("US001",
                 "I want to create a profile", "planned");
@@ -62,7 +69,7 @@ class EstimateUserStoryEffortControllerTest {
                 "software development " +
                         "management", "Peter", "228674498",
                 "Fixed cost", "Fishing");
-        sprintCreationDto = new SprintCreationDto(LocalDate.now(), 2,
+        sprintCreationDto = new SprintCreationDto(date, 2,
                 1);
         userStoryCreationDto = new UserStoryCreationDto("US001",
                 "I want to create a " +
@@ -86,7 +93,6 @@ class EstimateUserStoryEffortControllerTest {
                 factoryPeriod,
                 factorySprintBacklog, factorySprint);
         projectContainer.createSprint(sprintCreationDto, projectDtoOne);
-        /*        projectContainer.createUserStory(projectDtoOne, userStoryCreationDto);*/
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, null, customerContainer);
         estimateUserStoryEffortController = new EstimateUserStoryEffortController(company);
@@ -118,11 +124,14 @@ class EstimateUserStoryEffortControllerTest {
 
     @Test
     void ensureUserStoryEffortIsEstimatedSuccessfully() {
+        LocalDate todayDate = mock(LocalDate.class);
+        when(todayDate.isAfter(date)).thenReturn(false);
+        when(todayDate.isEqual(date)).thenReturn(false);
         projectContainer.createUserStory(projectDtoOne, userStoryCreationDto);
         projectContainer.addUserStoryToSprintBacklog(projectDtoOne.code,
                 "US001", "s001");
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
-                2, projectDtoOne);
+                2, projectDtoOne,todayDate);
         assertTrue(result);
     }
 
@@ -135,9 +144,12 @@ class EstimateUserStoryEffortControllerTest {
 
     @Test
     void ensureEstimateEffortUserStoryUnsuccessfullyUserStoryNotFound() {
+        LocalDate todayDate = mock(LocalDate.class);
+        when(todayDate.isAfter(date)).thenReturn(false);
+        when(todayDate.isEqual(date)).thenReturn(false);
         projectContainer.createUserStory(projectDtoOne, userStoryCreationDto);
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
-                2, projectDtoOne);
+                2, projectDtoOne,todayDate);
         assertFalse(result);
     }
 
@@ -150,8 +162,11 @@ class EstimateUserStoryEffortControllerTest {
 
     @Test
     void ensureEstimateEffortUserStoryUnsuccessfullyProjectNotFound() {
+        LocalDate todayDate = mock(LocalDate.class);
+        when(todayDate.isAfter(date)).thenReturn(false);
+        when(todayDate.isEqual(date)).thenReturn(false);
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
-                2, projectDtoTwo);
+                2, projectDtoTwo,todayDate);
         assertFalse(result);
     }
 
@@ -164,8 +179,11 @@ class EstimateUserStoryEffortControllerTest {
 
     @Test
     void ensureUserStoryEffortIsNotEstimatedUserStoryIsNull() {
+        LocalDate todayDate = mock(LocalDate.class);
+        when(todayDate.isAfter(date)).thenReturn(false);
+        when(todayDate.isEqual(date)).thenReturn(false);
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoTwo,
-                2, projectDtoOne);
+                2, projectDtoOne,todayDate);
         assertFalse(result);
     }
 
@@ -178,56 +196,119 @@ class EstimateUserStoryEffortControllerTest {
 
     @Test
     void ensureUserStoryEffortIsNotEstimatedProjectIsNull() {
+        LocalDate todayDate = mock(LocalDate.class);
+        when(todayDate.isAfter(date)).thenReturn(false);
+        when(todayDate.isEqual(date)).thenReturn(false);
         boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoTwo,
-                2, projectDtoThree);
+                2, projectDtoThree,todayDate);
         assertFalse(result);
     }
 
     /**
-     * Scenario 6: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
+     * Scenario 6: Verifies that the estimateEffortUserStory() method of the
+     * EstimateUserStoryEffortController class can't correctly estimate the effort
+     * for a user story because sprint is already finished
+     * Expected result: false.
+     */
+
+    @Test
+    void ensureUserStoryEffortIsEstimatedUnsuccessfully_SprintFinished() {
+        LocalDate todayDate = mock(LocalDate.class);
+        when(todayDate.isAfter(date)).thenReturn(true);
+        when(todayDate.isEqual(date)).thenReturn(false);
+        projectContainer.createUserStory(projectDtoOne, userStoryCreationDto);
+        projectContainer.addUserStoryToSprintBacklog(projectDtoOne.code,
+                "US001", "s001");
+        boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
+                2, projectDtoOne,todayDate);
+        assertFalse(result);
+    }
+    /**
+     * Scenario 7: Verifies that the estimateEffortUserStory() method of the
+     * EstimateUserStoryEffortController class can't correctly estimate the effort
+     * for a user story because sprint startDate is the same as the date to change the effort
+     * Expected result: false.
+     */
+
+    @Test
+    void ensureUserStoryEffortIsEstimatedUnsuccessfully_SprintStartDateIsToday() {
+        LocalDate todayDate = mock(LocalDate.class);
+        when(todayDate.isAfter(date)).thenReturn(false);
+        when(todayDate.isEqual(date)).thenReturn(true);
+        projectContainer.createUserStory(projectDtoOne, userStoryCreationDto);
+        projectContainer.addUserStoryToSprintBacklog(projectDtoOne.code,
+                "US001", "s001");
+        boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,
+                2, projectDtoOne,todayDate);
+        assertFalse(result);
+    }
+    /**
+     * Scenario 8: Verifies that the estimateEffortUserStory() method of the
+     * EstimateUserStoryEffortController class can't correctly estimate the effort
+     * for a user story because the effort given doesn't match the fibonacci sequence
+     * Expected result: false.
+     */
+
+    @Test
+    void ensureUserStoryEffortIsEstimatedUnsuccessfully_EffortUnacceptable() {
+        LocalDate todayDate = mock(LocalDate.class);
+        when(todayDate.isAfter(date)).thenReturn(false);
+        when(todayDate.isEqual(date)).thenReturn(false);
+        projectContainer.createUserStory(projectDtoOne, userStoryCreationDto);
+        projectContainer.addUserStoryToSprintBacklog(projectDtoOne.code,
+                "US001", "s001");
+        boolean result = estimateUserStoryEffortController.estimateEffortUserStory(userStoryDtoOne,4
+                , projectDtoOne,todayDate);
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 9: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
      * method of the EstimateUserStoryEffortController class can correctly estimate the effort
      * for a user story.
      * Expected result: true, indicating that the estimation was successful.
      */
 
     @Test
-    void ensureUserStoryEffortIsEstimatedSuccessfullyWithIsolation(){
+    void ensureUserStoryEffortIsEstimatedSuccessfullyWithIsolation() {
         //Assert
-        UserStoryDto userStoryDtoDouble=mock(UserStoryDto.class);
-        ProjectDto projectDtoDouble=mock(ProjectDto.class);
-        Company companyDouble=mock(Company.class);
+        LocalDate todayDate = mock(LocalDate.class);
+        UserStoryDto userStoryDtoDouble = mock(UserStoryDto.class);
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        Company companyDouble = mock(Company.class);
         EstimateUserStoryEffortController estimateUserStoryEffortControllerDouble =
                 new EstimateUserStoryEffortController(companyDouble);
         when(companyDouble.estimateEffortUserStory(userStoryDtoDouble, 2,
-                projectDtoDouble, LocalDate.now())).thenReturn(true);
+                projectDtoDouble, todayDate)).thenReturn(true);
         //Act
         boolean result = estimateUserStoryEffortControllerDouble.estimateEffortUserStory(userStoryDtoDouble,
-                2, projectDtoDouble);
+                2, projectDtoDouble,todayDate);
 
         //Arrange
         assertTrue(result);
     }
 
     /**
-     * Scenario 7: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
+     * Scenario 10: Verifies that the estimateEffortUserStory(userStoryDto, effort, projectDto)
      * method of the EstimateUserStoryEffortController class can't correctly estimate the effort
      * for a user story.
      * Expected result: false, indicating that the estimation was unsuccessful.
      */
 
     @Test
-    void ensureUserStoryEffortIsEstimatedUnSuccessfullyWithIsolation(){
+    void ensureUserStoryEffortIsEstimatedUnSuccessfullyWithIsolation() {
         //Assert
-        UserStoryDto userStoryDtoDouble=mock(UserStoryDto.class);
-        ProjectDto projectDtoDouble=mock(ProjectDto.class);
-        Company companyDouble=mock(Company.class);
+        LocalDate todayDate = mock(LocalDate.class);
+        UserStoryDto userStoryDtoDouble = mock(UserStoryDto.class);
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        Company companyDouble = mock(Company.class);
         EstimateUserStoryEffortController estimateUserStoryEffortControllerDouble =
                 new EstimateUserStoryEffortController(companyDouble);
         when(companyDouble.estimateEffortUserStory(userStoryDtoDouble, 2,
                 projectDtoDouble, LocalDate.now())).thenReturn(false);
         //Act
         boolean result = estimateUserStoryEffortControllerDouble.estimateEffortUserStory(userStoryDtoDouble,
-                2, projectDtoDouble);
+                2, projectDtoDouble,todayDate);
 
         //Arrange
         assertFalse(result);
