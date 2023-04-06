@@ -32,32 +32,33 @@ TeamMember -> ui: selects data and estimate effort (userStoryDto, effort, projec
 
 
 
-ui -> controller: estimateEffortUserStory(userStoryDto, effort, projectDto)
+ui -> controller: estimateEffortUserStory(userStoryDto, effort, projectDto, date)
 activate controller
 
-controller -> company: estimateEffortUserStory (UseruserStoryDto, effort, projectDto, date)
+controller -> company: estimateEffortUserStory (userStoryDto, effort, projectDto, date)
 activate company
 
 company -> pc: estimateEffortUserStory (userStoryDto, effort, projectCode, date)
 activate pc
 
 pc -> project: estimateEffortUserStory (userStoryDto, effort, date)
+
 activate project
 
-project -> sprint: estimateEffortUserStory (userStoryDto, effort)
+project -> sprint: estimateEffortUserStory (userStoryDto, effort, date)
 activate sprint
 
 sprint -> sb: estimateEffortUserStory (userStoryDto, effort)
 activate sb
-note right of us: fetches in class enum the effort value pretended
 
-sb -> us: setEffort(effort)
+sb -> us: setEffort(effortEstimate)
+note right of us: fetches in class enum the effort value pretended
 activate us
 
-us -> us: setEffort
-
-sb --> sprint: true
+us --> sb: true
 deactivate us
+sb --> sprint: true
+
 deactivate sb
 sprint --> project: true
 deactivate sprint
