@@ -59,8 +59,12 @@ public class UserStory implements Entity<UserStory> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserStory)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof UserStory)) {
+            return false;
+        }
         UserStory userStory = (UserStory) o;
         return usId.equals(userStory.usId);
     }
@@ -93,11 +97,29 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
+     * This protected method sets the status of the userStory.
+     *
+     * @param status of the User Story to be altered.
+     */
+    void setStatus(Status status) {
+        this.status = status;
+    }
+
+    /**
      * This getter method returns the User Story Text.
      */
 
     public UsText getUsText() {
         return usText;
+    }
+
+    /**
+     * This protected method sets the user story text of the userStory.
+     *
+     * @param usText of the User Story to create.
+     */
+    protected void setUsText(UsText usText) {
+        this.usText = usText;
     }
 
     /**
@@ -108,12 +130,12 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This protected method sets the status of the userStory.
+     * This protected method sets the user story number of the userStory.
      *
-     * @param status of the User Story to be altered.
+     * @param usNumber of the User Story to create.
      */
-    void setStatus(Status status) {
-        this.status = status;
+    protected void setUsNumber(UsNumber usNumber) {
+        this.usNumber = usNumber;
     }
 
     /**
@@ -138,16 +160,6 @@ public class UserStory implements Entity<UserStory> {
         throw new RuntimeException("Effort estimate was not successful");
     }
 
-
-    /**
-     * This protected method sets the user story number of the userStory.
-     *
-     * @param usNumber of the User Story to create.
-     */
-    protected void setUsNumber(UsNumber usNumber) {
-        this.usNumber = usNumber;
-    }
-
     /**
      * This protected method sets the actor of the userStory.
      *
@@ -158,21 +170,13 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This protected method sets the user story text of the userStory.
+     * This method verifies if the User Story has the given User Story Number.
      *
-     * @param usText of the User Story to create.
+     * @param usNumber of the User Story.
+     * @return TRUE if the User Story has the given Us Number and FALSE otherwise.
      */
-    protected void setUsText(UsText usText) {
-        this.usText = usText;
-    }
-
-    /**
-     * This protected verifies if the instance os User Story has the given UsNumber.
-     *
-     * @param toCompare is the usNumber to compare with the usNumber of the instance.
-     */
-    public boolean has(String toCompare) {
-        return this.usNumber.toString().equals(toCompare);
+    public boolean has(String usNumber) {
+        return usNumber.equals(this.usNumber);
     }
 
     @Override

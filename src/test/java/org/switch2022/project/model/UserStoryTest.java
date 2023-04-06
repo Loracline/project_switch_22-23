@@ -119,39 +119,41 @@ class UserStoryTest {
     }
 
     /**
-     * METHOD hasUserStoryNumber()
-     * <br>
-     * Scenario 1: Verify if userStory is the same by checking its userStoryNumber.
-     * Expected result:True
+     * METHOD hasUsNumber()
+     * Scenario 1: Verify if a User Story is the same by checking its usNumber.
+     * Expected result: True
      */
     @Test
-    public void ensureUserStoryNumberIsTheSame() {
-        // Arrange
+    public void makeSureTheyHaveTheSameUsNumber() {
+        // ARRANGE
         UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         boolean expected = true;
 
-        // Act
+        // ACT
         boolean result = userStoryOne.hasUserStoryNumber("US001");
 
-        // Assert
+        // ASSERT
         assertEquals(expected, result);
+
     }
 
     /**
-     * Scenario 2: Verify if userStory is not the same by checking its userStoryNumber.
-     * Expected result:false
+     * /**
+     * Scenario 2: Verify if a User Story is not the same by checking its usNumber.
+     * Expected result: False
      */
     @Test
-    public void ensureUserStoryNumberIsNotTheSame() {
-        // Arrange
+    public void makeSureTheyHaveDifferentUsNumber() {
+        // ARRANGE
         UserStory userStoryOne = (new UserStory.UserStoryBuilder("US001").build());
         boolean expected = false;
 
-        // Act
+        // ACT
         boolean result = userStoryOne.hasUserStoryNumber("US002");
 
-        // Assert
+        // ASSERT
         assertEquals(expected, result);
+
     }
 
     /**
