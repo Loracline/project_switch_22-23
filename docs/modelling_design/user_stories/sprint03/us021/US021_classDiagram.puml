@@ -8,7 +8,7 @@ skinparam sequenceMessageAlign center
 
 class "EstimateUserStoryEffortController" {
 - company
-+ estimateEffortUserStory(userStoryDto, effort, projectDto)
++ estimateEffortUserStory(userStoryDto, effort, projectDto, date)
 }
 
 class "Company" {
@@ -23,11 +23,11 @@ class "ProjectContainer" {
 class "Project"{
 - sprints
 + estimateEffortUserStory(userStoryDto, effort, date)
-+ isDateWithinPeriod(date)
 }
 class "Sprint"{
 - sprintBacklog
-+ estimateEffortUserStory(userStoryDto, effort)
++ estimateEffortUserStory(userStoryDto, effort, date)
++ isDateWithinPeriod(date)
 }
 class "SprintBacklog" {
 - userStories
@@ -38,7 +38,7 @@ class "SprintBacklog" {
 class "UserStory"{
 - effort
 + getEffort()
-+ setEffort(effort)
++ setEffort(effortEstimate)
 }
 enum "Effort"{
 - effortValue
