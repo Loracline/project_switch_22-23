@@ -4,6 +4,7 @@ import org.switch2022.project.dto.SprintCreationDto;
 import org.switch2022.project.dto.UserStoryCreationDto;
 import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
+import org.switch2022.project.utils.Status;
 
 
 import java.time.LocalDate;
@@ -232,13 +233,14 @@ public class Project {
      *                     estimated.
      * @return true if the effort estimation is successfully set, false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort, LocalDate date) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort,
+                                           LocalDate date) {
         boolean result = false;
         int i = 0;
         while (i < sprints.size() && !result) {
             Sprint sprint = sprints.get(i);
             if (sprint.hasUserStory(userStoryDto.userStoryNumber)) {
-                result = sprint.estimateEffortUserStory(userStoryDto, effort,date);
+                result = sprint.estimateEffortUserStory(userStoryDto, effort, date);
             }
             i++;
         }
@@ -255,12 +257,15 @@ public class Project {
     public ProductBacklog getProductBacklog() {
         return this.productBacklog.getProductBacklogCopy();
     }
+
     /**
-     * Returns the next sprint number by getting the size of the current sprints list and adding 1 to it.
+     * Returns the next sprint number by getting the size of the current sprints list
+     * and adding 1 to it.
+     *
      * @return an integer representing the next sprint number
      */
     public int getNextSprintNumber() {
-        return this.sprints.size()+1;
+        return this.sprints.size() + 1;
     }
 
     /**
@@ -304,11 +309,12 @@ public class Project {
                 sprintCreationDto.sprintDuration,
                 getNextSprintNumber(), iFactoryPeriod,
                 iFactorySprintBacklog);
-        return isPeriodValid(sprint) && addSprint(sprint) ;
+        return isPeriodValid(sprint) && addSprint(sprint);
     }
 
     /**
-     * This method checks if there is any Sprint in the sprint list of the project has an overlapping period with the
+     * This method checks if there is any Sprint in the sprint list of the project has
+     * an overlapping period with the
      * sprint created.
      * return true if the Sprint period is valid.
      */
@@ -325,6 +331,7 @@ public class Project {
         }
         return result;
     }
+
     /**
      * This method adds a new User Story to the Sprint Backlog
      *
@@ -336,14 +343,19 @@ public class Project {
     public boolean addUserStoryToSprintBacklog(String userStoryNumber,
                                                String sprintNumber) {
         boolean result = false;
+
         Optional<Sprint> sprintOptional = getSprintByNumber(sprintNumber);
-        Optional<UserStory> userStoryOptional = this.productBacklog.getUserStoryByNumber(userStoryNumber);
+        Optional<UserStory> userStoryOptional =
+                this.productBacklog.getUserStoryByNumber(userStoryNumber);
+
         if (sprintOptional.isPresent() && userStoryOptional.isPresent()) {
             Sprint sprint = sprintOptional.get();
             UserStory userStory = userStoryOptional.get();
-            sprint.addUserStoryToSprintBacklog(userStory);
-            productBacklog.removeUserStory(userStory);
-            result = true;
+            if (sprint.isDateBeforePeriod(LocalDate.now()) && !sprint.hasUserStory(userStoryNumber)
+                    && userStory.hasStatus(Status.PLANNED)) {
+                sprint.addUserStoryToSprintBacklog(userStory);
+                result = true;
+            }
         }
         return result;
     }

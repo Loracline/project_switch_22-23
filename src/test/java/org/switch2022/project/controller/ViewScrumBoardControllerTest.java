@@ -99,7 +99,8 @@ class ViewScrumBoardControllerTest {
 
         projectContainer.registerProject(projectCreationDto, projectTypologyContainer,
                 customerContainer,
-                businessSectorContainer, factoryProductBacklog, factoryUserStory, factoryProject,
+                businessSectorContainer, factoryProductBacklog, factoryUserStory,
+                factoryProject,
                 factoryPeriod, factorySprintBacklog, factorySprint);
 
         projectContainer.createUserStory(projectDto, userStoryCreationDtoOne);
@@ -144,7 +145,8 @@ class ViewScrumBoardControllerTest {
         ViewScrumBoardController controller = new ViewScrumBoardController(company);
 
         SprintBacklog sprintBacklog = mock(SprintBacklog.class);
-        Optional<SprintBacklog> sprintBacklogOptional = Optional.ofNullable(sprintBacklog);
+        Optional<SprintBacklog> sprintBacklogOptional =
+                Optional.ofNullable(sprintBacklog);
         when(company.getScrumBoard(any(), any(), any())).thenReturn(sprintBacklogOptional);
 
         UserStory userStoryOne = mock(UserStory.class);
@@ -168,13 +170,15 @@ class ViewScrumBoardControllerTest {
         expected.add(userStoryDtoTwo);
 
         //Act
-        List<UserStoryDto> result = controller.getScrumBoard(projectDto, LocalDate.now(), null);
+        List<UserStoryDto> result = controller.getScrumBoard(projectDto,
+                LocalDate.now(), null);
         //Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Scenario 2: Is returned an empty list because there is no sprint in the given date - With Isolation
+     * Scenario 2: Is returned an empty list because there is no sprint in the given
+     * date - With Isolation
      */
     @Test
     void ensureIsReturnedAnEmptyListBecauseThereIsNoSprint_WithIsolation() {
@@ -219,15 +223,16 @@ class ViewScrumBoardControllerTest {
     void ensureIsReturnedTheScrumBoardOfCurrentSprint() {
         //Arrange
 
-        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        LocalDate startDate = LocalDate.now().plusDays(1);
         SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, 1);
         projectContainer.createSprint(sprintCreationDto, projectDto);
         projectContainer.addUserStoryToSprintBacklog(projectDto.code, "US001", "s001");
-        LocalDate date = LocalDate.of(2022, 1, 2);
+        LocalDate date = LocalDate.now().plusDays(2);
         List<UserStoryDto> expected = new ArrayList<>();
         expected.add(userStoryDtoOne);
         //Act
-        List<UserStoryDto> result = viewScrumBoardController.getScrumBoard(projectDto, date, factoryUserStory);
+        List<UserStoryDto> result = viewScrumBoardController.getScrumBoard(projectDto,
+                date, factoryUserStory);
         //Assert
         assertEquals(expected, result);
     }
@@ -247,7 +252,8 @@ class ViewScrumBoardControllerTest {
         List<UserStoryDto> expected = new ArrayList<>();
 
         //Act
-        List<UserStoryDto> result = viewScrumBoardController.getScrumBoard(projectDto, date, factoryUserStory);
+        List<UserStoryDto> result = viewScrumBoardController.getScrumBoard(projectDto,
+                date, factoryUserStory);
         //Assert
         assertEquals(expected, result);
     }

@@ -8,6 +8,7 @@ import org.switch2022.project.dto.UserStoryDto;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.Sprint;
+
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +28,7 @@ class AddUserStoryToSprintBacklogControllerTest {
     IFactorySprintBacklog iFactorySprintBacklog;
     IFactoryProductBacklog iFactoryProductBacklog;
     IFactoryUserStory iFactoryUserStory;
-    Sprint sprint;
+    Sprint sprint, sprintTwo;
     Company company;
     AddUserStoryToSprintBacklogController addUserStoryToSprintBacklogController;
     UserStoryCreationDto userStoryCreationDto;
@@ -42,18 +43,25 @@ class AddUserStoryToSprintBacklogControllerTest {
         iFactoryUserStory = new FactoryUserStory();
 
         //Project
-        projectOne = new Project("1A", null, null, null, null, iFactoryProductBacklog, iFactoryUserStory, null, null,
+        projectOne = new Project("1A", null, null, null, null, iFactoryProductBacklog,
+                iFactoryUserStory, null, null,
                 null);
-        projectTwo = new Project("1B", null, null, null, null, iFactoryProductBacklog, iFactoryUserStory, null, null,
+        projectTwo = new Project("1B", null, null, null, null, iFactoryProductBacklog,
+                iFactoryUserStory, null, null,
                 null);
-        projectThree = new Project("1C", null, null, null, null, iFactoryProductBacklog, iFactoryUserStory, null, null,
+        projectThree = new Project("1C", null, null, null, null, iFactoryProductBacklog
+                , iFactoryUserStory, null, null,
                 null);
 
         //Sprint
-        sprint = Sprint.createSprint(LocalDate.now(), 2, 1, iFactoryPeriod, iFactorySprintBacklog);
+        sprint = Sprint.createSprint((LocalDate.now().plusDays(1)), 2, 1, iFactoryPeriod,
+                iFactorySprintBacklog);
+        sprintTwo = Sprint.createSprint((LocalDate.now()), 2, 2,
+                iFactoryPeriod,
+                iFactorySprintBacklog);
 
         //UserStoryDto
-        userStoryDto = new UserStoryDto("US001", "null", "null");
+        userStoryDto = new UserStoryDto("US001", "null", "PLANNED");
         userStoryDtoTwo = new UserStoryDto("US002", "null", "null");
 
         // UserStoryCreationDto
@@ -65,6 +73,7 @@ class AddUserStoryToSprintBacklogControllerTest {
         projectContainer.addProjectToProjectContainer(projectTwo);
         projectContainer.addProjectToProjectContainer(projectThree);
         projectOne.addSprint(sprint);
+        projectOne.addSprint(sprintTwo);
         projectOne.createUserStory(userStoryCreationDto);
 
         //Company
@@ -72,7 +81,8 @@ class AddUserStoryToSprintBacklogControllerTest {
                 projectContainer, null, null, null);
 
         //Controller
-        addUserStoryToSprintBacklogController = new AddUserStoryToSprintBacklogController(company);
+        addUserStoryToSprintBacklogController =
+                new AddUserStoryToSprintBacklogController(company);
     }
 
     //Integration tests
@@ -87,7 +97,8 @@ class AddUserStoryToSprintBacklogControllerTest {
     @Test
     void ensureThatUserStoryIsAddedToSprintBacklogHappyPath() {
         //ACT
-        boolean result= addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(
+        boolean result =
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(
                 "1A",
                 userStoryDto,
                 "s001");
@@ -103,10 +114,10 @@ class AddUserStoryToSprintBacklogControllerTest {
     @Test
     void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseProjectDoesNotExist() {
         //ACT
-        boolean result=
+        boolean result =
                 addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1B",
-                userStoryDto,
-                "S1");
+                        userStoryDto,
+                        "S1");
         assertFalse(result);
     }
 
@@ -118,10 +129,10 @@ class AddUserStoryToSprintBacklogControllerTest {
     @Test
     void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseSprintDoesNotExist() {
         //ACT
-        boolean result=
+        boolean result =
                 addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1A",
-                userStoryDto,
-                "S3");
+                        userStoryDto,
+                        "S3");
         assertFalse(result);
     }
 
@@ -133,10 +144,10 @@ class AddUserStoryToSprintBacklogControllerTest {
     @Test
     void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryDoesNotExist() {
         //ACT
-        boolean result=
+        boolean result =
                 addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1A",
                         userStoryDtoTwo,
-                        "S3");
+                        "S1");
         assertFalse(result);
     }
 
@@ -148,7 +159,7 @@ class AddUserStoryToSprintBacklogControllerTest {
     @Test
     void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseProjectCodeIsNull() {
         //ACT
-        boolean result=
+        boolean result =
                 addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(null,
                         userStoryDto,
                         "S3");
@@ -164,7 +175,7 @@ class AddUserStoryToSprintBacklogControllerTest {
     @Test
     void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryDtoIsNull() {
         //ACT
-        boolean result=
+        boolean result =
                 addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1A",
                         null,
                         "S3");
@@ -180,13 +191,58 @@ class AddUserStoryToSprintBacklogControllerTest {
     @Test
     void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseSprintIsNull() {
         //ACT
-        boolean result=
+        boolean result =
                 addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1A",
                         userStoryDto,
                         null);
         assertFalse(result);
     }
 
+    /**
+     * Scenario 8: verifies that User Story is not added to Sprint Backlog the Sprint
+     * has already begun. Should return false.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseSprintHasAlreadyBegun() {
+        //ACT
+        boolean result =
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(
+                "1A",
+                userStoryDto,
+                "S002");
+
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 9: verifies that User Story is not added to Sprint Backlog because the
+     * User Story is already there. Should return false.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryIsAlreadyThere() {
+        //ACT
+        addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog("1A",
+                userStoryDto, "s001");
+        boolean result =
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(
+                "1A", userStoryDto, "s001");
+
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 10: verifies that User Story is not added to Sprint Backlog because the
+     * User Story doesn't have the required status. Should return false.
+     */
+    @Test
+    void ensureThatUserStoryIsNotAddedToSprintBacklogBecauseUserStoryHasNotThePlannedStatus() {
+        //ACT
+        boolean result =
+                addUserStoryToSprintBacklogController.addUserStoryToSprintBacklog(
+                "1A", userStoryDtoTwo, "s001");
+
+        assertFalse(result);
+    }
 
     //Unit tests
 
@@ -198,7 +254,7 @@ class AddUserStoryToSprintBacklogControllerTest {
      * TRUE.
      */
     @Test
-    void ensureThatUserStoryIsAddedToSprintBacklogSuccessfully() {
+    void ensureThatUserStoryIsAddedToSprintBacklogSuccessfully_unitTest() {
         //Arrange
         Company companyDouble = mock(Company.class);
         UserStoryDto userStoryDtoDouble = mock(UserStoryDto.class);
@@ -220,7 +276,7 @@ class AddUserStoryToSprintBacklogControllerTest {
      * return FALSE.
      */
     @Test
-    void ensureThatUserStoryIsNotAddedToSprintBacklog() {
+    void ensureThatUserStoryIsNotAddedToSprintBacklog_uniteTest() {
         //Arrange
         Company companyDouble = mock(Company.class);
         UserStoryDto userStoryDtoDouble = mock(UserStoryDto.class);
@@ -244,7 +300,7 @@ class AddUserStoryToSprintBacklogControllerTest {
      */
 
     @Test
-    void ensureThatUserStoryIsNotAddedToSprintBecauseProjectIsNull() {
+    void ensureThatUserStoryIsNotAddedToSprintBecauseProjectIsNull_uniteTest() {
         //Arrange
         Company companyDouble = mock(Company.class);
         AddUserStoryToSprintBacklogController addUserStoryToSprintBacklogController =
@@ -282,7 +338,7 @@ class AddUserStoryToSprintBacklogControllerTest {
     }
 
     /**
-     * Scenario 8: verify that a User Story is not added to the Sprint Backlog because the
+     * Scenario 5: verify that a User Story is not added to the Sprint Backlog because the
      * Sprint parameter is null.
      * Should return FALSE.
      */

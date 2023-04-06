@@ -5,6 +5,7 @@ import org.switch2022.project.utils.Effort;
 import org.switch2022.project.utils.Status;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class UserStoryTest {
     /**
@@ -303,5 +304,44 @@ class UserStoryTest {
 
         // Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD hasStatus(status) verifies if User Story has the given status
+     * <p>
+     * Scenario 1: verifies that USer Story has the given status. Should return true.
+     */
+    @Test
+    void ensureThatUserStoryStatusEqualsTheStatusIntended() {
+        //Arrange
+        UserStory userStory = new
+                UserStory.UserStoryBuilder("US001").build();
+        Status statusDouble = mock(Status.class);
+        userStory.setStatus(statusDouble);
+
+        //Act
+        boolean result = userStory.hasStatus(statusDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: verifies that USer Story has not the given status. Should return false.
+     */
+    @Test
+    void ensureThatUserStoryStatusDoesNotEqualTheStatusIntended() {
+        //Arrange
+        UserStory userStory = new
+                UserStory.UserStoryBuilder("US001").build();
+        Status statusDouble = mock(Status.class);
+        Status statusDoubleTwo = mock(Status.class);
+        userStory.setStatus(statusDoubleTwo);
+
+        //Act
+        boolean result = userStory.hasStatus(statusDouble);
+
+        //Assert
+        assertFalse(result);
     }
 }

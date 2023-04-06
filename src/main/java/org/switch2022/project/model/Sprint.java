@@ -116,10 +116,11 @@ public final class Sprint {
      *
      * @param userStoryDto to estimate the effort.
      * @param effort       of the userStory.
-     * @param date to check of the date is before the start date of the sprint
+     * @param date         to check of the date is before the start date of the sprint
      * @return true if the effort is set and false otherwise.
      */
-    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort, LocalDate date) {
+    public boolean estimateEffortUserStory(UserStoryDto userStoryDto, int effort,
+                                           LocalDate date) {
         boolean result = false;
         if (isDateBeforeStartDate(date)) {
             result = sprintBacklog.estimateEffortUserStory(userStoryDto, effort);
@@ -161,6 +162,16 @@ public final class Sprint {
     }
 
     /**
+     * This method checks if date is before the sprint period.
+     *
+     * @param date to compare
+     * @return true if the date is before the Sprint period and false otherwise.
+     */
+    public boolean isDateBeforePeriod(LocalDate date) {
+        return !this.period.isDateEqualOrGreaterThanStartDate(date);
+    }
+
+    /**
      * This method makes a copy of the list of user stories contained in the sprint
      * backlog and stores it in another instance of sprint backlog.
      * <br>
@@ -189,7 +200,8 @@ public final class Sprint {
 
     /**
      * Returns the sprint number of the current object.
-     * This method splits the sprint number string using "S" as a delimiter and returns the second element of the resulting array
+     * This method splits the sprint number string using "S" as a delimiter and returns
+     * the second element of the resulting array
      * as an integer value.
      *
      * @return the sprint number as an integer value.

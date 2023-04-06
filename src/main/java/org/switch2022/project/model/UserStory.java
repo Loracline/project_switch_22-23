@@ -142,6 +142,16 @@ public final class UserStory {
     }
 
     /**
+     * This method verifies if a UserStory has a given status.
+     *
+     * @param status to be compared with.
+     * @return TRUE is it is the same status and FALSE otehrwise.
+     */
+    public boolean hasStatus(Status status) {
+        return this.status.equals(status);
+    }
+
+    /**
      * This class applies the builderPattern to create a new UserStory
      */
     public static class UserStoryBuilder {
