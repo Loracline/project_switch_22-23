@@ -51,7 +51,8 @@ public class Validate {
     }
 
     /**
-     * <p>Validate that the specified argument is not <code>blank</code>;
+     * <p>Validate that the specified argument is
+     * neither <code>null</code> nor <code>blank</code>;
      * otherwise throwing an exception with the specified message.
      *
      * <pre>Validate.notBlank(myString, "The string must not be blank");</pre>
@@ -61,7 +62,7 @@ public class Validate {
      * @throws IllegalArgumentException if the string is blank
      */
     public static void notBlank(String string, String message) {
-        if (string.isBlank()) {
+        if (string == null || string.isBlank()) {
             throw new IllegalArgumentException(message);
         }
     }
