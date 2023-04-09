@@ -101,7 +101,7 @@ public class UserStory implements Entity<UserStory> {
      *
      * @param status of the User Story to be altered.
      */
-    void setStatus(Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

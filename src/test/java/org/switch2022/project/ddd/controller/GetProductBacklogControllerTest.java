@@ -5,14 +5,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.domain.model.project.*;
+import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
+import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.ProjectCreationDto;
+import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.infrastructure.ProjectRepository;
+import org.switch2022.project.ddd.infrastructure.UsRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,9 +35,23 @@ class GetProductBacklogControllerTest {
     GetProductBacklogController getProductBacklogController;
     UsService usService;
     ProjectService projectService;
-
-    UserStoryDto userStoryDto;
     String projectCode;
+    GetProductBacklogController getProductBacklogControllerOne;
+    UsService usServiceOne;
+    ProjectService projectServiceOne;
+    IFactoryProject factoryProjectOne;
+    ProjectRepository projectRepositoryOne;
+    IFactoryProductBacklog factoryProductBacklogOne;
+    UsRepository usRepositoryOne;
+    IFactoryUserStory factoryUserStoryOne;
+    UserStoryMapper userStoryMapperOne;
+    Project projectOne;
+    UserStory userStoryOne;
+    UserStory userStoryTwo;
+    UserStory userStoryThree;
+    UserStory userStoryFour;
+    UserStoryDto userStoryToDtoOne;
+    UserStoryDto userStoryToDtoFour;
 
 
     @BeforeEach
@@ -41,6 +65,54 @@ class GetProductBacklogControllerTest {
 
         //Controller
         getProductBacklogController = new GetProductBacklogController(projectService, usService);
+
+        //Project Service
+        factoryProjectOne = new FactoryProject();
+        projectRepositoryOne = new ProjectRepository();
+        factoryProductBacklogOne = new FactoryProductBacklog();
+        projectServiceOne = new ProjectService(factoryProjectOne, projectRepositoryOne, factoryProductBacklogOne);
+
+        //UserStory Service
+        usRepositoryOne = new UsRepository();
+        factoryUserStoryOne = new FactoryUserStory();
+        userStoryMapperOne = new UserStoryMapper();
+        usServiceOne = new UsService(usRepositoryOne, factoryUserStoryOne, userStoryMapperOne);
+
+        //Controller
+        getProductBacklogControllerOne = new GetProductBacklogController(projectServiceOne, usServiceOne);
+
+        //UserStory
+        userStoryOne = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US01",
+                "userStoryText", "actor", 0), "P001");
+        userStoryTwo = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US02",
+                "userStoryText", "actor", 1), "P001");
+        userStoryThree = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US03",
+                "userStoryText", "actor", 2), "P001");
+        userStoryFour = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US04",
+                "userStoryText", "actor", 3), "P001");
+
+        userStoryOne.setStatus(Status.PLANNED);
+        userStoryTwo.setStatus(Status.FINISHED);
+        userStoryThree.setStatus(Status.BLOCKED);
+        userStoryFour.setStatus(Status.PLANNED);
+
+        usRepositoryOne.add(userStoryOne);
+        usRepositoryOne.add(userStoryTwo);
+        usRepositoryOne.add(userStoryThree);
+        usRepositoryOne.add(userStoryFour);
+
+        //Project
+        projectOne = factoryProjectOne.createProject(new Code("P001"), new ProjectCreationDto("projectName",
+                        "projectDescription", "businessSectorName", "customerName",
+                        "typologyName", 2), new BusinessSectorId(1), new CustomerId(1),
+                new ProjectTypologyId(1), factoryProductBacklogOne);
+
+        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+
+        projectOne.addUserStory(0, new UsId("P001", "US01"));
+        projectOne.addUserStory(1, new UsId("P001", "US02"));
+        projectOne.addUserStory(2, new UsId("P001", "US03"));
+        projectOne.addUserStory(3, new UsId("P001", "US04"));
 
     }
 
