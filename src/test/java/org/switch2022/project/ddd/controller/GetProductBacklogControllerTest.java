@@ -229,6 +229,12 @@ class GetProductBacklogControllerTest {
         assertTrue(actualUserStoryDtoList.containsAll(expectedUserStoryDtoList));
     }
 
+    /**
+     * Method: getProductBacklog()
+     * <p>
+     * Scenario 1: This test ensure that is returned a list containing only User Stories with the
+     * status Planned when the Product Backlog contains user stories from multiple status.
+     */
     @Test
     void ensureThatIsReturnedAnOrderListOfPlannedUserStories() throws Exception {
         //ARRANGE
@@ -249,6 +255,10 @@ class GetProductBacklogControllerTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Scenario 2: This test ensure that an empty List is returned when the Product
+     * Backlog of a give Project has no User Stories with Planned status.
+     */
     @Test
     void ensureThatIsReturnedAnEmptyListOfUserStories_NoUserStoryWithPlannedStatus() throws Exception {
         //ARRANGE
@@ -264,6 +274,10 @@ class GetProductBacklogControllerTest {
         assertTrue(result.isEmpty());
     }
 
+    /**
+     * Scenario 3: This test ensure that an empty List is returned when the Product
+     * Backlog of a give Project has no User Stories.
+     */
     @Test
     void ensureThatIsReturnedAnEmptyListOfUserStories_ProductBacklogIsEmpty() throws Exception {
 
