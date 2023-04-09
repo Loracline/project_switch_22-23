@@ -46,6 +46,7 @@ class GetProductBacklogControllerTest {
     IFactoryUserStory factoryUserStoryOne;
     UserStoryMapper userStoryMapperOne;
     Project projectOne;
+    Project projectTwo;
     UserStory userStoryOne;
     UserStory userStoryTwo;
     UserStory userStoryThree;
@@ -107,7 +108,13 @@ class GetProductBacklogControllerTest {
                         "typologyName", 2), new BusinessSectorId(1), new CustomerId(1),
                 new ProjectTypologyId(1), factoryProductBacklogOne);
 
+        projectTwo = factoryProjectOne.createProject(new Code("P002"), new ProjectCreationDto("projectName",
+                        "projectDescription", "businessSectorName", "customerName",
+                        "typologyName", 2), new BusinessSectorId(1), new CustomerId(1),
+                new ProjectTypologyId(1), factoryProductBacklogOne);
+
         projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        projectRepositoryOne.addProjectToProjectRepository(projectTwo);
 
         projectOne.addUserStory(0, new UsId("P001", "US01"));
         projectOne.addUserStory(1, new UsId("P001", "US02"));
@@ -192,7 +199,7 @@ class GetProductBacklogControllerTest {
 
     /**
      * Scenario 4: This test ensure that an UserStoryDto list is returned when the Product
-     * Backlog of a give Project Code has a lis of planned User Stories.
+     * Backlog of a give Project Code has a list of planned User Stories.
      *
      * @UserStoryDto list
      */
@@ -220,5 +227,50 @@ class GetProductBacklogControllerTest {
         assertEquals(expectedUserStoryDtoList.size(), actualUserStoryDtoList.size());
         assertTrue(expectedUserStoryDtoList.containsAll(actualUserStoryDtoList));
         assertTrue(actualUserStoryDtoList.containsAll(expectedUserStoryDtoList));
+    }
+
+    @Test
+    void ensureThatIsReturnedAnOrderListOfPlannedUserStories() throws Exception {
+        //ARRANGE
+        userStoryOne.setStatus(Status.PLANNED);
+        userStoryTwo.setStatus(Status.FINISHED);
+        userStoryThree.setStatus(Status.BLOCKED);
+        userStoryFour.setStatus(Status.PLANNED);
+
+        userStoryToDtoOne = userStoryMapperOne.userStoryToDto(userStoryOne);
+        userStoryToDtoFour = userStoryMapperOne.userStoryToDto(userStoryFour);
+
+        List<UserStoryDto> expected = Arrays.asList(userStoryToDtoOne, userStoryToDtoFour);
+
+        //ACT
+        List<UserStoryDto> result = getProductBacklogControllerOne.getProductBacklog("P001");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatIsReturnedAnEmptyListOfUserStories_NoUserStoryWithPlannedStatus() throws Exception {
+        //ARRANGE
+        userStoryOne.setStatus(Status.RUNNING);
+        userStoryTwo.setStatus(Status.FINISHED);
+        userStoryThree.setStatus(Status.BLOCKED);
+        userStoryFour.setStatus(Status.FINISHED);
+
+        //ACT
+        List<UserStoryDto> result = getProductBacklogControllerOne.getProductBacklog("P001");
+
+        // ASSERT
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void ensureThatIsReturnedAnEmptyListOfUserStories_ProductBacklogIsEmpty() throws Exception {
+
+        //ACT
+        List<UserStoryDto> result = getProductBacklogControllerOne.getProductBacklog("P002");
+
+        // ASSERT
+        assertTrue(result.isEmpty());
     }
 }
