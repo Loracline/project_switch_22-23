@@ -17,7 +17,7 @@ public class FactoryUserStory implements IFactoryUserStory {
     @Override
     public UserStory createUserStory(UserStoryCreationDto userStoryCreationDto, String projectCode) {
 
-        UserStory userStory = new UserStory(new UsId(userStoryCreationDto.userStoryNumber, projectCode));
+        UserStory userStory = new UserStory(new UsId(projectCode, userStoryCreationDto.userStoryNumber));
 
         userStory.setUsNumber(new UsNumber(userStoryCreationDto.userStoryNumber));
         userStory.setUsText(new UsText(userStoryCreationDto.userStoryText));
