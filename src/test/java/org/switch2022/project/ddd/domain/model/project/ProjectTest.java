@@ -3,8 +3,7 @@ package org.switch2022.project.ddd.domain.model.project;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +125,49 @@ class ProjectTest {
 
         //Assert
         assertNotEquals(projectOne.hashCode(), projectTwo.hashCode());
+    }
+
+    /**
+     * Method: sameIdentityAs()
+     * Scenario 01: make sure the two objects are the same by having the same attributes.
+     * Expected result: true.
+     */
+    @Test
+    void ensureTheTwoObjectsAreTheSameByHavingTheSameAttributes() {
+        //Arrange
+        //Code
+        Code codeOne = mock(Code.class);
+        //Projects
+        Project projectOne = new Project(codeOne);
+        Project projectTwo = new Project(codeOne);
+
+        //Act
+        boolean result = projectOne.sameIdentityAs(projectTwo);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Method: sameIdentityAs()
+     * Scenario 02: make sure the two objects are not the same because they have different attributes.
+     * Expected result: false.
+     */
+    @Test
+    void ensureTheTwoObjectsAreNotTheSameBecauseTheyHaveDifferentAttributes() {
+        //Arrange
+        //Code
+        Code codeOne = mock(Code.class);
+        Code codeTwo = mock(Code.class);
+        //Projects
+        Project projectOne = new Project(codeOne);
+        Project projectTwo = new Project(codeTwo);
+
+        //Act
+        boolean result = projectOne.sameIdentityAs(projectTwo);
+
+        //Assert
+        assertFalse(result);
     }
 
     /**
@@ -313,7 +355,6 @@ class ProjectTest {
     @Test
     public void ensureProjectCodeIsNotEqual_IsolationTest() {
         //Arrange
-
         //Code
         Code projectCodeOne = mock(Code.class);
         Code projectCodeTwo = mock(Code.class);

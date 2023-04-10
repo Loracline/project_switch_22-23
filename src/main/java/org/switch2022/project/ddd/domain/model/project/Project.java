@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Class Project is built to create and manage new projects.
  * A project is defined by code, it's your ID. Its other attributes are budget, name, description, project Status, <br>
- * number of planned sprints, period, sprint duration, sprints (list of sprints), business sector, customer, project <br>
- * typology and product backlog .
+ * number of planned sprints, period, sprint duration, sprints (list of sprints), business sector, customer, <br>
+ * project typology and product backlog .
  * The project status attribute defaults to "Planned"
  */
 public class Project implements Entity<Project> {
@@ -102,7 +102,7 @@ public class Project implements Entity<Project> {
      * @param projectName the name of the project
      */
     protected void setName(String projectName) {
-        this.projectName = new Name(projectName);
+        this.projectName = new Name(projectName.toLowerCase());
     }
 
     /**
@@ -112,7 +112,7 @@ public class Project implements Entity<Project> {
      * @param description the description of the project.
      */
     protected void setDescription(String description) {
-        this.description = new Description(description);
+        this.description = new Description(description.toLowerCase());
     }
 
     /**
