@@ -7,7 +7,6 @@ import org.switch2022.project.model.Account;
 import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.SprintBacklog;
-import org.switch2022.project.utils.Effort;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDate;

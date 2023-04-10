@@ -17,6 +17,28 @@ public class CustomerContainer {
     private final List<Customer> customers = new ArrayList<>();
 
     /**
+     * This method Checks if the NIF has the correct length (9 digits) and checks if
+     * the NIF contains only digits.
+     *
+     * @param customerNIF of the costumer to add.
+     * @return TRUE if costumerNIF has the correct length and contains only digits and
+     * FALSE otherwise.
+     */
+    private static boolean isValidNIF(String customerNIF) {
+        boolean isValidNIF = false;
+        final byte NIF_LENGTH = 9;
+        if (customerNIF.length() == NIF_LENGTH) {
+            isValidNIF = true;
+            for (int i = 0; i < customerNIF.length(); i++) {
+                if (!Character.isDigit(customerNIF.charAt(i))) {
+                    isValidNIF = false;
+                }
+            }
+        }
+        return isValidNIF;
+    }
+
+    /**
      * This method validates if customer already exists by checking the NIF.
      *
      * @param customer of the intended costumer.
@@ -37,8 +59,7 @@ public class CustomerContainer {
                                IFactoryCustomer iFactoryCustomer) {
         Customer newCustomer = iFactoryCustomer.createCustomer(customerName, customerNIF);
         boolean isAddedToList = false;
-        if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerExist(newCustomer))
-        {
+        if (isValidNIF(customerNIF) && !customerName.isEmpty() && !doesCustomerExist(newCustomer)) {
             addCustomerToList(newCustomer);
             isAddedToList = true;
         }
@@ -47,32 +68,11 @@ public class CustomerContainer {
 
     /**
      * This method just add a Customer to the Customer List
+     *
      * @param customer to be added
      */
     protected void addCustomerToList(Customer customer) {
         customers.add(customer);
-    }
-
-    /**
-     * This method Checks if the NIF has the correct length (9 digits) and checks if
-     * the NIF contains only digits.
-     *
-     * @param customerNIF of the costumer to add.
-     * @return TRUE if costumerNIF has the correct length and contains only digits and
-     * FALSE otherwise.
-     */
-    private static boolean isValidNIF(String customerNIF) {
-        boolean isValidNIF = false;
-        final byte NIF_LENGTH = 9;
-        if (customerNIF.length() == NIF_LENGTH) {
-            isValidNIF = true;
-            for (int i = 0; i < customerNIF.length(); i++) {
-                if (!Character.isDigit(customerNIF.charAt(i))) {
-                    isValidNIF = false;
-                }
-            }
-        }
-        return isValidNIF;
     }
 
     /**
