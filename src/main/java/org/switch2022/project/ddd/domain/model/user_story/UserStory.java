@@ -62,7 +62,10 @@ public class UserStory implements Entity<UserStory> {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserStory)) {
+        if (o == null) {
+            return false;
+        }
+        if (this.getClass() != o.getClass()) {
             return false;
         }
         UserStory userStory = (UserStory) o;
@@ -175,7 +178,7 @@ public class UserStory implements Entity<UserStory> {
      * @param usNumber of the User Story.
      * @return TRUE if the User Story has the given Us Number and FALSE otherwise.
      */
-    public boolean has(String usNumber) {
+    public boolean has(UsNumber usNumber) {
         return usNumber.equals(this.usNumber);
     }
 

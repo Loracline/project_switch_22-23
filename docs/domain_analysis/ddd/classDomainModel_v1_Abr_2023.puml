@@ -13,7 +13,7 @@ entity ProjectResource <<root>> {
 }
 
 entity BusinessSector <<root>> {
-    +bussinesSectorId
+    +businesSectorId
 }
 
 entity Typology <<root>> {
@@ -28,7 +28,7 @@ entity Project <<root>> {
     +code
     +name
     +customerId
-    +bussinesSectorId
+    +businesSectorId
     +projectStatus
     +description
     +numberOfPlannedSprints
@@ -51,7 +51,7 @@ entity UserStory <<root>> {
     +status
 }
 
-entity Sprint{
+entity Sprint <<root>> {
     + sprintId
     + sprintDuration
     + sprintNumber
@@ -68,7 +68,7 @@ Project "0.*" -- "1" Typology
 Project "0.*" -- "1" Customer
 Project "1" -- "1" ProductBacklog: <<aggregates>>
 ProductBacklog "1" -- "0.*" UserStory
-Project "1" -- "1" Sprint: <<aggregates>>
+Project "1" -- "1" Sprint
 Sprint "1" -- "0.*" UserStoryInSprint: <<aggregates>>
 
 @enduml

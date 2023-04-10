@@ -1,0 +1,76 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+title TO CONSULT THE PRODUCT BACKLOG
+skinparam sequenceMessageAlign center
+legend top
+US018 - As PO/SM/Team Member, I want to consult the product backlog, i.e. to get the list of user stories sorted by priority.
+end legend
+
+class "GetProductBacklogController" {
+-projectService
+-usService
++getProductBacklog(projectCode)
+}
+
+class "ProjectService"{
+-projectRepository
++getProductBacklog(code)
++getProjectByCode(code)
+}
+
+class "UsService"{
+-usRepository
+-userStoryMapper
++requestAllPlannedUs(usId)
+}
+
+class "Project" <<root>>{
+-projectCode
+-productBacklog
++hasProjectCode(projectCode)
++getProductBacklog()
+}
+
+class "ProductBacklog"{
+-userStories
++getUserStories()
+}
+
+class ProjectRepository{
++getProjectByCode(code)
+}
+
+class "UsRepository"{
++getListOfUsWithMatchingIds(usId)
+}
+
+class "UserStoryMapper"{
++userStoryToDto(userStory)
+}
+class "UserStory" <<root>>{
+-usId
+-usNumber
+-usText
+-status
++getUsId()
++getUsNumber()
++getUsText()
++getStatus()
++setStatus()
+}
+
+
+"GetProductBacklogController" "1"-->"1"  "ProjectService": has
+"GetProductBacklogController" "1"-->"1"  "UsService": has
+"Project" "1"-->"1" "ProductBacklog": has
+"ProductBacklog" "1"-->"*" "UserStory": has
+"UsService" "1"-->"1"  "UsRepository": contains
+"UsRepository" "1"-->"*" "UserStory": has
+"UsService" "1"-->"1"  "UserStoryMapper": has
+"UserStoryMapper" ..> "UserStory"
+"ProjectService" "1"-->"1" "ProjectRepository": contains
+"ProjectService" ..> "Project": uses
+"ProjectRepository" "1"-->"*" "Project": has
+
+@enduml

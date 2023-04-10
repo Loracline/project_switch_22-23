@@ -94,10 +94,11 @@ class UserStoryTest {
         // Arrange
         UsId usId = mock(UsId.class);
         UserStory reference = new UserStory(usId);
+        UserStory other = null;
         boolean expected = false;
 
         // Act
-        boolean result = reference.equals(null);
+        boolean result = reference.equals(other);
 
         // Assert
         assertEquals(expected, result);
@@ -344,4 +345,44 @@ class UserStoryTest {
         // Assert
         assertEquals("Effort estimate was not successful", exception.getMessage());
     }
+
+    /**
+     * METHOD has(usNumber) verifies if the User Story has the given User Story Number.
+     *
+     * Scenario 1: User Story has the given USNumber. Should return true.
+     */
+    @Test
+    void ensureThatUserStoryHasTheGivenUSNumber() {
+        //Arrange
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+        UsNumber usNumberDouble = mock(UsNumber.class);
+        userStory.setUsNumber(usNumberDouble);
+
+        //Act
+        boolean result = userStory.has(usNumberDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: User Story doesn't have the given USNumber. Should return false.
+     */
+    @Test
+    void ensureThatUserStoryDoesNotHaveTheGivenUSNumber() {
+        ///Arrange
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+        UsNumber usNumberDouble = mock(UsNumber.class);
+        UsNumber usNumberToVerify = mock(UsNumber.class);
+        userStory.setUsNumber(usNumberDouble);
+
+        //Act
+        boolean result = userStory.has(usNumberToVerify);
+
+        //Assert
+        assertFalse(result);
+    }
+
 }
