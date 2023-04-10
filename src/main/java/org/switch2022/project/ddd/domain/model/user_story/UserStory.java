@@ -151,11 +151,11 @@ public class UserStory implements Entity<UserStory> {
     /**
      * This method sets the effort of the userStory.
      *
-     * @param effortEstimate of the User Story to be set.
+     * @param newEffortEstimate of the User Story to be set.
      */
-    void setEffort(int effortEstimate) {
+    void setEffort(int newEffortEstimate) {
         for (Effort effort : Effort.values()) {
-            if (effort.getEffortValue() == effortEstimate) {
+            if (effort.getEffortValue() == newEffortEstimate) {
                 this.effort = effort;
                 return;
             }

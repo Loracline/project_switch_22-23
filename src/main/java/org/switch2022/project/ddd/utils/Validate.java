@@ -5,12 +5,16 @@ import java.time.LocalDate;
 public class Validate {
 
     /**
-     * Utility classes typically provide a set of related functionality that can be used across different parts of an
-     * application. They are designed to be stateless and provide only static methods. Since utility classes only
+     * Utility classes typically provide a set of related functionality that can be used across
+     * different parts of an
+     * application. They are designed to be stateless and provide only static methods. Since
+     * utility classes only
      * provide static methods, there is no need to create instances of the class.
      * <br>
-     * By making the constructor of the utility class private, we prevent any instances of the class from being
-     * created. This ensures that the utility class remains stateless and can only be used through its static methods.
+     * By making the constructor of the utility class private, we prevent any instances of the
+     * class from being
+     * created. This ensures that the utility class remains stateless and can only be used
+     * through its static methods.
      */
     private Validate() {
     }
@@ -68,7 +72,8 @@ public class Validate {
     }
 
     /**
-     * <p>Validate that the specified argument is not <code>null</code> or <code>empty</code> or <code>blank</code>;
+     * <p>Validate that the specified argument is not <code>null</code> or <code>empty</code> or
+     * <code>blank</code>;
      * otherwise throwing an exception with the specified message.
      *
      * <pre>Validate.notNullOrEmptyOrBlank(myString, myStringName);</pre>
@@ -97,7 +102,8 @@ public class Validate {
      */
     public static <T extends Number> void notNull(T number, String argumentName) {
         if (number == null) {
-            throw new IllegalArgumentException(String.format("The %s must not be null", argumentName));
+            throw new IllegalArgumentException(String.format("The %s must not be null",
+                    argumentName));
         }
     }
 
@@ -113,7 +119,8 @@ public class Validate {
      */
     public static <T extends Number> void notNegative(T number, String argumentName) {
         if (number.doubleValue() < 0) {
-            throw new IllegalArgumentException(String.format("The %s must not be negative", argumentName));
+            throw new IllegalArgumentException(String.format("The %s must not be negative",
+                    argumentName));
         }
     }
 
@@ -130,9 +137,11 @@ public class Validate {
      * @param argumentName the name of the argument to check.
      * @throws IllegalArgumentException if the number is outside the interval
      */
-    public static <T extends Number> void withinInterval(T lowerLimit, T upperLimit, T valueToCheck, String argumentName) {
+    public static <T extends Number> void withinInterval(T lowerLimit, T upperLimit,
+                                                         T valueToCheck, String argumentName) {
         if (valueToCheck.doubleValue() < lowerLimit.doubleValue() || valueToCheck.doubleValue() > upperLimit.doubleValue()) {
-            throw new IllegalArgumentException(String.format("The %s must be between %s and %s", argumentName,
+            throw new IllegalArgumentException(String.format("The %s must be between %s and %s",
+                    argumentName,
                     lowerLimit, upperLimit));
         }
     }
@@ -161,7 +170,8 @@ public class Validate {
      * <p>Validate that the specified date is not before another date;
      * otherwise throwing an exception with the specified message.
      *
-     * <pre>Validate.isDateAfter(myLocalDate, "The dateOfInterest must be after the dateToCompare");</pre>
+     * <pre>Validate.isDateAfter(myLocalDate, "The dateOfInterest must be after the
+     * dateToCompare");</pre>
      *
      * @param dateOfInterest the date to check.
      * @param dateToCompare  the data to compare to.
@@ -169,7 +179,8 @@ public class Validate {
      */
     public static void isAfter(LocalDate dateOfInterest, LocalDate dateToCompare) {
         if (dateOfInterest.isBefore(dateToCompare)) {
-            throw new IllegalArgumentException(String.format("The date must be after %s", dateToCompare));
+            throw new IllegalArgumentException(String.format("The date must be after %s",
+                    dateToCompare));
         }
     }
 }

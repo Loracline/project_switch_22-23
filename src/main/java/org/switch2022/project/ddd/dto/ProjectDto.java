@@ -49,7 +49,7 @@ public class ProjectDto {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        org.switch2022.project.ddd.dto.ProjectDto that = (org.switch2022.project.ddd.dto.ProjectDto) o;
+        ProjectDto that = (ProjectDto) o;
         return Objects.equals(code, that.code) && Objects.equals(name, that.name) &&
                 Objects.equals(customer, that.customer) && Objects.equals(status, that.status) &&
                 Objects.equals(projectTypology, that.projectTypology) &&

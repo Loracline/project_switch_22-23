@@ -1,7 +1,6 @@
 package org.switch2022.project.ddd.domain.interfaces;
 
 
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
@@ -19,7 +18,7 @@ public interface IUsService {
      * not created.
      *
      * @param userStoryCreationDto will be the base for the creation of a new userStory.
-     * @param projectCode will be associated with the newly created userStory.
+     * @param projectCode          will be associated with the newly created userStory.
      * @return userStoryId from the newly created userStory.
      */
     UsId createUs(UserStoryCreationDto userStoryCreationDto, String projectCode) throws Exception;

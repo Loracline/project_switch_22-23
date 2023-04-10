@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class SprintDuration implements ValueObject<SprintDuration> {
-    private Integer sprintDuration;
+    private final Integer sprintDuration;
     private final Integer MIN_SPRINT_DURATION = 0;
     private final Integer MAX_SPRINT_DURATION = 4;
 
