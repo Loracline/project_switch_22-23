@@ -1,0 +1,74 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+@startuml
+
+entity Account <<root>> {
+}
+
+entity Profile <<root>> {
+}
+
+entity ProjectResource <<root>> {
+}
+
+entity BusinessSector <<root>> {
+    +bussinesSectorId
+}
+
+entity Typology <<root>> {
+    +projectTypologyId
+}
+
+entity Customer <<root>> {
+    +customerId
+}
+
+entity Project <<root>> {
+    +code
+    +name
+    +customerId
+    +bussinesSectorId
+    +projectStatus
+    +description
+    +numberOfPlannedSprints
+    +budget
+    +projectTypologyId
+    +period
+}
+
+entity ProductBacklog {
+    +pbId
+}
+
+entity UserStory <<root>> {
+    +usId
+    +usNumber
+    +usText
+    + actor
+    + acceptanceCriteria
+    +effort
+    +status
+}
+
+entity Sprint{
+    + sprintId
+    + sprintDuration
+    + sprintNumber
+}
+
+entity UserStoryInSprint {
+}
+
+Account "1" -- "0.*" Profile
+Account "1" -- "0.*" ProjectResource
+Project "1" -- "0.*" Account
+Project "0.*" -- "1" BusinessSector
+Project "0.*" -- "1" Typology
+Project "0.*" -- "1" Customer
+Project "1" -- "1" ProductBacklog: <<aggregates>>
+ProductBacklog "1" -- "0.*" UserStory
+Project "1" -- "1" Sprint: <<aggregates>>
+Sprint "1" -- "0.*" UserStoryInSprint: <<aggregates>>
+
+@enduml

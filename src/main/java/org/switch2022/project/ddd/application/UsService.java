@@ -31,7 +31,7 @@ public class UsService implements IUsService {
      * @param userStoryMapper  converts userStory to userStoryDto.
      */
 
-    protected UsService(IUsRepository usRepository, IFactoryUserStory factoryUserStory,
+    public UsService(IUsRepository usRepository, IFactoryUserStory factoryUserStory,
                         UserStoryMapper userStoryMapper) {
         this.usRepository = usRepository;
         this.factoryUserStory = factoryUserStory;
