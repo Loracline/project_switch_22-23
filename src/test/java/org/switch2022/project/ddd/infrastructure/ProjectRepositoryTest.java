@@ -106,6 +106,28 @@ class ProjectRepositoryTest {
     }
 
     /**
+     * Method: getProjectByCode()
+     * <br>
+     * Scenario 02: test "Get Project By Code" When List Is Empty.
+     * Checks whether an Optional contains a non-null value. <br>
+     * It returns true if the Optional contains a value and false if it is empty.
+     */
+    @Test
+    void whenProjectsListIsEmpty() {
+        //Arrange
+        Project projectOne = mock(Project.class);
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        Code codeOne = mock(Code.class);
+        when(projectOne.hasProjectCode(any())).thenReturn(true);
+
+        //Act
+        Optional<Project> optionalResult = projectRepositoryOne.getProjectByCode(codeOne);
+
+        //Assert
+        assertFalse(optionalResult.isPresent());
+    }
+
+    /**
      * Method: getProjectNumber().
      * <br>
      * Scenario 01: return the number of projects from a list
