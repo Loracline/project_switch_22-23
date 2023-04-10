@@ -296,67 +296,6 @@ public class ProductBacklogTest {
     }
 
     /**
-     * METHOD removeUserStory(userStory)
-     * remove a User Story from Product Backlog
-     * <p>
-     * Scenario 1: verify if a User Story is removed from Product Backlog if it is
-     * there. Should return TRUE.
-     */
-    @Test
-    void ensureThatUserStoryIsRemovedFromProductBacklog() {
-        //ARRANGE
-        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
-        UserStory userStoryDouble = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDouble, 0);
-
-        //ACT
-        boolean result = productBacklog.removeUserStory(userStoryDouble);
-
-        //ASSERT
-        assertTrue(result);
-
-    }
-
-    /**
-     * Scenario 2: verify if a User Story is not removed from Product Backlog because
-     * it is empty. Should return FALSE.
-     */
-    @Test
-    void ensureThatUserStoryIsNotRemovedFromProductBacklogBecauseItIsEmpty() {
-        //ARRANGE
-        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
-        UserStory userStoryDouble = mock(UserStory.class);
-
-        //ACT
-        boolean result = productBacklog.removeUserStory(userStoryDouble);
-
-        //ASSERT
-        assertFalse(result);
-    }
-
-    /**
-     * Scenario 3: verify if a User Story is not removed from Product Backlog if it is not
-     * there. Should return FALSE.
-     */
-    @Test
-    void ensureThatUserStoryIsNotRemovedFromProductBacklogBecauseItIsNotThere() {
-        //ARRANGE
-        IFactoryUserStory IFactoryUserStory = mock(IFactoryUserStory.class);
-        ProductBacklog productBacklog = new ProductBacklog(IFactoryUserStory);
-        UserStory userStoryDouble = mock(UserStory.class);
-        UserStory userStoryDoubleTwo = mock(UserStory.class);
-        productBacklog.addUserStory(userStoryDoubleTwo, 0);
-
-        //ACT
-        boolean result = productBacklog.removeUserStory(userStoryDouble);
-
-        //ASSERT
-        assertFalse(result);
-    }
-
-    /**
      * METHOD getUserStoriesCopy(). Copy the list of user stories contained in the
      * product backlog.
      * <p>

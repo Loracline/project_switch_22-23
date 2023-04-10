@@ -113,18 +113,6 @@ public class ProductBacklog {
     }
 
     /**
-     * This method removes a User Story from the userStories list if the User Story
-     * exists.
-     *
-     * @param userStory to be deleted
-     * @return TRUE if the User Story is removed from UserStories list and FALSE
-     * otherwise.
-     */
-    public boolean removeUserStory(UserStory userStory) {
-        return this.userStories.remove(userStory);
-    }
-
-    /**
      * This method makes a deep copy of the User Stories that are in the Product Backlog,
      * and the copy in a new list.
      *
