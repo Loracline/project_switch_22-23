@@ -133,13 +133,17 @@ public class Validate {
      *
      * @param lowerLimit   the lower limit of the interval.
      * @param upperLimit   the upper limit of the interval.
-     * @param valueToCheck the number to check.
+     * @param value the number to check.
      * @param argumentName the name of the argument to check.
      * @throws IllegalArgumentException if the number is outside the interval
      */
     public static <T extends Number> void withinInterval(T lowerLimit, T upperLimit,
-                                                         T valueToCheck, String argumentName) {
-        if (valueToCheck.doubleValue() < lowerLimit.doubleValue() || valueToCheck.doubleValue() > upperLimit.doubleValue()) {
+                                                         T value, String argumentName) {
+        notNull(lowerLimit, "The lower limit must not be null");
+        notNull(upperLimit, "The upper limit must not be null");
+        notNull(value, "The value to check must not be null");
+
+        if (value.doubleValue() < lowerLimit.doubleValue() || value.doubleValue() > upperLimit.doubleValue()) {
             throw new IllegalArgumentException(String.format("The %s must be between %s and %s",
                     argumentName,
                     lowerLimit, upperLimit));
