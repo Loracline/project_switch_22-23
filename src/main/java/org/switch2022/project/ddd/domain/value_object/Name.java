@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class Name implements ValueObject<Name> {
-    private String name;
+    private final String denomination;
 
     /**
      * Constructor.
@@ -14,7 +14,7 @@ public class Name implements ValueObject<Name> {
     public Name(final String projectName) {
         Validate.notNullOrEmptyOrBlank(projectName, "project name");
 
-        this.name = projectName.toLowerCase();
+        this.denomination = projectName.toLowerCase();
     }
 
     /**
@@ -23,7 +23,7 @@ public class Name implements ValueObject<Name> {
      * @return String representation of the project name.
      */
     public String getName() {
-        return name;
+        return denomination;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Name implements ValueObject<Name> {
      */
     @Override
     public boolean sameValueAs(Name other) {
-        return other != null && this.name.equals(other.name);
+        return other != null && this.denomination.equals(other.denomination);
     }
 
     /**
@@ -65,6 +65,6 @@ public class Name implements ValueObject<Name> {
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return denomination.hashCode();
     }
 }

@@ -5,7 +5,7 @@ import org.switch2022.project.ddd.utils.Validate;
 
 public class BusinessSectorId implements ValueObject<BusinessSectorId> {
 
-    private final String businessSectorId;
+    private final String id;
 
     /**
      * Constructor.
@@ -16,7 +16,7 @@ public class BusinessSectorId implements ValueObject<BusinessSectorId> {
         Validate.notNull(idNumber, "business sector number");
         Validate.notNegative(idNumber, "business sector number");
 
-        this.businessSectorId = String.format("BS%03d", idNumber).toLowerCase();
+        this.id = String.format("BS%03d", idNumber).toLowerCase();
 
     }
 
@@ -26,7 +26,7 @@ public class BusinessSectorId implements ValueObject<BusinessSectorId> {
      * @return String representation of the business sector ID.
      */
     public String getBusinessSectorId() {
-        return businessSectorId;
+        return id;
     }
 
     /**
@@ -38,7 +38,7 @@ public class BusinessSectorId implements ValueObject<BusinessSectorId> {
      */
     @Override
     public boolean sameValueAs(BusinessSectorId other) {
-        return other != null && this.businessSectorId.equals(other.businessSectorId);
+        return other != null && this.id.equals(other.id);
     }
 
     /**
@@ -69,6 +69,6 @@ public class BusinessSectorId implements ValueObject<BusinessSectorId> {
 
     @Override
     public int hashCode() {
-        return businessSectorId.hashCode();
+        return id.hashCode();
     }
 }
