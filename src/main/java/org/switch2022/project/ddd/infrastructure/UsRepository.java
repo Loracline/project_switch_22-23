@@ -27,8 +27,12 @@ public class UsRepository implements IUsRepository {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UsRepository)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
         UsRepository that = (UsRepository) o;
         return Objects.equals(userStories, that.userStories);
     }
@@ -90,18 +94,14 @@ public class UsRepository implements IUsRepository {
 
     @Override
     public List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId) {
-        if (userStories.isEmpty()) {
-            throw new IllegalStateException("User story list does not contain userStories matching given IDs");
-        } else {
-            List<UserStory> userStoriesWithMatchingIds = new ArrayList<>();
-            for (UserStory userStory : userStories) {
-                for (UsId id : usId) {
-                    if (userStory.getUsId().equals(id)) {
-                        userStoriesWithMatchingIds.add(userStory);
-                    }
+        List<UserStory> userStoriesWithMatchingIds = new ArrayList<>();
+        for (UserStory userStory : userStories) {
+            for (UsId id : usId) {
+                if (userStory.getUsId().equals(id)) {
+                    userStoriesWithMatchingIds.add(userStory);
                 }
             }
-            return userStoriesWithMatchingIds;
         }
+        return userStoriesWithMatchingIds;
     }
 }

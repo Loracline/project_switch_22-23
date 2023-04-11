@@ -6,6 +6,7 @@ import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -146,13 +147,13 @@ class UsRepositoryTest {
     }
 
     /**
-     * Scenario 02: verify if a list of userStories is not retrieved with given IDs.
+     * Scenario 02: verify if a list of empty userStories is retrieved.
      * <p>
-     * Expected result: list of userStories is not retrieved, exception is thrown.
+     * Expected result: list of empty userStories is retrieved.
      */
 
     @Test
-    void ensureListOfUsIsNotRetrieved() {
+    void ensureListOfEmptyUsIsRetrieved() {
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
         UsRepository usRepositoryDouble = new UsRepository();
@@ -164,15 +165,10 @@ class UsRepositoryTest {
 
         when(userStoryDouble.getUsId()).thenReturn(usIdDouble);
 
-        // Act
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            usRepositoryDouble.getListOfUsWithMatchingIds(userStoryIds)
-                    .equals(userStories);
-        });
+        boolean result = usRepositoryDouble.getListOfUsWithMatchingIds(userStoryIds)
+                .equals(userStories);
 
-        // Assert
-        assertEquals("User story list does not contain userStories matching given IDs",
-                exception.getMessage());
+        assertTrue(result);
     }
 
     /**
@@ -182,7 +178,7 @@ class UsRepositoryTest {
      */
 
     @Test
-    public void ensureTwoUsIdInstancesHashcodeAreTheSame() {
+    public void ensureTwoUsRepositoryInstancesHashcodeAreTheSame() {
         // Arrange
         UsRepository usRepositoryOne = new UsRepository();
         UsRepository usRepositoryTwo = new UsRepository();
@@ -200,7 +196,7 @@ class UsRepositoryTest {
      */
 
     @Test
-    public void ensureTwoUsIdInstancesHashcodeAreNotTheSame() {
+    public void ensureTwoUsRepositoryInstancesHashcodeAreNotTheSame() {
         // Arrange
         UsRepository usRepositoryOne = new UsRepository();
         UsRepository usRepositoryThree = new UsRepository();
@@ -214,4 +210,34 @@ class UsRepositoryTest {
         // Assert
         assertNotEquals(repositoryOneHashCode, repositoryThreeHashCode);
     }
+
+    /**
+     * METHOD equals()
+     * <br>
+     * Scenario 1: Two UsRepository objects are the equal.
+     */
+
+    @Test
+    public void ensureTwoUsRepositoryInstancesAreEqual() {
+        // Arrange
+        UsRepository usRepositoryOne = new UsRepository();
+
+        // Assert
+        assertEquals(usRepositoryOne, usRepositoryOne);
+    }
+
+    /**
+     * Scenario 2: Two UsRepository objects are not equal.
+     */
+
+    @Test
+    public void ensureTwoUsRepositoryInstancesAreNotEqual() {
+        // Arrange
+        UsRepository usRepositoryOne = new UsRepository();
+        Object object = new Object();
+
+        // Assert
+        assertNotEquals(usRepositoryOne, object);
+    }
+
 }

@@ -23,13 +23,11 @@ public class UserStory implements Entity<UserStory> {
     private UsText usText;
     private Status status;
     private AcceptanceCriteria acceptanceCriteria;
-    private Effort effort;
 
     /**
      * Constructor
      * It creates an userStory using its identifier: usId.
      */
-
     protected UserStory(final UsId usId) {
         Validate.notNull(usId, "User Story's ID can't be null.");
         this.usId = usId;
@@ -43,7 +41,6 @@ public class UserStory implements Entity<UserStory> {
      * @return TRUE if the two have the same attribute value, and FALSE
      * otherwise.
      */
-
     @Override
     public boolean sameIdentityAs(UserStory other) {
         return this.usId.equals(other.usId);
@@ -56,7 +53,6 @@ public class UserStory implements Entity<UserStory> {
      * @param o userStory instance to compare with.
      * @return TRUE if the two have the same attribute, and FALSE otherwise.
      */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -78,16 +74,14 @@ public class UserStory implements Entity<UserStory> {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(usId);
     }
 
     /**
-     * This getter method returns the User Story Id.
+     * This getter method returns the User Story ID.
      */
-
     public UsId getUsId() {
         return usId;
     }
@@ -111,7 +105,6 @@ public class UserStory implements Entity<UserStory> {
     /**
      * This getter method returns the User Story Text.
      */
-
     public UsText getUsText() {
         return usText;
     }
@@ -142,34 +135,28 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This getter method returns the User Story effort.
-     */
-    public Effort getEffort() {
-        return effort;
-    }
-
-    /**
-     * This method sets the effort of the userStory.
-     *
-     * @param newEffortEstimate of the User Story to be set.
-     */
-    void setEffort(int newEffortEstimate) {
-        for (Effort effort : Effort.values()) {
-            if (effort.getEffortValue() == newEffortEstimate) {
-                this.effort = effort;
-                return;
-            }
-        }
-        throw new RuntimeException("Effort estimate was not successful");
-    }
-
-    /**
      * This protected method sets the actor of the userStory.
      *
      * @param actor of the User Story to create.
      */
     protected void setActor(Actor actor) {
         this.actor = actor;
+    }
+
+    /**
+     * This protected method sets the acceptance criteria of the userStory.
+     *
+     * @param acceptanceCriteria of the User Story to be added.
+     */
+    public void setAcceptanceCriteria(AcceptanceCriteria acceptanceCriteria) {
+        this.acceptanceCriteria = acceptanceCriteria;
+    }
+
+    /**
+     * This getter returns the Acceptance Criteria of a user story.
+     */
+    public AcceptanceCriteria getAcceptanceCriteria() {
+        return acceptanceCriteria;
     }
 
     /**
