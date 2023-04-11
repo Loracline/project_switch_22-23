@@ -91,16 +91,13 @@ class CreateUsControllerTest {
     /**
      * Method: createUs()
      * Scenario 1: Tests the behavior of the createUs method in the  CreateUsController class
-     * when a null
-     * ProjectDto object is passed as input.
+     * when a null ProjectDto object is passed as input.
      * The method should throw an IllegalArgumentExceptionwith a message indicating that the
-     * input parameters
-     * cannot be null.
+     * input parameters cannot be null.
      * The test first arranges the input by initializing the expected error message. Then it acts
      * by invoking the method with a null ProjectDto object and verifying that an
-     * IllegalArgumentException with the
-     * expected message is thrown. Finally, it asserts that the exception message matches the
-     * expected message.
+     * IllegalArgumentException with the expected message is thrown. Finally, it asserts that the
+     * exception message matches the expected message.
      *
      * @throwsIllegalArgumentException if the input parameters are null.
      */
@@ -145,14 +142,11 @@ class CreateUsControllerTest {
 
     /**
      * Scenario 3: This test verifies the behavior of the createUs method in the
-     * CreateUsController class when a valid
-     * UserStoryCreationDto object is passed as input. The method should successfully create a
-     * User Story and return
-     * true. The test arranges the input by creating mock objects for the UsService and
-     * ProjectService, and
-     * setting up the appropriate mock method behavior to return a UsId and true when called.
-     * Then it acts by
-     * invoking the method and verifying that it returns true. Finally, it asserts that the
+     * CreateUsController class when a valid UserStoryCreationDto object is passed as input.
+     * The method should successfully create a User Story and return true. The test arranges the
+     * input by creating mock objects for the UsService and ProjectService, and setting up the appropriate
+     * mock method behavior to return a UsId and true when called.
+     * Then it acts by invoking the method and verifying that it returns true. Finally, it asserts that the
      * result is true.
      */
     @Test
@@ -160,8 +154,8 @@ class CreateUsControllerTest {
         // Arrange
 
         UsId usId = mock(UsId.class);
-        when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.getProjectCode(), 0)).thenReturn(true);
+        when(mockUsService.createUs(userStoryCreationDto, projectDto.code)).thenReturn(usId);
+        when(mockProjectService.addToProductBacklog(usId, projectDto.code, userStoryCreationDto.priority)).thenReturn(true);
 
         // Act
         boolean result = mockCreateUsController.createUs(projectDto, userStoryCreationDto);
@@ -186,17 +180,15 @@ class CreateUsControllerTest {
 
     /**
      * Scenario 5: This test verifies that an exception is thrown and caught when adding a new
-     * user story to
-     * the product backlog fails during the process of creating a new user story. In this
-     * scenario, the
-     * createUs() method should also throw an exception.
+     * user story to the product backlog fails during the process of creating a new user story. In this
+     * scenario, the createUs() method should also throw an exception.
      */
     @Test
     void ensureCreateUsThrowsExceptionWhenAddingToProductBacklogFails() throws Exception {
         // Arrange
         UsId usId = mock(UsId.class);
-        when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.getProjectCode(), 0)).thenThrow(new Exception());
+        when(mockUsService.createUs(userStoryCreationDto, projectDto.code)).thenReturn(usId);
+        when(mockProjectService.addToProductBacklog(usId, projectDto.code, userStoryCreationDto.priority)).thenThrow(new Exception());
 
         // Act & Assert
         assertThrows(Exception.class, () -> mockCreateUsController.createUs(projectDto,
@@ -207,18 +199,16 @@ class CreateUsControllerTest {
      * Scenario 6: This test checks if a user story is deleted when adding it to the product
      * backlog fails.
      * It verifies that the createUs() method throws an exception and deletes the user story when
-     * the
-     * ProjectService#addToProductBacklog() method is called with the user story ID, project
-     * code, and
-     * position 0 in the backlog, and an exception is thrown with the message "Adding to product
+     * the ProjectService#addToProductBacklog() method is called with the user story ID, project
+     * code, and position 0 in the backlog, and an exception is thrown with the message "Adding to product
      * backlog failed".
      */
     @Test
     void ensureUsIsDeletedWhenAddingToProductBacklogFails() throws Exception {
         // Arrange
         UsId usId = mock(UsId.class);
-        when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.getProjectCode(), 0))
+        when(mockUsService.createUs(userStoryCreationDto, projectDto.code)).thenReturn(usId);
+        when(mockProjectService.addToProductBacklog(usId, projectDto.code, userStoryCreationDto.priority))
                 .thenThrow(new Exception("Adding to product backlog failed"));
 
         // Act and Assert
