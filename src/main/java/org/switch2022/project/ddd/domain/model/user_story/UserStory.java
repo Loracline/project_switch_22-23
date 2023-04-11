@@ -158,16 +158,4 @@ public class UserStory implements Entity<UserStory> {
     public boolean has(UsNumber usNumber) {
         return usNumber.equals(this.usNumber);
     }
-
-    @Override
-    public String toString() {
-        return "UserStory{" +
-                "usId=" + usId +
-                ", usNumber=" + usNumber +
-                ", actor=" + actor +
-                ", usText=" + usText +
-                ", status=" + status +
-                ", acceptanceCriteria=" + acceptanceCriteria +
-                '}';
-    }
 }
