@@ -18,18 +18,19 @@ class ProjectRepositoryTest {
      * Scenario 01: Test to ensure the object equals itself
      */
     @Test
-    void ensureSameObjectEqualsItself(){
-    // Arrange
-    ProjectRepository projectRepositoryOne = new ProjectRepository();
-    ProjectRepository projectRepositoryReference = projectRepositoryOne;
-    boolean expected = true;
+    void ensureSameObjectEqualsItself() {
+        // Arrange
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        ProjectRepository projectRepositoryReference = projectRepositoryOne;
+        boolean expected = true;
 
-    //Act
-    boolean result = projectRepositoryOne.equals(projectRepositoryReference);
+        //Act
+        boolean result = projectRepositoryOne.equals(projectRepositoryReference);
 
-    //Assert
-    assertEquals(expected, result);
-}
+        //Assert
+        assertEquals(expected, result);
+    }
+
     /**
      * Method: equals()
      * Scenario 02:Test to ensure that two objects are from different classes
@@ -48,6 +49,7 @@ class ProjectRepositoryTest {
         //Assert
         assertEquals(expected, result);
     }
+
     /**
      * Method: equals()
      * Scenario 04: Test to ensure that two objects from the same class are different
@@ -55,10 +57,10 @@ class ProjectRepositoryTest {
     @Test
     void ensureTwoProjectsAreNotEqual() {
         // Arrange
-        ProjectRepository projectRepositoryOne=new ProjectRepository();
-        Project projectOne= mock(Project.class);
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        Project projectOne = mock(Project.class);
         projectRepositoryOne.addProjectToProjectRepository(projectOne);
-        ProjectRepository projectRepositoryTwo= new ProjectRepository();
+        ProjectRepository projectRepositoryTwo = new ProjectRepository();
 
         boolean expected = false;
         //Act
@@ -66,16 +68,38 @@ class ProjectRepositoryTest {
         //Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * Method: equals()
+     * Scenario 05: Test to ensure that two objects from the same class are equals.
+     */
+    @Test
+    void ensureTwoProjectsAreEqual() {
+        // Arrange
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        Project projectOne = mock(Project.class);
+        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        ProjectRepository projectRepositoryTwo = new ProjectRepository();
+        projectRepositoryTwo.addProjectToProjectRepository(projectOne);
+
+        boolean expected = true;
+        //Act
+        boolean result = projectRepositoryOne.equals(projectRepositoryTwo);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
     /**
      * Method:hashCode()
      * Scenario 01:Two equal ProjectsRepository objects are the same.
      */
     @Test
     void ensureTwoUsIdInstancesHashcodeAreTheSame() {
-        Project projectOne = mock (Project.class);
-        ProjectRepository projectRepositoryOne= new ProjectRepository();
+        Project projectOne = mock(Project.class);
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
         projectRepositoryOne.addProjectToProjectRepository(projectOne);
-        ProjectRepository projectRepositoryTwo= new ProjectRepository();
+        ProjectRepository projectRepositoryTwo = new ProjectRepository();
         projectRepositoryTwo.addProjectToProjectRepository(projectOne);
 
         //Assert
@@ -90,11 +114,11 @@ class ProjectRepositoryTest {
     @Test
     void ensureNoTwoProjectsHaveTheSameHashCode() {
         //Arrange
-        Project projectOne = mock (Project.class);
-        Project projectTwo = mock (Project.class);
-        ProjectRepository projectRepositoryOne= new ProjectRepository();
+        Project projectOne = mock(Project.class);
+        Project projectTwo = mock(Project.class);
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
         projectRepositoryOne.addProjectToProjectRepository(projectOne);
-        ProjectRepository projectRepositoryTwo= new ProjectRepository();
+        ProjectRepository projectRepositoryTwo = new ProjectRepository();
         projectRepositoryTwo.addProjectToProjectRepository(projectTwo);
 
         //Assert

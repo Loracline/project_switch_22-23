@@ -15,7 +15,7 @@ import java.util.Optional;
  * of this company.
  */
 public class ProjectRepository implements IProjectRepository {
-      /**
+    /**
      * Attributes
      */
     private final List<Project> projects = new ArrayList<>();
@@ -30,7 +30,8 @@ public class ProjectRepository implements IProjectRepository {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o.getClass() != this.getClass()) {
-            return false;}
+            return false;
+        }
         ProjectRepository that = (ProjectRepository) o;
         return Objects.equals(projects, that.projects);
     }
