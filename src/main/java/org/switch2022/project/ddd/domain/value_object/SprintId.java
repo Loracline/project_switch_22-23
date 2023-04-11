@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class SprintId implements ValueObject<SprintId> {
-    private String sprintId;
+    private final String id;
 
     /**
      * Constructor.
@@ -16,7 +16,7 @@ public class SprintId implements ValueObject<SprintId> {
         Validate.notNullOrEmptyOrBlank(projectCode, "project code");
         Validate.notNullOrEmptyOrBlank(sprintNumber, "sprint number");
 
-        this.sprintId = (projectCode + "_" + sprintNumber).toLowerCase();
+        this.id = (projectCode + "_" + sprintNumber).toLowerCase();
     }
 
     /**
@@ -25,7 +25,7 @@ public class SprintId implements ValueObject<SprintId> {
      * @return String representation of the sprint ID.
      */
     public String getSprintId() {
-        return sprintId;
+        return id;
     }
 
     /**
@@ -36,7 +36,7 @@ public class SprintId implements ValueObject<SprintId> {
      */
     @Override
     public boolean sameValueAs(SprintId other) {
-        return other != null && this.sprintId.equals(other.sprintId);
+        return other != null && this.id.equals(other.id);
     }
 
     /**
@@ -67,7 +67,7 @@ public class SprintId implements ValueObject<SprintId> {
 
     @Override
     public int hashCode() {
-        return sprintId.hashCode();
+        return id.hashCode();
     }
 
 }

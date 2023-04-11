@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class NumberOfPlannedSprints implements ValueObject<NumberOfPlannedSprints> {
-    private Integer numberOfPlannedSprints;
+    private final Integer numberOfSprints;
 
     /**
      * Constructor.
@@ -14,7 +14,7 @@ public class NumberOfPlannedSprints implements ValueObject<NumberOfPlannedSprint
     public NumberOfPlannedSprints(final Number number) {
         Validate.notNull(number, "number of planned sprints");
         Validate.notNegative(number, "number of planned sprints");
-        this.numberOfPlannedSprints = number.intValue();
+        this.numberOfSprints = number.intValue();
     }
 
     /**
@@ -23,7 +23,7 @@ public class NumberOfPlannedSprints implements ValueObject<NumberOfPlannedSprint
      * @return number of planned sprints of the project.
      */
     public int getNumberOfPlannedSprints() {
-        return numberOfPlannedSprints;
+        return numberOfSprints;
     }
 
     /**
@@ -35,7 +35,7 @@ public class NumberOfPlannedSprints implements ValueObject<NumberOfPlannedSprint
      */
     @Override
     public boolean sameValueAs(NumberOfPlannedSprints other) {
-        return other != null && this.numberOfPlannedSprints == other.numberOfPlannedSprints;
+        return other != null && this.numberOfSprints.equals(other.numberOfSprints);
     }
 
     /**
@@ -66,6 +66,6 @@ public class NumberOfPlannedSprints implements ValueObject<NumberOfPlannedSprint
 
     @Override
     public int hashCode() {
-        return numberOfPlannedSprints.hashCode();
+        return numberOfSprints.hashCode();
     }
 }

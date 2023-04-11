@@ -4,6 +4,7 @@ package org.switch2022.project.ddd.application;
 import org.switch2022.project.ddd.domain.model.project.*;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
+import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +31,13 @@ public class ProjectService {
 
     public ProjectService(IFactoryProject factoryProject, IProjectRepository projectRepository,
                           IFactoryProductBacklog factoryProductBacklog) {
+        Validate.notNull(factoryProject, "Factory Project can't be null");
         this.factoryProject = factoryProject;
+
+        Validate.notNull(projectRepository, "Project Repository can't be null");
         this.projectRepository = projectRepository;
+
+        Validate.notNull(factoryProductBacklog, "Factory ProductBacklog can't be null");
         this.factoryProductBacklog = factoryProductBacklog;
     }
 
@@ -92,16 +98,16 @@ public class ProjectService {
     public boolean addUsToProductBacklog(UsId usId, String projectCode, int priority) throws Exception {
 
         Optional<Project> projectOptional = getProjectByCode(projectCode);
+        Project project;
         if (projectOptional.isPresent()) {
-            Project project = projectOptional.get();
-            if (project.addUserStory(priority, usId)) {
-                return true;
-            } else {
+            project = projectOptional.get();
+            if (!project.addUserStory(priority, usId)) {
                 throw new Exception("The User Story is already in the Product Backlog");
             }
         } else {
             throw new Exception("No project with that code");
         }
+        return project.addUserStory(priority, usId);
     }
 
     /**

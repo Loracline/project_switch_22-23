@@ -63,6 +63,70 @@ class ProjectServiceTest {
     }
 
     /**
+     * Constructor
+     * scenario 1: the factory project is null
+     */
+    @Test
+    void ensureProjectServiceIsNotCreated_FactoryProjectNull() {
+        //Arrange
+        IFactoryProject factoryProjectNull = null;
+        ProjectRepository projectRepositoryDouble = mock(ProjectRepository.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+
+        Exception exception = assertThrows(Exception.class, () ->
+                new ProjectService(factoryProjectNull, projectRepositoryDouble,
+                        factoryProductBacklogDouble));
+        String expected = "Factory Project can't be null";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Constructor
+     * scenario 2: the ProjectRepository is null
+     */
+    @Test
+    void ensureProjectServiceIsNotCreated_ProjectRepositoryNull() {
+        //Arrange
+        IFactoryProject factoryProjectNull = mock(FactoryProject.class);
+        ProjectRepository projectRepositoryDouble = null;
+        IFactoryProductBacklog factoryProductBacklogDouble = mock(FactoryProductBacklog.class);
+
+        Exception exception = assertThrows(Exception.class, () ->
+                new ProjectService(factoryProjectNull, projectRepositoryDouble,
+                        factoryProductBacklogDouble));
+        String expected = "Project Repository can't be null";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Constructor
+     * scenario 3: the factory Product Backlog is null
+     */
+    @Test
+    void ensureProjectServiceIsNotCreated_FactoryProductBacklogNull() {
+        //Arrange
+        IFactoryProject factoryProjectNull = mock(FactoryProject.class);
+        ProjectRepository projectRepositoryDouble = mock(ProjectRepository.class);
+        IFactoryProductBacklog factoryProductBacklogDouble = null;
+
+        Exception exception = assertThrows(Exception.class, () ->
+                new ProjectService(factoryProjectNull, projectRepositoryDouble,
+                        factoryProductBacklogDouble));
+        String expected = "Factory ProductBacklog can't be null";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
+    /**
      * Method: createProject
      * scenario1: the project is created successfully
      */
@@ -100,7 +164,7 @@ class ProjectServiceTest {
 
         Exception exception = assertThrows(Exception.class, () ->
                 projectService.createProject(projectCreationDtoDouble, customerIdDouble,
-                businessSectorIdDouble, projectTypologyIdDouble));
+                        businessSectorIdDouble, projectTypologyIdDouble));
         String expected = "Project not created";
         //Act
         String result = exception.getMessage();

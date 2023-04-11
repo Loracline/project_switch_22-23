@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class Actor implements ValueObject<Actor> {
-    private String actor;
+    private final String designation;
 
     /**
      * Constructor.
@@ -14,7 +14,7 @@ public class Actor implements ValueObject<Actor> {
     public Actor(final String actor) {
         Validate.notNullOrEmptyOrBlank(actor, "actor");
 
-        this.actor = actor.toLowerCase();
+        this.designation = actor.toLowerCase();
     }
 
     /**
@@ -23,7 +23,7 @@ public class Actor implements ValueObject<Actor> {
      * @return String representation of the actor.
      */
     public String getActor() {
-        return actor;
+        return designation;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Actor implements ValueObject<Actor> {
      */
     @Override
     public boolean sameValueAs(Actor other) {
-        return other != null && this.actor.equals(other.actor);
+        return other != null && this.designation.equals(other.designation);
     }
 
     /**
@@ -65,6 +65,6 @@ public class Actor implements ValueObject<Actor> {
 
     @Override
     public int hashCode() {
-        return actor.hashCode();
+        return designation.hashCode();
     }
 }

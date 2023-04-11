@@ -6,7 +6,7 @@ import org.switch2022.project.ddd.utils.Validate;
 import java.math.BigDecimal;
 
 public class Budget implements ValueObject<Budget> {
-    private BigDecimal budget;
+    private final BigDecimal value;
 
     /**
      * Constructor.
@@ -16,7 +16,7 @@ public class Budget implements ValueObject<Budget> {
     public Budget(final BigDecimal budget) {
         Validate.notNull(budget, "budget");
         Validate.notNegative(budget, "budget");
-        this.budget = budget;
+        this.value = budget;
     }
 
     /**
@@ -25,7 +25,7 @@ public class Budget implements ValueObject<Budget> {
      * @return budget of the project.
      */
     public BigDecimal getBudget() {
-        return budget;
+        return value;
     }
 
     /**
@@ -36,7 +36,7 @@ public class Budget implements ValueObject<Budget> {
      */
     @Override
     public boolean sameValueAs(Budget other) {
-        return other != null && this.budget.equals(other.budget);
+        return other != null && this.value.equals(other.value);
     }
 
     /**
@@ -67,6 +67,6 @@ public class Budget implements ValueObject<Budget> {
 
     @Override
     public int hashCode() {
-        return budget.hashCode();
+        return value.hashCode();
     }
 }
