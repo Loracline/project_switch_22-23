@@ -89,7 +89,7 @@ public class ProjectService {
      *                   and if the projectCode doesn't match any Project in the repository.
      */
 
-    public boolean addToProductBacklog(UsId usId, String projectCode, int priority) throws Exception {
+    public boolean addUsToProductBacklog(UsId usId, String projectCode, int priority) throws Exception {
 
         Optional<Project> projectOptional = getProjectByCode(projectCode);
         if (projectOptional.isPresent()) {

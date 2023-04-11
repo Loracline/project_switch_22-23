@@ -102,7 +102,7 @@ class CreateUsControllerTest {
      * expected message is thrown. Finally, it asserts that the exception message matches the
      * expected message.
      *
-     * @throwsIllegalArgumentException if the input parameters are null.
+     * @throws IllegalArgumentException if the input parameters are null.
      */
 
     @Test
@@ -126,7 +126,7 @@ class CreateUsControllerTest {
      * IllegalArgumentException with
      * a message indicating that the input parameters cannot be null.
      *
-     * @throwsIllegalArgumentException if the input parameters are null.
+     * @throws IllegalArgumentException if the input parameters are null.
      */
     @Test
     void ensureCreateUsThrowsExceptionWithNullUserStoryCreationDto() {
@@ -161,7 +161,8 @@ class CreateUsControllerTest {
 
         UsId usId = mock(UsId.class);
         when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.getProjectCode(), 0)).thenReturn(true);
+        when(mockProjectService.addUsToProductBacklog(usId, projectDto.getProjectCode(),
+                0)).thenReturn(true);
 
         // Act
         boolean result = mockCreateUsController.createUs(projectDto, userStoryCreationDto);
@@ -174,7 +175,7 @@ class CreateUsControllerTest {
      * Scenario 4: This test verifies if a user story is successfully created when the product
      * backlog is empty.
      *
-     * @throwsException if an error occurs during the test.
+     * @throws Exception if an error occurs during the test.
      */
     @Test
     void ensureUserStoryIsCreatedSuccessfullyEmptyProductBacklog() throws Exception {
@@ -196,7 +197,7 @@ class CreateUsControllerTest {
         // Arrange
         UsId usId = mock(UsId.class);
         when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.getProjectCode(), 0)).thenThrow(new Exception());
+        when(mockProjectService.addUsToProductBacklog(usId, projectDto.getProjectCode(), 0)).thenThrow(new Exception());
 
         // Act & Assert
         assertThrows(Exception.class, () -> mockCreateUsController.createUs(projectDto,
@@ -218,7 +219,8 @@ class CreateUsControllerTest {
         // Arrange
         UsId usId = mock(UsId.class);
         when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.getProjectCode(), 0))
+        when(mockProjectService.addUsToProductBacklog(usId, projectDto.getProjectCode(),
+                0))
                 .thenThrow(new Exception("Adding to product backlog failed"));
 
         // Act and Assert
@@ -268,7 +270,7 @@ class CreateUsControllerTest {
         projectRepository.addProjectToProjectRepository(project);
 
         UsId usId = new UsId("P001", "US001");
-        projectService.addToProductBacklog(usId, "P001", 0);
+        projectService.addUsToProductBacklog(usId, "P001", 0);
 
         ProjectDto projectDto = new ProjectDto("P001", null, null, null,
                 null, null);
