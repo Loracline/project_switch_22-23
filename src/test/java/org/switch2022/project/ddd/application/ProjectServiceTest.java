@@ -373,10 +373,11 @@ class ProjectServiceTest {
 
     /**
      * METHOD addUserStory(priority, usId) adds a userStoryId to the productBacklog of a project.
-     *
+     * <p>
      * Scenario 1: Adds a user Story because all arguments are valid.
+     *
      * @throws Exception if User Story is already added or project doesn't exist.
-     * Should return TRUE.
+     *                   Should return TRUE.
      */
     @Test
     void ensureUserStoryIsAddedToProductBacklog() throws Exception {
@@ -428,4 +429,63 @@ class ProjectServiceTest {
                 () -> projectServiceTwo.addUsToProductBacklog(usId, projectCode,
                         priority));
     }
+
+    /**
+     * METHOD getProductBacklog(String code) returns a list of UsID from the ProductBacklog of a Project.
+     * <p>
+     * Scenario 1: Returns a list of UsID.
+     *
+     * @throws Exception if there is no project in the product backlog with corresponding to the specified code.
+     *                   Should return a list of UsId.
+     */
+    @Test
+    void ensureProductBacklogIsReturned() throws Exception {
+        //Arrange
+        String projectCode = "P2";
+        UsId usId = mock(UsId.class);
+        List<UsId> expected = new ArrayList<>();
+        expected.add(usId);
+        when(productBacklogDouble.getUserStories()).thenReturn(expected);
+
+        //Act
+        List<UsId> result = projectServiceTwo.getProductBacklog(projectCode);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: Returns an empty list of UsID .
+     *
+     * @throws Exception if there is no project in the product backlog with corresponding to the specified code.
+     * Should return an empty list of UsId.
+     */
+    @Test
+    void ensureProductBacklogIsReturnedWithAnEmptyList() throws Exception {
+        //Arrange
+        String projectCode = "P2";
+        List<UsId> expected = new ArrayList<>();
+        when(productBacklogDouble.getUserStories()).thenReturn(expected);
+
+        //Act
+        List<UsId> result = projectServiceTwo.getProductBacklog(projectCode);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: Does not return a productBacklog because code doesn't match any project.
+     *
+     * Should throw an exception.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownIfProjectCodeDoesNotExist() {
+        //Arrange
+        String projectCode = "P3";
+
+        //Act and Assert
+        assertThrows(Exception.class, () -> projectServiceTwo.getProductBacklog(projectCode)) ;
+    }
+
 }
