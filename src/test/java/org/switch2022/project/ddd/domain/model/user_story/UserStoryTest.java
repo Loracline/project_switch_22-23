@@ -383,9 +383,7 @@ class UserStoryTest {
 
         // 5. Creation of the expected User Story to compare in the assertion.
         UserStory expected = new UserStory(usId);
-        expected.setUsNumber(usNumber);
-        expected.setUsText(usText);
-        expected.setActor(usActor);
+        expected.setValidUserStory(usNumber, usText, usActor);
 
         // ACT
         UserStory result = factoryUserStory.createUserStory(userStoryCreationDto, projectCode);
