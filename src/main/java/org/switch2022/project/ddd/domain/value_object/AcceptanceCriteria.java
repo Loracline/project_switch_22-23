@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class AcceptanceCriteria implements ValueObject<AcceptanceCriteria> {
-    private String acceptanceCriteria;
+    private final String criteria;
 
     /**
      * Constructor.
@@ -14,7 +14,7 @@ public class AcceptanceCriteria implements ValueObject<AcceptanceCriteria> {
     public AcceptanceCriteria(final String acceptanceCriteria) {
         Validate.notNullOrEmptyOrBlank(acceptanceCriteria, "acceptance criteria");
 
-        this.acceptanceCriteria = acceptanceCriteria.toLowerCase();
+        this.criteria = acceptanceCriteria.toLowerCase();
     }
 
     /**
@@ -23,7 +23,7 @@ public class AcceptanceCriteria implements ValueObject<AcceptanceCriteria> {
      * @return String representation of the acceptance criteria.
      */
     public String getAcceptanceCriteria() {
-        return acceptanceCriteria;
+        return criteria;
     }
 
     /**
@@ -35,7 +35,7 @@ public class AcceptanceCriteria implements ValueObject<AcceptanceCriteria> {
      */
     @Override
     public boolean sameValueAs(AcceptanceCriteria other) {
-        return other != null && this.acceptanceCriteria.equals(other.acceptanceCriteria);
+        return other != null && this.criteria.equals(other.criteria);
     }
 
     /**
@@ -66,6 +66,6 @@ public class AcceptanceCriteria implements ValueObject<AcceptanceCriteria> {
 
     @Override
     public int hashCode() {
-        return acceptanceCriteria.hashCode();
+        return criteria.hashCode();
     }
 }
