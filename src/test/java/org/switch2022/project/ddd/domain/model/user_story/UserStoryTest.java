@@ -547,4 +547,44 @@ class UserStoryTest {
     }
 
 
+    /**
+     * Method: hasStatus()
+     * Scenario 01: make sure the userStories have the same status
+     */
+    @Test
+    public void ensureTheUserStoriesStatusAreTheSame() {
+        //Arrange
+        UserStory userStoryOne = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        Status status = mock(Status.class);
+
+        //Act
+        boolean expected = userStoryTwo.hasStatus(status);
+        boolean result = userStoryOne.hasStatus(status);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: hasStatus()
+     * Scenario 01: make sure the userStories have different status
+     */
+    @Test
+    public void ensureTheUserStoriesStatusAreNotTheSame() {
+        //Arrange
+        UserStory userStoryOne = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        Status statusOne = mock(Status.class);
+        Status statusTwo = mock(Status.class);
+
+        //Act
+        boolean expected = userStoryTwo.hasStatus(statusOne);
+        boolean result = userStoryOne.hasStatus(statusTwo);
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }
