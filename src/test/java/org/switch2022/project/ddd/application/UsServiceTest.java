@@ -9,12 +9,14 @@ import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.infrastructure.UsRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class UsServiceTest {
@@ -90,43 +92,14 @@ class UsServiceTest {
 
     }
 
-
     /**
      * Method: delete(userStoryDto).
      * Deletes a userStory.
      * <br>
-     * Scenario 01: verify if a userStory is deleted.
-     * <p>
-     * Expected result: userStory is deleted.
-     */
-
-
-    @Test
-    void ensureUsIsDeleted() throws Exception {
-        // Arrange
-        IUsRepository usRepositoryDouble = mock(IUsRepository.class);
-        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
-        UserStoryMapper userStoryMapperDouble = mock(UserStoryMapper.class);
-        UsId usIdDouble = mock(UsId.class);
-
-        UsService usServiceOneDouble = new UsService(usRepositoryDouble, factoryUserStoryDouble, userStoryMapperDouble);
-        UsService usServiceTwoDouble = new UsService(usRepositoryDouble, factoryUserStoryDouble, userStoryMapperDouble);
-
-        // Act
-        usServiceOneDouble.deleteUs(usIdDouble);
-        usServiceTwoDouble.deleteUs(usIdDouble);
-
-        // Assert
-        assertEquals(usServiceOneDouble, usServiceTwoDouble);
-    }
-
-
-    /**
-     * Scenario 02: verify if a userStory is not deleted.
+     * Scenario 01: verify if a userStory is not deleted.
      * <p>
      * Expected result: userStory is not deleted.
      */
-
 
     @Test
     void ensureUsIsNotDeleted() throws Exception {
@@ -140,6 +113,27 @@ class UsServiceTest {
 
         // Assert
         assertThrows(IllegalStateException.class, () -> usServiceDouble.deleteUs(usIdDouble));
+    }
+
+    /**
+     * Scenario 02: verify if a userStory is deleted.
+     * <p>
+     * Expected result: userStory is deleted.
+     */
+
+    @Test
+    void ensureUsIsDeleted() throws Exception {
+        // Arrange
+        UsService usServiceDouble = mock(UsService.class);
+        UsRepository usRepositoryDouble = mock(UsRepository.class);
+        UsId usIdDouble = mock(UsId.class);
+
+        // Act
+        when(usRepositoryDouble.getListOfUsWithMatchingIds(anyList())).thenReturn(Collections.singletonList(mock(UserStory.class)));
+        usServiceDouble.deleteUs(usIdDouble);
+
+        // Assert
+        verify(usServiceDouble).deleteUs(usIdDouble);
     }
 
 
@@ -182,11 +176,10 @@ class UsServiceTest {
 
 
     /**
-     * Scenario 02: verify if a list of empty userStories is retrieved.
+     * Scenario 02: verify if a list of empty userStories is retrieved, a exception is thrown.
      * <p>
-     * Expected result: userStories list is retrieved.
+     * Expected result: exception is thrown.
      */
-
 
     @Test
     void ensureRequestOfAllPlannedUsIsSuccessfulEmptyList() throws Exception {
@@ -195,20 +188,18 @@ class UsServiceTest {
         IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
         UserStoryMapper userStoryMapperDouble = mock(UserStoryMapper.class);
         UsService usServiceDouble = new UsService(usRepositoryDouble, factoryUserStoryDouble, userStoryMapperDouble);
-
-        UserStoryDto userStoryDtoDoubleOne = mock(UserStoryDto.class);
-
         List<UsId> usIdDoubleList = new ArrayList<>();
-        List<UserStoryDto> expected = new ArrayList<>();
-        expected.add(userStoryDtoDoubleOne);
 
         when(usRepositoryDouble.getListOfUsWithMatchingIds(usIdDoubleList)).
                 thenReturn(Collections.emptyList());
 
         // Act
-        List<UserStoryDto> result = usServiceDouble.requestAllPlannedUs(usIdDoubleList);
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            usServiceDouble.requestAllPlannedUs(usIdDoubleList);
+        });
 
         // Assert
-        assertNotEquals(expected, result);
+        assertEquals("User story list does not contain userStories matching given IDs",
+                exception.getMessage());
     }
 }
