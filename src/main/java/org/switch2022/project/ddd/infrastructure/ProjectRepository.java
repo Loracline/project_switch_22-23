@@ -6,6 +6,7 @@ import org.switch2022.project.ddd.domain.value_object.Code;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 
@@ -14,10 +15,35 @@ import java.util.Optional;
  * of this company.
  */
 public class ProjectRepository implements IProjectRepository {
-    /**
+      /**
      * Attributes
      */
     private final List<Project> projects = new ArrayList<>();
+
+    /**
+     * This method checks if an instance of ProjectRepository is equal to another object.
+     *
+     * @param o object to compare with.
+     * @return true if the two have the same attribute value, and false otherwise.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o.getClass() != this.getClass()) {
+            return false;}
+        ProjectRepository that = (ProjectRepository) o;
+        return Objects.equals(projects, that.projects);
+    }
+
+    /**
+     * This method is used to generate a unique hash code for an object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(projects);
+    }
 
     /**
      * This method verify the existence of a project by code confirmation.

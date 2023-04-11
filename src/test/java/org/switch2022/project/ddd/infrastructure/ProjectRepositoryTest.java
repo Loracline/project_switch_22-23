@@ -14,6 +14,95 @@ import static org.mockito.Mockito.when;
 class ProjectRepositoryTest {
 
     /**
+     * Method: equals()
+     * Scenario 01: Test to ensure the object equals itself
+     */
+    @Test
+    void ensureSameObjectEqualsItself(){
+    // Arrange
+    ProjectRepository projectRepositoryOne = new ProjectRepository();
+    ProjectRepository projectRepositoryReference = projectRepositoryOne;
+    boolean expected = true;
+
+    //Act
+    boolean result = projectRepositoryOne.equals(projectRepositoryReference);
+
+    //Assert
+    assertEquals(expected, result);
+}
+    /**
+     * Method: equals()
+     * Scenario 02:Test to ensure that two objects are from different classes
+     */
+    @Test
+    void ensureObjectsAreFromDifferentClasses() {
+        // Arrange
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+
+        Object projectRepositoryObject = new Object();
+        boolean expected = false;
+
+        //Act
+        boolean result = projectRepositoryOne.equals(projectRepositoryObject);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+    /**
+     * Method: equals()
+     * Scenario 04: Test to ensure that two objects from the same class are different
+     */
+    @Test
+    void ensureTwoProjectsAreNotEqual() {
+        // Arrange
+        ProjectRepository projectRepositoryOne=new ProjectRepository();
+        Project projectOne= mock(Project.class);
+        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        ProjectRepository projectRepositoryTwo= new ProjectRepository();
+
+        boolean expected = false;
+        //Act
+        boolean result = projectRepositoryOne.equals(projectRepositoryTwo);
+        //Assert
+        assertEquals(expected, result);
+    }
+    /**
+     * Method:hashCode()
+     * Scenario 01:Two equal ProjectsRepository objects are the same.
+     */
+    @Test
+    void ensureTwoUsIdInstancesHashcodeAreTheSame() {
+        Project projectOne = mock (Project.class);
+        ProjectRepository projectRepositoryOne= new ProjectRepository();
+        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        ProjectRepository projectRepositoryTwo= new ProjectRepository();
+        projectRepositoryTwo.addProjectToProjectRepository(projectOne);
+
+        //Assert
+        assertEquals(projectRepositoryOne.hashCode(), projectRepositoryTwo.hashCode());
+    }
+
+
+    /**
+     * Method:hashCode()
+     * Scenario 02:Two objects with the different code and different hash codes are two different objects
+     */
+    @Test
+    void ensureNoTwoProjectsHaveTheSameHashCode() {
+        //Arrange
+        Project projectOne = mock (Project.class);
+        Project projectTwo = mock (Project.class);
+        ProjectRepository projectRepositoryOne= new ProjectRepository();
+        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        ProjectRepository projectRepositoryTwo= new ProjectRepository();
+        projectRepositoryTwo.addProjectToProjectRepository(projectTwo);
+
+        //Assert
+        assertNotEquals(projectRepositoryOne.hashCode(), projectRepositoryTwo.hashCode());
+    }
+
+
+    /**
      * Method: addProjectToProjectRepository(project).
      * adds a Project to Project Repository
      * <br>
