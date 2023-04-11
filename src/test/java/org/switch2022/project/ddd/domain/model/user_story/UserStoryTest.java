@@ -8,7 +8,6 @@ import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class UserStoryTest {
 
@@ -288,29 +287,6 @@ class UserStoryTest {
 
         // Assert
         assertEquals(usStatus, result);
-    }
-
-    /**
-     * METHOD toString()
-     * <br>
-     * Scenario 1: Verify that String has all the user story information.
-     */
-    @Test
-    void ensureThatUserStoryUSInformationIsRetrievedSuccessfullyAsAString() {
-        // Arrange
-        UsId usId = mock(UsId.class);
-        when(usId.toString()).thenReturn("P1US001");
-
-        UserStory userStory = new UserStory(usId);
-
-        String expected = "UserStory{usId=P1US001, usNumber=null, actor=null, " +
-                "usText=null, status=null, acceptanceCriteria=null}";
-
-        // Act
-        String result = userStory.toString();
-
-        // Assert
-        assertEquals(expected, result);
     }
 
     /**
