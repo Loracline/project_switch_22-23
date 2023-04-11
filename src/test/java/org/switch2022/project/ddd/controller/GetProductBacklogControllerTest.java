@@ -56,7 +56,7 @@ class GetProductBacklogControllerTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         //Services implemented
         usService = mock(UsService.class);
         projectService = mock(ProjectService.class);
