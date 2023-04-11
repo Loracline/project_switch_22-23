@@ -7,15 +7,15 @@ end legend
 autonumber
 actor "Product Owner" as product
 participant ":CreateUserStoryUI" as ui
-participant ":CreateUSController" as controller
-participant ":UsService" as service
-
+participant ":CreateUserStoryController" as controller
+participant ":Company" as company
+participant ":ProjectContainer" as container
+participant ":Project" as project
+participant ":Sprint" as sprint
+participant ":SprintBacklog" as sprintBacklog
+participant ":ProductBacklog" as backlog
 participant ":FactoryUserStory" as factory
 participant "userStory:UserStory" as userStory
-
-participant ":UsRepository" as usrep
-participant ":ProjectService" as pservice
-participant ":ProductBacklog" as pbacklog
 
 
 activate product
@@ -29,31 +29,38 @@ product -> ui : creates User Story
 activate ui
 ui --> product: requests data (US_number, actor, US_text, priority)
 product -> ui: enters User Story data
-ui -> controller: createUS(projectDto,userStoryCreationDto)
+ui -> controller: createUserStory(projectDto,userStoryCreationDto)
 activate controller
-controller -> service:createUs(userStoryCreationDto,projectCode)
-activate service
-
-service -> factory: createUserStory(userStoryCreationDto,projectCode)
+controller -> company: createUserStory(projectDto,userStoryCreationDto)
+activate company
+company -> container: createUserStory((projectDto,userStoryCreationDto)
+activate container
+container -> project: createUserStory(userStoryCreationDto)
+activate project
+project ->sprint:hasUserStory (userStoryNumber)
+activate sprint
+sprint -> sprintBacklog: hasUserStory (userStoryNumber)
+activate sprintBacklog
+sprintBacklog --> sprint: false
+deactivate sprintBacklog
+sprint --> project: false
+deactivate sprint
+project ->backlog: createUserStory(userStoryCreationDto)
+activate backlog
+backlog -> factory: createUserStory( userStoryNumber,userStoryText, actor)
 activate factory
 create userStory
 factory -> userStory
-
-factory -> service: userStory
+factory --> backlog: true
 deactivate factory
-service -> usrep: add(userStory)
-
-service --> controller: usId
-deactivate service
-
-controller -> pservice: addUserStoryToProductBacklog(usId,projectCode,priority)
-activate pservice
-pservice -> pbacklog : addUserStory(priority,usId)
-activate pbacklog
-pbacklog --> pservice : true
-deactivate pbacklog
-pservice --> controller : true
-deactivate pservice
+backlog --> project: true
+deactivate backlog
+project --> container: true
+deactivate project
+container --> company: true
+deactivate container
+company --> controller: true
+deactivate company
 controller --> ui: true
 deactivate controller
 ui --> product: "informs Operation Success"
