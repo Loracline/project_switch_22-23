@@ -25,33 +25,36 @@ ui -> controller: getProductBacklog(projectCode)
 activate controller
 controller -> pservice: getProductBacklog(code)
 activate pservice
-pservice -> prepo: getProjectByCode(projectCode)
+pservice -> prepo: getProjectByCode(code)
 activate prepo
 prepo -> project: getProductBacklog()
 activate project
 project -> backlog: getUserStories()
 activate backlog
-backlog --> project: List<usId>
+backlog --> project: usId
 deactivate backlog
-project --> prepo: List<usId>
+project --> prepo: usId
 deactivate project
-prepo --> pservice: List<usId>
+prepo --> pservice: usId
 deactivate prepo
-pservice --> controller: List<usId>
+pservice --> controller: usId
 deactivate pservice
 controller -> uservice : requestAllPlannedUs(usId)
 activate uservice
 uservice -> usrep : getListOfUsWithMatchingIds(usId)
 activate usrep
-usrep --> uservice : usId
+usrep --> uservice : userStories
 deactivate usrep
-uservice -> usmapper:  userStoryToDto(usId)
+loop for each userStory in userStories
+uservice -> usmapper:  userStoryToDto(userStory)
 activate usmapper
-usmapper --> uservice : List<UserStoryDto>
+usmapper --> uservice : userStoryDto
+
+end loop
 deactivate usmapper
-uservice --> controller: List<UserStoryDto>
+uservice --> controller: userStoryDtoList
 deactivate uservice
-controller --> ui : List<UserStoryDto>
+controller --> ui : userStoryDtoList
 deactivate controller
 
 ui --> actor: shows list of all US
