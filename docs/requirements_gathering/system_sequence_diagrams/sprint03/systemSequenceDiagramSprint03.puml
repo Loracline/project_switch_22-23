@@ -34,10 +34,6 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-note right
-Team member request to see all projects,
-and selects one (US016).
-end note
 actor <-- ":System": shows list of all US
 
 @enduml
