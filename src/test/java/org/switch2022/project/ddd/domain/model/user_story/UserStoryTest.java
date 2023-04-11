@@ -328,6 +328,29 @@ class UserStoryTest {
         assertFalse(result);
     }
 
+    /**
+     * METHOD setValidUserStory() sets the relevant attributes for a user story to be in a valid state.
+     * <br>
+     * Scenario 1: All three relevant attributes are set successfully - not one of them is null.
+     */
+    @DisplayName("User story relevant attributes are set")
+    @Test
+    void ensureUserStoryIsSetInAValidState() {
+        // ARRANGE
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+
+        UsNumber usNumber = mock(UsNumber.class);
+        UsText usText = mock(UsText.class);
+        Actor actor = mock(Actor.class);
+
+        // ACT
+        userStory.setValidUserStory(usNumber, usText, actor);
+
+        // ASSERT
+        assertNotNull(userStory.getActor());
+    }
+
 
     // INTEGRATION TESTS (on aggregate UserStory = class + factory + value objects)
 
@@ -522,4 +545,6 @@ class UserStoryTest {
         // ASSERT
         assertEquals(expected, userStory.getAcceptanceCriteria());
     }
+
+
 }

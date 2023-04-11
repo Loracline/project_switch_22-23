@@ -144,6 +144,13 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
+     * This getter returns the Actor.
+     */
+    public Actor getActor() {
+        return actor;
+    }
+
+    /**
      * This protected method sets the acceptance criteria of the userStory.
      *
      * @param acceptanceCriteria of the User Story to be added.
@@ -161,9 +168,10 @@ public class UserStory implements Entity<UserStory> {
 
     /**
      * This method sets the relevant attributes for a user story to be in a valid state.
+     *
      * @param usNumber of the user story.
-     * @param usText of the user story.
-     * @param actor of the user story.
+     * @param usText   of the user story.
+     * @param actor    of the user story.
      */
     protected void setValidUserStory(UsNumber usNumber, UsText usText, Actor actor) {
         setUsNumber(usNumber);
