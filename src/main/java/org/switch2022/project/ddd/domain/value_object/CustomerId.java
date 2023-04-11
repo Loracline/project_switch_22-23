@@ -13,7 +13,7 @@ public class CustomerId implements ValueObject<CustomerId> {
      * @param idNumber the id number of the customer.
      */
     public CustomerId(final Number idNumber) {
-        Validate.notNull(idNumber, "customer number");
+        Validate.notNull(idNumber, "The customer number must not be null");
         Validate.notNegative(idNumber, "customer number");
 
         this.id = String.format("C%03d", idNumber).toLowerCase();

@@ -86,13 +86,13 @@ class ValidateTest {
     @Test
     void ensureThatAnExceptionIsThrownWhenNumberIsNull() {
         //Arrange
-        String argumentName = "number";
+        String message = "The number must not be null";
         Number numberToTest = null;
-        String expected = "The number must not be null";
+        String expected = message;
 
         //Act
         IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
-                Validate.notNull(numberToTest, argumentName));
+                Validate.notNull(numberToTest, message));
 
         //Assert
         assertEquals(expected, exception.getMessage());

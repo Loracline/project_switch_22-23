@@ -13,7 +13,7 @@ public class BusinessSectorId implements ValueObject<BusinessSectorId> {
      * @param idNumber the id number of the business sector.
      */
     public BusinessSectorId(final Number idNumber) {
-        Validate.notNull(idNumber, "business sector number");
+        Validate.notNull(idNumber, "The business sector number must not be null");
         Validate.notNegative(idNumber, "business sector number");
 
         this.id = String.format("BS%03d", idNumber).toLowerCase();

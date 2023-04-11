@@ -13,7 +13,7 @@ public class ProjectTypologyId implements ValueObject<ProjectTypologyId> {
      * @param idNumber the id number of the customer.
      */
     public ProjectTypologyId(final Number idNumber) {
-        Validate.notNull(idNumber, "project typology number");
+        Validate.notNull(idNumber, "The project typology number must not be null");
         Validate.notNegative(idNumber, "project typology number");
 
         this.typologyId = String.format("PT%03d", idNumber).toLowerCase();

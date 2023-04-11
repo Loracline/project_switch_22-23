@@ -22,22 +22,6 @@ public class Validate {
     //STRING VALIDATIONS
 
     /**
-     * <p>Validate that the specified argument is not <code>null</code>;
-     * otherwise throwing an exception with the specified message.
-     *
-     * <pre>Validate.notNull(myString, "The string must not be null");</pre>
-     *
-     * @param string  the string to check
-     * @param message the exception message if invalid
-     * @throws IllegalArgumentException if the string is null
-     */
-    public static void notNull(String string, String message) {
-        if (string == null) {
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    /**
      * <p>Validate that the specified argument string is
      * neither <code>null</code> nor a length of zero (no characters);
      * otherwise throwing an exception with the specified message.
@@ -89,23 +73,6 @@ public class Validate {
     }
 
     //NUMBER VALIDATIONS
-
-    /**
-     * <p>Validate that the specified numeric argument is not <code>null</code>;
-     * otherwise throwing an exception with the specified message.
-     *
-     * <pre>Validate.notNull(myNumber, "The number must not be null");</pre>
-     *
-     * @param number       the number to check.
-     * @param argumentName the name of the argument to check.
-     * @throws IllegalArgumentException if the number is null.
-     */
-    public static <T extends Number> void notNull(T number, String argumentName) {
-        if (number == null) {
-            throw new IllegalArgumentException(String.format("The %s must not be null",
-                    argumentName));
-        }
-    }
 
     /**
      * <p>Validate that the specified argument is not <code>negative</code>;

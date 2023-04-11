@@ -14,7 +14,7 @@ public class SprintDuration implements ValueObject<SprintDuration> {
      * @param duration of sprints in the project.
      */
     public SprintDuration(final Number duration) {
-        Validate.notNull(duration, "sprint duration");
+        Validate.notNull(duration, "The sprint duration must not be null");
         Validate.withinInterval(MIN_SPRINT_DURATION, MAX_SPRINT_DURATION, duration, "sprint duration");
         this.duration = duration.intValue();
     }

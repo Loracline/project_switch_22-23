@@ -12,7 +12,7 @@ public class NumberOfPlannedSprints implements ValueObject<NumberOfPlannedSprint
      * @param number of planned sprints of the project.
      */
     public NumberOfPlannedSprints(final Number number) {
-        Validate.notNull(number, "number of planned sprints");
+        Validate.notNull(number, "The number of planned sprints must not be null");
         Validate.notNegative(number, "number of planned sprints");
         this.numberOfSprints = number.intValue();
     }
