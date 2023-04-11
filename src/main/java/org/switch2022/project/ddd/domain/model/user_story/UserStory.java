@@ -160,6 +160,18 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
+     * This method sets the relevant attributes for a user story to be in a valid state.
+     * @param usNumber of the user story.
+     * @param usText of the user story.
+     * @param actor of the user story.
+     */
+    protected void setValidUserStory(UsNumber usNumber, UsText usText, Actor actor) {
+        setUsNumber(usNumber);
+        setUsText(usText);
+        setActor(actor);
+    }
+
+    /**
      * This method verifies if the User Story has the given User Story Number.
      *
      * @param usNumber of the User Story.
