@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class UsNumber implements ValueObject<UsNumber> {
-    private String userStoryNumber;
+    private final String userStoryNumber;
 
     /**
      * Constructor.

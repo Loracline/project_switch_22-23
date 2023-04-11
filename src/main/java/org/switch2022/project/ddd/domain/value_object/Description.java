@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class Description implements ValueObject<Description> {
-    private String description;
+    private final String comentary;
 
     /**
      * Constructor.
@@ -14,7 +14,7 @@ public class Description implements ValueObject<Description> {
     public Description(final String projectDescription) {
         Validate.notNullOrEmptyOrBlank(projectDescription, "project description");
 
-        this.description = projectDescription.toLowerCase();
+        this.comentary = projectDescription.toLowerCase();
     }
 
     /**
@@ -23,7 +23,7 @@ public class Description implements ValueObject<Description> {
      * @return String representation of the project description.
      */
     public String getDescription() {
-        return description;
+        return comentary;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Description implements ValueObject<Description> {
      */
     @Override
     public boolean sameValueAs(Description other) {
-        return other != null && this.description.equals(other.description);
+        return other != null && this.comentary.equals(other.comentary);
     }
 
     /**
@@ -65,6 +65,6 @@ public class Description implements ValueObject<Description> {
 
     @Override
     public int hashCode() {
-        return description.hashCode();
+        return comentary.hashCode();
     }
 }

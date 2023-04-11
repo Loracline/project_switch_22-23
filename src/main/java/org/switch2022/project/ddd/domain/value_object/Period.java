@@ -7,8 +7,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Period implements ValueObject<Period> {
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
 
     /**
