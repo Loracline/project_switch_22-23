@@ -19,9 +19,10 @@ public class FactoryUserStory implements IFactoryUserStory {
 
         UserStory userStory = new UserStory(new UsId(projectCode, userStoryCreationDto.userStoryNumber));
 
-        userStory.setUsNumber(new UsNumber(userStoryCreationDto.userStoryNumber));
-        userStory.setUsText(new UsText(userStoryCreationDto.userStoryText));
-        userStory.setActor(new Actor(userStoryCreationDto.actor));
+        userStory.setValidUserStory(
+                new UsNumber(userStoryCreationDto.userStoryNumber),
+                new UsText(userStoryCreationDto.userStoryText),
+                new Actor(userStoryCreationDto.actor));
 
         return userStory;
     }
