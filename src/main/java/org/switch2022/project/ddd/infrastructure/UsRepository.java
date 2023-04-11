@@ -55,11 +55,11 @@ public class UsRepository implements IUsRepository {
      * @return the addition of the userStory to the repository or an exception otherwise.
      */
 
-    public void add(UserStory userStory) {
+    public void add(UserStory userStory) throws Exception{
         if (!userStories.contains(userStory)) {
             userStories.add(userStory);
         } else {
-            throw new IllegalStateException("User story ID already exists");
+            throw new IllegalArgumentException("User story ID already exists");
         }
     }
 
@@ -70,7 +70,7 @@ public class UsRepository implements IUsRepository {
      * @return the elimination of the userStory of the repository or an exception otherwise.
      */
 
-    public void delete(UsId usId) {
+    public void delete(UsId usId) throws Exception{
         boolean usFound = false;
         for (int i = 0; i < userStories.size(); i++) {
             if (userStories.get(i).getUsId().equals(usId)) {
@@ -80,7 +80,7 @@ public class UsRepository implements IUsRepository {
             }
         }
         if (!usFound) {
-            throw new IllegalStateException("User story does not exist");
+            throw new IllegalArgumentException("User story does not exist");
         }
     }
 

@@ -24,7 +24,7 @@ class UsRepositoryTest {
      */
 
     @Test
-    void ensureUserStoryIsAdded() {
+    void ensureUserStoryIsAdded() throws Exception {
         // Arrange
         UserStory userStoryDouble = mock(UserStory.class);
         UsRepository usRepositoryDouble = new UsRepository();
@@ -46,7 +46,7 @@ class UsRepositoryTest {
      */
 
     @Test
-    void ensureUserStoryIsNotAdded() {
+    void ensureUserStoryIsNotAdded() throws Exception {
         // Arrange
         UserStory userStoryDouble = mock(UserStory.class);
         UsRepository usRepositoryDouble = new UsRepository();
@@ -72,7 +72,7 @@ class UsRepositoryTest {
      */
 
     @Test
-    void ensureUserStoryIsDeleted() {
+    void ensureUserStoryIsDeleted() throws Exception {
         // Arrange
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
@@ -97,7 +97,7 @@ class UsRepositoryTest {
      */
 
     @Test
-    void ensureUserStoryIsNotDeletedUserStoryDoesNotExist() {
+    void ensureUserStoryIsNotDeletedUserStoryDoesNotExist() throws Exception {
         // Arrange
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
@@ -126,7 +126,7 @@ class UsRepositoryTest {
      */
 
     @Test
-    void ensureListOfUsIsRetrieved() {
+    void ensureListOfUsIsRetrieved() throws Exception {
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
         UsRepository usRepositoryDouble = new UsRepository();
@@ -196,7 +196,7 @@ class UsRepositoryTest {
      */
 
     @Test
-    public void ensureTwoUsRepositoryInstancesHashcodeAreNotTheSame() {
+    public void ensureTwoUsRepositoryInstancesHashcodeAreNotTheSame() throws Exception {
         // Arrange
         UsRepository usRepositoryOne = new UsRepository();
         UsRepository usRepositoryThree = new UsRepository();

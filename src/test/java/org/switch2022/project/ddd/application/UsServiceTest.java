@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.application;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.interfaces.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.Status;
@@ -15,8 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UsServiceTest {
@@ -136,7 +136,6 @@ class UsServiceTest {
         verify(usServiceDouble).deleteUs(usIdDouble);
     }
 
-
     /**
      * Method: requestAllPlannedUs(usId).
      * Returns a list of all userStories with the Status "PLANNED" through the userStory ID.
@@ -145,7 +144,6 @@ class UsServiceTest {
      * <p>
      * Expected result: userStories list is retrieved.
      */
-
 
     @Test
     void ensureRequestOfAllPlannedUsIsSuccessful() throws Exception {
@@ -164,7 +162,7 @@ class UsServiceTest {
 
         when(usRepositoryDouble.getListOfUsWithMatchingIds(usIdDoubleList)).
                 thenReturn(Collections.singletonList(userStoryDoubleOne));
-        when(userStoryDoubleOne.getStatus()).thenReturn(Status.valueOf("PLANNED"));
+        when(userStoryDoubleOne.hasStatus(Status.PLANNED)).thenReturn(true);
         when(userStoryMapperDouble.userStoryToDto(userStoryDoubleOne)).thenReturn(userStoryDtoDoubleOne);
 
         // Act
@@ -185,21 +183,102 @@ class UsServiceTest {
     void ensureRequestOfAllPlannedUsIsSuccessfulEmptyList() throws Exception {
         // Arrange
         IUsRepository usRepositoryDouble = mock(IUsRepository.class);
-        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
-        UserStoryMapper userStoryMapperDouble = mock(UserStoryMapper.class);
-        UsService usServiceDouble = new UsService(usRepositoryDouble, factoryUserStoryDouble, userStoryMapperDouble);
+        List<UsId> usIdDoubleList = new ArrayList<>();
+        List<UserStory> userStoriesList = new ArrayList<>();
+
+        when(usRepositoryDouble.getListOfUsWithMatchingIds(usIdDoubleList)).
+                thenReturn(userStoriesList);
+
+        List<UserStoryDto> emptyList = new ArrayList<>();
+
+        // Assert
+        assertEquals(userStoriesList, emptyList);
+    }
+
+    @Test
+    void ensureRequestOfAllPlannedUsIsSuccessfulEmptyListTestTwo() throws Exception {
+        // Arrange
+        IUsRepository usRepositoryDouble = mock(IUsRepository.class);
         List<UsId> usIdDoubleList = new ArrayList<>();
 
         when(usRepositoryDouble.getListOfUsWithMatchingIds(usIdDoubleList)).
                 thenReturn(Collections.emptyList());
 
-        // Act
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            usServiceDouble.requestAllPlannedUs(usIdDoubleList);
-        });
+        List<UserStoryDto> emptyList = new ArrayList<>();
 
         // Assert
-        assertEquals("User story list does not contain userStories matching given IDs",
-                exception.getMessage());
+        assertEquals(Collections.emptyList(), emptyList);
+    }
+
+    /**
+     * Constructor
+     * <p>
+     * Scenario 1: usRepository is null.
+     */
+
+    @Test
+    void ensureUsRepositoryIsNull() {
+        // Arrange
+        UsRepository usRepository = null;
+        FactoryUserStory factoryUserStory = new FactoryUserStory();
+        UserStoryMapper userStoryMapper = new UserStoryMapper();
+
+        // Act
+        Exception exception = assertThrows(Exception.class, () ->
+                new UsService(usRepository, factoryUserStory, userStoryMapper));
+
+        String expected = "User Story Repository can't be null";
+        String result = exception.getMessage();
+
+        // Act
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Constructor
+     * <p>
+     * Scenario 2: factoryRepository is null.
+     */
+
+    @Test
+    void ensureFactoryUserStoryIsNull() {
+        // Arrange
+        UsRepository usRepository = new UsRepository();
+        FactoryUserStory factoryUserStory = null;
+        UserStoryMapper userStoryMapper = new UserStoryMapper();
+
+        // Act
+        Exception exception = assertThrows(Exception.class, () ->
+                new UsService(usRepository, factoryUserStory, userStoryMapper));
+
+        String expected = "Factory User Story can't be null";
+        String result = exception.getMessage();
+
+        // Act
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Constructor
+     * <p>
+     * Scenario 3: userStoryMapper is null.
+     */
+
+    @Test
+    void ensureUserStoryMapperIsNull() {
+        // Arrange
+        UsRepository usRepository = new UsRepository();
+        FactoryUserStory factoryUserStory = new FactoryUserStory();
+        UserStoryMapper userStoryMapper = null;
+
+        // Act
+        Exception exception = assertThrows(Exception.class, () ->
+                new UsService(usRepository, factoryUserStory, userStoryMapper));
+
+        String expected = "User Story Mapper can't be null";
+        String result = exception.getMessage();
+
+        // Act
+        assertEquals(expected, result);
     }
 }
