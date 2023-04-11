@@ -5,7 +5,7 @@ import org.switch2022.project.ddd.utils.Validate;
 
 public class CustomerId implements ValueObject<CustomerId> {
 
-    private final String customerId;
+    private final String id;
 
     /**
      * Constructor.
@@ -13,10 +13,10 @@ public class CustomerId implements ValueObject<CustomerId> {
      * @param idNumber the id number of the customer.
      */
     public CustomerId(final Number idNumber) {
-        Validate.notNull(idNumber, "customer number");
+        Validate.notNull(idNumber, "The customer number must not be null");
         Validate.notNegative(idNumber, "customer number");
 
-        this.customerId = String.format("C%03d", idNumber).toLowerCase();
+        this.id = String.format("C%03d", idNumber).toLowerCase();
 
     }
 
@@ -26,7 +26,7 @@ public class CustomerId implements ValueObject<CustomerId> {
      * @return String representation of the customer ID.
      */
     public String getCustomerId() {
-        return customerId;
+        return id;
     }
 
     /**
@@ -38,7 +38,7 @@ public class CustomerId implements ValueObject<CustomerId> {
      */
     @Override
     public boolean sameValueAs(CustomerId other) {
-        return other != null && this.customerId.equals(other.customerId);
+        return other != null && this.id.equals(other.id);
     }
 
     /**
@@ -69,6 +69,6 @@ public class CustomerId implements ValueObject<CustomerId> {
 
     @Override
     public int hashCode() {
-        return customerId.hashCode();
+        return id.hashCode();
     }
 }

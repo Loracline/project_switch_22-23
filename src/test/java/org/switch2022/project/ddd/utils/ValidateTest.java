@@ -86,13 +86,13 @@ class ValidateTest {
     @Test
     void ensureThatAnExceptionIsThrownWhenNumberIsNull() {
         //Arrange
-        String argumentName = "number";
+        String message = "The number must not be null";
         Number numberToTest = null;
-        String expected = "The number must not be null";
+        String expected = message;
 
         //Act
         IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
-                Validate.notNull(numberToTest, argumentName));
+                Validate.notNull(numberToTest, message));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -238,6 +238,57 @@ class ValidateTest {
 
         //Act and Assert
         assertDoesNotThrow(() ->
+                Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
+    }
+
+    /**
+     * Scenario 6: verifies if a number is not located within an interval because the lower limit is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenLowerLimitIsNull() {
+        //Arrange
+        String argumentName = "number";
+        Number lowerLimit = null;
+        Number upperLimit = 4;
+        Number numberToTest = 5;
+
+        //Act and Assert
+        assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
+    }
+
+    /**
+     * Scenario 7: verifies if a number is not located within an interval because the upper limit is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenUpperLimitIsNull() {
+        //Arrange
+        String argumentName = "number";
+        Number lowerLimit = 1;
+        Number upperLimit = null;
+        Number numberToTest = 5;
+
+        //Act and Assert
+        assertThrowsExactly(IllegalArgumentException.class, () ->
+                Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
+    }
+
+    /**
+     * Scenario 8: verifies if a number is not located within an interval because the number to test is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenValueToCheckIsNull() {
+        //Arrange
+        String argumentName = "number";
+        Number lowerLimit = 1;
+        Number upperLimit = 4;
+        Number numberToTest = null;
+
+        //Act and Assert
+        assertThrowsExactly(IllegalArgumentException.class, () ->
                 Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
     }
 

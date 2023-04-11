@@ -4,9 +4,9 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class SprintDuration implements ValueObject<SprintDuration> {
-    private final Integer sprintDuration;
-    private final Integer MIN_SPRINT_DURATION = 0;
-    private final Integer MAX_SPRINT_DURATION = 4;
+    private final Integer duration;
+    private static final int MIN_SPRINT_DURATION = 0;
+    private static final int MAX_SPRINT_DURATION = 4;
 
     /**
      * Constructor.
@@ -14,9 +14,9 @@ public class SprintDuration implements ValueObject<SprintDuration> {
      * @param duration of sprints in the project.
      */
     public SprintDuration(final Number duration) {
-        Validate.notNull(duration, "sprint duration");
+        Validate.notNull(duration, "The sprint duration must not be null");
         Validate.withinInterval(MIN_SPRINT_DURATION, MAX_SPRINT_DURATION, duration, "sprint duration");
-        this.sprintDuration = duration.intValue();
+        this.duration = duration.intValue();
     }
 
     /**
@@ -25,7 +25,7 @@ public class SprintDuration implements ValueObject<SprintDuration> {
      * @return the duration of sprints in the project.
      */
     public int getSprintDuration() {
-        return sprintDuration;
+        return duration;
     }
 
     /**
@@ -37,7 +37,7 @@ public class SprintDuration implements ValueObject<SprintDuration> {
      */
     @Override
     public boolean sameValueAs(SprintDuration other) {
-        return other != null && this.sprintDuration == other.sprintDuration;
+        return other != null && this.duration.equals(other.duration);
     }
 
     /**
@@ -68,6 +68,6 @@ public class SprintDuration implements ValueObject<SprintDuration> {
 
     @Override
     public int hashCode() {
-        return sprintDuration.hashCode();
+        return duration.hashCode();
     }
 }
