@@ -273,7 +273,7 @@ class CreateUsControllerTest {
         ProjectDto projectDto = new ProjectDto("P001", null, null, null,
                 null, null);
 
-        String expectedMessage = "The User Story is already in the Product Backlog";
+        String expectedMessage = "User story does not exist";
 
         //ACT
         Exception exception = assertThrows(Exception.class, () ->

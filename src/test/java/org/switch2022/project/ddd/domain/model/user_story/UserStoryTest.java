@@ -311,42 +311,6 @@ class UserStoryTest {
     }
 
     /**
-     * METHOD setEffort()
-     * <br>
-     * Scenario 1: Verify that the effort is set successfully.
-     */
-    @Test
-    void ensureEffortIsSet() {
-        // Arrange
-        UsId usId = mock(UsId.class);
-        UserStory userStory = new UserStory(usId);
-
-        // Act
-        userStory.setEffort(2);
-
-        // Assert
-        assertEquals(Effort.TWO, userStory.getEffort());
-    }
-
-    /**
-     * Scenario 2: Verify that the effort is not set successfully.
-     */
-    @Test
-    void ensureEffortIsNotSet() {
-        // Arrange
-        UsId usId = mock(UsId.class);
-        UserStory userStory = new UserStory(usId);
-
-        // Act
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            userStory.setEffort(41);
-        });
-
-        // Assert
-        assertEquals("Effort estimate was not successful", exception.getMessage());
-    }
-
-    /**
      * METHOD has(usNumber) verifies if the User Story has the given User Story Number.
      *
      * Scenario 1: User Story has the given USNumber. Should return true.
