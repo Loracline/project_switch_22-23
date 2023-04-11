@@ -36,7 +36,7 @@ public class CreateUsController {
      * @param userStoryCreationDto the UserStoryCreationDto that represents the data for creating the user story
      * @return true if the user story is created and added to the product backlog successfully.
      * @throws IllegalArgumentException if either of the input parameters is null.
-     * @throws Exception                if an error occurs while creating the user story or adding it to
+     * @throws Exception                if an error occurs while creating the user story or adding it to.
      */
 
 
@@ -44,15 +44,14 @@ public class CreateUsController {
         if (projectDto == null || userStoryCreationDto == null) {
             throw new IllegalArgumentException("Input parameters cannot be null.");
         }
-
-        String projectCode = projectDto.getProjectCode();
+        String projectCode = projectDto.code;
         UsId usId = usService.createUs(userStoryCreationDto, projectCode);
         try {
-            projectService.addToProductBacklog(usId, projectCode, 0);
-            return true;
+            projectService.addToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
         } catch (Exception e) {
             usService.deleteUs(usId);
             throw e;
         }
+        return true;
     }
 }
