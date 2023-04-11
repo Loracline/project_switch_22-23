@@ -6,89 +6,80 @@ end legend
 skinparam sequenceMessageAlign center
 title To create User Story and add it to Product Backlog
 
-class "CreateUserStoryController" {
-- company
+
+class "CreateUsController" {
+- UsService
+- ProjectService
 + createUserStory(projectDto,userStoryCreationDto)
 }
 
-class "Company" {
-- projectContainer
-+ createUserStory(projectDto,userStoryCreationDto)
+class "UsService" {
+- FactoryUserStory
+- usRepository
++ createUs(userStoryCreationDto,projectCode)
++  add(userStory)
 }
 
-
-class "ProjectContainer" {
-- projects
-+ createUserStory(projectDto,userStoryCreationDto)
--getProjectByCode(projectCode)
+class "UsRepository" {
+-userStory
++add(userStory)
 }
 
-class "Project"{
-- productBacklog
-- sprints
-+ hasProjectCode(projectCode)
-- hasUserStoryNumberInSprints(String userStoryNumber)
-+ createUserStory(userStoryCreationDto)
-
-
-}
-class "Sprint"{
--SprintBacklog
-+hasUserStory (userStoryNumber)
-}
-
-class "SprintBacklog"{
--userStories
-+hasUserStory(userStoryNumber)
+class "ProjectService"{
+-ProductBacklog
++ addUserStoryToProductBacklog(usId,projectCode,priority)
 }
 
 class "ProductBacklog" {
-- userStories
--iFactoryUserStory
-+ createUserStory(userStoryCreationDto)
-+ addUserStory(UserStory userStory, int priority)
-}
-class "UserStory"{
-- userStoryNumber
-- actor
-- userStoryText
-- status
-- effort
-- listOfAcceptanceCriteria
--UserStory(builder)
-+UserStoryBuilder(userStoryNumber)
-+setActor( actor)
-+setUserStoryText( userStoryText)
-+hasUserStoryNumber(userStoryNumber)
+-priority
+-usId
++addUserStory(priority,usId)
 }
 
+class "UserStory"{
+- usId
+- usNumber
+- actor
+- usText
+- status
+- acceptanceCriteria
+- effort
+-UserStory(usId)
++setStatus(status)
++setUsText(usText)
++setUsNumber(usNumber)
++setEffort(effortEstimate)
++setActor(Actor actor)
++has(usNumber)
++toString()
+}
 
 interface "FactoryUserStory" {
 + createUserStory(userStoryCreationDto)
 }
+
 class "UserStoryCreationDto"{
 +userStoryNumber
 +actor
 +userStoryText
 +getPriority()
 }
+
 class "ProjectDto"{
 +projectCode
-
++getProjectCode()
 }
 
-"CreateUserStoryController""1"-->"1" "Company"
-"Company" "1"--> "1" "ProjectContainer"
-"ProjectContainer" "1"-->"*" "Project"
-"Project" "1" -->"1" "ProductBacklog"
-"Sprint" "*"<.. "Project"
-"ProductBacklog" "*" --> "1""FactoryUserStory"
-"FactoryUserStory" ..> "UserStory"
-"ProjectDto"<.. "ProjectContainer"
-"ProductBacklog" ..> "Sprint"
-"Sprint" "1"-->"1" "SprintBacklog"
-"Project" ..> "UserStoryCreationDto"
-"ProductBacklog" ..> "UserStoryCreationDto"
-"FactoryUserStory" ..> "UserStoryCreationDto"
+"CreateUsController""1"-->"1" "UsService"
+"UsService" "1"-->"1" "FactoryUserStory"
+"UserStoryCreationDto" <.. "CreateUsController"
+"UserStoryCreationDto" <. "UsService"
+"UserStoryCreationDto" <. "FactoryUserStory"
+"FactoryUserStory" "1"->"*" "UserStory"
+"ProjectDto" <. "UsService"
+"UsService" "1"->"1" "UsRepository"
+"CreateUsController" "1"->"1" "ProjectService"
+"CreateUsController" .>"ProjectDto"
+"ProjectService" "1"->"1" "ProductBacklog"
 
 @enduml
