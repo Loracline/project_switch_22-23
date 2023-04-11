@@ -4,7 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class Code implements ValueObject<Code> {
-    private String code;
+    private final String id;
 
     /**
      * Constructor.
@@ -14,7 +14,7 @@ public class Code implements ValueObject<Code> {
     public Code(final String projectCode) {
         Validate.notNullOrEmptyOrBlank(projectCode, "project code");
 
-        this.code = projectCode.toLowerCase();
+        this.id = projectCode.toLowerCase();
     }
 
     /**
@@ -23,7 +23,7 @@ public class Code implements ValueObject<Code> {
      * @return String representation of the project code.
      */
     public String getCode() {
-        return code;
+        return id;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Code implements ValueObject<Code> {
      */
     @Override
     public boolean sameValueAs(Code other) {
-        return other != null && this.code.equals(other.code);
+        return other != null && this.id.equals(other.id);
     }
 
     /**
@@ -65,6 +65,6 @@ public class Code implements ValueObject<Code> {
 
     @Override
     public int hashCode() {
-        return code.hashCode();
+        return id.hashCode();
     }
 }
