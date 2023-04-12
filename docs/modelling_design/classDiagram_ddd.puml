@@ -64,6 +64,7 @@ interface "FactoryUserStory" {
 + createUserStory(userStoryCreationDto)
 }
 
+
 "CreateUsController""1"->"1" "UsService" : has
 "UsService" "1"-->"1" "FactoryUserStory" : uses
 "FactoryUserStory" "1"-->"*" "UserStory" : creates
@@ -93,15 +94,35 @@ class "UserStoryMapper"{
 + userStoryToDto(userStory)
 }
 
+class "UserStoryCreationDto"{
++userStoryNumber
++actor
++userStoryText
++getPriority()
+}
+
+class "ProjectDto"{
++projectCode
++getProjectCode()
+}
+
+"CreateUsController" .>"ProjectDto"
+"ProjectDto" <. "UsService"
+"UserStoryCreationDto" .> "CreateUsController"
+"UserStoryCreationDto" .> "UsService"
+"UserStoryCreationDto" .> "FactoryUserStory"
 "GetProductBacklogController" "1"-->"1"  "ProjectService": has
 "GetProductBacklogController" "1"-->"1"  "UsService": has
-"Project" "1"-->"1" "ProductBacklog": has
-"ProductBacklog" "1"-->"*" "UserStory": has
-"UsRepository" "1"-->"*" "UserStory": has
-"UsService" "1"-->"1"  "UserStoryMapper": has
+"Project" "1"->"1" "ProductBacklog": has
+"ProductBacklog" "1"->"*" "UserStory": has
+"UsRepository" "1"->"*" "UserStory": has
+"UsService" "1"->"1"  "UserStoryMapper": has
 "UserStoryMapper" ..> "UserStory"
 "ProjectService" "1"-->"1" "ProjectRepository": contains
 "ProjectService" ..> "Project": uses
 "ProjectRepository" "1"-->"*" "Project": has
+
+
+
 @enduml
 
