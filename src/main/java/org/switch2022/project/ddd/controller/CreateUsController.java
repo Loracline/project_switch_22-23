@@ -47,7 +47,7 @@ public class CreateUsController {
         String projectCode = projectDto.code;
         UsId usId = usService.createUs(userStoryCreationDto, projectCode);
         try {
-            projectService.addUsToProductBacklog(usId, projectCode, 0);
+            projectService.addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
         } catch (Exception e) {
             try {
                 usService.deleteUs(usId);
