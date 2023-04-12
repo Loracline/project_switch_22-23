@@ -253,7 +253,7 @@ class CreateUsControllerTest {
                 "projectDescription", "businessSectorName",
                 "customerName", "typologyName", 2);
 
-        Project project = factoryProject.createProject(new Code("P001"), projectCreationDto,
+        Project project = factoryProject.createProject(new Code(1), projectCreationDto,
                 new BusinessSectorId(1), new CustomerId(1),
                 new ProjectTypologyId(1), new FactoryProductBacklog());
 
@@ -286,7 +286,7 @@ class CreateUsControllerTest {
                 "projectDescription", "businessSectorName",
                 "customerName", "typologyName", 2);
 
-        Project project = factoryProject.createProject(new Code("P001"), projectCreationDto,
+        Project project = factoryProject.createProject(new Code(1), projectCreationDto,
                 new BusinessSectorId(1), new CustomerId(1),
                 new ProjectTypologyId(1), new FactoryProductBacklog());
 

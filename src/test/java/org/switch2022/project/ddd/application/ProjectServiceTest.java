@@ -46,7 +46,7 @@ class ProjectServiceTest {
         projectServiceTwo = new ProjectService(factoryProject, projectRepository,
                 factoryProductBacklogDouble);
 
-        code = new Code("P2");
+        code = new Code(2);
         projectCreationDto = new ProjectCreationDto("Happy Project", "An amazing " +
                 "project", "Happy Name", "Happy Customer", "Happy Typology",
                 2);
@@ -137,7 +137,7 @@ class ProjectServiceTest {
         CustomerId customerIdDouble = mock(CustomerId.class);
         BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
         ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
-        String expected = "P2";
+        String expected = "p002";
         when(projectRepositoryDouble.getProjectNumber()).thenReturn(1);
         when(projectRepositoryDouble.addProjectToProjectRepository(any())).thenReturn(true);
 
@@ -213,7 +213,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.getProjectNumber()).thenReturn(0);
         int expected = 1;
         //Act
-        int result = projectService.createCode();
+        int result = projectService.calculateNextProjectNumber();
         //Assert
         assertEquals(expected, result);
     }
@@ -227,7 +227,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.getProjectNumber()).thenReturn(1);
         int expected = 2;
         //Act
-        int result = projectService.createCode();
+        int result = projectService.calculateNextProjectNumber();
         //Assert
         assertEquals(expected, result);
     }

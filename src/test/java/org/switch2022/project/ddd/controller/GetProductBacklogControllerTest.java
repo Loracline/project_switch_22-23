@@ -103,12 +103,12 @@ class GetProductBacklogControllerTest {
         usRepositoryOne.add(userStoryFour);
 
         //Project
-        projectOne = factoryProjectOne.createProject(new Code("P001"), new ProjectCreationDto("projectName",
+        projectOne = factoryProjectOne.createProject(new Code(1), new ProjectCreationDto("projectName",
                         "projectDescription", "businessSectorName", "customerName",
                         "typologyName", 2), new BusinessSectorId(1), new CustomerId(1),
                 new ProjectTypologyId(1), factoryProductBacklogOne);
 
-        projectTwo = factoryProjectOne.createProject(new Code("P002"), new ProjectCreationDto("projectName",
+        projectTwo = factoryProjectOne.createProject(new Code(2), new ProjectCreationDto("projectName",
                         "projectDescription", "businessSectorName", "customerName",
                         "typologyName", 2), new BusinessSectorId(1), new CustomerId(1),
                 new ProjectTypologyId(1), factoryProductBacklogOne);

@@ -8,58 +8,43 @@ class CodeTest {
     /**
      * METHOD constructor
      * <p>
-     * Scenario 1: verifies if an instance of Code is not created because the string passed as
+     * Scenario 1: verifies if an instance of Code is not created because the number passed as
      * argument is null.
      * Should throw an IllegalArgumentException.
      */
     @Test
-    void ensureThatAnExceptionIsThrownWhenStringIsNull() {
+    void ensureThatAnExceptionIsThrownWhenNumberIsNull() {
         //Arrange
-        String expected = "The project code must not be null";
+        Number number = null;
+
+        String expected = "The project number must not be null";
 
         //Act
         IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
-                new Code(null));
+                new Code(number));
 
         //Assert
         assertEquals(expected, exception.getMessage());
     }
 
     /**
-     * Scenario 2: verifies if an instance of Code is not created because the string passed as
-     * argument is empty.
+     * Scenario 2: verifies if an instance of Code is not created because the number passed as
+     * argument is negative.
      * Should throw an IllegalArgumentException.
      */
     @Test
-    void ensureThatAnExceptionIsThrownWhenStringIsEmpty() {
+    void ensureThatAnExceptionIsThrownWhenNumberIsNegative() {
         //Arrange
-        String expected = "The project code must not be empty";
+        String expected = "The project number must not be negative";
 
         //Act
         IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
-                new Code(""));
+                new Code(-2));
 
         //Assert
         assertEquals(expected, exception.getMessage());
     }
 
-    /**
-     * Scenario 3: verifies if an instance of Actor is not created because the string passed as
-     * argument is blank.
-     * Should throw an IllegalArgumentException.
-     */
-    @Test
-    void ensureThatAnExceptionIsThrownWhenStringIsBlank() {
-        //Arrange
-        String expected = "The project code must not be blank";
-
-        //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
-                new Code(" "));
-
-        //Assert
-        assertEquals(expected, exception.getMessage());
-    }
 
     /**
      * METHOD getCode()
@@ -70,7 +55,7 @@ class CodeTest {
     @Test
     void ensureCodeIsRetrievedSuccessfully() {
         // Arrange
-        Code code = new Code("P001");
+        Code code = new Code(1);
         String expected = "P001".toLowerCase();
 
         // Act
@@ -89,8 +74,8 @@ class CodeTest {
     @Test
     void ensureThatReturnsTrueIfTwoCodeInstancesHaveTheSameCodeValue() {
         //Arrange
-        Code code = new Code("P001");
-        Code otherCode = new Code("P001");
+        Code code = new Code(1);
+        Code otherCode = new Code(1);
         //Act
         boolean result = code.sameValueAs(otherCode);
         //Assert
@@ -104,8 +89,8 @@ class CodeTest {
     @Test
     void ensureThatReturnsFalseIfTwoCodeInstancesHaveDifferentCodeValues() {
         //Arrange
-        Code code = new Code("P001");
-        Code otherCode = new Code("P002");
+        Code code = new Code(1);
+        Code otherCode = new Code(2);
         //Act
         boolean result = code.sameValueAs(otherCode);
         //Assert
@@ -120,7 +105,7 @@ class CodeTest {
     @Test
     void ensureSameCodeEqualsItself() {
         // Arrange
-        Code reference = new Code("P001");
+        Code reference = new Code(1);
         Code other = reference;
 
         // Act
@@ -136,8 +121,8 @@ class CodeTest {
     @Test
     void ensureTwoInstancesWithSameIdAreEqual() {
         // Arrange
-        Code reference = new Code("P001");
-        Code other = new Code("P001");
+        Code reference = new Code(1);
+        Code other = new Code(1);
 
         // Act
         boolean result = reference.equals(other);
@@ -153,8 +138,8 @@ class CodeTest {
     @Test
     void ensureTwoDifferentCodeInstancesAreNotTheSame() {
         // Arrange
-        Code reference = new Code("P001");
-        Code other = new Code("P002");
+        Code reference = new Code(1);
+        Code other = new Code(2);
 
         // Act
         boolean result = reference.equals(other);
@@ -171,7 +156,7 @@ class CodeTest {
     @Test
     void ensureCodeDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        Code reference = new Code("P001");
+        Code reference = new Code(1);
         String other = "other object";
 
         // Act
@@ -187,7 +172,7 @@ class CodeTest {
     @Test
     void ensureCodeInstanceDoesNotEqualNull() {
         // Arrange
-        Code reference = new Code("P001");
+        Code reference = new Code(1);
         Code other = null;
 
         // Act
@@ -205,8 +190,8 @@ class CodeTest {
     @Test
     public void ensureTwoCodeInstancesHashcodeAreTheSame() {
         // Arrange
-        Code codeOne = new Code("P001");
-        Code codeTwo = new Code("P001");
+        Code codeOne = new Code(1);
+        Code codeTwo = new Code(1);
 
         // Act
         int codeOneHashCode = codeOne.hashCode();
@@ -222,8 +207,8 @@ class CodeTest {
     @Test
     public void ensureTwoCodeInstancesHashcodeAreNotTheSame() {
         // Arrange
-        Code codeOne = new Code("P001");
-        Code codeThree = new Code("P003");
+        Code codeOne = new Code(1);
+        Code codeThree = new Code(3);
 
         // Act
         int codeOneHashCode = codeOne.hashCode();

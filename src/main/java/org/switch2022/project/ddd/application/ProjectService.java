@@ -4,6 +4,7 @@ package org.switch2022.project.ddd.application;
 import org.switch2022.project.ddd.domain.model.project.*;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
+import org.switch2022.project.ddd.utils.Utils;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.List;
@@ -55,12 +56,13 @@ public class ProjectService {
     public String createProject(ProjectCreationDto projectCreationDto, CustomerId customerId,
                                 BusinessSectorId businessSectorId, ProjectTypologyId projectTypologyId)
             throws Exception {
-        String projectCode = "P" + createCode();
-        Code code = new Code(projectCode);
+
+        int projectNumber = calculateNextProjectNumber();
+        Code code = new Code(projectNumber);
         Project project = factoryProject.createProject(code, projectCreationDto, businessSectorId, customerId,
                 projectTypologyId, factoryProductBacklog);
         if (addProject(project)) {
-            return projectCode;
+            return code.getCode();
         } else {
             throw new Exception("Project not created");
         }
@@ -78,9 +80,9 @@ public class ProjectService {
     }
 
     /**
-     * This method creates a projectCode using the repository size.
+     * This method calculates the number of project to include in the project code using the repository size.
      */
-    public int createCode() {
+    public int calculateNextProjectNumber() {
         return projectRepository.getProjectNumber() + 1;
     }
 
@@ -117,7 +119,8 @@ public class ProjectService {
      * @return an optional from the repository.
      */
     public Optional<Project> getProjectByCode(String code) {
-        Code projectCode = new Code(code);
+        int codeNumber = Utils.getIntFromAlphanumericString(code,"P");
+        Code projectCode = new Code(codeNumber);
         return projectRepository.getProjectByCode(projectCode);
     }
 
