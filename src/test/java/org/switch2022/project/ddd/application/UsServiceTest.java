@@ -223,21 +223,6 @@ class UsServiceTest {
         assertEquals(userStoriesList, emptyList);
     }
 
-    @Test
-    void ensureRequestOfAllPlannedUsIsSuccessfulEmptyListTestTwo() throws Exception {
-        // Arrange
-        IUsRepository usRepositoryDouble = mock(IUsRepository.class);
-        List<UsId> usIdDoubleList = new ArrayList<>();
-
-        when(usRepositoryDouble.getListOfUsWithMatchingIds(usIdDoubleList)).
-                thenReturn(Collections.emptyList());
-
-        List<UserStoryDto> emptyList = new ArrayList<>();
-
-        // Assert
-        assertEquals(Collections.emptyList(), emptyList);
-    }
-
     /**
      * Constructor
      * <p>
