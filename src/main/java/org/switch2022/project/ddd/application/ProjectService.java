@@ -54,8 +54,8 @@ public class ProjectService {
 
 
     public String createProject(ProjectCreationDto projectCreationDto, CustomerId customerId,
-                                BusinessSectorId businessSectorId, ProjectTypologyId projectTypologyId)
-            throws Exception {
+                                BusinessSectorId businessSectorId,
+                                ProjectTypologyId projectTypologyId) {
 
         int projectNumber = calculateNextProjectNumber();
         Code code = new Code(projectNumber);
