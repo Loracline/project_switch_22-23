@@ -83,7 +83,7 @@ public class Project implements Entity<Project> {
      *
      * @return the code of the project.
      */
-    public Code getProjectCode() {
+    protected Code getProjectCode() {
         return this.projectCode;
     }
 
@@ -106,6 +106,15 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * Getter method for the attribute: projectName.
+     *
+     * @return the name of the project.
+     */
+    protected Name getProjectName() {
+        return projectName;
+    }
+
+    /**
      * This method sets the project description attribute to a new Description value object created with the description
      * parameter.
      *
@@ -113,6 +122,15 @@ public class Project implements Entity<Project> {
      */
     protected void setDescription(String description) {
         this.description = new Description(description.toLowerCase());
+    }
+
+    /**
+     * Getter method for the attribute: description.
+     *
+     * @return the description of the project.
+     */
+    protected Description getDescription() {
+        return description;
     }
 
     /**
@@ -125,12 +143,30 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * Getter method for the attribute: businessSectorId.
+     *
+     * @return the business sector ID of the project.
+     */
+    protected BusinessSectorId getBusinessSectorId() {
+        return businessSectorId;
+    }
+
+    /**
      * This method sets the customer ID attribute to the customerId parameter.
      *
      * @param customerId is the identifier attribute of type value object of the Customer entity.
      */
     protected void setCustomer(CustomerId customerId) {
         this.customerId = customerId;
+    }
+
+    /**
+     * Getter method for the attribute: customerId.
+     *
+     * @return the customer ID of the project.
+     */
+    protected CustomerId getCustomerId() {
+        return customerId;
     }
 
     /**
@@ -143,12 +179,30 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * Getter method for the attribute: projectTypologyId.
+     *
+     * @return the project typology ID of the project.
+     */
+    protected ProjectTypologyId getProjectTypologyId() {
+        return projectTypologyId;
+    }
+
+    /**
      * This method sets the sprint duration for this project to the specified sprint duration object.
      *
      * @param sprintDuration the sprint duration object to set for this project.
      */
     protected void setSprintDuration(int sprintDuration) {
         this.sprintDuration = new SprintDuration(sprintDuration);
+    }
+
+    /**
+     * Getter method for the attribute: sprintDuration.
+     *
+     * @return the sprint duration of the project.
+     */
+    protected SprintDuration getSprintDuration() {
+        return sprintDuration;
     }
 
     /**

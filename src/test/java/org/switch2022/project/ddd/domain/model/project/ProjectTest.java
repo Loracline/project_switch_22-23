@@ -2,9 +2,13 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.model.Sprint;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +23,8 @@ class ProjectTest {
      * tests below.
      */
 
-    Code projectCodeOne, projectCodeTwo, projectCodeThree;
-    Project projectOne, projectTwo, projectThree;
+    Code projectCodeOne, projectCodeTwo, projectCodeThree, projectCodeFour;
+    Project projectOne, projectTwo, projectThree, projectFour;
 
     @BeforeEach
     void setUp() {
@@ -29,11 +33,13 @@ class ProjectTest {
         projectCodeOne = new Code(1);
         projectCodeTwo = new Code(2);
         projectCodeThree = new Code(3);
+        projectCodeFour = new Code(1);
 
         //Project
         projectOne = new Project(projectCodeOne);
         projectTwo = new Project(projectCodeTwo);
         projectThree = new Project(projectCodeThree);
+        projectFour = new Project(projectCodeFour);
     }
 
     @AfterEach
@@ -44,6 +50,7 @@ class ProjectTest {
         projectOne = null;
         projectTwo = null;
         projectThree = null;
+        projectFour = null;
     }
 
     /**
@@ -200,6 +207,39 @@ class ProjectTest {
 
         //Assert
         assertNotEquals(expected, result);
+    }
+
+    /**
+     * METHOD setValidProject() sets the relevant attributes for a project to be in a valid state.
+     * <br>
+     * Scenario 1: All three relevant attributes are set successfully - not one of them is null.
+     */
+    @DisplayName("Project relevant attributes are set")
+    @Test
+    void ensureUserStoryIsSetInAValidState() {
+        // ARRANGE
+        Code projectCode = mock(Code.class);
+        Project project = new Project(projectCode);
+
+        String projectName = "X";
+        String description = "Unforgettable party";
+        int sprintDuration = 3;
+        BusinessSectorId businessSectorId = mock(BusinessSectorId.class);
+        CustomerId customerId = mock(CustomerId.class);
+        ProjectTypologyId projectTypologyId = mock(ProjectTypologyId.class);
+        IFactoryProductBacklog iFactoryProductBacklog = mock(IFactoryProductBacklog.class);
+
+        // ACT
+        project.setValidProject(projectName, description, sprintDuration, businessSectorId, customerId,
+                projectTypologyId, iFactoryProductBacklog);
+
+        // ASSERT
+        assertNotNull(project.getProjectName());
+        assertNotNull(project.getDescription());
+        assertNotNull(project.getSprintDuration());
+        assertNotNull(project.getBusinessSectorId());
+        assertNotNull(project.getCustomerId());
+        assertNotNull(project.getProjectTypologyId());
     }
 
     /**
@@ -547,5 +587,279 @@ class ProjectTest {
 
         // Act and Assert
         assertThrows(NullPointerException.class, () -> project.getProductBacklog());
+    }
+
+    /**
+     * Method: addUserStory()
+     * <p>
+     * Scenario 01: Add a new User Story to the userStories list if the User Story doesn't already exist.
+     * <p>
+     * Expected result: true.
+     */
+
+    @Test
+    void ensureUserStoryIsAddedToTheProductBacklog() {
+        // Arrange
+        UsId usId = new UsId("1", "us001");
+        int priority = 0;
+        IFactoryProductBacklog productBacklog = new FactoryProductBacklog();
+        productBacklog.createProductBacklog("1");
+        projectOne.setProductBacklog(productBacklog);
+        // Act
+        boolean result = projectOne.addUserStory(priority, usId);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Method: addUserStory()
+     * <p>
+     * Scenario 02: Fail to add a new User Story to the userStories list but the User Story already exists.
+     * <p>
+     * Expected result: false.
+     */
+
+    @Test
+    void ensureUserStoryIsNotAddedToTheProductBacklog() {
+        // Arrange
+        UsId usId = new UsId("1", "us001");
+        int priority = 0;
+        IFactoryProductBacklog productBacklog = new FactoryProductBacklog();
+        productBacklog.createProductBacklog("1");
+        projectOne.setProductBacklog(productBacklog);
+        // Act
+        projectOne.addUserStory(priority, usId);
+        boolean result = projectOne.addUserStory(priority, usId);
+
+        // Assert
+        assertFalse(false);
+    }
+
+    /**
+     * Method: sameIdentityAs()
+     * <p>
+     * Scenario 1: Check if two instances of Project are equal by comparing the value of the attribute project code.
+     * <p>
+     * Expected result: true.
+     */
+
+    @Test
+    void ensureTwoProjectsHaveTheSameIdentity() {
+        // Act
+        boolean isEquals = projectOne.sameIdentityAs(projectFour);
+
+        // Assert
+        assertTrue(isEquals);
+    }
+
+    /**
+     * Method: sameIdentityAs()
+     * <p>
+     * Scenario 2: Check if two instances of Project are not equal by comparing the value of the attribute project code.
+     * <p>
+     * Expected result: false.
+     */
+
+    @Test
+    void ensureTwoProjectsDoNotHaveTheSameIdentity() {
+        // Act
+        boolean isEquals = projectOne.sameIdentityAs(projectTwo);
+
+        // Assert
+        assertFalse(isEquals);
+    }
+
+    /**
+     * setBusinessSector()
+     * <p>
+     * Scenario 1: Sets the business sector ID attribute of the project.
+     * <p>
+     * Expected result: true.
+     */
+
+    @Test
+    void ensureBusinessSectorIdIsSet() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        BusinessSectorId businessSectorId = new BusinessSectorId(1);
+
+        // Act
+        projectOne.setBusinessSector(businessSectorId);
+        Field field = projectOne.getClass().getDeclaredField("businessSectorId");
+        field.setAccessible(true);
+        BusinessSectorId actualBusinessSectorId = (BusinessSectorId) field.get(projectOne);
+
+        // Assert
+        assertEquals(businessSectorId, actualBusinessSectorId);
+    }
+
+    /**
+     * Scenario 2: Fails to set the business sector ID attribute of the project, ID is null.
+     * <p>
+     * Expected result: business sector ID not set.
+     */
+
+    @Test
+    void ensureBusinessSectorIdIsNotSetBecauseItIsNull() throws NoSuchFieldException, IllegalAccessException {
+        // Act
+        projectOne.setBusinessSector(null);
+        Field field = projectOne.getClass().getDeclaredField("businessSectorId");
+        field.setAccessible(true);
+        BusinessSectorId actualBusinessSectorId = (BusinessSectorId) field.get(projectOne);
+
+        // Assert
+        assertNull(actualBusinessSectorId);
+    }
+
+    /**
+     * setCustomer()
+     * <p>
+     * Scenario 1: Sets the customer ID attribute of the project.
+     * <p>
+     * Expected result: true.
+     */
+
+    @Test
+    void ensureCustomerIdIsSet() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        CustomerId customerId = new CustomerId(1);
+
+        // Act
+        projectOne.setCustomer(customerId);
+        Field field = projectOne.getClass().getDeclaredField("customerId");
+        field.setAccessible(true);
+        CustomerId actualCustomerId = (CustomerId) field.get(projectOne);
+
+        // Assert
+        assertEquals(customerId, actualCustomerId);
+    }
+
+    /**
+     * Scenario 2: Fails to set the customer ID attribute of the project, ID is null.
+     * <p>
+     * Expected result: customer ID not set.
+     */
+
+    @Test
+    void ensureCustomerIdIsNotSetBecauseItIsNull() throws NoSuchFieldException, IllegalAccessException {
+        // Act
+        projectOne.setCustomer(null);
+        Field field = projectOne.getClass().getDeclaredField("customerId");
+        field.setAccessible(true);
+        CustomerId actualCustomerId = (CustomerId) field.get(projectOne);
+
+        // Assert
+        assertNull(actualCustomerId);
+    }
+
+    /**
+     * setTypology()
+     * <p>
+     * Scenario 1: Sets the project typology ID attribute of the project.
+     * <p>
+     * Expected result: true.
+     */
+
+    @Test
+    void ensureTypologyIdIsSet() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        ProjectTypologyId projectTypologyId = new ProjectTypologyId(1);
+
+        // Act
+        projectOne.setTypology(projectTypologyId);
+        Field field = projectOne.getClass().getDeclaredField("projectTypologyId");
+        field.setAccessible(true);
+        ProjectTypologyId actualProjectTypologyId = (ProjectTypologyId) field.get(projectOne);
+
+        // Assert
+        assertEquals(projectTypologyId, actualProjectTypologyId);
+    }
+
+    /**
+     * Scenario 2: Fails to set the project typology ID attribute of the project, ID is null.
+     * <p>
+     * Expected result: project typology ID not set.
+     */
+
+    @Test
+    void ensureTypologyIdIsNotSetBecauseItIsNull() throws NoSuchFieldException, IllegalAccessException {
+        // Act
+        projectOne.setTypology(null);
+        Field field = projectOne.getClass().getDeclaredField("projectTypologyId");
+        field.setAccessible(true);
+        ProjectTypologyId actualProjectTypologyId = (ProjectTypologyId) field.get(projectOne);
+
+        // Assert
+        assertNull(actualProjectTypologyId);
+    }
+
+    /**
+     * setSprintDuration()
+     * <p>
+     * Scenario 1: Sets the sprint duration of the project.
+     * <p>
+     * Expected result: true.
+     */
+
+    @Test
+    void ensureSprintDurationIsSet() throws NoSuchFieldException, IllegalAccessException {
+        // Arrange
+        int sprintDuration = 2;
+
+        // Act
+        projectOne.setSprintDuration(sprintDuration);
+
+        Field field = projectOne.getClass().getDeclaredField("sprintDuration");
+        field.setAccessible(true);
+        SprintDuration actualSprintDuration = (SprintDuration) field.get(projectOne);
+
+        Field durationField = actualSprintDuration.getClass().getDeclaredField("duration");
+        durationField.setAccessible(true);
+        int actualDuration = (int) durationField.get(actualSprintDuration);
+
+        // Assert
+        assertEquals(sprintDuration, actualDuration);
+    }
+
+    /**
+     * Scenario 2: Fails to set the sprint duration of the project because the sprint duration
+     * is higher than the established maximum limit.
+     * <p>
+     * Expected result: sprint duration not set, exception is thrown.
+     */
+
+    @Test
+    void ensureSprintDurationIsNotSetAboveTheLimit() {
+        // Arrange
+        Exception exception = assertThrows(Exception.class, () ->
+                projectOne.setSprintDuration(5));
+        String expected = "The sprint duration must be between 1 and 4";
+
+        //Act
+        String result = exception.getMessage();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: Fails to set the sprint duration of the project because the sprint duration
+     * is lower than the established minimum limit.
+     * <p>
+     * Expected result: sprint duration not set, exception is thrown.
+     */
+
+    @Test
+    void ensureSprintDurationIsNotSetBellowTheLimit() {
+        // Arrange
+        Exception exception = assertThrows(Exception.class, () ->
+                projectOne.setSprintDuration(0));
+        String expected = "The sprint duration must be between 1 and 4";
+
+        //Act
+        String result = exception.getMessage();
+
+        //Assert
+        assertEquals(expected, result);
     }
 }

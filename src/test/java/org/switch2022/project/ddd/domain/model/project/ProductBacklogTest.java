@@ -74,6 +74,24 @@ class ProductBacklogTest {
     }
 
     /**
+     * Scenario 3: Verify that two instances of ProductBacklog are not equal because one of them is null.
+     */
+    @Test
+    void ensureThatReturnsFalseIfOneOfTheProductBacklogsIsNull() {
+        // Arrange
+        PbId pbId = mock(PbId.class);
+        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        ProductBacklog other = null;
+        boolean expected = false;
+
+        // Act
+        boolean result = productBacklog.sameIdentityAs(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
      * METHOD equals()
      * <br>
      * Scenario 1: Verify that the same object equals itself.

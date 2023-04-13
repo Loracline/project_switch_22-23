@@ -39,7 +39,7 @@ class SprintDurationTest {
         //Arrange
         Number number = -1;
 
-        String expected = "The sprint duration must be between 0 and 4";
+        String expected = "The sprint duration must be between 1 and 4";
 
         //Act
         IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
