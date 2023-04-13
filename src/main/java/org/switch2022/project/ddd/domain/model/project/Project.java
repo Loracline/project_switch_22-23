@@ -150,6 +150,30 @@ public class Project implements Entity<Project> {
     protected void setSprintDuration(int sprintDuration) {
         this.sprintDuration = new SprintDuration(sprintDuration);
     }
+
+    /**
+     * This method sets the relevant attributes for a project to be in a valid state.
+     *
+     * @param projectName            of a project.
+     * @param description            of a project.
+     * @param sprintDuration         of a project.
+     * @param businessSectorId       of a project.
+     * @param customerId             of a project.
+     * @param projectTypologyId      of a project.
+     * @param iFactoryProductBacklog that creates the product backlog of a project.
+     */
+    protected void setValidProject(String projectName, String description, int sprintDuration,
+                                   BusinessSectorId businessSectorId, CustomerId customerId,
+                                   ProjectTypologyId projectTypologyId, IFactoryProductBacklog iFactoryProductBacklog) {
+        setName(projectName);
+        setDescription(description);
+        setSprintDuration(sprintDuration);
+        setBusinessSector(businessSectorId);
+        setCustomer(customerId);
+        setTypology(projectTypologyId);
+        setProductBacklog(iFactoryProductBacklog);
+    }
+
     /**
      * This method verifies if the Project has the given Project code
      *
@@ -171,7 +195,8 @@ public class Project implements Entity<Project> {
 
     /**
      * This method returns the list of user stories in the product backlog.
-     @return a list of {@link UsId} representing the user stories in the product backlog.
+     *
+     * @return a list of {@link UsId} representing the user stories in the product backlog.
      */
     public List<UsId> getProductBacklog() {
         return productBacklog.getUserStories();
