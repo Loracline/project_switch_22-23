@@ -4,6 +4,8 @@ package org.switch2022.project.ddd.application;
 import org.switch2022.project.ddd.domain.model.project.*;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
+import org.switch2022.project.ddd.utils.Utils;
+import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,8 +32,13 @@ public class ProjectService {
 
     public ProjectService(IFactoryProject factoryProject, IProjectRepository projectRepository,
                           IFactoryProductBacklog factoryProductBacklog) {
+        Validate.notNull(factoryProject, "Factory Project can't be null");
         this.factoryProject = factoryProject;
+
+        Validate.notNull(projectRepository, "Project Repository can't be null");
         this.projectRepository = projectRepository;
+
+        Validate.notNull(factoryProductBacklog, "Factory ProductBacklog can't be null");
         this.factoryProductBacklog = factoryProductBacklog;
     }
 
@@ -49,16 +56,13 @@ public class ProjectService {
     public String createProject(ProjectCreationDto projectCreationDto, CustomerId customerId,
                                 BusinessSectorId businessSectorId, ProjectTypologyId projectTypologyId)
             throws Exception {
-        String projectCode = "P" + createCode();
-        Code code = new Code(projectCode);
+
+        int projectNumber = calculateNextProjectNumber();
+        Code code = new Code(projectNumber);
         Project project = factoryProject.createProject(code, projectCreationDto, businessSectorId, customerId,
                 projectTypologyId, factoryProductBacklog);
-        if (addProject(project)) {
-            return projectCode;
-        } else {
-            throw new Exception("Project not created");
-        }
-
+        projectRepository.addProjectToProjectRepository(project);
+        return code.getCode();
     }
 
     /**
@@ -72,9 +76,9 @@ public class ProjectService {
     }
 
     /**
-     * This method creates a projectCode using the repository size.
+     * This method calculates the number of project to include in the project code using the repository size.
      */
-    public int createCode() {
+    public int calculateNextProjectNumber() {
         return projectRepository.getProjectNumber() + 1;
     }
 
@@ -89,19 +93,19 @@ public class ProjectService {
      *                   and if the projectCode doesn't match any Project in the repository.
      */
 
-    public boolean addToProductBacklog(UsId usId, String projectCode, int priority) throws Exception {
+    public boolean addUsToProductBacklog(UsId usId, String projectCode, int priority) throws Exception {
 
         Optional<Project> projectOptional = getProjectByCode(projectCode);
+        Project project;
         if (projectOptional.isPresent()) {
-            Project project = projectOptional.get();
-            if (project.addUserStory(priority, usId)) {
-                return true;
-            } else {
+            project = projectOptional.get();
+            if (!project.addUserStory(priority, usId)) {
                 throw new Exception("The User Story is already in the Product Backlog");
             }
         } else {
             throw new Exception("No project with that code");
         }
+        return project.addUserStory(priority, usId);
     }
 
     /**
@@ -111,7 +115,8 @@ public class ProjectService {
      * @return an optional from the repository.
      */
     public Optional<Project> getProjectByCode(String code) {
-        Code projectCode = new Code(code);
+        int codeNumber = Utils.getIntFromAlphanumericString(code,"P");
+        Code projectCode = new Code(codeNumber);
         return projectRepository.getProjectByCode(projectCode);
     }
 

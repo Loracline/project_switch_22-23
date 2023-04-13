@@ -99,7 +99,7 @@ class CreateUsControllerTest {
      * IllegalArgumentException with the expected message is thrown. Finally, it asserts that the
      * exception message matches the expected message.
      *
-     * @throwsIllegalArgumentException if the input parameters are null.
+     * @throws IllegalArgumentException if the input parameters are null.
      */
 
     @Test
@@ -123,7 +123,7 @@ class CreateUsControllerTest {
      * IllegalArgumentException with
      * a message indicating that the input parameters cannot be null.
      *
-     * @throwsIllegalArgumentException if the input parameters are null.
+     * @throws IllegalArgumentException if the input parameters are null.
      */
     @Test
     void ensureCreateUsThrowsExceptionWithNullUserStoryCreationDto() {
@@ -154,8 +154,8 @@ class CreateUsControllerTest {
         // Arrange
 
         UsId usId = mock(UsId.class);
-        when(mockUsService.createUs(userStoryCreationDto, projectDto.code)).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.code, userStoryCreationDto.priority)).thenReturn(true);
+        when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
+        when(mockProjectService.addUsToProductBacklog(usId, projectDto.getProjectCode(), 0)).thenReturn(true);
 
         // Act
         boolean result = mockCreateUsController.createUs(projectDto, userStoryCreationDto);
@@ -168,7 +168,7 @@ class CreateUsControllerTest {
      * Scenario 4: This test verifies if a user story is successfully created when the product
      * backlog is empty.
      *
-     * @throwsException if an error occurs during the test.
+     * @throws Exception if an error occurs during the test.
      */
     @Test
     void ensureUserStoryIsCreatedSuccessfullyEmptyProductBacklog() throws Exception {
@@ -187,8 +187,8 @@ class CreateUsControllerTest {
     void ensureCreateUsThrowsExceptionWhenAddingToProductBacklogFails() throws Exception {
         // Arrange
         UsId usId = mock(UsId.class);
-        when(mockUsService.createUs(userStoryCreationDto, projectDto.code)).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.code, userStoryCreationDto.priority)).thenThrow(new Exception());
+        when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
+        when(mockProjectService.addUsToProductBacklog(usId, projectDto.getProjectCode(), 0)).thenThrow(new Exception());
 
         // Act & Assert
         assertThrows(Exception.class, () -> mockCreateUsController.createUs(projectDto,
@@ -199,16 +199,18 @@ class CreateUsControllerTest {
      * Scenario 6: This test checks if a user story is deleted when adding it to the product
      * backlog fails.
      * It verifies that the createUs() method throws an exception and deletes the user story when
-     * the ProjectService#addToProductBacklog() method is called with the user story ID, project
-     * code, and position 0 in the backlog, and an exception is thrown with the message "Adding to product
+     * the
+     * ProjectService#addToProductBacklog() method is called with the user story ID, project
+     * code, and
+     * position 0 in the backlog, and an exception is thrown with the message "Adding to product
      * backlog failed".
      */
     @Test
     void ensureUsIsDeletedWhenAddingToProductBacklogFails() throws Exception {
         // Arrange
         UsId usId = mock(UsId.class);
-        when(mockUsService.createUs(userStoryCreationDto, projectDto.code)).thenReturn(usId);
-        when(mockProjectService.addToProductBacklog(usId, projectDto.code, userStoryCreationDto.priority))
+        when(mockUsService.createUs(userStoryCreationDto, projectDto.getProjectCode())).thenReturn(usId);
+        when(mockProjectService.addUsToProductBacklog(usId, projectDto.getProjectCode(), 0))
                 .thenThrow(new Exception("Adding to product backlog failed"));
 
         // Act and Assert
@@ -251,19 +253,19 @@ class CreateUsControllerTest {
                 "projectDescription", "businessSectorName",
                 "customerName", "typologyName", 2);
 
-        Project project = factoryProject.createProject(new Code("P001"), projectCreationDto,
+        Project project = factoryProject.createProject(new Code(1), projectCreationDto,
                 new BusinessSectorId(1), new CustomerId(1),
                 new ProjectTypologyId(1), new FactoryProductBacklog());
 
         projectRepository.addProjectToProjectRepository(project);
 
         UsId usId = new UsId("P001", "US001");
-        projectService.addToProductBacklog(usId, "P001", 0);
+        projectService.addUsToProductBacklog(usId, "P001", 0);
 
         ProjectDto projectDto = new ProjectDto("P001", null, null, null,
                 null, null);
 
-        String expectedMessage = "User story does not exist";
+        String expectedMessage = "The User Story is already in the Product Backlog";
 
         //ACT
         Exception exception = assertThrows(Exception.class, () ->
@@ -284,7 +286,7 @@ class CreateUsControllerTest {
                 "projectDescription", "businessSectorName",
                 "customerName", "typologyName", 2);
 
-        Project project = factoryProject.createProject(new Code("P001"), projectCreationDto,
+        Project project = factoryProject.createProject(new Code(1), projectCreationDto,
                 new BusinessSectorId(1), new CustomerId(1),
                 new ProjectTypologyId(1), new FactoryProductBacklog());
 

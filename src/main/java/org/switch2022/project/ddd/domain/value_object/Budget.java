@@ -14,7 +14,7 @@ public class Budget implements ValueObject<Budget> {
      * @param budget of the project.
      */
     public Budget(final BigDecimal budget) {
-        Validate.notNull(budget, "budget");
+        Validate.notNull(budget, "The budget must not be null");
         Validate.notNegative(budget, "budget");
         this.value = budget;
     }

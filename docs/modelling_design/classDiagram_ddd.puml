@@ -1,0 +1,128 @@
+@startuml
+
+class "CreateUsController" {
+- usService
+- projectService
++ createUserStory(projectDto,userStoryCreationDto)
+}
+
+class "UsService" {
+- factoryUserStory
+- usRepository
+- userStoryMapper
++ requestAllPlannedUs(usId)
++ createUs(userStoryCreationDto,projectCode)
++ add(userStory)
+}
+
+class "UsRepository" {
+- userStory
++ add(userStory)
++ getListOfUsWithMatchingIds(usId)
+}
+
+class "ProjectService"{
+- productBacklog
+- projectRepository
++ getProductBacklog(code)
++ getProjectByCode(code)
++ addUserStoryToProductBacklog(usId,projectCode,priority)
+}
+
+class "ProductBacklog" {
+- priority
+- usId
+- userStories
++ getUserStories()
++ addUserStory(priority,usId)
+}
+
+class "UserStory"{
+- usId
+- usNumber
+- actor
+- usText
+- status
+- acceptanceCriteria
+- effort
+- UserStory(usId)
++ setStatus()
++ setUsText(u)
++ setUsNumber()
++ setEffort()
++ setActor()
++ has()
++ toString()
++ getUsId()
++ getUsNumber()
++ getUsText()
++ getStatus()
++ setStatus()
+}
+
+interface "FactoryUserStory" {
++ createUserStory(userStoryCreationDto)
+}
+
+
+"CreateUsController""1"->"1" "UsService" : has
+"UsService" "1"-->"1" "FactoryUserStory" : uses
+"FactoryUserStory" "1"-->"*" "UserStory" : creates
+"UsService" "1"-->"1" "UsRepository" : contains
+"CreateUsController" "1"->"1" "ProjectService"
+"ProjectService" "1"->"1" "ProductBacklog" : has
+
+
+class "GetProductBacklogController" {
+- projectService
+- usService
++ getProductBacklog(projectCode)
+}
+
+class "Project" <<root>>{
+- projectCode
+- productBacklog
++ hasProjectCode(projectCode)
++ getProductBacklog()
+}
+
+class ProjectRepository{
++ getProjectByCode(code)
+}
+
+class "UserStoryMapper"{
++ userStoryToDto(userStory)
+}
+
+class "UserStoryCreationDto"{
++userStoryNumber
++actor
++userStoryText
++getPriority()
+}
+
+class "ProjectDto"{
++projectCode
++getProjectCode()
+}
+
+"CreateUsController" .>"ProjectDto"
+"ProjectDto" <. "UsService"
+"UserStoryCreationDto" .> "CreateUsController"
+"UserStoryCreationDto" .> "UsService"
+"UserStoryCreationDto" .> "FactoryUserStory"
+"GetProductBacklogController" "1"-->"1"  "ProjectService": has
+"GetProductBacklogController" "1"-->"1"  "UsService": has
+"Project" "1"->"1" "ProductBacklog": has
+"ProductBacklog" "1"->"*" "UserStory": has
+"UsRepository" "1"->"*" "UserStory": has
+"UsService" "1"->"1"  "UserStoryMapper": has
+"UserStoryMapper" ..> "UserStory"
+"ProjectService" "1"-->"1" "ProjectRepository": contains
+"ProjectService" ..> "Project": uses
+"ProjectRepository" "1"-->"*" "Project": has
+
+
+
+@enduml
+

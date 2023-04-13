@@ -21,7 +21,7 @@ public class Period implements ValueObject<Period> {
      */
     public Period(final LocalDate startDate, final Number duration) {
         Validate.notNull(startDate, "The start date must not be null");
-        Validate.notNull(duration, "duration");
+        Validate.notNull(duration, "The duration must not be null");
         Validate.notNegative(duration, "duration");
         this.startDate = startDate;
         this.endDate = calculateEndDate(startDate, duration);

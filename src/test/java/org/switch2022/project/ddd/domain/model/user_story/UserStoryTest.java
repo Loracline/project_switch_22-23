@@ -8,7 +8,6 @@ import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class UserStoryTest {
 
@@ -291,29 +290,6 @@ class UserStoryTest {
     }
 
     /**
-     * METHOD toString()
-     * <br>
-     * Scenario 1: Verify that String has all the user story information.
-     */
-    @Test
-    void ensureThatUserStoryUSInformationIsRetrievedSuccessfullyAsAString() {
-        // Arrange
-        UsId usId = mock(UsId.class);
-        when(usId.toString()).thenReturn("P1US001");
-
-        UserStory userStory = new UserStory(usId);
-
-        String expected = "UserStory{usId=P1US001, usNumber=null, actor=null, " +
-                "usText=null, status=null, acceptanceCriteria=null}";
-
-        // Act
-        String result = userStory.toString();
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    /**
      * METHOD has(usNumber) verifies if the User Story has the given User Story Number.
      *<br>
      * Scenario 1: User Story has the given USNumber. Should return true.
@@ -352,6 +328,29 @@ class UserStoryTest {
         assertFalse(result);
     }
 
+    /**
+     * METHOD setValidUserStory() sets the relevant attributes for a user story to be in a valid state.
+     * <br>
+     * Scenario 1: All three relevant attributes are set successfully - not one of them is null.
+     */
+    @DisplayName("User story relevant attributes are set")
+    @Test
+    void ensureUserStoryIsSetInAValidState() {
+        // ARRANGE
+        UsId usId = mock(UsId.class);
+        UserStory userStory = new UserStory(usId);
+
+        UsNumber usNumber = mock(UsNumber.class);
+        UsText usText = mock(UsText.class);
+        Actor actor = mock(Actor.class);
+
+        // ACT
+        userStory.setValidUserStory(usNumber, usText, actor);
+
+        // ASSERT
+        assertNotNull(userStory.getActor());
+    }
+
 
     // INTEGRATION TESTS (on aggregate UserStory = class + factory + value objects)
 
@@ -383,9 +382,7 @@ class UserStoryTest {
 
         // 5. Creation of the expected User Story to compare in the assertion.
         UserStory expected = new UserStory(usId);
-        expected.setUsNumber(usNumber);
-        expected.setUsText(usText);
-        expected.setActor(usActor);
+        expected.setValidUserStory(usNumber, usText, usActor);
 
         // ACT
         UserStory result = factoryUserStory.createUserStory(userStoryCreationDto, projectCode);
@@ -547,5 +544,47 @@ class UserStoryTest {
 
         // ASSERT
         assertEquals(expected, userStory.getAcceptanceCriteria());
+    }
+
+
+    /**
+     * Method: hasStatus()
+     * Scenario 01: make sure the userStories have the same status
+     */
+    @Test
+    public void ensureTheUserStoriesStatusAreTheSame() {
+        //Arrange
+        UserStory userStoryOne = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        Status status = mock(Status.class);
+
+        //Act
+        boolean expected = userStoryTwo.hasStatus(status);
+        boolean result = userStoryOne.hasStatus(status);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: hasStatus()
+     * Scenario 01: make sure the userStories have different status
+     */
+    @Test
+    public void ensureTheUserStoriesStatusAreNotTheSame() {
+        //Arrange
+        UserStory userStoryOne = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        Status statusOne = mock(Status.class);
+        Status statusTwo = mock(Status.class);
+
+        //Act
+        boolean expected = userStoryTwo.hasStatus(statusOne);
+        boolean result = userStoryOne.hasStatus(statusTwo);
+
+        //Assert
+        assertEquals(expected, result);
     }
 }

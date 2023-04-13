@@ -13,7 +13,7 @@ public class SprintNumber implements ValueObject<SprintNumber> {
      * @param sprintNumber the number of the sprint.
      */
     public SprintNumber(final Number sprintNumber) {
-        Validate.notNull(sprintNumber, "sprint number");
+        Validate.notNull(sprintNumber, "The sprint number must not be null");
         Validate.notNegative(sprintNumber, "sprint number");
 
         this.sprintId = String.format("S%03d", sprintNumber).toLowerCase();

@@ -22,6 +22,7 @@ public class UserStory implements Entity<UserStory> {
     private Actor actor;
     private UsText usText;
     private Status status;
+    private Effort effort;
     private AcceptanceCriteria acceptanceCriteria;
 
     /**
@@ -135,12 +136,41 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
+     * This getter method returns the User Story effort.
+     */
+    public Effort getEffort() {
+        return effort;
+    }
+
+    /**
+     * This method sets the effort of the userStory.
+     *
+     * @param newEffortEstimate of the User Story to be set.
+     */
+    void setEffort(int newEffortEstimate) {
+        for (Effort effort : Effort.values()) {
+            if (effort.getEffortValue() == newEffortEstimate) {
+                this.effort = effort;
+                return;
+            }
+        }
+        throw new RuntimeException("Effort estimate was not successful");
+    }
+
+    /**
      * This protected method sets the actor of the userStory.
      *
      * @param actor of the User Story to create.
      */
     protected void setActor(Actor actor) {
         this.actor = actor;
+    }
+
+    /**
+     * This getter returns the Actor.
+     */
+    public Actor getActor() {
+        return actor;
     }
 
     /**
@@ -160,6 +190,19 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
+     * This method sets the relevant attributes for a user story to be in a valid state.
+     *
+     * @param usNumber of the user story.
+     * @param usText   of the user story.
+     * @param actor    of the user story.
+     */
+    protected void setValidUserStory(UsNumber usNumber, UsText usText, Actor actor) {
+        setUsNumber(usNumber);
+        setUsText(usText);
+        setActor(actor);
+    }
+
+    /**
      * This method verifies if the User Story has the given User Story Number.
      *
      * @param usNumber of the User Story.
@@ -167,6 +210,16 @@ public class UserStory implements Entity<UserStory> {
      */
     public boolean has(UsNumber usNumber) {
         return usNumber.equals(this.usNumber);
+    }
+
+    /**
+     * This method verifies if the UserStory has the given status
+     *
+     * @param status of the Project.
+     * @return TRUE if Status has the given Status, and FALSE otherwise.
+     */
+    public boolean hasStatus(Status status) {
+        return status.equals(this.status);
     }
 
     @Override

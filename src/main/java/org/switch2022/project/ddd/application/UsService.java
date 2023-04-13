@@ -3,12 +3,15 @@ package org.switch2022.project.ddd.application;
 import org.switch2022.project.ddd.domain.interfaces.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,8 +34,11 @@ public class UsService {
 
     public UsService(IUsRepository usRepository, IFactoryUserStory factoryUserStory,
                      UserStoryMapper userStoryMapper) {
+        Validate.notNull(usRepository,"User Story Repository can't be null");
         this.usRepository = usRepository;
+        Validate.notNull(factoryUserStory,"Factory User Story can't be null");
         this.factoryUserStory = factoryUserStory;
+        Validate.notNull(userStoryMapper,"User Story Mapper can't be null");
         this.userStoryMapper = userStoryMapper;
     }
 
@@ -55,7 +61,6 @@ public class UsService {
      * This method deletes the userStory or throws an exception if the userStory does not exist.
      *
      * @param usId of userStory to be deleted from the repository.
-     * @return userStory deletion.
      */
 
     public void deleteUs(UsId usId) throws Exception {
@@ -77,16 +82,14 @@ public class UsService {
 
     public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) throws Exception {
         List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
-        if (userStories.isEmpty()) {
-            throw new IllegalStateException("User story list does not contain userStories matching given IDs");
-        } else {
-            List<UserStoryDto> userStoriesDto = new ArrayList<>();
+        List<UserStoryDto> userStoriesDto = new ArrayList<>();
+        if (!userStories.isEmpty()) {
             for (UserStory userStory : userStories) {
-                if (userStory.getStatus().toString().equals("PLANNED")) {
+                if (userStory.hasStatus(Status.PLANNED)) {
                     userStoriesDto.add(userStoryMapper.userStoryToDto(userStory));
                 }
             }
-            return userStoriesDto;
         }
+        return userStoriesDto;
     }
 }

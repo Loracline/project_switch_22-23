@@ -26,9 +26,9 @@ class ProjectTest {
     void setUp() {
 
         //Code
-        projectCodeOne = new Code("P001");
-        projectCodeTwo = new Code("P002");
-        projectCodeThree = new Code("P003");
+        projectCodeOne = new Code(1);
+        projectCodeTwo = new Code(2);
+        projectCodeThree = new Code(3);
 
         //Project
         projectOne = new Project(projectCodeOne);

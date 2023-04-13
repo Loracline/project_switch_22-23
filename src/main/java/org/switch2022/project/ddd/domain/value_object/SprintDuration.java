@@ -5,8 +5,8 @@ import org.switch2022.project.ddd.utils.Validate;
 
 public class SprintDuration implements ValueObject<SprintDuration> {
     private final Integer duration;
-    private final static int MIN_SPRINT_DURATION = 0;
-    private final static int MAX_SPRINT_DURATION = 4;
+    private static final int MIN_SPRINT_DURATION = 0;
+    private static final int MAX_SPRINT_DURATION = 4;
 
     /**
      * Constructor.
@@ -14,7 +14,7 @@ public class SprintDuration implements ValueObject<SprintDuration> {
      * @param duration of sprints in the project.
      */
     public SprintDuration(final Number duration) {
-        Validate.notNull(duration, "sprint duration");
+        Validate.notNull(duration, "The sprint duration must not be null");
         Validate.withinInterval(MIN_SPRINT_DURATION, MAX_SPRINT_DURATION, duration, "sprint duration");
         this.duration = duration.intValue();
     }

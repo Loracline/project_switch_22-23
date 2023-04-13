@@ -9,57 +9,52 @@ autonumber
 actor "Product Owner\nScrum Master\nTeam Member" as actor
 participant ":GetProductBacklogUI" as ui
 participant ":GetProductBacklogController" as controller
-participant ":Company" as company
-participant ":ProjectContainer" as container
+participant ":ProjectService" as pservice
+participant ":ProjectRepository" as prepo
 participant ":Project" as project
 participant ":ProductBacklog" as backlog
-participant ":UserStoryDtoListAssembler" as assembler
+participant ":UsService" as uservice
+participant ":UsRepository" as usrep
+participant ":userStoryMapper" as usmapper
 
 
-actor -> ui: requests list of all projects
-activate ui
-ref over ui: US016: list of all projects a user is currently allocated to
-
-ui --> actor: shows list of all projects
-deactivate ui
 
 actor -> ui: requests product backlog (list of all US) from selected project
 activate ui
-ui -> controller: getProductBacklog(projectDto)
+ui -> controller: getProductBacklog(projectCode)
 activate controller
-controller -> company: getProductBacklog(projectCode)
-activate company
-company -> container: getProductBacklog(projectCode)
-activate container
-
-container -> project: getProductBacklog()
+controller -> pservice: getProductBacklog(code)
+activate pservice
+pservice -> prepo: getProjectByCode(code)
+activate prepo
+prepo -> project: getProductBacklog()
 activate project
-project -> backlog: getProductBacklogCopy()
-
-loop for each user story in userStories
+project -> backlog: getUserStories()
 activate backlog
-backlog -> backlog: getUserStoriesCopy()
-
-backlog --> project: productBacklog
+backlog --> project: usId
 deactivate backlog
-
-project --> container: productBacklog
+project --> prepo: usId
 deactivate project
-container --> company: productBacklog
-deactivate container
-company --> controller: productBacklog
-deactivate company
-controller -> assembler: backlogToDto(productBacklog)
-activate assembler
-assembler -> backlog: getUserStoriesCopy()
-activate backlog
-backlog --> assembler: userStories
-deactivate backlog
-ref over assembler: To create a user story DTO
-assembler --> controller: userStoryDtoList
+prepo --> pservice: usId
+deactivate prepo
+pservice --> controller: usId
+deactivate pservice
+controller -> uservice : requestAllPlannedUs(usId)
+activate uservice
+uservice -> usrep : getListOfUsWithMatchingIds(usId)
+activate usrep
+usrep --> uservice : userStories
+deactivate usrep
+loop for each userStory in userStories
+uservice -> usmapper:  userStoryToDto(userStory)
+activate usmapper
+usmapper --> uservice : userStoryDto
 
-deactivate assembler
-controller --> ui: userStoryDtoList
+end loop
+deactivate usmapper
+uservice --> controller: userStoryDtoList
+deactivate uservice
+controller --> ui : userStoryDtoList
 deactivate controller
 
 ui --> actor: shows list of all US
