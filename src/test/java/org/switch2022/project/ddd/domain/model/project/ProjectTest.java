@@ -2,7 +2,9 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.model.Sprint;
 
@@ -205,6 +207,39 @@ class ProjectTest {
 
         //Assert
         assertNotEquals(expected, result);
+    }
+
+    /**
+     * METHOD setValidProject() sets the relevant attributes for a project to be in a valid state.
+     * <br>
+     * Scenario 1: All three relevant attributes are set successfully - not one of them is null.
+     */
+    @DisplayName("Project relevant attributes are set")
+    @Test
+    void ensureUserStoryIsSetInAValidState() {
+        // ARRANGE
+        Code projectCode = mock(Code.class);
+        Project project = new Project(projectCode);
+
+        String projectName = "X";
+        String description = "Unforgettable party";
+        int sprintDuration = 3;
+        BusinessSectorId businessSectorId = mock(BusinessSectorId.class);
+        CustomerId customerId = mock(CustomerId.class);
+        ProjectTypologyId projectTypologyId = mock(ProjectTypologyId.class);
+        IFactoryProductBacklog iFactoryProductBacklog = mock(IFactoryProductBacklog.class);
+
+        // ACT
+        project.setValidProject(projectName, description, sprintDuration, businessSectorId, customerId,
+                projectTypologyId, iFactoryProductBacklog);
+
+        // ASSERT
+        assertNotNull(project.getProjectName());
+        assertNotNull(project.getDescription());
+        assertNotNull(project.getSprintDuration());
+        assertNotNull(project.getBusinessSectorId());
+        assertNotNull(project.getCustomerId());
+        assertNotNull(project.getProjectTypologyId());
     }
 
     /**
