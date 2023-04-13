@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.model.Sprint;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -821,6 +821,7 @@ class ProjectTest {
     void ensureSprintDurationIsSet() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         int sprintDuration = 2;
+        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
 
         // Act
         projectOne.setSprintDuration(sprintDuration);
@@ -847,6 +848,7 @@ class ProjectTest {
     @Test
     void ensureSprintDurationIsNotSetAboveTheLimit() {
         // Arrange
+        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
         Exception exception = assertThrows(Exception.class, () ->
                 projectOne.setSprintDuration(5));
         String expected = "The sprint duration must be between 1 and 4";
@@ -868,6 +870,7 @@ class ProjectTest {
     @Test
     void ensureSprintDurationIsNotSetBellowTheLimit() {
         // Arrange
+        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
         Exception exception = assertThrows(Exception.class, () ->
                 projectOne.setSprintDuration(0));
         String expected = "The sprint duration must be between 1 and 4";

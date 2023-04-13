@@ -89,6 +89,15 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * Setter method for the attribute: projectStatus.
+     *
+     * @param projectStatus of the project.
+     */
+    protected void setProjectStatus(ProjectStatus projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
+    /**
      * Setter method for the attribute: productBacklog.
      * <p>
      * This method creates a Product backlog for the project
