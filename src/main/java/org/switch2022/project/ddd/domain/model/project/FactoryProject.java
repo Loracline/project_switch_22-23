@@ -23,19 +23,19 @@ public class FactoryProject implements IFactoryProject {
 
         Project project = new Project(projectCode);
 
-        project.setName(projectCreationDto.projectName);
-        project.setDescription(projectCreationDto.projectDescription);
-        project.setSprintDuration(projectCreationDto.sprintDuration);
-
         /*
           The methods for mapping string names to their corresponding IDs would typically be called in the controller
           or service layer of the application, where is handled the creation of the project.
          */
-        project.setBusinessSector(businessSectorId);
-        project.setCustomer(customerId);
-        project.setTypology(projectTypologyId);
-
-        project.setProductBacklog(factoryProductBacklog);
+        project.setValidProject(
+                projectCreationDto.projectName,
+                projectCreationDto.projectDescription,
+                projectCreationDto.sprintDuration,
+                businessSectorId,
+                customerId,
+                projectTypologyId,
+                factoryProductBacklog
+        );
 
         return project;
     }

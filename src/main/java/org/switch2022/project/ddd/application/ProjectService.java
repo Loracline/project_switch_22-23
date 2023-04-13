@@ -61,12 +61,8 @@ public class ProjectService {
         Code code = new Code(projectNumber);
         Project project = factoryProject.createProject(code, projectCreationDto, businessSectorId, customerId,
                 projectTypologyId, factoryProductBacklog);
-        if (addProject(project)) {
-            return code.getCode();
-        } else {
-            throw new Exception("Project not created");
-        }
-
+        projectRepository.addProjectToProjectRepository(project);
+        return code.getCode();
     }
 
     /**
