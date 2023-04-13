@@ -6,7 +6,7 @@ skinparam sequenceMessageAlign center
 title TO CREATE USER STORY (US)
 actor "Product Owner" as PO
 autonumber
-"PO" -> ":System": creates User Story
+"PO" -> ":System": requests list of projects
 note left
 Account is authenticated.
 ":System" grants access.
@@ -15,10 +15,13 @@ note right
 User requests to see all projects,
  and selects one (US016).
 end note
-PO <-- ":System": requests data (US_number, actor, US_text)
+PO <-- ":System": shows list of projects
 
+PO -> ":System": select project
+PO -> ":System": creates User Story
+PO <-- ":System": requests data (US_number, actor, US_text, priority)
 PO -> ":System": enters User Story data
-PO <-- ":System": informs operation success
+PO <-- ":System": "informs Operation Success"
 @enduml
 
 @startuml
