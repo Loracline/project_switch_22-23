@@ -102,7 +102,7 @@ public class Project implements Entity<Project> {
      * @param projectName the name of the project
      */
     protected void setName(String projectName) {
-        this.projectName = new Name(projectName.toLowerCase());
+        this.projectName = new Name(projectName);
     }
 
     /**
@@ -121,7 +121,7 @@ public class Project implements Entity<Project> {
      * @param description the description of the project.
      */
     protected void setDescription(String description) {
-        this.description = new Description(description.toLowerCase());
+        this.description = new Description(description);
     }
 
     /**

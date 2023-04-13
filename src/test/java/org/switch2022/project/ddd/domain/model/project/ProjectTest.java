@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.model.Sprint;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -859,6 +858,283 @@ class ProjectTest {
         //Act
         String result = exception.getMessage();
 
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Integration Tests
+     * method: getProjectCode
+     * scenario 1: get Project code with success
+     */
+
+    @Test
+    void ensureProjectCodeIsRetrievedSuccessfully() throws NoSuchFieldException, IllegalAccessException {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+        Field field = project.getClass().getDeclaredField("projectCode");
+        field.setAccessible(true);
+
+        //Act
+        Code actualCode = (Code) field.get(project);
+
+        //Assert
+        assertEquals(projectCode, actualCode);
+    }
+
+    /**
+     * Integration Tests
+     * method: setProductBacklog
+     * scenario 1: set product backlog with success
+     */
+    @Test
+    void ensureSetProductBacklogIsSuccessfullyChanged() throws NoSuchFieldException, IllegalAccessException {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+        String code = project.getProjectCode().toString();
+        FactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
+        ProductBacklog productBacklog = factoryProductBacklog.createProductBacklog(code);
+        Field field = project.getClass().getDeclaredField("productBacklog");
+        field.setAccessible(true);
+        project.setProductBacklog(factoryProductBacklog);
+        //Act
+
+        ProductBacklog actualProductBacklog = (ProductBacklog) field.get(project);
+
+        //Assert
+        assertEquals(productBacklog, actualProductBacklog);
+    }
+
+    /**
+     * Integration Tests
+     * method: setName
+     * scenario 1: set name with success
+     */
+    @Test
+    void ensureSetNameIsSuccessfullyChanged() throws NoSuchFieldException, IllegalAccessException {
+        //Arrange
+        Name name = new Name("Alpha");
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+        Field field = project.getClass().getDeclaredField("projectName");
+        field.setAccessible(true);
+        project.setName("Alpha");
+
+        //Act
+        Name actualName = (Name) field.get(project);
+
+        //Assert
+        assertEquals(name, actualName);
+    }
+
+    /**
+     * scenario 2: set name was unsuccessfully due to String be empty
+     */
+    @Test
+    void ensureSetNameIsUnsuccessfullyChanged_Empty() {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+
+
+        Exception exception = assertThrows(Exception.class, () ->
+                project.setName(""));
+        String expected = "The project name must not be empty";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 3: set name was unsuccessfully due to String be null
+     */
+    @Test
+    void ensureSetNameIsUnsuccessfullyChanged_Null() {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+
+
+        Exception exception = assertThrows(Exception.class, () ->
+                project.setName(null));
+        String expected = "The project name must not be null";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 4: set name was unsuccessfully due to String be blank
+     */
+    @Test
+    void ensureSetNameIsUnsuccessfullyChanged_Blank() {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+
+
+        Exception exception = assertThrows(Exception.class, () ->
+                project.setName(" "));
+        String expected = "The project name must not be blank";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Integration Tests
+     * method: setDescription
+     * scenario 1: set description with success
+     */
+    @Test
+    void ensureSetDescriptionIsSuccessfullyChanged() throws NoSuchFieldException, IllegalAccessException {
+        //Arrange
+        Description description = new Description("Cool project");
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+        Field field = project.getClass().getDeclaredField("description");
+        field.setAccessible(true);
+        project.setDescription("Cool project");
+
+        //Act
+        Description actualDescription = (Description) field.get(project);
+
+        //Assert
+        assertEquals(description, actualDescription);
+    }
+
+    /**
+     * scenario 2: set description was unsuccessfully due to String be empty
+     */
+    @Test
+    void ensureSetDescriptionIsSuccessfullyChanged_Empty() {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+
+
+        Exception exception = assertThrows(Exception.class, () ->
+                project.setDescription(""));
+        String expected = "The project description must not be empty";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 3: set description was unsuccessfully due to String be null
+     */
+    @Test
+    void ensureSetDescriptionIsSuccessfullyChanged_Null() {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+
+
+        Exception exception = assertThrows(Exception.class, () ->
+                project.setDescription(null));
+        String expected = "The project description must not be null";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 4: set description was unsuccessfully due to String be blank
+     */
+    @Test
+    void ensureSetDescriptionIsSuccessfullyChanged_Blank() {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+
+        Exception exception = assertThrows(Exception.class, () ->
+                project.setDescription(" "));
+        String expected = "The project description must not be blank";
+        //Act
+        String result = exception.getMessage();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Integration Tests
+     * method: hasProjectCode
+     * scenario 1: return true
+     */
+    @Test
+    void ensureThatProjectCodeMatch() {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+
+        //Act
+        boolean result = project.hasProjectCode(projectCode);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * scenario 2: return false
+     */
+    @Test
+    void ensureThatProjectCodeNotMatch() {
+        //Arrange
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+        Code newProjectCode = new Code(2);
+        //Act
+        boolean result = project.hasProjectCode(newProjectCode);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Integration Tests
+     * method: getProductBacklog
+     * scenario 1: Retrieved product Backlog with success
+     */
+    @Test
+    void ensureThatProductBacklogIsRetrieved() {
+        //Arrange
+        UsId usIdOne = new UsId("p001", "us001");
+        UsId usIdTwo = new UsId("p001", "us002");
+        List<UsId> expected = new ArrayList<>();
+        expected.add(usIdOne);
+        expected.add(usIdTwo);
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+        FactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
+        project.setProductBacklog(factoryProductBacklog);
+        project.addUserStory(0, usIdOne);
+        project.addUserStory(1, usIdTwo);
+
+        //Act
+        List<UsId> result = project.getProductBacklog();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 2: Retrieved product Backlog as an empty list
+     */
+    @Test
+    void ensureThatProductBacklogIsRetrieved_EmptyList() {
+        //Arrange
+        List<UsId> expected = new ArrayList<>();
+        Code projectCode = new Code(1);
+        Project project = new Project(projectCode);
+        FactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
+        project.setProductBacklog(factoryProductBacklog);
+        //Act
+        List<UsId> result = project.getProductBacklog();
         //Assert
         assertEquals(expected, result);
     }
