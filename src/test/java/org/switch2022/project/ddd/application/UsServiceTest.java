@@ -16,7 +16,6 @@ import org.switch2022.project.ddd.infrastructure.UsRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -344,7 +343,7 @@ class UsServiceTest {
 
 
         //ACT and ASSERT
-        assertThrows(IllegalStateException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
                 usService.createUs(userStoryCreationDto, "P001"));
 
     }
