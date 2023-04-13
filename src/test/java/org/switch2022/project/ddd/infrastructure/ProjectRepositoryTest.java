@@ -89,6 +89,23 @@ class ProjectRepositoryTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Method: equals()
+     * Scenario 06: Test to ensure that Repository doesn't equals a null object
+     */
+    @Test
+    void ensureThatProjectDoesNotEqualsNull() {
+        // Arrange
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        ProjectRepository projectRepositoryTwo = null;
+
+        boolean expected = false;
+        //Act
+        boolean result = projectRepositoryOne.equals(projectRepositoryTwo);
+        //Assert
+        assertEquals(expected, result);
+    }
+
 
     /**
      * Method:hashCode()
