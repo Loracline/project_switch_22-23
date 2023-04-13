@@ -1,7 +1,9 @@
 package org.switch2022.project.ddd.application;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.interfaces.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.Status;
@@ -22,8 +24,34 @@ import static org.mockito.Mockito.*;
 class UsServiceTest {
 
 
+    UserStoryCreationDto userStoryCreationDto;
+    UsId usIdOne;
+    UsService usService, usServiceOne;
+
+    UsRepository usRepository, usRepositoryOne;
+
+    IFactoryUserStory factoryUserStory;
+
+    UserStoryMapper userStoryMapper;
+
     /**
-     * Method: create(userStoryCreationDto, projectCode).
+     * BeforeEach executes common code before running the tests below.
+     */
+    @BeforeEach
+
+    void setUp() {
+        userStoryCreationDto = new UserStoryCreationDto("US001", "text", "actor", 0);
+        usIdOne = new UsId("P001", "US001");
+        usRepository = new UsRepository();
+        usRepositoryOne = new UsRepository();
+        factoryUserStory = new FactoryUserStory();
+        userStoryMapper = new UserStoryMapper();
+        usService = new UsService(usRepository, factoryUserStory, userStoryMapper);
+        usServiceOne = new UsService(usRepositoryOne, factoryUserStory, userStoryMapper);
+    }
+
+    /**
+     * Method: createUs(userStoryCreationDto, projectCode).
      * Creates a userStory and return the userStoryId.
      * <br>
      * Scenario 01: verify if a userStory is created and its ID returned.
@@ -194,12 +222,48 @@ class UsServiceTest {
                 thenReturn(Collections.emptyList());
 
         // Act
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            usServiceDouble.requestAllPlannedUs(usIdDoubleList);
-        });
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                usServiceDouble.requestAllPlannedUs(usIdDoubleList));
 
         // Assert
         assertEquals("User story list does not contain userStories matching given IDs",
                 exception.getMessage());
+    }
+
+    /**
+     * Method: createUs(userStoryCreationDto, projectCode).
+     * Creates a userStory and return the userStoryId.
+     * <p>
+     * Scenario 01: verify if a userStory is created and added to a list of User Stories.
+     * <p>
+     * Expected result: userStoryId is returned.
+     */
+    @Test
+    void ensureThatUserStoryIsCreatedAndAddedToRepository() throws Exception {
+        //ARRANGE
+        UsId expected = usIdOne;
+
+        //ACT
+        UsId result = usService.createUs(userStoryCreationDto, "P001");
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 02: verify if a userStory is not created when already exist.
+     * <p>
+     * Expected result: exception is thrown.
+     */
+    @Test
+    void ensureThatUserStoryIsNotCreatedAndAddedToUserStoryRepository() throws Exception {
+        //ARRANGE
+        usService.createUs(userStoryCreationDto, "P001");
+
+
+        //ACT and ASSERT
+        assertThrows(IllegalStateException.class, () ->
+                usService.createUs(userStoryCreationDto, "P001"));
+
     }
 }
