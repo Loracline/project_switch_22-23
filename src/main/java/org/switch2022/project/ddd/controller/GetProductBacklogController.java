@@ -53,7 +53,6 @@ public class GetProductBacklogController {
         if (!productBacklog.isEmpty()) {
             userStoryDtoList = usService.requestAllPlannedUs(productBacklog);
         }
-
         return userStoryDtoList;
     }
 }
