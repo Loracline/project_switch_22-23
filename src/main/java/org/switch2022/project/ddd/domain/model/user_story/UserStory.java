@@ -198,16 +198,4 @@ public class UserStory implements Entity<UserStory> {
     public boolean hasStatus(Status status) {
         return status.equals(this.status);
     }
-
-    @Override
-    public String toString() {
-        return "UserStory{" +
-                "usId=" + usId +
-                ", usNumber=" + usNumber +
-                ", actor=" + actor +
-                ", usText=" + usText +
-                ", status=" + status +
-                ", acceptanceCriteria=" + acceptanceCriteria +
-                '}';
-    }
 }

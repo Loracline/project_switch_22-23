@@ -4,9 +4,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.model.Sprint;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -177,6 +176,26 @@ class ProjectTest {
     }
 
     /**
+     * Scenario 3: Verify that two Projects are not the same because one of them is null.
+     */
+    @Test
+    void ensureTheTwoObjectsAreNotTheSameBecauseOneOfThemIsNull() {
+        //Arrange
+        //Code
+        Code codeOne = mock(Code.class);
+
+        //Projects
+        Project projectOne = new Project(codeOne);
+        Project projectTwo = null;
+
+        //Act
+        boolean result = projectOne.sameIdentityAs(projectTwo);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
      * Method: getProjectCode().
      * Scenario 01: test to ensure that project code requested from a given project is retrieved.
      */
@@ -222,20 +241,18 @@ class ProjectTest {
 
         String projectName = "X";
         String description = "Unforgettable party";
-        int sprintDuration = 3;
         BusinessSectorId businessSectorId = mock(BusinessSectorId.class);
         CustomerId customerId = mock(CustomerId.class);
         ProjectTypologyId projectTypologyId = mock(ProjectTypologyId.class);
         IFactoryProductBacklog iFactoryProductBacklog = mock(IFactoryProductBacklog.class);
 
         // ACT
-        project.setValidProject(projectName, description, sprintDuration, businessSectorId, customerId,
+        project.setValidProject(projectName, description, businessSectorId, customerId,
                 projectTypologyId, iFactoryProductBacklog);
 
         // ASSERT
         assertNotNull(project.getProjectName());
         assertNotNull(project.getDescription());
-        assertNotNull(project.getSprintDuration());
         assertNotNull(project.getBusinessSectorId());
         assertNotNull(project.getCustomerId());
         assertNotNull(project.getProjectTypologyId());
@@ -804,6 +821,7 @@ class ProjectTest {
     void ensureSprintDurationIsSet() throws NoSuchFieldException, IllegalAccessException {
         // Arrange
         int sprintDuration = 2;
+        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
 
         // Act
         projectOne.setSprintDuration(sprintDuration);
@@ -830,6 +848,7 @@ class ProjectTest {
     @Test
     void ensureSprintDurationIsNotSetAboveTheLimit() {
         // Arrange
+        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
         Exception exception = assertThrows(Exception.class, () ->
                 projectOne.setSprintDuration(5));
         String expected = "The sprint duration must be between 1 and 4";
@@ -851,6 +870,7 @@ class ProjectTest {
     @Test
     void ensureSprintDurationIsNotSetBellowTheLimit() {
         // Arrange
+        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
         Exception exception = assertThrows(Exception.class, () ->
                 projectOne.setSprintDuration(0));
         String expected = "The sprint duration must be between 1 and 4";
