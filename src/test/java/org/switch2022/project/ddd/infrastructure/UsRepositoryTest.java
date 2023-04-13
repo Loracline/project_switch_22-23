@@ -6,7 +6,6 @@ import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -238,6 +237,20 @@ class UsRepositoryTest {
 
         // Assert
         assertNotEquals(usRepositoryOne, object);
+    }
+
+    /**
+     * Scenario 3: UsRepository does not equal a null object
+     */
+
+    @Test
+    public void ensureThatUsRepositoryDoesNotEqualANullObject() {
+        // Arrange
+        UsRepository usRepositoryOne = new UsRepository();
+        UsRepository usRepositoryTwo = null;
+
+        // Assert
+        assertNotEquals(usRepositoryOne, usRepositoryTwo);
     }
 
 }
