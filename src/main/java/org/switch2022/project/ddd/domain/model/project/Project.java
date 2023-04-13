@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.List;
 
@@ -193,6 +194,7 @@ public class Project implements Entity<Project> {
      * @param sprintDuration the sprint duration object to set for this project.
      */
     protected void setSprintDuration(int sprintDuration) {
+        Utils.hasStatus(this.projectStatus, ProjectStatus.INCEPTION);
         this.sprintDuration = new SprintDuration(sprintDuration);
     }
 
@@ -210,18 +212,16 @@ public class Project implements Entity<Project> {
      *
      * @param projectName            of a project.
      * @param description            of a project.
-     * @param sprintDuration         of a project.
      * @param businessSectorId       of a project.
      * @param customerId             of a project.
      * @param projectTypologyId      of a project.
      * @param iFactoryProductBacklog that creates the product backlog of a project.
      */
-    protected void setValidProject(String projectName, String description, int sprintDuration,
-                                   BusinessSectorId businessSectorId, CustomerId customerId,
-                                   ProjectTypologyId projectTypologyId, IFactoryProductBacklog iFactoryProductBacklog) {
+    protected void setValidProject(String projectName, String description, BusinessSectorId businessSectorId,
+                                   CustomerId customerId, ProjectTypologyId projectTypologyId,
+                                   IFactoryProductBacklog iFactoryProductBacklog) {
         setName(projectName);
         setDescription(description);
-        setSprintDuration(sprintDuration);
         setBusinessSector(businessSectorId);
         setCustomer(customerId);
         setTypology(projectTypologyId);

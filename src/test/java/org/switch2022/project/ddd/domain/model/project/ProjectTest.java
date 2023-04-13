@@ -237,20 +237,18 @@ class ProjectTest {
 
         String projectName = "X";
         String description = "Unforgettable party";
-        int sprintDuration = 3;
         BusinessSectorId businessSectorId = mock(BusinessSectorId.class);
         CustomerId customerId = mock(CustomerId.class);
         ProjectTypologyId projectTypologyId = mock(ProjectTypologyId.class);
         IFactoryProductBacklog iFactoryProductBacklog = mock(IFactoryProductBacklog.class);
 
         // ACT
-        project.setValidProject(projectName, description, sprintDuration, businessSectorId, customerId,
+        project.setValidProject(projectName, description, businessSectorId, customerId,
                 projectTypologyId, iFactoryProductBacklog);
 
         // ASSERT
         assertNotNull(project.getProjectName());
         assertNotNull(project.getDescription());
-        assertNotNull(project.getSprintDuration());
         assertNotNull(project.getBusinessSectorId());
         assertNotNull(project.getCustomerId());
         assertNotNull(project.getProjectTypologyId());
