@@ -52,4 +52,13 @@ public class UserStoryDto {
     public int hashCode() {
         return Objects.hash(userStoryNumber, userStoryText, status);
     }
+
+    /**
+     * This method returns the status of the User Story.
+     *
+     * @return status.
+     */
+    public String getStatus() {
+        return status;
+    }
 }
