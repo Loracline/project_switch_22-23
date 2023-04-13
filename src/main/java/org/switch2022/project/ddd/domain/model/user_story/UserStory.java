@@ -22,7 +22,6 @@ public class UserStory implements Entity<UserStory> {
     private Actor actor;
     private UsText usText;
     private Status status;
-    private Effort effort;
     private AcceptanceCriteria acceptanceCriteria;
 
     /**
@@ -133,28 +132,6 @@ public class UserStory implements Entity<UserStory> {
      */
     protected void setUsNumber(UsNumber usNumber) {
         this.usNumber = usNumber;
-    }
-
-    /**
-     * This getter method returns the User Story effort.
-     */
-    public Effort getEffort() {
-        return effort;
-    }
-
-    /**
-     * This method sets the effort of the userStory.
-     *
-     * @param newEffortEstimate of the User Story to be set.
-     */
-    void setEffort(int newEffortEstimate) {
-        for (Effort effort : Effort.values()) {
-            if (effort.getEffortValue() == newEffortEstimate) {
-                this.effort = effort;
-                return;
-            }
-        }
-        throw new RuntimeException("Effort estimate was not successful");
     }
 
     /**
