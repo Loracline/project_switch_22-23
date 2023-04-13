@@ -11,7 +11,6 @@ import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

@@ -30,6 +30,9 @@ public class UsRepository implements IUsRepository {
         if (this == o) {
             return true;
         }
+        if (o == null) {
+            return false;
+        }
         if (o.getClass() != this.getClass()) {
             return false;
         }
@@ -52,7 +55,7 @@ public class UsRepository implements IUsRepository {
      * This method adds a new userStory to the repository of userStories if it does not exist.
      *
      * @param userStory to be added to the repository.
-     * @return the addition of the userStory to the repository or an exception otherwise.
+     * Makes the addition of the userStory to the repository or an exception otherwise.
      */
 
     public void add(UserStory userStory) throws Exception{
@@ -67,7 +70,7 @@ public class UsRepository implements IUsRepository {
      * This method deletes a userStory from the repository of userStories if it exists.
      *
      * @param usId of the userStory to be deleted from the repository.
-     * @return the elimination of the userStory of the repository or an exception otherwise.
+     * Makes the elimination of the userStory of the repository or an exception otherwise.
      */
 
     public void delete(UsId usId) throws Exception{
