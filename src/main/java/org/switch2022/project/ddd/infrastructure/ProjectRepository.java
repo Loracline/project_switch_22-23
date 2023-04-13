@@ -28,7 +28,12 @@ public class ProjectRepository implements IProjectRepository {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
         if (o.getClass() != this.getClass()) {
             return false;
         }
@@ -37,7 +42,8 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     /**
-     * This method is used to generate a unique hash code for an object, based on the object's state.
+     * This method is used to generate a unique hash code for an object, based on the
+     * object's state.
      *
      * @return a unique value that represents the object.
      */

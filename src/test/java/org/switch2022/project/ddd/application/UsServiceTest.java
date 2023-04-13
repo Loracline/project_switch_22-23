@@ -16,8 +16,7 @@ import org.switch2022.project.ddd.infrastructure.UsRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class UsServiceTest {
@@ -345,6 +344,41 @@ class UsServiceTest {
         //ACT and ASSERT
         assertThrows(IllegalArgumentException.class, () ->
                 usService.createUs(userStoryCreationDto, "P001"));
+    }
 
+    /**
+     * Method: deleteUs(UsId).
+     * Deletes a userStory.
+     * <br>
+     * Scenario 01: verify if a userStory is not deleted because it is not there.
+     * <p>
+     * Expected result: tHrow an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatUserStoryIsNotDeletedFromRepositoryBecauseIsNotThere() {
+        //ARRANGE
+        UsId expected = usIdOne;
+
+        //ACT and ASSERT
+        assertThrows(IllegalArgumentException.class, () -> usService.deleteUs(expected));
+
+    }
+
+    /**
+     * Scenario 02: verify if a userStory is deleted.
+     * <p>
+     * Expected result: true.
+     */
+    @Test
+    void ensureThatUserStoryIsDeletedFromRepository() throws Exception {
+        //ARRANGE
+        UsId expected = usIdOne;
+        usService.createUs(userStoryCreationDto, "P001");
+
+        //ACT
+        boolean result = usService.deleteUs(expected);
+
+        //ASSERT
+        assertTrue(result);
     }
 }

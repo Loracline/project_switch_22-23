@@ -22,7 +22,6 @@ public class UserStory implements Entity<UserStory> {
     private Actor actor;
     private UsText usText;
     private Status status;
-    private Effort effort;
     private AcceptanceCriteria acceptanceCriteria;
 
     /**
@@ -32,6 +31,7 @@ public class UserStory implements Entity<UserStory> {
     protected UserStory(final UsId usId) {
         Validate.notNull(usId, "User Story's ID can't be null.");
         this.usId = usId;
+        this.status = Status.PLANNED;
     }
 
     /**
@@ -136,28 +136,6 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This getter method returns the User Story effort.
-     */
-    public Effort getEffort() {
-        return effort;
-    }
-
-    /**
-     * This method sets the effort of the userStory.
-     *
-     * @param newEffortEstimate of the User Story to be set.
-     */
-    void setEffort(int newEffortEstimate) {
-        for (Effort effort : Effort.values()) {
-            if (effort.getEffortValue() == newEffortEstimate) {
-                this.effort = effort;
-                return;
-            }
-        }
-        throw new RuntimeException("Effort estimate was not successful");
-    }
-
-    /**
      * This protected method sets the actor of the userStory.
      *
      * @param actor of the User Story to create.
@@ -220,17 +198,5 @@ public class UserStory implements Entity<UserStory> {
      */
     public boolean hasStatus(Status status) {
         return status.equals(this.status);
-    }
-
-    @Override
-    public String toString() {
-        return "UserStory{" +
-                "usId=" + usId +
-                ", usNumber=" + usNumber +
-                ", actor=" + actor +
-                ", usText=" + usText +
-                ", status=" + status +
-                ", acceptanceCriteria=" + acceptanceCriteria +
-                '}';
     }
 }

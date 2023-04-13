@@ -62,15 +62,9 @@ public class UsService {
      * @param usId of userStory to be deleted from the repository.
      */
 
-    public void deleteUs(UsId usId) throws Exception {
-        List<UsId> usIdList = new ArrayList<>();
-        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usIdList);
-        if (userStories.isEmpty()) {
-            throw new IllegalStateException("User story does not exist");
-        } else {
-            usRepository.delete(usId);
+    public boolean  deleteUs(UsId usId) throws Exception {
+           return usRepository.delete(usId);
         }
-    }
 
     /**
      * Requests a list of userStories with the status planned.
