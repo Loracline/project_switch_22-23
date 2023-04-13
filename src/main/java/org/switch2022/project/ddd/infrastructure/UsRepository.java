@@ -69,9 +69,8 @@ public class UsRepository implements IUsRepository {
      * This method deletes a userStory from the repository of userStories if it exists.
      *
      * @param usId of the userStory to be deleted from the repository.
-     * @return the elimination of the userStory of the repository or an exception otherwise.
+     * @return true if the user story is deleted or throws an exception otherwise.
      */
-
     public boolean delete(UsId usId) {
         boolean usFound = false;
         for (int i = 0; i < userStories.size(); i++) {

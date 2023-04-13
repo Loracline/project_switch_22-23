@@ -31,6 +31,7 @@ public class UserStory implements Entity<UserStory> {
     protected UserStory(final UsId usId) {
         Validate.notNull(usId, "User Story's ID can't be null.");
         this.usId = usId;
+        this.status = Status.PLANNED;
     }
 
     /**
