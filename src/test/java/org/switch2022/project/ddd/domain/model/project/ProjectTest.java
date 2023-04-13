@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.util.ArrayList;
@@ -164,6 +163,26 @@ class ProjectTest {
         //Projects
         Project projectOne = new Project(codeOne);
         Project projectTwo = new Project(codeTwo);
+
+        //Act
+        boolean result = projectOne.sameIdentityAs(projectTwo);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3: Verify that two Projects are not the same because one of them is null.
+     */
+    @Test
+    void ensureTheTwoObjectsAreNotTheSameBecauseOneOfThemIsNull() {
+        //Arrange
+        //Code
+        Code codeOne = mock(Code.class);
+
+        //Projects
+        Project projectOne = new Project(codeOne);
+        Project projectTwo = null;
 
         //Act
         boolean result = projectOne.sameIdentityAs(projectTwo);
