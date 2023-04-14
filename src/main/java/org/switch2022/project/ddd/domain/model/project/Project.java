@@ -208,15 +208,6 @@ public class Project implements Entity<Project> {
     }
 
     /**
-     * Getter method for the attribute: sprintDuration.
-     *
-     * @return the sprint duration of the project.
-     */
-    protected SprintDuration getSprintDuration() {
-        return sprintDuration;
-    }
-
-    /**
      * This method sets the relevant attributes for a project to be in a valid state.
      *
      * @param projectName            of a project.

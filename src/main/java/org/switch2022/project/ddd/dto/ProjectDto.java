@@ -67,6 +67,9 @@ public class ProjectDto {
         return Objects.hash(code, name, customer, status, projectTypology, businessSector);
     }
 
+    /**
+     * This getter returns the project Code.
+     */
     public String getProjectCode() {
         return this.code;
     }
