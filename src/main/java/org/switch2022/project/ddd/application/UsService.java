@@ -33,11 +33,11 @@ public class UsService {
 
     public UsService(IUsRepository usRepository, IFactoryUserStory factoryUserStory,
                      UserStoryMapper userStoryMapper) {
-        Validate.notNull(usRepository,"User Story Repository can't be null");
+        Validate.notNull(usRepository, "User Story Repository can't be null");
         this.usRepository = usRepository;
-        Validate.notNull(factoryUserStory,"Factory User Story can't be null");
+        Validate.notNull(factoryUserStory, "Factory User Story can't be null");
         this.factoryUserStory = factoryUserStory;
-        Validate.notNull(userStoryMapper,"User Story Mapper can't be null");
+        Validate.notNull(userStoryMapper, "User Story Mapper can't be null");
         this.userStoryMapper = userStoryMapper;
     }
 
@@ -62,9 +62,10 @@ public class UsService {
      * @param usId of userStory to be deleted from the repository.
      */
 
-    public boolean  deleteUs(UsId usId) throws Exception {
-           return usRepository.delete(usId);
-        }
+    public boolean deleteUs(UsId usId) throws Exception {
+        usRepository.delete(usId);
+        return true;
+    }
 
     /**
      * Requests a list of userStories with the status planned.

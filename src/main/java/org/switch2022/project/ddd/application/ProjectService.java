@@ -86,9 +86,9 @@ public class ProjectService {
      * This method adds a userStoryId to the productBacklog of a project.
      *
      * @param usId        of the userStory.
-     * @param projectCode of the project where the user Id will be added.
-     * @param priority    that the Id will have in the ProductBacklog.
-     * @return true if the ID is sucessfully added. otherwise it will return false.
+     * @param projectCode of the project where the user ID will be added.
+     * @param priority    that the ID will have in the ProductBacklog.
+     * @return true if the ID is successfully added. otherwise it will return false.
      * @throws Exception if the priority is out og bounds, if the id is already in the ProductBacklog
      *                   and if the projectCode doesn't match any Project in the repository.
      */
@@ -105,7 +105,8 @@ public class ProjectService {
         } else {
             throw new Exception("No project with that code");
         }
-        return project.addUserStory(priority, usId);
+        project.addUserStory(priority, usId);
+        return true;
     }
 
     /**

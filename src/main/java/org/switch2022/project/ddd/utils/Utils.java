@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
 import static java.lang.Integer.parseInt;
 
 public class Utils {
+    private Utils(){}
 
     /**
      * This method extracts the number of an alphanumeric string by removing a specified expression and converts them

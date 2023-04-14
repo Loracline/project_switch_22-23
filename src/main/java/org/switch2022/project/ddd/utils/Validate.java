@@ -16,8 +16,7 @@ public class Validate {
      * created. This ensures that the utility class remains stateless and can only be used
      * through its static methods.
      */
-    private Validate() {
-    }
+    private Validate() {}
 
     //STRING VALIDATIONS
 
