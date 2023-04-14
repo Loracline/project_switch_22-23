@@ -193,10 +193,29 @@ public class UserStory implements Entity<UserStory> {
     /**
      * This method verifies if the UserStory has the given status
      *
-     * @param status of the Project.
+     * @param status of the User Story.
      * @return TRUE if Status has the given Status, and FALSE otherwise.
      */
     public boolean hasStatus(Status status) {
         return status.equals(this.status);
+    }
+
+    /**
+     * The method verify if the UserStory has the given usId.
+     * @param usId of the User Story.
+     * @return TRUE if User Story has the given usId, and FALSE otherwise.
+     */
+    public boolean hasUsId(UsId usId){ return usId.equals(this.usId); }
+
+    @Override
+    public String toString() {
+        return "UserStory{" +
+                "usId=" + usId +
+                ", usNumber=" + usNumber +
+                ", actor=" + actor +
+                ", usText=" + usText +
+                ", status=" + status +
+                ", acceptanceCriteria=" + acceptanceCriteria +
+                '}';
     }
 }

@@ -22,15 +22,22 @@ import static org.mockito.Mockito.*;
 class UsServiceTest {
 
 
-    UserStoryCreationDto userStoryCreationDto;
-    UsId usIdOne;
+    UserStoryCreationDto userStoryCreationDtoOne, userStoryCreationDtoTwo,userStoryCreationDtoThree;
+    UserStoryDto userStoryDtoOne;
+    UsId usIdOne, usIdTwo, usIdThree;
     UsService usService, usServiceOne;
 
-    UsRepository usRepository, usRepositoryOne;
+    UsRepository usRepository, usRepositoryOne, usRepositoryTwo;
 
     IFactoryUserStory factoryUserStory;
 
     UserStoryMapper userStoryMapper;
+
+    List<UsId> usIds, usIdsOne;
+
+    List<UserStoryDto> userStoriesDto;
+
+
 
     /**
      * BeforeEach executes common code before running the tests below.
@@ -38,14 +45,56 @@ class UsServiceTest {
     @BeforeEach
 
     void setUp() {
-        userStoryCreationDto = new UserStoryCreationDto("US001", "text", "actor", 0);
+
+        //Us ID
         usIdOne = new UsId("P001", "US001");
+        usIdTwo = new UsId("P001","US002");
+        usIdThree = new UsId("P001", "US003");
+
+        //US Repository
         usRepository = new UsRepository();
         usRepositoryOne = new UsRepository();
+
+        // IFactoryUserStory
         factoryUserStory = new FactoryUserStory();
+
+        //US Mapper
         userStoryMapper = new UserStoryMapper();
+
+        //US Service
         usService = new UsService(usRepository, factoryUserStory, userStoryMapper);
         usServiceOne = new UsService(usRepositoryOne, factoryUserStory, userStoryMapper);
+
+        //User Stories ID
+        usIds= new ArrayList<>();
+        usIds.add(usIdOne);
+        usIds.add(usIdTwo);
+        usIds.add(usIdThree);
+
+        usIdsOne= new ArrayList<>();
+
+        //User Story Dto
+        userStoryDtoOne= new UserStoryDto("us001","text","planned");
+
+
+        //User Stories Dto
+        userStoriesDto= new ArrayList<>();
+        userStoriesDto.add(userStoryDtoOne);
+
+
+
+        //User Stories Creation Dto
+        userStoryCreationDtoOne = new UserStoryCreationDto("US001", "text", "actor", 0);
+        userStoryCreationDtoTwo= new UserStoryCreationDto("US002", "textTwo","actorTwo", 2);
+        userStoryCreationDtoThree= new UserStoryCreationDto("US003", "textThree", "actorThree", 3);
+
+
+        // US Repository
+        usRepositoryTwo = new UsRepository();
+
+
+        //User Stories Dto
+
     }
 
     /**
@@ -174,7 +223,7 @@ class UsServiceTest {
 
 
     @Test
-    void ensureRequestOfAllPlannedUsIsSuccessful() throws Exception {
+    void ensureRequestOfAllPlannedUsIsSuccessful() {
         // Arrange
         IUsRepository usRepositoryDouble = mock(IUsRepository.class);
         IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
@@ -202,13 +251,13 @@ class UsServiceTest {
 
 
     /**
-     * Scenario 02: verify if a list of empty userStories is retrieved, a exception is thrown.
+     * Scenario 02: verify if a list of empty userStories is retrieved, an exception is thrown.
      * <p>
      * Expected result: exception is thrown.
      */
 
     @Test
-    void ensureRequestOfAllPlannedUsIsSuccessfulEmptyList() throws Exception {
+    void ensureRequestOfAllPlannedUsIsSuccessfulEmptyList(){
         // Arrange
         IUsRepository usRepositoryDouble = mock(IUsRepository.class);
         List<UsId> usIdDoubleList = new ArrayList<>();
@@ -309,7 +358,7 @@ class UsServiceTest {
         UsId expected = usIdOne;
 
         //ACT
-        UsId result = usService.createUs(userStoryCreationDto, "P001");
+        UsId result = usService.createUs(userStoryCreationDtoOne, "P001");
 
         //ASSERT
         assertEquals(expected, result);
@@ -323,12 +372,12 @@ class UsServiceTest {
     @Test
     void ensureThatUserStoryIsNotCreatedAndAddedToUserStoryRepository() throws Exception {
         //ARRANGE
-        usService.createUs(userStoryCreationDto, "P001");
+        usService.createUs(userStoryCreationDtoOne, "P001");
 
 
         //ACT and ASSERT
         assertThrows(IllegalArgumentException.class, () ->
-                usService.createUs(userStoryCreationDto, "P001"));
+                usService.createUs(userStoryCreationDtoOne, "P001"));
     }
 
     /**
@@ -358,7 +407,7 @@ class UsServiceTest {
     void ensureThatUserStoryIsDeletedFromRepository() throws Exception {
         //ARRANGE
         UsId expected = usIdOne;
-        usService.createUs(userStoryCreationDto, "P001");
+        usService.createUs(userStoryCreationDtoOne, "P001");
 
         //ACT
         boolean result = usService.deleteUs(expected);
@@ -366,4 +415,71 @@ class UsServiceTest {
         //ASSERT
         assertTrue(result);
     }
+    /**
+     * Method: requestAllPlannedUs(List<UsId> usId).
+     * Requests All Planned UserStories and resturn a list of User Stories Dto.
+     * <br>
+     * Scenario 01: checks that the list of all planned user stories and the list of Dto user stories are identical
+     */
+    @Test
+    void ensureThatReturnsAListOfPlannedUserStories() throws Exception{
+        //Arrange
+        usService.createUs(userStoryCreationDtoOne,"P001");
+        usService.createUs(userStoryCreationDtoTwo, "P001");
+        usService.createUs(userStoryCreationDtoThree, "P001");
+        UserStory userStoryTwo =(usRepository.getUserStory(usIdTwo)).get();
+        UserStory userStoryThree =(usRepository.getUserStory(usIdThree)).get();
+
+        userStoryTwo.setStatus(Status.FINISHED);
+        userStoryThree.setStatus(Status.BLOCKED);
+
+        List<UserStoryDto> expected = userStoriesDto;
+
+        //Act
+        List<UserStoryDto> result = usService.requestAllPlannedUs(usIds);
+
+        //Assert
+        assertEquals(expected, result);
+
+    }
+
+    /**
+     * Scenario 02: check if returns an empty list when there are no UserStories.
+     */
+    @Test
+    void ensureThatReturnsAnEmptyListIfThereAreNoUserStories()  {
+
+        //Act
+        List<UserStoryDto> result = usService.requestAllPlannedUs(usIdsOne);
+
+        //Assert
+        assertTrue(result.isEmpty());
+
+    }
+
+    /**
+     * Scenario 03: check if returns an empty list when there are no UserStories with planned status.
+     */
+    @Test
+    void ensureThatReturnsAnEmptyListBecauseThereAreNoPlannedUserStories() throws Exception {
+        //Arrange
+        usService.createUs(userStoryCreationDtoOne,"P001");
+        usService.createUs(userStoryCreationDtoTwo, "P001");
+        usService.createUs(userStoryCreationDtoThree, "P001");
+        UserStory userStoryOne =(usRepository.getUserStory(usIdOne)).get();
+        UserStory userStoryTwo =(usRepository.getUserStory(usIdTwo)).get();
+        UserStory userStoryThree =(usRepository.getUserStory(usIdThree)).get();
+
+        userStoryOne.setStatus(Status.RUNNING);
+        userStoryTwo.setStatus(Status.FINISHED);
+        userStoryThree.setStatus(Status.BLOCKED);
+
+        //Act
+        List<UserStoryDto> result = usService.requestAllPlannedUs(usIds);
+
+        //Assert
+        assertTrue(result.isEmpty());
+
+    }
+
 }

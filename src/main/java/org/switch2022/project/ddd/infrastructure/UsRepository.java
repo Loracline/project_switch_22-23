@@ -8,6 +8,7 @@ import org.switch2022.project.ddd.domain.value_object.UsId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Class UsRepository allows to manage userStories records.
@@ -52,10 +53,28 @@ public class UsRepository implements IUsRepository {
     }
 
     /**
+     * This method is used to return an optional that can contain a user story with the usId passed by parameter
+     * @param usId of the requested User Story
+     * @return optional that can contain the user story.
+     */
+    public Optional<UserStory> getUserStory(UsId usId){
+        int i = 0;
+        UserStory userStoryRequest = null;
+        while (i < userStories.size() && userStoryRequest == null) {
+            if (userStories.get(i).hasUsId(usId)) {
+                userStoryRequest = userStories.get(i);
+            }
+            i++;
+        }
+        return Optional.ofNullable(userStoryRequest);
+    }
+
+    /**
      * This method adds a new userStory to the repository of userStories if it does not exist.
      *
      * @param userStory to be added to the repository.
      */
+
 
     public void add(UserStory userStory) throws Exception{
         if (!userStories.contains(userStory)) {
@@ -91,7 +110,6 @@ public class UsRepository implements IUsRepository {
      * @param usId will filter the userStories present in the repository by ID.
      * @return all planned userStories with a corresponding ID.
      */
-    @Override
     public List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId) {
         List<UserStory> userStoriesWithMatchingIds = new ArrayList<>();
         for (UserStory userStory : userStories) {

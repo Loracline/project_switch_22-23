@@ -73,7 +73,7 @@ public class UsService {
      * @return a list of all userStoriesDto with the status planned.
      */
 
-    public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) throws Exception {
+    public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) {
         List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
         List<UserStoryDto> userStoriesDto = new ArrayList<>();
         if (!userStories.isEmpty()) {

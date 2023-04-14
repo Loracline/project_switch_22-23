@@ -34,5 +34,5 @@ public interface IUsRepository {
      * @return all planned userStories with a corresponding ID.
      */
 
-    List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId) throws Exception;
+    List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId);
 }
