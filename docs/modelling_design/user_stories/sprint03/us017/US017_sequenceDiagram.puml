@@ -28,23 +28,25 @@ product -> ui : creates User Story
 activate ui
 ui --> product: requests data (US_number, actor, US_text, priority)
 product -> ui: enters User Story data
-ui -> controller: createUS(projectDto,userStoryCreationDto)
+ui -> controller: createUS(projectDto, userStoryCreationDto)
 activate controller
-controller -> service:createUs(userStoryCreationDto,projectCode)
+controller -> service:createUs(userStoryCreationDto, projectCode)
 activate service
 
-service -> factory: createUserStory(userStoryCreationDto,projectCode)
+service -> factory: createUserStory(userStoryCreationDto, projectCode)
 activate factory
 create userStory
 factory -> userStory
 factory -> service: userStory
 deactivate factory
 service -> usrep: add(userStory)
+activate usrep
+deactivate usrep
 service --> controller: usId
 deactivate service
-controller -> pservice: addUserStoryToProductBacklog(usId,projectCode,priority)
+controller -> pservice: addUsToProductBacklog(usId, projectCode, priority)
 activate pservice
-pservice -> pbacklog : addUserStory(priority,usId)
+pservice -> pbacklog : addUsToProductBacklog(priority, usId)
 activate pbacklog
 pbacklog --> pservice : true
 deactivate pbacklog

@@ -22,7 +22,7 @@ class "ProjectService"{
 class "UsService"{
 -usRepository
 -userStoryMapper
-+requestAllPlannedUs(usId)
++requestAllPlannedUs(usIds)
 }
 
 class "Project" <<root>>{
@@ -42,7 +42,7 @@ class ProjectRepository{
 }
 
 class "UsRepository"{
-+getListOfUsWithMatchingIds(usId)
++getListOfUsWithMatchingIds(usIds)
 }
 
 class "UserStoryMapper"{

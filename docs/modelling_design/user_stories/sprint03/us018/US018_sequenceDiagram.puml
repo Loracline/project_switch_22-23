@@ -15,6 +15,7 @@ participant ":Project" as project
 participant ":ProductBacklog" as backlog
 participant ":UsService" as uservice
 participant ":UsRepository" as usrep
+participant "userStoriesDto"
 participant ":userStoryMapper" as usmapper
 
 
@@ -31,30 +32,35 @@ prepo -> project: getProductBacklog()
 activate project
 project -> backlog: getUserStories()
 activate backlog
-backlog --> project: usId
+backlog --> project: usIds
 deactivate backlog
-project --> prepo: usId
+project --> prepo: usIds
 deactivate project
-prepo --> pservice: usId
+prepo --> pservice: usIds
 deactivate prepo
-pservice --> controller: usId
+pservice --> controller: usIds
 deactivate pservice
-controller -> uservice : requestAllPlannedUs(usId)
+controller -> uservice : requestAllPlannedUs(usIds)
 activate uservice
-uservice -> usrep : getListOfUsWithMatchingIds(usId)
+uservice -> usrep : getListOfUsWithMatchingIds(usIds)
 activate usrep
 usrep --> uservice : userStories
 deactivate usrep
+create "userStoriesDto"
+uservice --> userStoriesDto: create ()
 loop for each userStory in userStories
 uservice -> usmapper:  userStoryToDto(userStory)
 activate usmapper
 usmapper --> uservice : userStoryDto
-
-end loop
 deactivate usmapper
-uservice --> controller: userStoryDtoList
+uservice -> "userStoriesDto": add(userStoryDto)
+activate "userStoriesDto"
+deactivate "userStoriesDto"
+end loop
+
+uservice --> controller: userStoriesDto
 deactivate uservice
-controller --> ui : userStoryDtoList
+controller --> ui : userStoriesDto
 deactivate controller
 
 ui --> actor: shows list of all US

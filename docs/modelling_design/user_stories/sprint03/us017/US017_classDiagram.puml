@@ -8,26 +8,27 @@ title To create User Story and add it to Product Backlog
 
 
 class "CreateUsController" {
-- UsService
-- ProjectService
-+ createUserStory(projectDto,userStoryCreationDto)
+- usService
+- projectService
++ createUs(projectDto, userStoryCreationDto)
 }
 
 class "UsService" {
-- FactoryUserStory
+- factoryUserStory
 - usRepository
-+ createUs(userStoryCreationDto,projectCode)
-+  add(userStory)
+- userStoryMapper
++ createUs(userStoryCreationDto, projectCode)
++ deleteUs(usId)
 }
 
 class "UsRepository" {
--userStory
+-userStories
 +add(userStory)
 }
 
 class "ProjectService"{
--ProductBacklog
-+ addUserStoryToProductBacklog(usId,projectCode,priority)
+-productBacklog
++ addUsToProductBacklog(usId, projectCode, priority)
 }
 
 class "ProductBacklog" {
@@ -43,20 +44,19 @@ class "UserStory"{
 - usText
 - status
 - acceptanceCriteria
-- effort
 -UserStory(usId)
 +setStatus(status)
 +setUsText(usText)
 +setUsNumber(usNumber)
-+setEffort(effortEstimate)
-+setActor(Actor actor)
++setActor(actor)
 +has(usNumber)
-+toString()
++setValidUserStory(usNumber, usText, actor)
 }
 
-interface "FactoryUserStory" {
-+ createUserStory(userStoryCreationDto)
+interface "IFactoryUserStory" {
++ createUserStory(userStoryCreationDto, projectCode)
 }
+
 
 class "UserStoryCreationDto"{
 +userStoryNumber
@@ -71,11 +71,11 @@ class "ProjectDto"{
 }
 
 "CreateUsController""1"-->"1" "UsService"
-"UsService" "1"-->"1" "FactoryUserStory"
+"UsService" "1"-->"1" "IFactoryUserStory"
 "UserStoryCreationDto" <.. "CreateUsController"
 "UserStoryCreationDto" <. "UsService"
-"UserStoryCreationDto" <. "FactoryUserStory"
-"FactoryUserStory" "1"->"*" "UserStory"
+"UserStoryCreationDto" <. "IFactoryUserStory"
+"IFactoryUserStory" "1"..>"*" "UserStory"
 "ProjectDto" <. "UsService"
 "UsService" "1"->"1" "UsRepository"
 "CreateUsController" "1"->"1" "ProjectService"
