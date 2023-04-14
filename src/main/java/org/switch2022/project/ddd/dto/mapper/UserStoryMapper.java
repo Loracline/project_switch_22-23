@@ -16,7 +16,7 @@ public class UserStoryMapper {
      */
     
     public UserStoryDto userStoryToDto(UserStory userStory) {
-        return new UserStoryDto(userStory.getUsNumber().toString(), userStory.getUsText().toString(),
+        return new UserStoryDto(userStory.getUsNumber().getUserStoryNumber(), userStory.getUsText().getUserStoryText(),
                 userStory.getStatus().toString());
     }
     /**

@@ -49,11 +49,7 @@ public class CreateUsController {
         try {
             projectService.addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
         } catch (Exception e) {
-            try {
-                usService.deleteUs(usId);
-            } catch (Exception error) {
-                throw  e;
-            }
+            usService.deleteUs(usId);
             throw e;
         }
         return true;

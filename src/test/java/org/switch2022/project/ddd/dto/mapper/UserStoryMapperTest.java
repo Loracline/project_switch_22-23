@@ -32,9 +32,9 @@ class UserStoryMapperTest {
         String usNumber = "US001";
         String status = "Planned";
         String text = "I want to create an issue";
-        when(usNumberDouble.toString()).thenReturn(usNumber);
+        when(usNumberDouble.getUserStoryNumber()).thenReturn(usNumber);
         when(statusDouble.toString()).thenReturn(status);
-        when(usTextDouble.toString()).thenReturn(text);
+        when(usTextDouble.getUserStoryText()).thenReturn(text);
         when(userStoryDouble.getUsNumber()).thenReturn(usNumberDouble);
         when(userStoryDouble.getStatus()).thenReturn(statusDouble);
         when(userStoryDouble.getUsText()).thenReturn(usTextDouble);
@@ -66,9 +66,9 @@ class UserStoryMapperTest {
         String usNumber = "US001";
         String status = "Planned";
         String text = "I want to create an issue";
-        when(usNumberDouble.toString()).thenReturn(usNumber);
+        when(usNumberDouble.getUserStoryNumber()).thenReturn(usNumber);
         when(statusDouble.toString()).thenReturn(status);
-        when(usTextDouble.toString()).thenReturn(text);
+        when(usTextDouble.getUserStoryText()).thenReturn(text);
         when(userStoryDouble.getUsNumber()).thenReturn(usNumberDouble);
         when(userStoryDoubleTwo.getUsNumber()).thenReturn(usNumberDouble);
         when(userStoryDouble.getStatus()).thenReturn(statusDouble);

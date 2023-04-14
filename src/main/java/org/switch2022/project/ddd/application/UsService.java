@@ -11,7 +11,6 @@ import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -63,15 +62,9 @@ public class UsService {
      * @param usId of userStory to be deleted from the repository.
      */
 
-    public void deleteUs(UsId usId) throws Exception {
-        List<UsId> usIdList = new ArrayList<>();
-        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usIdList);
-        if (userStories.isEmpty()) {
-            throw new IllegalStateException("User story does not exist");
-        } else {
-            usRepository.delete(usId);
+    public boolean  deleteUs(UsId usId) throws Exception {
+           return usRepository.delete(usId);
         }
-    }
 
     /**
      * Requests a list of userStories with the status planned.
@@ -80,7 +73,7 @@ public class UsService {
      * @return a list of all userStoriesDto with the status planned.
      */
 
-    public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) throws Exception {
+    public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) {
         List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
         List<UserStoryDto> userStoriesDto = new ArrayList<>();
         if (!userStories.isEmpty()) {

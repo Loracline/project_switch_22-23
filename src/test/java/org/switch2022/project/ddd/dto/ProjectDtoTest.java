@@ -89,5 +89,22 @@ class ProjectDtoTest {
         // Check that unequal objects have different hash codes
         assertNotEquals(objectOne.hashCode(), objectThree.hashCode());
     }
+
+    /**
+     * Method: getProjectCode
+     * This method ensure that the project code is returned.
+     */
+    @Test
+    void getProjectCode() {
+        //arrange
+        ProjectDto projectDtoFive = projectDtoOne;
+        String expected = "AA001";
+
+        //act
+        String result = projectDtoFive.getProjectCode();
+
+        //assert
+        assertEquals(expected, result);
+    }
 }
 

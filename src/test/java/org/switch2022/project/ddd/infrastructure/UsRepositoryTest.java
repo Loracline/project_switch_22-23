@@ -1,12 +1,13 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -238,6 +239,29 @@ class UsRepositoryTest {
 
         // Assert
         assertNotEquals(usRepositoryOne, object);
+    }
+
+    /**
+     * Scenario 3: Two UsRepository objects are not equal because one of them is null.
+     */
+
+    @Test
+    public void ensureTwoUsRepositoryInstancesAreNotEqualBecauseOneItIsNull() throws Exception {
+        // Arrange
+        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("1","1"
+        ,"1",1);
+        FactoryUserStory factoryUserStory = new FactoryUserStory();
+
+        UsRepository usRepository = new UsRepository();
+        usRepository.add(factoryUserStory.createUserStory(userStoryCreationDto, "1"));
+
+        UsRepository other = null;
+
+        // Act
+        boolean result = usRepository.equals(other);
+
+        // Assert
+        assertFalse(result);
     }
 
 }
