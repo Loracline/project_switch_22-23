@@ -5,13 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.container.*;
 import org.switch2022.project.dto.*;
-
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.SprintBacklog;
 import org.switch2022.project.model.UserStory;
 import org.switch2022.project.utils.Status;
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 class ViewScrumBoardControllerTest {
@@ -31,8 +27,8 @@ class ViewScrumBoardControllerTest {
 
     ProjectCreationDto projectCreationDto;
     ProjectDto projectDto, wrongCodeProjectDto;
-    UserStoryCreationDto userStoryCreationDtoOne, userStoryCreationDtoTwo;
-    UserStoryDto userStoryDtoOne, userStoryDtoTwo;
+    UserStoryCreationDto userStoryCreationDtoOne, userStoryCreationDtoTwo, userStoryCreationDtoThree,userStoryCreationDtoFour;
+    UserStoryDto userStoryDtoOne, userStoryDtoTwo, userStoryDtoTree, userStoryDtoFour;
 
     BusinessSectorContainer businessSectorContainer;
     AccountContainer accountContainer;
@@ -68,11 +64,19 @@ class ViewScrumBoardControllerTest {
                 "I want to create a project", "Manager", 0);
         userStoryCreationDtoTwo = new UserStoryCreationDto("US002",
                 "I want to create a project", "Manager", 1);
+        userStoryCreationDtoThree = new UserStoryCreationDto("US003",
+                "I want to create a Sprint","Manager",2);
+        userStoryCreationDtoFour = new UserStoryCreationDto("US004",
+                "I want to create a Sprint Backlog", "Manager",3);
 
         userStoryDtoOne = new UserStoryDto("US001",
                 "I want to create a project", "Planned");
         userStoryDtoTwo = new UserStoryDto("US002",
                 "I want to create a user story", "Planned");
+        userStoryDtoTree = new UserStoryDto("US003",
+                "I want to create a Sprint", "Finished");
+        userStoryDtoFour = new UserStoryDto("US004",
+                "I want to create a Sprint Backlog", "Blocked");
 
         projectDto = new ProjectDto("AA001", "software development " +
                 "management", "Peter", "228674498",
@@ -87,6 +91,7 @@ class ViewScrumBoardControllerTest {
                 "Fixed cost", "Fishing");
 
         //Containers
+
         projectTypologyContainer = new ProjectTypologyContainer();
         customerContainer = new CustomerContainer();
         businessSectorContainer = new BusinessSectorContainer();
@@ -105,6 +110,8 @@ class ViewScrumBoardControllerTest {
 
         projectContainer.createUserStory(projectDto, userStoryCreationDtoOne);
         projectContainer.createUserStory(projectDto, userStoryCreationDtoTwo);
+        projectContainer.createUserStory(projectDto, userStoryCreationDtoThree);
+        projectContainer.createUserStory(projectDto, userStoryCreationDtoFour);
 
         company = new Company(accountContainer, profileContainer, businessSectorContainer,
                 projectContainer, projectTypologyContainer, null, customerContainer);
@@ -258,5 +265,33 @@ class ViewScrumBoardControllerTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Scenario 3: Ensure User Stories not start yet have the same status
+     */
 
+    @Test
+    void ensureAllUserStoriesInSprintHaveSameStatusWhenSprintHasNotStarted() {
+        //Arrange
+        LocalDate startDate = LocalDate.now().plusDays(100);
+        SprintCreationDto sprintCreationDto = new SprintCreationDto(startDate, 3, 1);
+        projectContainer.registerProject(projectCreationDto,projectTypologyContainer, customerContainer,businessSectorContainer,factoryProductBacklog,factoryUserStory,factoryProject,factoryPeriod,factorySprintBacklog,factorySprint);
+        projectContainer.createSprint(sprintCreationDto, projectDto);
+        projectContainer.addUserStoryToSprintBacklog(projectDto.code, "US001", "s001");
+        projectContainer.addUserStoryToSprintBacklog(projectDto.code,"US002","s001");
+        LocalDate date = LocalDate.now().plusDays(100);
+        List<String> expected = new ArrayList<>();
+        expected.add("planned");
+        expected.add("planned");
+
+        //Act
+        List<UserStoryDto> scrumBoard = viewScrumBoardController.getScrumBoard(projectDto,
+                date, factoryUserStory);
+        List<String> result = new ArrayList<>();
+        for (int i = 0 ; i < scrumBoard.size(); i++) {
+           result.add(scrumBoard.get(i).getStatus());
+        }
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }

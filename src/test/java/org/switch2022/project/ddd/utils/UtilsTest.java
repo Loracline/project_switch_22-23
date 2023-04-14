@@ -1,6 +1,8 @@
 package org.switch2022.project.ddd.utils;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,5 +57,38 @@ class UtilsTest {
 
         //Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD hasStatus()
+     * Scenario 1: The status is the same. Should return true.
+     */
+    @DisplayName("Project has desired status")
+    @Test
+    void ensureThatReturnsTrueIfProjectStatusIsTheDesiredOne() {
+        // ARRANGE
+        ProjectStatus actualProjectStatus = ProjectStatus.PLANNED;
+        ProjectStatus desiredProjectStatus = ProjectStatus.PLANNED;
+
+        // ACT
+        boolean result = Utils.hasStatus(actualProjectStatus, desiredProjectStatus);
+
+        // ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: The status is not the same. Should return an exception.
+     */
+    @DisplayName("Project hasn't the desired status")
+    @Test
+    void ensureThatReturnsExceptionIfProjectStatusIsNotTheDesiredOne() {
+        // ARRANGE
+        ProjectStatus actualProjectStatus = ProjectStatus.PLANNED;
+        ProjectStatus desiredProjectStatus = ProjectStatus.INCEPTION;
+
+        // ACT & ASSERT
+        assertThrows(IllegalArgumentException.class, () ->
+                Utils.hasStatus(actualProjectStatus, desiredProjectStatus));
     }
 }

@@ -30,6 +30,9 @@ public class UsRepository implements IUsRepository {
         if (this == o) {
             return true;
         }
+        if (o == null) {
+            return false;
+        }
         if (o.getClass() != this.getClass()) {
             return false;
         }
@@ -52,7 +55,6 @@ public class UsRepository implements IUsRepository {
      * This method adds a new userStory to the repository of userStories if it does not exist.
      *
      * @param userStory to be added to the repository.
-     * @return the addition of the userStory to the repository or an exception otherwise.
      */
 
     public void add(UserStory userStory) throws Exception{
@@ -67,23 +69,21 @@ public class UsRepository implements IUsRepository {
      * This method deletes a userStory from the repository of userStories if it exists.
      *
      * @param usId of the userStory to be deleted from the repository.
-     * @return the elimination of the userStory of the repository or an exception otherwise.
+     * @return true if the user story is deleted or throws an exception otherwise.
      */
-
-    public void delete(UsId usId) throws Exception{
+    public boolean delete(UsId usId) {
         boolean usFound = false;
         for (int i = 0; i < userStories.size(); i++) {
-            if (userStories.get(i).getUsId().equals(usId)) {
+            if (userStories.get(i).getUsId().equals(usId) && !usFound) {
                 userStories.remove(i);
                 usFound = true;
-                break;
             }
         }
         if (!usFound) {
             throw new IllegalArgumentException("User story does not exist");
         }
+        return true;
     }
-
 
     /**
      * Lists all userStories with a matching ID.
@@ -91,7 +91,6 @@ public class UsRepository implements IUsRepository {
      * @param usId will filter the userStories present in the repository by ID.
      * @return all planned userStories with a corresponding ID.
      */
-
     @Override
     public List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId) {
         List<UserStory> userStoriesWithMatchingIds = new ArrayList<>();

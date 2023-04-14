@@ -30,7 +30,6 @@ public class FactoryProject implements IFactoryProject {
         project.setValidProject(
                 projectCreationDto.projectName,
                 projectCreationDto.projectDescription,
-                projectCreationDto.sprintDuration,
                 businessSectorId,
                 customerId,
                 projectTypologyId,

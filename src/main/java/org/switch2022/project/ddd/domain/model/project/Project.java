@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.List;
 
@@ -83,8 +84,17 @@ public class Project implements Entity<Project> {
      *
      * @return the code of the project.
      */
-    public Code getProjectCode() {
+    protected Code getProjectCode() {
         return this.projectCode;
+    }
+
+    /**
+     * Setter method for the attribute: projectStatus.
+     *
+     * @param projectStatus of the project.
+     */
+    protected void setProjectStatus(ProjectStatus projectStatus) {
+        this.projectStatus = projectStatus;
     }
 
     /**
@@ -102,7 +112,16 @@ public class Project implements Entity<Project> {
      * @param projectName the name of the project
      */
     protected void setName(String projectName) {
-        this.projectName = new Name(projectName.toLowerCase());
+        this.projectName = new Name(projectName);
+    }
+
+    /**
+     * Getter method for the attribute: projectName.
+     *
+     * @return the name of the project.
+     */
+    protected Name getProjectName() {
+        return projectName;
     }
 
     /**
@@ -112,7 +131,16 @@ public class Project implements Entity<Project> {
      * @param description the description of the project.
      */
     protected void setDescription(String description) {
-        this.description = new Description(description.toLowerCase());
+        this.description = new Description(description);
+    }
+
+    /**
+     * Getter method for the attribute: description.
+     *
+     * @return the description of the project.
+     */
+    protected Description getDescription() {
+        return description;
     }
 
     /**
@@ -125,12 +153,30 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * Getter method for the attribute: businessSectorId.
+     *
+     * @return the business sector ID of the project.
+     */
+    protected BusinessSectorId getBusinessSectorId() {
+        return businessSectorId;
+    }
+
+    /**
      * This method sets the customer ID attribute to the customerId parameter.
      *
      * @param customerId is the identifier attribute of type value object of the Customer entity.
      */
     protected void setCustomer(CustomerId customerId) {
         this.customerId = customerId;
+    }
+
+    /**
+     * Getter method for the attribute: customerId.
+     *
+     * @return the customer ID of the project.
+     */
+    protected CustomerId getCustomerId() {
+        return customerId;
     }
 
     /**
@@ -143,12 +189,31 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * Getter method for the attribute: projectTypologyId.
+     *
+     * @return the project typology ID of the project.
+     */
+    protected ProjectTypologyId getProjectTypologyId() {
+        return projectTypologyId;
+    }
+
+    /**
      * This method sets the sprint duration for this project to the specified sprint duration object.
      *
      * @param sprintDuration the sprint duration object to set for this project.
      */
     protected void setSprintDuration(int sprintDuration) {
+        Utils.hasStatus(this.projectStatus, ProjectStatus.INCEPTION);
         this.sprintDuration = new SprintDuration(sprintDuration);
+    }
+
+    /**
+     * Getter method for the attribute: sprintDuration.
+     *
+     * @return the sprint duration of the project.
+     */
+    protected SprintDuration getSprintDuration() {
+        return sprintDuration;
     }
 
     /**
@@ -156,18 +221,16 @@ public class Project implements Entity<Project> {
      *
      * @param projectName            of a project.
      * @param description            of a project.
-     * @param sprintDuration         of a project.
      * @param businessSectorId       of a project.
      * @param customerId             of a project.
      * @param projectTypologyId      of a project.
      * @param iFactoryProductBacklog that creates the product backlog of a project.
      */
-    protected void setValidProject(String projectName, String description, int sprintDuration,
-                                   BusinessSectorId businessSectorId, CustomerId customerId,
-                                   ProjectTypologyId projectTypologyId, IFactoryProductBacklog iFactoryProductBacklog) {
+    protected void setValidProject(String projectName, String description, BusinessSectorId businessSectorId,
+                                   CustomerId customerId, ProjectTypologyId projectTypologyId,
+                                   IFactoryProductBacklog iFactoryProductBacklog) {
         setName(projectName);
         setDescription(description);
-        setSprintDuration(sprintDuration);
         setBusinessSector(businessSectorId);
         setCustomer(customerId);
         setTypology(projectTypologyId);
