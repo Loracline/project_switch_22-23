@@ -8,33 +8,47 @@ title To create User Story and add it to Product Backlog
 
 
 class "CreateUsController" {
-- usService
 - projectService
+- usService
 + createUs(projectDto, userStoryCreationDto)
 }
 
 class "UsService" {
-- factoryUserStory
 - usRepository
-- userStoryMapper
+- factoryUserStory
 + createUs(userStoryCreationDto, projectCode)
 + deleteUs(usId)
 }
 
-class "UsRepository" {
--userStories
-+add(userStory)
+class "ProjectService"{
++ addUsToProductBacklog(usId, projectCode, priority)
++getProjectByCode(code)
 }
 
-class "ProjectService"{
+class "UserStoryCreationDto"{
++userStoryNumber
++actor
++userStoryText
++priority
+}
+
+class "ProjectDto"{
++code
+}
+
+class "Project"{
+-projectCode
 -productBacklog
-+ addUsToProductBacklog(usId, projectCode, priority)
++ addUserStory(priority, usId
 }
 
 class "ProductBacklog" {
--priority
--usId
-+addUserStory(priority,usId)
+-userStories
++addUserStory(priority, usId)
+}
+
+interface IProjectRepository{
++getProjectByCode(projectCode)
 }
 
 class "UserStory"{
@@ -43,43 +57,35 @@ class "UserStory"{
 - actor
 - usText
 - status
-- acceptanceCriteria
 -UserStory(usId)
-+setStatus(status)
-+setUsText(usText)
++setValidUserStory(usNumber, usText, actor)
 +setUsNumber(usNumber)
 +setActor(actor)
++setUsText(usText)
 +has(usNumber)
-+setValidUserStory(usNumber, usText, actor)
++setStatus(status)
 }
 
 interface "IFactoryUserStory" {
 + createUserStory(userStoryCreationDto, projectCode)
 }
 
-
-class "UserStoryCreationDto"{
-+userStoryNumber
-+actor
-+userStoryText
-+getPriority()
+interface "IUsRepository" {
+-userStories
++add(userStory)
++delete(usId)
 }
 
-class "ProjectDto"{
-+projectCode
-+getProjectCode()
-}
-
-"CreateUsController""1"-->"1" "UsService"
-"UsService" "1"-->"1" "IFactoryUserStory"
-"UserStoryCreationDto" <.. "CreateUsController"
-"UserStoryCreationDto" <. "UsService"
-"UserStoryCreationDto" <. "IFactoryUserStory"
-"IFactoryUserStory" "1"..>"*" "UserStory"
-"ProjectDto" <. "UsService"
-"UsService" "1"->"1" "UsRepository"
-"CreateUsController" "1"->"1" "ProjectService"
-"CreateUsController" .>"ProjectDto"
-"ProjectService" "1"->"1" "ProductBacklog"
-
+"CreateUsController""1"-->"1" "UsService": has
+"CreateUsController" "1"-->"1" "ProjectService": has
+"CreateUsController" ..>"ProjectDto": uses
+"ProjectService" ..> "Project": uses
+"ProjectService" "1"-->"1" "IProjectRepository": contains
+"IProjectRepository" "1"-->"*" "Project": has
+"Project" "1"-->"1" "ProductBacklog": has
+"UsService" "1"-->"1" "IFactoryUserStory": has
+"IFactoryUserStory" "1"..>"*" "UserStory": creates
+"UsService" "1"-->"1" "IUsRepository": contains
+"IUsRepository" "1"-->"*" "UserStory": has
+"UserStoryCreationDto" <.. "IFactoryUserStory": uses
 @enduml

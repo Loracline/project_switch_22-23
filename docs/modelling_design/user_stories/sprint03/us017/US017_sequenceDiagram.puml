@@ -13,6 +13,8 @@ participant ":FactoryUserStory" as factory
 participant "userStory:UserStory" as userStory
 participant ":UsRepository" as usrep
 participant ":ProjectService" as pservice
+participant ":ProjectRepository" as pr
+participant "project:Project" as project
 participant ":ProductBacklog" as pbacklog
 
 
@@ -46,9 +48,19 @@ service --> controller: usId
 deactivate service
 controller -> pservice: addUsToProductBacklog(usId, projectCode, priority)
 activate pservice
-pservice -> pbacklog : addUsToProductBacklog(priority, usId)
+pservice -> pr: getProjectByCode(projectCode)
+activate pr
+pr --> pservice: project
+deactivate pr
+
+pservice -> project: addUserStory(priority, usId)
+activate project
+project -> pbacklog : addUsToProductBacklog(priority, usId)
 activate pbacklog
-pbacklog --> pservice : true
+pbacklog --> project : true
+deactivate
+project --> pservice: true
+deactivate
 deactivate pbacklog
 pservice --> controller : true
 deactivate pservice
