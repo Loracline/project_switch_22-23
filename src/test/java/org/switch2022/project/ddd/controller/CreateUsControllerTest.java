@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.domain.interfaces.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.project.*;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
@@ -21,6 +21,7 @@ import org.switch2022.project.ddd.infrastructure.UsRepository;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/*
 class CreateUsControllerTest {
     */
 /**

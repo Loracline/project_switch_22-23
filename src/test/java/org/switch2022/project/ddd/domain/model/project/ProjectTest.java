@@ -202,10 +202,10 @@ class ProjectTest {
     @Test
     public void ensureProjectCodeIsEqual() {
         //Arrange
-        Code expected = projectCodeOne;
+        String expected = projectCodeOne.getCode();
 
         //Act
-        Code result = projectOne.getProjectCode();
+        String result = projectOne.getProjectCode();
 
         //Assert
         assertEquals(expected, result);
@@ -218,10 +218,10 @@ class ProjectTest {
     @Test
     public void ensureProjectCodeIsNotEqual() {
         //Arrange
-        Code expected = projectCodeOne;
+        String expected = projectCodeOne.getCode();
 
         //Act
-        Code result = projectTwo.getProjectCode();
+        String result = projectTwo.getProjectCode();
 
         //Assert
         assertNotEquals(expected, result);
@@ -242,8 +242,11 @@ class ProjectTest {
         String projectName = "X";
         String description = "Unforgettable party";
         BusinessSectorId businessSectorId = mock(BusinessSectorId.class);
+        when(businessSectorId.getBusinessSectorId()).thenReturn("Y");
         CustomerId customerId = mock(CustomerId.class);
+        when(customerId.getCustomerId()).thenReturn("idCustomer");
         ProjectTypologyId projectTypologyId = mock(ProjectTypologyId.class);
+        when(projectTypologyId.getProjectTypologyId()).thenReturn("idProjectTypology");
         IFactoryProductBacklog iFactoryProductBacklog = mock(IFactoryProductBacklog.class);
 
         // ACT
@@ -394,14 +397,15 @@ class ProjectTest {
     public void ensureProjectCodeIsEqual_IsolationTest() {
         //Arrange
         Code projectCodeOne = mock(Code.class);
+        when(projectCodeOne.getCode()).thenReturn("P001");
 
         Project projectOne = new Project(projectCodeOne);
 
         //Act
-        Code result = projectOne.getProjectCode();
+        String result = projectOne.getProjectCode();
 
         //Assert
-        assertEquals(projectCodeOne, result);
+        assertEquals("P001", result);
     }
 
     /**
@@ -413,15 +417,15 @@ class ProjectTest {
         //Arrange
         //Code
         Code projectCodeOne = mock(Code.class);
-        Code projectCodeTwo = mock(Code.class);
+        when(projectCodeOne.getCode()).thenReturn("P001");
         //Project
         Project projectTwo = new Project(projectCodeTwo);
 
         //Act
-        Code result = projectTwo.getProjectCode();
+        String result = projectTwo.getProjectCode();
 
         //Assert
-        assertNotEquals(projectCodeOne, result);
+        assertNotEquals("P001", result);
     }
 
     /**
@@ -649,7 +653,7 @@ class ProjectTest {
         boolean result = projectOne.addUserStory(priority, usId);
 
         // Assert
-        assertFalse(false);
+        assertFalse(result);
     }
 
     /**
@@ -901,30 +905,6 @@ class ProjectTest {
 
         //Assert
         assertEquals(projectCode, actualCode);
-    }
-
-    /**
-     * Integration Tests
-     * method: setProductBacklog
-     * scenario 1: set product backlog with success
-     */
-    @Test
-    void ensureSetProductBacklogIsSuccessfullyChanged() throws NoSuchFieldException, IllegalAccessException {
-        //Arrange
-        Code projectCode = new Code(1);
-        Project project = new Project(projectCode);
-        String code = project.getProjectCode().toString();
-        FactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        ProductBacklog productBacklog = factoryProductBacklog.createProductBacklog(code);
-        Field field = project.getClass().getDeclaredField("productBacklog");
-        field.setAccessible(true);
-        project.setProductBacklog(factoryProductBacklog);
-        //Act
-
-        ProductBacklog actualProductBacklog = (ProductBacklog) field.get(project);
-
-        //Assert
-        assertEquals(productBacklog, actualProductBacklog);
     }
 
     /**

@@ -1,9 +1,9 @@
-package org.switch2022.project.ddd.domain.interfaces;
+package org.switch2022.project.ddd.domain.model.user_story;
 
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * User Story Repository interface.
@@ -35,4 +35,6 @@ public interface IUsRepository {
      */
 
     List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId);
+
+     Optional<UserStory> getUserStory(UsId usId);
 }

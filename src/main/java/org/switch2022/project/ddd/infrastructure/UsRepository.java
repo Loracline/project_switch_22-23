@@ -1,7 +1,8 @@
 package org.switch2022.project.ddd.infrastructure;
 
 
-import org.switch2022.project.ddd.domain.interfaces.IUsRepository;
+import org.springframework.stereotype.Component;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 /**
  * Class UsRepository allows to manage userStories records.
  */
-
+@Component
 public class UsRepository implements IUsRepository {
 
     private final List<UserStory> userStories = new ArrayList<>();
@@ -93,13 +94,13 @@ public class UsRepository implements IUsRepository {
     public boolean delete(UsId usId) {
         boolean usFound = false;
         for (int i = 0; i < userStories.size(); i++) {
-            if (userStories.get(i).getUsId().equals(usId) && !usFound) {
+            if (userStories.get(i).getUsId().equals(usId.getUserStoryId()) && !usFound) {
                 userStories.remove(i);
                 usFound = true;
             }
         }
         if (!usFound) {
-            throw new IllegalArgumentException("User story does not exist");
+            throw new IllegalArgumentException("The User Story is already in the Product Backlog");
         }
         return true;
     }
@@ -114,7 +115,7 @@ public class UsRepository implements IUsRepository {
         List<UserStory> userStoriesWithMatchingIds = new ArrayList<>();
         for (UserStory userStory : userStories) {
             for (UsId id : usId) {
-                if (userStory.getUsId().equals(id)) {
+                if (userStory.getUsId().equals(id.getUserStoryId())) {
                     userStoriesWithMatchingIds.add(userStory);
                 }
             }

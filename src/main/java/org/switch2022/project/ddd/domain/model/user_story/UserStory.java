@@ -81,17 +81,17 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This getter method returns the User Story ID.
+     * This getter method returns a String with User Story ID.
      */
-    public UsId getUsId() {
-        return usId;
+    public String getUsId() {
+        return usId.getUserStoryId();
     }
 
     /**
-     * This getter method returns the User Story status.
+     * This getter method returns a String with User Story status.
      */
-    public Status getStatus() {
-        return status;
+    public String getStatus() {
+        return status.getStatus();
     }
 
     /**
@@ -104,10 +104,10 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This getter method returns the User Story Text.
+     * This getter method returns a String with the User Story Text.
      */
-    public UsText getUsText() {
-        return usText;
+    public String getUsText() {
+        return usText.getUserStoryText();
     }
 
     /**
@@ -120,10 +120,10 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This getter method returns the User Story Number.
+     * This getter method returns a String with the User Story Number.
      */
-    public UsNumber getUsNumber() {
-        return usNumber;
+    public String getUsNumber() {
+        return usNumber.getUserStoryNumber();
     }
 
     /**
@@ -145,10 +145,10 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This getter returns the Actor.
+     * This getter returns a String with the Actor.
      */
-    public Actor getActor() {
-        return actor;
+    public String getActor() {
+        return actor.getActor();
     }
 
     /**
@@ -163,8 +163,8 @@ public class UserStory implements Entity<UserStory> {
     /**
      * This getter returns the Acceptance Criteria of a user story.
      */
-    public AcceptanceCriteria getAcceptanceCriteria() {
-        return acceptanceCriteria;
+    public String getAcceptanceCriteria() {
+        return acceptanceCriteria.getAcceptanceCriteria();
     }
 
     /**
@@ -206,5 +206,5 @@ public class UserStory implements Entity<UserStory> {
      * @return TRUE if User Story has the given usId, and FALSE otherwise.
      */
     public boolean hasUsId(UsId usId){ return usId.equals(this.usId); }
-
 }
+

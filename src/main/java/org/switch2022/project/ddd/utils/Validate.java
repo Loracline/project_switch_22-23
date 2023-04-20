@@ -1,6 +1,9 @@
 package org.switch2022.project.ddd.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
+@Component
 
 public class Validate {
 
@@ -16,6 +19,7 @@ public class Validate {
      * created. This ensures that the utility class remains stateless and can only be used
      * through its static methods.
      */
+
     private Validate() {}
 
     //STRING VALIDATIONS
