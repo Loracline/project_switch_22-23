@@ -1,11 +1,15 @@
 package org.switch2022.project.ddd.application;
 
 
-import org.switch2022.project.ddd.domain.model.project.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.switch2022.project.ddd.domain.model.project.IFactoryProductBacklog;
+import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
+import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
+import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.utils.Utils;
-import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,32 +18,23 @@ import java.util.Optional;
  * Class ProjectService allows to create and
  * manipulate Project aggregate.
  */
+@Service
 public class ProjectService {
     /**
      * Attributes
      */
-    private final IFactoryProject factoryProject;
-    private final IProjectRepository projectRepository;
-    private final IFactoryProductBacklog factoryProductBacklog;
+    @Autowired
+    private IFactoryProject factoryProject;
+    @Autowired
+    private IProjectRepository projectRepository;
+    @Autowired
+    private IFactoryProductBacklog factoryProductBacklog;
 
     /**
      * Constructor.
-     *
-     * @param factoryProject        it creates a new project;
-     * @param projectRepository     it saves all projects;
-     * @param factoryProductBacklog it creates a productBacklog for each project;
      */
 
-    public ProjectService(IFactoryProject factoryProject, IProjectRepository projectRepository,
-                          IFactoryProductBacklog factoryProductBacklog) {
-        Validate.notNull(factoryProject, "Factory Project can't be null");
-        this.factoryProject = factoryProject;
-
-        Validate.notNull(projectRepository, "Project Repository can't be null");
-        this.projectRepository = projectRepository;
-
-        Validate.notNull(factoryProductBacklog, "Factory ProductBacklog can't be null");
-        this.factoryProductBacklog = factoryProductBacklog;
+    public ProjectService() {
     }
 
     /**
@@ -116,7 +111,7 @@ public class ProjectService {
      * @return an optional from the repository.
      */
     public Optional<Project> getProjectByCode(String code) {
-        int codeNumber = Utils.getIntFromAlphanumericString(code,"P");
+        int codeNumber = Utils.getIntFromAlphanumericString(code, "P");
         Code projectCode = new Code(codeNumber);
         return projectRepository.getProjectByCode(projectCode);
     }

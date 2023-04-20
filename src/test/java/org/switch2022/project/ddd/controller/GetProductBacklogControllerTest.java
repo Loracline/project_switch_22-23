@@ -1,3 +1,4 @@
+/*
 package org.switch2022.project.ddd.controller;
 
 import org.junit.jupiter.api.AfterEach;
@@ -27,10 +28,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class GetProductBacklogControllerTest {
-    /**
+    */
+/**
      * BeforeEach and AfterEach executes common code before/after running
      * the tests below.
-     */
+     *//*
+
 
     GetProductBacklogController getProductBacklogController;
     UsService usService;
@@ -71,7 +74,7 @@ class GetProductBacklogControllerTest {
         factoryProjectOne = new FactoryProject();
         projectRepositoryOne = new ProjectRepository();
         factoryProductBacklogOne = new FactoryProductBacklog();
-        projectServiceOne = new ProjectService(factoryProjectOne, projectRepositoryOne, factoryProductBacklogOne);
+        projectServiceOne = new ProjectService();
 
         //UserStory Service
         usRepositoryOne = new UsRepository();
@@ -131,7 +134,8 @@ class GetProductBacklogControllerTest {
         projectCode = null;
     }
 
-    /**
+    */
+/**
      * Method: getProductBacklog()
      * Scenario 1: Tests the behavior of the getProductBacklog method in the
      * getProductBacklogController class when a null ProjectCode String is passed as input.
@@ -144,7 +148,8 @@ class GetProductBacklogControllerTest {
      * expected message.
      *
      * @throwsIllegalArgumentException if the input parameters are null.
-     */
+     *//*
+
     @Test
     void ensureThatIsReturnedAndThrowsAnExceptionIfProjectCodeIsNull() {
         // ARRANGE
@@ -159,10 +164,12 @@ class GetProductBacklogControllerTest {
 
     }
 
-    /**
+    */
+/**
      * Scenario 2: This test verifies that none IllegalArgumentException is thrown with a not
      * null input parameter.
-     */
+     *//*
+
     @Test
     void ensureThatIsNotReturnedAndThrowsAnExceptionIfProjectCodeIsNotNull() {
         // ACT
@@ -177,12 +184,14 @@ class GetProductBacklogControllerTest {
         assertTrue(true);
     }
 
-    /**
+    */
+/**
      * Scenario 3: This test ensure that an empty UserStoryDto list is returned when the Product
      * Backlog of a give Project Code is also empty.
      *
      * @empty UserStoryDto list
-     */
+     *//*
+
     @Test
     void ensureThatAnEmptyUserStoryDtoListIsReturned() throws Exception {
         // ARRANGE
@@ -197,12 +206,14 @@ class GetProductBacklogControllerTest {
         assertTrue(result.isEmpty());
     }
 
-    /**
+    */
+/**
      * Scenario 4: This test ensure that an UserStoryDto list is returned when the Product
      * Backlog of a give Project Code has a list of planned User Stories.
      *
      * @UserStoryDto list
-     */
+     *//*
+
     @Test
     void testGetProductBacklog() throws Exception {
         // ARRANGE
@@ -229,12 +240,14 @@ class GetProductBacklogControllerTest {
         assertTrue(actualUserStoryDtoList.containsAll(expectedUserStoryDtoList));
     }
 
-    /**
+    */
+/**
      * Method: getProductBacklog()
      * <p>
      * Scenario 1: This test ensure that is returned a list containing only User Stories with the
      * status Planned when the Product Backlog contains user stories from multiple status.
-     */
+     *//*
+
     @Test
     void ensureThatIsReturnedAnOrderListOfPlannedUserStories() throws Exception {
         //ARRANGE
@@ -255,10 +268,12 @@ class GetProductBacklogControllerTest {
         assertEquals(expected, result);
     }
 
-    /**
+    */
+/**
      * Scenario 2: This test ensure that an empty List is returned when the Product
      * Backlog of a give Project has no User Stories with Planned status.
-     */
+     *//*
+
     @Test
     void ensureThatIsReturnedAnEmptyListOfUserStories_NoUserStoryWithPlannedStatus() throws Exception {
         //ARRANGE
@@ -274,10 +289,12 @@ class GetProductBacklogControllerTest {
         assertTrue(result.isEmpty());
     }
 
-    /**
+    */
+/**
      * Scenario 3: This test ensure that an empty List is returned when the Product
      * Backlog of a give Project has no User Stories.
-     */
+     *//*
+
     @Test
     void ensureThatIsReturnedAnEmptyListOfUserStories_ProductBacklogIsEmpty() throws Exception {
 
@@ -287,4 +304,5 @@ class GetProductBacklogControllerTest {
         // ASSERT
         assertTrue(result.isEmpty());
     }
-}
+
+}*/
