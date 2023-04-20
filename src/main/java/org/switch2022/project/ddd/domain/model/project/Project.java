@@ -82,10 +82,10 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: projectCode.
      *
-     * @return the code of the project.
+     * @return a String with the code of the project.
      */
-    protected Code getProjectCode() {
-        return this.projectCode;
+    protected String getProjectCode() {
+        return this.projectCode.getCode();
     }
 
     /**
@@ -118,10 +118,10 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: projectName.
      *
-     * @return the name of the project.
+     * @return a String with the name of the project.
      */
-    protected Name getProjectName() {
-        return projectName;
+    protected String getProjectName() {
+        return projectName.getName();
     }
 
     /**
@@ -137,10 +137,10 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: description.
      *
-     * @return the description of the project.
+     * @return a String with the description of the project.
      */
-    protected Description getDescription() {
-        return description;
+    protected String getDescription() {
+        return description.getDescription();
     }
 
     /**
@@ -155,10 +155,10 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: businessSectorId.
      *
-     * @return the business sector ID of the project.
+     * @return a String with the business sector ID of the project.
      */
-    protected BusinessSectorId getBusinessSectorId() {
-        return businessSectorId;
+    protected String getBusinessSectorId() {
+        return businessSectorId.getBusinessSectorId();
     }
 
     /**
@@ -173,10 +173,10 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: customerId.
      *
-     * @return the customer ID of the project.
+     * @return a String with the customer ID of the project.
      */
-    protected CustomerId getCustomerId() {
-        return customerId;
+    protected String getCustomerId() {
+        return customerId.getCustomerId();
     }
 
     /**
@@ -191,10 +191,10 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: projectTypologyId.
      *
-     * @return the project typology ID of the project.
+     * @return a String with the project typology ID of the project.
      */
-    protected ProjectTypologyId getProjectTypologyId() {
-        return projectTypologyId;
+    protected String getProjectTypologyId() {
+        return projectTypologyId.getProjectTypologyId();
     }
 
     /**
