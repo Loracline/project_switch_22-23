@@ -1,9 +1,10 @@
 package org.switch2022.project.ddd.utils;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
 
 import static java.lang.Integer.parseInt;
-
+@Component
 public class Utils {
     private Utils(){}
 

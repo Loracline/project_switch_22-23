@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.application;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
@@ -8,7 +9,6 @@ import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
-import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,27 +18,14 @@ import java.util.List;
  */
 
 public class UsService {
+    @Autowired
+    private IUsRepository usRepository;
+    @Autowired
+     private IFactoryUserStory factoryUserStory;
+    @Autowired
+    private UserStoryMapper userStoryMapper;
 
-    private final IUsRepository usRepository;
-    private final IFactoryUserStory factoryUserStory;
-    private final UserStoryMapper userStoryMapper;
-
-    /**
-     * Constructor.
-     *
-     * @param usRepository     where the userStory will be saved.
-     * @param factoryUserStory allows to create a userStory.
-     * @param userStoryMapper  converts userStory to userStoryDto.
-     */
-
-    public UsService(IUsRepository usRepository, IFactoryUserStory factoryUserStory,
-                     UserStoryMapper userStoryMapper) {
-        Validate.notNull(usRepository, "User Story Repository can't be null");
-        this.usRepository = usRepository;
-        Validate.notNull(factoryUserStory, "Factory User Story can't be null");
-        this.factoryUserStory = factoryUserStory;
-        Validate.notNull(userStoryMapper, "User Story Mapper can't be null");
-        this.userStoryMapper = userStoryMapper;
+    public UsService() {
     }
 
     /**

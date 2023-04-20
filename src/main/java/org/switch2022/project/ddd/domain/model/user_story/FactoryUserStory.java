@@ -1,11 +1,12 @@
 package org.switch2022.project.ddd.domain.model.user_story;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.value_object.Actor;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.domain.value_object.UsNumber;
 import org.switch2022.project.ddd.domain.value_object.UsText;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
-
+@Component
 public class FactoryUserStory implements IFactoryUserStory {
     /**
      * This method creates a new User Story based on the provided UserStoryCreationDto.
