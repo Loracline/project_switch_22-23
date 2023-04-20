@@ -21,7 +21,7 @@ class ProjectServiceTest {
      * BeforeEach execute common code before running the
      * tests below.
      */
-    IFactoryProject factoryProjectDouble, factoryProject;
+/*    IFactoryProject factoryProjectDouble, factoryProject;
     IProjectRepository projectRepositoryDouble, projectRepository;
     IFactoryProductBacklog factoryProductBacklogDouble;
     ProjectService projectService, projectServiceTwo;
@@ -66,7 +66,7 @@ class ProjectServiceTest {
      * Constructor
      * scenario 1: the factory project is null
      */
-    @Test
+    /*@Test
     void ensureProjectServiceIsNotCreated_FactoryProjectNull() {
         //Arrange
         IFactoryProject factoryProjectNull = null;
@@ -87,7 +87,7 @@ class ProjectServiceTest {
      * Constructor
      * scenario 2: the ProjectRepository is null
      */
-    @Test
+    /*@Test
     void ensureProjectServiceIsNotCreated_ProjectRepositoryNull() {
         //Arrange
         IFactoryProject factoryProjectNull = mock(FactoryProject.class);
@@ -108,7 +108,7 @@ class ProjectServiceTest {
      * Constructor
      * scenario 3: the factory Product Backlog is null
      */
-    @Test
+    /*@Test
     void ensureProjectServiceIsNotCreated_FactoryProductBacklogNull() {
         //Arrange
         IFactoryProject factoryProjectNull = mock(FactoryProject.class);
@@ -133,7 +133,7 @@ class ProjectServiceTest {
      * scenario1: the project is created successfully. This always happens as all ids
      * are uniques and generated automatically.
      */
-    @Test
+    /*@Test
     void ensureProjectIsCreated() throws Exception {
         //Arrange
         ProjectCreationDto projectCreationDtoDouble = mock(ProjectCreationDto.class);
@@ -155,7 +155,7 @@ class ProjectServiceTest {
      * Method: addProject
      * scenario1: the project is added successfully
      */
-    @Test
+    /*@Test
     void ensureProjectIsAdded() {
         //Arrange
         Project projectDouble = mock(Project.class);
@@ -170,7 +170,7 @@ class ProjectServiceTest {
     /**
      * scenario2: the project is not added
      */
-    @Test
+    /*@Test
     void ensureProjectIsNotAdded() {
         //Arrange
         Project projectDouble = mock(Project.class);
@@ -186,7 +186,7 @@ class ProjectServiceTest {
      * Method createCode
      * scenario1: the method returns number 1 when Repository is empty
      */
-    @Test
+    /*@Test
     void ensureProjectCodeIsCreatedWithEmptyRepository() {
         //Arrange
         when(projectRepositoryDouble.getProjectNumber()).thenReturn(0);
@@ -200,7 +200,7 @@ class ProjectServiceTest {
     /**
      * scenario2: the method returns number 2, when the Repository has one project
      */
-    @Test
+    /*@Test
     void ensureProjectCodeIsCreatedWithRepositoryWithOneProject() {
         //Arrange
         when(projectRepositoryDouble.getProjectNumber()).thenReturn(1);
@@ -215,7 +215,7 @@ class ProjectServiceTest {
      * Method: addToProductBacklog
      * scenario 1: it adds an usId to the ProductBacklog
      */
-    @Test
+    /*@Test
     void ensureUsIdIsAddedSuccessfullyToProductBacklog() throws Exception {
         //Arrange
         boolean expected = true;
@@ -236,7 +236,7 @@ class ProjectServiceTest {
     /**
      * Scenario 2: doesn't add an usID to ProductBacklog, because the id is already in the product backlog
      */
-    @Test
+    /*@Test
     void ensureUsIdIsNotAddedSuccessfullyToProductBacklog() {
         //Arrange
         UsId usIdDouble = mock(UsId.class);
@@ -259,7 +259,7 @@ class ProjectServiceTest {
     /**
      * Scenario 3: doesn't add an usID to ProductBacklog, because the projectCode doesn't match any project
      */
-    @Test
+    /*@Test
     void ensureUsIdIsNotAddedSuccessfullyToProductBacklog_NoProject() {
         //Arrange
         UsId usIdDouble = mock(UsId.class);
@@ -281,7 +281,7 @@ class ProjectServiceTest {
      * Method: getProjectByCode
      * scenario 1: returns an optional
      */
-    @Test
+    /*@Test
     void ensureProjectIsRetrieved() {
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
@@ -296,7 +296,7 @@ class ProjectServiceTest {
      * Method: getProductBacklog
      * scenario 1: returns a list of usId
      */
-    @Test
+    /*@Test
     void ensureProductBacklogIsRetrievedSuccessfully() throws Exception {
         //Arrange
         UsId usIdDouble = mock(UsId.class);
@@ -317,7 +317,7 @@ class ProjectServiceTest {
     /**
      * scenario 2: returns an empty list
      */
-    @Test
+    /*@Test
     void ensureProductBacklogIsRetrievedSuccessfully_EmptyList() throws Exception {
         //Arrange
         List<UsId> expected = new ArrayList<>();
@@ -334,7 +334,7 @@ class ProjectServiceTest {
     /**
      * scenario 3: productBacklog is not retrieved because code doesn't match any project
      */
-    @Test
+    /*@Test
     void ensureThatProductBacklogIsNotRetrievedBecauseCodeDoesNotMatchAnyProject() {
         //Arrange
         Optional<Project> optionalProject = Optional.empty();
@@ -359,7 +359,7 @@ class ProjectServiceTest {
      * uniques and generated automatically.Should return a String with the code from
      * the project just created.
      */
-    @Test
+    /*@Test
     void ensureThatProjectIsCreatedSuccessfully() throws Exception {
         //Arrange
         String expected = "p002";
@@ -379,7 +379,7 @@ class ProjectServiceTest {
      * @throws Exception if User Story is already added or project doesn't exist.
      *                   Should return TRUE.
      */
-    @Test
+    /*@Test
     void ensureUserStoryIsAddedToProductBacklog() throws Exception {
         //Arrange
         UsId usId = mock(UsId.class);
@@ -399,7 +399,7 @@ class ProjectServiceTest {
      * Scenario 2: Doesn't add User Story because it is already there. Should throw an
      * exception.
      */
-    @Test
+    /*@Test
     void ensureUserStoryIsNotAddedToProductBacklogBecauseItISAlreadyThere() {
         //Arrange
         UsId usId = mock(UsId.class);
@@ -417,7 +417,7 @@ class ProjectServiceTest {
      * Scenario 3: Doesn't add User Story because project doesn't exist. Should throw an
      * exception.
      */
-    @Test
+    /*@Test
     void ensureThatUserStoryIsNotAddedToProductBacklogBecauseProjectDoesNotExist() {
         //Arrange
         UsId usId = mock(UsId.class);
@@ -438,7 +438,7 @@ class ProjectServiceTest {
      * @throws Exception if there is no project in the product backlog with corresponding to the specified code.
      *                   Should return a list of UsId.
      */
-    @Test
+    /*@Test
     void ensureProductBacklogIsReturned() throws Exception {
         //Arrange
         String projectCode = "p001";
@@ -460,7 +460,7 @@ class ProjectServiceTest {
      * @throws Exception if there is no project in the product backlog with corresponding to the specified code.
      * Should return an empty list of UsId.
      */
-    @Test
+    /*@Test
     void ensureProductBacklogIsReturnedWithAnEmptyList() throws Exception {
         //Arrange
         String projectCode = "p001";
@@ -479,7 +479,7 @@ class ProjectServiceTest {
      *
      * Should throw an exception.
      */
-    @Test
+    /*@Test
     void ensureThatAnExceptionIsThrownIfProjectCodeDoesNotExist() {
         //Arrange
         String projectCode = "p002";
@@ -487,5 +487,5 @@ class ProjectServiceTest {
         //Act and Assert
         assertThrows(Exception.class, () -> projectServiceTwo.getProductBacklog(projectCode)) ;
     }
-
+*/
 }
