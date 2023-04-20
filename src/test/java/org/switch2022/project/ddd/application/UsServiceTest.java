@@ -118,6 +118,9 @@ class UsServiceTest {
 
         UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
         UserStory userStoryDouble = mock(UserStory.class);
+        when(factoryUserStoryDouble.createUserStory(userStoryCreationDtoDouble,"P001")).thenReturn(userStoryDouble);
+        when(userStoryDouble.getUsId()).thenReturn("P001_US003");
+        when(userStoryDouble.getUsNumber()).thenReturn("US003");
 
         // Act
         when(factoryUserStoryDouble.createUserStory(userStoryCreationDtoDouble, "P001"))
@@ -125,7 +128,9 @@ class UsServiceTest {
 
         usRepositoryDouble.add(userStoryDouble);
 
-        UsId expected = userStoryDouble.getUsId();
+
+        UsId expected = new UsId("P001","US003");
+
         UsId result = usService.createUs(userStoryCreationDtoDouble, "P001");
 
         // Assert

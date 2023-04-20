@@ -53,7 +53,8 @@ public class UsService {
     public UsId createUs(UserStoryCreationDto userStoryCreationDto, String projectCode) throws Exception {
         final UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto, projectCode);
         usRepository.add(userStory);
-        return userStory.getUsId();
+        UsId usId = new UsId(projectCode, userStory.getUsNumber());
+        return usId;
     }
 
     /**
