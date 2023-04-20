@@ -1,6 +1,6 @@
 package org.switch2022.project.ddd.application;
 
-import org.switch2022.project.ddd.domain.interfaces.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.Status;
