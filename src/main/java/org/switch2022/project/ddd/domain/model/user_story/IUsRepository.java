@@ -1,4 +1,4 @@
-package org.switch2022.project.ddd.domain.interfaces;
+package org.switch2022.project.ddd.domain.model.user_story;
 
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;

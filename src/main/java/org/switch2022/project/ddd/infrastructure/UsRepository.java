@@ -1,7 +1,7 @@
 package org.switch2022.project.ddd.infrastructure;
 
 
-import org.switch2022.project.ddd.domain.interfaces.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
