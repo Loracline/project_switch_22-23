@@ -39,7 +39,7 @@ service -> factory: createUserStory(userStoryCreationDto, projectCode)
 activate factory
 create userStory
 factory -> userStory
-factory -> service: userStory
+factory --> service: userStory
 deactivate factory
 service -> usrep: add(userStory)
 activate usrep

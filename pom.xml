@@ -4,6 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.10</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <groupId>org.switch2022</groupId>
     <artifactId>switch2022project-g4</artifactId>
     <name>switch-2022 switch-2022-g4</name>
@@ -45,13 +52,34 @@
             <version>4.9.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!-- Students can only add new dependencies to this section -->
 
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Required for compiling the project usign maven -->
+            <!-- Required for building and packaging Spring Boot applications into executable jar/war files in a Maven project -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Required for compiling the project using maven -->
             <plugin><!-- Compiler configuration-->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -132,14 +160,14 @@
                         <param>org.switch2022.project.factories.*</param>
                         <param>org.switch2022.project.model.*</param>
                         <param>org.switch2022.project.utils.*</param>
-                        <pram>org.switch2022.project.ddd.*</pram>
+                        <param>org.switch2022.project.ddd.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>org.switch2022.project.container.*</param>
                         <param>org.switch2022.project.controller.*</param>
                         <param>org.switch2022.project.dto.*</param>
                         <param>org.switch2022.project.model.*</param>
-                        <pram>org.switch2022.project.ddd.*</pram>
+                        <param>org.switch2022.project.ddd.*</param>
                     </targetTests>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>
