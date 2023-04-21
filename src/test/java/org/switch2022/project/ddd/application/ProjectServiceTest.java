@@ -1,6 +1,6 @@
 package org.switch2022.project.ddd.application;
 
-import org.junit.jupiter.api.BeforeEach;
+import rt org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
@@ -16,6 +16,18 @@ import org.switch2022.project.ddd.domain.value_object.CustomerId;
 import org.switch2022.project.ddd.domain.value_object.ProjectTypologyId;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
+import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
+import org.switch2022.project.ddd.domain.model.project.ProductBacklog;
+import org.switch2022.project.ddd.domain.model.project.Project;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
+import org.switch2022.project.ddd.domain.value_object.CustomerId;
+import org.switch2022.project.ddd.domain.value_object.ProjectTypologyId;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,71 +184,6 @@ class ProjectServiceTest {
         assertEquals(expected, result);
     }
 
-    /**
-     * Method: addToProductBacklog
-     * scenario 1: it adds an usId to the ProductBacklog
-     */
-    @Test
-    void ensureUsIdIsAddedSuccessfullyToProductBacklog() throws Exception {
-        //Arrange
-        boolean expected = true;
-        UsId usIdDouble = mock(UsId.class);
-        String projectCode = "P001";
-        int priority = 1;
-        Project projectDouble = mock(Project.class);
-        Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
-        when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(true);
-
-        //Act
-        boolean result = projectService.addUsToProductBacklog(usIdDouble, projectCode, priority);
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Scenario 2: doesn't add an usID to ProductBacklog, because the id is already in the product backlog
-     */
-    @Test
-    void ensureUsIdIsNotAddedSuccessfullyToProductBacklog() {
-        //Arrange
-        UsId usIdDouble = mock(UsId.class);
-        String projectCode = "P001";
-        int priority = 1;
-        Project projectDouble = mock(Project.class);
-        Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
-        when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(false);
-        Exception exception = assertThrows(Exception.class, () ->
-                projectService.addUsToProductBacklog(usIdDouble, projectCode, priority));
-        String expected = "The User Story is already in the Product Backlog";
-        //Act
-        String result = exception.getMessage();
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Scenario 3: doesn't add an usID to ProductBacklog, because the projectCode doesn't match any project
-     */
-    @Test
-    void ensureUsIdIsNotAddedSuccessfullyToProductBacklog_NoProject() {
-        //Arrange
-        UsId usIdDouble = mock(UsId.class);
-        String projectCode = "P001";
-        int priority = 1;
-        Optional<Project> optionalProject = Optional.empty();
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
-        Exception exception = assertThrows(Exception.class, () ->
-                projectService.addUsToProductBacklog(usIdDouble, projectCode, priority));
-        String expected = "No project with that code";
-        //Act
-        String result = exception.getMessage();
-
-        //Assert
-        assertEquals(expected, result);
-    }
 
     /**
      * Method: getProjectByCode

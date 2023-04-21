@@ -3,7 +3,7 @@ package org.switch2022.project.ddd.infrastructure;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 import java.util.ArrayList;
@@ -249,12 +249,15 @@ class UsRepositoryTest {
     @Test
     public void ensureTwoUsRepositoryInstancesAreNotEqualBecauseOneItIsNull() throws Exception {
         // Arrange
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto("1","1"
-        ,"1",1);
+        Code projectCode = new Code(1);
+        UsNumber usNumber = new UsNumber("US1");
+        UsText usText = new UsText("I want to create profiles.");
+        Actor usActor = new Actor("Administrator");
+
         FactoryUserStory factoryUserStory = new FactoryUserStory();
 
         UsRepository usRepository = new UsRepository();
-        usRepository.add(factoryUserStory.createUserStory(userStoryCreationDto, "1"));
+        usRepository.add(factoryUserStory.createUserStory(usNumber, usText, usActor, 0, projectCode));
 
         UsRepository other = null;
 

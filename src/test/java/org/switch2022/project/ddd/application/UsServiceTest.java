@@ -7,16 +7,24 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
+import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.infrastructure.UsRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import java.util.Optional;
 
 @AutoConfigureMockMvc
 @SpringBootTest(
@@ -29,6 +37,8 @@ class UsServiceTest {
     IFactoryUserStory factoryUserStory;
     @MockBean
     IUsRepository usRepository;
+    @MockBean
+    IProjectRepository projectRepository;
     @MockBean
     UserStoryMapper userStoryMapper;
 
@@ -97,6 +107,8 @@ class UsServiceTest {
 //        //User Stories Dto
     }
 
+    //UNIT TESTS
+
     /**
      * Method: createUs(userStoryCreationDto, projectCode).
      * Creates a userStory and return the userStoryId.
@@ -110,30 +122,31 @@ class UsServiceTest {
     @Test
     void ensureUsIsCreated() throws Exception {
         // Arrange
+        UsNumber userStoryNumberDouble = mock(UsNumber.class);
+        UsText userStoryTextDouble = mock(UsText.class);
+        Actor actorDouble = mock(Actor.class);
+        int priority = 1;
 
-        UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
         UserStory userStoryDouble = mock(UserStory.class);
-        when(factoryUserStory.createUserStory(userStoryCreationDtoDouble,"P001")).thenReturn(userStoryDouble);
+        Code projectCode = new Code(1);
+        when(factoryUserStory.createUserStory(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority ,
+                projectCode)).thenReturn(userStoryDouble);
         when(userStoryDouble.getUsId()).thenReturn("P001_US003");
         when(userStoryDouble.getUsNumber()).thenReturn("US003");
 
-        // Act
-        when(factoryUserStory.createUserStory(userStoryCreationDtoDouble, "P001"))
-                .thenReturn(userStoryDouble);
-
         usRepository.add(userStoryDouble);
-
 
         UsId expected = new UsId("P001","US003");
 
-        UsId result = usService.createUs(userStoryCreationDtoDouble, "P001");
+        // Act
+        UsId result = usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority, projectCode);
 
         // Assert
         assertEquals(expected, result);
     }
 
 
-    /**
+   /**
      * Scenario 02: verify if a userStory is not created and its ID not returned.
      * <p>
      * Expected result: exception is thrown.
@@ -143,12 +156,16 @@ class UsServiceTest {
     @Test
     void ensureUsIsNotCreated() throws Exception {
         // Arrange
+        UsNumber userStoryNumberDouble = mock(UsNumber.class);
+        UsText userStoryTextDouble = mock(UsText.class);
+        Actor actorDouble = mock(Actor.class);
+        int priority = 1;
 
-        UserStoryCreationDto userStoryCreationDtoDouble = mock(UserStoryCreationDto.class);
         UserStory userStoryDouble = mock(UserStory.class);
+        Code projectCode = new Code(1);
 
         // Act
-        when(factoryUserStory.createUserStory(userStoryCreationDtoDouble, "P001"))
+        when(factoryUserStory.createUserStory(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority, projectCode))
                 .thenReturn(userStoryDouble);
 
         usRepository.add(userStoryDouble);
@@ -157,8 +174,8 @@ class UsServiceTest {
                 add(userStoryDouble);
 
         // Assert
-        assertThrows(IllegalStateException.class, () -> usService.createUs(userStoryCreationDtoDouble,
-                "P001"));
+        assertThrows(IllegalStateException.class, () -> usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority,
+                projectCode));
 
     }
 
@@ -208,6 +225,129 @@ class UsServiceTest {
 
 
     /**
+     * Method: requestAllPlannedUs(usId).
+     * Returns a list of all userStories with the Status "PLANNED" through the userStory ID.
+     * <br>
+     * Scenario 01: verify if a list of userStories is retrieved.
+     * <p>
+     * Expected result: userStories list is retrieved.
+     */
+
+
+    @Test
+    void ensureRequestOfAllPlannedUsIsSuccessful() {
+        // Arrange
+        UserStory userStoryDoubleOne = mock(UserStory.class);
+        UserStoryDto userStoryDtoDoubleOne = mock(UserStoryDto.class);
+
+        List<UsId> usIdDoubleList = new ArrayList<>();
+        List<UserStoryDto> expected = new ArrayList<>();
+        expected.add(userStoryDtoDoubleOne);
+
+        when(usRepository.getListOfUsWithMatchingIds(usIdDoubleList)).
+                thenReturn(Collections.singletonList(userStoryDoubleOne));
+        when(userStoryDoubleOne.hasStatus(Status.PLANNED)).thenReturn(true);
+        when(userStoryMapper.userStoryToDto(userStoryDoubleOne)).thenReturn(userStoryDtoDoubleOne);
+
+        // Act
+        List<UserStoryDto> result = usService.requestAllPlannedUs(usIdDoubleList);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+
+    /**
+     * Scenario 02: verify if a list of empty userStories is retrieved, an exception is thrown.
+     * <p>
+     * Expected result: exception is thrown.
+     */
+
+    @Test
+    void ensureRequestOfAllPlannedUsIsSuccessfulEmptyList(){
+        // Arrange
+
+        List<UsId> usIdDoubleList = new ArrayList<>();
+        List<UserStory> userStoriesList = new ArrayList<>();
+
+        when(usRepository.getListOfUsWithMatchingIds(usIdDoubleList)).
+                thenReturn(userStoriesList);
+
+        List<UserStoryDto> emptyList = new ArrayList<>();
+
+        // Assert
+        assertEquals(userStoriesList, emptyList);
+    }
+
+    /**
+     * Method: addToProductBacklog
+     * scenario 1: it adds an usId to the ProductBacklog
+     */
+    @Test
+    void ensureUsIdIsAddedSuccessfullyToProductBacklog() throws Exception {
+        //Arrange
+        boolean expected = true;
+        UsId usIdDouble = mock(UsId.class);
+        Code projectCode = new Code(1);
+        int priority = 1;
+        Project projectDouble = mock(Project.class);
+        Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
+        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(true);
+
+        //Act
+        boolean result = usService.addUsToProductBacklog(usIdDouble, projectCode, priority);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: doesn't add an usID to ProductBacklog, because the id is already in the product backlog
+     */
+    @Test
+    void ensureUsIdIsNotAddedSuccessfullyToProductBacklog() {
+        //Arrange
+        UsId usIdDouble = mock(UsId.class);
+        Code projectCode = new Code(1);
+        int priority = 1;
+        Project projectDouble = mock(Project.class);
+        Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
+        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(false);
+        Exception exception = assertThrows(Exception.class, () ->
+                usService.addUsToProductBacklog(usIdDouble, projectCode, priority));
+        String expected = "The User Story is already in the Product Backlog";
+        //Act
+        String result = exception.getMessage();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: doesn't add an usID to ProductBacklog, because the projectCode doesn't match any project
+     */
+    @Test
+    void ensureUsIdIsNotAddedSuccessfullyToProductBacklog_NoProject() {
+        //Arrange
+        UsId usIdDouble = mock(UsId.class);
+        Code projectCode = new Code(1);
+        int priority = 1;
+        Optional<Project> optionalProject = Optional.empty();
+        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        Exception exception = assertThrows(Exception.class, () ->
+                usService.addUsToProductBacklog(usIdDouble, projectCode, priority));
+        String expected = "No project with that code";
+        //Act
+        String result = exception.getMessage();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    //INTEGRATION TESTS
+
+   /* *//**
      * Method: createUs(userStoryCreationDto, projectCode).
      * Creates a userStory and return the userStoryId.
      * <p>
@@ -231,7 +371,7 @@ class UsServiceTest {
     }*/
     /*
 
-     *//**
+    *//**
      * Scenario 02: verify if a userStory is not created when already exist.
      * <p>
      * Expected result: exception is thrown.
