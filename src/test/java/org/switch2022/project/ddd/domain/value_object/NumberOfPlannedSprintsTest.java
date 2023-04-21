@@ -1,8 +1,8 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
-import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +22,7 @@ class NumberOfPlannedSprintsTest {
         String expected = "The number of planned sprints must not be null";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new NumberOfPlannedSprints(number));
 
         //Assert
@@ -44,7 +44,7 @@ class NumberOfPlannedSprintsTest {
         String expected = "The number of planned sprints must not be negative";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new NumberOfPlannedSprints(number));
 
         //Assert

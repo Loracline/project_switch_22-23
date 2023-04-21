@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.utils;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.time.LocalDate;
 
@@ -19,7 +20,7 @@ class ValidateTest {
         String expected = "The string must not be null";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.notNullOrEmptyOrBlank(null, argumentName));
 
         //Assert
@@ -37,7 +38,7 @@ class ValidateTest {
         String expected = "The string must not be empty";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.notNullOrEmptyOrBlank("", argumentName));
 
         //Assert
@@ -55,7 +56,7 @@ class ValidateTest {
         String expected = "The string must not be blank";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.notNullOrEmptyOrBlank(" ", argumentName));
 
 
@@ -91,7 +92,7 @@ class ValidateTest {
         String expected = message;
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.notNull(numberToTest, message));
 
         //Assert
@@ -125,7 +126,7 @@ class ValidateTest {
         String expected = "The number must not be negative";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.notNegative(numberToTest, argumentName));
 
         //Assert
@@ -162,7 +163,7 @@ class ValidateTest {
         String expected = "The number must be between 1 and 4";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
 
         //Assert
@@ -183,7 +184,7 @@ class ValidateTest {
         String expected = "The number must be between 1 and 4";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
 
         //Assert
@@ -254,7 +255,7 @@ class ValidateTest {
         Number numberToTest = 5;
 
         //Act and Assert
-        assertThrowsExactly(IllegalArgumentException.class, () ->
+        assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
     }
 
@@ -271,7 +272,7 @@ class ValidateTest {
         Number numberToTest = 5;
 
         //Act and Assert
-        assertThrowsExactly(IllegalArgumentException.class, () ->
+        assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
     }
 
@@ -288,7 +289,7 @@ class ValidateTest {
         Number numberToTest = null;
 
         //Act and Assert
-        assertThrowsExactly(IllegalArgumentException.class, () ->
+        assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.withinInterval(lowerLimit, upperLimit, numberToTest, argumentName));
     }
 
@@ -304,7 +305,7 @@ class ValidateTest {
         Object objectToTest = null;
 
         //Act and Assert
-        assertThrows(IllegalArgumentException.class, () ->
+        assertThrows(InvalidInputException.class, () ->
                 Validate.notNull(objectToTest, message));
     }
 
@@ -336,7 +337,7 @@ class ValidateTest {
         String expected = "The date must be after 2024-02-02";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 Validate.isAfter(dateOfInterest,dateToCompare));
 
         //Assert

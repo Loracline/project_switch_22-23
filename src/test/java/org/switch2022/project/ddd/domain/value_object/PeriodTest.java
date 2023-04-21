@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.time.LocalDate;
 
@@ -20,7 +21,7 @@ class PeriodTest {
         String expected = "The start date must not be null";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new Period(null,duration));
 
         //Assert
@@ -39,7 +40,7 @@ class PeriodTest {
         String expected = "The duration must not be null";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new Period(date,duration));
 
         //Assert
@@ -58,7 +59,7 @@ class PeriodTest {
         String expected = "The duration must not be negative";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new Period(date,duration));
 
         //Assert
@@ -78,7 +79,7 @@ class PeriodTest {
         String expected = "The start date must not be null";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new Period(null,endDate));
 
         //Assert
@@ -98,7 +99,7 @@ class PeriodTest {
         String expected = "The end date must not be null";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new Period(startDate,endDate));
 
         //Assert
@@ -119,7 +120,7 @@ class PeriodTest {
         String expected = "The date must be after 2024-01-01";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new Period(startDate,endDate));
 
         //Assert

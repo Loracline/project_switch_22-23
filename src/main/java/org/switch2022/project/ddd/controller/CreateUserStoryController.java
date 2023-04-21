@@ -3,8 +3,10 @@ package org.switch2022.project.ddd.controller;
 import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.exceptions.UserStoryAlreadyExistException;
 import org.switch2022.project.ddd.utils.Utils;
+import org.switch2022.project.ddd.utils.Validate;
 
 public class CreateUserStoryController {
     /**
@@ -31,15 +33,13 @@ public class CreateUserStoryController {
      * @param projectCodeOfInterest the code string that represents the project in which the user story will be created
      * @param userStoryCreationDto  the UserStoryCreationDto that represents the data for creating the user story
      * @return true if the user story is created and added to the product backlog successfully.
-     * @throws IllegalArgumentException if either of the input parameters is null.
-     * @throws Exception                if an error occurs while creating the user story or adding it to.
+     * @throws  if either of the input parameters is null.
      */
 
 
     public boolean createUs(String projectCodeOfInterest, UserStoryCreationDto userStoryCreationDto) {
-        if (projectCodeOfInterest == null || userStoryCreationDto == null) {
-            throw new IllegalArgumentException("Input parameters cannot be null.");
-        }
+        Validate.notNullOrEmptyOrBlank(projectCodeOfInterest, "Project Code Of Interest");
+        Validate.notNull(userStoryCreationDto, "User Story Creation Dto ");
 
         int codeNumber = Utils.getIntFromAlphanumericString(projectCodeOfInterest, "P");
         Code projectCode = new Code(codeNumber);
