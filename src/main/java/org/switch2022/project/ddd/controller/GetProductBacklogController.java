@@ -3,9 +3,11 @@ package org.switch2022.project.ddd.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.ProjectService;
-import org.switch2022.project.ddd.application.UsService;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class GetProductBacklogController {
     private ProjectService projectService;
 
     @Autowired
-    private UsService usService;
+    private UserStoryMapper userStoryMapper;
 
     /**
      * Constructor
@@ -52,10 +54,17 @@ public class GetProductBacklogController {
         }
 
         List<UsId> productBacklog = projectService.getProductBacklog(projectCode);
+        List<UserStory> userStories;
         List<UserStoryDto> userStoryDtoList = new ArrayList<>();
 
         if (!productBacklog.isEmpty()) {
-            userStoryDtoList = usService.requestAllPlannedUs(productBacklog);
+            userStories = projectService.requestAllUserStories(productBacklog);
+            for (UserStory userStory : userStories) {
+                if (userStory.hasStatus(Status.PLANNED)) {
+                    userStoryDtoList.add(userStoryMapper.userStoryToDto(userStory));
+                }
+            }
+
         }
         return userStoryDtoList;
     }

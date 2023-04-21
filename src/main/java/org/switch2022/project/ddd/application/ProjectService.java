@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
-
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.project.IFactoryProductBacklog;
@@ -29,6 +30,8 @@ public class ProjectService {
     private IProjectRepository projectRepository;
     @Autowired
     private IFactoryProductBacklog factoryProductBacklog;
+    @Autowired
+    private IUsRepository usRepository;
 
     /**
      * Constructor.
@@ -106,5 +109,16 @@ public class ProjectService {
         } else {
             throw new Exception("No project with that code");
         }
+    }
+
+    /**
+     * Requests a list of userStories with the status planned.
+     *
+     * @param usId ID of the userStory.
+     * @return a list of all userStoriesDto with the status planned.
+     */
+
+    public List<UserStory> requestAllUserStories(List<UsId> usId) {
+        return usRepository.getListOfUsWithMatchingIds(usId);
     }
 }
