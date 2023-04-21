@@ -15,9 +15,10 @@ public interface IUsRepository {
      * This method adds a new userStory to the repository of userStories if it does not exist.
      *
      * @param userStory to be added to the repository.
+     * @return true if the user story is added and an exception otherwise.
      */
 
-    public void add(UserStory userStory) throws Exception;
+    public boolean add(UserStory userStory) throws Exception;
 
     /**
      * This method deletes a userStory from the repository of userStories if it exists.

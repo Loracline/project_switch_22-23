@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.Code;
@@ -9,11 +10,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
 /**
  * Class ProjectRepository is built to access and manipulate the set of projects
  * of this company.
  */
+@Component
 public class ProjectRepository implements IProjectRepository {
     /**
      * Attributes
