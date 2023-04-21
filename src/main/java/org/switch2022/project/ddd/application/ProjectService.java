@@ -10,10 +10,12 @@ import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
+import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.List;
 import java.util.Optional;
+
 
 /**
  * Class ProjectService allows to create and
@@ -101,13 +103,13 @@ public class ProjectService {
      * @throws Exception if the projectCode doesn't match any Project in the repository.
      */
 
-    public List<UsId> getProductBacklog(String code) throws Exception {
+    public List<UsId> getProductBacklog(String code) {
         Optional<Project> projectOptional = getProjectByCode(code);
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             return project.getProductBacklog();
         } else {
-            throw new Exception("No project with that code");
+            throw new ProjectNotFoundException("No project with that code");
         }
     }
 

@@ -4,9 +4,9 @@ import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.exceptions.UserStoryAlreadyExistException;
 import org.switch2022.project.ddd.utils.Utils;
 
-import java.util.List;
 
 
 public class CreateUsController {
@@ -40,11 +40,10 @@ public class CreateUsController {
      */
 
 
-    public boolean createUs(ProjectDto projectDto, UserStoryCreationDto userStoryCreationDto) throws Exception {
+    public boolean createUs(ProjectDto projectDto, UserStoryCreationDto userStoryCreationDto)  {
         if (projectDto == null || userStoryCreationDto == null) {
             throw new IllegalArgumentException("Input parameters cannot be null.");
         }
-
         int codeNumber = Utils.getIntFromAlphanumericString(projectDto.code,"P");
         Code projectCode = new Code(codeNumber);
 
@@ -56,9 +55,9 @@ public class CreateUsController {
         UsId usId = usService.createUs(userStoryNumber, userStoryText, actor, priority, projectCode);
         try {
             usService.addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
-        } catch (Exception e) {
+        } catch (UserStoryAlreadyExistException usaee) {
             usService.deleteUs(usId);
-            throw e;
+            throw usaee;
         }
         return true;
     }

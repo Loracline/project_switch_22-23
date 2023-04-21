@@ -16,6 +16,7 @@ import org.switch2022.project.ddd.domain.value_object.CustomerId;
 import org.switch2022.project.ddd.domain.value_object.ProjectTypologyId;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
+import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,7 +194,7 @@ class ProjectServiceTest {
      * scenario 1: returns a list of usId
      */
     @Test
-    void ensureProductBacklogIsRetrievedSuccessfully() throws Exception {
+    void ensureProductBacklogIsRetrievedSuccessfully()  {
         //Arrange
         UsId usIdDouble = mock(UsId.class);
         UsId usIdDoubleTwo = mock(UsId.class);
@@ -214,7 +215,7 @@ class ProjectServiceTest {
      * scenario 2: returns an empty list
      */
     @Test
-    void ensureProductBacklogIsRetrievedSuccessfully_EmptyList() throws Exception {
+    void ensureProductBacklogIsRetrievedSuccessfully_EmptyList() {
         //Arrange
         List<UsId> expected = new ArrayList<>();
         Project projectDouble = mock(Project.class);
@@ -235,7 +236,7 @@ class ProjectServiceTest {
         //Arrange
         Optional<Project> optionalProject = Optional.empty();
         when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
-        Exception exception = assertThrows(Exception.class, () ->
+        ProjectNotFoundException exception = assertThrows(ProjectNotFoundException.class, () ->
                 projectService.getProductBacklog("P001"));
         String expected = "No project with that code";
         //Act

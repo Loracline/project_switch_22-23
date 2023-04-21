@@ -48,7 +48,7 @@ public class GetProductBacklogController {
      * @return a list of User Stories Dto.
      * @throws IllegalArgumentException if the input parameter is null.
      */
-    public List<UserStoryDto> getProductBacklog(String projectCode) throws Exception {
+    public List<UserStoryDto> getProductBacklog(String projectCode) {
         if (projectCode == null) {
             throw new IllegalArgumentException("Input parameter cannot be null.");
         }
