@@ -11,6 +11,7 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,16 +25,15 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = GetProductBacklogController.class
+        classes = ConsultProductBacklogController.class
 )
-class GetProductBacklogControllerTest {
+class ConsultProductBacklogControllerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running
      * the tests below.
      */
-
     @InjectMocks
-    GetProductBacklogController getProductBacklogController;
+    ConsultProductBacklogController controller;
 
     @MockBean
     UserStoryMapper userStoryMapper;
@@ -43,7 +43,7 @@ class GetProductBacklogControllerTest {
 
     /*
     String projectCode;
-    GetProductBacklogController getProductBacklogControllerOne;
+    ConsultProductBacklogController getProductBacklogControllerOne;
     UsService usServiceOne;
     ProjectService projectServiceOne;
     IFactoryProject factoryProjectOne;
@@ -61,9 +61,8 @@ class GetProductBacklogControllerTest {
     UserStoryDto userStoryToDtoOne;
     UserStoryDto userStoryToDtoFour;*/
 
-
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp()  {
         MockitoAnnotations.openMocks(this);/*
         //Services implemented
         usService = mock(UsService.class);
@@ -73,7 +72,7 @@ class GetProductBacklogControllerTest {
         projectCode = "P001";
 
         //Controller
-        //getProductBacklogController = new GetProductBacklogController(projectService,
+        //getProductBacklogController = new ConsultProductBacklogController(projectService,
                 //usService);
 
         //Project Service
@@ -92,7 +91,7 @@ class GetProductBacklogControllerTest {
 
         //Controller
         //getProductBacklogControllerOne =
-                //new GetProductBacklogController(projectServiceOne, usServiceOne);
+                //new ConsultProductBacklogController(projectServiceOne, usServiceOne);
 
         //UserStory
         userStoryOne = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US01",
@@ -152,11 +151,11 @@ class GetProductBacklogControllerTest {
     @Test
     void ensureThatIsReturnedAndThrowsAnExceptionIfProjectCodeIsNull() {
         // ARRANGE
-        String expectedMessage = "Input parameter cannot be null.";
+        String expectedMessage = "The Project Code must not be null";
 
         // ACT
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                getProductBacklogController.getProductBacklog(null));
+        InvalidInputException exception = assertThrows(InvalidInputException.class, () ->
+                controller.getProductBacklog(null));
 
         // ASSERT
         assertEquals(expectedMessage, exception.getMessage());
@@ -171,7 +170,7 @@ class GetProductBacklogControllerTest {
     void ensureThatIsNotReturnedAndThrowsAnExceptionIfProjectCodeIsNotNull() {
         // ACT
         try {
-            getProductBacklogController.getProductBacklog("P001");
+            controller.getProductBacklog("P001");
         } catch (Exception e) {
             // ASSERT
             fail("No exception should be thrown when the Project Code parameter was not null.");
@@ -188,14 +187,14 @@ class GetProductBacklogControllerTest {
      * Should return a UserStoryDto list
      */
     @Test
-    void ensureThatAnEmptyUserStoryDtoListIsReturned() throws Exception {
+    void ensureThatAnEmptyUserStoryDtoListIsReturned()  {
         // ARRANGE
         String projectCode = "P001";
         List<UsId> emptyProductBacklog = new ArrayList<>();
         when(projectService.getProductBacklog(projectCode)).thenReturn(emptyProductBacklog);
 
         // ACT
-        List<UserStoryDto> result = getProductBacklogController.getProductBacklog(projectCode);
+        List<UserStoryDto> result = controller.getProductBacklog(projectCode);
 
         // ASSERT
         assertTrue(result.isEmpty());
@@ -204,11 +203,11 @@ class GetProductBacklogControllerTest {
     /**
      * Scenario 4: This test ensures that an UserStoryDto list is returned when the
      * Product Backlog of a given Project Code has a list of planned User Stories.
-     *
+     * <p>
      * Should return a list of UserStoryDto
      */
     @Test
-    void ensureThatProductBacklogIsRetrievedSuccessfully() throws Exception{
+    void ensureThatProductBacklogIsRetrievedSuccessfully() {
         String projectCode = "P001";
 
         List<UsId> productBacklog = Arrays.asList(mock(UsId.class), mock(UsId.class));
@@ -224,7 +223,7 @@ class GetProductBacklogControllerTest {
 
         // ACT
         List<UserStoryDto> actualUserStoryDtoList =
-                getProductBacklogController.getProductBacklog(projectCode);
+                controller.getProductBacklog(projectCode);
 
         // ASSERT
         assertEquals(expectedUserStoryDtoList, actualUserStoryDtoList);

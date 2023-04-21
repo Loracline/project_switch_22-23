@@ -1,15 +1,13 @@
 package org.switch2022.project.ddd.application;
 
+import org.switch2022.project.ddd.domain.model.project.*;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.switch2022.project.ddd.domain.model.project.IFactoryProductBacklog;
-import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
-import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
-import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
+import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.ArrayList;
@@ -42,26 +40,25 @@ public class ProjectService {
     }
 
     /**
-     * This method creates a new Project and adds it to the repository, and creates a ProjectCode
-     * using the projectRepository.
+     * This method creates a new Project with the next project code available and adds it to the repository.
      *
-     * @param projectCreationDto it has all the information needed to create a project
-     * @param customerId         the identifier of the customer
-     * @param businessSectorId   the identifier of the businessSector
-     * @param projectTypologyId  the identifier of the projectTypology
+     * @param description           the description of the project.
+     * @param businessSectorId      the identifier of the businessSector.
+     * @param customerId            the identifier of the customer.
+     * @param businessSectorId      the identifier of the businessSector.
+     * @param projectTypologyId     the identifier of the projectTypology.
+     *
+     * @return returns the code of the created Project.
      */
-
-
-    public String createProject(ProjectCreationDto projectCreationDto, CustomerId customerId,
-                                BusinessSectorId businessSectorId,
-                                ProjectTypologyId projectTypologyId) {
-
+    public String createProject(Name projectName, Description description, BusinessSectorId businessSectorId,
+                                     CustomerId customerId, ProjectTypologyId projectTypologyId) {
         int projectNumber = calculateNextProjectNumber();
-        Code code = new Code(projectNumber);
-        Project project = factoryProject.createProject(code, projectCreationDto, businessSectorId, customerId,
-                projectTypologyId, factoryProductBacklog);
+        Code projectCode = new Code(projectNumber);
+        ProductBacklog productBacklog = factoryProductBacklog.createProductBacklog(projectCode.getCode());
+        Project project = factoryProject.createProject(projectNumber, projectName, description, businessSectorId,
+                customerId, projectTypologyId, productBacklog);
         projectRepository.addProjectToProjectRepository(project);
-        return code.getCode();
+        return project.getProjectCode();
     }
 
     /**
@@ -102,13 +99,13 @@ public class ProjectService {
      * @throws Exception if the projectCode doesn't match any Project in the repository.
      */
 
-    public List<UsId> getProductBacklog(String code) throws Exception {
+    public List<UsId> getProductBacklog(String code) {
         Optional<Project> projectOptional = getProjectByCode(code);
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             return project.getProductBacklog();
         } else {
-            throw new Exception("No project with that code");
+            throw new ProjectNotFoundException("No project with that code");
         }
     }
 

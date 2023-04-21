@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class GetProductBacklogControllerTest {
+class ConsultProductBacklogControllerTest {
 
     /**
      * BeforeEach and AfterEach executes common code before/after running

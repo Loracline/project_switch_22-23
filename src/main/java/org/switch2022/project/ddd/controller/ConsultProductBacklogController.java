@@ -7,17 +7,18 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class GetProductBacklogController {
+public class ConsultProductBacklogController {
     /**
-     * The GetProductBacklogController class serves as an intermediary between the user interface
+     * The ConsultProductBacklogController class serves as an intermediary between the user interface
      * (UI) and the business logic underlying the "US018 - As PO/SM/Team Member, I want to
      * consult the product backlog, i.e. to get the list of user stories sorted by priority."
-     * The GetProductBacklogController receives the necessary data from the UI, such as the
+     * The ConsultProductBacklogController receives the necessary data from the UI, such as the
      * projectCode and passes it to the domain model through the appropriate services. It then
      * returns the result of the operation back to the UI, which the list of user
      * Story Dto was successfully returned or not.
@@ -31,7 +32,7 @@ public class GetProductBacklogController {
     /**
      * Constructor
      */
-    public GetProductBacklogController() {
+    public ConsultProductBacklogController() {
     }
 
     /**
@@ -45,12 +46,9 @@ public class GetProductBacklogController {
      *
      * @param projectCode Code of the Project.
      * @return a list of User Stories Dto.
-     * @throws IllegalArgumentException if the input parameter is null.
      */
-    public List<UserStoryDto> getProductBacklog(String projectCode) throws Exception {
-        if (projectCode == null) {
-            throw new IllegalArgumentException("Input parameter cannot be null.");
-        }
+    public List<UserStoryDto> getProductBacklog(String projectCode) {
+        Validate.notNullOrEmptyOrBlank(projectCode, "Project Code");
 
         List<UsId> productBacklog = projectService.getProductBacklog(projectCode);
         List<UserStory> userStories;
