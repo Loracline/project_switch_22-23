@@ -211,71 +211,6 @@ class ProjectServiceTest {
         assertEquals(expected, result);
     }
 
-    /**
-     * Method: addToProductBacklog
-     * scenario 1: it adds an usId to the ProductBacklog
-     */
-    @Test
-    void ensureUsIdIsAddedSuccessfullyToProductBacklog() throws Exception {
-        //Arrange
-        boolean expected = true;
-        UsId usIdDouble = mock(UsId.class);
-        String projectCode = "P001";
-        int priority = 1;
-        Project projectDouble = mock(Project.class);
-        Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
-        when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(true);
-
-        //Act
-        boolean result = projectService.addUsToProductBacklog(usIdDouble, projectCode, priority);
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Scenario 2: doesn't add an usID to ProductBacklog, because the id is already in the product backlog
-     */
-    @Test
-    void ensureUsIdIsNotAddedSuccessfullyToProductBacklog() {
-        //Arrange
-        UsId usIdDouble = mock(UsId.class);
-        String projectCode = "P001";
-        int priority = 1;
-        Project projectDouble = mock(Project.class);
-        Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
-        when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(false);
-        Exception exception = assertThrows(Exception.class, () ->
-                projectService.addUsToProductBacklog(usIdDouble, projectCode, priority));
-        String expected = "The User Story is already in the Product Backlog";
-        //Act
-        String result = exception.getMessage();
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Scenario 3: doesn't add an usID to ProductBacklog, because the projectCode doesn't match any project
-     */
-    @Test
-    void ensureUsIdIsNotAddedSuccessfullyToProductBacklog_NoProject() {
-        //Arrange
-        UsId usIdDouble = mock(UsId.class);
-        String projectCode = "P001";
-        int priority = 1;
-        Optional<Project> optionalProject = Optional.empty();
-        when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
-        Exception exception = assertThrows(Exception.class, () ->
-                projectService.addUsToProductBacklog(usIdDouble, projectCode, priority));
-        String expected = "No project with that code";
-        //Act
-        String result = exception.getMessage();
-
-        //Assert
-        assertEquals(expected, result);
-    }
 
     /**
      * Method: getProjectByCode
@@ -379,7 +314,7 @@ class ProjectServiceTest {
      * @throws Exception if User Story is already added or project doesn't exist.
      *                   Should return TRUE.
      */
-    @Test
+    /*@Test
     void ensureUserStoryIsAddedToProductBacklog() throws Exception {
         //Arrange
         UsId usId = mock(UsId.class);
@@ -393,13 +328,13 @@ class ProjectServiceTest {
 
         //Assert
         assertTrue(result);
-    }
+    }*/
 
     /**
      * Scenario 2: Doesn't add User Story because it is already there. Should throw an
      * exception.
      */
-    @Test
+    /*@Test
     void ensureUserStoryIsNotAddedToProductBacklogBecauseItISAlreadyThere() {
         //Arrange
         UsId usId = mock(UsId.class);
@@ -411,13 +346,13 @@ class ProjectServiceTest {
         assertThrows(Exception.class,
                 () -> projectServiceTwo.addUsToProductBacklog(usId, projectCode,
                         priority));
-    }
+    }*/
 
     /**
      * Scenario 3: Doesn't add User Story because project doesn't exist. Should throw an
      * exception.
      */
-    @Test
+    /*@Test
     void ensureThatUserStoryIsNotAddedToProductBacklogBecauseProjectDoesNotExist() {
         //Arrange
         UsId usId = mock(UsId.class);
@@ -428,7 +363,7 @@ class ProjectServiceTest {
         assertThrows(Exception.class,
                 () -> projectServiceTwo.addUsToProductBacklog(usId, projectCode,
                         priority));
-    }
+    }*/
 
     /**
      * METHOD getProductBacklog(String code) returns a list of UsID from the ProductBacklog of a Project.

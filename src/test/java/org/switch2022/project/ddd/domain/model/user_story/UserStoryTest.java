@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -296,7 +295,7 @@ class UserStoryTest {
 
     /**
      * METHOD has(usNumber) verifies if the User Story has the given User Story Number.
-     *<br>
+     * <br>
      * Scenario 1: User Story has the given USNumber. Should return true.
      */
     @Test
@@ -372,28 +371,20 @@ class UserStoryTest {
         // 1. Creation of an instance of the User Story Factory.
         FactoryUserStory factoryUserStory = new FactoryUserStory();
 
-        // 2. Gathering the information for the creation of a new User Story.
-        String projectCode = "P1";
-        String userStoryNumber = "US1";
-        String userStoryText = "I want to create profiles.";
-        String actor = "Administrator";
+        // 2. Creation of the value objects of interest.
+        Code projectCode = new Code(1);
+        UsNumber usNumber = new UsNumber("US1");
+        UsId usId = new UsId(projectCode.getCode(), usNumber.getUserStoryNumber());
+        UsText usText = new UsText("I want to create profiles.");
+        Actor usActor = new Actor("Administrator");
 
-        // 3. Creation of a Data Transfer Object to carry the information.
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(userStoryNumber,
-                userStoryText, actor, 0);
-
-        // 4. Creation of the value objects of interest.
-        UsId usId = new UsId(projectCode, userStoryNumber);
-        UsNumber usNumber = new UsNumber(userStoryNumber);
-        UsText usText = new UsText(userStoryText);
-        Actor usActor = new Actor(actor);
-
-        // 5. Creation of the expected User Story to compare in the assertion.
+        // 3. Creation of the expected User Story to compare in the assertion.
         UserStory expected = new UserStory(usId);
         expected.setValidUserStory(usNumber, usText, usActor);
 
         // ACT
-        UserStory result = factoryUserStory.createUserStory(userStoryCreationDto, projectCode);
+        UserStory result = factoryUserStory.createUserStory(usNumber,
+                usText, usActor, 0, projectCode);
 
         // ASSERT
         assertEquals(expected, result);
@@ -409,25 +400,20 @@ class UserStoryTest {
         // 1. Creation of an instance of the User Story Factory.
         FactoryUserStory factoryUserStory = new FactoryUserStory();
 
-        // 2. Gathering the information for the creation of a new User Story.
-        String projectCode = "P1";
-        String userStoryNumber = "US1";
-        String userStoryText = "I want to create profiles.";
-        String actor = null;
+        // 2. Creation of the value objects of interest.
+        Code projectCode = new Code(1);
+        UsNumber usNumber = new UsNumber("US1");
+        UsText usText = new UsText("I want to create profiles.");
+        Actor usActor = null;
 
-        // 3. Creation of a Data Transfer Object to carry the information.
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(userStoryNumber,
-                userStoryText, actor, 0);
-
-        // 4. Expected message when creating the value object Actor with a null string.
+        // 3. Expected message when creating the value object Actor with a null string.
         String expectedMessage = "The actor must not be null";
 
-        // ACT
-        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> factoryUserStory.createUserStory(userStoryCreationDto, projectCode));
+        // ACT AND ASSERT
+        assertThrows(NullPointerException.class,
+                () -> factoryUserStory.createUserStory(usNumber,
+                        usText, usActor, 0, projectCode));
 
-        // ASSERT
-        assertEquals(expectedMessage, result.getMessage());
     }
 
     /**
@@ -440,25 +426,16 @@ class UserStoryTest {
         // 1. Creation of an instance of the User Story Factory.
         FactoryUserStory factoryUserStory = new FactoryUserStory();
 
-        // 2. Gathering the information for the creation of a new User Story.
-        String projectCode = "P1";
-        String userStoryNumber = "  ";
-        String userStoryText = "I want to create profiles.";
-        String actor = "Administrator";
+        // 2. Creation of the value objects of interest.
+        Code projectCode = new Code(1);
+        UsNumber usNumber = null;
+        UsText usText = new UsText("I want to create profiles.");
+        Actor usActor = new Actor("Administrator");
 
-        // 3. Creation of a Data Transfer Object to carry the information.
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(userStoryNumber,
-                userStoryText, actor, 0);
-
-        // 4. Expected message when creating the value object Actor with a null string.
-        String expectedMessage = "The user story number must not be blank";
-
-        // ACT
-        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> factoryUserStory.createUserStory(userStoryCreationDto, projectCode));
-
-        // ASSERT
-        assertEquals(expectedMessage, result.getMessage());
+        // ACT AND ASSERT
+        assertThrows(NullPointerException.class,
+                () -> factoryUserStory.createUserStory(usNumber,
+                        usText, usActor, 0, projectCode));
     }
 
     /**
@@ -471,20 +448,16 @@ class UserStoryTest {
         // 1. Creation of an instance of the User Story Factory.
         FactoryUserStory factoryUserStory = new FactoryUserStory();
 
-        // 2. Gathering the information for the creation of a new User Story.
-        String projectCode = "P1";
-        String userStoryNumber = "US1";
-        String userStoryText = "I want to create profiles.";
-        String actor = "Administrator";
+        // 2. Creation of the value objects of interest.
+        Code projectCode = new Code(1);
+        UsNumber usNumber = new UsNumber("US1");
+        UsText usText = new UsText("I want to create profiles.");
+        Actor usActor = new Actor("Administrator");
 
-        // 3. Creation of a Data Transfer Object to carry the information.
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(userStoryNumber,
-                userStoryText, actor, 0);
+        // 3. Creation of user story by the factory.
+        UserStory userStory = factoryUserStory.createUserStory(usNumber, usText, usActor, 0, projectCode);
 
-        // 5. Creation of user story by the factory.
-        UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto, projectCode);
-
-        // 6. Expected status for the user story created.
+        // 4. Expected status for the user story created.
         String expected = "Blocked";
 
         // ACT
@@ -504,20 +477,16 @@ class UserStoryTest {
         // 1. Creation of an instance of the User Story Factory.
         FactoryUserStory factoryUserStory = new FactoryUserStory();
 
-        // 2. Gathering the information for the creation of a new User Story.
-        String projectCode = "P1";
-        String userStoryNumber = "US17";
-        String userStoryText = "I want to create a user story and add it to the ProductBacklog.";
-        String actor = "Product Owner";
+        // 2. Creation of the value objects of interest.
+        Code projectCode = new Code(1);
+        UsNumber usNumber = new UsNumber("US1");
+        UsText usText = new UsText("I want to create profiles.");
+        Actor usActor = new Actor("Administrator");
 
-        // 3. Creation of a Data Transfer Object to carry the information.
-        UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(userStoryNumber,
-                userStoryText, actor, 0);
+        // 4. Creation of user story by the factory.
+        UserStory userStory = factoryUserStory.createUserStory(usNumber, usText, usActor, 0, projectCode);
 
-        // 5. Creation of user story by the factory.
-        UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto, projectCode);
-
-        // 6. Gathering the acceptance criteria of this user story.
+        // 5. Gathering the acceptance criteria of this user story.
         String acceptanceCriteria =
                 "1. Fail to create US due to insufficient/invalid information\n" +
                         "\t\n" +
