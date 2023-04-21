@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Component
 /**
  * Class ProjectRepository is built to access and manipulate the set of projects
  * of this company.
  */
+@Component
 public class ProjectRepository implements IProjectRepository {
     /**
      * Attributes

@@ -1,5 +1,7 @@
 package org.switch2022.project.ddd.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.domain.value_object.UsId;
@@ -8,6 +10,7 @@ import org.switch2022.project.ddd.dto.UserStoryDto;
 import java.util.ArrayList;
 import java.util.List;
 
+@Controller
 public class GetProductBacklogController {
     /**
      * The GetProductBacklogController class serves as an intermediary between the user interface
@@ -18,15 +21,16 @@ public class GetProductBacklogController {
      * returns the result of the operation back to the UI, which the list of user
      * Story Dto was successfully returned or not.
      */
-    private final ProjectService projectService;
-    private final UsService usService;
+    @Autowired
+    private ProjectService projectService;
+
+    @Autowired
+    private UsService usService;
 
     /**
      * Constructor
      */
-    public GetProductBacklogController(ProjectService projectService, UsService usService) {
-        this.projectService = projectService;
-        this.usService = usService;
+    public GetProductBacklogController() {
     }
 
     /**

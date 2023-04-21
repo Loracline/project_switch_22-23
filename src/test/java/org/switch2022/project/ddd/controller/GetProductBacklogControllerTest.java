@@ -1,141 +1,49 @@
 package org.switch2022.project.ddd.controller;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.domain.model.project.*;
-import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
-import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.ProjectCreationDto;
-import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
-import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
-import org.switch2022.project.ddd.infrastructure.ProjectRepository;
-import org.switch2022.project.ddd.infrastructure.UsRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/*
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
+        classes = GetProductBacklogController.class
+)
 class GetProductBacklogControllerTest {
-    */
-/**
+    /**
      * BeforeEach and AfterEach executes common code before/after running
      * the tests below.
-     *//*
+     */
 
-
+    @InjectMocks
     GetProductBacklogController getProductBacklogController;
-    UsService usService;
-    ProjectService projectService;
-    String projectCode;
-    GetProductBacklogController getProductBacklogControllerOne;
-    UsService usServiceOne;
-    ProjectService projectServiceOne;
-    IFactoryProject factoryProjectOne;
-    ProjectRepository projectRepositoryOne;
-    IFactoryProductBacklog factoryProductBacklogOne;
-    UsRepository usRepositoryOne;
-    IFactoryUserStory factoryUserStoryOne;
-    UserStoryMapper userStoryMapperOne;
-    Project projectOne;
-    Project projectTwo;
-    UserStory userStoryOne;
-    UserStory userStoryTwo;
-    UserStory userStoryThree;
-    UserStory userStoryFour;
-    UserStoryDto userStoryToDtoOne;
-    UserStoryDto userStoryToDtoFour;
 
+    @MockBean
+    UsService usService;
+
+    @MockBean
+    ProjectService projectService;
 
     @BeforeEach
-    void setUp() throws Exception {
-        //Services implemented
-        usService = mock(UsService.class);
-        projectService = mock(ProjectService.class);
-
-        //Input
-        projectCode = "P001";
-
-        //Controller
-        getProductBacklogController = new GetProductBacklogController(projectService, usService);
-
-        //Project Service
-        factoryProjectOne = new FactoryProject();
-        projectRepositoryOne = new ProjectRepository();
-        factoryProductBacklogOne = new FactoryProductBacklog();
-        projectServiceOne = new ProjectService(factoryProjectOne, projectRepositoryOne, factoryProductBacklogOne);
-
-        //UserStory Service
-        usRepositoryOne = new UsRepository();
-        factoryUserStoryOne = new FactoryUserStory();
-        userStoryMapperOne = new UserStoryMapper();
-        usServiceOne = new UsService(usRepositoryOne, factoryUserStoryOne, userStoryMapperOne);
-
-        //Controller
-        getProductBacklogControllerOne = new GetProductBacklogController(projectServiceOne, usServiceOne);
-
-        //UserStory
-        userStoryOne = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US01",
-                "userStoryText", "actor", 0), "P001");
-        userStoryTwo = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US02",
-                "userStoryText", "actor", 1), "P001");
-        userStoryThree = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US03",
-                "userStoryText", "actor", 2), "P001");
-        userStoryFour = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US04",
-                "userStoryText", "actor", 3), "P001");
-
-        userStoryOne.setStatus(Status.PLANNED);
-        userStoryTwo.setStatus(Status.FINISHED);
-        userStoryThree.setStatus(Status.BLOCKED);
-        userStoryFour.setStatus(Status.PLANNED);
-
-        usRepositoryOne.add(userStoryOne);
-        usRepositoryOne.add(userStoryTwo);
-        usRepositoryOne.add(userStoryThree);
-        usRepositoryOne.add(userStoryFour);
-
-        //Project
-        projectOne = factoryProjectOne.createProject(new Code(1), new ProjectCreationDto("projectName",
-                        "projectDescription", "businessSectorName", "customerName",
-                        "typologyName", 2), new BusinessSectorId(1), new CustomerId(1),
-                new ProjectTypologyId(1), factoryProductBacklogOne);
-
-        projectTwo = factoryProjectOne.createProject(new Code(2), new ProjectCreationDto("projectName",
-                        "projectDescription", "businessSectorName", "customerName",
-                        "typologyName", 2), new BusinessSectorId(1), new CustomerId(1),
-                new ProjectTypologyId(1), factoryProductBacklogOne);
-
-        projectRepositoryOne.addProjectToProjectRepository(projectOne);
-        projectRepositoryOne.addProjectToProjectRepository(projectTwo);
-
-        projectOne.addUserStory(0, new UsId("P001", "US01"));
-        projectOne.addUserStory(1, new UsId("P001", "US02"));
-        projectOne.addUserStory(2, new UsId("P001", "US03"));
-        projectOne.addUserStory(3, new UsId("P001", "US04"));
-
+    public void setUp() throws Exception {
+        MockitoAnnotations.openMocks(this);
     }
 
-    @AfterEach
-    void tearDown() {
-        getProductBacklogController = null;
-        usService = null;
-        projectService = null;
-        projectCode = null;
-    }
 
-    */
-/**
+    /**
      * Method: getProductBacklog()
      * Scenario 1: Tests the behavior of the getProductBacklog method in the
      * getProductBacklogController class when a null ProjectCode String is passed as input.
@@ -148,8 +56,7 @@ class GetProductBacklogControllerTest {
      * expected message.
      *
      * @throwsIllegalArgumentException if the input parameters are null.
-     *//*
-
+     */
     @Test
     void ensureThatIsReturnedAndThrowsAnExceptionIfProjectCodeIsNull() {
         // ARRANGE
@@ -164,12 +71,10 @@ class GetProductBacklogControllerTest {
 
     }
 
-    */
-/**
+    /**
      * Scenario 2: This test verifies that none IllegalArgumentException is thrown with a not
      * null input parameter.
-     *//*
-
+     */
     @Test
     void ensureThatIsNotReturnedAndThrowsAnExceptionIfProjectCodeIsNotNull() {
         // ACT
@@ -184,14 +89,12 @@ class GetProductBacklogControllerTest {
         assertTrue(true);
     }
 
-    */
-/**
+    /**
      * Scenario 3: This test ensure that an empty UserStoryDto list is returned when the Product
      * Backlog of a give Project Code is also empty.
      *
      * @empty UserStoryDto list
-     *//*
-
+     */
     @Test
     void ensureThatAnEmptyUserStoryDtoListIsReturned() throws Exception {
         // ARRANGE
@@ -206,14 +109,12 @@ class GetProductBacklogControllerTest {
         assertTrue(result.isEmpty());
     }
 
-    */
-/**
+    /**
      * Scenario 4: This test ensure that an UserStoryDto list is returned when the Product
      * Backlog of a give Project Code has a list of planned User Stories.
      *
      * @UserStoryDto list
-     *//*
-
+     */
     @Test
     void testGetProductBacklog() throws Exception {
         // ARRANGE
@@ -239,18 +140,18 @@ class GetProductBacklogControllerTest {
         assertTrue(expectedUserStoryDtoList.containsAll(actualUserStoryDtoList));
         assertTrue(actualUserStoryDtoList.containsAll(expectedUserStoryDtoList));
     }
-
-    */
-/**
+/*
+    /**
      * Method: getProductBacklog()
      * <p>
      * Scenario 1: This test ensure that is returned a list containing only User Stories with the
      * status Planned when the Product Backlog contains user stories from multiple status.
-     *//*
-
+     */ /*
     @Test
     void ensureThatIsReturnedAnOrderListOfPlannedUserStories() throws Exception {
         //ARRANGE
+
+
         userStoryOne.setStatus(Status.PLANNED);
         userStoryTwo.setStatus(Status.FINISHED);
         userStoryThree.setStatus(Status.BLOCKED);
@@ -268,12 +169,10 @@ class GetProductBacklogControllerTest {
         assertEquals(expected, result);
     }
 
-    */
-/**
+    /**
      * Scenario 2: This test ensure that an empty List is returned when the Product
      * Backlog of a give Project has no User Stories with Planned status.
-     *//*
-
+     */ /*
     @Test
     void ensureThatIsReturnedAnEmptyListOfUserStories_NoUserStoryWithPlannedStatus() throws Exception {
         //ARRANGE
@@ -289,12 +188,10 @@ class GetProductBacklogControllerTest {
         assertTrue(result.isEmpty());
     }
 
-    */
-/**
+    /**
      * Scenario 3: This test ensure that an empty List is returned when the Product
      * Backlog of a give Project has no User Stories.
-     *//*
-
+     */ /*
     @Test
     void ensureThatIsReturnedAnEmptyListOfUserStories_ProductBacklogIsEmpty() throws Exception {
 
@@ -303,5 +200,5 @@ class GetProductBacklogControllerTest {
 
         // ASSERT
         assertTrue(result.isEmpty());
-    }
-}*/
+    }*/
+}
