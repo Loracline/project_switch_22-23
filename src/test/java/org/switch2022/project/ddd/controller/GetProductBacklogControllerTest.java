@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.controller;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -8,27 +7,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.ProjectService;
-import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.domain.model.project.*;
-import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
-import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.ProjectCreationDto;
-import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
-import org.switch2022.project.ddd.infrastructure.ProjectRepository;
-import org.switch2022.project.ddd.infrastructure.UsRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
@@ -45,11 +32,12 @@ class GetProductBacklogControllerTest {
     GetProductBacklogController getProductBacklogController;
 
     @MockBean
-    UsService usService;
+    UserStoryMapper userStoryMapper;
 
     @MockBean
     ProjectService projectService;
 
+    /*
     String projectCode;
     GetProductBacklogController getProductBacklogControllerOne;
     UsService usServiceOne;
@@ -67,12 +55,12 @@ class GetProductBacklogControllerTest {
     UserStory userStoryThree;
     UserStory userStoryFour;
     UserStoryDto userStoryToDtoOne;
-    UserStoryDto userStoryToDtoFour;
+    UserStoryDto userStoryToDtoFour;*/
 
 
     @BeforeEach
     void setUp() throws Exception {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this);/*
         //Services implemented
         usService = mock(UsService.class);
         //projectService = mock(ProjectService.class);
@@ -88,16 +76,19 @@ class GetProductBacklogControllerTest {
         factoryProjectOne = new FactoryProject();
         projectRepositoryOne = new ProjectRepository();
         factoryProductBacklogOne = new FactoryProductBacklog();
-        projectServiceOne = new ProjectService(factoryProjectOne, projectRepositoryOne, factoryProductBacklogOne);
+        //projectServiceOne = new ProjectService(factoryProjectOne, projectRepositoryOne
+                //, factoryProductBacklogOne);
 
         //UserStory Service
         usRepositoryOne = new UsRepository();
         factoryUserStoryOne = new FactoryUserStory();
         userStoryMapperOne = new UserStoryMapper();
-        usServiceOne = new UsService(usRepositoryOne, factoryUserStoryOne, userStoryMapperOne);
+        //usServiceOne = new UsService(usRepositoryOne, factoryUserStoryOne,
+                //userStoryMapperOne);
 
         //Controller
-        getProductBacklogControllerOne = new GetProductBacklogController(projectServiceOne, usServiceOne);
+        //getProductBacklogControllerOne =
+                //new GetProductBacklogController(projectServiceOne, usServiceOne);
 
         //UserStory
         userStoryOne = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US01",
@@ -136,7 +127,7 @@ class GetProductBacklogControllerTest {
         projectOne.addUserStory(0, new UsId("P001", "US01"));
         projectOne.addUserStory(1, new UsId("P001", "US02"));
         projectOne.addUserStory(2, new UsId("P001", "US03"));
-        projectOne.addUserStory(3, new UsId("P001", "US04"));
+        projectOne.addUserStory(3, new UsId("P001", "US04"));*/
 
     }
 

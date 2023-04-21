@@ -8,16 +8,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
-import org.switch2022.project.ddd.domain.model.project.ProductBacklog;
 import org.switch2022.project.ddd.domain.model.project.Project;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.domain.value_object.CustomerId;
 import org.switch2022.project.ddd.domain.value_object.ProjectTypologyId;
 import org.switch2022.project.ddd.domain.value_object.UsId;
-import org.switch2022.project.ddd.domain.model.project.*;
-import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
-import org.switch2022.project.ddd.infrastructure.ProjectRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +41,10 @@ class ProjectServiceTest {
     IFactoryProject factoryProject;
     @MockBean
     IProjectRepository projectRepository;
+    @MockBean
+    IUsRepository usRepository;
 
+    /*
     IFactoryProject factoryProjectDouble;
     IProjectRepository projectRepositoryDouble;
     IFactoryProductBacklog factoryProductBacklogDouble;
@@ -53,21 +54,22 @@ class ProjectServiceTest {
     CustomerId customerIdDouble;
     ProjectTypologyId projectTypologyIdDouble;
     Code code;
-    ProductBacklog productBacklogDouble;
+    ProductBacklog productBacklogDouble;*/
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this);/*
         factoryProjectDouble = mock(IFactoryProject.class);
         projectRepositoryDouble = mock(IProjectRepository.class);
         factoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
-        projectService = new ProjectService(factoryProjectDouble, projectRepositoryDouble,
-                factoryProductBacklogDouble);
+        //projectService = new ProjectService(factoryProjectDouble,
+                //projectRepositoryDouble,
+                //factoryProductBacklogDouble);
 
         factoryProject = new FactoryProject();
         projectRepository = new ProjectRepository();
-        projectServiceTwo = new ProjectService(factoryProject, projectRepository,
-                factoryProductBacklogDouble);
+        //projectServiceTwo = new ProjectService(factoryProject, projectRepository,
+                //factoryProductBacklogDouble);
 
         code = new Code(1);
         projectCreationDto = new ProjectCreationDto("Happy Project", "An amazing " +
@@ -82,7 +84,7 @@ class ProjectServiceTest {
                 businessSectorIdDouble, customerIdDouble, projectTypologyIdDouble,
                 factoryProductBacklogDouble);
 
-        projectRepository.addProjectToProjectRepository(projectOne);
+        projectRepository.addProjectToProjectRepository(projectOne);*/
     }
 
     /**
@@ -325,10 +327,10 @@ class ProjectServiceTest {
         expected.add(userStory);
         expected.add(userStoryTwo);
 
-        when(usRepositoryDouble.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
+        when(usRepository.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
 
         //Act
-        List<UserStory> result = projectServiceDouble.requestAllUserStories(usIds);
+        List<UserStory> result = projectService.requestAllUserStories(usIds);
 
         //Assert
         assertEquals(expected, result);
@@ -344,10 +346,10 @@ class ProjectServiceTest {
         //Arrange
         List<UsId> usIds = new ArrayList<>();
         List<UserStory> expected = new ArrayList<>();
-        when(usRepositoryDouble.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
+        when(usRepository.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
 
         //Act
-        List<UserStory> result = projectServiceDouble.requestAllUserStories(usIds);
+        List<UserStory> result = projectService.requestAllUserStories(usIds);
 
         //Assert
         assertTrue(result.isEmpty());

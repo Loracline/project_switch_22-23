@@ -1,7 +1,5 @@
 package org.switch2022.project.ddd.application;
 
-
-import org.switch2022.project.ddd.domain.model.project.*;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,7 @@ public class ProjectService {
     @Autowired
     private IFactoryProductBacklog factoryProductBacklog;
     @Autowired
-    private final IUsRepository usRepository;
+    private IUsRepository usRepository;
 
     /**
      * Constructor.
