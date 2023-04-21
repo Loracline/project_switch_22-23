@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.utils.Validate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -50,14 +48,7 @@ public class ConsultProductBacklogController {
     public List<UserStoryDto> getProductBacklog(String projectCode) {
         Validate.notNullOrEmptyOrBlank(projectCode, "Project Code");
 
-        List<UsId> productBacklog = projectService.getProductBacklog(projectCode);
-        List<UserStory> userStories;
-        List<UserStoryDto> userStoryDtoList = new ArrayList<>();
-
-        if (!productBacklog.isEmpty()) {
-            userStories = projectService.requestAllPlannedUserStories(productBacklog);
-            userStoryDtoList = userStoryMapper.userStoryToDtoList(userStories);
-        }
-        return userStoryDtoList;
+        List<UserStory> userStories = projectService.getProductBacklog(projectCode);
+        return userStoryMapper.userStoryToDtoList(userStories);
     }
 }
