@@ -12,12 +12,10 @@ import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
@@ -219,7 +217,7 @@ class GetProductBacklogControllerTest {
         when(projectService.getProductBacklog(projectCode)).thenReturn(productBacklog);
 
         // Mock the requestAllPlannedUs method of the usService to return a list of UserStoryDto
-        when(usService.requestAllPlannedUs(productBacklog)).thenReturn(expectedUserStoryDtoList);
+        when(projectService.requestAllUserStories(productBacklog)).thenReturn(expectedUserStoryDtoList);
 
         // ACT
         List<UserStoryDto> actualUserStoryDtoList =

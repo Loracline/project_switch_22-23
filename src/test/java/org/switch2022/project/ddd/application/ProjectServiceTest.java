@@ -1,6 +1,6 @@
 package org.switch2022.project.ddd.application;
 
-import rt org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
@@ -16,18 +16,6 @@ import org.switch2022.project.ddd.domain.value_object.CustomerId;
 import org.switch2022.project.ddd.domain.value_object.ProjectTypologyId;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
-import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
-import org.switch2022.project.ddd.domain.model.project.ProductBacklog;
-import org.switch2022.project.ddd.domain.model.project.Project;
-import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
-import org.switch2022.project.ddd.domain.value_object.CustomerId;
-import org.switch2022.project.ddd.domain.value_object.ProjectTypologyId;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
 import java.util.List;
