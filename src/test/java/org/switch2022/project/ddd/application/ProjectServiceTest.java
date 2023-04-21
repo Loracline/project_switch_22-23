@@ -8,8 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
-import org.switch2022.project.ddd.domain.model.project.ProductBacklog;
 import org.switch2022.project.ddd.domain.model.project.Project;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.domain.value_object.CustomerId;
 import org.switch2022.project.ddd.domain.value_object.ProjectTypologyId;
@@ -34,24 +35,62 @@ class ProjectServiceTest {
      * BeforeEach execute common code before running the
      * tests below.
      */
-
     @InjectMocks
     ProjectService projectService;
     @MockBean
     IFactoryProject factoryProject;
     @MockBean
     IProjectRepository projectRepository;
+    @MockBean
+    IUsRepository usRepository;
 
+    /*
+    IFactoryProject factoryProjectDouble;
+    IProjectRepository projectRepositoryDouble;
+    IFactoryProductBacklog factoryProductBacklogDouble;
+    Project projectOne;
+    ProjectCreationDto projectCreationDto;
+    BusinessSectorId businessSectorIdDouble;
+    CustomerId customerIdDouble;
+    ProjectTypologyId projectTypologyIdDouble;
+    Code code;
+    ProductBacklog productBacklogDouble;*/
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this);/*
+        factoryProjectDouble = mock(IFactoryProject.class);
+        projectRepositoryDouble = mock(IProjectRepository.class);
+        factoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
+        //projectService = new ProjectService(factoryProjectDouble,
+                //projectRepositoryDouble,
+                //factoryProductBacklogDouble);
+
+        factoryProject = new FactoryProject();
+        projectRepository = new ProjectRepository();
+        //projectServiceTwo = new ProjectService(factoryProject, projectRepository,
+                //factoryProductBacklogDouble);
+
+        code = new Code(1);
+        projectCreationDto = new ProjectCreationDto("Happy Project", "An amazing " +
+                "project", "Happy Name", "Happy Customer", "Happy Typology",
+                2);
+        businessSectorIdDouble = mock(BusinessSectorId.class);
+        customerIdDouble = mock(CustomerId.class);
+        projectTypologyIdDouble = mock(ProjectTypologyId.class);
+        productBacklogDouble = mock(ProductBacklog.class);
+        when(factoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
+        projectOne = factoryProject.createProject(code, projectCreationDto,
+                businessSectorIdDouble, customerIdDouble, projectTypologyIdDouble,
+                factoryProductBacklogDouble);
+
+        projectRepository.addProjectToProjectRepository(projectOne);*/
     }
 
     /**
      * Method: createProject(projectCreationDto, customerId,businessSectorId,
      * projectTypologyId)
-     * <p>
+     *
      * scenario1: the project is created successfully. This always happens as all ids
      * are uniques and generated automatically.
      */
@@ -205,13 +244,60 @@ class ProjectServiceTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Method: requestAllUserStory(List<UsId> usId).
+     * Requests and return a list of User Stories.
+     * <br>
+     * Scenario 01: returns a list of User Stories that own the corresponding UsIds.
+     */
+
+    @Test
+    void ensureThatAllUserStoriesAreReturned() throws Exception{
+        //Arrange
+        List<UsId> usIds = new ArrayList<>();
+        UserStory userStory = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        List<UserStory> expected = new ArrayList<>();
+        expected.add(userStory);
+        expected.add(userStoryTwo);
+
+        when(usRepository.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
+
+        //Act
+        List<UserStory> result = projectService.requestAllUserStories(usIds);
+
+        //Assert
+        assertEquals(expected, result);
+
+    }
+
+    /**
+     * Scenario 02: returns an empty list when there are no UserStories.
+     */
+
+    @Test
+    void ensureThatReturnsAnEmptyListIfThereAreNoUserStories()  {
+        //Arrange
+        List<UsId> usIds = new ArrayList<>();
+        List<UserStory> expected = new ArrayList<>();
+        when(usRepository.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
+
+        //Act
+        List<UserStory> result = projectService.requestAllUserStories(usIds);
+
+        //Assert
+        assertTrue(result.isEmpty());
+
+    }
+
     // Integration testes: ProjectService + Project + ProjectRepository
 /*
     *//**
      * METHOD createProject(projectCreationDto, customerId,businessSectorId,
      * projectTypologyId) creates a new Project and adds it to the repository, and
      * creates a ProjectCode using the projectRepository.
-     * <p>
+     *
      * Scenario 1: project is created successfully. This always happens as all ids are
      * uniques and generated automatically.Should return a String with the code from
      * the project just created.
@@ -233,7 +319,7 @@ class ProjectServiceTest {
         assertEquals(expected, result);
     }*/
 
-/*     *//**
+    /**
      * METHOD addUserStory(priority, usId) adds a userStoryId to the productBacklog of a project.
      * <p>
      * Scenario 1: Adds a user Story because all arguments are valid.
@@ -256,8 +342,8 @@ class ProjectServiceTest {
         //Assert
         assertTrue(result);
     }*/
-    /*
-    *//**
+
+    /**
      * Scenario 2: Doesn't add User Story because it is already there. Should throw an
      * exception.
      *//*
@@ -320,7 +406,7 @@ class ProjectServiceTest {
      * Scenario 2: Returns an empty list of UsID .
      *
      * @throws Exception if there is no project in the product backlog with corresponding to the specified code.
-     *                   Should return an empty list of UsId.
+     * Should return an empty list of UsId.
      *//*
     @Test
     void ensureProductBacklogIsReturnedWithAnEmptyList() throws Exception {
@@ -338,7 +424,7 @@ class ProjectServiceTest {
 
     *//**
      * Scenario 3: Does not return a productBacklog because code doesn't match any project.
-     * <p>
+     *
      * Should throw an exception.
      *//*
     @Test
@@ -347,7 +433,6 @@ class ProjectServiceTest {
         String projectCode = "p002";
 
         //Act and Assert
-        assertThrows(Exception.class, () -> projectServiceTwo.getProductBacklog(projectCode));
+        assertThrows(Exception.class, () -> projectServiceTwo.getProductBacklog(projectCode)) ;
     }*/
-
 }
