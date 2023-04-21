@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +19,7 @@ class CustomerIdTest {
         String expected = "The customer number must not be null";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new CustomerId(null));
 
         //Assert
@@ -36,7 +37,7 @@ class CustomerIdTest {
         String expected = "The customer number must not be negative";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new CustomerId(-1));
 
         //Assert

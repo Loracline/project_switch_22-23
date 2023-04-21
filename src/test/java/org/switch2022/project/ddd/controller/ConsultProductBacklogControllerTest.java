@@ -11,6 +11,7 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,7 +62,7 @@ class ConsultProductBacklogControllerTest {
     UserStoryDto userStoryToDtoFour;*/
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp()  {
         MockitoAnnotations.openMocks(this);/*
         //Services implemented
         usService = mock(UsService.class);
@@ -150,10 +151,10 @@ class ConsultProductBacklogControllerTest {
     @Test
     void ensureThatIsReturnedAndThrowsAnExceptionIfProjectCodeIsNull() {
         // ARRANGE
-        String expectedMessage = "Input parameter cannot be null.";
+        String expectedMessage = "The Project Code must not be null";
 
         // ACT
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrows(InvalidInputException.class, () ->
                 controller.getProductBacklog(null));
 
         // ASSERT
@@ -186,7 +187,7 @@ class ConsultProductBacklogControllerTest {
      * Should return a UserStoryDto list
      */
     @Test
-    void ensureThatAnEmptyUserStoryDtoListIsReturned() throws Exception {
+    void ensureThatAnEmptyUserStoryDtoListIsReturned()  {
         // ARRANGE
         String projectCode = "P001";
         List<UsId> emptyProductBacklog = new ArrayList<>();
@@ -206,7 +207,7 @@ class ConsultProductBacklogControllerTest {
      * Should return a list of UserStoryDto
      */
     @Test
-    void ensureThatProductBacklogIsRetrievedSuccessfully() throws Exception {
+    void ensureThatProductBacklogIsRetrievedSuccessfully() {
         String projectCode = "P001";
 
         List<UsId> productBacklog = Arrays.asList(mock(UsId.class), mock(UsId.class));

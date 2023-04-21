@@ -7,6 +7,7 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +46,9 @@ public class ConsultProductBacklogController {
      *
      * @param projectCode Code of the Project.
      * @return a list of User Stories Dto.
-     * @throws IllegalArgumentException if the input parameter is null.
      */
-    public List<UserStoryDto> getProductBacklog(String projectCode) throws Exception {
-        if (projectCode == null) {
-            throw new IllegalArgumentException("Input parameter cannot be null.");
-        }
+    public List<UserStoryDto> getProductBacklog(String projectCode) {
+        Validate.notNullOrEmptyOrBlank(projectCode, "Project Code");
 
         List<UsId> productBacklog = projectService.getProductBacklog(projectCode);
         List<UserStory> userStories;
