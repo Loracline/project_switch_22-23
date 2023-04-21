@@ -1,10 +1,12 @@
 package org.switch2022.project.ddd.controller;
 
-import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.utils.Utils;
+
+import java.util.List;
 
 
 public class CreateUsController {
@@ -18,14 +20,12 @@ public class CreateUsController {
      * creation data, and passes it to the domain model through the appropriate services. It then returns the
      * result of the operation back to the UI, indicating whether the user story was successfully created or not.
      */
-    private final ProjectService projectService;
     private final UsService usService;
 
     /**
      * Constructor
      */
-    public CreateUsController(ProjectService projectService, UsService usService) {
-        this.projectService = projectService;
+    public CreateUsController(UsService usService) {
         this.usService = usService;
     }
 
@@ -44,10 +44,18 @@ public class CreateUsController {
         if (projectDto == null || userStoryCreationDto == null) {
             throw new IllegalArgumentException("Input parameters cannot be null.");
         }
-        String projectCode = projectDto.code;
-        UsId usId = usService.createUs(userStoryCreationDto, projectCode);
+
+        int codeNumber = Utils.getIntFromAlphanumericString(projectDto.code,"P");
+        Code projectCode = new Code(codeNumber);
+
+        UsNumber userStoryNumber = new UsNumber(userStoryCreationDto.userStoryNumber);
+        UsText userStoryText = new UsText(userStoryCreationDto.userStoryText);
+        Actor actor = new Actor(userStoryCreationDto.actor);
+        int priority = userStoryCreationDto.priority;
+
+        UsId usId = usService.createUs(userStoryNumber, userStoryText, actor, priority, projectCode);
         try {
-            projectService.addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
+            usService.addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
         } catch (Exception e) {
             usService.deleteUs(usId);
             throw e;
