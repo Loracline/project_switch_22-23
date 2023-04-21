@@ -7,15 +7,19 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.ProjectService;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
@@ -198,36 +202,33 @@ class GetProductBacklogControllerTest {
     }
 
     /**
-     * Scenario 4: This test ensure that an UserStoryDto list is returned when the Product
-     * Backlog of a given Project Code has a list of planned User Stories.
+     * Scenario 4: This test ensures that an UserStoryDto list is returned when the
+     * Product Backlog of a given Project Code has a list of planned User Stories.
      *
-     * @UserStoryDto list
-     */ /*
+     * Should return a list of UserStoryDto
+     */
     @Test
-    void testGetProductBacklog() throws Exception {
-        // ARRANGE
+    void ensureThatProductBacklogIsRetrievedSuccessfully() throws Exception{
         String projectCode = "P001";
-        List<UsId> productBacklog = Arrays.asList(new UsId("P001", "US001"), new UsId("P001",
-                "US002"));
-        List<UserStoryDto> expectedUserStoryDtoList = Arrays.asList(new UserStoryDto("US001",
-                        "create an User Story", "planned"),
-                new UserStoryDto("US002", "create Product Backlog", "planned"));
 
-        // Mock the getProductBacklog method of the projectService to return a non-empty list
+        List<UsId> productBacklog = Arrays.asList(mock(UsId.class), mock(UsId.class));
+        List<UserStory> userStories = Arrays.asList(mock(UserStory.class));
+
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
+        List<UserStoryDto> expectedUserStoryDtoList =
+                Arrays.asList(userStoryDto);
+
         when(projectService.getProductBacklog(projectCode)).thenReturn(productBacklog);
-
-        // Mock the requestAllPlannedUs method of the usService to return a list of UserStoryDto
-        when(projectService.requestAllUserStories(productBacklog)).thenReturn(expectedUserStoryDtoList);
+        when(projectService.requestAllPlannedUserStories(productBacklog)).thenReturn(userStories);
+        when(userStoryMapper.userStoryToDtoList(any())).thenReturn(expectedUserStoryDtoList);
 
         // ACT
         List<UserStoryDto> actualUserStoryDtoList =
                 getProductBacklogController.getProductBacklog(projectCode);
 
         // ASSERT
-        assertEquals(expectedUserStoryDtoList.size(), actualUserStoryDtoList.size());
-        assertTrue(expectedUserStoryDtoList.containsAll(actualUserStoryDtoList));
-        assertTrue(actualUserStoryDtoList.containsAll(expectedUserStoryDtoList));
-    }*/
+        assertEquals(expectedUserStoryDtoList, actualUserStoryDtoList);
+    }
 /*
     /**
      * Method: getProductBacklog()

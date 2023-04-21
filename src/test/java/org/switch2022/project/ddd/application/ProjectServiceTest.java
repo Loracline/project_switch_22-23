@@ -245,14 +245,15 @@ class ProjectServiceTest {
     }
 
     /**
-     * Method: requestAllUserStory(List<UsId> usId).
-     * Requests and return a list of User Stories.
+     * Method: requestAllPlannedUserStories(List<UsId> usId).
+     * Requests a list of User Stories with matching usIds and "planned" status.
      * <br>
-     * Scenario 01: returns a list of User Stories that own the corresponding UsIds.
+     * Scenario 01: returns a list of User Stories that own the corresponding UsIds and
+     * "planned" status.
      */
 
     @Test
-    void ensureThatAllUserStoriesAreReturned() throws Exception{
+    void ensureThatAllUserStoriesWithPlannedStatusAreReturned() throws Exception{
         //Arrange
         List<UsId> usIds = new ArrayList<>();
         UserStory userStory = mock(UserStory.class);
@@ -263,9 +264,11 @@ class ProjectServiceTest {
         expected.add(userStoryTwo);
 
         when(usRepository.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
+        when(userStory.hasStatus(any())).thenReturn(true);
+        when(userStoryTwo.hasStatus(any())).thenReturn(true);
 
         //Act
-        List<UserStory> result = projectService.requestAllUserStories(usIds);
+        List<UserStory> result = projectService.requestAllPlannedUserStories(usIds);
 
         //Assert
         assertEquals(expected, result);
@@ -284,12 +287,37 @@ class ProjectServiceTest {
         when(usRepository.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
 
         //Act
-        List<UserStory> result = projectService.requestAllUserStories(usIds);
+        List<UserStory> result = projectService.requestAllPlannedUserStories(usIds);
 
         //Assert
         assertTrue(result.isEmpty());
 
     }
+
+    /**
+     * Scenario 03: check if returns an empty list when there are no UserStories with planned status.
+     */
+    @Test
+    void ensureThatReturnsAnEmptyListBecauseThereAreNoUserStoriesWithPlannedStatus(){
+        //Arrange
+        List<UsId> usIds = new ArrayList<>();
+        UserStory userStory = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        List<UserStory> expected = new ArrayList<>();
+
+        when(usRepository.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
+        when(userStory.hasStatus(any())).thenReturn(false);
+        when(userStoryTwo.hasStatus(any())).thenReturn(false);
+
+        //Act
+        List<UserStory> result = projectService.requestAllPlannedUserStories(usIds);
+
+        //Assert
+        assertEquals(expected, result);
+
+    }
+
 
     // Integration testes: ProjectService + Project + ProjectRepository
 /*

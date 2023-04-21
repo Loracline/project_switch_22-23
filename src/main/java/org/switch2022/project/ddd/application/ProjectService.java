@@ -12,6 +12,7 @@ import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,7 +119,16 @@ public class ProjectService {
      * @return a list of all userStoriesDto with the status planned.
      */
 
-    public List<UserStory> requestAllUserStories(List<UsId> usId) {
-        return usRepository.getListOfUsWithMatchingIds(usId);
+    public List<UserStory> requestAllPlannedUserStories(List<UsId> usId) {
+        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
+        List<UserStory> userStoriesPlanned = new ArrayList<>();
+        if (!userStories.isEmpty()) {
+            for (UserStory userStory : userStories) {
+                if (userStory.hasStatus(Status.PLANNED)) {
+                    userStoriesPlanned.add(userStory);
+                }
+            }
+        }
+        return userStoriesPlanned;
     }
 }
