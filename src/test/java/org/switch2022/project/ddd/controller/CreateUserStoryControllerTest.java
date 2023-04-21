@@ -30,7 +30,7 @@ class CreateUsControllerTest {
      *//*
 
 
-    CreateUsController mockCreateUsController;
+    CreateUserStoryController mockCreateUsController;
     UsService mockUsService;
     ProjectService mockProjectService;
     ProjectDto projectDto;
@@ -44,7 +44,7 @@ class CreateUsControllerTest {
     ProjectService projectService;
     IProjectRepository projectRepository;
     IFactoryProject factoryProject;
-    CreateUsController createUsController;
+    CreateUserStoryController createUsController;
 
     @BeforeEach
     void setUp() {
@@ -62,7 +62,7 @@ class CreateUsControllerTest {
 
 
         //Controller
-        mockCreateUsController = new CreateUsController(mockProjectService, mockUsService);
+        mockCreateUsController = new CreateUserStoryController(mockProjectService, mockUsService);
 
 
         // Non-mocked objects
@@ -76,7 +76,7 @@ class CreateUsControllerTest {
         IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
         projectService = new ProjectService();
 
-        createUsController = new CreateUsController(projectService, usService);
+        createUsController = new CreateUserStoryController(projectService, usService);
     }
 
     @AfterEach
@@ -94,7 +94,7 @@ class CreateUsControllerTest {
     */
 /**
      * Method: createUs()
-     * Scenario 1: Tests the behavior of the createUs method in the  CreateUsController class
+     * Scenario 1: Tests the behavior of the createUs method in the  CreateUserStoryController class
      * when a null ProjectDto object is passed as input.
      * The method should throw an IllegalArgumentExceptionwith a message indicating that the
      * input parameters cannot be null.
@@ -123,7 +123,7 @@ class CreateUsControllerTest {
 
     */
 /**
-     * Scenario 2: Tests the behavior of the createUs method in the CreateUsController class when
+     * Scenario 2: Tests the behavior of the createUs method in the CreateUserStoryController class when
      * a null
      * UserStoryCreationDto object is passed as input. The method should throw an
      * IllegalArgumentException with
@@ -136,7 +136,7 @@ class CreateUsControllerTest {
     void ensureCreateUsThrowsExceptionWithNullUserStoryCreationDto() {
         // Arrange
         UsService usService = mock(UsService.class);
-        CreateUsController createUsController = new CreateUsController(mockProjectService,
+        CreateUserStoryController createUsController = new CreateUserStoryController(mockProjectService,
                 usService);
 
         // Act
@@ -150,7 +150,7 @@ class CreateUsControllerTest {
     */
 /**
      * Scenario 3: This test verifies the behavior of the createUs method in the
-     * CreateUsController class when a valid UserStoryCreationDto object is passed as input.
+     * CreateUserStoryController class when a valid UserStoryCreationDto object is passed as input.
      * The method should successfully create a User Story and return true. The test arranges the
      * input by creating mock objects for the UsService and ProjectService, and setting up the appropriate
      * mock method behavior to return a UsId and true when called.

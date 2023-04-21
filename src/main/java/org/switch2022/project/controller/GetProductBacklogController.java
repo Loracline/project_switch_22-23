@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Class GetProductBacklogController acts as an intermediary between the
+ * Class ConsultProductBacklogController acts as an intermediary between the
  * user interface (UI) and the business logic underlying the "US018 - As PO/SM/Team Member, I
  * want to consult the product backlog, i.e. to get the list of user stories sorted by priority."
  */

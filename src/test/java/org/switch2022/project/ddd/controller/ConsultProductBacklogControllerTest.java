@@ -24,16 +24,15 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = GetProductBacklogController.class
+        classes = ConsultProductBacklogController.class
 )
-class GetProductBacklogControllerTest {
+class ConsultProductBacklogControllerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running
      * the tests below.
      */
-
     @InjectMocks
-    GetProductBacklogController getProductBacklogController;
+    ConsultProductBacklogController controller;
 
     @MockBean
     UserStoryMapper userStoryMapper;
@@ -43,7 +42,7 @@ class GetProductBacklogControllerTest {
 
     /*
     String projectCode;
-    GetProductBacklogController getProductBacklogControllerOne;
+    ConsultProductBacklogController getProductBacklogControllerOne;
     UsService usServiceOne;
     ProjectService projectServiceOne;
     IFactoryProject factoryProjectOne;
@@ -61,7 +60,6 @@ class GetProductBacklogControllerTest {
     UserStoryDto userStoryToDtoOne;
     UserStoryDto userStoryToDtoFour;*/
 
-
     @BeforeEach
     void setUp() throws Exception {
         MockitoAnnotations.openMocks(this);/*
@@ -73,7 +71,7 @@ class GetProductBacklogControllerTest {
         projectCode = "P001";
 
         //Controller
-        //getProductBacklogController = new GetProductBacklogController(projectService,
+        //getProductBacklogController = new ConsultProductBacklogController(projectService,
                 //usService);
 
         //Project Service
@@ -92,7 +90,7 @@ class GetProductBacklogControllerTest {
 
         //Controller
         //getProductBacklogControllerOne =
-                //new GetProductBacklogController(projectServiceOne, usServiceOne);
+                //new ConsultProductBacklogController(projectServiceOne, usServiceOne);
 
         //UserStory
         userStoryOne = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US01",
@@ -146,7 +144,7 @@ class GetProductBacklogControllerTest {
      * IllegalArgumentException with the
      * expected message is thrown. Finally, it asserts that the exception message matches the
      * expected message.
-     *
+     * <p>
      * Should throw an exception if the input parameters are null.
      */
     @Test
@@ -156,7 +154,7 @@ class GetProductBacklogControllerTest {
 
         // ACT
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                getProductBacklogController.getProductBacklog(null));
+                controller.getProductBacklog(null));
 
         // ASSERT
         assertEquals(expectedMessage, exception.getMessage());
@@ -171,7 +169,7 @@ class GetProductBacklogControllerTest {
     void ensureThatIsNotReturnedAndThrowsAnExceptionIfProjectCodeIsNotNull() {
         // ACT
         try {
-            getProductBacklogController.getProductBacklog("P001");
+            controller.getProductBacklog("P001");
         } catch (Exception e) {
             // ASSERT
             fail("No exception should be thrown when the Project Code parameter was not null.");
@@ -184,7 +182,7 @@ class GetProductBacklogControllerTest {
     /**
      * Scenario 3: This test ensure that an empty UserStoryDto list is returned when the Product
      * Backlog of a give Project Code is also empty.
-     *
+     * <p>
      * Should return a UserStoryDto list
      */
     @Test
@@ -195,7 +193,7 @@ class GetProductBacklogControllerTest {
         when(projectService.getProductBacklog(projectCode)).thenReturn(emptyProductBacklog);
 
         // ACT
-        List<UserStoryDto> result = getProductBacklogController.getProductBacklog(projectCode);
+        List<UserStoryDto> result = controller.getProductBacklog(projectCode);
 
         // ASSERT
         assertTrue(result.isEmpty());
@@ -204,11 +202,11 @@ class GetProductBacklogControllerTest {
     /**
      * Scenario 4: This test ensures that an UserStoryDto list is returned when the
      * Product Backlog of a given Project Code has a list of planned User Stories.
-     *
+     * <p>
      * Should return a list of UserStoryDto
      */
     @Test
-    void ensureThatProductBacklogIsRetrievedSuccessfully() throws Exception{
+    void ensureThatProductBacklogIsRetrievedSuccessfully() throws Exception {
         String projectCode = "P001";
 
         List<UsId> productBacklog = Arrays.asList(mock(UsId.class), mock(UsId.class));
@@ -224,7 +222,7 @@ class GetProductBacklogControllerTest {
 
         // ACT
         List<UserStoryDto> actualUserStoryDtoList =
-                getProductBacklogController.getProductBacklog(projectCode);
+                controller.getProductBacklog(projectCode);
 
         // ASSERT
         assertEquals(expectedUserStoryDtoList, actualUserStoryDtoList);
