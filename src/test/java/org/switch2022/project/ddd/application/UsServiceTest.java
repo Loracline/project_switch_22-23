@@ -13,6 +13,7 @@ import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
@@ -21,10 +22,9 @@ import org.switch2022.project.ddd.infrastructure.UsRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+import java.util.Optional;
 
 @AutoConfigureMockMvc
 @SpringBootTest(
@@ -32,7 +32,6 @@ import static org.mockito.Mockito.*;
         classes = UsServiceTest.class
 )
 class UsServiceTest {
-
 
     @MockBean
     IFactoryUserStory factoryUserStory;
@@ -47,17 +46,17 @@ class UsServiceTest {
     UsService usService;
 
 
-    UserStoryCreationDto userStoryCreationDtoOne, userStoryCreationDtoTwo,userStoryCreationDtoThree;
-    UserStoryDto userStoryDtoOne;
-    UsId usIdOne, usIdTwo, usIdThree;
-    UsService usServiceOne;
+//    UserStoryCreationDto userStoryCreationDtoOne, userStoryCreationDtoTwo,
+//            userStoryCreationDtoThree;
+//    UserStoryDto userStoryDtoOne;
+//    UsId usIdOne, usIdTwo, usIdThree;
+//    UsService usServiceOne;
 
-    UsRepository usRepositoryOne,usRepositoryTwo;
+//    UsRepository usRepositoryOne,usRepositoryTwo;
 
-    List<UsId> usIds, usIdsOne;
+//    List<UsId> usIds, usIdsOne;
 
-    List<UserStoryDto> userStoriesDto;
-
+//    List<UserStoryDto> userStoriesDto;
 
 
     /**
@@ -106,7 +105,6 @@ class UsServiceTest {
 //
 //
 //        //User Stories Dto
-
     }
 
     //UNIT TESTS
