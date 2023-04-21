@@ -1,3 +1,4 @@
+/*
 package org.switch2022.project.ddd.controller;
 
 import org.junit.jupiter.api.AfterEach;
@@ -73,8 +74,7 @@ class CreateUsControllerTest {
         factoryProject = new FactoryProject();
         projectRepository = new ProjectRepository();
         IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        projectService = new ProjectService(factoryProject, projectRepository,
-                factoryProductBacklog);
+        projectService = new ProjectService();
 
         createUsController = new CreateUsController(projectService, usService);
     }

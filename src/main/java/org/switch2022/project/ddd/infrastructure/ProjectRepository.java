@@ -15,6 +15,7 @@ import java.util.Optional;
  * Class ProjectRepository is built to access and manipulate the set of projects
  * of this company.
  */
+@Component
 public class ProjectRepository implements IProjectRepository {
     /**
      * Attributes
