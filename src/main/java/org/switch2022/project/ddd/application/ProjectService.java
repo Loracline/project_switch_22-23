@@ -2,6 +2,8 @@ package org.switch2022.project.ddd.application;
 
 
 import org.switch2022.project.ddd.domain.model.project.*;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.utils.Utils;
@@ -20,18 +22,21 @@ public class ProjectService {
      */
     private final IFactoryProject factoryProject;
     private final IProjectRepository projectRepository;
+    private final IUsRepository usRepository;
     private final IFactoryProductBacklog factoryProductBacklog;
 
     /**
      * Constructor.
      *
-     * @param factoryProject        it creates a new project;
-     * @param projectRepository     it saves all projects;
-     * @param factoryProductBacklog it creates a productBacklog for each project;
+     * @param factoryProject        it creates a new project.
+     * @param projectRepository     it saves all projects.
+     * @param factoryProductBacklog it creates a productBacklog for each project.
+     * @param usRepository          it contains all user stories.
      */
 
     public ProjectService(IFactoryProject factoryProject, IProjectRepository projectRepository,
-                          IFactoryProductBacklog factoryProductBacklog) {
+                          IFactoryProductBacklog factoryProductBacklog,
+                          IUsRepository usRepository) {
         Validate.notNull(factoryProject, "Factory Project can't be null");
         this.factoryProject = factoryProject;
 
@@ -40,6 +45,9 @@ public class ProjectService {
 
         Validate.notNull(factoryProductBacklog, "Factory ProductBacklog can't be null");
         this.factoryProductBacklog = factoryProductBacklog;
+
+        Validate.notNull(usRepository, "User Story Repository can't be null");
+        this.usRepository = usRepository;
     }
 
     /**
@@ -137,5 +145,16 @@ public class ProjectService {
         } else {
             throw new Exception("No project with that code");
         }
+    }
+
+    /**
+     * Requests a list of userStories with the status planned.
+     *
+     * @param usId ID of the userStory.
+     * @return a list of all userStoriesDto with the status planned.
+     */
+
+    public List<UserStory> requestAllUserStories(List<UsId> usId) {
+        return usRepository.getListOfUsWithMatchingIds(usId);
     }
 }

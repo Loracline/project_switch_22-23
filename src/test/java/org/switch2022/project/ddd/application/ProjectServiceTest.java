@@ -3,6 +3,8 @@ package org.switch2022.project.ddd.application;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project.*;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.infrastructure.ProjectRepository;
@@ -24,7 +26,7 @@ class ProjectServiceTest {
     IFactoryProject factoryProjectDouble, factoryProject;
     IProjectRepository projectRepositoryDouble, projectRepository;
     IFactoryProductBacklog factoryProductBacklogDouble;
-    ProjectService projectService, projectServiceTwo;
+    ProjectService projectServiceDouble, projectServiceTwo;
     Project projectOne;
     ProjectCreationDto projectCreationDto;
     BusinessSectorId businessSectorIdDouble;
@@ -32,19 +34,21 @@ class ProjectServiceTest {
     ProjectTypologyId projectTypologyIdDouble;
     Code code;
     ProductBacklog productBacklogDouble;
+    IUsRepository usRepositoryDouble;
 
     @BeforeEach
     void setUp() {
         factoryProjectDouble = mock(IFactoryProject.class);
         projectRepositoryDouble = mock(IProjectRepository.class);
         factoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
-        projectService = new ProjectService(factoryProjectDouble, projectRepositoryDouble,
-                factoryProductBacklogDouble);
+        usRepositoryDouble = mock(IUsRepository.class);
+        projectServiceDouble = new ProjectService(factoryProjectDouble, projectRepositoryDouble,
+                factoryProductBacklogDouble, usRepositoryDouble);
 
         factoryProject = new FactoryProject();
         projectRepository = new ProjectRepository();
         projectServiceTwo = new ProjectService(factoryProject, projectRepository,
-                factoryProductBacklogDouble);
+                factoryProductBacklogDouble, usRepositoryDouble);
 
         code = new Code(1);
         projectCreationDto = new ProjectCreationDto("Happy Project", "An amazing " +
@@ -75,7 +79,7 @@ class ProjectServiceTest {
 
         Exception exception = assertThrows(Exception.class, () ->
                 new ProjectService(factoryProjectNull, projectRepositoryDouble,
-                        factoryProductBacklogDouble));
+                        factoryProductBacklogDouble, usRepositoryDouble));
         String expected = "Factory Project can't be null";
         //Act
         String result = exception.getMessage();
@@ -96,7 +100,7 @@ class ProjectServiceTest {
 
         Exception exception = assertThrows(Exception.class, () ->
                 new ProjectService(factoryProjectNull, projectRepositoryDouble,
-                        factoryProductBacklogDouble));
+                        factoryProductBacklogDouble, usRepositoryDouble));
         String expected = "Project Repository can't be null";
         //Act
         String result = exception.getMessage();
@@ -117,7 +121,7 @@ class ProjectServiceTest {
 
         Exception exception = assertThrows(Exception.class, () ->
                 new ProjectService(factoryProjectNull, projectRepositoryDouble,
-                        factoryProductBacklogDouble));
+                        factoryProductBacklogDouble, usRepositoryDouble));
         String expected = "Factory ProductBacklog can't be null";
         //Act
         String result = exception.getMessage();
@@ -145,7 +149,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.addProjectToProjectRepository(any())).thenReturn(true);
 
         //Act
-        String result = projectService.createProject(projectCreationDtoDouble, customerIdDouble,
+        String result = projectServiceDouble.createProject(projectCreationDtoDouble, customerIdDouble,
                 businessSectorIdDouble, projectTypologyIdDouble);
         //Assert
         assertEquals(expected, result);
@@ -162,7 +166,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.addProjectToProjectRepository(any())).thenReturn(true);
         boolean expected = true;
         //Act
-        boolean result = projectService.addProject(projectDouble);
+        boolean result = projectServiceDouble.addProject(projectDouble);
         //Assert
         assertEquals(expected, result);
     }
@@ -177,7 +181,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.addProjectToProjectRepository(any())).thenReturn(false);
         boolean expected = false;
         //Act
-        boolean result = projectService.addProject(projectDouble);
+        boolean result = projectServiceDouble.addProject(projectDouble);
         //Assert
         assertEquals(expected, result);
     }
@@ -192,7 +196,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.getProjectNumber()).thenReturn(0);
         int expected = 1;
         //Act
-        int result = projectService.calculateNextProjectNumber();
+        int result = projectServiceDouble.calculateNextProjectNumber();
         //Assert
         assertEquals(expected, result);
     }
@@ -206,7 +210,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.getProjectNumber()).thenReturn(1);
         int expected = 2;
         //Act
-        int result = projectService.calculateNextProjectNumber();
+        int result = projectServiceDouble.calculateNextProjectNumber();
         //Assert
         assertEquals(expected, result);
     }
@@ -228,7 +232,7 @@ class ProjectServiceTest {
         when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(true);
 
         //Act
-        boolean result = projectService.addUsToProductBacklog(usIdDouble, projectCode, priority);
+        boolean result = projectServiceDouble.addUsToProductBacklog(usIdDouble, projectCode, priority);
         //Assert
         assertEquals(expected, result);
     }
@@ -247,7 +251,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
         when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(false);
         Exception exception = assertThrows(Exception.class, () ->
-                projectService.addUsToProductBacklog(usIdDouble, projectCode, priority));
+                projectServiceDouble.addUsToProductBacklog(usIdDouble, projectCode, priority));
         String expected = "The User Story is already in the Product Backlog";
         //Act
         String result = exception.getMessage();
@@ -268,7 +272,7 @@ class ProjectServiceTest {
         Optional<Project> optionalProject = Optional.empty();
         when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
         Exception exception = assertThrows(Exception.class, () ->
-                projectService.addUsToProductBacklog(usIdDouble, projectCode, priority));
+                projectServiceDouble.addUsToProductBacklog(usIdDouble, projectCode, priority));
         String expected = "No project with that code";
         //Act
         String result = exception.getMessage();
@@ -287,7 +291,7 @@ class ProjectServiceTest {
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
         when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
         //Act
-        Optional<Project> result = projectService.getProjectByCode("P001");
+        Optional<Project> result = projectServiceDouble.getProjectByCode("P001");
         //Assert
         assertEquals(optionalProject, result);
     }
@@ -309,7 +313,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
         when(projectDouble.getProductBacklog()).thenReturn(expected);
         //Act
-        List<UsId> result = projectService.getProductBacklog("P001");
+        List<UsId> result = projectServiceDouble.getProductBacklog("P001");
         //Assert
         assertEquals(expected, result);
     }
@@ -326,7 +330,7 @@ class ProjectServiceTest {
         when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
         when(projectDouble.getProductBacklog()).thenReturn(expected);
         //Act
-        List<UsId> result = projectService.getProductBacklog("P001");
+        List<UsId> result = projectServiceDouble.getProductBacklog("P001");
         //Assert
         assertEquals(expected, result);
     }
@@ -340,7 +344,7 @@ class ProjectServiceTest {
         Optional<Project> optionalProject = Optional.empty();
         when(projectRepositoryDouble.getProjectByCode(any())).thenReturn(optionalProject);
         Exception exception = assertThrows(Exception.class, () ->
-                projectService.getProductBacklog("P001"));
+                projectServiceDouble.getProductBacklog("P001"));
         String expected = "No project with that code";
         //Act
         String result = exception.getMessage();
@@ -488,4 +492,50 @@ class ProjectServiceTest {
         assertThrows(Exception.class, () -> projectServiceTwo.getProductBacklog(projectCode)) ;
     }
 
+    /**
+     * Method: requestAllUserStory(List<UsId> usId).
+     * Requests and return a list of User Stories.
+     * <br>
+     * Scenario 01: returns a list of User Stories that own the corresponding UsIds.
+     */
+
+    @Test
+    void ensureThatAllUserStoriesAreReturned() throws Exception{
+        //Arrange
+        List<UsId> usIds = new ArrayList<>();
+        UserStory userStory = mock(UserStory.class);
+        UserStory userStoryTwo = mock(UserStory.class);
+
+        List<UserStory> expected = new ArrayList<>();
+        expected.add(userStory);
+        expected.add(userStoryTwo);
+
+        when(usRepositoryDouble.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
+
+        //Act
+        List<UserStory> result = projectServiceDouble.requestAllUserStories(usIds);
+
+        //Assert
+        assertEquals(expected, result);
+
+    }
+
+    /**
+     * Scenario 02: returns an empty list when there are no UserStories.
+     */
+
+    @Test
+    void ensureThatReturnsAnEmptyListIfThereAreNoUserStories()  {
+        //Arrange
+        List<UsId> usIds = new ArrayList<>();
+        List<UserStory> expected = new ArrayList<>();
+        when(usRepositoryDouble.getListOfUsWithMatchingIds(usIds)).thenReturn(expected);
+
+        //Act
+        List<UserStory> result = projectServiceDouble.requestAllUserStories(usIds);
+
+        //Assert
+        assertTrue(result.isEmpty());
+
+    }
 }

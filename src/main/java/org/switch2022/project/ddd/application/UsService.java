@@ -3,15 +3,10 @@ package org.switch2022.project.ddd.application;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
-import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.utils.Validate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class UsService allows to create a new userStory.
@@ -65,25 +60,5 @@ public class UsService {
     public boolean deleteUs(UsId usId) throws Exception {
         usRepository.delete(usId);
         return true;
-    }
-
-    /**
-     * Requests a list of userStories with the status planned.
-     *
-     * @param usId ID of the userStory.
-     * @return a list of all userStoriesDto with the status planned.
-     */
-
-    public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) {
-        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
-        List<UserStoryDto> userStoriesDto = new ArrayList<>();
-        if (!userStories.isEmpty()) {
-            for (UserStory userStory : userStories) {
-                if (userStory.hasStatus(Status.PLANNED)) {
-                    userStoriesDto.add(userStoryMapper.userStoryToDto(userStory));
-                }
-            }
-        }
-        return userStoriesDto;
     }
 }

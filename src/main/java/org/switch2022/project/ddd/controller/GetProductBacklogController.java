@@ -1,38 +1,45 @@
 package org.switch2022.project.ddd.controller;
 
 import org.switch2022.project.ddd.application.ProjectService;
-import org.switch2022.project.ddd.application.UsService;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GetProductBacklogController {
     /**
-     * The GetProductBacklogController class serves as an intermediary between the user interface
+     * The GetProductBacklogController class serves as an intermediary between the user
+     * interface
      * (UI) and the business logic underlying the "US018 - As PO/SM/Team Member, I want to
-     * consult the product backlog, i.e. to get the list of user stories sorted by priority."
-     * The GetProductBacklogController receives the necessary data from the UI, such as the
-     * projectCode and passes it to the domain model through the appropriate services. It then
+     * consult the product backlog, i.e. to get the list of user stories sorted by
+     * priority."
+     * The GetProductBacklogController receives the necessary data from the UI, such as
+     * the
+     * projectCode and passes it to the domain model through the appropriate services.
+     * It then
      * returns the result of the operation back to the UI, which the list of user
      * Story Dto was successfully returned or not.
      */
     private final ProjectService projectService;
-    private final UsService usService;
+    private final UserStoryMapper userStoryMapper;
 
     /**
      * Constructor
      */
-    public GetProductBacklogController(ProjectService projectService, UsService usService) {
+    public GetProductBacklogController(ProjectService projectService, UserStoryMapper userStoryMapper) {
         this.projectService = projectService;
-        this.usService = usService;
+        this.userStoryMapper = userStoryMapper;
     }
 
     /**
      * This method receives the input data from the UI (projectCode) to get the respective
      * Product Backlog through the responsible domain service (ProjectService).
-     * As the returned Product Backlog is a list of UsId, it's necessary get the information
+     * As the returned Product Backlog is a list of UsId, it's necessary get the
+     * information
      * for each Planned User Story from the responsible domain service (UsService).
      * After that it should return to the UI:
      * - A list of User Stories Dto; or
@@ -48,10 +55,17 @@ public class GetProductBacklogController {
         }
 
         List<UsId> productBacklog = projectService.getProductBacklog(projectCode);
+        List<UserStory> userStories;
         List<UserStoryDto> userStoryDtoList = new ArrayList<>();
 
         if (!productBacklog.isEmpty()) {
-            userStoryDtoList = usService.requestAllPlannedUs(productBacklog);
+            userStories = projectService.requestAllUserStories(productBacklog);
+            for (UserStory userStory : userStories) {
+                if (userStory.hasStatus(Status.PLANNED)) {
+                    userStoryDtoList.add(userStoryMapper.userStoryToDto(userStory));
+                }
+            }
+
         }
         return userStoryDtoList;
     }

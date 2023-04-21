@@ -71,7 +71,7 @@ class CreateUsControllerTest {
         projectRepository = new ProjectRepository();
         IFactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
         projectService = new ProjectService(factoryProject, projectRepository,
-                factoryProductBacklog);
+                factoryProductBacklog, usRepository);
 
         createUsController = new CreateUsController(projectService, usService);
     }

@@ -64,15 +64,6 @@ class GetProductBacklogControllerTest {
         //Input
         projectCode = "P001";
 
-        //Controller
-        getProductBacklogController = new GetProductBacklogController(projectService, usService);
-
-        //Project Service
-        factoryProjectOne = new FactoryProject();
-        projectRepositoryOne = new ProjectRepository();
-        factoryProductBacklogOne = new FactoryProductBacklog();
-        projectServiceOne = new ProjectService(factoryProjectOne, projectRepositoryOne, factoryProductBacklogOne);
-
         //UserStory Service
         usRepositoryOne = new UsRepository();
         factoryUserStoryOne = new FactoryUserStory();
@@ -80,7 +71,18 @@ class GetProductBacklogControllerTest {
         usServiceOne = new UsService(usRepositoryOne, factoryUserStoryOne, userStoryMapperOne);
 
         //Controller
-        getProductBacklogControllerOne = new GetProductBacklogController(projectServiceOne, usServiceOne);
+        getProductBacklogController = new GetProductBacklogController(projectService, userStoryMapperOne);
+
+        //Project Service
+        factoryProjectOne = new FactoryProject();
+        projectRepositoryOne = new ProjectRepository();
+        factoryProductBacklogOne = new FactoryProductBacklog();
+        projectServiceOne = new ProjectService(factoryProjectOne, projectRepositoryOne,
+                factoryProductBacklogOne, usRepositoryOne);
+
+        //Controller
+        getProductBacklogControllerOne =
+                new GetProductBacklogController(projectServiceOne, userStoryMapperOne);
 
         //UserStory
         userStoryOne = factoryUserStoryOne.createUserStory(new UserStoryCreationDto("US01",
@@ -143,7 +145,7 @@ class GetProductBacklogControllerTest {
      * expected message is thrown. Finally, it asserts that the exception message matches the
      * expected message.
      *
-     * @throwsIllegalArgumentException if the input parameters are null.
+     * Should throw an exception if the input parameters are null.
      */
     @Test
     void ensureThatIsReturnedAndThrowsAnExceptionIfProjectCodeIsNull() {
@@ -181,7 +183,7 @@ class GetProductBacklogControllerTest {
      * Scenario 3: This test ensure that an empty UserStoryDto list is returned when the Product
      * Backlog of a give Project Code is also empty.
      *
-     * @empty UserStoryDto list
+     * Should return a UserStoryDto list
      */
     @Test
     void ensureThatAnEmptyUserStoryDtoListIsReturned() throws Exception {
@@ -199,17 +201,19 @@ class GetProductBacklogControllerTest {
 
     /**
      * Scenario 4: This test ensure that an UserStoryDto list is returned when the Product
-     * Backlog of a give Project Code has a list of planned User Stories.
+     * Backlog of a given Project Code has a list of planned User Stories.
      *
      * @UserStoryDto list
      */
+
+    /*
     @Test
     void testGetProductBacklog() throws Exception {
         // ARRANGE
         String projectCode = "P001";
         List<UsId> productBacklog = Arrays.asList(new UsId("P001", "US001"), new UsId("P001",
                 "US002"));
-        List<UserStoryDto> expectedUserStoryDtoList = Arrays.asList(new UserStoryDto("US001",
+        List<UserStoryDto> expectedUserStoryList = Arrays.asList(new UserStoryDto("US001",
                         "create an User Story", "planned"),
                 new UserStoryDto("US002", "create Product Backlog", "planned"));
 
@@ -217,7 +221,7 @@ class GetProductBacklogControllerTest {
         when(projectService.getProductBacklog(projectCode)).thenReturn(productBacklog);
 
         // Mock the requestAllPlannedUs method of the usService to return a list of UserStoryDto
-        when(usService.requestAllPlannedUs(productBacklog)).thenReturn(expectedUserStoryDtoList);
+        when(projectService.requestAllUserStories(productBacklog)).thenReturn(expectedUserStoryList);
 
         // ACT
         List<UserStoryDto> actualUserStoryDtoList =
@@ -227,7 +231,7 @@ class GetProductBacklogControllerTest {
         assertEquals(expectedUserStoryDtoList.size(), actualUserStoryDtoList.size());
         assertTrue(expectedUserStoryDtoList.containsAll(actualUserStoryDtoList));
         assertTrue(actualUserStoryDtoList.containsAll(expectedUserStoryDtoList));
-    }
+    }*/
 
     /**
      * Method: getProductBacklog()

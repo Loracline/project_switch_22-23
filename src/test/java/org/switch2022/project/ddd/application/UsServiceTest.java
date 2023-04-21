@@ -6,7 +6,6 @@ import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
@@ -211,67 +210,6 @@ class UsServiceTest {
         verify(usServiceDouble).deleteUs(usIdDouble);
     }
 
-
-    /**
-     * Method: requestAllPlannedUs(usId).
-     * Returns a list of all userStories with the Status "PLANNED" through the userStory ID.
-     * <br>
-     * Scenario 01: verify if a list of userStories is retrieved.
-     * <p>
-     * Expected result: userStories list is retrieved.
-     */
-
-
-    @Test
-    void ensureRequestOfAllPlannedUsIsSuccessful() {
-        // Arrange
-        IUsRepository usRepositoryDouble = mock(IUsRepository.class);
-        IFactoryUserStory factoryUserStoryDouble = mock(IFactoryUserStory.class);
-        UserStoryMapper userStoryMapperDouble = mock(UserStoryMapper.class);
-        UsService usServiceDouble = new UsService(usRepositoryDouble, factoryUserStoryDouble, userStoryMapperDouble);
-
-        UserStory userStoryDoubleOne = mock(UserStory.class);
-        UserStoryDto userStoryDtoDoubleOne = mock(UserStoryDto.class);
-
-        List<UsId> usIdDoubleList = new ArrayList<>();
-        List<UserStoryDto> expected = new ArrayList<>();
-        expected.add(userStoryDtoDoubleOne);
-
-        when(usRepositoryDouble.getListOfUsWithMatchingIds(usIdDoubleList)).
-                thenReturn(Collections.singletonList(userStoryDoubleOne));
-        when(userStoryDoubleOne.hasStatus(Status.PLANNED)).thenReturn(true);
-        when(userStoryMapperDouble.userStoryToDto(userStoryDoubleOne)).thenReturn(userStoryDtoDoubleOne);
-
-        // Act
-        List<UserStoryDto> result = usServiceDouble.requestAllPlannedUs(usIdDoubleList);
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-
-    /**
-     * Scenario 02: verify if a list of empty userStories is retrieved, an exception is thrown.
-     * <p>
-     * Expected result: exception is thrown.
-     */
-
-    @Test
-    void ensureRequestOfAllPlannedUsIsSuccessfulEmptyList(){
-        // Arrange
-        IUsRepository usRepositoryDouble = mock(IUsRepository.class);
-        List<UsId> usIdDoubleList = new ArrayList<>();
-        List<UserStory> userStoriesList = new ArrayList<>();
-
-        when(usRepositoryDouble.getListOfUsWithMatchingIds(usIdDoubleList)).
-                thenReturn(userStoriesList);
-
-        List<UserStoryDto> emptyList = new ArrayList<>();
-
-        // Assert
-        assertEquals(userStoriesList, emptyList);
-    }
-
     /**
      * Constructor
      * <p>
@@ -415,71 +353,4 @@ class UsServiceTest {
         //ASSERT
         assertTrue(result);
     }
-    /**
-     * Method: requestAllPlannedUs(List<UsId> usId).
-     * Requests All Planned UserStories and resturn a list of User Stories Dto.
-     * <br>
-     * Scenario 01: checks that the list of all planned user stories and the list of Dto user stories are identical
-     */
-    @Test
-    void ensureThatReturnsAListOfPlannedUserStories() throws Exception{
-        //Arrange
-        usService.createUs(userStoryCreationDtoOne,"P001");
-        usService.createUs(userStoryCreationDtoTwo, "P001");
-        usService.createUs(userStoryCreationDtoThree, "P001");
-        UserStory userStoryTwo =(usRepository.getUserStory(usIdTwo)).get();
-        UserStory userStoryThree =(usRepository.getUserStory(usIdThree)).get();
-
-        userStoryTwo.setStatus(Status.FINISHED);
-        userStoryThree.setStatus(Status.BLOCKED);
-
-        List<UserStoryDto> expected = userStoriesDto;
-
-        //Act
-        List<UserStoryDto> result = usService.requestAllPlannedUs(usIds);
-
-        //Assert
-        assertEquals(expected, result);
-
-    }
-
-    /**
-     * Scenario 02: check if returns an empty list when there are no UserStories.
-     */
-    @Test
-    void ensureThatReturnsAnEmptyListIfThereAreNoUserStories()  {
-
-        //Act
-        List<UserStoryDto> result = usService.requestAllPlannedUs(usIdsOne);
-
-        //Assert
-        assertTrue(result.isEmpty());
-
-    }
-
-    /**
-     * Scenario 03: check if returns an empty list when there are no UserStories with planned status.
-     */
-    @Test
-    void ensureThatReturnsAnEmptyListBecauseThereAreNoPlannedUserStories() throws Exception {
-        //Arrange
-        usService.createUs(userStoryCreationDtoOne,"P001");
-        usService.createUs(userStoryCreationDtoTwo, "P001");
-        usService.createUs(userStoryCreationDtoThree, "P001");
-        UserStory userStoryOne =(usRepository.getUserStory(usIdOne)).get();
-        UserStory userStoryTwo =(usRepository.getUserStory(usIdTwo)).get();
-        UserStory userStoryThree =(usRepository.getUserStory(usIdThree)).get();
-
-        userStoryOne.setStatus(Status.RUNNING);
-        userStoryTwo.setStatus(Status.FINISHED);
-        userStoryThree.setStatus(Status.BLOCKED);
-
-        //Act
-        List<UserStoryDto> result = usService.requestAllPlannedUs(usIds);
-
-        //Assert
-        assertTrue(result.isEmpty());
-
-    }
-
 }
