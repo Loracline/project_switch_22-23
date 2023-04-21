@@ -27,8 +27,6 @@ public class UsService {
     private IProjectRepository projectRepository;
     @Autowired
      private IFactoryUserStory factoryUserStory;
-    @Autowired
-    private UserStoryMapper userStoryMapper;
 
     public UsService() {
     }
@@ -61,27 +59,6 @@ public class UsService {
     public boolean deleteUs(UsId usId){
         usRepository.delete(usId);
         return true;
-    }
-
-
-    /**
-     * Requests a list of userStories with the status planned.
-     *
-     * @param usId ID of the userStory.
-     * @return a list of all userStoriesDto with the status planned.
-     */
-
-    public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) {
-        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
-        List<UserStoryDto> userStoriesDto = new ArrayList<>();
-        if (!userStories.isEmpty()) {
-            for (UserStory userStory : userStories) {
-                if (userStory.hasStatus(Status.PLANNED)) {
-                    userStoriesDto.add(userStoryMapper.userStoryToDto(userStory));
-                }
-            }
-        }
-        return userStoriesDto;
     }
 
     /**

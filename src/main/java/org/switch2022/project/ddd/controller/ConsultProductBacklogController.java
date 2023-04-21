@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
@@ -13,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class GetProductBacklogController {
+public class ConsultProductBacklogController {
     /**
-     * The GetProductBacklogController class serves as an intermediary between the user interface
+     * The ConsultProductBacklogController class serves as an intermediary between the user interface
      * (UI) and the business logic underlying the "US018 - As PO/SM/Team Member, I want to
      * consult the product backlog, i.e. to get the list of user stories sorted by priority."
-     * The GetProductBacklogController receives the necessary data from the UI, such as the
+     * The ConsultProductBacklogController receives the necessary data from the UI, such as the
      * projectCode and passes it to the domain model through the appropriate services. It then
      * returns the result of the operation back to the UI, which the list of user
      * Story Dto was successfully returned or not.
@@ -32,7 +31,7 @@ public class GetProductBacklogController {
     /**
      * Constructor
      */
-    public GetProductBacklogController() {
+    public ConsultProductBacklogController() {
     }
 
     /**
@@ -58,13 +57,8 @@ public class GetProductBacklogController {
         List<UserStoryDto> userStoryDtoList = new ArrayList<>();
 
         if (!productBacklog.isEmpty()) {
-            userStories = projectService.requestAllUserStories(productBacklog);
-            for (UserStory userStory : userStories) {
-                if (userStory.hasStatus(Status.PLANNED)) {
-                    userStoryDtoList.add(userStoryMapper.userStoryToDto(userStory));
-                }
-            }
-
+            userStories = projectService.requestAllPlannedUserStories(productBacklog);
+            userStoryDtoList = userStoryMapper.userStoryToDtoList(userStories);
         }
         return userStoryDtoList;
     }

@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.project;
 
+
 /**
  * Interface for a ProductBacklog factory.
  */
