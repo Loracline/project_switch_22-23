@@ -1,9 +1,9 @@
 package org.switch2022.project.ddd.domain.model.user_story;
 
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * User Story Repository interface.
@@ -15,9 +15,10 @@ public interface IUsRepository {
      * This method adds a new userStory to the repository of userStories if it does not exist.
      *
      * @param userStory to be added to the repository.
+     * @return true if the user story is added and an exception otherwise.
      */
 
-    public void add(UserStory userStory) throws Exception;
+    public boolean add(UserStory userStory) throws Exception;
 
     /**
      * This method deletes a userStory from the repository of userStories if it exists.
@@ -35,4 +36,6 @@ public interface IUsRepository {
      */
 
     List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId);
+
+     Optional<UserStory> getUserStory(UsId usId);
 }

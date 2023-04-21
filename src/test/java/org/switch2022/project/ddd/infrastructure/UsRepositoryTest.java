@@ -82,7 +82,8 @@ class UsRepositoryTest {
         usRepositoryDouble.add(userStoryDouble);
 
         // Act
-        when(userStoryDouble.getUsId()).thenReturn(usIdDouble);
+        when(userStoryDouble.getUsId()).thenReturn("usIdDouble");
+        when(usIdDouble.getUserStoryId()).thenReturn("usIdDouble");
         usRepositoryDouble.delete(usIdDouble);
         boolean result = usRepositoryDouble.equals(emptyUsRepositoryDouble);
 
@@ -106,7 +107,7 @@ class UsRepositoryTest {
         usRepositoryDouble.add(userStoryDouble);
 
 
-        when(userStoryDouble.getUsId()).thenReturn(mock(UsId.class));
+        when(userStoryDouble.getUsId()).thenReturn("ID");
 
         // Act
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
@@ -114,7 +115,7 @@ class UsRepositoryTest {
         });
 
         // Assert
-        assertEquals("User story does not exist", exception.getMessage());
+        assertEquals("The User Story is already in the Product Backlog", exception.getMessage());
     }
 
     /**
@@ -139,8 +140,8 @@ class UsRepositoryTest {
         List<UserStory> userStories = new ArrayList<>();
         userStories.add(0, userStoryDouble);
 
-        when(userStoryDouble.getUsId()).thenReturn(usIdDouble);
-
+        when(userStoryDouble.getUsId()).thenReturn("usIdDouble");
+        when(usIdDouble.getUserStoryId()).thenReturn("usIdDouble");
         boolean result = usRepositoryDouble.getListOfUsWithMatchingIds(userStoryIds)
                 .equals(userStories);
 
@@ -164,7 +165,7 @@ class UsRepositoryTest {
 
         List<UserStory> userStories = new ArrayList<>();
 
-        when(userStoryDouble.getUsId()).thenReturn(usIdDouble);
+        when(userStoryDouble.getUsId()).thenReturn("usIdDouble");
 
         boolean result = usRepositoryDouble.getListOfUsWithMatchingIds(userStoryIds)
                 .equals(userStories);

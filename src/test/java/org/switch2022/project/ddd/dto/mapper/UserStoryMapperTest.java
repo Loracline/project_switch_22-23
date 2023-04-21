@@ -33,11 +33,11 @@ class UserStoryMapperTest {
         String status = "Planned";
         String text = "I want to create an issue";
         when(usNumberDouble.getUserStoryNumber()).thenReturn(usNumber);
-        when(statusDouble.toString()).thenReturn(status);
+        when(statusDouble.getStatus()).thenReturn(status);
         when(usTextDouble.getUserStoryText()).thenReturn(text);
-        when(userStoryDouble.getUsNumber()).thenReturn(usNumberDouble);
-        when(userStoryDouble.getStatus()).thenReturn(statusDouble);
-        when(userStoryDouble.getUsText()).thenReturn(usTextDouble);
+        when(userStoryDouble.getUsNumber()).thenReturn(usNumber);
+        when(userStoryDouble.getStatus()).thenReturn(status);
+        when(userStoryDouble.getUsText()).thenReturn(text);
 
         UserStoryDto expected = new UserStoryDto(usNumber, text, status);
 
@@ -67,14 +67,14 @@ class UserStoryMapperTest {
         String status = "Planned";
         String text = "I want to create an issue";
         when(usNumberDouble.getUserStoryNumber()).thenReturn(usNumber);
-        when(statusDouble.toString()).thenReturn(status);
+        when(statusDouble.getStatus()).thenReturn(status);
         when(usTextDouble.getUserStoryText()).thenReturn(text);
-        when(userStoryDouble.getUsNumber()).thenReturn(usNumberDouble);
-        when(userStoryDoubleTwo.getUsNumber()).thenReturn(usNumberDouble);
-        when(userStoryDouble.getStatus()).thenReturn(statusDouble);
-        when(userStoryDoubleTwo.getStatus()).thenReturn(statusDouble);
-        when(userStoryDouble.getUsText()).thenReturn(usTextDouble);
-        when(userStoryDoubleTwo.getUsText()).thenReturn(usTextDouble);
+        when(userStoryDouble.getUsNumber()).thenReturn(usNumber);
+        when(userStoryDoubleTwo.getUsNumber()).thenReturn(usNumber);
+        when(userStoryDouble.getStatus()).thenReturn(status);
+        when(userStoryDoubleTwo.getStatus()).thenReturn(status);
+        when(userStoryDouble.getUsText()).thenReturn(text);
+        when(userStoryDoubleTwo.getUsText()).thenReturn(text);
         UserStoryDto userStoryDtoDouble = new UserStoryDto(usNumber, text, status);
         UserStoryDto userStoryDtoDoubleTwo = new UserStoryDto(usNumber, text, status);
 

@@ -8,6 +8,7 @@ import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class UserStoryTest {
 
@@ -216,14 +217,15 @@ class UserStoryTest {
     void ensureUserStoryIdIsRetrievedSuccessfully() {
         // Arrange
         UsId usId = mock(UsId.class);
+        when(usId.getUserStoryId()).thenReturn("123");
         UserStory userStory = new UserStory(usId);
-        String expected = usId.toString();
+
 
         // Act
-        String result = userStory.getUsId().toString();
+        String result = userStory.getUsId();
 
         // Assert
-        assertEquals(expected, result);
+        assertEquals("123", result);
     }
 
     /**
@@ -236,15 +238,16 @@ class UserStoryTest {
     void ensureUserStoryTextIsRetrievedSuccessfully() {
         // Arrange
         UsText usText = mock(UsText.class);
+        when(usText.getUserStoryText()).thenReturn("jogar 24/7");
         UsId usId = mock(UsId.class);
         UserStory userStory = new UserStory(usId);
         userStory.setUsText(usText);
 
         // Act
-        UsText result = userStory.getUsText();
+        String result = userStory.getUsText();
 
         //Assert
-        assertEquals(usText, result);
+        assertEquals("jogar 24/7", result);
     }
 
     /**
@@ -257,15 +260,16 @@ class UserStoryTest {
     void ensureUserStoryNumberIsRetrievedSuccessfully() {
         // Arrange
         UsNumber usNumber = mock(UsNumber.class);
+        when(usNumber.getUserStoryNumber()).thenReturn("US01");
         UsId usId = mock(UsId.class);
         UserStory userStory = new UserStory(usId);
         userStory.setUsNumber(usNumber);
 
         // Act
-        UsNumber result = userStory.getUsNumber();
+        String result = userStory.getUsNumber();
 
         // Assert
-        assertEquals(usNumber, result);
+        assertEquals("US01", result);
     }
 
     /**
@@ -278,15 +282,16 @@ class UserStoryTest {
     void ensureUserStoryStatusIsRetrievedSuccessfully() {
         // Arrange
         Status usStatus = mock(Status.class);
+        when(usStatus.getStatus()).thenReturn("Planned");
         UsId usId = mock(UsId.class);
         UserStory userStory = new UserStory(usId);
         userStory.setStatus(usStatus);
 
         // Act
-        Status result = userStory.getStatus();
+        String result = userStory.getStatus();
 
         // Assert
-        assertEquals(usStatus, result);
+        assertEquals("Planned", result);
     }
 
     /**
@@ -341,8 +346,11 @@ class UserStoryTest {
         UserStory userStory = new UserStory(usId);
 
         UsNumber usNumber = mock(UsNumber.class);
+        when(usNumber.getUserStoryNumber()).thenReturn("US01");
         UsText usText = mock(UsText.class);
+        when(usText.getUserStoryText()).thenReturn("blablabla");
         Actor actor = mock(Actor.class);
+        when(actor.getActor()).thenReturn("User");
 
         // ACT
         userStory.setValidUserStory(usNumber, usText, actor);
@@ -473,20 +481,14 @@ class UserStoryTest {
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(userStoryNumber,
                 userStoryText, actor, 0);
 
-        // 4. Creation of the value objects of interest.
-        UsId usId = new UsId(projectCode, userStoryNumber);
-        UsNumber usNumber = new UsNumber(userStoryNumber);
-        UsText usText = new UsText(userStoryText);
-        Actor usActor = new Actor(actor);
-
         // 5. Creation of user story by the factory.
         UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto, projectCode);
 
         // 6. Expected status for the user story created.
-        Status expected = Status.BLOCKED;
+        String expected = "Blocked";
 
         // ACT
-        userStory.setStatus(expected);
+        userStory.setStatus(Status.BLOCKED);
 
         // ASSERT
         assertEquals(expected, userStory.getStatus());
@@ -512,12 +514,6 @@ class UserStoryTest {
         UserStoryCreationDto userStoryCreationDto = new UserStoryCreationDto(userStoryNumber,
                 userStoryText, actor, 0);
 
-        // 4. Creation of the value objects of interest.
-        UsId usId = new UsId(projectCode, userStoryNumber);
-        UsNumber usNumber = new UsNumber(userStoryNumber);
-        UsText usText = new UsText(userStoryText);
-        Actor usActor = new Actor(actor);
-
         // 5. Creation of user story by the factory.
         UserStory userStory = factoryUserStory.createUserStory(userStoryCreationDto, projectCode);
 
@@ -537,10 +533,11 @@ class UserStoryTest {
                         "\t\n" +
                         "6. Add US to a non-empty backlog at the specified priority n (and the length of the backlog " +
                         "is shorter than n)";
-        AcceptanceCriteria expected = new AcceptanceCriteria(acceptanceCriteria);
+        AcceptanceCriteria acceptanceCriteriaVO = new AcceptanceCriteria(acceptanceCriteria);
+        String expected = acceptanceCriteriaVO.getAcceptanceCriteria();
 
         // ACT
-        userStory.setAcceptanceCriteria(expected);
+        userStory.setAcceptanceCriteria(acceptanceCriteriaVO);
 
         // ASSERT
         assertEquals(expected, userStory.getAcceptanceCriteria());

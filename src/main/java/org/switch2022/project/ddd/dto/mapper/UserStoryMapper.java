@@ -16,8 +16,8 @@ public class UserStoryMapper {
      */
     
     public UserStoryDto userStoryToDto(UserStory userStory) {
-        return new UserStoryDto(userStory.getUsNumber().getUserStoryNumber(), userStory.getUsText().getUserStoryText(),
-                userStory.getStatus().toString());
+        return new UserStoryDto(userStory.getUsNumber(), userStory.getUsText(),
+                userStory.getStatus());
     }
     /**
      * This method converts a list of user stories into a list
