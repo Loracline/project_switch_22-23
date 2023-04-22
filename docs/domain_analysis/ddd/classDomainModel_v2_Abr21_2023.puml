@@ -1,71 +1,256 @@
 @startuml
-'https://plantuml.com/class-diagram
 
-@startuml
-
-entity Account <<root>> {
+package project {
+class Project <<root>> #line:green;back:lightgreen {
 }
 
-entity Profile <<root>> {
+class ProductBacklog <<entity>> #line:green;back:lightblue {
+}
 }
 
-entity ProjectResource <<root>> {
+package user_story {
+class UserStory <<root>> #line:green;back:lightgreen {
+}
 }
 
-entity BusinessSector <<root>> {
-    +businesSectorId
+package business_sector {
+class BusinessSector <<root>> #line:green;back:lightgreen {
+}
 }
 
-entity Typology <<root>> {
-    +projectTypologyId
+package customer {
+class Customer <<root>> #line:green;back:lightgreen {
+}
 }
 
-entity Customer <<root>> {
-    +customerId
+package typology {
+class Typology <<root>> #line:green;back:lightgreen {
+}
 }
 
-entity Project <<root>> {
-    +code
-    +name
-    +projectStatus
-    +description
-    +numberOfPlannedSprints
-    +budget
-    +period
+package sprint {
+class Sprint <<root>> #line:green;back:lightgreen {
 }
 
-entity ProductBacklog {
-    +pbId
+class UserStoryInSprint <<entity>> #line:green;back:lightblue {
+}
 }
 
-entity UserStory <<root>> {
-    +usId
-    +usNumber
-    +usText
-    +actor
-    +acceptanceCriteria
-    +status
+package project_resource {
+class ProjectResource <<root>> #line:green;back:lightgreen {
+}
 }
 
-entity Sprint <<root>> {
-    +sprintId
-    +sprintDuration
-    +sprintNumber
+package account {
+class Account <<root>> #line:green;back:lightgreen {
+}
 }
 
-entity UserStoryInSprint {
+package profile {
+class Profile <<root>> #line:green;back:lightgreen {
+}
 }
 
-Account "1" -- "0.*" Profile
-Account "1" -- "0.*" ProjectResource
-Project "1" -- "0.*" Account
-Project "0.*" -- "1" BusinessSector
-Project "0.*" -- "1" Typology
-Project "0.*" -- "1" Customer
-Project "1" -- "0.*" ProjectResource
-Project "1" -- "1" ProductBacklog: <<aggregates>>
-ProductBacklog "1" -- "0.*" UserStory
-Project "1" -- "1" Sprint
-Sprint "1" -- "0.*" UserStoryInSprint: <<aggregates>>
+
+class Code <<value object>> {
+-id: String
+}
+
+class Budget <<value object>> {
+-value: BigDecimal
+}
+
+class Name <<value object>> {
+-denomination: String
+}
+
+class Description <<value object>> {
+-commentary: String
+}
+
+enum ProjectStatus <<value object>> {
+PLANNED
+INCEPTION
+ELABORATION
+CONSTRUCTION
+TRANSITION
+WARRANTY
+CLOSED
+}
+
+class NumberOfPlannedSprints <<value object>> {
+-numberOfSprints: Integer
+}
+
+class Period <<value object>> {
+-startDate: LocalDate
+-endDate: LocalDate
+}
+
+class SprintDuration <<value object>> {
+-duration: Integer
+}
+
+class SprintId <<value object>> {
+-id: String
+}
+
+class BusinessSectorId <<value object>> {
+-id: String
+}
+
+class CustomerId <<value object>> {
+-id: String
+}
+
+class ProjectTypologyId <<value object>> {
+-typologyId: String
+}
+
+class PbId <<value object>> {
+-productBacklogId: String
+}
+
+class UsId <<value object>> {
+-userStoryId: String
+}
+
+class UsNumber <<value object>> {
+-userStoryNumber: String
+}
+
+class Actor <<value object>> {
+-designation: String
+}
+
+class UsText <<value object>> {
+-userStoryText: String
+}
+
+enum Status <<value object>> {
+PLANNED
+RUNNING
+FINISHED
+BLOCKED
+}
+
+class AcceptanceCriteria <<value object>> {
+-criteria: String
+}
+
+class SprintNumber <<value object>> {
+-sprintNumber: String
+}
+
+enum Effort <<value object>> {
+ONE
+TWO
+THREE
+FIVE
+EIGHT
+THIRTEEN
+TWENTY_ONE
+THIRTY_FOUR
+}
+
+class ProfileId <<value object>> {
+-profileId: String
+}
+
+class Email <<value object>> {
+-designation: String
+}
+
+enum Role <<value object>> {
+PRODUCT_OWNER
+SCRUM_MASTER
+PROJECT_MANAGER
+TEAM_MEMBER
+}
+
+class AccountStatus <<value object>> {
+-status: Boolean
+}
+
+class Vat <<value object>> {
+-number: Integer
+}
+
+class PhoneNumber <<value object>> {
+-contact: Integer
+}
+
+class Photo <<value object>> {
+-image: BufferedImage
+}
+
+class CostPerHour <<value object>> {
+-cost: Double
+}
+
+class PercentageOfAllocation <<value object>> {
+-allocation: Double
+}
+
+
+Project --> "1" Code
+Project --> "1" Budget
+Project --> "1" Name
+Project --> "1" Description
+Project --> "1" ProjectStatus
+Project --> "1" NumberOfPlannedSprints
+Project --> "1" Period
+Project --> "1" SprintDuration
+Project --> "*" SprintId: has List >
+Project --> "1" BusinessSectorId
+Project --> "1" CustomerId
+Project --> "1" ProjectTypologyId
+Project --> "1" ProductBacklog
+
+ProductBacklog --> "1" PbId
+ProductBacklog --> "*" UsId: has List >
+
+UserStory --> "1" UsId
+UserStory --> "1" UsNumber
+UserStory --> "1" Actor
+UserStory --> "1" UsText
+UserStory --> "1" Status
+UserStory --> "1" AcceptanceCriteria
+
+Customer --> "1" CustomerId
+Customer --> "1" Name
+Customer --> "1" Vat
+Customer --> "1" PhoneNumber
+
+BusinessSector --> "1" BusinessSectorId
+BusinessSector --> "1" Name
+
+Typology --> "1" ProjectTypologyId
+Typology --> "1" Name
+
+Sprint --> "1" SprintId
+Sprint --> "1" SprintNumber
+Sprint --> "*" UserStoryInSprint: has List >
+Sprint --> "1" Period
+
+UserStoryInSprint --> "1" UsId
+UserStoryInSprint --> "1" Effort
+
+Profile --> "1" Name
+Profile --> "1" ProfileId
+
+Account --> "1" Name
+Account --> "1" ProfileId
+Account --> "1" Email
+Account --> "1" AccountStatus
+Account --> "1" PhoneNumber
+Account --> "1" Photo
+
+ProjectResource --> "1" Period
+ProjectResource --> "1" Code
+ProjectResource --> "1" Email
+ProjectResource --> "1" Role
+ProjectResource --> "1" CostPerHour
+ProjectResource --> "1" PercentageOfAllocation
 
 @enduml
