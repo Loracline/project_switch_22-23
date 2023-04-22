@@ -12,11 +12,11 @@ import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
-import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 import org.switch2022.project.ddd.domain.model.project.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -200,15 +200,21 @@ class ProjectServiceTest {
         //Arrange
         UsId usIdDouble = mock(UsId.class);
         UsId usIdDoubleTwo = mock(UsId.class);
-        List<UsId> expected = new ArrayList<>();
-        expected.add(usIdDoubleTwo);
-        expected.add(usIdDouble);
+        List<UsId> usIds = Arrays.asList(usIdDoubleTwo, usIdDouble);
+
+        UserStory userStoryOne = mock(UserStory.class);
+        List<UserStory> expected = Arrays.asList(userStoryOne);
+
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
+
         when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
-        when(projectDouble.getProductBacklog()).thenReturn(expected);
+        when(projectDouble.getProductBacklog()).thenReturn(usIds);
+        when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(expected);
+        when(userStoryOne.hasStatus(any())).thenReturn(true);
+
         //Act
-        List<UsId> result = projectService.getProductBacklog("P001");
+        List<UserStory> result = projectService.getProductBacklog("P001");
         //Assert
         assertEquals(expected, result);
     }
@@ -219,13 +225,16 @@ class ProjectServiceTest {
     @Test
     void ensureProductBacklogIsRetrievedSuccessfully_EmptyList() {
         //Arrange
-        List<UsId> expected = new ArrayList<>();
+        List<UsId> usIds = Arrays.asList(mock(UsId.class));
+        List<UserStory> expected = new ArrayList<>();
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
         when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
-        when(projectDouble.getProductBacklog()).thenReturn(expected);
+        when(projectDouble.getProductBacklog()).thenReturn(usIds);
+
         //Act
-        List<UsId> result = projectService.getProductBacklog("P001");
+        List<UserStory> result = projectService.getProductBacklog("P001");
+
         //Assert
         assertEquals(expected, result);
     }

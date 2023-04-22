@@ -10,7 +10,6 @@ import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.util.ArrayList;
@@ -145,7 +144,7 @@ class ConsultProductBacklogControllerTest {
      * IllegalArgumentException with the
      * expected message is thrown. Finally, it asserts that the exception message matches the
      * expected message.
-     * <p>
+     *
      * Should throw an exception if the input parameters are null.
      */
     @Test
@@ -183,14 +182,14 @@ class ConsultProductBacklogControllerTest {
     /**
      * Scenario 3: This test ensure that an empty UserStoryDto list is returned when the Product
      * Backlog of a give Project Code is also empty.
-     * <p>
+     *
      * Should return a UserStoryDto list
      */
     @Test
     void ensureThatAnEmptyUserStoryDtoListIsReturned()  {
         // ARRANGE
         String projectCode = "P001";
-        List<UsId> emptyProductBacklog = new ArrayList<>();
+        List<UserStory> emptyProductBacklog = new ArrayList<>();
         when(projectService.getProductBacklog(projectCode)).thenReturn(emptyProductBacklog);
 
         // ACT
@@ -210,15 +209,13 @@ class ConsultProductBacklogControllerTest {
     void ensureThatProductBacklogIsRetrievedSuccessfully() {
         String projectCode = "P001";
 
-        List<UsId> productBacklog = Arrays.asList(mock(UsId.class), mock(UsId.class));
         List<UserStory> userStories = Arrays.asList(mock(UserStory.class));
 
         UserStoryDto userStoryDto = mock(UserStoryDto.class);
         List<UserStoryDto> expectedUserStoryDtoList =
                 Arrays.asList(userStoryDto);
 
-        when(projectService.getProductBacklog(projectCode)).thenReturn(productBacklog);
-        when(projectService.requestAllPlannedUserStories(productBacklog)).thenReturn(userStories);
+        when(projectService.getProductBacklog(projectCode)).thenReturn(userStories);
         when(userStoryMapper.userStoryToDtoList(any())).thenReturn(expectedUserStoryDtoList);
 
         // ACT
