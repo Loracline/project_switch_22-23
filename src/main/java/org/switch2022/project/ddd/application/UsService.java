@@ -40,12 +40,13 @@ public class UsService {
      * @param userStoryText the description of the userStory.
      * @param actor the actor of the userStory.
      * @param priority the priority of the userStory.
+     * @param acceptanceCriteria the list of acceptance criteria.
      * @param projectCode          will be associated with the newly created userStory.
      * @return userStoryId from the newly created userStory.
      */
 
-    public UsId createUs(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority, Code projectCode) throws Exception {
-        final UserStory userStory = factoryUserStory.createUserStory(userStoryNumber, userStoryText, actor, priority, projectCode);
+    public UsId createUs(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority,List <AcceptanceCriteria> acceptanceCriteria, Code projectCode) throws Exception {
+        final UserStory userStory = factoryUserStory.createUserStory(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
         usRepository.add(userStory);
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
         return usId;

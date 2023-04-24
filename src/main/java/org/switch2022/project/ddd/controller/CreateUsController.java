@@ -1,14 +1,17 @@
 package org.switch2022.project.ddd.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
+@Controller
 public class CreateUsController {
 
     /**
@@ -20,13 +23,13 @@ public class CreateUsController {
      * creation data, and passes it to the domain model through the appropriate services. It then returns the
      * result of the operation back to the UI, indicating whether the user story was successfully created or not.
      */
-    private final UsService usService;
+    @Autowired
+    private UsService usService;
 
     /**
      * Constructor
      */
-    public CreateUsController(UsService usService) {
-        this.usService = usService;
+    public CreateUsController() {
     }
 
     /**
@@ -52,8 +55,9 @@ public class CreateUsController {
         UsText userStoryText = new UsText(userStoryCreationDto.userStoryText);
         Actor actor = new Actor(userStoryCreationDto.actor);
         int priority = userStoryCreationDto.priority;
+        List <AcceptanceCriteria> acceptanceCriteria = convertListOfStringsToAnAcceptanceCriteriaList(userStoryCreationDto);
 
-        UsId usId = usService.createUs(userStoryNumber, userStoryText, actor, priority, projectCode);
+        UsId usId = usService.createUs(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
         try {
             usService.addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
         } catch (Exception e) {
@@ -62,4 +66,21 @@ public class CreateUsController {
         }
         return true;
     }
+
+    /**
+     * This method receives a UserStoryCreationDto and to convert your list of "acceptCriteria" strings into a list<br>
+     * of objects of type AcceptanceCriteria.
+     * @param userStoryCreationDto
+     * @return a list of objects of type AcceptanceCriteria.
+     */
+    private List<AcceptanceCriteria> convertListOfStringsToAnAcceptanceCriteriaList(UserStoryCreationDto userStoryCreationDto) {
+
+        List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
+        for (int i = 0; i <userStoryCreationDto.acceptanceCriteria.size(); i++){
+            AcceptanceCriteria acceptanceCriteriaElement = new AcceptanceCriteria(userStoryCreationDto.acceptanceCriteria.get(i));
+            acceptanceCriteria.add(acceptanceCriteriaElement);
+        }
+        return acceptanceCriteria;
+    }
 }
+

@@ -4,6 +4,8 @@ import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.utils.Validate;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,19 +21,26 @@ public class UserStory implements Entity<UserStory> {
      */
     private final UsId usId;
     private UsNumber usNumber;
-    private Actor actor;
     private UsText usText;
     private Status status;
-    private AcceptanceCriteria acceptanceCriteria;
+    private final List<AcceptanceCriteria> acceptanceCriteria;
 
     /**
      * Constructor
-     * It creates an userStory using its identifier: usId.
+     * It creates an userStory using its identifier: usId  and your minimals attributs.
+     * Attributs: usNumber, actor, usText, accptaneCriteria.
      */
-    protected UserStory(final UsId usId) {
-        Validate.notNull(usId, "User Story's ID can't be null.");
-        this.usId = usId;
+    protected UserStory(Code projectCode, UsNumber usNumber, Actor actor, UsText usText, List<AcceptanceCriteria> acceptanceCriteria) {
+        Validate.notNull(projectCode, "User Story's project code can't be null.");
+        Validate.notNull(usNumber, "User Story's User Story Number can't be null.");
+        Validate.notNull(actor, "User Story's actor can't be null.");
+        Validate.notNull(usText, "User Story's Text can't be null");
+        Validate.notNull(acceptanceCriteria, "User Story's Acceptance Criteria can't be null.");
+        this.usNumber = usNumber;
+        this.usText = usText;
         this.status = Status.PLANNED;
+        this.acceptanceCriteria = acceptanceCriteria;
+        this.usId = new UsId(projectCode.getCode(), usNumber.getUserStoryNumber());
     }
 
     /**
@@ -87,6 +96,7 @@ public class UserStory implements Entity<UserStory> {
         return usId.getUserStoryId();
     }
 
+
     /**
      * This getter method returns a String with User Story status.
      */
@@ -136,48 +146,10 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This protected method sets the actor of the userStory.
-     *
-     * @param actor of the User Story to create.
-     */
-    protected void setActor(Actor actor) {
-        this.actor = actor;
-    }
-
-    /**
-     * This getter returns a String with the Actor.
-     */
-    public String getActor() {
-        return actor.getActor();
-    }
-
-    /**
-     * This protected method sets the acceptance criteria of the userStory.
-     *
-     * @param acceptanceCriteria of the User Story to be added.
-     */
-    public void setAcceptanceCriteria(AcceptanceCriteria acceptanceCriteria) {
-        this.acceptanceCriteria = acceptanceCriteria;
-    }
-
-    /**
      * This getter returns the Acceptance Criteria of a user story.
      */
-    public String getAcceptanceCriteria() {
-        return acceptanceCriteria.getAcceptanceCriteria();
-    }
-
-    /**
-     * This method sets the relevant attributes for a user story to be in a valid state.
-     *
-     * @param usNumber of the user story.
-     * @param usText   of the user story.
-     * @param actor    of the user story.
-     */
-    protected void setValidUserStory(UsNumber usNumber, UsText usText, Actor actor) {
-        setUsNumber(usNumber);
-        setUsText(usText);
-        setActor(actor);
+    public List<AcceptanceCriteria> getAcceptanceCriteria() {
+        return Collections.unmodifiableList(acceptanceCriteria);
     }
 
     /**
@@ -202,9 +174,12 @@ public class UserStory implements Entity<UserStory> {
 
     /**
      * The method verify if the UserStory has the given usId.
+     *
      * @param usId of the User Story.
      * @return TRUE if User Story has the given usId, and FALSE otherwise.
      */
-    public boolean hasUsId(UsId usId){ return usId.equals(this.usId); }
+    public boolean hasUsId(UsId usId) {
+        return usId.equals(this.usId);
+    }
 }
 

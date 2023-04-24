@@ -126,10 +126,14 @@ class UsServiceTest {
         UsText userStoryTextDouble = mock(UsText.class);
         Actor actorDouble = mock(Actor.class);
         int priority = 1;
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+        acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
+
 
         UserStory userStoryDouble = mock(UserStory.class);
         Code projectCode = new Code(1);
-        when(factoryUserStory.createUserStory(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority ,
+        when(factoryUserStory.createUserStory(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority , acceptanceCriteriaDouble,
                 projectCode)).thenReturn(userStoryDouble);
         when(userStoryDouble.getUsId()).thenReturn("P001_US003");
         when(userStoryDouble.getUsNumber()).thenReturn("US003");
@@ -139,7 +143,8 @@ class UsServiceTest {
         UsId expected = new UsId("P001","US003");
 
         // Act
-        UsId result = usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority, projectCode);
+        UsId result = usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority,
+                acceptanceCriteriaDouble, projectCode);
 
         // Assert
         assertEquals(expected, result);
@@ -160,12 +165,15 @@ class UsServiceTest {
         UsText userStoryTextDouble = mock(UsText.class);
         Actor actorDouble = mock(Actor.class);
         int priority = 1;
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+        acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
 
         UserStory userStoryDouble = mock(UserStory.class);
         Code projectCode = new Code(1);
 
         // Act
-        when(factoryUserStory.createUserStory(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority, projectCode))
+        when(factoryUserStory.createUserStory(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority, acceptanceCriteriaDouble, projectCode))
                 .thenReturn(userStoryDouble);
 
         usRepository.add(userStoryDouble);
@@ -174,7 +182,7 @@ class UsServiceTest {
                 add(userStoryDouble);
 
         // Assert
-        assertThrows(IllegalStateException.class, () -> usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority,
+        assertThrows(IllegalStateException.class, () -> usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority, acceptanceCriteriaDouble,
                 projectCode));
 
     }
