@@ -18,7 +18,7 @@ public interface IUsRepository {
      * @return true if the user story is added and an exception otherwise.
      */
 
-    public boolean add(UserStory userStory) throws Exception;
+    public boolean add(UserStory userStory);
 
     /**
      * This method deletes a userStory from the repository of userStories if it exists.
@@ -26,7 +26,7 @@ public interface IUsRepository {
      * @param usId of the userStory to be deleted from the repository.
      * @return true if the user story is deleted or throws an exception otherwise.
      */
-    public boolean delete(UsId usId) throws Exception;
+    public boolean delete(UsId usId);
 
     /**
      * Lists all userStories with a matching ID.

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.exceptions.UserStoryAlreadyExistException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,16 +75,16 @@ public class UsRepository implements IUsRepository {
      * This method adds a new userStory to the repository of userStories if it does not exist.
      *
      * @param userStory to be added to the repository.
-     * @return true if the user story is added and an exception otherwise.
+     * @return true if the user story is added and an UserStoryAlreadyExistException otherwise.
      */
 
 
-    public boolean add(UserStory userStory) throws Exception{
+    public boolean add(UserStory userStory){
         if (!userStories.contains(userStory)) {
             userStories.add(userStory);
             return true;
         } else {
-            throw new IllegalArgumentException("User story ID already exists");
+            throw new UserStoryAlreadyExistException("User story ID already exists");
         }
     }
 
@@ -102,7 +103,7 @@ public class UsRepository implements IUsRepository {
             }
         }
         if (!usFound) {
-            throw new IllegalArgumentException("The User Story is already in the Product Backlog");
+            throw new UserStoryAlreadyExistException ("The User Story is already in the Product Backlog");
         }
         return true;
     }

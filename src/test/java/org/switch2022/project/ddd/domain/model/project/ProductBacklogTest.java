@@ -2,7 +2,6 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.value_object.PbId;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
@@ -21,12 +20,12 @@ class ProductBacklogTest {
     @Test
     void ensureAProductBacklogIsNotCreatedBecauseTheIdIsNull() {
         // Arrange
-        PbId pbId = null;
+        String projectCode = null;
         String expected = "Product Backlog's ID can't be null.";
 
         // Act
         IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new ProductBacklog(pbId));
+                () -> new ProductBacklog(projectCode));
 
         // Assert
         assertEquals(expected, result.getMessage());
@@ -41,9 +40,9 @@ class ProductBacklogTest {
     @Test
     void ensureThatReturnsTrueIfTwoProductBacklogInstancesHaveTheSameIdValue() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
-        ProductBacklog other = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog productBacklog = new ProductBacklog(code);
+        ProductBacklog other = new ProductBacklog(code);
         boolean expected = true;
 
         // Act
@@ -60,10 +59,10 @@ class ProductBacklogTest {
     @Test
     void ensureThatReturnsFalseIfTwoProductBacklogInstancesDoNotHaveTheSameIdValue() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        PbId otherId = mock(PbId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
-        ProductBacklog other = new ProductBacklog(otherId);
+        String code = "P001";
+        String otherCode = "P002";
+        ProductBacklog productBacklog = new ProductBacklog(code);
+        ProductBacklog other = new ProductBacklog(otherCode);
         boolean expected = false;
 
         // Act
@@ -79,8 +78,8 @@ class ProductBacklogTest {
     @Test
     void ensureThatReturnsFalseIfOneOfTheProductBacklogsIsNull() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog productBacklog = new ProductBacklog(code);
         ProductBacklog other = null;
         boolean expected = false;
 
@@ -99,8 +98,8 @@ class ProductBacklogTest {
     @Test
     void ensureSameProductBacklogEqualsItself() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog reference = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog reference = new ProductBacklog(code);
         ProductBacklog other = reference;
         boolean expected = true;
 
@@ -117,9 +116,9 @@ class ProductBacklogTest {
     @Test
     void ensureTwoInstancesWithSameIdAreEqual() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog reference = new ProductBacklog(pbId);
-        ProductBacklog other = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog reference = new ProductBacklog(code);
+        ProductBacklog other = new ProductBacklog(code);
         boolean expected = true;
 
         // Act
@@ -135,10 +134,10 @@ class ProductBacklogTest {
     @Test
     void ensureTwoInstancesWithDifferentIdsAreNotEqual() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        PbId otherPbId = mock(PbId.class);
-        ProductBacklog reference = new ProductBacklog(pbId);
-        ProductBacklog other = new ProductBacklog(otherPbId);
+        String code = "P001";
+        String otherCode = "P002";
+        ProductBacklog reference = new ProductBacklog(code);
+        ProductBacklog other = new ProductBacklog(otherCode);
         boolean expected = false;
 
         // Act
@@ -154,8 +153,8 @@ class ProductBacklogTest {
     @Test
     void ensureProductBacklogDoesNotEqualNull() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog reference = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog reference = new ProductBacklog(code);
         boolean expected = false;
 
         // Act
@@ -171,8 +170,8 @@ class ProductBacklogTest {
     @Test
     void ensureProductBacklogDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog reference = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog reference = new ProductBacklog(code);
         UsId other = mock(UsId.class);
         boolean expected = false;
 
@@ -191,10 +190,10 @@ class ProductBacklogTest {
     @Test
     void ensureTwoEqualProductBacklogInstancesHaveTheSameHashcode() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        PbId otherPbId = pbId;
-        ProductBacklog reference = new ProductBacklog(pbId);
-        ProductBacklog other = new ProductBacklog(otherPbId);
+        String code = "P001";
+        String otherCode = code;
+        ProductBacklog reference = new ProductBacklog(code);
+        ProductBacklog other = new ProductBacklog(otherCode);
         int expected = reference.hashCode();
 
         // Act
@@ -210,10 +209,10 @@ class ProductBacklogTest {
     @Test
     void ensureTwoDifferentProductBacklogInstancesHaveDifferentHashcode() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        PbId otherPbId = mock(PbId.class);
-        ProductBacklog reference = new ProductBacklog(pbId);
-        ProductBacklog other = new ProductBacklog(otherPbId);
+        String code = "P001";
+        String otherCode = "P002";
+        ProductBacklog reference = new ProductBacklog(code);
+        ProductBacklog other = new ProductBacklog(otherCode);
         int expected = reference.hashCode();
 
         // Act
@@ -231,8 +230,8 @@ class ProductBacklogTest {
     @Test
     void ensureProductBacklogReturnsAnEmptyListWhenThereAreNoUsIdInIt() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog productBacklog = new ProductBacklog(code);
         List<UsId> expected = new ArrayList<>();
 
         // Act
@@ -249,8 +248,8 @@ class ProductBacklogTest {
     @Test
     void ensureProductBacklogReturnsAListOfUserStoryIDsWhenThereAreUsIdInItAddedWithoutPriority() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog productBacklog = new ProductBacklog(code);
         List<UsId> expected = new ArrayList<>();
 
         UsId usIdOne = mock(UsId.class);
@@ -279,8 +278,8 @@ class ProductBacklogTest {
     @Test
     void ensureProductBacklogReturnsAListOfUserStoryIDsWhenThereAreUsIdInItAddedWithPriority() {
         // Arrange
-        PbId pbId = mock(PbId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        String code = "P001";
+        ProductBacklog productBacklog = new ProductBacklog(code);
         List<UsId> expected = new ArrayList<>();
 
         UsId usIdOne = mock(UsId.class);
@@ -312,10 +311,10 @@ class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToProductBacklog() {
         //Arrange
-        PbId pbId = mock(PbId.class);
+        String code = "P001";
         UsId usId = mock(UsId.class);
         UsId otherUsId = mock(UsId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        ProductBacklog productBacklog = new ProductBacklog(code);
         productBacklog.addUserStory(0, otherUsId);
 
         //Act
@@ -334,10 +333,10 @@ class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToTheEndOfTheProductBacklog() {
         //Arrange
-        PbId pbId = mock(PbId.class);
+        String code = "P001";
         UsId usId = mock(UsId.class);
         UsId otherUsId = mock(UsId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        ProductBacklog productBacklog = new ProductBacklog(code);
         productBacklog.addUserStory(0, otherUsId);
 
         //Act
@@ -354,10 +353,10 @@ class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsSuccessfullyAddedToTheProductBacklogWhenPriorityEqualsListSize() {
         //Arrange
-        PbId pbId = mock(PbId.class);
+        String code = "P001";
         UsId usId = mock(UsId.class);
         UsId otherUsId = mock(UsId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        ProductBacklog productBacklog = new ProductBacklog(code);
         productBacklog.addUserStory(0, otherUsId);
 
         //Act
@@ -374,9 +373,9 @@ class ProductBacklogTest {
     @Test
     void ensureThatUserStoryIsNotAddedToTheProductBacklogBecauseItIsAlreadyThere() {
         //Arrange
-        PbId pbId = mock(PbId.class);
+        String code = "P001";
         UsId usId = mock(UsId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        ProductBacklog productBacklog = new ProductBacklog(code);
         productBacklog.addUserStory(0, usId);
 
         //Act
@@ -396,10 +395,10 @@ class ProductBacklogTest {
         String expected = "This position doesn't exist, since it's" +
                 " bigger than the list of User Stories.";
 
-        PbId pbId = mock(PbId.class);
+        String code = "P001";
         UsId usId = mock(UsId.class);
         UsId otherUsId = mock(UsId.class);
-        ProductBacklog productBacklog = new ProductBacklog(pbId);
+        ProductBacklog productBacklog = new ProductBacklog(code);
         productBacklog.addUserStory(0, otherUsId);
 
         //Act

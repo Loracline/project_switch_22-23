@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +18,7 @@ class UsTextTest {
         String expected = "The user story text must not be null";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new UsText(null));
 
         //Assert
@@ -34,7 +35,7 @@ class UsTextTest {
         String expected = "The user story text must not be empty";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new UsText(""));
 
         //Assert
@@ -51,7 +52,7 @@ class UsTextTest {
         String expected = "The user story text must not be blank";
 
         //Act
-        IllegalArgumentException exception = assertThrowsExactly(IllegalArgumentException.class, () ->
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
                 new UsText(" "));
 
         //Assert

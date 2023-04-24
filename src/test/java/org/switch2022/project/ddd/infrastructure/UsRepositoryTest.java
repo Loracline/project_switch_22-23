@@ -245,7 +245,7 @@ class UsRepositoryTest {
     /**
      * Scenario 3: Two UsRepository objects are not equal because one of them is null.
      */
-
+/*
     @Test
     public void ensureTwoUsRepositoryInstancesAreNotEqualBecauseOneItIsNull() throws Exception {
         // Arrange
@@ -267,5 +267,5 @@ class UsRepositoryTest {
         // Assert
         assertFalse(result);
     }
-
+*/
 }

@@ -11,23 +11,17 @@ import java.util.List;
 
 public class ProductBacklog implements Entity<ProductBacklog> {
 
-    /**
-     * (In some cases, it may make sense to represent a value object as a string in an entity. For example, if the value
-     * object is a simple identifier or code that is used to look up data in a separate system, it may be sufficient to
-     * store it as a string in the entity.)
-     */
-    private final String productBacklogId;
+    private final PbId productBacklogId;
     private final List<UsId> userStories = new ArrayList<>();
 
     /**
      * Constructor.
      *
-     * @param productBacklogId the ID of the product backlog to be created.
+     * @param projectCode the ID of the product backlog to be created.
      */
-    protected ProductBacklog(final PbId productBacklogId) {
-        Validate.notNull(productBacklogId, "Product Backlog's ID can't be null.");
-
-        this.productBacklogId = productBacklogId.toString();
+    protected ProductBacklog(final String projectCode) {
+        Validate.notNull(projectCode, "Product Backlog's ID can't be null.");
+       this.productBacklogId = new PbId(projectCode);
     }
 
     /**

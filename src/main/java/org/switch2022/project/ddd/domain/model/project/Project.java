@@ -13,13 +13,14 @@ import java.util.List;
  * project typology and product backlog .
  * The project status attribute defaults to "Planned"
  */
+
 public class Project implements Entity<Project> {
 
     private final Code projectCode;
     private Budget budget;
     private Name projectName;
     private Description description;
-    private ProjectStatus projectStatus = ProjectStatus.PLANNED;
+    private ProjectStatus projectStatus;
     private NumberOfPlannedSprints numberOfPlannedSprints;
     private Period period;
     private SprintDuration sprintDuration;
@@ -30,10 +31,19 @@ public class Project implements Entity<Project> {
     private ProductBacklog productBacklog;
 
     /**
-     * Constructor: the constructor only has the attribute that defines it, in this case, the project code.
+     * Constructor: the constructor with relevant attributes for a project to be in a valid state.
      */
-    protected Project(final Code projectCode) {
-        this.projectCode = projectCode;
+    protected Project(Number projectNumber, Name projectName, Description description,
+                      BusinessSectorId businessSectorId, CustomerId customerId, ProjectTypologyId projectTypologyId,
+                      ProductBacklog productBacklog) {
+        this.projectCode = new Code(projectNumber);
+        this.projectStatus = ProjectStatus.PLANNED;
+        this.projectName = projectName;
+        this.description = description;
+        this.businessSectorId = businessSectorId;
+        this.customerId = customerId;
+        this.projectTypologyId = projectTypologyId;
+        this.productBacklog = productBacklog;
     }
 
     /**
@@ -84,7 +94,7 @@ public class Project implements Entity<Project> {
      *
      * @return a String with the code of the project.
      */
-    protected String getProjectCode() {
+    public String getProjectCode() {
         return this.projectCode.getCode();
     }
 
@@ -205,27 +215,6 @@ public class Project implements Entity<Project> {
     protected void setSprintDuration(int sprintDuration) {
         Utils.hasStatus(this.projectStatus, ProjectStatus.INCEPTION);
         this.sprintDuration = new SprintDuration(sprintDuration);
-    }
-
-    /**
-     * This method sets the relevant attributes for a project to be in a valid state.
-     *
-     * @param projectName            of a project.
-     * @param description            of a project.
-     * @param businessSectorId       of a project.
-     * @param customerId             of a project.
-     * @param projectTypologyId      of a project.
-     * @param iFactoryProductBacklog that creates the product backlog of a project.
-     */
-    protected void setValidProject(String projectName, String description, BusinessSectorId businessSectorId,
-                                   CustomerId customerId, ProjectTypologyId projectTypologyId,
-                                   IFactoryProductBacklog iFactoryProductBacklog) {
-        setName(projectName);
-        setDescription(description);
-        setBusinessSector(businessSectorId);
-        setCustomer(customerId);
-        setTypology(projectTypologyId);
-        setProductBacklog(iFactoryProductBacklog);
     }
 
     /**
