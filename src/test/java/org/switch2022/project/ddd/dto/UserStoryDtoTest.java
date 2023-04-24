@@ -87,12 +87,8 @@ class UserStoryDtoTest {
         assertEquals(expected, result);
     }
 
-
-    /*
-      METHOD hashCode()
-     */
-
     /**
+     * METHOD hashCode()
      * Scenario 1: Two UserStoryDto objects are the same.
      */
     @Test

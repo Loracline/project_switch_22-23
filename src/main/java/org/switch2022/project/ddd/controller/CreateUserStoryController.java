@@ -1,20 +1,17 @@
 package org.switch2022.project.ddd.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+
 import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
-import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.exceptions.UserStoryAlreadyExistException;
 import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.switch2022.project.ddd.utils.Validate;
 
-@Controller
-public class CreateUsController {
 
 public class CreateUserStoryController {
     /**
@@ -26,13 +23,14 @@ public class CreateUserStoryController {
      * creation data, and passes it to the domain model through the appropriate services. It then returns the
      * result of the operation back to the UI, indicating whether the user story was successfully created or not.
      */
-    @Autowired
+
     private UsService usService;
 
     /**
      * Constructor
      */
-    public CreateUsController() {
+    public void CreateUsController(UsService usService) {
+        this.usService = usService;
     }
 
     /**
@@ -41,11 +39,11 @@ public class CreateUserStoryController {
      * @param projectCodeOfInterest the code string that represents the project in which the user story will be created
      * @param userStoryCreationDto  the UserStoryCreationDto that represents the data for creating the user story
      * @return true if the user story is created and added to the product backlog successfully.
-     * @throws  if either of the input parameters is null.
+     * @throws if either of the input parameters is null.
      */
 
 
-    public boolean createUs(String projectCodeOfInterest, UserStoryCreationDto userStoryCreationDto) {
+    public boolean createUs(String projectCodeOfInterest, UserStoryCreationDto userStoryCreationDto) throws Exception {
         Validate.notNullOrEmptyOrBlank(projectCodeOfInterest, "Project Code Of Interest");
         Validate.notNull(userStoryCreationDto, "User Story Creation Dto ");
 
@@ -56,9 +54,9 @@ public class CreateUserStoryController {
         UsText userStoryText = new UsText(userStoryCreationDto.userStoryText);
         Actor actor = new Actor(userStoryCreationDto.actor);
         int priority = userStoryCreationDto.priority;
-        List <AcceptanceCriteria> acceptanceCriteria = convertListOfStringsToAnAcceptanceCriteriaList(userStoryCreationDto);
+        List<AcceptanceCriteria> acceptanceCriteria = convertListOfStringsToAnAcceptanceCriteriaList(userStoryCreationDto);
 
-        UsId usId = usService.createUs(userStoryNumber, userStoryText, actor, priority, projectCode);
+        UsId usId = usService.createUs(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
         try {
             usService.addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
         } catch (UserStoryAlreadyExistException usaee) {
@@ -71,13 +69,14 @@ public class CreateUserStoryController {
     /**
      * This method receives a UserStoryCreationDto and to convert your list of "acceptCriteria" strings into a list<br>
      * of objects of type AcceptanceCriteria.
-     * @param userStoryCreationDto
+     *
+     * @param userStoryCreationDto that represents the data for creating the user story
      * @return a list of objects of type AcceptanceCriteria.
      */
     private List<AcceptanceCriteria> convertListOfStringsToAnAcceptanceCriteriaList(UserStoryCreationDto userStoryCreationDto) {
 
         List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
-        for (int i = 0; i <userStoryCreationDto.acceptanceCriteria.size(); i++){
+        for (int i = 0; i < userStoryCreationDto.acceptanceCriteria.size(); i++) {
             AcceptanceCriteria acceptanceCriteriaElement = new AcceptanceCriteria(userStoryCreationDto.acceptanceCriteria.get(i));
             acceptanceCriteria.add(acceptanceCriteriaElement);
         }

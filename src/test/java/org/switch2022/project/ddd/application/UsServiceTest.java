@@ -16,9 +16,13 @@ import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 
+import java.util.ArrayList;
 import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @AutoConfigureMockMvc
@@ -128,14 +132,14 @@ class UsServiceTest {
 
         UserStory userStoryDouble = mock(UserStory.class);
         Code projectCode = new Code(1);
-        when(factoryUserStory.createUserStory(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority , acceptanceCriteriaDouble,
+        when(factoryUserStory.createUserStory(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority, acceptanceCriteriaDouble,
                 projectCode)).thenReturn(userStoryDouble);
         when(userStoryDouble.getUsId()).thenReturn("P001_US003");
         when(userStoryDouble.getUsNumber()).thenReturn("US003");
 
         usRepository.add(userStoryDouble);
 
-        UsId expected = new UsId("P001","US003");
+        UsId expected = new UsId("P001", "US003");
 
         // Act
         UsId result = usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority,
@@ -146,7 +150,7 @@ class UsServiceTest {
     }
 
 
-   /**
+    /**
      * Scenario 02: verify if a userStory is not created and its ID not returned.
      * <p>
      * Expected result: exception is thrown.
@@ -294,7 +298,7 @@ class UsServiceTest {
 
     //INTEGRATION TESTS
 
-   /* *//**
+    /* *//**
      * Method: createUs(userStoryCreationDto, projectCode).
      * Creates a userStory and return the userStoryId.
      * <p>
@@ -318,7 +322,7 @@ class UsServiceTest {
     }*/
     /*
 
-    *//**
+     *//**
      * Scenario 02: verify if a userStory is not created when already exist.
      * <p>
      * Expected result: exception is thrown.

@@ -728,35 +728,59 @@ class UserStoryTest {
         assertFalse(result);
     }
 
-//    /**
-//     * METHOD hasUsId
-//     * Scenario 01: verify if the UserStory has the given usId.
-//     */
-//    @Test
-//    void ensureThatUserStoryHasTheGivenUsId(){
-//        // Arrange
-//        Code projectCodeDouble = mock(Code.class);
-//        UsNumber usNumberDouble = mock(UsNumber.class);
-//        Actor actorDouble = mock(Actor.class);
-//        UsText usTextDouble = mock (UsText.class);
-//        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
-//        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
-//        acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
-//        when(projectCodeDouble.getCode()).thenReturn("p001");
-//        when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
-//
-//        UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
-//                acceptanceCriteriaDouble);
-//        when(userStory.getUsId()).thenReturn("p001_us001");
-//
-//        UsId usIdToVerify = mock(UsId.class);
-//        when(usIdToVerify.getUserStoryId()).thenReturn("p001_us001");
-//        //Act
-//        boolean result = userStory.hasUsId(usIdToVerify);
-//
-//        //Assert
-//        assertTrue(result);
-//    }
+    /**
+     * METHOD hasUsId
+     * Scenario 01: verify if the UserStory has the given usId.
+     */
+    @Test
+    void ensureThatUserStoryHasTheGivenUsId(){
+        // Arrange
+        Code projectCodeDouble = mock(Code.class);
+        UsNumber usNumberDouble = mock(UsNumber.class);
+        Actor actorDouble = mock(Actor.class);
+        UsText usTextDouble = mock (UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+        acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
+        when(projectCodeDouble.getCode()).thenReturn("p001");
+        when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
+
+        UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
+                acceptanceCriteriaDouble);
+        UsId usIdToVerify = new UsId(projectCodeDouble.getCode(), usNumberDouble.getUserStoryNumber() );
+
+        //Ac
+        boolean result= userStory.hasUsId(usIdToVerify);
+
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * Scenario 02: check that the User Story does not have the given Id.
+     * */
+    @Test
+    void ensureThatUserStoryDoesNotHaveTheGivenUsId(){
+        // Arrange
+        Code projectCodeDouble = mock(Code.class);
+        UsNumber usNumberDouble = mock(UsNumber.class);
+        Actor actorDouble = mock(Actor.class);
+        UsText usTextDouble = mock (UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+        acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
+        when(projectCodeDouble.getCode()).thenReturn("p001");
+        when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
+
+        UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
+                acceptanceCriteriaDouble);
+        UsId usIdToVerify = mock (UsId.class);
+
+        //Ac
+        boolean result= userStory.hasUsId(usIdToVerify);
+
+        //Assert
+        assertFalse(result);
+    }
 
 
     /*
