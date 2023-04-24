@@ -2,6 +2,13 @@ import * as React from 'react';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
+/**
+ * Component that allows to create alert messages.
+ *
+ * Message can be of successful/unsuccessful action.
+ * @returns the alert message correspondent to the action performed.
+ */
+
 function AlertMessages() {
     const handleAlertClickSuccessful = () => {
         alert('Success!');
