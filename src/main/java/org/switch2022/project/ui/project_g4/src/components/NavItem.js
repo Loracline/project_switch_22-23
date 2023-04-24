@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * Represents a navigation item in a menu.
  * @param item the navigation item.
