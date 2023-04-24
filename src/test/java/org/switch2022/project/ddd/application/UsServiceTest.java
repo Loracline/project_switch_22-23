@@ -139,14 +139,20 @@ class UsServiceTest {
 
         usRepository.add(userStoryDouble);
 
-        UsId expected = new UsId("P001", "US003");
+        Project projectDouble = mock(Project.class);
+        Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
+        when(projectRepository.getProjectByCode(projectCode)).thenReturn(optionalProject);
+        UsId usId = new UsId("P001","US003");
+        when(projectDouble.addUserStory(priority, usId)).thenReturn(true);
+
+        usRepository.add(userStoryDouble);
 
         // Act
-        UsId result = usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority,
+        boolean result = usService.createUs(userStoryNumberDouble, userStoryTextDouble, actorDouble, priority,
                 acceptanceCriteriaDouble, projectCode);
 
         // Assert
-        assertEquals(expected, result);
+        assertTrue(result);
     }
 
 

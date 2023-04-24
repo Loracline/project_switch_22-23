@@ -39,7 +39,7 @@ public class CreateUserStoryController {
      * @param projectCodeOfInterest the code string that represents the project in which the user story will be created
      * @param userStoryCreationDto  the UserStoryCreationDto that represents the data for creating the user story
      * @return true if the user story is created and added to the product backlog successfully.
-     * @throws if either of the input parameters is null.
+     * @throws IllegalArgumentException if either of the input parameters is null.
      */
 
 
@@ -56,14 +56,7 @@ public class CreateUserStoryController {
         int priority = userStoryCreationDto.priority;
         List<AcceptanceCriteria> acceptanceCriteria = convertListOfStringsToAnAcceptanceCriteriaList(userStoryCreationDto);
 
-        UsId usId = usService.createUs(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
-        try {
-            usService.addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
-        } catch (UserStoryAlreadyExistException usaee) {
-            usService.deleteUs(usId);
-            throw usaee;
-        }
-        return true;
+        return usService.createUs(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
     }
 
     /**

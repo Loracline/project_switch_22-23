@@ -30,7 +30,7 @@ public class UsService {
     }
 
     /**
-     * This method returns the ID of the userStory newly created or throws an exception if userStory
+     * This method creates a userStory and adds it to the product backlog or throws an exception if userStory
      * not created.
      *
      * @param userStoryNumber    the number of the userStory.
@@ -39,14 +39,21 @@ public class UsService {
      * @param priority           the priority of the userStory.
      * @param acceptanceCriteria the list of acceptance criteria.
      * @param projectCode        will be associated with the newly created userStory.
-     * @return userStoryId from the newly created userStory.
+     * @return true if a suer story is succesfully created and added to the product backlog, and false otherwise.
      */
 
-    public UsId createUs(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority, List<AcceptanceCriteria> acceptanceCriteria, Code projectCode) throws Exception {
+    public boolean createUs(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority,
+                      List<AcceptanceCriteria> acceptanceCriteria, Code projectCode) throws Exception {
         final UserStory userStory = factoryUserStory.createUserStory(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
         usRepository.add(userStory);
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
-        return usId;
+        try {
+            addUsToProductBacklog(usId, projectCode, priority);
+        } catch (UserStoryAlreadyExistException usaee) {
+            deleteUs(usId);
+            throw usaee;
+        }
+        return true;
     }
 
     /**
