@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class CreateUserStoryControllerTest {
+class CreateCreateUserStoryControllerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running
      * the tests below.

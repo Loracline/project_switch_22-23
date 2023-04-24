@@ -28,3 +28,10 @@ US019 - As Project Manager, I want to create a sprint.
 US020 - As Team Member, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
 US021 - As Team Member, I want to estimate the effort of a user story in a sprint, during the sprint planning ceremony.
 US022 - As Team Member, I want to view the Scrum Board of current sprint.
+
+Sprint #5:
+US023 - As an Administrator, I want to create a Project in the web UI.
+US024 - As an Administrator, I want list all Project in the web UI.
+US025 - As a Product Owner, I want to create a user story and add it to the Product Backlog using the web UI.
+US026 - As a PO/SM/Team Member, I want to consult the current Product Backlog in the web UI.
+US027 - As a Project Manager, I want to create a sprint in the web UI.

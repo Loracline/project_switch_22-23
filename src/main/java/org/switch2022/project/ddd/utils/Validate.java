@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.utils;
 
 import org.springframework.stereotype.Component;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.time.LocalDate;
 @Component
@@ -33,11 +34,11 @@ public class Validate {
      *
      * @param string  the string to check
      * @param message the exception message if invalid
-     * @throws IllegalArgumentException if the string is empty
+     * @throws InvalidInputException if the string is empty
      */
     public static void notEmpty(String string, String message) {
         if (string == null || string.length() == 0) {
-            throw new IllegalArgumentException(message);
+            throw new InvalidInputException(message);
         }
     }
 
@@ -50,11 +51,11 @@ public class Validate {
      *
      * @param string  the string to check
      * @param message the exception message if invalid
-     * @throws IllegalArgumentException if the string is blank
+     * @throws InvalidInputException if the string is blank
      */
     public static void notBlank(String string, String message) {
         if (string == null || string.isBlank()) {
-            throw new IllegalArgumentException(message);
+            throw new InvalidInputException(message);
         }
     }
 
@@ -67,7 +68,7 @@ public class Validate {
      *
      * @param string       the string to check.
      * @param argumentName the name of the argument to check.
-     * @throws IllegalArgumentException if the string is null or empty or blank.
+     * @throws InvalidInputException if the string is null or empty or blank.
      */
     public static void notNullOrEmptyOrBlank(String string, String argumentName) {
         notNull(string, String.format("The %s must not be null", argumentName));
@@ -85,11 +86,11 @@ public class Validate {
      *
      * @param number       the number to check.
      * @param argumentName the name of the argument to check.
-     * @throws IllegalArgumentException if the number is negative.
+     * @throws InvalidInputException if the number is negative.
      */
     public static <T extends Number> void notNegative(T number, String argumentName) {
         if (number.doubleValue() < 0) {
-            throw new IllegalArgumentException(String.format("The %s must not be negative",
+            throw new InvalidInputException(String.format("The %s must not be negative",
                     argumentName));
         }
     }
@@ -105,7 +106,7 @@ public class Validate {
      * @param upperLimit   the upper limit of the interval.
      * @param value the number to check.
      * @param argumentName the name of the argument to check.
-     * @throws IllegalArgumentException if the number is outside the interval
+     * @throws InvalidInputException if the number is outside the interval
      */
     public static <T extends Number> void withinInterval(T lowerLimit, T upperLimit,
                                                          T value, String argumentName) {
@@ -114,7 +115,7 @@ public class Validate {
         notNull(value, "The value to check must not be null");
 
         if (value.doubleValue() < lowerLimit.doubleValue() || value.doubleValue() > upperLimit.doubleValue()) {
-            throw new IllegalArgumentException(String.format("The %s must be between %s and %s",
+            throw new InvalidInputException(String.format("The %s must be between %s and %s",
                     argumentName,
                     lowerLimit, upperLimit));
         }
@@ -130,11 +131,11 @@ public class Validate {
      *
      * @param object  the object to check
      * @param message the exception message if invalid
-     * @throws IllegalArgumentException if the object is null
+     * @throws InvalidInputException if the object is null
      */
     public static void notNull(Object object, String message) {
         if (object == null) {
-            throw new IllegalArgumentException(message);
+            throw new InvalidInputException(message);
         }
     }
 
@@ -149,11 +150,11 @@ public class Validate {
      *
      * @param dateOfInterest the date to check.
      * @param dateToCompare  the data to compare to.
-     * @throws IllegalArgumentException if the date to check is before the date to compare to.
+     * @throws InvalidInputException if the date to check is before the date to compare to.
      */
     public static void isAfter(LocalDate dateOfInterest, LocalDate dateToCompare) {
         if (dateOfInterest.isBefore(dateToCompare)) {
-            throw new IllegalArgumentException(String.format("The date must be after %s",
+            throw new InvalidInputException(String.format("The date must be after %s",
                     dateToCompare));
         }
     }

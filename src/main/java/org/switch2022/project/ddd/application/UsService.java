@@ -7,9 +7,10 @@ import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
+import org.switch2022.project.ddd.exceptions.UserStoryAlreadyExistException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,6 @@ public class UsService {
     private IProjectRepository projectRepository;
     @Autowired
      private IFactoryUserStory factoryUserStory;
-    @Autowired
-    private UserStoryMapper userStoryMapper;
 
     public UsService() {
     }
@@ -45,7 +44,7 @@ public class UsService {
      * @return userStoryId from the newly created userStory.
      */
 
-    public UsId createUs(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority,List <AcceptanceCriteria> acceptanceCriteria, Code projectCode) throws Exception {
+    public UsId createUs(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority,List <AcceptanceCriteria> acceptanceCriteria, Code projectCode) {
         final UserStory userStory = factoryUserStory.createUserStory(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
         usRepository.add(userStory);
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
@@ -58,29 +57,9 @@ public class UsService {
      * @param usId of userStory to be deleted from the repository.
      */
 
-    public boolean deleteUs(UsId usId) throws Exception {
+    public boolean deleteUs(UsId usId){
         usRepository.delete(usId);
         return true;
-    }
-
-    /**
-     * Requests a list of userStories with the status planned.
-     *
-     * @param usId ID of the userStory.
-     * @return a list of all userStoriesDto with the status planned.
-     */
-
-    public List<UserStoryDto> requestAllPlannedUs(List<UsId> usId) {
-        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
-        List<UserStoryDto> userStoriesDto = new ArrayList<>();
-        if (!userStories.isEmpty()) {
-            for (UserStory userStory : userStories) {
-                if (userStory.hasStatus(Status.PLANNED)) {
-                    userStoriesDto.add(userStoryMapper.userStoryToDto(userStory));
-                }
-            }
-        }
-        return userStoriesDto;
     }
 
     /**
@@ -90,11 +69,11 @@ public class UsService {
      * @param projectCode of the project where the user ID will be added.
      * @param priority    that the ID will have in the ProductBacklog.
      * @return true if the ID is successfully added. otherwise it will return false.
-     * @throws Exception if the priority is out og bounds, if the id is already in the ProductBacklog
-     *                   and if the projectCode doesn't match any Project in the repository.
+     * @throws ProjectNotFoundException if the projectCode doesn't match any Project in the repository.
+     * @throws UserStoryAlreadyExistException if the User Story is already in the Product Backlog.
      */
 
-    public boolean addUsToProductBacklog(UsId usId, Code projectCode, int priority) throws Exception {
+    public boolean addUsToProductBacklog(UsId usId, Code projectCode, int priority) {
 
         Optional<Project> projectOptional = projectRepository.getProjectByCode(projectCode);
 
@@ -103,10 +82,10 @@ public class UsService {
         if (projectOptional.isPresent()) {
             project = projectOptional.get();
             if (!project.addUserStory(priority, usId)) {
-                throw new Exception("The User Story is already in the Product Backlog");
+                throw new UserStoryAlreadyExistException ("The User Story is already in the Product Backlog");
             }
         } else {
-            throw new Exception("No project with that code");
+            throw new ProjectNotFoundException("No project with that code");
         }
         project.addUserStory(priority, usId);
         return true;
