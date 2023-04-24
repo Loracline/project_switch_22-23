@@ -1,10 +1,9 @@
 package org.switch2022.project.ddd.domain.model.user_story;
 
-import org.switch2022.project.ddd.domain.value_object.Actor;
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.UsNumber;
-import org.switch2022.project.ddd.domain.value_object.UsText;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+
+import java.util.List;
 
 public interface IFactoryUserStory {
     /**
@@ -14,9 +13,11 @@ public interface IFactoryUserStory {
      * @param userStoryText the description of the userStory.
      * @param actor the actor of the userStory.
      * @param priority the priority of the userStory.
+     * @param acceptanceCriteria the list of acceptance criteria.
      * @param projectCode          the code of the Project where the User Story belongs to.
      * @return the newly created User Story object.
      */
     UserStory createUserStory(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority,
+                              List<AcceptanceCriteria> acceptanceCriteria,
                               Code projectCode);
 }
