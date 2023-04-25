@@ -10,7 +10,6 @@ import org.switch2022.project.ddd.exceptions.UserStoryAlreadyExistException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Class UsRepository allows to manage userStories records.
@@ -52,23 +51,6 @@ public class UsRepository implements IUsRepository {
     @Override
     public int hashCode() {
         return Objects.hash(userStories);
-    }
-
-    /**
-     * This method is used to return an optional that can contain a user story with the usId passed by parameter
-     * @param usId of the requested User Story
-     * @return optional that can contain the user story.
-     */
-    public Optional<UserStory> getUserStory(UsId usId){
-        int i = 0;
-        UserStory userStoryRequest = null;
-        while (i < userStories.size() && userStoryRequest == null) {
-            if (userStories.get(i).hasUsId(usId)) {
-                userStoryRequest = userStories.get(i);
-            }
-            i++;
-        }
-        return Optional.ofNullable(userStoryRequest);
     }
 
     /**

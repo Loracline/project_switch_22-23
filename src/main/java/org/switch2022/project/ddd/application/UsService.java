@@ -46,7 +46,8 @@ public class UsService {
 
     public boolean createUs(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority,
                       List<AcceptanceCriteria> acceptanceCriteria, Code projectCode) throws Exception {
-        final UserStory userStory = factoryUserStory.createUserStory(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
+        final UserStory userStory = factoryUserStory.createUserStory(userStoryNumber, userStoryText,
+                actor, priority, acceptanceCriteria, projectCode);
         usRepository.add(userStory);
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
         try {
