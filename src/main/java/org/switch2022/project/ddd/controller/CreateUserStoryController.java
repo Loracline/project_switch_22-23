@@ -1,10 +1,10 @@
 package org.switch2022.project.ddd.controller;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
-import org.switch2022.project.ddd.exceptions.UserStoryAlreadyExistException;
 import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.switch2022.project.ddd.utils.Validate;
 
-
+@Controller
 public class CreateUserStoryController {
     /**
      * The CreateUserStoryController class serves as an intermediary between the user interface (UI) and the
@@ -24,13 +24,13 @@ public class CreateUserStoryController {
      * result of the operation back to the UI, indicating whether the user story was successfully created or not.
      */
 
+    @Autowired
     private UsService usService;
 
     /**
      * Constructor
      */
-    public void CreateUsController(UsService usService) {
-        this.usService = usService;
+    public CreateUserStoryController() {
     }
 
     /**
@@ -41,11 +41,9 @@ public class CreateUserStoryController {
      * @return true if the user story is created and added to the product backlog successfully.
      * @throws IllegalArgumentException if either of the input parameters is null.
      */
-
-
     public boolean createUs(String projectCodeOfInterest, UserStoryCreationDto userStoryCreationDto) throws Exception {
         Validate.notNullOrEmptyOrBlank(projectCodeOfInterest, "Project Code Of Interest");
-        Validate.notNull(userStoryCreationDto, "User Story Creation Dto ");
+        Validate.notNull(userStoryCreationDto, "User Story Creation Dto");
 
         int codeNumber = Utils.getIntFromAlphanumericString(projectCodeOfInterest, "P");
         Code projectCode = new Code(codeNumber);
