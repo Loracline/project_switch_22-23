@@ -1,23 +1,19 @@
-import React, {useContext} from 'react';
-import AppContext from "../context/AppContext";
+import React from 'react';
 
 /**
- * Component that allows to create a table body.
- *
- * 'data' fetched from AppProvider to be inserted in the table body.
- * @returns the body of a table with the data.
- */
+ * @param body array passed to create table body
+ * This component takes in an array of body as a prop and maps over the array to create a td element for each column.
+ * @returns {JSX.Element} a body created accordingly with the props passed.
+ * */
 
-function TableBody() {
-    const { state } = useContext(AppContext);
-    const { data } = state;
+function TableBody({ body }) {
     return (
         <tbody>
-        {data.map((item, index) => (
+        {body.map((item, index) => (
             <tr key={index}>
-                <td>{item.name}</td>
-                <td>{item.age}</td>
-                <td>{item.gender}</td>
+                {Object.values(item).map((value, i) => (
+                    <td key={i}>{value}</td>
+                ))}
             </tr>
         ))}
         </tbody>
