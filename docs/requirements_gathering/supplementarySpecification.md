@@ -4,6 +4,7 @@
 |---------|--------------|-----------------------------|-------------------------------------------------------------------------------------|
 | v.01    | Dec 07, 2022 | First draft. To be refined. | João Serra, Cristiana Moreira, Bárbara Oliveira, Margarida Ferreira, Sofia Oliveira |
 | v.02    | Dec 12, 2022 | Update and refine.          | Caroline Dantas, Jussara Oliveira                                                   |
+| v.03    | Apr 26, 2023 | Update - Interface.         | Bárbara Oliveira                                                                    |
 
 
 
@@ -51,7 +52,7 @@ If there is a period of inactivity of more than 30 minutes, the session should b
 
 ## Interface
 
-*Not defined*
+The user interface to the system should be a web application developed using ReactJS.
 
 ## Operations
 

@@ -13,6 +13,7 @@
 | v.07        | Feb 21, 2023 | Addition of new terms with their definitions.                 | Caroline Silva     |
 | v.08        | Mar 07, 2023 | Update with new terms presented on sprint #3                  | Mariana Zancheta   |
 | v.09        | Apr 11, 2023 | Update with new terms presented on sprint #4                  | João Magalhães     |
+| v.10        | Apr 26, 2023 | Update with new terms presented on sprint #5                  | Bárbara Oliveira   |
 
 
 ## Definitions
@@ -158,7 +159,7 @@
 | User Account                    | See: Account.                                                                                                                                                                                                                                                         | Account                        |
 | User Experience                 | The feeling an end-user experiences when using the application.                                                                                                                                                                                                       |                                |
 | User Story ID                   | The junction of User Story Number with Project Code.                                                                                                                                                                                                                  |                                |
-| User Interface                  | The point of interaction of an end-user with the application.                                                                                                                                                                                                         |                                |
+| User Interface                  | The point of interaction of an end-user with the application.                                                                                                                                                                                                         | Web UI                         |
 | User Profile                    | See: Profile.                                                                                                                                                                                                                                                         | Profile                        |
 | User Story                      | See: US.                                                                                                                                                                                                                                                              | US                             |
 | User Story Effort Estimate      | See: US Effort Estimate.                                                                                                                                                                                                                                              | US Effort Estimate             |
