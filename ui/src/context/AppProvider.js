@@ -19,7 +19,7 @@ const menu = [
 
 const nav = {
     selectedMenu:menu[0],
-    menus: menu,
+    menu: menu,
 }
 
 const AppProvider = ({children}) => {
@@ -82,7 +82,6 @@ const AppProvider = ({children}) => {
         headers,
         bodies
     }
-
 
     const [state, dispatch] = useReducer(appReducer, initialState);
 

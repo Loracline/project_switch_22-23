@@ -1,4 +1,4 @@
-import {CREATE_USER_STORY} from "./Actions";
+import {CREATE_USER_STORY, SELECT_MENU} from "./Actions";
 
 /**
  Reducer function that updates the app state based on the dispatched actions.
@@ -12,6 +12,14 @@ const reducer = (state, action) => {
         case CREATE_USER_STORY:
             //to be updated with proper implementation
             return;
+        case SELECT_MENU:
+            const key = action.payload.key;
+            const {nav} = state;
+            const menu = nav.menu.find((item) => (item.key === key));
+            const newNav = {...nav, selectedMenu: menu};
+            return {
+                ...state, nav: newNav,
+            };
         default:
             return state;
     }
