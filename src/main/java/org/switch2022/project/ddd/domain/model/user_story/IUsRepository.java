@@ -37,5 +37,4 @@ public interface IUsRepository {
 
     List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId);
 
-     Optional<UserStory> getUserStory(UsId usId);
 }

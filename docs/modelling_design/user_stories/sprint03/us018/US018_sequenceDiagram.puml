@@ -11,12 +11,13 @@ participant ":GetProductBacklogUI" as ui
 participant ":GetProductBacklogController" as controller
 participant ":ProjectService" as pservice
 participant ":ProjectRepository" as prepo
-participant ":Project" as project
+participant "project:Project" as project
 participant ":ProductBacklog" as backlog
 participant ":UsService" as uservice
 participant ":UsRepository" as usrep
-participant "userStoriesDto"
 participant ":userStoryMapper" as usmapper
+participant ":userStoriesDto" as userStoriesDto
+participant "userStoryDto:UserStoryDto" as userStoryDto
 
 
 
@@ -28,7 +29,9 @@ controller -> pservice: getProductBacklog(code)
 activate pservice
 pservice -> prepo: getProjectByCode(code)
 activate prepo
-prepo -> project: getProductBacklog()
+prepo --> pservice : project
+deactivate prepo
+pservice -> project: getProductBacklog()
 activate project
 project -> backlog: getUserStories()
 activate backlog
@@ -37,29 +40,35 @@ deactivate backlog
 project --> prepo: usIds
 deactivate project
 prepo --> pservice: usIds
-deactivate prepo
-pservice --> controller: usIds
-deactivate pservice
-controller -> uservice : requestAllPlannedUs(usIds)
-activate uservice
-uservice -> usrep : getListOfUsWithMatchingIds(usIds)
-activate usrep
-usrep --> uservice : userStories
-deactivate usrep
-create "userStoriesDto"
-uservice --> userStoriesDto: create ()
-loop for each userStory in userStories
-uservice -> usmapper:  userStoryToDto(userStory)
-activate usmapper
-usmapper --> uservice : userStoryDto
-deactivate usmapper
-uservice -> "userStoriesDto": add(userStoryDto)
-activate "userStoriesDto"
-deactivate "userStoriesDto"
-end loop
 
-uservice --> controller: userStoriesDto
+
+pservice -> pservice : requestAllPlannedUserStories(usIds)
+
+pservice -> usrep : getListOfUsWithMatchingIds(usIds)
+activate usrep
+usrep --> pservice : userStories
+deactivate usrep
+pservice --> controller : userStories
+deactivate pservice
+controller -> usmapper: userStoryToDtoList(userStories)
+activate usmapper
+create "userStoriesDto"
+usmapper --> userStoriesDto: create ()
+loop for each userStory in userStories
+usmapper -> userStoryDto:  userStoryToDto(userStory)
+activate userStoryDto
+userStoryDto --> usmapper : userStoryDto
+deactivate userStoryDto
+
+usmapper -> userStoriesDto: add(userStoryDto)
+
+
+end loop
+usmapper --> controller :userStoriesDto
+deactivate usmapper
+
 deactivate uservice
+deactivate pservice
 controller --> ui : userStoriesDto
 deactivate controller
 

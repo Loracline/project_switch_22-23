@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
@@ -18,6 +19,7 @@ import java.util.Optional;
  * Class UsService allows to create a new userStory.
  */
 
+@Service
 public class UsService {
     @Autowired
     private IUsRepository usRepository;
@@ -44,7 +46,8 @@ public class UsService {
 
     public boolean createUs(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority,
                       List<AcceptanceCriteria> acceptanceCriteria, Code projectCode) throws Exception {
-        final UserStory userStory = factoryUserStory.createUserStory(userStoryNumber, userStoryText, actor, priority, acceptanceCriteria, projectCode);
+        final UserStory userStory = factoryUserStory.createUserStory(userStoryNumber, userStoryText,
+                actor, priority, acceptanceCriteria, projectCode);
         usRepository.add(userStory);
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
         try {

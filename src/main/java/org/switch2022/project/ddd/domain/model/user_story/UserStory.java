@@ -20,17 +20,18 @@ public class UserStory implements Entity<UserStory> {
      * Attributes
      */
     private final UsId usId;
+    private final List<AcceptanceCriteria> acceptanceCriteria;
     private UsNumber usNumber;
     private UsText usText;
     private Status status;
-    private final List<AcceptanceCriteria> acceptanceCriteria;
 
     /**
      * Constructor
      * It creates an userStory using its identifier: usId  and your minimals attributs.
      * Attributs: usNumber, actor, usText, accptaneCriteria.
      */
-    protected UserStory(Code projectCode, UsNumber usNumber, Actor actor, UsText usText, List<AcceptanceCriteria> acceptanceCriteria) {
+    protected UserStory(Code projectCode, UsNumber usNumber, Actor actor, UsText usText,
+                        List<AcceptanceCriteria> acceptanceCriteria) {
         Validate.notNull(projectCode, "User Story's project code can't be null.");
         Validate.notNull(usNumber, "User Story's User Story Number can't be null.");
         Validate.notNull(actor, "User Story's actor can't be null.");

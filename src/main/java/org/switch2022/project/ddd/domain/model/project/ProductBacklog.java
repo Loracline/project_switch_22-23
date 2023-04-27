@@ -21,15 +21,17 @@ public class ProductBacklog implements Entity<ProductBacklog> {
      */
     protected ProductBacklog(final String projectCode) {
         Validate.notNull(projectCode, "Product Backlog's ID can't be null.");
-       this.productBacklogId = new PbId(projectCode);
+        this.productBacklogId = new PbId(projectCode);
     }
 
     /**
-     * This method checks if two instances of ProductBacklog are equal by comparing the value of the attribute product
+     * This method checks if two instances of ProductBacklog are equal by comparing the value of
+     * the attribute product
      * backlog id.
      *
      * @param other ProductBacklog instance to compare with.
-     * @return <code>true</code> if the two have the same attribute value, and <code>false</code> otherwise.
+     * @return <code>true</code> if the two have the same attribute value, and <code>false</code>
+     * otherwise.
      */
     @Override
     public boolean sameIdentityAs(ProductBacklog other) {
@@ -69,7 +71,8 @@ public class ProductBacklog implements Entity<ProductBacklog> {
     }
 
     /**
-     * This method returns an unmodifiable view of the user stories in the product backlog. The returned list is a
+     * This method returns an unmodifiable view of the user stories in the product backlog. The
+     * returned list is a
      * read-only view of the user stories stored in the product backlog.
      *
      * @return an unmodifiable view of the user stories in the product backlog.

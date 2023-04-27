@@ -10,19 +10,13 @@ import Stack from '@mui/material/Stack';
  */
 
 function AlertMessages() {
-    const handleAlertClickSuccessful = () => {
-        alert('Success!');
-    };
-    const handleAlertClickUnsuccessful = () => {
-        alert('Error!');
-    };
     return (
         <div>
             <Stack sx={{width: '100%'}} spacing={2}>
-                <Alert variant="filled" severity="success" onClick={handleAlertClickSuccessful}>
+                <Alert variant="filled" severity="success">
                     This is a successful action!
                 </Alert>
-                <Alert variant="filled" severity="error" onClick={handleAlertClickUnsuccessful}>
+                <Alert variant="filled" severity="error">
                     Oops! Something went wrong. Please try again later.
                 </Alert>
             </Stack>
