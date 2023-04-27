@@ -6,7 +6,7 @@ import React from 'react';
  * @param handleTextChange prop is a function that gets called whenever the text area's value changes.
  * @param htmlFor attribute to associate the label element with the imput element.
  */
-const ImputText = ({title, handleTextChange, contentOfImputText}) => {
+const InputText = ({title, handleTextChange, contentOfImputText}) => {
     return (
         <>
             <label htmlFor="myInputText"> {title} </label>
@@ -22,4 +22,4 @@ const ImputText = ({title, handleTextChange, contentOfImputText}) => {
     )
 }
 
-export default ImputText;
+export default InputText;

@@ -11,18 +11,40 @@ import appReducer from './Reducer';
  */
 
 const AppProvider = ({children}) => {
-    const initialState = {
-        //this is just a dummy initial state, needs to be updated with proper implementation
-        userStories: [],
-    }
 
+    const headers = [
+        "US ID",
+        "US Description",
+        "US Status"
+    ]
+
+    const bodies = [
+        {
+            USID: "US001",
+            UsDescription: "I want to create a profile",
+            UsStatus: "Planned"
+        },
+        {
+            USID: "US002",
+            UsDescription: "I want to create a project",
+            UsStatus: "Planned"
+        },
+        {
+            USID: "US003",
+            UsDescription: "I want to create an account",
+            UsStatus: "Planned"
+        },
+
+
+    ]
+    const initialState = {headers, bodies}
 
     const [state, dispatch] = useReducer(appReducer, initialState);
 
     return (
         <Provider value={{
             state,
-            dispatch
+            dispatch,
         }}>
             {children}
         </Provider>
