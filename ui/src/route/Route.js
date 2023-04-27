@@ -1,5 +1,5 @@
 import About from "../pages/About";
-import ListProjects from "../pages/ListProjects";
+import ListProjects from "../pages/ListProjects/ListProjects";
 import ConsultProductBacklog from "../pages/ConsultProductBacklog";
 
 const Route = ({ selected }) => {

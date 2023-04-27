@@ -1,6 +1,6 @@
 import React from "react";
 import TableBody from "./TableBody";
-import TableHeader from "./TableHeader";
+import TableHeader from "./TableHeader/TableHeader";
 
 /**
   * Component that allows to create a table.

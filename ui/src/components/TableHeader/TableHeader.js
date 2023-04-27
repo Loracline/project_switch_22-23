@@ -1,5 +1,5 @@
 import React from "react";
-
+import './TableHeader.css';
 /**
  *
  * @param headers array passed to create table header
@@ -10,7 +10,7 @@ import React from "react";
 
 const TableHeader = ({headers}) => {
     return (
-        <thead>
+        <thead className="tableHeader">
         <tr>
             {headers.map((header) => (
                 <th key={header}>{header}</th>

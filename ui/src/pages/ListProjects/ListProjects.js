@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
-import TableHeader from "../components/TableHeader";
-import TableBody from "../components/TableBody";
-import AppContext from "../context/AppContext";
-
+import TableHeader from "../../components/TableHeader/TableHeader";
+import TableBody from "../../components/TableBody";
+import AppContext from "../../context/AppContext";
+import "./ListProjects.css";
 /**
  * A functional component that displays a list of all projects.
  * @returns {JSX.Element} A div element containing an h1 element and a table.
@@ -15,7 +15,7 @@ const ListProjects = () => {
     return (
         <div>
             <h1>Projects</h1>
-            <table>
+            <table className="table">
                 <TableHeader headers={headers}/>
                 <TableBody body={data}/>
             </table>

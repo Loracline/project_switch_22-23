@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import TableBody from "../components/TableBody";
-import TableHeader from "../components/TableHeader";
+import TableHeader from "../components/TableHeader/TableHeader";
 import AppContext from "../context/AppContext";
 import InputText from "../components/InputText";
 

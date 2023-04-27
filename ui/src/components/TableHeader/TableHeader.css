@@ -1,0 +1,13 @@
+.tableHeader {
+    background-color: #AC99DF;
+    height: 72px;
+    font-family: 'Roboto',sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    width: 100%;
+    padding: 24px 30px;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
