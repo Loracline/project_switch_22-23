@@ -38,9 +38,36 @@ const AppProvider = ({children}) => {
             endDate: "31/12/2022"
         }
     ]
+    const headers = [
+        "US ID",
+        "US Description",
+        "US Status"
+    ]
+
+    const bodies = [
+        {
+            USID: "US001",
+            UsDescription: "I want to create a profile",
+            UsStatus: "Planned"
+        },
+        {
+            USID: "US002",
+            UsDescription: "I want to create a project",
+            UsStatus: "Planned"
+        },
+        {
+            USID: "US003",
+            UsDescription: "I want to create an account",
+            UsStatus: "Planned"
+        },
+
+
+    ]
     const initialState = {
         headersProjects,
-        bodyProjects
+        bodyProjects,
+        headers,
+        bodies
     }
 
 
