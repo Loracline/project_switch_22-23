@@ -3,12 +3,24 @@ import PropTypes from 'prop-types';
 import {Provider} from './AppContext.js';
 import appReducer from './Reducer';
 
+
 /**
  Component that provides the AppContext to its child components using useReducer hook.
 
  @param children - The child components that will have access to AppContext.
  @returns The provider component that wraps the child components.
  */
+
+const menu = [
+    {key: 'about', label: "about"},
+    {key:'projects', label: "projects"},
+    {key:'productbacklog', label: "product backlog"},
+    ]
+
+const nav = {
+    selectedMenu:menu[0],
+    menus: menu,
+}
 
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
@@ -64,6 +76,7 @@ const AppProvider = ({children}) => {
 
     ]
     const initialState = {
+        nav,
         headersProjects,
         bodyProjects,
         headers,
