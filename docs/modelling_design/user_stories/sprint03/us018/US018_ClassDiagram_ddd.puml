@@ -1,5 +1,5 @@
 @startuml
-'https://plantuml.com/class-diagram
+'https://plantuml.com/class-diagram'
 
 title TO CONSULT THE PRODUCT BACKLOG
 skinparam sequenceMessageAlign center
@@ -9,21 +9,20 @@ end legend
 
 class "GetProductBacklogController" {
 -projectService
--usService
+-userStoryMapper
 +getProductBacklog(projectCode)
 }
 
 class "ProjectService"{
+-factoryProject
 -projectRepository
+-factoryProductBacklog
+-usRepository
 +getProductBacklog(code)
 +getProjectByCode(code)
++requestAllPlannedUserStories(usIds)
 }
 
-class "UsService"{
--usRepository
--userStoryMapper
-+requestAllPlannedUs(usIds)
-}
 
 class "Project" <<root>>{
 -projectCode
@@ -37,40 +36,52 @@ class "ProductBacklog"{
 +getUserStories()
 }
 
-class ProjectRepository{
-+getProjectByCode(code)
-}
+
 
 class "UsRepository"{
+-userStories
 +getListOfUsWithMatchingIds(usIds)
 }
 
 class "UserStoryMapper"{
 +userStoryToDto(userStory)
++userStoryToDtoList(userStories)
 }
+
 class "UserStory" <<root>>{
--usId
 -usNumber
 -usText
 -status
-+getUsId()
 +getUsNumber()
 +getUsText()
 +getStatus()
-+setStatus()
 }
 
+interface "IProjectRepository" {
++getProjectByCode(code)
+}
 
-"GetProductBacklogController" "1"-->"1"  "ProjectService": has
-"GetProductBacklogController" "1"-->"1"  "UsService": has
+interface "IUsRepository" {
++getListOfUsWithMatchingIds(usIds)
+}
+
+class ProjectRepository{
+-projects
++getProjectByCode(code)
+}
+
+"GetProductBacklogController" "1"-->"1" "ProjectService": accesses
+
 "Project" "1"-->"1" "ProductBacklog": has
 "ProductBacklog" "1"-->"*" "UserStory": has
-"UsService" "1"-->"1"  "UsRepository": contains
-"UsRepository" "1"-->"*" "UserStory": has
-"UsService" "1"-->"1"  "UserStoryMapper": has
-"UserStoryMapper" ..> "UserStory"
-"ProjectService" "1"-->"1" "ProjectRepository": contains
-"ProjectService" ..> "Project": uses
-"ProjectRepository" "1"-->"*" "Project": has
+"ProjectRepository" -> "Project" : contains
 
+"UsRepository" "1"->"*" "UserStory": has
+"GetProductBacklogController" "1"-->"1" "UserStoryMapper" : has
+"UserStoryMapper" "1 "..> "*" "UserStoryDto" : creates
+"UserStoryMapper" ..> "UserStory" : knows
+"ProjectRepository" --|> "IProjectRepository" : implements
+"ProjectService" ..> "IProjectRepository" : accesses
+"ProjectService" ..> "IUsRepository" : accesses
+"UsRepository" --|> "IUsRepository" :implements
 @enduml

@@ -112,12 +112,12 @@ public class ProjectService {
     /**
      * Requests a list of userStories with the status planned.
      *
-     * @param usId ID of the userStory.
+     * @param usIds ID of the userStory.
      * @return a list of all userStoriesDto with the status planned.
      */
 
-    public List<UserStory> requestAllPlannedUserStories(List<UsId> usId) {
-        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usId);
+    public List<UserStory> requestAllPlannedUserStories(List<UsId> usIds) {
+        List<UserStory> userStories = usRepository.getListOfUsWithMatchingIds(usIds);
         List<UserStory> userStoriesPlanned = new ArrayList<>();
         if (!userStories.isEmpty()) {
             for (UserStory userStory : userStories) {
