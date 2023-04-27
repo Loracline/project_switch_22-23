@@ -1,4 +1,5 @@
 import React from 'react';
+import './TableBody.css';
 
 /**
  * @param body array passed to create table body
@@ -10,7 +11,7 @@ function TableBody({ body }) {
     return (
         <tbody>
         {body.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} className="tableBody">
                 {Object.values(item).map((value, i) => (
                     <td key={i}>{value}</td>
                 ))}
