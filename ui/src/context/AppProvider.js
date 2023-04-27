@@ -11,9 +11,36 @@ import appReducer from './Reducer';
  */
 
 const AppProvider = ({children}) => {
+    const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
+    const bodyProjects = [
+        {
+            code: "P01",
+            name: "Project1",
+            customer: "ISEP",
+            status: "planned",
+            startDate: "21/05/2023",
+            endDate: "31/12/2038"
+        },
+        {
+            code: "P02",
+            name: "Project2",
+            customer: "ISEP",
+            status: "finished",
+            startDate: "21/02/2010",
+            endDate: "31/12/2022"
+        },
+        {
+            code: "P03",
+            name: "Project3",
+            customer: "Águas do Porto",
+            status: "inception",
+            startDate: "21/02/2010",
+            endDate: "31/12/2022"
+        }
+    ]
     const initialState = {
-        //this is just a dummy initial state, needs to be updated with proper implementation
-        userStories: [],
+        headersProjects,
+        bodyProjects
     }
 
 
