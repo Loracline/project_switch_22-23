@@ -1,6 +1,6 @@
 import React from "react";
 import NavItem from "./NavItem";
-import {selecMenu} from "../context/Actions";
+import {selectMenu} from "../context/Actions";
 
 /**
  * A component that renders a navigation menu with clickable items.
@@ -13,7 +13,7 @@ import {selecMenu} from "../context/Actions";
 
 const Nav = ({items, dispatch}) => {
     const onClick = (label) => {
-        const action = selecMenu(label);
+        const action = selectMenu(label);
         dispatch(action);
     }
     return (
