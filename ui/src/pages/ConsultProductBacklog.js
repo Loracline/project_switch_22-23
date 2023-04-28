@@ -1,8 +1,8 @@
 import React, {useContext, useMemo} from 'react';
-import TableBody from "../components/TableBody";
-import TableHeader from "../components/TableHeader";
+import TableBody from "../components/TableBody/TableBody";
+import TableHeader from "../components/TableHeader/TableHeader";
 import AppContext from "../context/AppContext";
-import SelectProjectTextInput from "./SelectProjectTextInput";
+import SelectProjectTextInput from "../components/SelectProjectTextInput";
 import AlertMessages from "../components/AlertMessages";
 
 /**
