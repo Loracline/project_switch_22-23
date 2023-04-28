@@ -26,7 +26,7 @@ const reducer = (state, action) => {
             const code = action.payload.projectToCheck;
 
             return {
-                ...state, selectedProject: state.bodyProjects.find((project, _) => {
+                ...state, selectedProject: state.bodyProjectsUserStories.find((project, _) => {
                     return project.code === code;
                 })
             };

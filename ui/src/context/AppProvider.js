@@ -14,7 +14,7 @@ import appReducer from './Reducer';
 const menu = [
     {key: 'about', label: "about"},
     {key:'projects', label: "projects"},
-    {key:'productbacklog', label: "product backlog"},
+    {key:'productBacklog', label: "product backlog"},
     ]
 
 const nav = {
@@ -32,6 +32,29 @@ const AppProvider = ({children}) => {
             status: "planned",
             startDate: "21/05/2023",
             endDate: "31/12/2038",
+
+        },
+        {
+            code: "P02",
+            name: "Project2",
+            customer: "ISEP",
+            status: "finished",
+            startDate: "21/02/2010",
+            endDate: "31/12/2022",
+        }
+        ,
+        {
+            code: "P03",
+            name: "Project3",
+            customer: "Águas do Porto",
+            status: "inception",
+            startDate: "21/02/2010",
+            endDate: "31/12/2022",
+        }
+    ]
+    const bodyProjectsUserStories = [
+        {
+            code: "P01",
             userStories: [
                 {
                     USID: "US001",
@@ -51,11 +74,6 @@ const AppProvider = ({children}) => {
         },
         {
             code: "P02",
-            name: "Project2",
-            customer: "ISEP",
-            status: "finished",
-            startDate: "21/02/2010",
-            endDate: "31/12/2022",
             userStories: [
                 {
                     USID: "US001",
@@ -76,11 +94,6 @@ const AppProvider = ({children}) => {
         ,
         {
             code: "P03",
-            name: "Project3",
-            customer: "Águas do Porto",
-            status: "inception",
-            startDate: "21/02/2010",
-            endDate: "31/12/2022",
             userStories: []
         }
     ]
@@ -95,6 +108,7 @@ const AppProvider = ({children}) => {
         headersProjects,
         bodyProjects,
         usHeaders,
+        bodyProjectsUserStories,
         selectedProject: undefined,
     }
 
