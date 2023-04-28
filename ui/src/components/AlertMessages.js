@@ -3,25 +3,32 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
 /**
+ * For now to use the alert messages you should copy the specific alert wanted and write your own
+ * message.
+ */
+
+/**
  * Component that allows to create alert messages.
  *
- * Message can be of successful/unsuccessful action.
+ * Message can be of success/error/information/warning.
  * @returns the alert message correspondent to the action performed.
  */
 
-function AlertMessages({severity}) {
-
-    const messages = {
-        success: 'Great success!',
-        error: 'Oops! Something went wrong. Please try again later.',
-        info_project: 'The project that you searched for does not exist.',
-        info_userStories: 'The project that you searched does not have user stories.',
-    };
+function AlertMessages({}) {
 
     return (
-        <Stack spacing={2} sx={{width: '100%'}}>
-            <Alert variant="filled" severity={severity}>
-                {messages[severity]}
+        <Stack sx={{width: '100%'}} spacing={2}>
+            <Alert variant="filled" severity="error">
+                This is an error alert — check it out!
+            </Alert>
+            <Alert variant="filled" severity="warning">
+                This is a warning alert — check it out!
+            </Alert>
+            <Alert variant="filled" severity="info">
+                This is an info alert — check it out!
+            </Alert>
+            <Alert variant="filled" severity="success">
+                This is a success alert — check it out!
             </Alert>
         </Stack>
     );

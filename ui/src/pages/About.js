@@ -11,7 +11,7 @@ function About() {
             <h1>About</h1>
             <p>Welcome to our group! We are a team of students who are passionate about building great software.
                 Our goal is to create innovative solutions that solve problems.</p>
-            <img src="FotoDeGrupo.jpg" alt="Group photo" />
+            {/*<img src="FotoDeGrupo.jpg" alt="Group photo" />*/}
         </div>
     );
 }
