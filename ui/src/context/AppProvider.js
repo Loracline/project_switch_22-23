@@ -12,9 +12,9 @@ import appReducer from './Reducer';
  */
 
 const menu = [
-    {key: 'about', label: "about"},
     {key:'projects', label: "projects"},
     {key:'productbacklog', label: "product backlog"},
+    {key: 'about', label: "about"}
     ]
 
 const nav = {
