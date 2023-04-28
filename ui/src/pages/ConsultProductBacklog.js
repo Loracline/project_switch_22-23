@@ -3,12 +3,11 @@ import TableBody from "../components/TableBody/TableBody";
 import TableHeader from "../components/TableHeader/TableHeader";
 import AppContext from "../context/AppContext";
 import SelectProjectTextInput from "../components/SelectProjectTextInput";
-import AlertMessages from "../components/AlertMessages";
 
 /**
- *  A functional component that displays the product backlog.
- *  @returns {JSX.Element} A div element containing a h1 element, an input text component, a table header and
- *  a table body element.
+ * A functional component that displays the product backlog.
+ * @returns {JSX.Element} A div element containing a h1 element, an input text component, a table header and
+ * a table body element.
  */
 
 function ConsultProductBacklog() {
@@ -19,15 +18,15 @@ function ConsultProductBacklog() {
         if (selectedProject) {
             if (selectedProject.userStories.length > 0) {
                 tableData = (
-                    <div>
+                    <table>
                         <TableHeader headers={usHeaders}/>
                         <TableBody body={selectedProject.userStories}/>
-                    </div>)
+                    </table>)
             } else {
-                tableData = <AlertMessages severity="info_userStories"/>;
+                tableData = <h1>No US</h1>;
             }
         } else {
-            tableData = <AlertMessages severity="info_projects"/>
+            tableData = <h1>No Project</h1>
         }
         return tableData;
     }, [selectedProject, usHeaders]);
