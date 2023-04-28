@@ -17,4 +17,4 @@ function Button(props) {
     );
 }
 
-export default About;
+export default Button;

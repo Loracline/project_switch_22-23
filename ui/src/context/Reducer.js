@@ -1,4 +1,4 @@
-import {CREATE_USER_STORY, SELECT_MENU} from "./Actions";
+import {CHECK_PROJECT, CREATE_USER_STORY, SELECT_MENU} from "./Actions";
 
 /**
  Reducer function that updates the app state based on the dispatched actions.
@@ -22,6 +22,14 @@ const reducer = (state, action) => {
             };
         default:
             return state;
+        case CHECK_PROJECT:
+            const code = action.payload.projectToCheck;
+
+            return {
+                ...state, selectedProject: state.bodyProjects.find((project, _) => {
+                    return project.code === code;
+                })
+            };
     }
 };
 

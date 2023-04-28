@@ -31,7 +31,23 @@ const AppProvider = ({children}) => {
             customer: "ISEP",
             status: "planned",
             startDate: "21/05/2023",
-            endDate: "31/12/2038"
+            endDate: "31/12/2038",
+            userStories: [
+                {
+                    USID: "US001",
+                    UsDescription: "I want to create a profile",
+                    UsStatus: "Planned"
+                },
+                {
+                    USID: "US002",
+                    UsDescription: "I want to create a project",
+                    UsStatus: "Planned"
+                },
+                {
+                    USID: "US003",
+                    UsDescription: "I want to create an account",
+                    UsStatus: "Planned"
+                },]
         },
         {
             code: "P02",
@@ -39,48 +55,47 @@ const AppProvider = ({children}) => {
             customer: "ISEP",
             status: "finished",
             startDate: "21/02/2010",
-            endDate: "31/12/2022"
-        },
+            endDate: "31/12/2022",
+            userStories: [
+                {
+                    USID: "US001",
+                    UsDescription: "I want to create a profile",
+                    UsStatus: "Planned"
+                },
+                {
+                    USID: "US002",
+                    UsDescription: "I want to create a project",
+                    UsStatus: "Planned"
+                },
+                {
+                    USID: "US003",
+                    UsDescription: "I want to create an account",
+                    UsStatus: "Planned"
+                },]
+        }
+        ,
         {
             code: "P03",
             name: "Project3",
             customer: "Águas do Porto",
             status: "inception",
             startDate: "21/02/2010",
-            endDate: "31/12/2022"
+            endDate: "31/12/2022",
+            userStories: []
         }
     ]
-    const headers = [
+    const usHeaders = [
         "US ID",
         "US Description",
         "US Status"
     ]
 
-    const bodies = [
-        {
-            USID: "US001",
-            UsDescription: "I want to create a profile",
-            UsStatus: "Planned"
-        },
-        {
-            USID: "US002",
-            UsDescription: "I want to create a project",
-            UsStatus: "Planned"
-        },
-        {
-            USID: "US003",
-            UsDescription: "I want to create an account",
-            UsStatus: "Planned"
-        },
-
-
-    ]
     const initialState = {
         nav,
         headersProjects,
         bodyProjects,
-        headers,
-        bodies
+        usHeaders,
+        selectedProject: undefined,
     }
 
     const [state, dispatch] = useReducer(appReducer, initialState);
