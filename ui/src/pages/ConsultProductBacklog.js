@@ -3,6 +3,7 @@ import TableBody from "../components/TableBody/TableBody";
 import TableHeader from "../components/TableHeader/TableHeader";
 import AppContext from "../context/AppContext";
 import SelectProjectTextInput from "../components/SelectProjectTextInput";
+import Alert from "@mui/material/Alert";
 
 /**
  * A functional component that displays the product backlog.
@@ -23,10 +24,14 @@ function ConsultProductBacklog() {
                         <TableBody body={selectedProject.userStories}/>
                     </table>)
             } else {
-                tableData = <h1>No US</h1>;
+                tableData = <Alert variant="filled" severity="info">
+                    The project selected has no user stories!
+                </Alert>;
             }
         } else {
-            tableData = <h1>No Project</h1>
+            tableData = <Alert variant="filled" severity="info">
+                The project selected does not exist!
+            </Alert>;
         }
         return tableData;
     }, [selectedProject, usHeaders]);
