@@ -1,8 +1,8 @@
 import {useContext, useState} from "react";
 import AppContext from "../context/AppContext";
 import {checkProject} from "../context/Actions";
-import InputText from "./InputText";
-import Button from "./Button";
+import InputText from "./InputText/InputText";
+import Button from "./Button/Button";
 
 const SelectProjectTextInput = () => {
     const {dispatch} = useContext(AppContext);

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import "./Button.css";
 
 /**
  * A functional component that displays a button element with an onClick event handler.
@@ -11,7 +11,7 @@ import React from 'react';
 
 function Button(props) {
     return (
-        <button onClick={props.onClick}>
+        <button  className="button" onClick={props.onClick}>
             {props.text}
         </button>
     );

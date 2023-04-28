@@ -1,4 +1,5 @@
 import React from 'react';
+import "./InputText.css";
 
 /**
  * @param title prop is the title of the imput text.
@@ -13,6 +14,7 @@ const InputText = ({title, handleTextChange, contentOfInputText}) => {
             <br/>
             <br/>
             <input
+                className="inputText"
                 type="text"
                 name="myInputText"
                 id="myInputText"
