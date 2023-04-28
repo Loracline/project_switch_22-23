@@ -9,22 +9,21 @@ import Stack from '@mui/material/Stack';
  * @returns the alert message correspondent to the action performed.
  */
 
-function AlertMessages({ severity }) {
+function AlertMessages({severity}) {
+
+    const messages = {
+        success: 'Great success!',
+        error: 'Oops! Something went wrong. Please try again later.',
+        info_project: 'The project that you searched for does not exist.',
+        info_userStories: 'The project that you searched does not have user stories.',
+    };
+
     return (
-        <div>
-            <Stack sx={{width: '100%'}} spacing={2}>
-                {severity === 'success' && (
-                    <Alert variant="filled" severity="success">
-                        This is a successful action!
-                    </Alert>
-                )}
-                {severity === 'error' && (
-                    <Alert variant="filled" severity="error">
-                        Oops! Something went wrong. Please try again later.
-                    </Alert>
-                )}
-            </Stack>
-        </div>
+        <Stack spacing={2} sx={{width: '100%'}}>
+            <Alert variant="filled" severity={severity}>
+                {messages[severity]}
+            </Alert>
+        </Stack>
     );
 }
 
