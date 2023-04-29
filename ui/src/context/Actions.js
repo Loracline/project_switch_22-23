@@ -3,7 +3,9 @@
  */
 //the following is just a dummy action, needs to be updated with proper implementation
 export const CREATE_USER_STORY = 'CREATE_USER_STORY';
+export const CREATE_SPRINT = 'CREATE_SPRINT';
 export const CHECK_PROJECT = 'CHECK_PROJECT';
+export const CHECK_PROJECT_SPRINT = 'CHECK_PROJECT_SPRINT';
 export const SELECT_MENU = 'SELECT_MENU';
 
 /**
@@ -15,11 +17,32 @@ export const createUserStory = () => {
     }
 }
 
+/**
+ Action for creating a new sprint.
+ */
+export const createSprint = (sprint) => {
+    return {
+        type: CREATE_SPRINT,
+        payload: {
+            sprintToAdd: sprint,
+        },
+    };
+};
+
 export const checkProject = (code) => {
     return {
         type: CHECK_PROJECT,
         payload: {
             projectToCheck: code,
+        }
+    }
+}
+
+export const checkProjectSprint = (projectCode) => {
+    return {
+        type: CHECK_PROJECT_SPRINT,
+        payload: {
+            projectToCheck: projectCode,
         }
     }
 }

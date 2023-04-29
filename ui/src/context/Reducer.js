@@ -1,4 +1,6 @@
-import {CHECK_PROJECT, CREATE_USER_STORY, SELECT_MENU} from "./Actions";
+
+import {CHECK_PROJECT, CHECK_PROJECT_SPRINT, CREATE_USER_STORY, SELECT_MENU, CREATE_SPRINT} from "./Actions";
+
 
 /**
  Reducer function that updates the app state based on the dispatched actions.
@@ -30,6 +32,21 @@ const reducer = (state, action) => {
                     return project.code === code;
                 })
             };
+
+        case CHECK_PROJECT_SPRINT:
+            const projectCode = action.payload.projectToCheck;
+
+            return {
+                ...state, selectedProject: state.bodyProjectsSprints.find((project, _) => {
+                    return project.code === projectCode;
+                })
+            };
+
+        case CREATE_SPRINT:
+            const sprint = action.payload.sprintToAdd;
+            return {
+                ...state, bodyProjectsSprints: [...state.bodyProjectsSprints.sprints, sprint]
+            }
     }
 };
 
