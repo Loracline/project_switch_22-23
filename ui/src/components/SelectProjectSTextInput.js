@@ -1,8 +1,8 @@
 import {useContext, useState} from "react";
 import AppContext from "../context/AppContext";
 import {checkProjectSprint} from "../context/Actions";
-import InputText from "./InputText";
-import Button from "./Button";
+import InputText from "./InputText/InputText";
+import Button from "./Button/Button";
 /**
  * A component that allows the user to select a project by entering its name.
  * @returns {JSX.Element} A React component that renders a form with an input field and a
