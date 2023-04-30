@@ -7,12 +7,11 @@ end legend
 autonumber
 actor "Product Owner" as product
 participant ":CreateUserStoryUI" as ui
-participant ":CreateUSController" as controller
+participant ":CreateUsController" as controller
 participant ":UsService" as service
 participant ":FactoryUserStory" as factory
 participant "userStory:UserStory" as userStory
 participant ":UsRepository" as usrep
-participant ":ProjectService" as pservice
 participant ":ProjectRepository" as pr
 participant "project:Project" as project
 participant ":ProductBacklog" as pbacklog
@@ -20,22 +19,16 @@ participant ":ProductBacklog" as pbacklog
 
 
 activate product
-product -> ui : requests list of projects
-activate ui
-ref over ui: US016: list all projects the user is allocated as authenticated
-ui --> product: shows list of projects
-product -> ui : select project
-deactivate ui
 product -> ui : creates User Story
 activate ui
-ui --> product: requests data (US_number, actor, US_text, priority)
+ui --> product: requests data (us number, actor, us text,\npriority, acceptance criteria, project code)
 product -> ui: enters User Story data
-ui -> controller: createUS(projectDto, userStoryCreationDto)
+ui -> controller: createUS(projectCodeOfInterest, userStoryCreationDto)
 activate controller
-controller -> service:createUs(userStoryCreationDto, projectCode)
+controller -> service:createUs(userStoryNumber, userStoryText, \nactor, priority, acceptanceCriteria, projectCode)
 activate service
 
-service -> factory: createUserStory(userStoryCreationDto, projectCode)
+service -> factory: createUserStory(usNumber, usText, \nactor, priority, acceptanceCriteria, projectCode)
 activate factory
 create userStory
 factory -> userStory
@@ -43,27 +36,23 @@ factory --> service: userStory
 deactivate factory
 service -> usrep: add(userStory)
 activate usrep
+service <-- usrep: true
 deactivate usrep
-service --> controller: usId
-deactivate service
-controller -> pservice: addUsToProductBacklog(usId, projectCode, priority)
-activate pservice
-pservice -> pr: getProjectByCode(projectCode)
-activate pr
-pr --> pservice: project
-deactivate pr
 
-pservice -> project: addUserStory(priority, usId)
+service -> pr: getProjectByCode(code)
+activate pr
+service <-- pr: project
+deactivate pr
+service -> project: addUserStory(priority, usId)
 activate project
-project -> pbacklog : addUsToProductBacklog(priority, usId)
+project -> pbacklog : addUserStory(priority, usId)
 activate pbacklog
 pbacklog --> project : true
-deactivate
-project --> pservice: true
-deactivate
 deactivate pbacklog
-pservice --> controller : true
-deactivate pservice
+project --> service: true
+deactivate project
+service --> controller : true
+deactivate service
 controller --> ui: true
 deactivate controller
 ui --> product: "informs Operation Success"
