@@ -11,7 +11,7 @@ import "./Button.css";
 
 function Button(props) {
     return (
-        <button  className="button" onClick={props.onClick}>
+        <button  className="button" onClick={props.onClick} type={props.type || "submit"} >
             {props.text}
         </button>
     );
