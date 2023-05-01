@@ -11,9 +11,12 @@ export const SELECT_MENU = 'SELECT_MENU';
 /**
  Action for creating a new user story.
  */
-export const createUserStory = () => {
+export const createUserStory = (userStory) => {
     return {
-        type: CREATE_USER_STORY
+        type: CREATE_USER_STORY,
+        payload: {
+            userStory
+        }
     }
 }
 

@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 import PropTypes from 'prop-types';
 import {Provider} from './AppContext.js';
-import appReducer from './Reducer';
+import reducer from './Reducer';
 
 
 /**
@@ -14,6 +14,7 @@ import appReducer from './Reducer';
 const menu = [
     {key: 'projects', label: "projects"},
     {key: 'createSprint', label: "create sprint"},
+    {key: 'createUserStory', label: "Create User Story"},
     {key: 'productBacklog', label: "product backlog"},
     {key: 'about', label: "about"}
 ]
@@ -128,7 +129,7 @@ const AppProvider = ({children}) => {
         bodyProjectsSprints,
     }
 
-    const [state, dispatch] = useReducer(appReducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     return (
         <Provider value={{
