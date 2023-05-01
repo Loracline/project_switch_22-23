@@ -22,6 +22,7 @@ public class UserStory implements Entity<UserStory> {
     private final UsId usId;
     private final List<AcceptanceCriteria> acceptanceCriteria;
     private UsNumber usNumber;
+    private Actor actor;
     private UsText usText;
     private Status status;
 
@@ -38,6 +39,7 @@ public class UserStory implements Entity<UserStory> {
         Validate.notNull(usText, "User Story's Text can't be null");
         Validate.notNull(acceptanceCriteria, "User Story's Acceptance Criteria can't be null.");
         this.usNumber = usNumber;
+        this.actor =actor;
         this.usText = usText;
         this.status = Status.PLANNED;
         this.acceptanceCriteria = acceptanceCriteria;
