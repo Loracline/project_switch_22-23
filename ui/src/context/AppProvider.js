@@ -12,13 +12,14 @@ import appReducer from './Reducer';
  */
 
 const menu = [
-    {key:'projects', label: "projects"},
-    {key:'productBacklog', label: "product backlog"},
+    {key: 'projects', label: "projects"},
+    {key: 'createSprint', label: "create sprint"},
+    {key: 'productBacklog', label: "product backlog"},
     {key: 'about', label: "about"}
-    ]
+]
 
 const nav = {
-    selectedMenu:menu[0],
+    selectedMenu: menu[0],
     menu: menu,
 }
 
@@ -97,6 +98,20 @@ const AppProvider = ({children}) => {
             userStories: []
         }
     ]
+    const bodyProjectsSprints = [
+        {
+            code: "P01",
+            sprints: []
+        },
+        {
+            code: "P02",
+            sprints: []
+        },
+        {
+            code: "P03",
+            sprints: []
+        }
+    ]
     const usHeaders = [
         "US ID",
         "US Description",
@@ -110,6 +125,7 @@ const AppProvider = ({children}) => {
         usHeaders,
         bodyProjectsUserStories,
         selectedProject: undefined,
+        bodyProjectsSprints,
     }
 
     const [state, dispatch] = useReducer(appReducer, initialState);
