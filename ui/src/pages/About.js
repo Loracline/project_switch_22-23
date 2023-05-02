@@ -7,7 +7,7 @@ import React from 'react';
 
 function About() {
     return (
-        <div>
+        <div className='page'>
             <h1>About</h1>
             <p>Welcome to our group! We are a team of students who are passionate about building great software.
                 Our goal is to create innovative solutions that solve problems.</p>

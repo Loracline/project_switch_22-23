@@ -12,10 +12,12 @@ import reducer from './Reducer';
  */
 
 const menu = [
+    {key: 'home', label: 'home'},
+    {key: 'createProject', label: "create project"},
     {key: 'projects', label: "projects"},
-    {key: 'createSprint', label: "create sprint"},
-    {key: 'createUserStory', label: "Create User Story"},
+    {key: 'createUserStory', label: "create User Story"},
     {key: 'productBacklog', label: "product backlog"},
+    {key: 'createSprint', label: "create sprint"},
     {key: 'about', label: "about"}
 ]
 

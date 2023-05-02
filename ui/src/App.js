@@ -1,5 +1,5 @@
 import './App.css';
-import Nav from "./components/Nav";
+import Nav from "./components/Nav/Nav";
 import Route from "./route/Route";
 import Footer from "./components/Footer/Footer";
 import {useContext} from "react";

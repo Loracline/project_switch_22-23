@@ -1,0 +1,7 @@
+.navBar {
+    list-style: none;
+    background-color: #6145AF;
+    margin: 0;
+    padding: 24px 48px;
+    display: flex;
+}

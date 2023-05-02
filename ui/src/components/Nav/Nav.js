@@ -1,6 +1,7 @@
 import React from "react";
-import NavItem from "./NavItem";
-import {selectMenu} from "../context/Actions";
+import NavItem from "../NavItem/NavItem";
+import {selectMenu} from "../../context/Actions";
+import './Nav.css';
 
 /**
  * A component that renders a navigation menu with clickable items.
@@ -18,18 +19,19 @@ const Nav = ({items, dispatch}) => {
     }
     return (
         <div>
-            <ul>
-                {
-                    items.map(item => (
-                        <NavItem
-                            key={item.key}
-                            item={item}
-                            onClick={onClick}
-                        />
-                    ))
-                }
-            </ul>
-            <hr></hr>
+            <nav>
+                <ul className="navBar">
+                    {
+                        items.map(item => (
+                            <NavItem
+                                key={item.key}
+                                item={item}
+                                onClick={onClick}
+                            />
+                        ))
+                    }
+                </ul>
+            </nav>
         </div>
     )
 }

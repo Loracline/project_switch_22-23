@@ -1,4 +1,5 @@
 import React from "react";
+import './NavItem.css';
 
 /**
  * Represents a navigation item in a menu.
@@ -12,7 +13,7 @@ NavItem = ({item, onClick}) => {
 
     return (
         <li>
-            <button onClick={() => onClick(key)}>
+            <button className='navItem' onClick={() => onClick(key)}>
                 {label}
             </button>
         </li>
