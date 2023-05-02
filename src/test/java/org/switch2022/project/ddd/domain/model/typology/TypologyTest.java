@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.typology;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.model.ProjectTypology;
@@ -105,7 +106,7 @@ class TypologyTest {
     }
 
     /**
-     * Method getTypologyName() return typology name. Should return a String.
+     * Method getTypologyName() returns typology name. Should return a String.
      */
 
     @Test
@@ -123,4 +124,75 @@ class TypologyTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Method getTypologyId() returns typology id. Should return a String.
+     */
+
+    @Test
+    public void ensureThatTypologyIdISRetrievedSuccessfully(){
+        Name nameDouble = mock(Name.class);
+        Typology typology = new Typology(8, nameDouble);
+        String expected = "pt008";
+
+        String result = typology.getTypologyId();
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Constructor tests.
+     *
+     * Scenario 1: Typology is not created when the typologyNumber is negative. Should
+     * throw an exception.
+     */
+    @Test
+    public void ensureThatTypologyIsNotCreatedWithNullNumber() {
+        Name nameDouble = mock(Name.class);
+        String expected = "The typology id must not be negative";
+
+        // Act
+        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Typology(-2, nameDouble));
+
+        //Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * Scenario 2: Typology is not created when the typologyName is null. Should
+     * throw an exception.
+     */
+    @Test
+    public void ensureThatTypologyIsNotCreatedWithNullName() {
+        String expected = "Typology name can't be null";
+
+        // Act
+        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Typology(1, null));
+
+        //Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * METHOD sameIdentityAs()
+     * <br>
+     * Scenario 1: Check if two instances of Typology are equal if the value of their
+     * typologyId are the same.
+     */
+
+    @Test
+    void ensureThatTwoTypologiesAreTheSame() {
+        //Arrange
+        Name nameDouble = mock(Name.class);
+        Typology reference = new Typology(8, nameDouble);
+        Typology other = new Typology(8, nameDouble);
+        boolean expected = true;
+
+        //Act
+        boolean result = reference.sameIdentityAs(other);
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }

@@ -17,16 +17,16 @@ public class Typology implements Entity<Typology> {
      * Attributes
      */
     private final ProjectTypologyId typologyId;
-    private final Name typology;
+    private final Name typologyName;
 
     /**
      * Constructor
      */
-    protected Typology(int typologyNumber, Name typology) {
-        Validate.notNull(typologyNumber, "Typology id can't be null.");
-        Validate.notNull(typology, "Typology name can't be null");
+    protected Typology(int typologyNumber, Name typologyName) {
+        Validate.notNegative(typologyNumber, "typology id");
+        Validate.notNull(typologyName, "Typology name can't be null");
         this.typologyId = new ProjectTypologyId(typologyNumber);
-        this.typology = typology;
+        this.typologyName = typologyName;
     }
 
     /**
@@ -81,6 +81,13 @@ public class Typology implements Entity<Typology> {
      */
 
     public String getTypologyName() {
-        return this.typology.getName();
+        return this.typologyName.getName();
+    }
+
+    /**
+     * This getter method returns a string with the typology id.
+     */
+    public String getTypologyId() {
+        return this.typologyId.getProjectTypologyId();
     }
 }
