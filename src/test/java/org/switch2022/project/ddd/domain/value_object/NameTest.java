@@ -16,7 +16,7 @@ class NameTest {
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsNull() {
         //Arrange
-        String expected = "The project name must not be null";
+        String expected = "The name must not be null";
 
         //Act
         InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
@@ -34,7 +34,7 @@ class NameTest {
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsEmpty() {
         //Arrange
-        String expected = "The project name must not be empty";
+        String expected = "The name must not be empty";
 
         //Act
         InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
@@ -52,7 +52,7 @@ class NameTest {
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsBlank() {
         //Arrange
-        String expected = "The project name must not be blank";
+        String expected = "The name must not be blank";
 
         //Act
         InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
