@@ -12,8 +12,8 @@ public interface IFactoryTypology {
      * This method creates a Typology object with no return.
      *
      * @param typologyNumber of the Typology to create.
-     * @param typology       is the name.
+     * @param typologyName       is the name.
      */
 
-    Typology createTypology(int typologyNumber, Name typology);
+    Typology createTypology(int typologyNumber, Name typologyName);
 }
