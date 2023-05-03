@@ -1,7 +1,8 @@
 package org.switch2022.project.ddd.domain.model.project;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.value_object.*;
-
+@Component
 public class FactoryProject implements IFactoryProject {
     /**
      * This method creates a new Project.

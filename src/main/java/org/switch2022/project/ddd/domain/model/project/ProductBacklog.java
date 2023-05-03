@@ -77,7 +77,7 @@ public class ProductBacklog implements Entity<ProductBacklog> {
      *
      * @return an unmodifiable view of the user stories in the product backlog.
      */
-    public List<UsId> getUserStories() {
+    protected List<UsId> getUserStories() {
         return Collections.unmodifiableList(userStories);
     }
 
@@ -94,7 +94,7 @@ public class ProductBacklog implements Entity<ProductBacklog> {
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise. If the id is already in the Product backlog it returns and exception.
      */
-    public boolean addUserStory(int priority, UsId usId) {
+    protected boolean addUserStory(int priority, UsId usId) {
         boolean result = true;
 
         if (priority > userStories.size()) {
