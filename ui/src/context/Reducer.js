@@ -1,4 +1,11 @@
-import {CHECK_PROJECT, CHECK_PROJECT_SPRINT, CREATE_SPRINT, CREATE_USER_STORY, SELECT_MENU} from "./Actions";
+import {
+    CHECK_PROJECT,
+    CHECK_PROJECT_SPRINT,
+    CREATE_SPRINT,
+    CREATE_USER_STORY,
+    SELECT_MENU,
+    SELECT_PROJECT
+} from "./Actions";
 
 
 /**
@@ -72,6 +79,10 @@ const reducer = (state, action) => {
             return {...state, bodyProjectsSprints: updatedBodyProjectsSprints}
         }
             ;
+        case SELECT_PROJECT: {
+            const project = action.payload.project;
+            return{...state, detailedProject: project};
+        }
 
         default:
             return state;

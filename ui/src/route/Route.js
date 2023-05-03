@@ -3,6 +3,7 @@ import ListProjects from "../pages/ListProjects/ListProjects";
 import ConsultProductBacklog from "../pages/ConsultProductBacklog";
 import CreateSprint from "../pages/CreateSprint";
 import CreateUserStory from "../pages/CreateUserStory";
+import Project from "../pages/Project";
 
 const Route = ({ selected }) => {
     return (
@@ -12,6 +13,7 @@ const Route = ({ selected }) => {
             {selected === 'createSprint' && <CreateSprint />}
             {selected === 'about' && <About />}
             {selected === 'createUserStory' && <CreateUserStory />}
+            {selected === 'project' && <Project/>}
         </div>
     )
 }

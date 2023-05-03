@@ -4,4 +4,5 @@
     margin: 0;
     padding: 24px 48px;
     display: flex;
+    justify-content: space-between;
 }
