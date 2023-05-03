@@ -1,10 +1,14 @@
 package org.switch2022.project.ddd.domain.model.project;
 
 
+import org.springframework.stereotype.Component;
+
 /**
  * Implementation of the FactoryProductBacklog interface that creates instances of the
  * ProductBacklog class.
  */
+
+@Component
 public class FactoryProductBacklog implements IFactoryProductBacklog {
     /**
      * This method creates a new ProductBacklog object.
