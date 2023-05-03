@@ -1,3 +1,19 @@
+
+### Revision History
+
+| **Version** | **Date**     | **Description**             | **Author**     |
+|-------------|--------------|-----------------------------|----------------|
+| v.01        | May 03, 2023 | First draft. To be refined. | João Magalhães |
+|             |              |                             |                |
+|             |              |                             |                |
+|             |              |                             |                |
+|             |              |                             |                |
+|             |              |                             |                |
+|             |              |                             |                |
+|             |              |                             |                |
+|             |              |                             |                |
+|             |              |                             |                |
+
 # DDD justification
 
 The justification for creating different aggregates in the project was based on various factors, such as:
