@@ -924,7 +924,7 @@ class ProjectTest {
 
         Exception exception = assertThrows(Exception.class, () ->
                 project.setName(""));
-        String expected = "The project name must not be empty";
+        String expected = "The name must not be empty";
         //Act
         String result = exception.getMessage();
         //Assert
@@ -943,7 +943,7 @@ class ProjectTest {
 
         Exception exception = assertThrows(Exception.class, () ->
                 project.setName(null));
-        String expected = "The project name must not be null";
+        String expected = "The name must not be null";
         //Act
         String result = exception.getMessage();
         //Assert
@@ -962,7 +962,7 @@ class ProjectTest {
 
         Exception exception = assertThrows(Exception.class, () ->
                 project.setName(" "));
-        String expected = "The project name must not be blank";
+        String expected = "The name must not be blank";
         //Act
         String result = exception.getMessage();
         //Assert

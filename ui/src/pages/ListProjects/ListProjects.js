@@ -4,14 +4,16 @@ import TableBody from "../../components/TableBody/TableBody";
 import AppContext from "../../context/AppContext";
 import "./ListProjects.css";
 import Alert from "@mui/material/Alert";
+import {selectMenu} from "../../context/Actions";
+import Button from "../../components/Button/Button";
 
 /**
  * A functional component that displays a list of all projects.
- * @returns {JSX.Element} A div element containing an h1 element and a table.
+ * @returns {JSX.Element} A div element containing a h1 element and a table.
  */
 
 const ListProjects = () => {
-    const {state} = useContext(AppContext);
+    const {state, dispatch} = useContext(AppContext);
     const headers = state.headersProjects;
     const data = state.bodyProjects;
     const tableData = () => {
@@ -20,7 +22,7 @@ const ListProjects = () => {
             tableData = (
                 <table>
                     <TableHeader headers={headers}/>
-                    <TableBody body={data}/>
+                    <TableBody body={data} dispatch={dispatch}/>
                 </table>)
         } else {
             tableData = <Alert variant="filled" severity="info">
@@ -35,6 +37,7 @@ const ListProjects = () => {
             <h1 className="pageH1">Projects</h1>
             <div className="tableWrap">
                 {tableData()}
+                <Button onClick={() => {dispatch(selectMenu('productBacklog'))}} text='Create project'/>
             </div>
         </div>
     );

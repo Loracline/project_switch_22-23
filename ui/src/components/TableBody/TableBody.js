@@ -1,5 +1,6 @@
 import React from 'react';
 import './TableBody.css';
+import {selectMenu, setCurrentProject} from "../../context/Actions";
 
 /**
  * @param body array passed to create table body
@@ -7,11 +8,12 @@ import './TableBody.css';
  * @returns {JSX.Element} a body created accordingly with the props passed.
  * */
 
-function TableBody({ body }) {
+function TableBody({ body, dispatch }) {
     return (
         <tbody>
         {body.map((item, index) => (
-            <tr key={index} className="tableBody">
+            <tr key={index} className="tableBody" onClick={() => {dispatch(setCurrentProject(item));
+                dispatch(selectMenu('project'))}}>
                 {Object.values(item).map((value, i) => (
                     <td key={i}>{value}</td>
                 ))}
