@@ -18,6 +18,7 @@ const menu = [
     {key: 'createUserStory', label: "create User Story"},
     {key: 'productBacklog', label: "product backlog"},
     {key: 'createSprint', label: "create sprint"},
+    {key: 'project', label: "project"},
     {key: 'about', label: "about"}
 ]
 
@@ -25,6 +26,8 @@ const nav = {
     selectedMenu: menu[0],
     menu: menu,
 }
+
+const detailedProject = null;
 
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
@@ -129,6 +132,7 @@ const AppProvider = ({children}) => {
         bodyProjectsUserStories,
         selectedProject: undefined,
         bodyProjectsSprints,
+        detailedProject
     }
 
     const [state, dispatch] = useReducer(reducer, initialState);

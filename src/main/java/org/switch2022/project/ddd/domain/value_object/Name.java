@@ -9,12 +9,12 @@ public class Name implements ValueObject<Name> {
     /**
      * Constructor.
      *
-     * @param projectName Name of the project.
+     * @param name Name or denomination to be received.
      */
-    public Name(final String projectName) {
-        Validate.notNullOrEmptyOrBlank(projectName, "project name");
+    public Name(final String name) {
+        Validate.notNullOrEmptyOrBlank(name, "name");
 
-        this.denomination = projectName.toLowerCase();
+        this.denomination = name.toLowerCase();
     }
 
     /**

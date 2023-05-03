@@ -7,6 +7,7 @@ export const CREATE_SPRINT = 'CREATE_SPRINT';
 export const CHECK_PROJECT = 'CHECK_PROJECT';
 export const CHECK_PROJECT_SPRINT = 'CHECK_PROJECT_SPRINT';
 export const SELECT_MENU = 'SELECT_MENU';
+export const SELECT_PROJECT = 'SELECT_PROJECT';
 
 /**
  Action for creating a new user story.
@@ -55,6 +56,15 @@ export function selectMenu(name) {
         type: SELECT_MENU,
         payload: {
             key: name
+        }
+    }
+}
+
+export function setCurrentProject(project) {
+    return {
+        type: SELECT_PROJECT,
+        payload: {
+            project
         }
     }
 }

@@ -1,8 +1,7 @@
 .button{
     background: #6145AF;
     border-radius: 10px;
-    width: 150px;
-    height: 50px;
+    padding: 16px 40px;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
@@ -10,7 +9,5 @@
     line-height: 28px;
     text-align: center;
     color: #FFFFFF;
-    position: relative;
-    left: 10px;
-    top: 1px;
+    border: none;
 }
