@@ -6,8 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.domain.model.typology.FactoryTypology;
-import org.switch2022.project.ddd.infrastructure.TypologyRepository;
+import org.switch2022.project.ddd.domain.model.typology.IFactoryTypology;
+import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
+
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,7 +24,9 @@ class TypologyServiceTest {
     @InjectMocks
     TypologyService typologyService;
     @MockBean
-    TypologyRepository typologyRepository;
+    ITypologyRepository typologyRepository;
+    @MockBean
+    IFactoryTypology factoryTypology;
 
     /**
      * Method: createTypology().
