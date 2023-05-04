@@ -24,7 +24,7 @@ class ProjectTest {
     Name projectName;
     Description description;
     BusinessSectorId businessSectorId;
-    CustomerId customerId;
+    TaxId customerTaxId;
     ProjectTypologyId projectTypologyId;
 
 
@@ -37,27 +37,24 @@ class ProjectTest {
         //Name
         projectName = mock(Name.class);
 
-        //Descritpion
+        //Description
         description = mock(Description.class);
 
         //Business Sector
         businessSectorId = mock(BusinessSectorId.class);
 
         //Customer
-        customerId = mock(CustomerId.class);
+        customerTaxId = mock(TaxId.class);
 
         //Project Typology
         projectTypologyId = mock(ProjectTypologyId.class);
 
 
         //Project
-        projectOne = new Project(1, projectName, description, businessSectorId, customerId, projectTypologyId);
-        projectTwo = new Project(2, projectName, description, businessSectorId, customerId, projectTypologyId
-        );
-        projectThree = new Project(3, projectName, description, businessSectorId, customerId, projectTypologyId
-        );
-        projectFour = new Project(1, projectName, description, businessSectorId, customerId, projectTypologyId
-        );
+        projectOne = new Project(1, projectName, description, businessSectorId, customerTaxId, projectTypologyId);
+        projectTwo = new Project(2, projectName, description, businessSectorId, customerTaxId, projectTypologyId);
+        projectThree = new Project(3, projectName, description, businessSectorId, customerTaxId, projectTypologyId);
+        projectFour = new Project(1, projectName, description, businessSectorId, customerTaxId, projectTypologyId);
     }
 
     @AfterEach
@@ -153,9 +150,9 @@ class ProjectTest {
     @Test
     void ensureTheTwoObjectsAreTheSameByHavingTheSameAttributes() {
         //Arrange
-        Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectOne = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
-        Project projectTwo = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectTwo = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         //Act
@@ -173,9 +170,9 @@ class ProjectTest {
     @Test
     void ensureTheTwoObjectsAreNotTheSameBecauseTheyHaveDifferentAttributes() {
         //Arrange
-        Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectOne = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
-        Project projectTwo = new Project(2, projectName, description, businessSectorId, customerId,
+        Project projectTwo = new Project(2, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         //Act
@@ -191,7 +188,7 @@ class ProjectTest {
     @Test
     void ensureTheTwoObjectsAreNotTheSameBecauseOneOfThemIsNull() {
         //Arrange
-        Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectOne = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Project projectTwo = null;
 
@@ -275,7 +272,7 @@ class ProjectTest {
     @Test
     public void shouldCreateAValidProjectWithIsolation() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         // Assert
@@ -290,7 +287,7 @@ class ProjectTest {
     @Test
     public void shouldReturnTrueEqualsWithSameObjectWithIsolation() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
 
@@ -310,9 +307,9 @@ class ProjectTest {
     @Test
     public void shouldReturnTrueEqualsProjectsWithSameParameters() {
         // Arrange
-        Project projectDouble = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectDouble = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
-        Project projectDoubleToCompare = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectDoubleToCompare = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         //Act
@@ -331,9 +328,9 @@ class ProjectTest {
     @Test
     public void shouldReturnFalseEqualsProjectsNotWithSameParameters() {
         // Arrange
-        Project projectDouble = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectDouble = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
-        Project projectDoubleToCompare = new Project(2, projectName, description, businessSectorId, customerId,
+        Project projectDoubleToCompare = new Project(2, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         // Act
@@ -352,7 +349,7 @@ class ProjectTest {
     @Test
     public void shouldReturnFalseWithDifferentClasses() {
         // Arrange
-        Project projectDouble = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectDouble = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Object projectToCompare = new Object();
 
@@ -373,7 +370,7 @@ class ProjectTest {
         Code projectCodeOne = mock(Code.class);
         when(projectCodeOne.getCode()).thenReturn("P001");
 
-        Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectOne = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         //Act
@@ -394,7 +391,7 @@ class ProjectTest {
         Code projectCodeOne = mock(Code.class);
         when(projectCodeOne.getCode()).thenReturn("P001");
         //Project
-        Project projectTwo = new Project(2, projectName, description, businessSectorId, customerId,
+        Project projectTwo = new Project(2, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         //Act
@@ -412,7 +409,7 @@ class ProjectTest {
     @Test
     void ensureThatUserStoryIsSuccessfullyAdded() {
         //Arrange
-        Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectOne = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         UsId usIdDouble = mock(UsId.class);
         UsId usId = mock(UsId.class);
@@ -434,7 +431,7 @@ class ProjectTest {
     @Test
     void ensureThatUserStoryIsUnsuccessfullyAdded() {
         //Arrange
-        Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
+        Project projectOne = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         UsId usId = mock(UsId.class);
@@ -460,7 +457,7 @@ class ProjectTest {
         // Arrange
         UsId usId = mock(UsId.class);
         UsId usIdTwo = mock(UsId.class);
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         project.addUserStory(0, usId);
         project.addUserStory(1, usIdTwo);
@@ -485,7 +482,7 @@ class ProjectTest {
     @Test
     void ensureGetProductBacklogReturnsEmptyListWhenProductBacklogIsEmpty() {
         // Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         List<UsId> expectedUserStories = new ArrayList<>();
@@ -509,7 +506,7 @@ class ProjectTest {
     void ensureUserStoryIsAddedToTheProductBacklog() {
         // Arrange
         UsId usId = new UsId("1", "us001");
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         // Act
@@ -531,7 +528,7 @@ class ProjectTest {
     void ensureUserStoryIsNotAddedToTheProductBacklog() {
         // Arrange
         UsId usId = new UsId("1", "us001");
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         project.addUserStory(0, usId);
 
@@ -582,7 +579,7 @@ class ProjectTest {
     @Test
     void ensureThatPeriodIsAssigned() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = mock(Period.class);
         ProjectStatus projectStatus = ProjectStatus.INCEPTION;
@@ -599,7 +596,7 @@ class ProjectTest {
     @Test
     void ensureThatPeriodIsNotAssigned() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = mock(Period.class);
         //Act
@@ -615,7 +612,7 @@ class ProjectTest {
     @Test
     void ensureProjectStatusIsRetrievedSuccessfully() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         String expected = "planned";
 
@@ -633,7 +630,7 @@ class ProjectTest {
     @Test
     void ensureProjectStartDateIsRetrievedSuccessfully() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = mock(Period.class);
         ProjectStatus projectStatus = ProjectStatus.INCEPTION;
@@ -655,7 +652,7 @@ class ProjectTest {
     @Test
     void ensureProjectEndDateIsRetrievedSuccessfully() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = mock(Period.class);
         ProjectStatus projectStatus = ProjectStatus.INCEPTION;
@@ -678,7 +675,7 @@ class ProjectTest {
     @Test
     void ensureProjectStartDateIsRetrievedSuccessfully_IT() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
                 LocalDate.of(2024, 1, 21));
@@ -701,7 +698,7 @@ class ProjectTest {
     @Test
     void ensureProjectEndDateIsRetrievedSuccessfully_IT() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
                 LocalDate.of(2024, 1, 21));
@@ -724,7 +721,7 @@ class ProjectTest {
     @Test
     void ensureThatPeriodIsAssigned_IT() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
                 LocalDate.of(2024, 1, 21));
@@ -742,7 +739,7 @@ class ProjectTest {
     @Test
     void ensureThatPeriodIsNotAssigned_IT() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
                 LocalDate.of(2024,1, 21));
@@ -762,7 +759,7 @@ class ProjectTest {
     void ensureProjectCodeIsRetrievedSuccessfully() {
         //Arrange
         Code projectCode = new Code(1);
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         //Act
         String actualCode = project.getProjectCode();
@@ -780,7 +777,7 @@ class ProjectTest {
     void ensureThatProjectCodeMatch() {
         //Arrange
         Code projectCode = new Code(1);
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
 
         //Act
@@ -795,7 +792,7 @@ class ProjectTest {
     @Test
     void ensureThatProjectCodeNotMatch() {
         //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Code newProjectCode = new Code(2);
         //Act
@@ -817,7 +814,7 @@ class ProjectTest {
         List<UsId> expected = new ArrayList<>();
         expected.add(usIdOne);
         expected.add(usIdTwo);
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         project.addUserStory(0, usIdOne);
         project.addUserStory(1, usIdTwo);
@@ -835,7 +832,7 @@ class ProjectTest {
     void ensureThatProductBacklogIsRetrieved_EmptyList() {
         //Arrange
         List<UsId> expected = new ArrayList<>();
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         //Act
         List<UsId> result = project.getProductBacklog();

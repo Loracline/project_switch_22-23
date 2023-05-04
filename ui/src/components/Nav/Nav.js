@@ -21,6 +21,7 @@ const Nav = ({items, dispatch}) => {
         <div>
             <nav>
                 <ul className="navBar">
+                    <li onClick={() => {dispatch(selectMenu('home'))}}><img src='/logoNav.svg' alt="G4 logo"/></li>
                     {
                         items.map(item => (
                             <NavItem

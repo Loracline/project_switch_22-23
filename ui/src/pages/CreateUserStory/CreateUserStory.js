@@ -60,69 +60,72 @@ function CreateUserStory() {
     }
 
     return (
-        <div className="form-container">
-            <h2>Create User Story</h2>
-            <form className="user-story-form" onSubmit={handleSubmit}>
-                <TextField
-                    name="userStoryNumber"
-                    label="User Story Number"
-                    value={userStory.userStoryNumber}
-                    onChange={handleChange}
-                    variant="outlined"
-                    required
-                    helperText="* Required"
-                />
-                <TextField
-                    name="userStoryText"
-                    label="User Story Text"
-                    value={userStory.userStoryText}
-                    multiline
-                    onChange={handleChange}
-                    variant="outlined"
-                    required
-                    helperText="* Required"/>
-                <TextField
-                    name="actor"
-                    label="Actor"
-                    value={userStory.actor}
-                    onChange={handleChange}
-                    variant="outlined"/>
-                <div className="ac-container">
-                    <TextField style={{width: "90%"}}
-                               name="acceptanceCriteria"
-                               label="Acceptance Criteria"
-                               value={newAcceptanceCriteria}
-                               onChange={handleChangeCriteria}
-                               variant="outlined"
-                               helperText="Click + to add an acceptance criteria"
+        <div className="page">
+            <section className="form-container">
+                <h2>Create User Story</h2>
+                <form className="user-story-form" onSubmit={handleSubmit}>
+                    <TextField
+                        name="userStoryNumber"
+                        label="User Story Number"
+                        value={userStory.userStoryNumber}
+                        onChange={handleChange}
+                        variant="outlined"
+                        required
+                        helperText="* Required"
                     />
-                    <IconButton style={{margin: "auto"}} aria-label="add" onClick={addCriteria}>
-                        <AddIcon/>
-                    </IconButton>
-                </div>
-                <List>
-                    {userStory.acceptanceCriteria.map((acceptanceCriteria, index) => (
-                        <ListItem key={index}
-                                  secondaryAction={
-                                      <IconButton edge="end" aria-label="delete" onClick={() => deleteCriteria(index)}>
-                                          <DeleteIcon/>
-                                      </IconButton>
-                                  }>
-                            <ListItemText primary={`${index + 1}. ${acceptanceCriteria}`}> </ListItemText>
-                        </ListItem>
-                    ))}
-                </List>
-                <TextField //todo make sure that priority only accepts positive values
-                    name="priority"
-                    label="Priority"
-                    value={userStory.priority}
-                    onChange={handleChange}
-                    type="number"
-                    variant="outlined"/>
-                <Button text="Create US"
-                        isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
-            </form>
-            <Button onClick={() => dispatch(selectMenu('projects'))} text="Return to projects"/>
+                    <TextField
+                        name="userStoryText"
+                        label="User Story Text"
+                        value={userStory.userStoryText}
+                        multiline
+                        onChange={handleChange}
+                        variant="outlined"
+                        required
+                        helperText="* Required"/>
+                    <TextField
+                        name="actor"
+                        label="Actor"
+                        value={userStory.actor}
+                        onChange={handleChange}
+                        variant="outlined"/>
+                    <div className="ac-container">
+                        <TextField style={{width: "90%"}}
+                                   name="acceptanceCriteria"
+                                   label="Acceptance Criteria"
+                                   value={newAcceptanceCriteria}
+                                   onChange={handleChangeCriteria}
+                                   variant="outlined"
+                                   helperText="Click + to add an acceptance criteria"
+                        />
+                        <IconButton style={{margin: "auto"}} aria-label="add" onClick={addCriteria}>
+                            <AddIcon/>
+                        </IconButton>
+                    </div>
+                    <List>
+                        {userStory.acceptanceCriteria.map((acceptanceCriteria, index) => (
+                            <ListItem key={index}
+                                      secondaryAction={
+                                          <IconButton edge="end" aria-label="delete"
+                                                      onClick={() => deleteCriteria(index)}>
+                                              <DeleteIcon/>
+                                          </IconButton>
+                                      }>
+                                <ListItemText primary={`${index + 1}. ${acceptanceCriteria}`}> </ListItemText>
+                            </ListItem>
+                        ))}
+                    </List>
+                    <TextField //todo make sure that priority only accepts positive values
+                        name="priority"
+                        label="Priority"
+                        value={userStory.priority}
+                        onChange={handleChange}
+                        type="number"
+                        variant="outlined"/>
+                    <Button text="Create US"
+                            isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
+                </form>
+                <Button isSecundary={true} onClick={() => dispatch(selectMenu('projects'))} text="Return to projects"/>
+            </section>
         </div>)
 
 }

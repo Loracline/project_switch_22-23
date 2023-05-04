@@ -41,16 +41,16 @@ public class ProjectService {
      *
      * @param description           the description of the project.
      * @param businessSectorId      the identifier of the businessSector.
-     * @param customerId            the identifier of the customer.
+     * @param customerTaxId            the identifier of the customer.
      * @param projectTypologyId     the identifier of the projectTypology.
      *
      * @return returns the code of the created Project.
      */
     public String createProject(Name projectName, Description description, BusinessSectorId businessSectorId,
-                                     CustomerId customerId, ProjectTypologyId projectTypologyId) {
+                                TaxId customerTaxId, ProjectTypologyId projectTypologyId) {
         int projectNumber = calculateNextProjectNumber();
         Project project = factoryProject.createProject(projectNumber, projectName, description, businessSectorId,
-                customerId, projectTypologyId);
+                customerTaxId, projectTypologyId);
         projectRepository.addProjectToProjectRepository(project);
         return project.getProjectCode();
     }
