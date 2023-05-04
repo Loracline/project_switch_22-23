@@ -111,10 +111,9 @@ public class Project implements Entity<Project> {
      *
      * @return a String with the name of the project.
      */
-    protected String getProjectName() {
+    public String getProjectName() {
         return projectName.getName();
     }
-
 
     /**
      * Getter method for the attribute: description.
