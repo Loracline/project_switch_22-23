@@ -1,0 +1,53 @@
+@startuml
+
+class CreateTypologyController
+class TypologyService
+interface ITypologyFactory
+class TypologyFactory
+interface ITypologyRepository
+class TypologyRepository
+class Typology
+
+class CreateTypologyController {
+- typologyService
++ createTypology(name)
+}
+
+class TypologyService{
+- typologyRepository
+- typologyFactory
++ createTypology(name)
+}
+
+interface ITypologyFactory{
++ createTypology(typologyNumber, typologyName)
+}
+
+class TypologyFactory{
++ createTypology(typologyNumber, typologyName)
+}
+
+interface ITypologyRepository{
++ add(typology)
+}
+
+class TypologyRepository{
++ add(typology)
+}
+
+class Typology{
+- typologyId
+- typologyName
+# Typology(typologyNumber, typologyName)
+}
+
+CreateTypologyController <.. TypologyService: is injected
+TypologyService <.. ITypologyRepository: is injected
+TypologyService <.. ITypologyFactory: is injected
+ITypologyFactory <|.. TypologyFactory: implements
+TypologyFactory ..> Typology: creates
+ITypologyRepository <|.. TypologyRepository: implements
+TypologyRepository --> Typology: has
+
+
+@enduml
