@@ -5,10 +5,7 @@ import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.Code;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Class ProjectRepository is built to access and manipulate the set of projects
@@ -80,7 +77,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     /**
-     * This method adds a Project to Project Container if the Project does not exist.
+     * This method adds a Project to Project repository if the Project does not exist.
      *
      * @param project to be added.
      * @return TRUE if the Project was added to Project Repository and false otherwise.
@@ -103,5 +100,15 @@ public class ProjectRepository implements IProjectRepository {
      */
     private boolean doesProjectExist(Project project) {
         return projects.contains(project);
+    }
+
+
+    /**
+     * This method returns an unmodifiable view of the projects.
+     *
+     * @return an unmodifiable view of the projects.
+     */
+    public List<Project> findAll() {
+        return Collections.unmodifiableList(projects);
     }
 }

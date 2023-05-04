@@ -11,7 +11,7 @@ class ValidateTest {
     /**
      * METHOD Validate.notNullOrEmptyOrBlank(myString, "The string must not be null/empty/blank")
      * Scenario 1: verifies if a String is null.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsNullInTheNotNullOrEmptyOrBlankMethod() {
@@ -29,7 +29,7 @@ class ValidateTest {
 
     /**
      * Scenario 2: verifies if a String is empty.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsEmptyInTheNotNullOrEmptyOrBlankMethod() {
@@ -47,7 +47,7 @@ class ValidateTest {
 
     /**
      * Scenario 3: verifies if a String is blank.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenStringIsBlankInTheNotNullOrEmptyOrBlankMethod() {
@@ -66,7 +66,7 @@ class ValidateTest {
 
     /**
      * Scenario 6: verifies if a String is not null nor empty nor blank.
-     * Should not throw an IllegalArgumentException.
+     * Should not throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenStringIsNotNullEmptyOrBlankInTheNotNullOrEmptyOrBlankMethod() {
@@ -82,7 +82,7 @@ class ValidateTest {
     /**
      * METHOD Validate.notNull(myNumber, "The number must not be null")
      * Scenario 1: verifies if a number is null.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenNumberIsNull() {
@@ -101,7 +101,7 @@ class ValidateTest {
 
     /**
      * Scenario 2: verifies if a number is not null.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenNumberIsNotNull() {
@@ -116,7 +116,7 @@ class ValidateTest {
     /**
      * METHOD Validate.notNegative(myNumber, "The number must not be negative")
      * Scenario 1: verifies if a number is negative.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenNumberIsNegative() {
@@ -135,7 +135,7 @@ class ValidateTest {
 
     /**
      * Scenario 2: verifies if a number is negative.
-     * Should not throw an IllegalArgumentException.
+     * Should not throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenNumberIsNotNegative() {
@@ -149,9 +149,45 @@ class ValidateTest {
     }
 
     /**
+     * METHOD Validate.notZero(myNumber, "The number must not be zero")
+     * Scenario 1: verifies if a number is zero.
+     * Should throw an InvalidInputException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenNumberIsZero() {
+        //Arrange
+        String argumentName = "number";
+        Number numberToTest = 0;
+        String expected = "The number must not be zero";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                Validate.notZero(numberToTest, argumentName));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if a number is zero.
+     * Should not throw an InvalidInputException.
+     */
+    @Test
+    void ensureThatAnExceptionIsNotThrownWhenNumberIsNotZero() {
+        //Arrange
+        String argumentName = "number";
+        Number numberToTest = 1;
+
+        //Act and Assert
+        assertDoesNotThrow(() ->
+                Validate.notZero(numberToTest, argumentName));
+    }
+
+
+    /**
      * METHOD Validate.withinInterval(myValueToCheck, "The valueToCheck must be between lowerLimit and upperLimit")
      * Scenario 1: verifies if a number is not located within an interval because it's lower than the lower limit.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenNumberIsBelowInterval() {
@@ -172,7 +208,7 @@ class ValidateTest {
 
     /**
      * Scenario 2: verifies if a number is not located within an interval because it's higher than the upper limit.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenNumberIsAboveInterval() {
@@ -193,7 +229,7 @@ class ValidateTest {
 
     /**
      * Scenario 3: verifies if a number is located within an interval.
-     * Should not throw an IllegalArgumentException.
+     * Should not throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenNumberIsWithinInterval() {
@@ -210,7 +246,7 @@ class ValidateTest {
 
     /**
      * Scenario 4: verifies if a number is located within an interval if is equal to the lower limit.
-     * Should not throw an IllegalArgumentException.
+     * Should not throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenNumberIsWithinIntervalAndEqualToLowerLimit() {
@@ -227,7 +263,7 @@ class ValidateTest {
 
     /**
      * Scenario 5: verifies if a number is located within an interval if is equal to the upper limit.
-     * Should not throw an IllegalArgumentException.
+     * Should not throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenNumberIsWithinIntervalAndEqualToUpperLimit() {
@@ -244,7 +280,7 @@ class ValidateTest {
 
     /**
      * Scenario 6: verifies if a number is not located within an interval because the lower limit is null.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenLowerLimitIsNull() {
@@ -261,7 +297,7 @@ class ValidateTest {
 
     /**
      * Scenario 7: verifies if a number is not located within an interval because the upper limit is null.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenUpperLimitIsNull() {
@@ -278,7 +314,7 @@ class ValidateTest {
 
     /**
      * Scenario 8: verifies if a number is not located within an interval because the number to test is null.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenValueToCheckIsNull() {
@@ -296,7 +332,7 @@ class ValidateTest {
     /**
      * METHOD Validate.notNull(myObject, "The object must not be null")
      * Scenario 1: verifies if an Object is null.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenObjectIsNull() {
@@ -311,7 +347,7 @@ class ValidateTest {
 
     /**
      * Scenario 2: verifies if an Object is not null.
-     * Should not throw an IllegalArgumentException.
+     * Should not throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenObjectIsNotNull() {
@@ -327,7 +363,7 @@ class ValidateTest {
     /**
      * METHOD Validate.isDateAfter(myLocalDate, "The dateOfInterest must be after the dateToCompare")
      * Scenario 1: verifies that a date is not after another date.
-     * Should throw an IllegalArgumentException.
+     * Should throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsThrownWhenDateIsBeforeAnotherDate() {
@@ -346,7 +382,7 @@ class ValidateTest {
 
     /**
      * Scenario 2: verifies that a date is after another date.
-     * Should not throw an IllegalArgumentException.
+     * Should not throw an InvalidInputException.
      */
     @Test
     void ensureThatAnExceptionIsNotThrownWhenDateIsAfterAnotherDate() {
@@ -357,5 +393,165 @@ class ValidateTest {
         //Act and Assert
         assertDoesNotThrow(() ->
                 Validate.isAfter(dateOfInterest,dateToCompare));
+    }
+
+    /**
+     * METHOD Validate.isEmailValid()
+     * Scenario 1: verifies that an email is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatEmailIsValid() {
+        //Arrange
+        String email = "1231234@isep.pt";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isEmailValid(email));
+    }
+
+    /**
+     * Scenario 2: verifies that an email is not valid.
+     * Should throw an exception.
+     */
+
+    @Test
+    void ensureThatEmailIsNotValid() {
+        //Arrange
+        String email = "1231234isep.ipp.pt";
+
+        String expected = "The email is invalid";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                Validate.isEmailValid(email));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * METHOD Validate.isPhoneNumberValid()
+     * Scenario 1: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatPortuguesePhoneNumberWithPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "+351964454321";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 2: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatPortuguesePhoneNumberWithoutPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "964454321";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 3: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatSpanishPhoneNumber_StartingWithSix_WithPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "+34664454321";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 4: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatSpanishPhoneNumber_StartingWithSeven_WithPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "+34764454321";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 5: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatSpanishPhoneNumber_StartingWithSix_WithoutPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "612345678";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 6: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatSpanishPhoneNumber_StartingWithSeven_WithoutPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "712345678";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 7: verifies that a phone number is not valid.
+     * Should throw an exception.
+     */
+
+    @Test
+    void ensureThatPhoneNumberIsNotValid_wrongStartingNumber() {
+        //Arrange
+        String phoneNumber = "112345678";
+
+        String expected = "The phone number is invalid";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                Validate.isPhoneNumberValid(phoneNumber));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 8: verifies that a phone number is not valid.
+     * Should throw an exception.
+     */
+
+    @Test
+    void ensureThatPhoneNumberIsNotValid_wrongPrefix() {
+        //Arrange
+        String phoneNumber = "+32712345678";
+
+        String expected = "The phone number is invalid";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                Validate.isPhoneNumberValid(phoneNumber));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
     }
 }

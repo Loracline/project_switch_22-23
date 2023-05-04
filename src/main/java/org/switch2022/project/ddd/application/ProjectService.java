@@ -27,8 +27,6 @@ public class ProjectService {
     @Autowired
     private IProjectRepository projectRepository;
     @Autowired
-    private IFactoryProductBacklog factoryProductBacklog;
-    @Autowired
     private IUsRepository usRepository;
 
     /**
@@ -41,19 +39,18 @@ public class ProjectService {
     /**
      * This method creates a new Project with the next project code available and adds it to the repository.
      *
-     * @param description       the description of the project.
-     * @param businessSectorId  the identifier of the businessSector.
-     * @param customerTaxId     the identifier of the customer.
-     * @param projectTypologyId the identifier of the projectTypology.
+     * @param description           the description of the project.
+     * @param businessSectorId      the identifier of the businessSector.
+     * @param customerTaxId            the identifier of the customer.
+     * @param projectTypologyId     the identifier of the projectTypology.
+     *
      * @return returns the code of the created Project.
      */
     public String createProject(Name projectName, Description description, BusinessSectorId businessSectorId,
                                 TaxId customerTaxId, ProjectTypologyId projectTypologyId) {
         int projectNumber = calculateNextProjectNumber();
-        Code projectCode = new Code(projectNumber);
-        ProductBacklog productBacklog = factoryProductBacklog.createProductBacklog(projectCode.getCode());
         Project project = factoryProject.createProject(projectNumber, projectName, description, businessSectorId,
-                customerTaxId, projectTypologyId, productBacklog);
+                customerTaxId, projectTypologyId);
         projectRepository.addProjectToProjectRepository(project);
         return project.getProjectCode();
     }
@@ -127,4 +124,6 @@ public class ProjectService {
         }
         return userStoriesPlanned;
     }
+
+
 }

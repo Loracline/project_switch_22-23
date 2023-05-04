@@ -11,9 +11,8 @@ import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
-import org.switch2022.project.ddd.domain.model.project.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,8 +41,6 @@ class ProjectServiceTest {
     IProjectRepository projectRepository;
     @MockBean
     IUsRepository usRepository;
-    @MockBean
-    IFactoryProductBacklog factoryProductBacklog;
 
     /*
     IFactoryProject factoryProjectDouble;
@@ -95,8 +92,8 @@ class ProjectServiceTest {
      * scenario1: the project is created successfully. This always happens as all ids
      * are uniques and generated automatically.
      */
-  /*  @Test
-   void ensureProjectIsCreated() throws Exception {
+    @Test
+   void ensureProjectIsCreated() {
         //Arrange
         Name projectNameDouble = mock(Name.class);
         Description descriptionDouble = mock(Description.class);
@@ -105,7 +102,9 @@ class ProjectServiceTest {
         ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
         String expected = "p002";
         when(projectRepository.getProjectNumber()).thenReturn(1);
-        //when(projectRepository.addProjectToProjectRepository(any())).thenReturn(true);
+        Project projectDouble = mock(Project.class);
+        when(factoryProject.createProject(any(),any(),any(),any(),any(),any())).thenReturn(projectDouble);
+        when(projectDouble.getProjectCode()).thenReturn(expected);
 
         //Act
         String result = projectService.createProject(projectNameDouble, descriptionDouble, businessSectorIdDouble,
@@ -113,7 +112,7 @@ class ProjectServiceTest {
 
         //Assert
         assertEquals(expected, result);
-    }*/
+    }
 
     /**
      * Method: addProject

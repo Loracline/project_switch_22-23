@@ -1,12 +1,13 @@
 package org.switch2022.project.ddd.domain.model.typology;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.value_object.Name;
 
 /**
  * Class FactoryTypology implements IFactoryTypology in order to create
  * a Typology object.
  */
-
+@Component
 public class FactoryTypology implements IFactoryTypology {
 
     /**

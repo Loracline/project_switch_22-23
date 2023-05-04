@@ -10,11 +10,17 @@ import "./Button.css";
  */
 
 function Button(props) {
+    let isSecondary = props.isSecundary;
     return (
-        <button  className="button" onClick={props.onClick} type={props.type || "submit"} >
+        <button  className={isSecondary? 'secondaryButton' : 'button'} onClick={props.onClick} type={props.type || "submit"} >
             {props.text}
         </button>
     );
+
+}
+
+Button.defaultProps = {
+    isSecondary: false
 }
 
 export default Button;

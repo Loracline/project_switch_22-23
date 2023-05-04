@@ -73,7 +73,7 @@ public class Profile implements Entity<Profile> {
      */
     @Override
     public boolean sameIdentityAs(Profile other) {
-        return this.profileId.equals(other.profileId);
+        return other != null && this.profileId.equals(other.profileId);
     }
 
     /**

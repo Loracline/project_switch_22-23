@@ -2,10 +2,23 @@ package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectStatusTest {
+
+    /**
+     * METHOD getStatus
+     */
+    @Test
+    void ensureStatusValueIsRetrieved (){
+        //Arrange
+        String expected = "planned";
+        //Act
+        String result = ProjectStatus.PLANNED.getStatus();
+        //Assert
+        assertEquals(expected, result);
+    }
+
     /**
      * METHOD sameValueAs()
      * <br>

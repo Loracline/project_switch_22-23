@@ -1,0 +1,45 @@
+@startuml
+
+autonumber
+
+skinparam sequenceMessageAlign center
+title CREATE A NEW PROJECT TYPOLOGY
+legend top
+US007 - As Administrator, I want to create a new project typology.
+end legend
+
+actor Administrator as admin
+participant ":UITypology" as ui
+participant ":CreateTypologyController" as ctrl
+participant ":TypologyService" as service
+participant ":TypologyFactory" as factory
+participant "typology:Typology" as typology
+participant ":TypologyRepository" as repo
+
+activate "admin"
+admin -> ui : creates typology
+activate "ui"
+ui --> admin : resquest data(name)
+admin -> ui: enters data
+ui -> ctrl: createTypology(name)
+activate "ctrl"
+ctrl -> service: createTypology(name)
+activate "service"
+service -> factory: createTypology(typologyNumber, \n typologyName)
+activate factory
+create typology
+factory -> typology: create()
+factory --> service: typology
+deactivate factory
+service -> repo: add(typology)
+activate "repo"
+repo --> service: true
+deactivate repo
+service --> ctrl: true
+deactivate "service"
+ctrl --> ui : true
+deactivate ctrl
+ui --> admin: informs operation success
+deactivate ui
+
+@enduml

@@ -13,6 +13,7 @@ public class Email implements ValueObject<Email> {
      */
     public Email(final String email) {
         Validate.notNullOrEmptyOrBlank(email, "email");
+        Validate.isEmailValid(email);
         this.email = email.toLowerCase();
     }
 
