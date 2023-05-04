@@ -8,9 +8,8 @@ import React, {useState} from 'react';
  */
 
 function Calendar(props) {
-    const [selectedDate, setSelectedDate] = useState(null);
+
     const handleDateChange = (event) => {
-        setSelectedDate(event.target.value);
         if (props.onDateChange) {
             props.onDateChange(event.target.value);
         }
@@ -18,7 +17,7 @@ function Calendar(props) {
     return (<div>
         <label htmlFor="calendar">
         </label>
-        <input type="date" id="calendar" name="calendar" value={selectedDate} onChange={handleDateChange}
+        <input type="date" id="calendar" name="calendar" value={props.selectedDate} onChange={handleDateChange}
         />
     </div>);
 }

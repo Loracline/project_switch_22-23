@@ -35,7 +35,7 @@ const reducer = (state, action) => {
                 ...state, bodyProjectsUserStories: updatedBodyProjectsUserStories
             }
         }
-            ;
+
 
         case SELECT_MENU: {
             const key = action.payload.key;
@@ -46,7 +46,7 @@ const reducer = (state, action) => {
                 ...state, nav: newNav,
             }
         }
-            ;
+
 
         case CHECK_PROJECT: {
             const code = action.payload.projectToCheck;
@@ -56,7 +56,7 @@ const reducer = (state, action) => {
                 })
             }
         }
-            ;
+
 
         case CHECK_PROJECT_SPRINT: {
             const projectCode = action.payload.projectToCheck;
@@ -67,7 +67,7 @@ const reducer = (state, action) => {
                 })
             }
         }
-            ;
+
 
         case CREATE_SPRINT: {
             const sprint = action.payload.sprintToAdd;
@@ -78,7 +78,7 @@ const reducer = (state, action) => {
             updatedBodyProjectsSprints[bodyProjectSprintIndex].sprints.push(sprint);
             return {...state, bodyProjectsSprints: updatedBodyProjectsSprints}
         }
-            ;
+
         case SELECT_PROJECT: {
             const project = action.payload.project;
             return{...state, detailedProject: project};
