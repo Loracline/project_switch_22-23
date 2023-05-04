@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.switch2022.project.ddd.domain.value_object.Code;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,4 +17,5 @@ public interface IProjectRepository {
     int getProjectNumber();
 
     boolean addProjectToProjectRepository(Project project);
+     List<Project> findAll();
 }

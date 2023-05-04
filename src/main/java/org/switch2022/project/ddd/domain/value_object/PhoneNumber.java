@@ -15,6 +15,7 @@ public class PhoneNumber implements ValueObject<PhoneNumber> {
     public PhoneNumber(final int phoneNumber) {
         Validate.notNull(phoneNumber, "The number must not be null");
         Validate.notNegative(phoneNumber, "number");
+        Validate.isPhoneNumberValid(String.valueOf(phoneNumber));
         this.value = phoneNumber;
     }
 

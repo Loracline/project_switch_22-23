@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.Code;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -278,5 +280,46 @@ class ProjectRepositoryTest {
 
         assertEquals(expected, result);
 
+    }
+
+    /**
+     * Method: findAll()
+     *
+     * scenario 1: Verify that an empty list is returned when the project list is empty
+     */
+    @Test
+    void ensureProjectReturnsAnEmptyListWhenThereAreNoProjects(){
+        //Arrange
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        List<Project> expected = new ArrayList<>();
+        //Act
+        List<Project> result = projectRepositoryOne.findAll();
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * scenario 2: Verify that a list pf projects is returned when the project list has projects
+     */
+    @Test
+    void ensureProjectReturnsAListOfProjects(){
+        //Arrange
+        Project projectOne = mock(Project.class);
+        Project projectTwo = mock(Project.class);
+
+        ProjectRepository projectRepositoryOne = new ProjectRepository();
+        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        projectRepositoryOne.addProjectToProjectRepository(projectTwo);
+
+        List<Project> expected = new ArrayList<>();
+        expected.add(projectOne);
+        expected.add(projectTwo);
+
+
+        //Act
+        List<Project> result = projectRepositoryOne.findAll();
+
+        //Assert
+        assertEquals(expected,result);
     }
 }
