@@ -18,24 +18,23 @@ public class Project implements Entity<Project> {
 
     private final Code projectCode;
     private Budget budget;
-    private Name projectName;
-    private Description description;
+    private final Name projectName;
+    private final Description description;
     private ProjectStatus projectStatus;
     private NumberOfPlannedSprints numberOfPlannedSprints;
     private Period period;
     private SprintDuration sprintDuration;
     private List<SprintId> sprints;
-    private BusinessSectorId businessSectorId;
-    private CustomerId customerId;
-    private ProjectTypologyId projectTypologyId;
-    private ProductBacklog productBacklog;
+    private final BusinessSectorId businessSectorId;
+    private final CustomerId customerId;
+    private final ProjectTypologyId projectTypologyId;
+    private final ProductBacklog productBacklog;
 
     /**
      * Constructor: the constructor with relevant attributes for a project to be in a valid state.
      */
     protected Project(Number projectNumber, Name projectName, Description description,
-                      BusinessSectorId businessSectorId, CustomerId customerId, ProjectTypologyId projectTypologyId,
-                      ProductBacklog productBacklog) {
+                      BusinessSectorId businessSectorId, CustomerId customerId, ProjectTypologyId projectTypologyId) {
         this.projectCode = new Code(projectNumber);
         this.projectStatus = ProjectStatus.PLANNED;
         this.projectName = projectName;
@@ -43,7 +42,7 @@ public class Project implements Entity<Project> {
         this.businessSectorId = businessSectorId;
         this.customerId = customerId;
         this.projectTypologyId = projectTypologyId;
-        this.productBacklog = productBacklog;
+        this.productBacklog = new ProductBacklog(this.projectCode.getCode());
     }
 
     /**
@@ -108,40 +107,12 @@ public class Project implements Entity<Project> {
     }
 
     /**
-     * Setter method for the attribute: productBacklog.
-     * <p>
-     * This method creates a Product backlog for the project
-     */
-    protected void setProductBacklog(IFactoryProductBacklog iFactoryProductBacklog) {
-        this.productBacklog = iFactoryProductBacklog.createProductBacklog(this.projectCode.toString());
-    }
-
-    /**
-     * This method sets the project name attribute to a new Name value object created with the projectName parameter.
-     *
-     * @param projectName the name of the project
-     */
-    protected void setName(String projectName) {
-        this.projectName = new Name(projectName);
-    }
-
-    /**
      * Getter method for the attribute: projectName.
      *
      * @return a String with the name of the project.
      */
-    protected String getProjectName() {
+    public String getProjectName() {
         return projectName.getName();
-    }
-
-    /**
-     * This method sets the project description attribute to a new Description value object created with the description
-     * parameter.
-     *
-     * @param description the description of the project.
-     */
-    protected void setDescription(String description) {
-        this.description = new Description(description);
     }
 
     /**
@@ -154,15 +125,6 @@ public class Project implements Entity<Project> {
     }
 
     /**
-     * This method sets the business sector ID attribute to the businessSectorId parameter.
-     *
-     * @param businessSectorId is the identifier attribute of type value object of the business sector entity.
-     */
-    protected void setBusinessSector(BusinessSectorId businessSectorId) {
-        this.businessSectorId = businessSectorId;
-    }
-
-    /**
      * Getter method for the attribute: businessSectorId.
      *
      * @return a String with the business sector ID of the project.
@@ -171,14 +133,6 @@ public class Project implements Entity<Project> {
         return businessSectorId.getBusinessSectorId();
     }
 
-    /**
-     * This method sets the customer ID attribute to the customerId parameter.
-     *
-     * @param customerId is the identifier attribute of type value object of the Customer entity.
-     */
-    protected void setCustomer(CustomerId customerId) {
-        this.customerId = customerId;
-    }
 
     /**
      * Getter method for the attribute: customerId.
@@ -189,14 +143,6 @@ public class Project implements Entity<Project> {
         return customerId.getCustomerId();
     }
 
-    /**
-     * This method sets the project typology ID attribute to the projectTypologyId parameter.
-     *
-     * @param projectTypologyId is the identifier attribute of type value object of the Project Typology entity.
-     */
-    protected void setTypology(ProjectTypologyId projectTypologyId) {
-        this.projectTypologyId = projectTypologyId;
-    }
 
     /**
      * Getter method for the attribute: projectTypologyId.
@@ -215,6 +161,20 @@ public class Project implements Entity<Project> {
     protected void setSprintDuration(int sprintDuration) {
         Utils.hasStatus(this.projectStatus, ProjectStatus.INCEPTION);
         this.sprintDuration = new SprintDuration(sprintDuration);
+    }
+
+    /**
+     * This method sets the period for this project to the specified.
+     *
+     * @param period the period object
+     */
+    protected boolean isPeriodAssigned(Period period) {
+        boolean isAssignedPeriod = false;
+        if (projectStatus==ProjectStatus.INCEPTION) {
+            this.period = period;
+            isAssignedPeriod = true;
+        }
+        return isAssignedPeriod;
     }
 
     /**
@@ -243,6 +203,36 @@ public class Project implements Entity<Project> {
      */
     public List<UsId> getProductBacklog() {
         return productBacklog.getUserStories();
+    }
+
+    /**
+     * Getter method for the attribute: status
+     *
+     * @return a String with the status of the project.
+     */
+
+    public String getProjectStatus() {
+        return this.projectStatus.getStatus();
+    }
+
+    /**
+     * Getter method for the attribute: startDate
+     *
+     * @return a String with the startDate of the project.
+     */
+
+    public String getStartDate() {
+        return this.period.getStartDate();
+    }
+
+    /**
+     * Getter method for the attribute: endDate
+     *
+     * @return a String with the endDate of the project.
+     */
+
+    public String getEndDate() {
+        return this.period.getEndDate();
     }
 }
 

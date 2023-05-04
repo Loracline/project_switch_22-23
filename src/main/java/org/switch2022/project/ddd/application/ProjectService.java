@@ -27,8 +27,6 @@ public class ProjectService {
     @Autowired
     private IProjectRepository projectRepository;
     @Autowired
-    private IFactoryProductBacklog factoryProductBacklog;
-    @Autowired
     private IUsRepository usRepository;
 
     /**
@@ -51,10 +49,8 @@ public class ProjectService {
     public String createProject(Name projectName, Description description, BusinessSectorId businessSectorId,
                                      CustomerId customerId, ProjectTypologyId projectTypologyId) {
         int projectNumber = calculateNextProjectNumber();
-        Code projectCode = new Code(projectNumber);
-        ProductBacklog productBacklog = factoryProductBacklog.createProductBacklog(projectCode.getCode());
         Project project = factoryProject.createProject(projectNumber, projectName, description, businessSectorId,
-                customerId, projectTypologyId, productBacklog);
+                customerId, projectTypologyId);
         projectRepository.addProjectToProjectRepository(project);
         return project.getProjectCode();
     }
@@ -128,4 +124,6 @@ public class ProjectService {
         }
         return userStoriesPlanned;
     }
+
+
 }

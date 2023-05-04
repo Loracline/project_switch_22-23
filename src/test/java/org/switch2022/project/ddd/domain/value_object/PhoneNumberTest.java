@@ -98,13 +98,13 @@ class PhoneNumberTest {
     }
 
     /**
-     * Scenario 3: Verify that two objects with different phoneNummbers are not equal.
+     * Scenario 3: Verify that two objects with different phoneNumbers are not equal.
      */
     @Test
     void ensureTwoDifferentPhoneNumberInstancesAreNotTheSame() {
         // Arrange
-        int value = 644546321;
-        int otherValue = 121345897;
+        int value = 912123123;
+        int otherValue = 912123124;
         PhoneNumber reference = new PhoneNumber(value);
         PhoneNumber other = new PhoneNumber(otherValue);
 

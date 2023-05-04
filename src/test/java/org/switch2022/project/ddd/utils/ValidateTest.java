@@ -394,4 +394,164 @@ class ValidateTest {
         assertDoesNotThrow(() ->
                 Validate.isAfter(dateOfInterest,dateToCompare));
     }
+
+    /**
+     * METHOD Validate.isEmailValid()
+     * Scenario 1: verifies that an email is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatEmailIsValid() {
+        //Arrange
+        String email = "1231234@isep.pt";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isEmailValid(email));
+    }
+
+    /**
+     * Scenario 2: verifies that an email is not valid.
+     * Should throw an exception.
+     */
+
+    @Test
+    void ensureThatEmailIsNotValid() {
+        //Arrange
+        String email = "1231234isep.ipp.pt";
+
+        String expected = "The email is invalid";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                Validate.isEmailValid(email));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * METHOD Validate.isPhoneNumberValid()
+     * Scenario 1: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatPortuguesePhoneNumberWithPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "+351964454321";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 2: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatPortuguesePhoneNumberWithoutPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "964454321";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 3: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatSpanishPhoneNumber_StartingWithSix_WithPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "+34664454321";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 4: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatSpanishPhoneNumber_StartingWithSeven_WithPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "+34764454321";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 5: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatSpanishPhoneNumber_StartingWithSix_WithoutPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "612345678";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 6: verifies that a phone number is valid.
+     * Should not throw an exception.
+     */
+
+    @Test
+    void ensureThatSpanishPhoneNumber_StartingWithSeven_WithoutPrefixIsValid() {
+        //Arrange
+        String phoneNumber = "712345678";
+
+        //Act and Assert
+        assertDoesNotThrow(() -> Validate.isPhoneNumberValid(phoneNumber));
+    }
+
+    /**
+     * Scenario 7: verifies that a phone number is not valid.
+     * Should throw an exception.
+     */
+
+    @Test
+    void ensureThatPhoneNumberIsNotValid_wrongStartingNumber() {
+        //Arrange
+        String phoneNumber = "112345678";
+
+        String expected = "The phone number is invalid";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                Validate.isPhoneNumberValid(phoneNumber));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 8: verifies that a phone number is not valid.
+     * Should throw an exception.
+     */
+
+    @Test
+    void ensureThatPhoneNumberIsNotValid_wrongPrefix() {
+        //Arrange
+        String phoneNumber = "+32712345678";
+
+        String expected = "The phone number is invalid";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                Validate.isPhoneNumberValid(phoneNumber));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
 }
