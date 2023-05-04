@@ -2,7 +2,7 @@ import About from "../pages/About";
 import ListProjects from "../pages/ListProjects/ListProjects";
 import ConsultProductBacklog from "../pages/ConsultProductBacklog";
 import CreateSprint from "../pages/CreateSprint";
-import Project from "../pages/Project";
+import Project from "../pages/Project/Project";
 import CreateUserStory from "../pages/CreateUserStory/CreateUserStory";
 import Home from "../pages/Home/Home";
 

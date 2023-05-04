@@ -2,6 +2,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     color: white;
+    min-height: calc(100vh - 172px);
 }
 
 .homeContainer {

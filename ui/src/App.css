@@ -4,22 +4,18 @@ body {
 }
 
 .page {
+    width: 90vw;
+    margin-right: 5vw;
+    margin-left: 5vw;
     min-height: calc(100vh - 172px);
 }
 
-.pageH1 {
-    margin-left: 5vw;
+.page H2 {
     font-family: 'Roboto', sans-serif;font-style: normal;
     font-weight: 700;
     font-size: 36px;
     line-height: 42px;
     margin-bottom: 0;
-}
-
-.tableWrap {
-    width: 90vw;
-    margin-right: 5vw;
-    margin-left: 5vw;
 }
 
 table {

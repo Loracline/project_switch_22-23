@@ -3,7 +3,7 @@ import './Home.css';
 
 const Home = () => {
     return (
-        <div style={{backgroundImage: "url(/homeBackgroundPng.png)" }} className='home page'>
+        <div style={{backgroundImage: "url(/homeBackgroundPng.png)" }} className='home'>
             <section className='homeContainer' >
                 <div className='content'>
                     <h1>Grow your <br/> <span className="content_highlight">Business by</span>
