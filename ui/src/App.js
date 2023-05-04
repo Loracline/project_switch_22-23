@@ -11,7 +11,7 @@ function App() {
     const {selectedMenu, menu} = nav;
     return (
         <div className="App">
-            <Nav items={menu} dispatch={dispatch}/>
+            <Nav items={menu.filter((item) => !item.hidden)} dispatch={dispatch}/>
             <Route selected={selectedMenu.key}/>
             <Footer/>
         </div>
