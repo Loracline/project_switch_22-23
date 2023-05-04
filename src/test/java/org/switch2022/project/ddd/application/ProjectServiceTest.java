@@ -98,7 +98,7 @@ class ProjectServiceTest {
         Name projectNameDouble = mock(Name.class);
         Description descriptionDouble = mock(Description.class);
         BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
-        CustomerId customerIdDouble = mock(CustomerId.class);
+        TaxId customerTaxIdDouble = mock(TaxId.class);
         ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
         String expected = "p002";
         when(projectRepository.getProjectNumber()).thenReturn(1);
@@ -108,7 +108,7 @@ class ProjectServiceTest {
 
         //Act
         String result = projectService.createProject(projectNameDouble, descriptionDouble, businessSectorIdDouble,
-                customerIdDouble, projectTypologyIdDouble);
+                customerTaxIdDouble, projectTypologyIdDouble);
 
         //Assert
         assertEquals(expected, result);
