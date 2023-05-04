@@ -83,7 +83,7 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
      */
     @Override
     public boolean sameIdentityAs(UserStoryInSprint other) {
-        return this.usId.equals(other.usId);
+        return other != null && this.usId.equals(other.usId);
     }
 
     /**
