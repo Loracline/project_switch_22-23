@@ -5,12 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 
-import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -27,8 +26,6 @@ class ProjectTest {
     BusinessSectorId businessSectorId;
     CustomerId customerId;
     ProjectTypologyId projectTypologyId;
-
-    ProductBacklog productBacklog;
 
 
     @BeforeEach
@@ -52,18 +49,15 @@ class ProjectTest {
         //Project Typology
         projectTypologyId = mock(ProjectTypologyId.class);
 
-        productBacklog = mock(ProductBacklog.class);
-
 
         //Project
-        projectOne = new Project(1, projectName, description, businessSectorId, customerId, projectTypologyId,
-                productBacklog);
-        projectTwo = new Project(2, projectName, description, businessSectorId, customerId, projectTypologyId,
-                productBacklog);
-        projectThree = new Project(3, projectName, description, businessSectorId, customerId, projectTypologyId,
-                productBacklog);
-        projectFour = new Project(1, projectName, description, businessSectorId, customerId, projectTypologyId,
-                productBacklog);
+        projectOne = new Project(1, projectName, description, businessSectorId, customerId, projectTypologyId);
+        projectTwo = new Project(2, projectName, description, businessSectorId, customerId, projectTypologyId
+        );
+        projectThree = new Project(3, projectName, description, businessSectorId, customerId, projectTypologyId
+        );
+        projectFour = new Project(1, projectName, description, businessSectorId, customerId, projectTypologyId
+        );
     }
 
     @AfterEach
@@ -160,9 +154,9 @@ class ProjectTest {
     void ensureTheTwoObjectsAreTheSameByHavingTheSameAttributes() {
         //Arrange
         Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
         Project projectTwo = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
         //Act
         boolean result = projectOne.sameIdentityAs(projectTwo);
@@ -180,9 +174,9 @@ class ProjectTest {
     void ensureTheTwoObjectsAreNotTheSameBecauseTheyHaveDifferentAttributes() {
         //Arrange
         Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
         Project projectTwo = new Project(2, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
         //Act
         boolean result = projectOne.sameIdentityAs(projectTwo);
@@ -198,7 +192,7 @@ class ProjectTest {
     void ensureTheTwoObjectsAreNotTheSameBecauseOneOfThemIsNull() {
         //Arrange
         Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
         Project projectTwo = null;
 
         //Act
@@ -282,7 +276,7 @@ class ProjectTest {
     public void shouldCreateAValidProjectWithIsolation() {
         //Arrange
         Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
         // Assert
         assertNotNull(project);
@@ -297,7 +291,7 @@ class ProjectTest {
     public void shouldReturnTrueEqualsWithSameObjectWithIsolation() {
         //Arrange
         Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
 
         // Act
@@ -317,9 +311,9 @@ class ProjectTest {
     public void shouldReturnTrueEqualsProjectsWithSameParameters() {
         // Arrange
         Project projectDouble = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
         Project projectDoubleToCompare = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
         //Act
         boolean isEquals = projectDouble.equals(projectDoubleToCompare);
@@ -338,9 +332,9 @@ class ProjectTest {
     public void shouldReturnFalseEqualsProjectsNotWithSameParameters() {
         // Arrange
         Project projectDouble = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
         Project projectDoubleToCompare = new Project(2, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
         // Act
         boolean isEquals = projectDouble.equals(projectDoubleToCompare);
@@ -359,7 +353,7 @@ class ProjectTest {
     public void shouldReturnFalseWithDifferentClasses() {
         // Arrange
         Project projectDouble = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
         Object projectToCompare = new Object();
 
         // Act
@@ -380,7 +374,7 @@ class ProjectTest {
         when(projectCodeOne.getCode()).thenReturn("P001");
 
         Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
         //Act
         String result = projectOne.getProjectCode();
@@ -400,8 +394,8 @@ class ProjectTest {
         Code projectCodeOne = mock(Code.class);
         when(projectCodeOne.getCode()).thenReturn("P001");
         //Project
-        Project projectTwo = new Project(2, projectName, description, businessSectorId, customerId, projectTypologyId,
-                productBacklog);
+        Project projectTwo = new Project(2, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
 
         //Act
         String result = projectTwo.getProjectCode();
@@ -419,21 +413,14 @@ class ProjectTest {
     void ensureThatUserStoryIsSuccessfullyAdded() {
         //Arrange
         Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-
-        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
-        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
-
-        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
-        projectOne.setProductBacklog(iFactoryProductBacklogDouble);
-
-        int priority = 0;
+                projectTypologyId);
+        UsId usIdDouble = mock(UsId.class);
         UsId usId = mock(UsId.class);
-
-        when(productBacklogDouble.addUserStory(priority, usId)).thenReturn(true);
+        projectOne.addUserStory(0, usId);
+        int priority = 0;
 
         //Act
-        boolean result = projectOne.addUserStory(priority, usId);
+        boolean result = projectOne.addUserStory(priority, usIdDouble);
 
         //Assert
         assertTrue(result);
@@ -448,19 +435,12 @@ class ProjectTest {
     void ensureThatUserStoryIsUnsuccessfullyAdded() {
         //Arrange
         Project projectOne = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
-        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
-        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
-
-        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
-        projectOne.setProductBacklog(iFactoryProductBacklogDouble);
+        UsId usId = mock(UsId.class);
+        projectOne.addUserStory(0, usId);
 
         int priority = 0;
-        UsId usId = mock(UsId.class);
-
-        when(productBacklogDouble.addUserStory(priority, usId)).thenReturn(false);
-
         //Act
         boolean result = projectOne.addUserStory(priority, usId);
 
@@ -472,28 +452,22 @@ class ProjectTest {
      * Method: getProductBacklog()
      * Scenario 1: This test verifies that the getProductBacklog() method in the Project class returns a list
      * of User Stories in the Product Backlog.
-     * It sets up a mock object for the IFactoryProductBacklog interface and a mock object for the
-     * ProductBacklog class to simulate a Product Backlog with two User Stories. It then sets up the expected
-     * User Story list with the same two User Stories.
      * The method under test is then called to get the list of User Stories in the Product Backlog. The actual
      * list is compared to the expected list to ensure that they are equal. If they are, the test passes.
      */
     @Test
     void ensureGetProductBacklogReturnsListOfUserStories() {
         // Arrange
-        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
-        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        UsId usId = mock(UsId.class);
+        UsId usIdTwo = mock(UsId.class);
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        project.addUserStory(0, usId);
+        project.addUserStory(1, usIdTwo);
 
         List<UsId> expectedUserStories = new ArrayList<>();
-        expectedUserStories.add(new UsId("P001", "P1US001"));
-        expectedUserStories.add(new UsId("P001", "P1US002"));
-
-        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
-        when(productBacklogDouble.getUserStories()).thenReturn(expectedUserStories);
-
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        project.setProductBacklog(iFactoryProductBacklogDouble);
+        expectedUserStories.add(usId);
+        expectedUserStories.add(usIdTwo);
 
         // Act
         List<UsId> result = project.getProductBacklog();
@@ -505,90 +479,22 @@ class ProjectTest {
     /**
      * Scenario 2: This test verifies that the getProductBacklog() method in the Project class returns an empty list
      * when there are no User Stories in the Product Backlog.
-     * It sets up a mock object for the IFactoryProductBacklog interface and a mock object for the
-     * ProductBacklog class to simulate an empty Product Backlog. It then sets up an empty expected User Story list.
-     * The method under test is then called to get the list of User Stories in the Product Backlog. The actual
-     * list is compared to the expected empty list to ensure that they are equal. If they are, the test passes.
+     * The actual list is compared to the expected empty list to ensure that they are equal. If they are,
+     * the test passes.
      */
     @Test
     void ensureGetProductBacklogReturnsEmptyListWhenProductBacklogIsEmpty() {
         // Arrange
-        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
-        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
 
         List<UsId> expectedUserStories = new ArrayList<>();
-
-        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
-        when(productBacklogDouble.getUserStories()).thenReturn(new ArrayList<>());
-
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        project.setProductBacklog(iFactoryProductBacklogDouble);
 
         // Act
         List<UsId> result = project.getProductBacklog();
 
         // Assert
         assertEquals(expectedUserStories, result);
-    }
-
-    /**
-     * Scenario 3: This test verifies that the getProductBacklog() method in the Project class returns a list
-     * of User Stories in the order they were added to the Product Backlog.
-     * It sets up a mock object for the IFactoryProductBacklog interface and a mock object for the
-     * ProductBacklog class to simulate a Product Backlog with three User Stories added in a specific order.
-     * It then sets up the expected User Story list with the same three User Stories in the order they were added.
-     * The method under test is then called to get the list of User Stories in the Product Backlog. The actual
-     * list is compared to the expected list to ensure that they are equal and in the same order. If they are,
-     * the test passes.
-     */
-    @Test
-    void ensureGetProductBacklogReturnsListOfUserStoriesInCorrectOrder() {
-        // Arrange
-        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
-        ProductBacklog productBacklogDouble = mock(ProductBacklog.class);
-
-        List<UsId> expectedUserStories = new ArrayList<>();
-        expectedUserStories.add(new UsId("P001", "P1US001"));
-        expectedUserStories.add(new UsId("P001", "P1US003"));
-        expectedUserStories.add(new UsId("P001", "P1US002"));
-
-        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
-        when(productBacklogDouble.getUserStories()).thenReturn(new ArrayList<UsId>() {{
-            add(new UsId("P001", "P1US001"));
-            add(new UsId("P001", "P1US003"));
-            add(new UsId("P001", "P1US002"));
-        }});
-
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        project.setProductBacklog(iFactoryProductBacklogDouble);
-
-        // Act
-        List<UsId> result = project.getProductBacklog();
-
-        // Assert
-        assertEquals(expectedUserStories, result);
-    }
-
-    /**
-     * Scenario 4: Test the behavior of the getProductBacklog() method in the Project class when the Product Backlog is null.
-     * It sets up a mock object for the IFactoryProductBacklog interface to simulate a null Product Backlog.
-     * The method under test is then called to get the list of User Stories in the Product Backlog.
-     * An exception is expected to be thrown since there is no Product Backlog to get User Stories from.
-     */
-    @Test
-    void ensureGetProductBacklogThrowsExceptionWhenProductBacklogIsNull() {
-        // Arrange
-        IFactoryProductBacklog iFactoryProductBacklogDouble = mock(IFactoryProductBacklog.class);
-        when(iFactoryProductBacklogDouble.createProductBacklog(any())).thenReturn(null);
-
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        project.setProductBacklog(iFactoryProductBacklogDouble);
-
-        // Act and Assert
-        assertThrows(NullPointerException.class, () -> project.getProductBacklog());
     }
 
     /**
@@ -603,12 +509,11 @@ class ProjectTest {
     void ensureUserStoryIsAddedToTheProductBacklog() {
         // Arrange
         UsId usId = new UsId("1", "us001");
-        int priority = 0;
-        IFactoryProductBacklog productBacklog = new FactoryProductBacklog();
-        productBacklog.createProductBacklog("1");
-        projectOne.setProductBacklog(productBacklog);
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+
         // Act
-        boolean result = projectOne.addUserStory(priority, usId);
+        boolean result = project.addUserStory(0, usId);
 
         // Assert
         assertTrue(result);
@@ -626,14 +531,12 @@ class ProjectTest {
     void ensureUserStoryIsNotAddedToTheProductBacklog() {
         // Arrange
         UsId usId = new UsId("1", "us001");
-        int priority = 0;
-        IFactoryProductBacklog productBacklog = new FactoryProductBacklog();
-        productBacklog.createProductBacklog("1");
-        projectOne.setProductBacklog(productBacklog);
-        // Act
-        projectOne.addUserStory(priority, usId);
-        boolean result = projectOne.addUserStory(priority, usId);
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        project.addUserStory(0, usId);
 
+        // Act
+        boolean result = project.addUserStory(0, usId);
         // Assert
         assertFalse(result);
     }
@@ -673,199 +576,180 @@ class ProjectTest {
     }
 
     /**
-     * setBusinessSector()
-     * <p>
-     * Scenario 1: Sets the business sector ID attribute of the project.
-     * <p>
-     * Expected result: true.
+     * METHOD: isPeriodAssigned
+     * scenario 1: return true if period is assigned
      */
-
     @Test
-    void ensureBusinessSectorIdIsSet() throws NoSuchFieldException, IllegalAccessException {
-        // Arrange
-        BusinessSectorId businessSectorId = new BusinessSectorId(1);
-
-        // Act
-        projectOne.setBusinessSector(businessSectorId);
-        Field field = projectOne.getClass().getDeclaredField("businessSectorId");
-        field.setAccessible(true);
-        BusinessSectorId actualBusinessSectorId = (BusinessSectorId) field.get(projectOne);
-
-        // Assert
-        assertEquals(businessSectorId, actualBusinessSectorId);
+    void ensureThatPeriodIsAssigned() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        Period periodDouble = mock(Period.class);
+        ProjectStatus projectStatus = ProjectStatus.INCEPTION;
+        project.setProjectStatus(projectStatus);
+        //Act
+        boolean result = project.isPeriodAssigned(periodDouble);
+        //Assert
+        assertTrue(result);
     }
 
     /**
-     * Scenario 2: Fails to set the business sector ID attribute of the project, ID is null.
-     * <p>
-     * Expected result: business sector ID not set.
+     * scenario 2: return false if period is not assigned
      */
-
     @Test
-    void ensureBusinessSectorIdIsNotSetBecauseItIsNull() throws NoSuchFieldException, IllegalAccessException {
-        // Act
-        projectOne.setBusinessSector(null);
-        Field field = projectOne.getClass().getDeclaredField("businessSectorId");
-        field.setAccessible(true);
-        BusinessSectorId actualBusinessSectorId = (BusinessSectorId) field.get(projectOne);
-
-        // Assert
-        assertNull(actualBusinessSectorId);
+    void ensureThatPeriodIsNotAssigned() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        Period periodDouble = mock(Period.class);
+        //Act
+        boolean result = project.isPeriodAssigned(periodDouble);
+        //Assert
+        assertFalse(result);
     }
 
     /**
-     * setCustomer()
-     * <p>
-     * Scenario 1: Sets the customer ID attribute of the project.
-     * <p>
-     * Expected result: true.
+     * METHOD: getProjectStatus
+     * scenario 1: get Project status with success
      */
-
     @Test
-    void ensureCustomerIdIsSet() throws NoSuchFieldException, IllegalAccessException {
-        // Arrange
-        CustomerId customerId = new CustomerId(1);
-
-        // Act
-        projectOne.setCustomer(customerId);
-        Field field = projectOne.getClass().getDeclaredField("customerId");
-        field.setAccessible(true);
-        CustomerId actualCustomerId = (CustomerId) field.get(projectOne);
-
-        // Assert
-        assertEquals(customerId, actualCustomerId);
-    }
-
-    /**
-     * Scenario 2: Fails to set the customer ID attribute of the project, ID is null.
-     * <p>
-     * Expected result: customer ID not set.
-     */
-
-    @Test
-    void ensureCustomerIdIsNotSetBecauseItIsNull() throws NoSuchFieldException, IllegalAccessException {
-        // Act
-        projectOne.setCustomer(null);
-        Field field = projectOne.getClass().getDeclaredField("customerId");
-        field.setAccessible(true);
-        CustomerId actualCustomerId = (CustomerId) field.get(projectOne);
-
-        // Assert
-        assertNull(actualCustomerId);
-    }
-
-    /**
-     * setTypology()
-     * <p>
-     * Scenario 1: Sets the project typology ID attribute of the project.
-     * <p>
-     * Expected result: true.
-     */
-
-    @Test
-    void ensureTypologyIdIsSet() throws NoSuchFieldException, IllegalAccessException {
-        // Arrange
-        ProjectTypologyId projectTypologyId = new ProjectTypologyId(1);
-
-        // Act
-        projectOne.setTypology(projectTypologyId);
-        Field field = projectOne.getClass().getDeclaredField("projectTypologyId");
-        field.setAccessible(true);
-        ProjectTypologyId actualProjectTypologyId = (ProjectTypologyId) field.get(projectOne);
-
-        // Assert
-        assertEquals(projectTypologyId, actualProjectTypologyId);
-    }
-
-    /**
-     * Scenario 2: Fails to set the project typology ID attribute of the project, ID is null.
-     * <p>
-     * Expected result: project typology ID not set.
-     */
-
-    @Test
-    void ensureTypologyIdIsNotSetBecauseItIsNull() throws NoSuchFieldException, IllegalAccessException {
-        // Act
-        projectOne.setTypology(null);
-        Field field = projectOne.getClass().getDeclaredField("projectTypologyId");
-        field.setAccessible(true);
-        ProjectTypologyId actualProjectTypologyId = (ProjectTypologyId) field.get(projectOne);
-
-        // Assert
-        assertNull(actualProjectTypologyId);
-    }
-
-    /**
-     * setSprintDuration()
-     * <p>
-     * Scenario 1: Sets the sprint duration of the project.
-     * <p>
-     * Expected result: true.
-     */
-
-    @Test
-    void ensureSprintDurationIsSet() throws NoSuchFieldException, IllegalAccessException {
-        // Arrange
-        int sprintDuration = 2;
-        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
-
-        // Act
-        projectOne.setSprintDuration(sprintDuration);
-
-        Field field = projectOne.getClass().getDeclaredField("sprintDuration");
-        field.setAccessible(true);
-        SprintDuration actualSprintDuration = (SprintDuration) field.get(projectOne);
-
-        Field durationField = actualSprintDuration.getClass().getDeclaredField("duration");
-        durationField.setAccessible(true);
-        int actualDuration = (int) durationField.get(actualSprintDuration);
-
-        // Assert
-        assertEquals(sprintDuration, actualDuration);
-    }
-
-    /**
-     * Scenario 2: Fails to set the sprint duration of the project because the sprint duration
-     * is higher than the established maximum limit.
-     * <p>
-     * Expected result: sprint duration not set, exception is thrown.
-     */
-
-    @Test
-    void ensureSprintDurationIsNotSetAboveTheLimit() {
-        // Arrange
-        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
-        Exception exception = assertThrows(Exception.class, () ->
-                projectOne.setSprintDuration(5));
-        String expected = "The sprint duration must be between 1 and 4";
+    void ensureProjectStatusIsRetrievedSuccessfully() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        String expected = "planned";
 
         //Act
-        String result = exception.getMessage();
+        String result = project.getProjectStatus();
 
         //Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Scenario 3: Fails to set the sprint duration of the project because the sprint duration
-     * is lower than the established minimum limit.
-     * <p>
-     * Expected result: sprint duration not set, exception is thrown.
+     * METHOD: getStartDate
+     * scenario 1: get Project start date with success
      */
-
     @Test
-    void ensureSprintDurationIsNotSetBellowTheLimit() {
-        // Arrange
-        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
-        Exception exception = assertThrows(Exception.class, () ->
-                projectOne.setSprintDuration(0));
-        String expected = "The sprint duration must be between 1 and 4";
-
+    void ensureProjectStartDateIsRetrievedSuccessfully() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        Period periodDouble = mock(Period.class);
+        ProjectStatus projectStatus = ProjectStatus.INCEPTION;
+        project.setProjectStatus(projectStatus);
+        project.isPeriodAssigned(periodDouble);
+        String expected = "";
+        when(periodDouble.getStartDate()).thenReturn(expected);
         //Act
-        String result = exception.getMessage();
+        String result = project.getStartDate();
 
         //Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD: getEndDate
+     * scenario 1: get Project end date with success
+     */
+    @Test
+    void ensureProjectEndDateIsRetrievedSuccessfully() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        Period periodDouble = mock(Period.class);
+        ProjectStatus projectStatus = ProjectStatus.INCEPTION;
+        project.setProjectStatus(projectStatus);
+        project.isPeriodAssigned(periodDouble);
+        String expected = "";
+        when(periodDouble.getEndDate()).thenReturn(expected);
+        //Act
+        String result = project.getEndDate();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Integration Tests
+     * METHOD: getStartDate
+     * scenario 1: get Project start date with success
+     */
+    @Test
+    void ensureProjectStartDateIsRetrievedSuccessfully_IT() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
+                LocalDate.of(2024, 1, 21));
+        ProjectStatus projectStatus = ProjectStatus.INCEPTION;
+        project.setProjectStatus(projectStatus);
+        project.isPeriodAssigned(periodDouble);
+        String expected = periodDouble.getStartDate();
+        //Act
+        String result = project.getStartDate();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Integration Tests
+     * METHOD: getEndDate
+     * scenario 1: get Project end date with success
+     */
+    @Test
+    void ensureProjectEndDateIsRetrievedSuccessfully_IT() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
+                LocalDate.of(2024, 1, 21));
+        ProjectStatus projectStatus = ProjectStatus.INCEPTION;
+        project.setProjectStatus(projectStatus);
+        project.isPeriodAssigned(periodDouble);
+        String expected = periodDouble.getEndDate();
+        //Act
+        String result = project.getEndDate();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Integration Tests
+     * METHOD: isPeriodAssigned
+     * scenario 1: return true if period is assigned
+     */
+    @Test
+    void ensureThatPeriodIsAssigned_IT() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
+                LocalDate.of(2024, 1, 21));
+        ProjectStatus projectStatus = ProjectStatus.INCEPTION;
+        project.setProjectStatus(projectStatus);
+        //Act
+        boolean result = project.isPeriodAssigned(periodDouble);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * scenario 2: return false if period is not assigned
+     */
+    @Test
+    void ensureThatPeriodIsNotAssigned_IT() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerId,
+                projectTypologyId);
+        Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
+                LocalDate.of(2024,1, 21));
+        //Act
+        boolean result = project.isPeriodAssigned(periodDouble);
+        //Assert
+        assertFalse(result);
     }
 
     /**
@@ -875,176 +759,16 @@ class ProjectTest {
      */
 
     @Test
-    void ensureProjectCodeIsRetrievedSuccessfully() throws NoSuchFieldException, IllegalAccessException {
+    void ensureProjectCodeIsRetrievedSuccessfully() {
         //Arrange
         Code projectCode = new Code(1);
         Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        Field field = project.getClass().getDeclaredField("projectCode");
-        field.setAccessible(true);
-
+                projectTypologyId);
         //Act
-        Code actualCode = (Code) field.get(project);
+        String actualCode = project.getProjectCode();
 
         //Assert
-        assertEquals(projectCode, actualCode);
-    }
-
-    /**
-     * Integration Tests
-     * method: setName
-     * scenario 1: set name with success
-     */
-    @Test
-    void ensureSetNameIsSuccessfullyChanged() throws NoSuchFieldException, IllegalAccessException {
-        //Arrange
-        Name name = new Name("Alpha");
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        Field field = project.getClass().getDeclaredField("projectName");
-        field.setAccessible(true);
-        project.setName("Alpha");
-
-        //Act
-        Name actualName = (Name) field.get(project);
-
-        //Assert
-        assertEquals(name, actualName);
-    }
-
-    /**
-     * scenario 2: set name was unsuccessfully due to String be empty
-     */
-    @Test
-    void ensureSetNameIsUnsuccessfullyChanged_Empty() {
-        //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-
-
-        Exception exception = assertThrows(Exception.class, () ->
-                project.setName(""));
-        String expected = "The name must not be empty";
-        //Act
-        String result = exception.getMessage();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * scenario 3: set name was unsuccessfully due to String be null
-     */
-    @Test
-    void ensureSetNameIsUnsuccessfullyChanged_Null() {
-        //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-
-
-        Exception exception = assertThrows(Exception.class, () ->
-                project.setName(null));
-        String expected = "The name must not be null";
-        //Act
-        String result = exception.getMessage();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * scenario 4: set name was unsuccessfully due to String be blank
-     */
-    @Test
-    void ensureSetNameIsUnsuccessfullyChanged_Blank() {
-        //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-
-
-        Exception exception = assertThrows(Exception.class, () ->
-                project.setName(" "));
-        String expected = "The name must not be blank";
-        //Act
-        String result = exception.getMessage();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Integration Tests
-     * method: setDescription
-     * scenario 1: set description with success
-     */
-    @Test
-    void ensureSetDescriptionIsSuccessfullyChanged() throws NoSuchFieldException, IllegalAccessException {
-        //Arrange
-        Description description = new Description("Cool project");
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        Field field = project.getClass().getDeclaredField("description");
-        field.setAccessible(true);
-        project.setDescription("Cool project");
-
-        //Act
-        Description actualDescription = (Description) field.get(project);
-
-        //Assert
-        assertEquals(description, actualDescription);
-    }
-
-    /**
-     * scenario 2: set description was unsuccessfully due to String be empty
-     */
-    @Test
-    void ensureSetDescriptionIsSuccessfullyChanged_Empty() {
-        //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-
-
-        Exception exception = assertThrows(Exception.class, () ->
-                project.setDescription(""));
-        String expected = "The project description must not be empty";
-        //Act
-        String result = exception.getMessage();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * scenario 3: set description was unsuccessfully due to String be null
-     */
-    @Test
-    void ensureSetDescriptionIsSuccessfullyChanged_Null() {
-        //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-
-
-        Exception exception = assertThrows(Exception.class, () ->
-                project.setDescription(null));
-        String expected = "The project description must not be null";
-        //Act
-        String result = exception.getMessage();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * scenario 4: set description was unsuccessfully due to String be blank
-     */
-    @Test
-    void ensureSetDescriptionIsSuccessfullyChanged_Blank() {
-        //Arrange
-        Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-
-        Exception exception = assertThrows(Exception.class, () ->
-                project.setDescription(" "));
-        String expected = "The project description must not be blank";
-        //Act
-        String result = exception.getMessage();
-        //Assert
-        assertEquals(expected, result);
+        assertEquals(projectCode.getCode(), actualCode);
     }
 
     /**
@@ -1057,7 +781,7 @@ class ProjectTest {
         //Arrange
         Code projectCode = new Code(1);
         Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
 
         //Act
         boolean result = project.hasProjectCode(projectCode);
@@ -1072,7 +796,7 @@ class ProjectTest {
     void ensureThatProjectCodeNotMatch() {
         //Arrange
         Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
+                projectTypologyId);
         Code newProjectCode = new Code(2);
         //Act
         boolean result = project.hasProjectCode(newProjectCode);
@@ -1094,9 +818,7 @@ class ProjectTest {
         expected.add(usIdOne);
         expected.add(usIdTwo);
         Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        FactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        project.setProductBacklog(factoryProductBacklog);
+                projectTypologyId);
         project.addUserStory(0, usIdOne);
         project.addUserStory(1, usIdTwo);
 
@@ -1114,9 +836,7 @@ class ProjectTest {
         //Arrange
         List<UsId> expected = new ArrayList<>();
         Project project = new Project(1, projectName, description, businessSectorId, customerId,
-                projectTypologyId, productBacklog);
-        FactoryProductBacklog factoryProductBacklog = new FactoryProductBacklog();
-        project.setProductBacklog(factoryProductBacklog);
+                projectTypologyId);
         //Act
         List<UsId> result = project.getProductBacklog();
         //Assert

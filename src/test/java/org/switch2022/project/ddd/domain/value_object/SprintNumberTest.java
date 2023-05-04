@@ -56,7 +56,7 @@ class SprintNumberTest {
         String expected = "S001".toLowerCase();
 
         // Act
-        String result = sprintNumber.getSprintId();
+        String result = sprintNumber.getSprintNumber();
 
         // Assert
         assertEquals(expected, result);

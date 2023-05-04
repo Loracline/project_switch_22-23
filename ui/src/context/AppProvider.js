@@ -12,12 +12,13 @@ import reducer from './Reducer';
  */
 
 const menu = [
-    {key: 'home', label: 'home'},
-    {key: 'createProject', label: "create project"},
+    {key: 'home', label: 'home', hidden: true},
+    {key: 'createProject', label: "create project", hidden: true},
     {key: 'projects', label: "projects"},
-    {key: 'createUserStory', label: "create User Story"},
-    {key: 'productBacklog', label: "product backlog"},
-    {key: 'createSprint', label: "create sprint"},
+    {key: 'createUserStory', label: "create user story", hidden: true},
+    {key: 'productBacklog', label: "product backlog", hidden: true},
+    {key: 'createSprint', label: "create sprint", hidden: true},
+    {key: 'project', label: "project", hidden: true},
     {key: 'about', label: "about"}
 ]
 
@@ -25,6 +26,8 @@ const nav = {
     selectedMenu: menu[0],
     menu: menu,
 }
+
+const detailedProject = null;
 
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
@@ -129,6 +132,7 @@ const AppProvider = ({children}) => {
         bodyProjectsUserStories,
         selectedProject: undefined,
         bodyProjectsSprints,
+        detailedProject
     }
 
     const [state, dispatch] = useReducer(reducer, initialState);

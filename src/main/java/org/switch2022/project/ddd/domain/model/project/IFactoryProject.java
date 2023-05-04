@@ -13,12 +13,11 @@ public interface IFactoryProject {
      * @param customerId            the identifier of the customer.
      * @param businessSectorId      the identifier of the businessSector.
      * @param projectTypologyId     the identifier of the projectTypology.
-     * @param productBacklog        the Product Backlog of the project.
      *
      * @return the newly created Project object.
      */
     Project createProject(final Number projectNumber, Name projectName, Description description,
                                  BusinessSectorId businessSectorId, CustomerId customerId,
-                                 ProjectTypologyId projectTypologyId, ProductBacklog productBacklog);
+                                 ProjectTypologyId projectTypologyId);
 }
 
