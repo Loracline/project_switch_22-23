@@ -1,0 +1,25 @@
+.home {
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+}
+
+.homeContainer {
+    display: flex;
+    align-items: center;
+    padding: 11% 15%;
+    justify-content: space-between;
+}
+
+.content h1{
+    font-size: 4rem;
+    margin: 0;
+}
+
+.content p {
+    font-size: 1.5rem;
+}
+
+.content_highlight {
+    color: #CDC4E4;
+}
