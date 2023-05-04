@@ -41,20 +41,19 @@ public class ProjectService {
     /**
      * This method creates a new Project with the next project code available and adds it to the repository.
      *
-     * @param description           the description of the project.
-     * @param businessSectorId      the identifier of the businessSector.
-     * @param customerId            the identifier of the customer.
-     * @param projectTypologyId     the identifier of the projectTypology.
-     *
+     * @param description       the description of the project.
+     * @param businessSectorId  the identifier of the businessSector.
+     * @param customerTaxId     the identifier of the customer.
+     * @param projectTypologyId the identifier of the projectTypology.
      * @return returns the code of the created Project.
      */
     public String createProject(Name projectName, Description description, BusinessSectorId businessSectorId,
-                                     CustomerId customerId, ProjectTypologyId projectTypologyId) {
+                                TaxId customerTaxId, ProjectTypologyId projectTypologyId) {
         int projectNumber = calculateNextProjectNumber();
         Code projectCode = new Code(projectNumber);
         ProductBacklog productBacklog = factoryProductBacklog.createProductBacklog(projectCode.getCode());
         Project project = factoryProject.createProject(projectNumber, projectName, description, businessSectorId,
-                customerId, projectTypologyId, productBacklog);
+                customerTaxId, projectTypologyId, productBacklog);
         projectRepository.addProjectToProjectRepository(project);
         return project.getProjectCode();
     }

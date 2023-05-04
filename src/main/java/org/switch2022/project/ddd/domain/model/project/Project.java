@@ -8,12 +8,11 @@ import java.util.List;
 
 /**
  * Class Project is built to create and manage new projects.
- * A project is defined by code, it's your ID. Its other attributes are budget, name, description, project Status, <br>
- * number of planned sprints, period, sprint duration, sprints (list of sprints), business sector, customer, <br>
+ * A project is defined by a code, its ID. Other attributes are the budget, name, description, project status, <br>
+ * number of planned sprints, period, sprint duration, list of sprints, business sector, customer, <br>
  * project typology and product backlog .
- * The project status attribute defaults to "Planned"
+ * The project status attribute defaults to "Planned".
  */
-
 public class Project implements Entity<Project> {
 
     private final Code projectCode;
@@ -26,7 +25,7 @@ public class Project implements Entity<Project> {
     private SprintDuration sprintDuration;
     private List<SprintId> sprints;
     private BusinessSectorId businessSectorId;
-    private CustomerId customerId;
+    private TaxId customerTaxId;
     private ProjectTypologyId projectTypologyId;
     private ProductBacklog productBacklog;
 
@@ -34,14 +33,14 @@ public class Project implements Entity<Project> {
      * Constructor: the constructor with relevant attributes for a project to be in a valid state.
      */
     protected Project(Number projectNumber, Name projectName, Description description,
-                      BusinessSectorId businessSectorId, CustomerId customerId, ProjectTypologyId projectTypologyId,
+                      BusinessSectorId businessSectorId, TaxId customerTaxId, ProjectTypologyId projectTypologyId,
                       ProductBacklog productBacklog) {
         this.projectCode = new Code(projectNumber);
         this.projectStatus = ProjectStatus.PLANNED;
         this.projectName = projectName;
         this.description = description;
         this.businessSectorId = businessSectorId;
-        this.customerId = customerId;
+        this.customerTaxId = customerTaxId;
         this.projectTypologyId = projectTypologyId;
         this.productBacklog = productBacklog;
     }
@@ -169,24 +168,6 @@ public class Project implements Entity<Project> {
      */
     protected String getBusinessSectorId() {
         return businessSectorId.getBusinessSectorId();
-    }
-
-    /**
-     * This method sets the customer ID attribute to the customerId parameter.
-     *
-     * @param customerId is the identifier attribute of type value object of the Customer entity.
-     */
-    protected void setCustomer(CustomerId customerId) {
-        this.customerId = customerId;
-    }
-
-    /**
-     * Getter method for the attribute: customerId.
-     *
-     * @return a String with the customer ID of the project.
-     */
-    protected String getCustomerId() {
-        return customerId.getCustomerId();
     }
 
     /**

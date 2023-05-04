@@ -7,18 +7,17 @@ public interface IFactoryProject {
     /**
      * This method creates a new Project.
      *
-     * @param projectNumber         the unique number to create projectCode.
-     * @param projectName           the name of the project.
-     * @param description           the description of the project.
-     * @param customerId            the identifier of the customer.
-     * @param businessSectorId      the identifier of the businessSector.
-     * @param projectTypologyId     the identifier of the projectTypology.
-     * @param productBacklog        the Product Backlog of the project.
-     *
+     * @param projectNumber     the unique number to create projectCode.
+     * @param projectName       the name of the project.
+     * @param description       the description of the project.
+     * @param customerTaxId     the identifier of the customer.
+     * @param businessSectorId  the identifier of the businessSector.
+     * @param projectTypologyId the identifier of the projectTypology.
+     * @param productBacklog    the Product Backlog of the project.
      * @return the newly created Project object.
      */
     Project createProject(final Number projectNumber, Name projectName, Description description,
-                                 BusinessSectorId businessSectorId, CustomerId customerId,
-                                 ProjectTypologyId projectTypologyId, ProductBacklog productBacklog);
+                          BusinessSectorId businessSectorId, TaxId customerTaxId,
+                          ProjectTypologyId projectTypologyId, ProductBacklog productBacklog);
 }
 
