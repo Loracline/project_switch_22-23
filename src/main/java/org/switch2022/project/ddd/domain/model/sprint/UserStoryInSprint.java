@@ -35,6 +35,16 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
     }
 
     /**
+     * Constructor with only usId, sets effort as one.
+     * @param usId of the user story.
+     */
+    protected UserStoryInSprint(UsId usId) {
+        Validate.notNull(usId, "UsId cannot be null");
+        this.usId = usId;
+        this.effort = Effort.ONE;
+    }
+
+    /**
      * This method checks if two instances of UserStoryInSprint are equal by comparing
      * the usId.
      *
@@ -81,12 +91,8 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
      *
      * @return a String with the UserStoryInSprint id.
      */
-    public String getUsId() {
-        if (this.usId != null) {
-            return this.usId.getUserStoryId();
-        } else {
-            return null;
-        }
+    protected UsId getUsId() {
+        return this.usId;
     }
 
     /**
@@ -94,7 +100,7 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
      *
      * @return the effort associated to the userStory.
      */
-    Effort getEffort() {
+    protected Effort getEffort() {
         return effort;
     }
 
@@ -103,9 +109,9 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
      *
      * @param effortEstimate of the User Story to be set.
      */
-    boolean setEffort(int effortEstimate) {
+    protected boolean changeEffort(Effort effortEstimate) {
         for (Effort effort : Effort.values()) {
-            if (effort.getEffortValue() == effortEstimate) {
+            if (effort == effortEstimate) {
                 this.effort = effort;
                 return true;
             }

@@ -27,6 +27,17 @@ public class UserStoryInSprintTest {
     }
 
     /**
+     * Constructor with only usId
+     */
+    @Test
+    void ensureAUserStoryInSprintIsNotCreatedBecauseTheUsIdIsNull_ConstructorWithOnlyUsId() {
+        //ACT & ASSERT
+        assertThrows(IllegalArgumentException.class, () -> {
+            new UserStoryInSprint(null);
+        });
+    }
+
+    /**
      * METHOD equals()
      * <p>
      * Scenario 1: Verify that the same object equals itself.
@@ -37,7 +48,7 @@ public class UserStoryInSprintTest {
         //ARRANGE
         UserStoryInSprint userStoryInSprint = mock(UserStoryInSprint.class);
         //ACT & ASSERT
-        assertTrue(userStoryInSprint.equals(userStoryInSprint));
+        assertEquals(userStoryInSprint, userStoryInSprint);
     }
 
     /**
@@ -55,7 +66,7 @@ public class UserStoryInSprintTest {
         UserStoryInSprint userStoryInSprint_two = new UserStoryInSprint(usId, TWO);
 
         //ACT & ASSERT
-        assertTrue(userStoryInSprint_one.equals(userStoryInSprint_two));
+        assertEquals(userStoryInSprint_one, userStoryInSprint_two);
     }
 
     /**
@@ -69,11 +80,13 @@ public class UserStoryInSprintTest {
         //ARRANGE
         UserStoryInSprint userStoryInSprint_one = mock(UserStoryInSprint.class);
         UserStoryInSprint userStoryInSprint_two = mock(UserStoryInSprint.class);
-        when(userStoryInSprint_one.getUsId()).thenReturn("P001_US001");
-        when(userStoryInSprint_two.getUsId()).thenReturn("P001_US002");
+        UsId usIdOne = mock(UsId.class);
+        UsId usIdTwo = mock(UsId.class);
+        when(userStoryInSprint_one.getUsId()).thenReturn(usIdOne);
+        when(userStoryInSprint_two.getUsId()).thenReturn(usIdTwo);
 
         //ACT & ASSERT
-        assertFalse(userStoryInSprint_one.equals(userStoryInSprint_two));
+        assertNotEquals(userStoryInSprint_one, userStoryInSprint_two);
     }
 
     /**
@@ -87,7 +100,7 @@ public class UserStoryInSprintTest {
         UserStoryInSprint userStoryInSprint = mock(UserStoryInSprint.class);
 
         //ACT & ASSERT
-        assertFalse(userStoryInSprint.equals(null));
+        assertNotEquals(null, userStoryInSprint);
     }
 
 
@@ -103,7 +116,7 @@ public class UserStoryInSprintTest {
         Effort effort = ONE;
 
         //ACT & ASSERT
-        assertFalse(userStoryInSprint.equals(effort));
+        assertNotEquals(userStoryInSprint, effort);
     }
 
     /**
@@ -130,15 +143,13 @@ public class UserStoryInSprintTest {
     public void ensureStringRepresentationOfUserStoryInSprintIdIsRetrieved() {
         //ARRANGE
         UsId usIdDouble = mock(UsId.class);
-        when(usIdDouble.getUserStoryId()).thenReturn("P001_US001");
         UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usIdDouble, ONE);
-        String expected = "P001_US001";
 
         //ACT
-        String result = userStoryInSprint.getUsId();
+        UsId result = userStoryInSprint.getUsId();
 
         //ASSERT
-        assertEquals(expected, result);
+        assertEquals(usIdDouble, result);
     }
 
     /**
@@ -152,7 +163,7 @@ public class UserStoryInSprintTest {
         //ARRANGE
         UsId usIdDouble = mock(UsId.class);
         UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble, ONE);
-        boolean result = userStoryInSprint_One.setEffort(TWO.getEffortValue());
+        boolean result = userStoryInSprint_One.changeEffort(TWO);
 
         //ACT & ASSERT
         assertTrue(result);
