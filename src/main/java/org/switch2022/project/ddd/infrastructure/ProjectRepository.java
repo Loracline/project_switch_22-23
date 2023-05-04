@@ -80,7 +80,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     /**
-     * This method adds a Project to Project Container if the Project does not exist.
+     * This method adds a Project to Project repository if the Project does not exist.
      *
      * @param project to be added.
      * @return TRUE if the Project was added to Project Repository and false otherwise.
