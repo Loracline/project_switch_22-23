@@ -136,7 +136,7 @@ class PercentageOfAllocationTest {
     }
 
     @Test
-    void ensureThatTwoPercentageOfAllocationHaveNotTheSameValue() {
+    void ensureThatTwoPercentageOfAllocationDoesNotHaveTheSameValue() {
         // Arrange
         PercentageOfAllocation percentageOfAllocationOne = new PercentageOfAllocation(10);
         PercentageOfAllocation percentageOfAllocationTwo = new PercentageOfAllocation(11);
