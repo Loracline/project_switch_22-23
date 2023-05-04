@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.time.LocalDate;
+
 @Component
 
 public class Validate {
@@ -21,7 +22,8 @@ public class Validate {
      * through its static methods.
      */
 
-    private Validate() {}
+    private Validate() {
+    }
 
     //STRING VALIDATIONS
 
@@ -76,6 +78,32 @@ public class Validate {
         notBlank(string, String.format("The %s must not be blank", argumentName));
     }
 
+    /**
+     * <p>Validate that the email has the following structure letters@letters.letters;
+     * otherwise throwing an exception with the specified message.
+     *
+     * @param email the string to check.
+     * @throws InvalidInputException if the string is null or empty or blank or email invalid.
+     */
+    public static void isEmailValid(String email) {
+        if (!email.matches("^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            throw new InvalidInputException("The email is invalid");
+        }
+    }
+
+    /**
+     * <p>Validate if the phone number is portuguese or spanish;
+     * otherwise throws an exception with the specified message.
+     *
+     * @param phoneNumber the string to check.
+     * @throws InvalidInputException if the string is null or empty or blank or email invalid.
+     */
+    public static void isPhoneNumberValid(String phoneNumber) {
+        if (!phoneNumber.matches("^\\+3519\\d{8}|9\\d{8}|\\+346\\d{8}|\\+347\\d{8}|6\\d{8}|7\\d{8}$")) {
+            throw new InvalidInputException("The phone number is invalid");
+        }
+    }
+
     //NUMBER VALIDATIONS
 
     /**
@@ -104,7 +132,7 @@ public class Validate {
      *
      * @param lowerLimit   the lower limit of the interval.
      * @param upperLimit   the upper limit of the interval.
-     * @param value the number to check.
+     * @param value        the number to check.
      * @param argumentName the name of the argument to check.
      * @throws InvalidInputException if the number is outside the interval
      */

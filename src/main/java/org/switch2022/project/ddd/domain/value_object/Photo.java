@@ -1,49 +1,48 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.switch2022.project.ddd.domain.shared.ValueObject;
-import org.switch2022.project.ddd.utils.Validate;
 
-public class Email implements ValueObject<Email> {
-    private final String email;
+import java.awt.image.BufferedImage;
+import java.util.Objects;
+
+public class Photo implements ValueObject<Photo> {
+    private final BufferedImage photo;
 
     /**
      * Constructor.
      *
-     * @param email of the account.
+     * @param photo of the account.
      */
-    public Email(final String email) {
-        Validate.notNullOrEmptyOrBlank(email, "email");
-        Validate.isEmailValid(email);
-        this.email = email.toLowerCase();
+    public Photo(final BufferedImage photo) {
+        this.photo = photo;
     }
 
     /**
-     * Getter method for the attribute: email
+     * Getter method for the attribute: photo.
      *
-     * @return String representation of the email.
+     * @return photo of the account.
      */
-    public String getEmail() {
-        return email;
+    public BufferedImage getPhoto() {
+        return photo;
     }
 
     /**
-     * This method checks if two instances of Email are equal by comparing the value of the attribute email.
+     * This method checks if two instances of Photo are equal by comparing the value of the attribute photo.
      *
-     * @param other Email instance to compare with.
+     * @param other Photo instance to compare with.
      * @return <code>true</code> if the two have the same attribute value, and <code>false</code> otherwise.
      */
     @Override
-    public boolean sameValueAs(Email other) {
-        return other != null && this.email.equals(other.email);
+    public boolean sameValueAs(Photo other) {
+        return other != null && this.photo == (other.photo);
     }
 
     /**
-     * This method checks if an instance of Email is equal to another object.
+     * This method checks if an instance of Budget is equal to another object.
      *
      * @param o object to compare with.
      * @return <code>true</code> if the two have the same attribute value, and <code>false</code> otherwise.
      */
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -53,7 +52,7 @@ public class Email implements ValueObject<Email> {
             return false;
         }
 
-        Email other = (Email) o;
+        Photo other = (Photo) o;
 
         return sameValueAs(other);
     }
@@ -66,6 +65,6 @@ public class Email implements ValueObject<Email> {
 
     @Override
     public int hashCode() {
-        return email.hashCode();
+        return Objects.hash(photo);
     }
 }
