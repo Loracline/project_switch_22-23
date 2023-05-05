@@ -2,7 +2,9 @@ package org.switch2022.project.ddd.domain.model.sprint;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.value_object.Effort;
 import org.switch2022.project.ddd.domain.value_object.Period;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.time.LocalDate;
 
@@ -407,7 +409,7 @@ class SprintTest {
         //Arrange
         Period period = mock(Period.class);
         String projectCode = "P1";
-        Sprint sprint= new Sprint(projectCode,8, period);
+        Sprint sprint = new Sprint(projectCode, 8, period);
         when(period.isPeriodNotOverlapping(any())).thenReturn(false);
 
         Sprint sprintOne = new Sprint(projectCode, 2, period);
@@ -417,4 +419,69 @@ class SprintTest {
         //Assert
         assertFalse(result);
     }
+        /**
+         * METHOD addUserStory()
+         * Scenario 1 : return true if userStory is added, because the list is empty.
+         */
+
+        @Test
+        void ensureUserStoryIsAdded_becauseTheListIsEmpty() {
+        //Arrange
+            Period period = mock(Period.class);
+            String projectCode = "P1";
+            Sprint sprint = new Sprint(projectCode, 1, period);
+            UsId usId = mock(UsId.class);
+            Effort effort = mock(Effort.class);
+        //Act
+         boolean result = sprint.addUserStory(usId,effort);
+
+        //Assert
+        assertTrue(result);
+        }
+
+
+    /**
+     * Scenario 2 : return true if userStory is added, because the US is not already there.
+     */
+    @Test
+    void ensureUserStoryIsAdded_becauseUSisNotAlreadyThere() {
+        //Arrange
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        Effort effort = mock(Effort.class);
+        UsId usIdDouble = mock(UsId.class);
+        sprint.addUserStory(usIdDouble,effort);
+        //Act
+        boolean result = sprint.addUserStory(usId,effort);
+
+        //Assert
+        assertTrue(result);
+    }
+
+
+    /**
+     * Scenario 3 : return false because the US is already there.
+     */
+    @Test
+    void ensureUserStoryIsNotAdded_becauseUSisAlreadyThere() {
+        //Arrange
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        Effort effort = mock(Effort.class);
+        sprint.addUserStory(usId,effort);
+        //Act
+        boolean result = sprint.addUserStory(usId,effort);
+
+        //Assert
+        assertFalse(result);
+    }
+
+
+
+
+
 }

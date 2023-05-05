@@ -97,7 +97,7 @@ public class Sprint implements Entity<Sprint> {
      * otherwise.
      */
 
-    /*
+
     public boolean addUserStory(UsId usId, Effort effort) {
         UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId, effort);
         boolean isAdded = true;
@@ -107,7 +107,7 @@ public class Sprint implements Entity<Sprint> {
             userStoriesInSprint.add(userStoryInSprint);
         }
         return isAdded;
-    }*/
+    }
 
     /**
      * This method verifies if the User Story is already in the list.
