@@ -30,7 +30,7 @@ public class PercentageOfAllocation implements ValueObject<PercentageOfAllocatio
      *
      * @return <code>true</code> if the percentage of allocation of an Account to a Project is valid, and <code>false</code> otherwise.
      */
-    private boolean isPercentageOfAllocationValid(float percentageOfAllocation) {
+    private static boolean isPercentageOfAllocationValid(float percentageOfAllocation) {
         final float MAXIMUM_PERCENTAGE = 100;
         final float MINIMUM_PERCENTAGE = 0;
         return percentageOfAllocation > MINIMUM_PERCENTAGE && percentageOfAllocation <= MAXIMUM_PERCENTAGE;
