@@ -43,6 +43,7 @@ interface "IProjectRepository"{
 }
 
 class "ProjectRepository"{
+- projects
 +getProjectByCode(code)
 }
 
@@ -75,43 +76,22 @@ class "UserStory"{
 
 
 "CreateUsController" .> "UserStoryCreationDto": accesses
-"CreateUsController" "1"-->"1" "UsService": has
+"CreateUsController" "1"<.."1" "UsService": is injected
 
-"UsService" "1" ..> "1" "IFactoryUserStory": has
+"UsService" "1" <.. "1" "IFactoryUserStory": is injected
 "IFactoryUserStory" <|.. "FactoryUserStory": implements
 "FactoryUserStory" "1"..>"*" "UserStory": creates
 
 
-"UsService" "1" ..> "1" "IProjectRepository": has
+"UsService" "1" <.. "1" "IProjectRepository": is injected
 "IProjectRepository" <|.. "ProjectRepository": implements
 "ProjectRepository" "1"-->"*" "Project": has
 
-"UsService" "1" ..> "1" "IUsRepository": has
+"UsService" "1" <.. "1" "IUsRepository": is injected
 "IUsRepository" <|.. "UsRepository": implements
 "UsRepository" "1"-->"*" "UserStory": has
 
 "UsService" ..> "UserStory": uses
 "UsService" ..> "Project": uses
 
-
-
-/'
-
-
-
-
-
-
-
-"CreateUsController" "1"-->"1" "ProjectService": has
-"CreateUsController" ..>"ProjectDto": uses
-"ProjectService" ..> "Project": uses
-"ProjectService" "1"-->"1" "IProjectRepository": contains
-
-"Project" "1"-->"1" "ProductBacklog": has
-"UsService" "1"-->"1" "IFactoryUserStory": has
-
-"UsService" "1"-->"1" "IUsRepository": contains
-"IUsRepository" "1"-->"*" "UserStory": has
-"UserStoryCreationDto" <.. "IFactoryUserStory": uses'/
 @enduml
