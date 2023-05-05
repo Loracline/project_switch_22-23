@@ -27,7 +27,7 @@ public class CreateBusinessSectorController {
      * @return TRUE if the business sector is created, and throws an AlreadyExistsInRepoException exception otherwise.
      */
 
-    public boolean createBusinessSector(String name) throws AlreadyExistsInRepoException {
+    public boolean createBusinessSector(String name) {
         return businessSectorService.createBusinessSector(name);
     }
 }

@@ -5,7 +5,7 @@ import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
 
 import static java.lang.Integer.parseInt;
 @Component
-public class Utils {
+public final class Utils {
     private Utils(){}
 
     /**

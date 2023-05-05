@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
 import org.switch2022.project.ddd.exceptions.CustomerAlreadyExistsException;
+import org.switch2022.project.ddd.exceptions.CustomerNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class CustomerRepository implements ICustomerRepository {
      * exists.
      */
     @Override
-    public Optional<String> getCustomerNameByTaxId(TaxId taxId) {
+    public String getCustomerNameByTaxId(TaxId taxId) {
         String requestedName = null;
 
         int i = 0;
@@ -89,6 +90,11 @@ public class CustomerRepository implements ICustomerRepository {
             }
             i++;
         }
-        return Optional.ofNullable(requestedName);
+
+        if (requestedName == null) {
+            throw new CustomerNotFoundException("Customer with this tax ID does not exist in Repository.");
+        }
+
+        return requestedName;
     }
 }
