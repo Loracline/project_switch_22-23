@@ -370,12 +370,10 @@ class ProjectServiceTest {
         projects.add(projectDouble);
         projects.add(projectDoubleTwo);
         TaxId taxIdDouble = mock(TaxId.class);
-        Optional<String> customerNameDouble = mock(Optional.class);
         when(projectRepository.findAll()).thenReturn(projects);
-        when(customerRepository.getCustomerNameByTaxId(taxIdDouble)).thenReturn(customerNameDouble);
+        when(customerRepository.getCustomerNameByTaxId(taxIdDouble)).thenReturn(customerName);
         when(projectDouble.getCustomerTaxId()).thenReturn(taxIdDouble);
         when(projectDoubleTwo.getCustomerTaxId()).thenReturn(taxIdDouble);
-        when (customerNameDouble.get()).thenReturn(customerName);
         when (projectMapper.projectToDto(projectDouble,customerName)).thenReturn(projectDtoDouble);
         when (projectMapper.projectToDto(projectDoubleTwo,customerName)).thenReturn(projectDtoDouble);
         expected.add(projectDtoDouble);

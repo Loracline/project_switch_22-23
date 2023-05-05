@@ -4,11 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
+import org.switch2022.project.ddd.exceptions.CustomerNotFoundException;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -156,6 +154,7 @@ class CustomerRepositoryTest {
     /**
      * METHOD getCustomerByTaxId()
      */
+    @SuppressWarnings("all")
     @DisplayName("Customer retrieved successfully")
     @Test
     void ensureCustomerIsRetrievedSuccessfully() {
@@ -166,18 +165,13 @@ class CustomerRepositoryTest {
         Customer customerOne = mock(Customer.class);
 
         // Double of Customer Two.
-        TaxId customerTaxIdTwo = mock(TaxId.class);
         Customer customerTwo = mock(Customer.class);
 
         // Double of Customer Three.
-        TaxId customerTaxIdThree = mock(TaxId.class);
         Customer customerThree = mock(Customer.class);
 
         // Setting up mock behaviour.
         when(customerOne.hasTaxId(customerTaxIdOne)).thenReturn(true);
-        when(customerTwo.hasTaxId(customerTaxIdTwo)).thenReturn(false);
-        when(customerThree.hasTaxId(customerTaxIdThree)).thenReturn(false);
-
         when(customerOne.getCustomerName()).thenReturn(customerNameOne);
 
         // Adding customers to the Repository.
@@ -186,11 +180,11 @@ class CustomerRepositoryTest {
         repository.addCustomerToRepository(customerTwo);
         repository.addCustomerToRepository(customerThree);
 
-        // The customer one wishes to retrieve - Customer One.
-        Optional<String> expected = Optional.of(customerNameOne);
+        // The customer's name one wishes to retrieve - Customer One.
+        String expected = customerNameOne;
 
         // ACT
-        Optional<String> result = repository.getCustomerNameByTaxId(customerTaxIdOne);
+        String result = repository.getCustomerNameByTaxId(customerTaxIdOne);
 
         // ASSERT
         assertEquals(expected, result);
@@ -198,35 +192,29 @@ class CustomerRepositoryTest {
 
     @DisplayName("Customer does not exist in repository")
     @Test
-    void ensureAnEmptyOptionalIsRetrievedWhenCustomerDoesNotExist() {
+    void ensureAnExceptionIsThrownWhenCustomerDoesNotExist() {
         // ARRANGE
-        // Double of Customer One.
-        TaxId customerTaxIdOne = mock(TaxId.class);
+        // Double of Customers to add in Repository.
         Customer customerOne = mock(Customer.class);
-
-        // Double of Customer Two.
-        TaxId customerTaxIdTwo = mock(TaxId.class);
         Customer customerTwo = mock(Customer.class);
 
-        // Double of Customer Three.
+        // Double of Tax ID of the Customer Three that don't exist in Repository.
         TaxId customerTaxIdThree = mock(TaxId.class);
-        Customer customerThree = mock(Customer.class);
 
-        // Setting up mock behaviour.
-        when(customerOne.hasTaxId(customerTaxIdOne)).thenReturn(true);
-        when(customerTwo.hasTaxId(customerTaxIdTwo)).thenReturn(false);
-        when(customerThree.hasTaxId(customerTaxIdThree)).thenReturn(false);
-
-        // Adding customers to the Repository.
+        // Adding customers One and Two to the Repository.
         CustomerRepository repository = new CustomerRepository();
         repository.addCustomerToRepository(customerOne);
         repository.addCustomerToRepository(customerTwo);
 
-        // An empty optional is expected because Customer Three is not in Repository.
-        Optional<String> expected = Optional.empty();
+        // Exception thrown when searching for the Customer Three in Repository.
+        CustomerNotFoundException exception = assertThrows(CustomerNotFoundException.class,
+                () -> repository.getCustomerNameByTaxId(customerTaxIdThree));
+
+        // An exception message is expected because Customer Three is not in Repository.
+        String expected = "Customer with this tax ID does not exist in Repository.";
 
         // ACT
-        Optional<String> result = repository.getCustomerNameByTaxId(customerTaxIdThree);
+        String result = exception.getMessage();
 
         // ASSERT
         assertEquals(expected, result);
