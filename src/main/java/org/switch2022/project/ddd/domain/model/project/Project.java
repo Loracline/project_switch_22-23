@@ -132,6 +132,16 @@ public class Project implements Entity<Project> {
         return businessSectorId.getBusinessSectorId();
     }
 
+
+    /**
+     * Getter method for the attribute: customerTaxId.
+     *
+     * @return a String with the customer ID of the project.
+     */
+    public TaxId getCustomerTaxId() {
+        return customerTaxId;
+    }
+
     /**
      * Getter method for the attribute: projectTypologyId.
      *
@@ -158,7 +168,7 @@ public class Project implements Entity<Project> {
      */
     protected boolean isPeriodAssigned(Period period) {
         boolean isAssignedPeriod = false;
-        if (projectStatus==ProjectStatus.INCEPTION) {
+        if (projectStatus == ProjectStatus.INCEPTION) {
             this.period = period;
             isAssignedPeriod = true;
         }
@@ -206,21 +216,31 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: startDate
      *
-     * @return a String with the startDate of the project.
+     * @return a String with the startDate of the project if there is a period otherwise it will
+     * return an empty string
      */
 
     public String getStartDate() {
-        return this.period.getStartDate();
+        String startDate = "";
+        if (period != null) {
+            startDate = this.period.getStartDate();
+        }
+        return startDate;
     }
 
     /**
      * Getter method for the attribute: endDate
      *
-     * @return a String with the endDate of the project.
+     * @return a String with the endDate of the project if there is a period otherwise it will
+     * return an empty string
      */
 
     public String getEndDate() {
-        return this.period.getEndDate();
+        String endDAte = "";
+        if (period != null) {
+            endDAte = this.period.getEndDate();
+        }
+        return endDAte;
     }
 }
 

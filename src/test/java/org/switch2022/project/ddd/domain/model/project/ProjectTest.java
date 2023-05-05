@@ -636,8 +636,25 @@ class ProjectTest {
         ProjectStatus projectStatus = ProjectStatus.INCEPTION;
         project.setProjectStatus(projectStatus);
         project.isPeriodAssigned(periodDouble);
-        String expected = "";
+        String expected = "2023.01.20";
         when(periodDouble.getStartDate()).thenReturn(expected);
+        //Act
+        String result = project.getStartDate();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 2: get ProjectStartDate if period is null
+     */
+
+    @Test
+    void ensureProjectStartDateIsRetrievedSuccessfullyWithPeriodNull() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        String expected = "";
         //Act
         String result = project.getStartDate();
 
@@ -658,8 +675,25 @@ class ProjectTest {
         ProjectStatus projectStatus = ProjectStatus.INCEPTION;
         project.setProjectStatus(projectStatus);
         project.isPeriodAssigned(periodDouble);
-        String expected = "";
+        String expected = "2023.01.04";
         when(periodDouble.getEndDate()).thenReturn(expected);
+        //Act
+        String result = project.getEndDate();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 2: get ProjectStartDate if period is null
+     */
+
+    @Test
+    void ensureProjectEndDateIsRetrievedSuccessfullyWithPeriodNull() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        String expected = "";
         //Act
         String result = project.getEndDate();
 
@@ -742,7 +776,7 @@ class ProjectTest {
         Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
-                LocalDate.of(2024,1, 21));
+                LocalDate.of(2024, 1, 21));
         //Act
         boolean result = project.isPeriodAssigned(periodDouble);
         //Assert
@@ -836,6 +870,39 @@ class ProjectTest {
                 projectTypologyId);
         //Act
         List<UsId> result = project.getProductBacklog();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD: getCustomerTaxId
+     * scenario 1: a string of customerTaxID is retrieved
+     */
+    @Test
+    void ensureThatCustomerTaxIDIsRetrieved() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        TaxId expected = customerTaxId;
+        //Act
+        TaxId result = project.getCustomerTaxId();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * INTEGRATION TEST
+     * METHOD: getCustomerTaxId
+     * scenario 1: a string of customerTaxID is retrieved
+     */
+    @Test
+    void ensureThatCustomerTaxIDIsRetrieved_IT() {
+        //Arrange
+        TaxId expected = new TaxId("202020200", "Portugal");
+        Project project = new Project(1, projectName, description, businessSectorId, expected,
+                projectTypologyId);
+        //Act
+        TaxId result = project.getCustomerTaxId();
         //Assert
         assertEquals(expected, result);
     }
