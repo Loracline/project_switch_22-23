@@ -15,7 +15,7 @@ import Button from "../../components/Button/Button";
 const ListProjects = () => {
     const {state, dispatch} = useContext(AppContext);
     const headers = state.headersProjects;
-    const data = state.bodyProjects;
+    const data = state.projects.map(project => project.basicInfo);
     const tableData = () => {
         let tableData;
         if (data.length > 0) {

@@ -31,32 +31,102 @@ const detailedProject = null;
 
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
-    const bodyProjects = [
+    const projects = [
         {
-            code: "P01",
-            name: "Project1",
-            customer: "ISEP",
-            status: "planned",
-            startDate: "21/05/2023",
-            endDate: "31/12/2038",
+            basicInfo:
+                {
+                    code: "P01",
+                    name: "Project1",
+                    customer: "ISEP",
+                    status: "planned",
+                    startDate: "21/05/2023",
+                    endDate: "31/12/2038",
+                },
+
+            userStories: [
+                {
+                    projectCode: "P01",
+                    userStoryNumber: "US001",
+                    userStoryText: "I want to create a profile",
+                    actor: "",
+                    acceptanceCriteria: [],
+                    status: "Planned",
+                    priority: undefined,
+                },
+                {
+                    projectCode: "P01",
+                    userStoryNumber: "US002",
+                    userStoryText: "I want to create a project",
+                    actor: "",
+                    acceptanceCriteria: [],
+                    status: "Finished",
+                    priority: undefined,
+                },
+                {
+                    projectCode: "P01",
+                    userStoryNumber: "US003",
+                    userStoryText: "I want to create an account",
+                    actor: "",
+                    acceptanceCriteria: [],
+                    status: "Blocked",
+                    priority: undefined,
+                },],
+            sprints: []
 
         },
         {
-            code: "P02",
-            name: "Project2",
-            customer: "ISEP",
-            status: "finished",
-            startDate: "21/02/2010",
-            endDate: "31/12/2022",
+            basicInfo: {
+                code: "P02",
+                name: "Project2",
+                customer: "ISEP",
+                status: "finished",
+                startDate: "21/02/2010",
+                endDate: "31/12/2022",
+            },
+
+            userStories: [
+                {
+                    projectCode: "P01",
+                    userStoryNumber: "US001",
+                    userStoryText: "I want to create a profile",
+                    actor: "",
+                    acceptanceCriteria: [],
+                    status: "Planned",
+                    priority: undefined,
+                },
+                {
+                    projectCode: "P01",
+                    userStoryNumber: "US002",
+                    userStoryText: "I want to create a project",
+                    actor: "",
+                    acceptanceCriteria: [],
+                    status: "Finished",
+                    priority: undefined,
+                },
+                {
+                    projectCode: "P01",
+                    userStoryNumber: "US003",
+                    userStoryText: "I want to create an account",
+                    actor: "",
+                    acceptanceCriteria: [],
+                    status: "Blocked",
+                    priority: undefined,
+                },],
+            sprints: []
         }
         ,
         {
-            code: "P03",
-            name: "Project3",
-            customer: "Águas do Porto",
-            status: "inception",
-            startDate: "21/02/2010",
-            endDate: "31/12/2022",
+            basicInfo: {
+                code: "P03",
+                name: "Project3",
+                customer: "Águas do Porto",
+                status: "inception",
+                startDate: "21/02/2010",
+                endDate: "31/12/2022",
+            },
+            userStories: [],
+            sprints: []
+
         }
     ]
     const bodyProjectsUserStories = [
@@ -127,7 +197,7 @@ const AppProvider = ({children}) => {
     const initialState = {
         nav,
         headersProjects,
-        bodyProjects,
+        projects,
         usHeaders,
         bodyProjectsUserStories,
         selectedProject: undefined,
