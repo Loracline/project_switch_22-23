@@ -33,7 +33,7 @@ public class Period implements ValueObject<Period> {
      * Creates a new period with the given start and end dates.
      *
      * @param startDate the start date of the period.
-     * @param endDate  the end date of the period.
+     * @param endDate   the end date of the period.
      */
     public Period(final LocalDate startDate, final LocalDate endDate) {
         Validate.notNull(startDate, "The start date must not be null");
@@ -62,22 +62,26 @@ public class Period implements ValueObject<Period> {
     }
 
     /**
-     * This method calculates the end date of the period given a start date and a duration.
+     * This method calculates the end date of the period given a start date and a
+     * duration.
      *
      * @param startDate the start date of the period.
      * @param duration  the duration of the period.
      * @return the end date of the period.
      */
-    private static final LocalDate calculateEndDate(final LocalDate startDate, final Number duration) {
+    private static final LocalDate calculateEndDate(final LocalDate startDate,
+                                                    final Number duration) {
         return startDate.plusWeeks(duration.intValue());
     }
 
     /**
-     * This method checks if two instances of Period are equal by comparing the value of their attributes
+     * This method checks if two instances of Period are equal by comparing the value
+     * of their attributes
      * startDate and endDate.
      *
      * @param other Period instance to compare with.
-     * @return <code>true</code> if the two have the same attribute value, and <code>false</code> otherwise.
+     * @return <code>true</code> if the two have the same attribute value, and
+     * <code>false</code> otherwise.
      */
     @Override
     public boolean sameValueAs(Period other) {
@@ -88,7 +92,8 @@ public class Period implements ValueObject<Period> {
      * This method checks if an instance of Period is equal to another object.
      *
      * @param o object to compare with.
-     * @return <code>true</code> if the two have the same attribute value, and <code>false</code> otherwise.
+     * @return <code>true</code> if the two have the same attribute value, and
+     * <code>false</code> otherwise.
      */
     @Override
     public boolean equals(Object o) {
@@ -105,7 +110,8 @@ public class Period implements ValueObject<Period> {
     }
 
     /**
-     * This method is used to generate a unique hash code for an object, based on the object's state.
+     * This method is used to generate a unique hash code for an object, based on the
+     * object's state.
      *
      * @return a unique value that represents the object.
      */
@@ -113,5 +119,54 @@ public class Period implements ValueObject<Period> {
     @Override
     public int hashCode() {
         return Objects.hash(startDate, endDate);
+    }
+
+    /**
+     * Verifies the startDate is not before today date.
+     *
+     * @return true if the startDate is before present day.
+     */
+    public boolean isStartDateBeforeNow() {
+        return this.startDate.isBefore(LocalDate.now());
+    }
+
+    /**
+     * Determines if this period does not overlap with the given period.
+     *
+     * @param period the period to compare with
+     * @return true if the periods do not overlap, false otherwise
+     */
+    public boolean isPeriodNotOverlapping(Period period) {
+        // check if this period ends before the start of the given period
+        return this.endDate.isBefore(period.startDate) || period.endDate.isBefore(this.startDate);
+    }
+
+    /**
+     * This method checks if date is equal or greater than start date.
+     *
+     * @param date to compare.
+     * @return true if date is equal or greater than start date or false otherwise.
+     */
+    public boolean isDateEqualOrGreaterThanStartDate(LocalDate date) {
+        boolean isEqualOrGreater = false;
+        if (date != null) {
+            isEqualOrGreater =
+                    date.isAfter(this.startDate) || date.isEqual(this.startDate);
+        }
+        return isEqualOrGreater;
+    }
+
+    /**
+     * This method checks if date is equal or lower than end date.
+     *
+     * @param date to compare.
+     * @return true if date is equal or lower than end date or false otherwise.
+     */
+    public boolean isDateEqualOrLowerThanEndDate(LocalDate date) {
+        boolean isEqualOrLower = false;
+        if (date != null) {
+            isEqualOrLower = date.isBefore(this.endDate) || date.isEqual(this.endDate);
+        }
+        return isEqualOrLower;
     }
 }

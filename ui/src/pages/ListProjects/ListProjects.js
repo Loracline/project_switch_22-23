@@ -34,7 +34,7 @@ const ListProjects = () => {
 
     return (
         <div className='page'>
-            <h1 className="pageH1">Projects</h1>
+            <h2 className="pageH1">Projects</h2>
             <div className="tableWrap">
                 {tableData()}
                 <Button onClick={() => {dispatch(selectMenu('productBacklog'))}} text='Create project'/>

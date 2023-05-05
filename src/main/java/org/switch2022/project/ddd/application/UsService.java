@@ -10,7 +10,7 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
-import org.switch2022.project.ddd.exceptions.UserStoryAlreadyExistException;
+import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +52,7 @@ public class UsService {
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
         try {
             addUsToProductBacklog(usId, projectCode, priority);
-        } catch (UserStoryAlreadyExistException usaee) {
+        } catch (AlreadyExistsInRepoException usaee) {
             deleteUs(usId);
             throw usaee;
         }
@@ -78,7 +78,7 @@ public class UsService {
      * @param priority    that the ID will have in the ProductBacklog.
      * @return true if the ID is successfully added. otherwise it will return false.
      * @throws ProjectNotFoundException       if the projectCode doesn't match any Project in the repository.
-     * @throws UserStoryAlreadyExistException if the User Story is already in the Product Backlog.
+     * @throws AlreadyExistsInRepoException if the User Story is already in the Product Backlog.
      */
 
     public boolean addUsToProductBacklog(UsId usId, Code projectCode, int priority) {
@@ -90,7 +90,7 @@ public class UsService {
         if (projectOptional.isPresent()) {
             project = projectOptional.get();
             if (!project.addUserStory(priority, usId)) {
-                throw new UserStoryAlreadyExistException("The User Story is already in the Product Backlog");
+                throw new AlreadyExistsInRepoException("The User Story is already in the Product Backlog");
             }
         } else {
             throw new ProjectNotFoundException("No project with that code");

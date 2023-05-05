@@ -33,7 +33,7 @@ class "Project" <<root>>{
 
 class "ProductBacklog"{
 -userStories
-+getUserStories()
+#getUserStories()
 }
 
 
@@ -70,7 +70,13 @@ class ProjectRepository{
 +getProjectByCode(code)
 }
 
-"GetProductBacklogController" "1"-->"1" "ProjectService": accesses
+class "UserStoryDto"{
++userStoryNumber
++userStoryText
++status
+}
+
+"GetProductBacklogController" "1"<.."1" "ProjectService":  is injected
 
 "Project" "1"-->"1" "ProductBacklog": has
 "ProductBacklog" "1"-->"*" "UserStory": has
@@ -81,7 +87,7 @@ class ProjectRepository{
 "UserStoryMapper" "1 "..> "*" "UserStoryDto" : creates
 "UserStoryMapper" ..> "UserStory" : knows
 "ProjectRepository" --|> "IProjectRepository" : implements
-"ProjectService" ..> "IProjectRepository" : accesses
-"ProjectService" ..> "IUsRepository" : accesses
+"ProjectService" <.. "IProjectRepository" : is injected
+"ProjectService" <.. "IUsRepository" : is injected
 "UsRepository" --|> "IUsRepository" :implements
 @enduml
