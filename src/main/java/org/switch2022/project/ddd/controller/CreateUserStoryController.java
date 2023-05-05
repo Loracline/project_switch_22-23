@@ -32,11 +32,6 @@ public class CreateUserStoryController {
     @Autowired
     private UsService usService;
 
-    /**
-     * Constructor
-     */
-    public CreateUserStoryController() {
-    }
 
     /**
      * This method creates a new user story in the requested project and adds it to the product
