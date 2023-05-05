@@ -6,12 +6,15 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
 import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.ProjectDto;
+import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 
 import java.util.ArrayList;
@@ -41,6 +44,11 @@ class ProjectServiceTest {
     IProjectRepository projectRepository;
     @MockBean
     IUsRepository usRepository;
+    @MockBean
+    ProjectMapper projectMapper;
+    @MockBean
+    ICustomerRepository customerRepository;
+
 
     /*
     IFactoryProject factoryProjectDouble;
@@ -329,6 +337,54 @@ class ProjectServiceTest {
 
     }
 
+    /**
+     * METHOD: requestAllProjects
+     * Scenario 1: returns and emtpy list because there are no Projects
+     */
+
+    @Test
+    void ensureThatReturnsAnEmptyListBecauseThereAreNoProjects(){
+        //Arrange
+        List<ProjectDto> expected = new ArrayList<>();
+        List<Project> projects = new ArrayList<>();
+        when(projectRepository.findAll()).thenReturn(projects);
+        //Act
+        List<ProjectDto> result = projectService.requestAllProjects();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: returns a list of ProjectDto
+     */
+
+    @Test
+    void ensureThatReturnsAListOfProjectsDto(){
+        //Arrange
+        List<ProjectDto> expected = new ArrayList<>();
+        Project projectDouble = mock(Project.class);
+        Project projectDoubleTwo = mock(Project.class);
+        ProjectDto projectDtoDouble = mock(ProjectDto.class);
+        List<Project> projects = new ArrayList<>();
+        String customerName = "ISEP";
+        projects.add(projectDouble);
+        projects.add(projectDoubleTwo);
+        TaxId taxIdDouble = mock(TaxId.class);
+        Optional<String> customerNameDouble = mock(Optional.class);
+        when(projectRepository.findAll()).thenReturn(projects);
+        when(customerRepository.getCustomerNameByTaxId(taxIdDouble)).thenReturn(customerNameDouble);
+        when(projectDouble.getCustomerTaxId()).thenReturn(taxIdDouble);
+        when(projectDoubleTwo.getCustomerTaxId()).thenReturn(taxIdDouble);
+        when (customerNameDouble.get()).thenReturn(customerName);
+        when (projectMapper.projectToDto(projectDouble,customerName)).thenReturn(projectDtoDouble);
+        when (projectMapper.projectToDto(projectDoubleTwo,customerName)).thenReturn(projectDtoDouble);
+        expected.add(projectDtoDouble);
+        expected.add(projectDtoDouble);
+        //Act
+        List<ProjectDto> result = projectService.requestAllProjects();
+        //Assert
+        assertEquals(expected, result);
+    }
 
     // Integration testes: ProjectService + Project + ProjectRepository
 /*

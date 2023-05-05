@@ -1,11 +1,14 @@
 package org.switch2022.project.ddd.application;
 
+import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
 import org.switch2022.project.ddd.domain.model.project.*;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.ProjectDto;
+import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 import org.switch2022.project.ddd.utils.Utils;
 
@@ -28,6 +31,10 @@ public class ProjectService {
     private IProjectRepository projectRepository;
     @Autowired
     private IUsRepository usRepository;
+    @Autowired
+    private ProjectMapper projectMapper;
+    @Autowired
+    private ICustomerRepository customerRepository;
 
     /**
      * Constructor.
@@ -125,5 +132,18 @@ public class ProjectService {
         return userStoriesPlanned;
     }
 
-
+    /**
+     * Requests a list of all projects
+     *
+     * @return a list of all projectsDto.
+     */
+    public List<ProjectDto> requestAllProjects() {
+        List<ProjectDto> projectsDto = new ArrayList<>();
+        List<Project> projects = projectRepository.findAll();
+        for (Project project : projects) {
+            Optional<String> customerName = customerRepository.getCustomerNameByTaxId(project.getCustomerTaxId());
+            projectsDto.add(projectMapper.projectToDto(project, customerName.get()));
+        }
+        return projectsDto;
+    }
 }
