@@ -8,12 +8,11 @@ import java.util.List;
 
 /**
  * Class Project is built to create and manage new projects.
- * A project is defined by code, it's your ID. Its other attributes are budget, name, description, project Status, <br>
- * number of planned sprints, period, sprint duration, sprints (list of sprints), business sector, customer, <br>
+ * A project is defined by a code, its ID. Other attributes are the budget, name, description, project status, <br>
+ * number of planned sprints, period, sprint duration, list of sprints, business sector, customer, <br>
  * project typology and product backlog .
- * The project status attribute defaults to "Planned"
+ * The project status attribute defaults to "Planned".
  */
-
 public class Project implements Entity<Project> {
 
     private final Code projectCode;
@@ -26,7 +25,7 @@ public class Project implements Entity<Project> {
     private SprintDuration sprintDuration;
     private List<SprintId> sprints;
     private final BusinessSectorId businessSectorId;
-    private final CustomerId customerId;
+    private final TaxId customerTaxId;
     private final ProjectTypologyId projectTypologyId;
     private final ProductBacklog productBacklog;
 
@@ -34,13 +33,13 @@ public class Project implements Entity<Project> {
      * Constructor: the constructor with relevant attributes for a project to be in a valid state.
      */
     protected Project(Number projectNumber, Name projectName, Description description,
-                      BusinessSectorId businessSectorId, CustomerId customerId, ProjectTypologyId projectTypologyId) {
+                      BusinessSectorId businessSectorId, TaxId customerTaxId, ProjectTypologyId projectTypologyId) {
         this.projectCode = new Code(projectNumber);
         this.projectStatus = ProjectStatus.PLANNED;
         this.projectName = projectName;
         this.description = description;
         this.businessSectorId = businessSectorId;
-        this.customerId = customerId;
+        this.customerTaxId = customerTaxId;
         this.projectTypologyId = projectTypologyId;
         this.productBacklog = new ProductBacklog(this.projectCode.getCode());
     }
@@ -135,14 +134,13 @@ public class Project implements Entity<Project> {
 
 
     /**
-     * Getter method for the attribute: customerId.
+     * Getter method for the attribute: customerTaxId.
      *
      * @return a String with the customer ID of the project.
      */
-    protected String getCustomerId() {
-        return customerId.getCustomerId();
+    public TaxId getCustomerTaxId() {
+        return customerTaxId;
     }
-
 
     /**
      * Getter method for the attribute: projectTypologyId.
@@ -170,7 +168,7 @@ public class Project implements Entity<Project> {
      */
     protected boolean isPeriodAssigned(Period period) {
         boolean isAssignedPeriod = false;
-        if (projectStatus==ProjectStatus.INCEPTION) {
+        if (projectStatus == ProjectStatus.INCEPTION) {
             this.period = period;
             isAssignedPeriod = true;
         }
@@ -218,21 +216,31 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: startDate
      *
-     * @return a String with the startDate of the project.
+     * @return a String with the startDate of the project if there is a period otherwise it will
+     * return an empty string
      */
 
     public String getStartDate() {
-        return this.period.getStartDate();
+        String startDate = "";
+        if (period != null) {
+            startDate = this.period.getStartDate();
+        }
+        return startDate;
     }
 
     /**
      * Getter method for the attribute: endDate
      *
-     * @return a String with the endDate of the project.
+     * @return a String with the endDate of the project if there is a period otherwise it will
+     * return an empty string
      */
 
     public String getEndDate() {
-        return this.period.getEndDate();
+        String endDAte = "";
+        if (period != null) {
+            endDAte = this.period.getEndDate();
+        }
+        return endDAte;
     }
 }
 

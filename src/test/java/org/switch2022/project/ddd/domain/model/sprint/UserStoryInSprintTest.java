@@ -134,6 +134,68 @@ public class UserStoryInSprintTest {
     }
 
     /**
+     * Method: sameIdentityAs()
+     * Scenario 01: This test evaluates if two instances of UserStoryInSprint are the same if
+     * their usId attribute are the same.
+     * It should assert true.
+     */
+    @Test
+    void ensureTheTwoInstancesOfUserStoryInSprintAreTheSameIfTheirIdAttributeIsTheSame() {
+        //ARRANGE
+        UsId usIdDouble = mock(UsId.class);
+        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdDouble, ONE);
+        UserStoryInSprint userStoryInSprintTwo = new UserStoryInSprint(usIdDouble, ONE);
+
+        //ACT
+        boolean result = userStoryInSprintOne.sameIdentityAs(userStoryInSprintTwo);
+
+        //ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Method: sameIdentityAs()
+     * Scenario 02: This test evaluates if two instances of UserStoryInSprint are different if
+     * their usId attribute are not the same.
+     * It should assert false.
+     */
+    @Test
+    void ensureTheTwoInstancesOfUserStoryInSprintAreDifferentIfTheirIdAttributeIsNotTheSame() {
+        //ARRANGE
+        Effort effortDouble = mock(Effort.class);
+        UsId usIdOne = new UsId("P001", "US001");
+        UsId usIdTwo = new UsId("P002", "US002");
+        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdOne, effortDouble);
+        UserStoryInSprint userStoryInSprintTwo = new UserStoryInSprint(usIdTwo, effortDouble);
+
+        //ACT
+        boolean result = userStoryInSprintOne.sameIdentityAs(userStoryInSprintTwo);
+
+        //ASSERT
+        assertFalse(result);
+    }
+
+    /**
+     * Method: sameIdentityAs()
+     * Scenario 03: This test evaluates if two instances of UserStoryInSprint are different if
+     * one of them is null.
+     * It should assert false.
+     */
+    @Test
+    void ensureTheTwoProfilesAreNotTheSameBecauseOneOfThemIsNull() {
+        //ARRANGE
+        UsId usIdDouble = mock(UsId.class);
+        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdDouble, ONE);
+        UserStoryInSprint userStoryInSprintTwo = null;
+
+        //ACT
+        boolean result = userStoryInSprintOne.sameIdentityAs(userStoryInSprintTwo);
+
+        //ASSERT
+        assertFalse(result);
+    }
+
+    /**
      * Method: getUsId().
      * Scenario 1: Ensure if the string representation of the UserStory id attribute of a given
      * instance of UserStoryInSprint is retrieved.
@@ -168,6 +230,26 @@ public class UserStoryInSprintTest {
         //ACT & ASSERT
         assertTrue(result);
         assertEquals(TWO, userStoryInSprint_One.getEffort());
+    }
+
+    /**
+     * Scenario 2: Verify if the effort of userStoryOne is not set when an invalid input is given.
+     * Expected result: effort of userStoryOne remains unchanged.
+     */
+    @Test
+    public void ensureEffortIsNotSetForUserStory() {
+        //ARRANGE
+        UsId usIdDouble = mock(UsId.class);
+        Effort effortDouble = mock(Effort.class);
+        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble, ONE);
+        Effort initialEffort = userStoryInSprint_One.getEffort();
+
+        //ACT
+        boolean result = userStoryInSprint_One.changeEffort(effortDouble);
+
+        //ASSERT
+        assertFalse(result);
+        assertEquals(initialEffort, userStoryInSprint_One.getEffort());
     }
 }
 

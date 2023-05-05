@@ -99,10 +99,6 @@ class BusinessSectorId <<value object>> {
 -id: String
 }
 
-class CustomerId <<value object>> {
--id: String
-}
-
 class ProjectTypologyId <<value object>> {
 -typologyId: String
 }
@@ -172,8 +168,9 @@ class AccountStatus <<value object>> {
 -status: Boolean
 }
 
-class Vat <<value object>> {
--number: Integer
+class TaxId <<value object>> {
+-number: String
+-country: String
 }
 
 class PhoneNumber <<value object>> {
@@ -203,7 +200,7 @@ Project --> "1" Period
 Project --> "1" SprintDuration
 Project --> "*" SprintId: has List >
 Project --> "1" BusinessSectorId
-Project --> "1" CustomerId
+Project --> "1" TaxId
 Project --> "1" ProjectTypologyId
 Project --> "1" ProductBacklog
 
@@ -217,9 +214,8 @@ UserStory --> "1" UsText
 UserStory --> "1" Status
 UserStory --> "1" AcceptanceCriteria
 
-Customer --> "1" CustomerId
+Customer --> "1" TaxId
 Customer --> "1" Name
-Customer --> "1" Vat
 Customer --> "1" PhoneNumber
 
 BusinessSector --> "1" BusinessSectorId
