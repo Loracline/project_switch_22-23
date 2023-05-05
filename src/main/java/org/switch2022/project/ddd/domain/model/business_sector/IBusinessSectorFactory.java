@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.domain.model.business_sector;
 
-import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.domain.value_object.Name;
 
 /**

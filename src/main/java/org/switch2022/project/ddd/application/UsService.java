@@ -27,9 +27,7 @@ public class UsService {
     private IProjectRepository projectRepository;
     @Autowired
     private IFactoryUserStory factoryUserStory;
-
-    public UsService() {
-    }
+    
 
     /**
      * This method creates a userStory and adds it to the product backlog or throws an exception if userStory
