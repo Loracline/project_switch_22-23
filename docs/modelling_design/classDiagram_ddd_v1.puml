@@ -156,6 +156,88 @@ class "ProjectDto"{
 "IFactoryUserStory" <|.. "FactoryUserStory": implements
 "FactoryUserStory" "1"..>"*" "UserStory": creates
 
+class CreateTypologyController {
+- typologyService
++ createTypology(name)
+}
+
+class TypologyService{
+- typologyRepository
+- typologyFactory
++ createTypology(name)
+}
+
+interface ITypologyFactory{
++ createTypology(typologyNumber, typologyName)
+}
+
+class TypologyFactory{
++ createTypology(typologyNumber, typologyName)
+}
+
+interface ITypologyRepository{
++ add(typology)
+}
+
+class TypologyRepository{
++ add(typology)
+}
+
+class Typology{
+- typologyId
+- typologyName
+# Typology(typologyNumber, typologyName)
+}
+
+CreateTypologyController <.. TypologyService: is injected
+TypologyService <.. ITypologyRepository: is injected
+TypologyService <.. ITypologyFactory: is injected
+ITypologyFactory <|.. TypologyFactory: implements
+TypologyFactory ..> Typology: creates
+ITypologyRepository <|.. TypologyRepository: implements
+TypologyRepository --> Typology: has
+
+class CreateBusinessSectorController {
+- businessSectorService
++ createBusinessSector(name)
+}
+
+class BusinessSectorService{
+- businessSectorRepository
+- businessSectorFactory
++ createBusinessSector(name)
+}
+
+interface IBusinessSectorFactory{
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+class BusinessSectorFactory{
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+interface IBusinessSectorRepository{
++ add(businessSector)
+}
+
+class BusinessSectorRepository{
++ add(businessSector)
+}
+
+class BusinessSector{
+- businessSectorId
+- businessSectorName
+# businessSector(businessSectorNumber, businessSectorName)
+}
+
+CreateBusinessSectorController <.. BusinessSectorService: is injected
+BusinessSectorService <.. IBusinessSectorRepository: is injected
+BusinessSectorService <.. IBusinessSectorFactory: is injected
+IBusinessSectorFactory <|.. BusinessSectorFactory: implements
+BusinessSectorFactory ..> BusinessSector: creates
+IBusinessSectorRepository <|.. BusinessSectorRepository: implements
+BusinessSectorRepository --> BusinessSector: has
+
 
 "UsService" "1" <.. "1" "IProjectRepository": is injected
 "IProjectRepository" <|.. "ProjectRepository": implements

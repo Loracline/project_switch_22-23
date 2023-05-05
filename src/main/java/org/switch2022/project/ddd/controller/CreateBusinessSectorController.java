@@ -14,13 +14,6 @@ public class CreateBusinessSectorController {
     private BusinessSectorService businessSectorService;
 
     /**
-     * Constructor
-     */
-
-    public CreateBusinessSectorController() {
-    }
-
-    /**
      * This method receives a name as a String and creates a new business sector with that name.
      *
      * @param name that represents the name of a business sector.

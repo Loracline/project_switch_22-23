@@ -13,13 +13,6 @@ public class CreateTypologyController {
     private TypologyService typologyService;
 
     /**
-     * Constructor
-     */
-
-    public CreateTypologyController() {
-    }
-
-    /**
      * This method receives a String name and call outher class method typology sevice.
      *
      * @param name that represents a String.
