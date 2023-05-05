@@ -1,13 +1,31 @@
 .button{
     background: #6145AF;
     border-radius: 10px;
-    padding: 16px 40px;
+    padding: 16px 30px;
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 1.25rem;
     line-height: 28px;
     text-align: center;
     color: #FFFFFF;
     border: none;
+    margin-bottom: 12px;
+    cursor: pointer;
+    filter: drop-shadow(4px 5px 1px rgba(0, 0, 0, 0.20));
+}
+
+.secondaryButton {
+    color: #6145AF;
+    background-color: white;
+    border-color: #6145AF;
+    border-radius: 10px;
+    padding: 16px 30px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 28px;
+    text-align: center;
+    cursor: pointer;
+    filter: drop-shadow(4px 5px 1px rgba(0, 0, 0, 0.20));
 }

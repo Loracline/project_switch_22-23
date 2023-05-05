@@ -1,0 +1,44 @@
+@startuml
+
+autonumber
+skinparam sequenceMessageAlign center
+title TO ADD BUSINESS SECTOR
+legend top
+US008 - As Administrator, I want to add a business sector.
+end legend
+
+actor Administrator as admin
+participant ":BusinessSectorUI" as ui
+participant ":CreateBusinessSectorController" as ctrl
+participant ":BusinessSectorService" as service
+participant ":BusinessSectorFactory" as factory
+participant "businessSector:BusinessSector" as sector
+participant ":BusinessSectorRepository" as repo
+
+activate "admin"
+admin -> ui : creates business sector
+activate "ui"
+ui --> admin : request data(name)
+admin -> ui: enters data
+ui -> ctrl: createBusinessSector(name)
+activate "ctrl"
+ctrl -> service: createBusinessSector(name)
+activate "service"
+service -> factory: createBusinessSector(businessSectorNumber, \n businessSectorName)
+activate factory
+create sector
+factory -> sector: create()
+factory --> service: businessSector
+deactivate factory
+service -> repo: add(businessSector)
+activate "repo"
+repo --> service: true
+deactivate repo
+service --> ctrl: true
+deactivate "service"
+ctrl --> ui : true
+deactivate ctrl
+ui --> admin: informs operation success
+deactivate ui
+
+@enduml

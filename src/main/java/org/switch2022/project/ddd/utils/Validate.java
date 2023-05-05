@@ -124,6 +124,23 @@ public class Validate {
     }
 
     /**
+     * <p>Validate that the specified argument is not <code>zero</code>;
+     * otherwise throwing an exception with the specified message.
+     *
+     * <pre>Validate.notZero(myNumber, "The number must not be zero");</pre>
+     *
+     * @param number       the number to check.
+     * @param argumentName the name of the argument to check.
+     * @throws InvalidInputException if the number is zero.
+     */
+    public static <T extends Number> void notZero(T number, String argumentName) {
+        if (number.doubleValue() == 0.0) {
+            throw new InvalidInputException(String.format("The %s must not be zero",
+                    argumentName));
+        }
+    }
+
+    /**
      * <p>Validate that the specified argument is within a specified <code>interval</code>;
      * otherwise throwing an exception with the specified message.
      *

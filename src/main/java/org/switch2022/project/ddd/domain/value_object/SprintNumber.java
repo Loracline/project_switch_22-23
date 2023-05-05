@@ -5,7 +5,7 @@ import org.switch2022.project.ddd.utils.Validate;
 
 public class SprintNumber implements ValueObject<SprintNumber> {
 
-    private final String sprintId;
+    private final String sprintNumber;
 
     /**
      * Constructor.
@@ -16,7 +16,7 @@ public class SprintNumber implements ValueObject<SprintNumber> {
         Validate.notNull(sprintNumber, "The sprint number must not be null");
         Validate.notNegative(sprintNumber, "sprint number");
 
-        this.sprintId = String.format("S%03d", sprintNumber).toLowerCase();
+        this.sprintNumber = String.format("S%03d", sprintNumber).toLowerCase();
 
     }
 
@@ -25,8 +25,8 @@ public class SprintNumber implements ValueObject<SprintNumber> {
      *
      * @return String representation of the sprint ID.
      */
-    public String getSprintId() {
-        return sprintId;
+    public String getSprintNumber() {
+        return sprintNumber;
     }
 
     /**
@@ -37,7 +37,7 @@ public class SprintNumber implements ValueObject<SprintNumber> {
      */
     @Override
     public boolean sameValueAs(SprintNumber other) {
-        return other != null && this.sprintId.equals(other.sprintId);
+        return other != null && this.sprintNumber.equals(other.sprintNumber);
     }
 
     /**
@@ -68,6 +68,6 @@ public class SprintNumber implements ValueObject<SprintNumber> {
 
     @Override
     public int hashCode() {
-        return sprintId.hashCode();
+        return sprintNumber.hashCode();
     }
 }

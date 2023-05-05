@@ -10,7 +10,7 @@ class ProjectStatusTest {
      * METHOD getStatus
      */
     @Test
-    void ensureStatusValueIsRetrieved (){
+    void ensureStatusValueIsRetrieved() {
         //Arrange
         String expected = "planned";
         //Act
