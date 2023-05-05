@@ -30,9 +30,10 @@ public class BusinessSectorService {
      * AlreadyExistsInRepoException otherwise.
      */
     public boolean createBusinessSector(String name) {
-        Name sectorName = new Name(name);
-        int sectorNumber = calculateNextBusinessSectorNumber();
-        BusinessSector businessSector = businessSectorFactory.createBusinessSector(sectorNumber, sectorName);
+        Name businessSectorName = new Name(name);
+        int businessSectorNumber = calculateNextBusinessSectorNumber();
+        BusinessSector businessSector = businessSectorFactory.createBusinessSector(businessSectorNumber,
+                businessSectorName);
         return businessSectorRepository.add(businessSector);
     }
 
