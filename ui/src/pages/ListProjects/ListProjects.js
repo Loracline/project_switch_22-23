@@ -22,7 +22,7 @@ const ListProjects = () => {
             tableData = (
                 <table>
                     <TableHeader headers={headers}/>
-                    <TableBody body={data} dispatch={dispatch}/>
+                    <TableBody body={data} dispatch={dispatch} isClickable={true}/>
                 </table>)
         } else {
             tableData = <Alert variant="filled" severity="info">

@@ -29,3 +29,12 @@
     cursor: pointer;
     filter: drop-shadow(4px 5px 1px rgba(0, 0, 0, 0.20));
 }
+
+.button:hover {
+    background-color: #282c34;
+}
+
+.secondaryButton:hover {
+    background-color: #282c34;
+    color: white;
+}

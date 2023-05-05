@@ -61,7 +61,7 @@ function CreateUserStory() {
 
     return (
         <div className="page">
-            <section className="form-container">
+            <section className="formCard">
                 <h2>Create User Story</h2>
                 <form className="user-story-form" onSubmit={handleSubmit}>
                     <TextField

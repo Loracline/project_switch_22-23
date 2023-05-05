@@ -8,11 +8,11 @@ import {selectMenu, setCurrentProject} from "../../context/Actions";
  * @returns {JSX.Element} a body created accordingly with the props passed.
  * */
 
-function TableBody({ body, dispatch }) {
+function TableBody({ isClickable, body, dispatch }) {
     return (
         <tbody>
         {body.map((item, index) => (
-            <tr key={index} className="tableBody" onClick={() => {dispatch(setCurrentProject(item));
+            <tr key={index} className={isClickable? "tableBody clickRow":"tableBody"} onClick={() => {dispatch(setCurrentProject(item));
                 dispatch(selectMenu('project'))}}>
                 {Object.values(item).map((value, i) => (
                     <td key={i}>{value}</td>
@@ -21,6 +21,10 @@ function TableBody({ body, dispatch }) {
         ))}
         </tbody>
     );
+}
+
+TableBody.defaultProps = {
+    isClickable: false
 }
 
 export default TableBody;

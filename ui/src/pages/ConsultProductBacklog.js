@@ -36,7 +36,7 @@ function ConsultProductBacklog() {
         return tableData;
     }, [selectedProject, usHeaders]);
     return (
-        <div>
+        <div className='page'>
             <h1>Consult Product Backlog</h1>
             <SelectProjectTextInput/>
             {tableData}

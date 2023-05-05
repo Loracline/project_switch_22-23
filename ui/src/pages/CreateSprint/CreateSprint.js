@@ -1,10 +1,11 @@
 import {useContext, useMemo, useState} from "react";
-import AppContext from "../context/AppContext";
-import {createSprint} from "../context/Actions";
-import InputText from "../components/InputText/InputText";
-import Button from "../components/Button/Button";
-import SelectProjectSTextInput from "../components/SelectProjectSTextInput";
-import Calendar from "../components/Calendar";
+import AppContext from "../../context/AppContext";
+import {createSprint} from "../../context/Actions";
+import InputText from "../../components/InputText/InputText";
+import Button from "../../components/Button/Button";
+import SelectProjectSTextInput from "../../components/SelectProjectSTextInput";
+import Calendar from "../../components/Calendar";
+import './CreateSprint.css';
 
 
 /**This component provides a form for creating a new sprint.
@@ -87,10 +88,12 @@ function CreateSprintForm() {
     }, [selectedProject]);
 
     return (
-        <div>
-            <h2>Create a Sprint</h2>
-            <SelectProjectSTextInput/>
-            {form}
+        <div className='page'>
+            <section className='formCard'>
+                <h2>Create a Sprint</h2>
+                <SelectProjectSTextInput/>
+                {form}
+            </section>
         </div>
     );
 }

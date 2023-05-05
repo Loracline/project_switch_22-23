@@ -1,0 +1,11 @@
+.aboutPage {
+    display: flex;
+}
+
+.aboutPage ul {
+    padding: 0;
+}
+
+.aboutPage li {
+    list-style: none;
+}
