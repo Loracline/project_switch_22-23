@@ -20,9 +20,9 @@ const reducer = (state, action) => {
         case CREATE_USER_STORY: {
             const {userStory} = action.payload;
 
-            const updatedBodyProjectsUserStories = state.bodyProjectsUserStories.map(
+            const updatedProjects = state.projects.map(
                 (project) => {
-                    if (project.code === userStory.projectCode) {
+                    if (project.basicInfo.code === userStory.projectCode) {
                         return {
                             ...project,
                             userStories: [...project.userStories, userStory]
@@ -30,9 +30,9 @@ const reducer = (state, action) => {
                     }
                     return project;
                 })
-
+            /*console.log(updatedProjects)*/
             return {
-                ...state, bodyProjectsUserStories: updatedBodyProjectsUserStories
+                ...state, projects: updatedProjects,
             }
         }
 
