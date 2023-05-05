@@ -116,18 +116,19 @@ public class Sprint implements Entity<Sprint> {
      * @return TRUE if the User Story is present in the list and FALSE otherwise.
      */
 
-    /*
+
     public boolean hasUserStory(UsId usId) {
         boolean hasUs = false;
         int i = 0;
         while (i < userStoriesInSprint.size() && !hasUs) {
             UserStoryInSprint userStory = userStoriesInSprint.get(i);
-            if (userStory.getUsId().equals(usId.getUserStoryId())) {
+            if (userStory.getUsId().equals(usId)) {
                 hasUs = true;
             }
+            i++;
         }
         return hasUs;
-    }*/
+    }
 
     /**
      * This method sets the effort of a userStory.
@@ -138,7 +139,6 @@ public class Sprint implements Entity<Sprint> {
      * @return true if the effort is set and false otherwise.
      */
 
-    /*
     public boolean estimateEffortUserStory(UsId usId, Effort effort,
 
                                            LocalDate date){
@@ -146,13 +146,12 @@ public class Sprint implements Entity<Sprint> {
         if (isDateBeforeStartDate(date)) {
             for (UserStoryInSprint userStory : userStoriesInSprint) {
                 if (userStory.getUsId().equals(usId)) {
-                    userStory.changeEffort(effort);
-                    hasEffortChanged = true;
+                    hasEffortChanged = userStory.changeEffort(effort) ;
                 }
             }
         }
         return  hasEffortChanged;
-    }*/
+    }
 
     /**
      * This method verifies if the Sprint has the given Sprint Number
@@ -184,14 +183,14 @@ public class Sprint implements Entity<Sprint> {
      * @return a sprint backlog with list of copies of user stories.
      */
 
-    /*
+
     public List<UsId> getSprintBacklog() {
         List<UsId> sprintBacklog = new ArrayList<>();
         for (UserStoryInSprint userStory : userStoriesInSprint) {
             sprintBacklog.add(userStory.getUsId());
         }
         return sprintBacklog;
-    }*/
+    }
 
     /**
      * This method checks if date is equal or greater than start date and equal or

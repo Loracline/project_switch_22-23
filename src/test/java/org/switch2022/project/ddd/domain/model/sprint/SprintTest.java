@@ -7,6 +7,8 @@ import org.switch2022.project.ddd.domain.value_object.Period;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,7 +40,7 @@ class SprintTest {
 
     }
     /**
-     * Scenario 2: Sprint is not created when the Sprint NUmber is negative. Should
+     * Scenario 2: Sprint is not created when the Sprint Number is negative. Should
      * throw an exception.
      */
 
@@ -55,8 +57,26 @@ class SprintTest {
 
         //Assert
         assertEquals(expected, result.getMessage());
-    }
 
+    }
+    /**
+     * Scenario 3: Sprint is not created when the ProjectCode is null/blank. Should
+     * throw an exception.
+     */
+    @Test
+    public void ensureSprintIsNotCreateBecauseProjectCodeIsNull() {
+        //Arrange
+        String projectCode = "";
+        Period period = mock(Period.class);
+        String expected = "The project code must not be empty";
+
+        // Act
+        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
+                () -> new Sprint(projectCode, 2, period));
+
+        //Assert
+        assertEquals(expected, result.getMessage());
+    }
     /**
      * METHOD EQUALS
      * <br>
@@ -213,11 +233,6 @@ class SprintTest {
         assertEquals(expected, result);
     }
 
-    /*
-    @Test
-    void ensureThatUserStoryIsAddedSuccessfully() {
-        //boolean result = sprint.addUserStory(userStoryInSprint);
-    }*/
 
     /**
      * METHOD hasSprintNumber(sprintNumber)
@@ -419,25 +434,26 @@ class SprintTest {
         //Assert
         assertFalse(result);
     }
-        /**
-         * METHOD addUserStory()
-         * Scenario 1 : return true if userStory is added, because the list is empty.
-         */
 
-        @Test
-        void ensureUserStoryIsAdded_becauseTheListIsEmpty() {
+    /**
+     * METHOD addUserStory()
+     * Scenario 1 : return true if userStory is added, because the list is empty.
+     */
+
+    @Test
+    void ensureUserStoryIsAdded_becauseTheListIsEmpty() {
         //Arrange
-            Period period = mock(Period.class);
-            String projectCode = "P1";
-            Sprint sprint = new Sprint(projectCode, 1, period);
-            UsId usId = mock(UsId.class);
-            Effort effort = mock(Effort.class);
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        Effort effort = mock(Effort.class);
         //Act
-         boolean result = sprint.addUserStory(usId,effort);
+        boolean result = sprint.addUserStory(usId, effort);
 
         //Assert
         assertTrue(result);
-        }
+    }
 
 
     /**
@@ -452,9 +468,9 @@ class SprintTest {
         UsId usId = mock(UsId.class);
         Effort effort = mock(Effort.class);
         UsId usIdDouble = mock(UsId.class);
-        sprint.addUserStory(usIdDouble,effort);
+        sprint.addUserStory(usIdDouble, effort);
         //Act
-        boolean result = sprint.addUserStory(usId,effort);
+        boolean result = sprint.addUserStory(usId, effort);
 
         //Assert
         assertTrue(result);
@@ -472,12 +488,213 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, 1, period);
         UsId usId = mock(UsId.class);
         Effort effort = mock(Effort.class);
-        sprint.addUserStory(usId,effort);
+        sprint.addUserStory(usId, effort);
         //Act
-        boolean result = sprint.addUserStory(usId,effort);
+        boolean result = sprint.addUserStory(usId, effort);
 
         //Assert
         assertFalse(result);
+    }
+
+    /**
+     * METHOD hasUserStory()
+     * Scenario 1 : return true if it has the userStory.
+     */
+
+    @Test
+    void ensureItReturnsTrueIfItHasUserStory() {
+        //Arrange
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        Effort effort = mock(Effort.class);
+        sprint.addUserStory(usId, effort);
+
+        //Act
+        boolean result = sprint.hasUserStory(usId);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2 : return false because the userStory is not in list.
+     */
+
+    @Test
+    void ensureItReturnsFalseBecauseUserStoryIsNotInTheList() {
+        //Arrange
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        Effort effort = mock(Effort.class);
+        UsId usIdDouble = mock(UsId.class);
+        sprint.addUserStory(usIdDouble, effort);
+
+        //Act
+        boolean result = sprint.hasUserStory(usId);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3 : return false because the userStory list is empty.
+     */
+    @Test
+    void ensureItReturnsFalseBecauseUserStoryIsEmpty() {
+        //Arrange
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+
+        //Act
+        boolean result = sprint.hasUserStory(usId);
+
+        //Assert
+        assertFalse(result);
+    }
+    /**
+     * METHOD estimateEffortUserStory()
+     * Scenario 1 : return true if Effort changed.
+     */
+
+    @Test
+    void ensureEstimateEffortHasChanged() {
+        //Arrange
+        LocalDate date = mock(LocalDate.class);
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        Effort effort = Effort.TWO;
+        sprint.addUserStory(usId, effort);
+        when(date.isAfter(any())).thenReturn(true);
+
+        //Act
+        boolean result = sprint.estimateEffortUserStory(usId,effort,date);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+    * Scenario 2 : return false because date is after start date.
+    */
+
+    @Test
+    void ensureEstimateEffortIsNotChangedBecauseDateIsAfterStartDate() {
+        //Arrange
+        LocalDate date = mock(LocalDate.class);
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        Effort effort = Effort.TWO;
+        when(date.isAfter(any())).thenReturn(false);
+
+        //Act
+        boolean result = sprint.estimateEffortUserStory(usId,effort,date);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 3 : returns true because date is equal to start date.
+     */
+    @Test
+    void ensureEstimateEffortHasNotChanged() {
+        //Arrange
+        LocalDate date = mock(LocalDate.class);
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        Effort effort = Effort.TWO;
+        sprint.addUserStory(usId, effort);
+        when(date.isEqual(any())).thenReturn(true);
+
+        //Act
+        boolean result = sprint.estimateEffortUserStory(usId,effort,date);
+
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * Scenario 4 : returns false because UserStory does not exist.
+     */
+    @Test
+    void ensureEstimateEffortHasNotChangedBecauseUSDoesNotExist() {
+        //Arrange
+        LocalDate date = mock(LocalDate.class);
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        UsId usId = mock(UsId.class);
+        UsId usIdDouble = mock(UsId.class);
+        Effort effort = Effort.TWO;
+        sprint.addUserStory(usIdDouble, effort);
+        when(date.isAfter(any())).thenReturn(true);
+
+        //Act
+        boolean result = sprint.estimateEffortUserStory(usId,effort,date);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD getSprintBacklog()
+     * Scenario 1 : ensure it returns an empty list.
+     */
+
+    @Test
+    void ensureItReturnsAnEmptyList(){
+        //Arrange
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        List<UsId> expected = new ArrayList<>();
+
+        //Act
+        List<UsId> result = sprint.getSprintBacklog();
+
+        //Assert
+        assertEquals(result, expected);
+
+    }
+
+    /**
+     * Scenario 2: ensure it returns a list of UsId's.
+     */
+    @Test
+    void ensureItReturnsAListOfUsIds(){
+        //Arrange
+        Period period = mock(Period.class);
+        String projectCode = "P1";
+        Sprint sprint = new Sprint(projectCode, 1, period);
+        Effort effort = mock(Effort.class);
+        List<UsId> expected = new ArrayList<>();
+        UsId usId = mock(UsId.class);
+        UsId usIdDouble = mock(UsId.class);
+        UsId usIdTriple = mock(UsId.class);
+        expected.add(usId);
+        expected.add(usIdDouble);
+        expected.add(usIdTriple);
+        sprint.addUserStory(usId,effort);
+        sprint.addUserStory(usIdDouble,effort);
+        sprint.addUserStory(usIdTriple,effort);
+
+        //Act
+        List<UsId> result = sprint.getSprintBacklog();
+
+        //Assert
+        assertEquals(expected,result);
+
     }
 
 
