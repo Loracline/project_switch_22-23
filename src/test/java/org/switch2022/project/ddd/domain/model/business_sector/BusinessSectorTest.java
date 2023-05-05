@@ -53,7 +53,7 @@ class BusinessSectorTest {
     void ensureAnInstanceOfBusinessSectorIsNotCreatedBecauseTheNameIsNull() {
         // Arrange, Act and Assert
         assertThrows(IllegalArgumentException.class,
-                () -> new BusinessSector(-1, null));
+                () -> new BusinessSector(1, null));
     }
 
     /**

@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.domain.model.business_sector;
 
-import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.domain.value_object.Name;
 
 /**
@@ -11,10 +10,11 @@ public interface IBusinessSectorFactory {
     /**
      * This method creates an instance of BusinessSector.
      *
-     * @param idNumber of the business sector to create.
-     * @param name       is the name of the business sector.
+     * @param businessSectorNumber is the number of the business sector.
+     * @param businessSectorName is the name of the business sector.
+     * @return a new business sector.
      */
 
-    BusinessSector createBusinessSector(final Number idNumber, Name name);
+    BusinessSector createBusinessSector(final Number businessSectorNumber, Name businessSectorName);
 
 }

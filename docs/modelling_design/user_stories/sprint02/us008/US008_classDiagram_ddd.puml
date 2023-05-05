@@ -1,0 +1,53 @@
+@startuml
+
+class CreateBusinessSectorController
+class BusinessSectorService
+interface IBusinessSectorFactory
+class BusinessSectorFactory
+interface IBusinessSectorRepository
+class BusinessSectorRepository
+class BusinessSector
+
+class CreateBusinessSectorController {
+- businessSectorService
++ createBusinessSector(name)
+}
+
+class BusinessSectorService{
+- businessSectorRepository
+- businessSectorFactory
++ createBusinessSector(name)
+}
+
+interface IBusinessSectorFactory{
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+class BusinessSectorFactory{
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+interface IBusinessSectorRepository{
++ add(businessSector)
+}
+
+class BusinessSectorRepository{
++ add(businessSector)
+}
+
+class BusinessSector{
+- businessSectorId
+- businessSectorName
+# businessSector(businessSectorNumber, businessSectorName)
+}
+
+CreateBusinessSectorController <.. BusinessSectorService: is injected
+BusinessSectorService <.. IBusinessSectorRepository: is injected
+BusinessSectorService <.. IBusinessSectorFactory: is injected
+IBusinessSectorFactory <|.. BusinessSectorFactory: implements
+BusinessSectorFactory ..> BusinessSector: creates
+IBusinessSectorRepository <|.. BusinessSectorRepository: implements
+BusinessSectorRepository --> BusinessSector: has
+
+
+@enduml

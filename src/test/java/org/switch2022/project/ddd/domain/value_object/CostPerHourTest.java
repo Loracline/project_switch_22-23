@@ -62,7 +62,7 @@ class CostPerHourTest {
         CostPerHour expected = new CostPerHour(10);
         CostPerHour result = new CostPerHour(11);
 
-        // Assert
+        // Act, Assert
         assertNotEquals(expected, result);
     }
 

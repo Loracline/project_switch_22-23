@@ -17,5 +17,6 @@ public interface IProjectRepository {
     int getProjectNumber();
 
     boolean addProjectToProjectRepository(Project project);
-     List<Project> findAll();
+
+    List<Project> findAll();
 }

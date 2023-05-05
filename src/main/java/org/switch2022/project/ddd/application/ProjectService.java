@@ -36,12 +36,6 @@ public class ProjectService {
     @Autowired
     private ICustomerRepository customerRepository;
 
-    /**
-     * Constructor.
-     */
-
-    public ProjectService() {
-    }
 
     /**
      * This method creates a new Project with the next project code available and adds it to the repository.
@@ -141,8 +135,8 @@ public class ProjectService {
         List<ProjectDto> projectsDto = new ArrayList<>();
         List<Project> projects = projectRepository.findAll();
         for (Project project : projects) {
-            Optional<String> customerName = customerRepository.getCustomerNameByTaxId(project.getCustomerTaxId());
-            projectsDto.add(projectMapper.projectToDto(project, customerName.get()));
+            String customerName = customerRepository.getCustomerNameByTaxId(project.getCustomerTaxId());
+            projectsDto.add(projectMapper.projectToDto(project, customerName));
         }
         return projectsDto;
     }

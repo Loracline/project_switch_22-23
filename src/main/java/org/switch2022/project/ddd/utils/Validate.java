@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Component
 
-public class Validate {
+public final class Validate {
 
     /**
      * Utility classes typically provide a set of related functionality that can be used across
