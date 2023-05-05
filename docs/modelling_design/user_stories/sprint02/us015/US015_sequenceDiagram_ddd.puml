@@ -1,0 +1,62 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title GET A LIST OF ALL PROJECTS
+legend top
+US015 - As a Manager, I want to get a list of all projects.
+end legend
+autonumber
+actor Manager
+
+participant ":ProjectListUI" as ui
+participant ":ProjectListController" as controller
+participant ":ProjectService" as service
+participant ":CustomerRepository" as custRepo
+participant "ProjectMapper" as mapper
+participant "projectDto: List<ProjectDto>" as list
+participant "projectDto:ProjectDto" as dto
+participant ":ProjectRepository" as projectRepo
+participant ":Project" as proj
+
+activate Manager
+Manager -> ui: asks for list of all projects
+activate ui
+ui -> controller: ListAllProjects()
+activate controller
+controller -> service: requestAllProjects()
+activate service
+service ->> projectRepo: findAll()
+activate projectRepo
+projectRepo --> service: projects
+deactivate projectRepo
+create list
+service --> list: create ()
+
+loop for each project in projects
+service -> proj: getCustomerTaxId (taxId)
+activate proj
+proj --> service: customerTaxId
+deactivate proj
+service -> custRepo: getCustomerNameByTaxId (taxId)
+activate custRepo
+custRepo --> service: requestedName
+deactivate custRepo
+service -> mapper: projectToDto (project, customerName)
+activate mapper
+create dto
+mapper -> dto: create (project, customerName)
+activate dto
+dto --> mapper: projectDto
+deactivate dto
+mapper --> service: projectDto
+deactivate mapper
+service -> list: add ()
+service --> controller: projectsDto
+end loop
+deactivate service
+ui <-- controller: projectsDto
+deactivate controller
+ui --> Manager: shows list of all projects
+deactivate ui
+
+@enduml
