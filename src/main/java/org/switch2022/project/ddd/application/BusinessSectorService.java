@@ -7,7 +7,6 @@ import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
 import org.switch2022.project.ddd.domain.value_object.Name;
-import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 
 @Service
@@ -30,10 +29,10 @@ public class BusinessSectorService {
      * @return TRUE if the typology is created and added to the typology repository successfully, and throws an
      * AlreadyExistsInRepoException otherwise.
      */
-    public boolean createBusinessSector(String name) throws AlreadyExistsInRepoException {
-        Name businessSectorName = new Name(name);
-        int businessSectorNumber = calculateNextBusinessSectorNumber();
-        BusinessSector businessSector = businessSectorFactory.createBusinessSector(businessSectorNumber, businessSectorName);
+    public boolean createBusinessSector(String name) {
+        Name sectorName = new Name(name);
+        int sectorNumber = calculateNextBusinessSectorNumber();
+        BusinessSector businessSector = businessSectorFactory.createBusinessSector(sectorNumber, sectorName);
         return businessSectorRepository.add(businessSector);
     }
 
