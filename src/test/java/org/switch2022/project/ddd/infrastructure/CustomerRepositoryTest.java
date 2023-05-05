@@ -172,7 +172,7 @@ class CustomerRepositoryTest {
 
         // Setting up mock behaviour.
         when(customerOne.hasTaxId(customerTaxIdOne)).thenReturn(true);
-        when(customerOne.getCustomerName()).thenReturn(customerNameOne);
+        when(customerOne.getName()).thenReturn(customerNameOne);
 
         // Adding customers to the Repository.
         CustomerRepository repository = new CustomerRepository();

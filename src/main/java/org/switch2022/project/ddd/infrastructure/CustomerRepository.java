@@ -10,7 +10,6 @@ import org.switch2022.project.ddd.exceptions.CustomerNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 
 /**
@@ -85,7 +84,7 @@ public class CustomerRepository implements ICustomerRepository {
         int i = 0;
         while (i < this.customers.size()) {
             if (customers.get(i).hasTaxId(taxId)) {
-                requestedName = customers.get(i).getCustomerName();
+                requestedName = customers.get(i).getName();
                 i = this.customers.size();
             }
             i++;
