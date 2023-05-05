@@ -141,8 +141,8 @@ public class ProjectService {
         List<ProjectDto> projectsDto = new ArrayList<>();
         List<Project> projects = projectRepository.findAll();
         for (Project project : projects) {
-            Optional<String> customerName = customerRepository.getCustomerNameByTaxId(project.getCustomerTaxId());
-            projectsDto.add(projectMapper.projectToDto(project, customerName.get()));
+            String customerName = customerRepository.getCustomerNameByTaxId(project.getCustomerTaxId());
+            projectsDto.add(projectMapper.projectToDto(project, customerName));
         }
         return projectsDto;
     }
