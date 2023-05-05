@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = CreateUserStoryController.class)
-class CreateUsControllerTest {
+class CreateUserStoryControllerTest {
     /**
      * BeforeEach and AfterEach executes common code before/after running
      * the tests below.

@@ -27,11 +27,6 @@ public class ConsultProductBacklogController {
     @Autowired
     private UserStoryMapper userStoryMapper;
 
-    /**
-     * Constructor
-     */
-    public ConsultProductBacklogController() {
-    }
 
     /**
      * This method receives the input data from the UI (projectCode) to get the respective

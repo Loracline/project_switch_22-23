@@ -16,11 +16,6 @@ public class TypologyService {
     @Autowired
     private IFactoryTypology factoryTypology;
 
-    /**
-     * Constructor.
-     */
-    public TypologyService() {
-    }
 
     /**
      * This method receives a String name and to convert in of objects of type Name.

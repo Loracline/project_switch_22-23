@@ -2,7 +2,6 @@ package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
@@ -15,13 +14,7 @@ public class BusinessSectorService {
     private IBusinessSectorFactory businessSectorFactory;
     @Autowired
     private IBusinessSectorRepository businessSectorRepository;
-
-    /**
-     * Constructor.
-     */
-    public BusinessSectorService() {
-    }
-
+    
     /**
      * This method receives a name as a String and creates a new business sector with that name.
      *
@@ -40,7 +33,8 @@ public class BusinessSectorService {
     /**
      * This method calculates the next business sector number
      *
-     * @return the number of business sectors already contained in the list (equivalent to the size of the list) plus
+     * @return the number of business sectors already contained in the list (equivalent to the
+     * size of the list) plus
      * one, which logically equals the next number.
      */
     private int calculateNextBusinessSectorNumber() {

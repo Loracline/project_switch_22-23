@@ -13,14 +13,23 @@ class "GetProductBacklogController" {
 +getProductBacklog(projectCode)
 }
 
+class "ProjectListController"{
+-projectService
++listAllProjects()
+}
+
 class "ProjectService"{
 -factoryProject
 -projectRepository
 -factoryProductBacklog
 -usRepository
+-projectMapper
+-projectRepository
+-customerRepository
 +getProductBacklog(code)
 +getProjectByCode(code)
 +requestAllPlannedUserStories(usIds)
++requestAllProjects()
 }
 
 class "UserStoryCreationDto"{
@@ -50,11 +59,13 @@ class "FactoryUserStory"{
 
 interface "IProjectRepository"{
 +getProjectByCode(code)
++findAll()
 }
 
 class "ProjectRepository"{
 - projects
 +getProjectByCode(code)
++findAll()
 }
 
 interface "IUsRepository"{
@@ -70,9 +81,22 @@ class "UsRepository"{
 +delete(usId)
 }
 
+class "CustomerRepository"{
+-customers
++getCustomerNameByTaxId(taxId)
+}
+
+interface "ICustomerRepository"{
++getCustomerNameByTaxId(taxId)
+}
+
 class "UserStoryMapper"{
 +userStoryToDto(userStory)
 +userStoryToDtoList(userStories)
+}
+
+class "ProjectMapper"{
++projectToDto()
 }
 
 class "ProductBacklog"{
@@ -82,11 +106,20 @@ class "ProductBacklog"{
 
 class "Project"{
 -projectCode
+-customerTaxId
+-projectName
+-projectStatus
+-period
 -productBacklog
 +hasProjectCode(projectCode)
 +getProductBacklog()
 + addUserStory(priority, usId)
 + getProjectCode()
++getCustomerTaxId()
++getProjectName()
++getProjectStatus()
++getStartDate()
++getEndDate()
 }
 
 class "UserStory"{
@@ -107,6 +140,14 @@ class "UserStoryDto"{
 +status
 }
 
+class "ProjectDto"{
++code
++projectName
++customerName
++status
++startDate
++endDate
+}
 
 "CreateUsController" .> "UserStoryCreationDto": accesses
 "CreateUsController" "1"<.."1" "UsService": is injected
@@ -114,6 +155,88 @@ class "UserStoryDto"{
 "UsService" "1" <.. "1" "IFactoryUserStory": is injected
 "IFactoryUserStory" <|.. "FactoryUserStory": implements
 "FactoryUserStory" "1"..>"*" "UserStory": creates
+
+class CreateTypologyController {
+- typologyService
++ createTypology(name)
+}
+
+class TypologyService{
+- typologyRepository
+- typologyFactory
++ createTypology(name)
+}
+
+interface ITypologyFactory{
++ createTypology(typologyNumber, typologyName)
+}
+
+class TypologyFactory{
++ createTypology(typologyNumber, typologyName)
+}
+
+interface ITypologyRepository{
++ add(typology)
+}
+
+class TypologyRepository{
++ add(typology)
+}
+
+class Typology{
+- typologyId
+- typologyName
+# Typology(typologyNumber, typologyName)
+}
+
+CreateTypologyController <.. TypologyService: is injected
+TypologyService <.. ITypologyRepository: is injected
+TypologyService <.. ITypologyFactory: is injected
+ITypologyFactory <|.. TypologyFactory: implements
+TypologyFactory ..> Typology: creates
+ITypologyRepository <|.. TypologyRepository: implements
+TypologyRepository --> Typology: has
+
+class CreateBusinessSectorController {
+- businessSectorService
++ createBusinessSector(name)
+}
+
+class BusinessSectorService{
+- businessSectorRepository
+- businessSectorFactory
++ createBusinessSector(name)
+}
+
+interface IBusinessSectorFactory{
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+class BusinessSectorFactory{
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+interface IBusinessSectorRepository{
++ add(businessSector)
+}
+
+class BusinessSectorRepository{
++ add(businessSector)
+}
+
+class BusinessSector{
+- businessSectorId
+- businessSectorName
+# businessSector(businessSectorNumber, businessSectorName)
+}
+
+CreateBusinessSectorController <.. BusinessSectorService: is injected
+BusinessSectorService <.. IBusinessSectorRepository: is injected
+BusinessSectorService <.. IBusinessSectorFactory: is injected
+IBusinessSectorFactory <|.. BusinessSectorFactory: implements
+BusinessSectorFactory ..> BusinessSector: creates
+IBusinessSectorRepository <|.. BusinessSectorRepository: implements
+BusinessSectorRepository --> BusinessSector: has
 
 
 "UsService" "1" <.. "1" "IProjectRepository": is injected
@@ -133,9 +256,19 @@ class "UserStoryDto"{
 "GetProductBacklogController" "1"-->"1" "UserStoryMapper" : has
 "UserStoryMapper" "1 "..> "*" "UserStoryDto" : creates
 "UserStoryMapper" ..> "UserStory" : knows
+
 "ProjectService" <.. "IProjectRepository" : is injected
 "ProjectService" <.. "IUsRepository" : is injected
-
+"ProjectListController" "1"<.."1" "ProjectService": is injected
+"ProjectService" "1"<.."1" "IProjectRepository": is injected
+"ProjectRepository" "1" ..|> "1" "IProjectRepository": implements
+"ProjectService" "1"<.right."1" "ICustomerRepository": is injected
+"CustomerRepository" "1" ..|> "1" "ICustomerRepository": implements
+"ProjectService" "1" ..> "*" "Project": uses
+"ProjectMapper" "1" .up.> "1" "ProjectService": is injected
+"ProjectMapper" "1" ..> "*" "Project": uses
+"ProjectDto" "*" <.up. "1" "ProjectMapper": uses
+"Project" "*" <-down- "1" "ProjectRepository": has
 
 
 @enduml
