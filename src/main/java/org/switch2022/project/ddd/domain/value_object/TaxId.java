@@ -12,8 +12,14 @@ public class TaxId implements ValueObject<TaxId> {
     private final String country;
     private final String number;
 
+    /**
+     * Constructor.
+     *
+     * @param number of the Customer.
+     * @param country of the Customer.
+     */
     public TaxId(String number, String country) {
-        Validate.notNullOrEmptyOrBlank(number, "tax ID");
+        Validate.notNullOrEmptyOrBlank(number, "number");
         Validate.notNullOrEmptyOrBlank(country, "country");
 
         this.country = country.toLowerCase();
