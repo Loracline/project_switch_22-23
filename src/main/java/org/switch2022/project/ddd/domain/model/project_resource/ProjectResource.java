@@ -1,4 +1,4 @@
-package org.switch2022.project.ddd.domain.model.projectResource;
+package org.switch2022.project.ddd.domain.model.project_resource;
 
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;

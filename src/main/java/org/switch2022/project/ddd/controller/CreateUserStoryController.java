@@ -71,7 +71,7 @@ public class CreateUserStoryController {
      * @param userStoryCreationDto that represents the data for creating the user story
      * @return a list of objects of type AcceptanceCriteria.
      */
-    private List<AcceptanceCriteria>
+    private static List<AcceptanceCriteria>
     convertListOfStringsToAnAcceptanceCriteriaList(UserStoryCreationDto userStoryCreationDto) {
 
         List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
