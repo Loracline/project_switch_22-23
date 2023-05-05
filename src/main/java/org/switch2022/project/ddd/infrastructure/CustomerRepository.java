@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
@@ -10,9 +11,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+
 /**
  * A class representing a repository for managing customers.
  */
+@Component
 public class CustomerRepository implements ICustomerRepository {
 
     private final List<Customer> customers = new ArrayList<>();
