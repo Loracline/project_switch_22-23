@@ -15,7 +15,7 @@ class PercentageOfAllocationTest {
         final float MAXIMUM_PERCENTAGE = 100;
 
         // Act, Assert
-        assertDoesNotThrow(()-> new PercentageOfAllocation(MAXIMUM_PERCENTAGE));
+        assertDoesNotThrow(() -> new PercentageOfAllocation(MAXIMUM_PERCENTAGE));
     }
 
     /**
@@ -27,7 +27,7 @@ class PercentageOfAllocationTest {
         final float PERCENTAGE_ZERO = 0;
 
         // Act, Assert
-        assertThrows(InvalidInputException.class,()-> new PercentageOfAllocation(PERCENTAGE_ZERO));
+        assertThrows(InvalidInputException.class, () -> new PercentageOfAllocation(PERCENTAGE_ZERO));
     }
 
     /**
@@ -39,19 +39,19 @@ class PercentageOfAllocationTest {
         final float PERCENTAGE_ABOVE_ONE_HUNDRED = 151;
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, ()-> new PercentageOfAllocation(PERCENTAGE_ABOVE_ONE_HUNDRED));
+        assertThrows(InvalidInputException.class, () -> new PercentageOfAllocation(PERCENTAGE_ABOVE_ONE_HUNDRED));
     }
 
     /**
      * Testing if percentage of allocation is not cerated when is below 0%.
      */
     @Test
-    void ensureThatPercentageOfAllocationIsNotCreated_PercentAllocationBelowZero(){
+    void ensureThatPercentageOfAllocationIsNotCreated_PercentAllocationBelowZero() {
         // Arrange
         final float PERCENTAGE_BELOW_ZERO = -20;
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, ()-> new PercentageOfAllocation(PERCENTAGE_BELOW_ZERO));
+        assertThrows(InvalidInputException.class, () -> new PercentageOfAllocation(PERCENTAGE_BELOW_ZERO));
     }
 
     /**
@@ -73,12 +73,13 @@ class PercentageOfAllocationTest {
         PercentageOfAllocation expected = new PercentageOfAllocation(10);
         PercentageOfAllocation result = new PercentageOfAllocation(11);
 
-        // Assert
+        // Act, Assert
         assertNotEquals(expected, result);
     }
 
+    @SuppressWarnings("all")
     @Test
-    void ensureThatPercentageOfAllocationDoesNotEqualOtherTypeOfObject() {
+    void ensureThatPercentageOfAllocationIsNotEqualOtherTypeOfObject() {
         // Arrange
         String expected = "Hello World!";
         PercentageOfAllocation result = new PercentageOfAllocation(11);

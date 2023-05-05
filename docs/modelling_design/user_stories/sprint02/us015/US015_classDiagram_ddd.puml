@@ -1,0 +1,76 @@
+@startuml
+
+title GET A LIST OF ALL PROJECTS
+skinparam sequenceMessageAlign center
+legend top
+US015 - As a Manager, I want to get a list of all projects.
+end legend
+
+class "ProjectListController" {
+-projectService
++listAllProjects()
+}
+
+class "ProjectService"{
+-projectMapper
+-projectRepository
+-customerRepository
++requestAllProjects()
+}
+
+class "ProjectRepository"{
++findAll()
+}
+
+interface "IProjectRepository"{
++findAll()
+}
+
+class "CustomerRepository"{
+-customers
++getCustomerNameByTaxId(taxId)
+}
+
+interface "ICustomerRepository"{
++getCustomerNameByTaxId(taxId)
+}
+
+class "Project"{
+-projectCode
+-customerTaxId
+-projectName
+-projectStatus
+-period
++getProjectCode()
++getCustomerTaxId()
++getProjectName()
++getProjectStatus()
++getStartDate()
++getEndDate()
+}
+
+class "ProjectMapper"{
++projectToDto()
+}
+
+class "ProjectDto" {
++code
++projectName
++customerName
++status
++startDate
++endDate
+}
+
+"ProjectListController" "1"<.."1" "ProjectService": is injected
+"ProjectService" "1"<.."1" "IProjectRepository": is injected
+"ProjectRepository" "1" ..|> "1" "IProjectRepository": implements
+"ProjectService" "1"<.."1" "ICustomerRepository": is injected
+"CustomerRepository" "1" ..|> "1" "ICustomerRepository": implements
+"ProjectService" "1" ..> "*" "Project": uses
+"ProjectMapper" "1" ..> "1" "ProjectService": is injected
+"ProjectMapper" "1" ..> "*" "Project": uses
+"ProjectDto" "*" <.. "1" "ProjectMapper": uses
+"Project" "*" <-down- "1" "ProjectRepository": has
+
+@enduml
