@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 /**
  * A class representing a repository for managing customers.
  */
@@ -66,7 +65,7 @@ public class CustomerRepository implements ICustomerRepository {
             customers.add(customer);
             return true;
         } else {
-            throw new AlreadyExistsInRepoException("Customer tax ID already exists!");
+            throw new AlreadyExistsInRepoException("Customer's tax ID already exists!");
         }
     }
 

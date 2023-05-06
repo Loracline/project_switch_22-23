@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
+import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -146,6 +147,25 @@ class CustomerRepositoryTest {
 
         // ACT
         boolean result = repository.addCustomerToRepository(customer);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Customer already exists")
+    @Test
+    void ensureCustomerIsNotAddedWhenAlreadyExists() {
+        CustomerRepository repository = new CustomerRepository();
+        Customer customer = mock(Customer.class);
+        repository.addCustomerToRepository(customer);
+
+        String expected = "Customer's tax ID already exists!";
+
+        AlreadyExistsInRepoException exception = assertThrows(AlreadyExistsInRepoException.class,
+                () -> repository.addCustomerToRepository(customer));
+
+        // ACT
+        String result = exception.getMessage();
 
         // ASSERT
         assertEquals(expected, result);
