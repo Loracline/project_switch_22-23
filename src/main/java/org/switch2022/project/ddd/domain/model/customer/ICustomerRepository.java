@@ -2,8 +2,6 @@ package org.switch2022.project.ddd.domain.model.customer;
 
 import org.switch2022.project.ddd.domain.value_object.TaxId;
 
-import java.util.Optional;
-
 /**
  * An interface representing a repository for managing customers.
  */
@@ -22,9 +20,9 @@ public interface ICustomerRepository {
      *
      * @param customer the customer to add to the repository.
      * @return TRUE if the customer was added successfully.
-     * @throws org.switch2022.project.ddd.exceptions.CustomerAlreadyExistsException if the repository already contains
-     *                                                                              a customer with the same tax ID as
-     *                                                                              the specified customer.
+     * @throws org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException if the repository already contains
+     *                                                                            a customer with the same tax ID as
+     *                                                                            the specified customer.
      */
     boolean addCustomerToRepository(Customer customer);
 }

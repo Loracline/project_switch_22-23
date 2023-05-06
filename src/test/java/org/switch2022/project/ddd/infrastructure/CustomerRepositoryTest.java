@@ -4,7 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
-import org.switch2022.project.ddd.exceptions.CustomerNotFoundException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -207,7 +207,7 @@ class CustomerRepositoryTest {
         repository.addCustomerToRepository(customerTwo);
 
         // Exception thrown when searching for the Customer Three in Repository.
-        CustomerNotFoundException exception = assertThrows(CustomerNotFoundException.class,
+        NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class,
                 () -> repository.getCustomerNameByTaxId(customerTaxIdThree));
 
         // An exception message is expected because Customer Three is not in Repository.

@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
-import org.switch2022.project.ddd.exceptions.CustomerAlreadyExistsException;
-import org.switch2022.project.ddd.exceptions.CustomerNotFoundException;
+import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +56,9 @@ public class CustomerRepository implements ICustomerRepository {
      *
      * @param customer the customer to add to the repository.
      * @return TRUE if the customer was added successfully.
-     * @throws org.switch2022.project.ddd.exceptions.CustomerAlreadyExistsException if the repository already contains
-     *                                                                              a customer with the same tax ID as
-     *                                                                              the specified customer.
+     * @throws AlreadyExistsInRepoException if the repository already contains
+     *                                      a customer with the same tax ID as
+     *                                      the specified customer.
      */
     @Override
     public boolean addCustomerToRepository(Customer customer) {
@@ -66,16 +66,16 @@ public class CustomerRepository implements ICustomerRepository {
             customers.add(customer);
             return true;
         } else {
-            throw new CustomerAlreadyExistsException("Customer tax ID already exists!");
+            throw new AlreadyExistsInRepoException("Customer tax ID already exists!");
         }
     }
 
     /**
-     * Retrieves the customer with the specified tax ID from the repository, if it exists.
+     * Retrieves the name of a customer with the given tax ID from the repository.
      *
-     * @param taxId the tax ID of the customer to retrieve.
-     * @return an Optional containing the customer with the specified tax ID, or an empty Optional if no such customer
-     * exists.
+     * @param taxId the tax ID of the customer whose name is being requested.
+     * @return the name of the customer with the given tax ID.
+     * @throws NotFoundInRepoException if a customer with the given tax ID is not found in the repository.
      */
     @Override
     public String getCustomerNameByTaxId(TaxId taxId) {
@@ -91,7 +91,7 @@ public class CustomerRepository implements ICustomerRepository {
         }
 
         if (requestedName == null) {
-            throw new CustomerNotFoundException("Customer with this tax ID does not exist in Repository.");
+            throw new NotFoundInRepoException("Customer with this tax ID does not exist in Repository.");
         }
 
         return requestedName;

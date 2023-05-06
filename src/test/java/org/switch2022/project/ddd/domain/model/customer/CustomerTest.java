@@ -5,8 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
-import org.switch2022.project.ddd.infrastructure.CustomerRepository;
-import org.switch2022.project.ddd.infrastructure.ProjectRepository;
 import org.switch2022.project.model.Account;
 
 import static org.junit.jupiter.api.Assertions.*;
