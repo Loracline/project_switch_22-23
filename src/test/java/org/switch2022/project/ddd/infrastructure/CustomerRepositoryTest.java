@@ -116,7 +116,7 @@ class CustomerRepositoryTest {
 
     @DisplayName("Two repositories have different hashcode")
     @Test
-    void ensureTwoEqualRepositoryInstancesHaveDifferentHashcode() {
+    void ensureTwoRepositoryInstancesHaveDifferentHashcode() {
         // Arrange
         Customer customer = mock(Customer.class);
         CustomerRepository reference = new CustomerRepository();
