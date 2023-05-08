@@ -1,9 +1,7 @@
 package org.switch2022.project.ddd.domain.model.profile;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.value_object.Name;
-import org.switch2022.project.ddd.domain.value_object.ProfileId;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -66,7 +64,8 @@ public class ProfileTest {
     @Test
     void ensureThatSameObjectEqualsItself() {
         //ARRANGE
-        Profile profile = mock(Profile.class);
+        Name profileName = mock(Name.class);
+        Profile profile = new Profile(profileName, 1);
         //ACT & ASSERT
         assertTrue(profile.equals(profile));
     }
@@ -80,13 +79,12 @@ public class ProfileTest {
     @Test
     void ensureThatTwoProfilesHasTheSameId() {
         //ARRANGE
-        ProfileId profileId = mock(ProfileId.class);
-        //when(profileId.getProfileId()).thenReturn("prof01");
-        Profile profile_one = new Profile(new Name("Sofia"), 1);
-        Profile profile_two = new Profile(new Name("Sofia"), 1);
+        Name profileName = mock(Name.class);
+        Profile profileOne = new Profile(profileName, 1);
+        Profile profileTwo = new Profile(profileName, 1);
 
         //ACT & ASSERT
-        assertTrue(profile_one.equals(profile_two));
+        assertTrue(profileOne.equals(profileTwo));
     }
 
     /**
@@ -98,13 +96,12 @@ public class ProfileTest {
     @Test
     void ensureThatTwoProfilesHasNotTheSameId() {
         //ARRANGE
-        Profile profile_one = mock(Profile.class);
-        Profile profile_two = mock(Profile.class);
-        when(profile_one.getProfileId()).thenReturn("pr001");
-        when(profile_two.getProfileId()).thenReturn("pr002");
+        Name profileName = mock(Name.class);
+        Profile profileOne = new Profile(profileName, 1);
+        Profile profileTwo = new Profile(profileName, 2);
 
         //ACT & ASSERT
-        assertFalse(profile_one.equals(profile_two));
+        assertFalse(profileOne.equals(profileTwo));
     }
 
     /**
@@ -115,7 +112,8 @@ public class ProfileTest {
     @Test
     void ensureThatObjectProfileDoesNotEqualNull() {
         //ARRANGE
-        Profile profile = mock(Profile.class);
+        Name profileName = mock(Name.class);
+        Profile profile = new Profile(profileName, 1);
 
         //ACT & ASSERT
         assertFalse(profile.equals(null));
@@ -129,7 +127,8 @@ public class ProfileTest {
     @Test
     public void ensureThatObjectProfileDoesNotEqualToOtherObjectType() {
         //ARRANGE
-        Profile profile = mock(Profile.class);
+        Name profileName = mock(Name.class);
+        Profile profile = new Profile(profileName, 1);
         String name = "Sofia";
 
         //ACT & ASSERT
@@ -143,11 +142,11 @@ public class ProfileTest {
     void ensureTwoInstancesOfProfileWithDifferentHashCodesAreNotEqual() {
         // ARRANGE
         Name profileNameDouble = mock(Name.class);
-        Profile profile_One = new Profile(profileNameDouble, 1);
-        Profile profile_Two = new Profile(profileNameDouble, 2);
+        Profile profileOne = new Profile(profileNameDouble, 1);
+        Profile profileTwo = new Profile(profileNameDouble, 2);
 
         //ACT & ASSERT
-        assertNotEquals(profile_One.hashCode(), profile_Two.hashCode());
+        assertNotEquals(profileOne.hashCode(), profileTwo.hashCode());
     }
 
     /**
@@ -182,7 +181,6 @@ public class ProfileTest {
         Name nameDouble = mock(Name.class);
         Profile profileOne = new Profile(nameDouble, 1);
         Profile profileTwo = new Profile(nameDouble, 2);
-
 
         //ACT
         boolean result = profileOne.sameIdentityAs(profileTwo);
@@ -221,11 +219,11 @@ public class ProfileTest {
         //ARRANGE
         Name nameDouble = mock(Name.class);
         when(nameDouble.getName()).thenReturn("Sofia");
-        Profile profile_One = new Profile(nameDouble, 1);
+        Profile profile = new Profile(nameDouble, 1);
         String expected = "Sofia";
 
         //ACT
-        String result = profile_One.getProfileName();
+        String result = profile.getProfileName();
 
         //ASSERT
         assertEquals(expected, result);
@@ -241,11 +239,11 @@ public class ProfileTest {
     public void ensureStringRepresentationOfProfileIdIsRetrieved() {
         //ARRANGE
         Name nameDouble = mock(Name.class);
-        Profile profileOne = new Profile(nameDouble, 1);
+        Profile profile = new Profile(nameDouble, 1);
         String expected = "pr001";
 
         //ACT
-        String result = profileOne.getProfileId();
+        String result = profile.getProfileId();
 
         //ASSERT
         assertEquals(expected, result);
