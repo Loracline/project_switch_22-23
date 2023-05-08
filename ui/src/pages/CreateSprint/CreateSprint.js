@@ -1,101 +1,59 @@
-import {useContext, useMemo, useState} from "react";
+import React, {useContext, useState} from 'react';
+import {TextField} from '@mui/material';
+import {createSprint, selectMenu} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
-import {createSprint} from "../../context/Actions";
-import InputText from "../../components/InputText/InputText";
 import Button from "../../components/Button/Button";
-import SelectProjectSTextInput from "../../components/SelectProjectSTextInput";
-import Calendar from "../../components/Calendar";
 import './CreateSprint.css';
 
-
-/**This component provides a form for creating a new sprint.
- It allows the user to select a project, enter a start date, and specify the duration
- of the sprint in days.
- @requires AppContext - This component requires access to the AppContext in order to
- retrieve a list of available projects and update the selected project, start date,
- and duration state variables.
- @exports CreateSprintForm */
-
-function CreateSprintForm() {
-    const {state, dispatch} = useContext(AppContext);
-
-    const [sprintToSubmit, setSprintSubmit] = useState({
-        projectCode: "",
-        startDate: "",
-        duration: "",
-    });
-
-    const selectedProject = state.selectedProject;
-
-    const handleStartDate = (event) => {
-        setSprintSubmit({
+function CreateSprint() {
+    const { state, dispatch} = useContext(AppContext);
+    const { detailedProject } = state;
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const initialSprintState = {
+        projectCode: detailedProject.code,
+        date: '',
+    };
+    const [sprintToSubmit, setSprintToSubmit] = useState(initialSprintState);
+    const handleDateChange = (event) => {
+        setSelectedDate(event.target.value);
+        setSprintToSubmit({
             ...sprintToSubmit,
-            startDate: event.target.value,
+            date: event.target.value,
         });
     };
-
-    const handleDuration = (event) => {
-        setSprintSubmit({
-            ...sprintToSubmit,
-            duration: event.target.value,
-        });
-    };
-
-    const handleSubmitForm = (event) => {
-        event.preventDefault();
-        dispatch(createSprint(sprintToSubmit));
-        setSprintSubmit({
-            projectCode: "",
-            startDate: "",
-            duration: "",
-        });
-    };
-
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (!sprintToSubmit.startDate || !sprintToSubmit.duration) {
-            alert("Please, enter a project name, insert initial date, and specify the duration.");
+        if (sprintToSubmit.date.length === 0) {
+            alert('Please, insert initial date.');
+        } else if (new Date(sprintToSubmit.date) < new Date()) {
+            alert('Please select a future date for the start date.');
         } else {
-            handleSubmitForm(event);
+            dispatch(createSprint({
+                ...sprintToSubmit
+            }));
+            window.alert('The sprint was successfully created.');
+            setSprintToSubmit(initialSprintState);
         }
     };
 
-    const form = useMemo(() => {
-        let formS;
-        if (selectedProject) {
-            formS = (
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>Start Date:</label>
-                        <Calendar onChange={handleStartDate}/>
-                    </div>
-                    <br/>
-                    <br/>
-                    <InputText
-                        title={"Duration:"}
-                        contentOfInputText={sprintToSubmit.duration}
-                        handleTextChange={handleDuration}
-                    />
-                    <br/>
-                    <br/>
-                    <Button type="submit" text={"Submit"}/>
-                </form>
-            );
-        } else {
-            formS = <h1> No Project </h1>;
-        }
-        return formS;
-    }, [selectedProject]);
+    if (!detailedProject) return null;
 
     return (
-        <div className='page'>
-            <section className='formCard'>
-                <h2>Create a Sprint</h2>
-                <SelectProjectSTextInput/>
-                {form}
+        <div className="page">
+            <section className="formCard">
+                <h2> Create Sprint </h2>
+                <form className="sprint-form" onSubmit={handleSubmit}>
+                    <TextField label="Start Date" type="date" value={selectedDate}
+                               onChange={handleDateChange}
+                               variant="outlined" required helperText="* Required"/>
+                    <div className="buttons">
+                        <Button text="Submit" isdisabled={!sprintToSubmit.date}/>
+                        <Button onClick={() => dispatch(selectMenu('projects'))} text="Return"/>
+                    </div>
+                </form>
             </section>
         </div>
     );
 }
 
-export default CreateSprintForm;
+export default CreateSprint;
