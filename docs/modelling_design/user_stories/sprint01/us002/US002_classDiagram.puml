@@ -27,7 +27,7 @@ class AccountRepository{
 + add(account)
 }
 
-class Account{
+class Account<<root>>{
 - name
 - email
 -phoneNumber

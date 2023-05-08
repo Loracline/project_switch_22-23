@@ -1,0 +1,47 @@
+@startuml
+legend top
+US006 - As Administrator, I want to activate a user account.
+end legend
+skinparam sequenceMessageAlign center
+title ACTIVATE USER ACCOUNT
+autonumber
+actor "Administrator" as administrator
+participant ":ChangeStatusUI" as ui
+participant ":ChangeStatusController" as controller
+participant ":Company" as company
+participant "accountContainer:AccountContainer" as container
+participant "account:Account" as account
+
+activate administrator
+administrator -> ui : Changes account status to "Active"
+activate ui
+ui -->> administrator: requests data (email, status)
+deactivate ui
+administrator -> ui: Enters requested data
+activate ui
+ui -> controller: changeStatus(email, status)
+activate controller
+controller -> company: validateProfileRequired(email, profileNameRequired)
+activate company
+ref over company: validateAdministrator_sequenceDiagram
+company -->> controller: true
+deactivate company
+controller -> company: changeStatus(email, status)
+activate company
+company -> container: changeStatus(email, status)
+activate container
+container -> container: getAccountByEmail(email)
+container -> account: setStatus(status)
+activate account
+container <-- account: true
+deactivate account
+container --> company: true
+deactivate container
+company --> controller: true
+deactivate company
+controller -->> ui: true
+deactivate controller
+ui -->> administrator: informs account status updated
+deactivate ui
+
+@enduml
