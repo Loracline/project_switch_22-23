@@ -5,7 +5,6 @@ import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,8 +25,12 @@ public class AccountRepository implements IAccountRepository {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o){
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AccountRepository that = (AccountRepository) o;
         return Objects.equals(accounts, that.accounts);
     }

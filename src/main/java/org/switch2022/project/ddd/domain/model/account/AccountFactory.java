@@ -1,10 +1,12 @@
 package org.switch2022.project.ddd.domain.model.account;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
 import org.switch2022.project.ddd.domain.value_object.Photo;
 
+@Component
 public class AccountFactory implements IAccountFactory {
 
     /**
