@@ -118,4 +118,13 @@ public class Account implements Entity<Account> {
         this.accountStatus = status;
         return getAccountStatus();
     }
+
+    /**
+     * This method checks if the account has the same email as a given one.
+     * @param email to check is the account has a match
+     * @return true if account has the given email and false otherwise.
+     */
+    public boolean hasEmail(String email) {
+        return this.email.getEmail().equals(email);
+    }
 }

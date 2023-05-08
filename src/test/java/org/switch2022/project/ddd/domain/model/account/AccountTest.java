@@ -8,6 +8,7 @@ import org.switch2022.project.ddd.domain.value_object.Photo;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class AccountTest {
 
@@ -226,11 +227,12 @@ class AccountTest {
     @Test
     void getAccountNameReturnsCorrectName() {
         // Arrange
-        Name name = new Name("John Doe");
+        Name name = mock(Name.class);
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
         Account account = new Account(name, email, phoneNumber, photo);
+        when(name.getName()).thenReturn("john doe");
 
         // Act
         String accountName = account.getAccountName();
@@ -246,11 +248,12 @@ class AccountTest {
     @Test
     void getAccountEmailReturnsCorrectEmail() {
         // Arrange
-        Name name = new Name("john doe");
-        Email email = new Email("johndoe@example.com");
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
         Account account = new Account(name, email, phoneNumber, photo);
+        when(email.getEmail()).thenReturn("johndoe@example.com");
 
         // Act
         String accountEmail = account.getAccountEmail();
@@ -266,8 +269,8 @@ class AccountTest {
     @Test
     void getAccountStatusReturnsCorrectStatus() {
         // Arrange
-        Name name = new Name("john Doe");
-        Email email = new Email("johndoe@example.com");
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
         Account account = new Account(name, email, phoneNumber, photo);
@@ -287,8 +290,8 @@ class AccountTest {
      */
     @Test
     void ensureThatAccountIsInactivated() {
-        Name name = new Name("john Doe");
-        Email email = new Email("johndoe@example.com");
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
 
@@ -304,8 +307,8 @@ class AccountTest {
      */
     @Test
     void ensureThatAccountIsActivated() {
-        Name name = new Name("john Doe");
-        Email email = new Email("johndoe@example.com");
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
 
@@ -323,14 +326,51 @@ class AccountTest {
 
     @Test
     void ensureThatAccountIsTheSameAsBefore() {
-        Name name = new Name("john Doe");
-        Email email = new Email("johndoe@example.com");
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
 
         Account account = new Account(name, email, phoneNumber, photo);
         boolean result = account.changeStatus(true);
 
-        assertTrue(true);
+        assertTrue(result);
+    }
+
+    /**
+     * Method hasEmail()
+     *
+     * Scenario 1: account has the given email, should return TRUE.
+     */
+    @Test
+    void ensureThatAccountHasTheGivenEmail() {
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+        when(email.getEmail()).thenReturn("johndoe@example.com");
+
+        boolean result = account.hasEmail("johndoe@example.com");
+
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: account does not have the given email, should return FALSE.
+     */
+    @Test
+    void ensureThatAccountDoersNotHaveTheGivenEmail() {
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+        when(email.getEmail()).thenReturn("johndoe@example.com");
+        boolean result = account.hasEmail("jamese@example.com");
+
+        assertFalse(result);
     }
 }
