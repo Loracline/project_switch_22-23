@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.account.Account;
+import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
@@ -13,7 +14,7 @@ import static org.mockito.Mockito.mock;
 class ProfileRepositoryTest {
     /**
      * Method: equals()
-     * Scenario 01: Test to ensure the obect equals itself
+     * Scenario 01: Test to ensure the object equals itself
      */
 
     @Test
@@ -86,10 +87,10 @@ class ProfileRepositoryTest {
 
 
     /**
-     * Scenario 05: Test to ensure that ProfileRepository doesn't equals a null object
+     * Scenario 05: Test to ensure that ProfileRepository doesn't equal a null object
      */
     @Test
-    void ensureThatProfileDoesNotEqualsNull() {
+    void ensureThatProfileDoesNotEqualNull() {
         //Arrange
         ProfileRepository profileRepositoryOne = new ProfileRepository();
         ProfileRepository profileRepositoryTwo = null;
@@ -121,10 +122,11 @@ class ProfileRepositoryTest {
     }
 
     /**
-     * Scenario 02:Two objects with the different code and different hash codes are two different objects
+     * Scenario 02:Two objects with the different code and different hash codes are two
+     * different objects
      */
     @Test
-    void ensureTwoDifferentInstancesHaveTheSameHashCode() {
+    void ensureTwoDifferentInstancesHaveDifferentHashCode() {
         //Arrange
         Profile profileOneDouble = mock(Profile.class);
         Profile profileTwoDouble = mock(Profile.class);
@@ -178,6 +180,28 @@ class ProfileRepositoryTest {
 
         //Assert
         assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Method: getSize().
+     *
+     * Scenario 01: return the number of profiles from a list
+     * Expected result: the number of Profile instances in the list.
+     */
+    @Test
+    void ensureThatTheNumberOfProfilesInTheRepoIsReturned() {
+        //Arrange
+        Profile profileOneDouble = mock(Profile.class);
+        Profile profileTwoDouble = mock(Profile.class);
+
+        ProfileRepository repository = new ProfileRepository();
+        repository.add(profileOneDouble);
+        repository.add(profileTwoDouble);
+
+        int expected = 2;
+        int result = repository.getSize();
+
+        assertEquals(expected, result);
     }
 
 }
