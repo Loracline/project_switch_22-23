@@ -1,19 +1,22 @@
 @startuml
 legend top
+US005 - As Administrator, I want to inactivate a user account.
 US006 - As Administrator, I want to activate a user account.
 end legend
 skinparam sequenceMessageAlign center
-title ACTIVATE USER ACCOUNT
+title TO INACTIVATE/ACTIVATE USER ACCOUNT
 autonumber
 actor "Administrator" as administrator
 participant ":ChangeStatusUI" as ui
 participant ":ChangeStatusController" as controller
-participant ":Company" as company
-participant "accountContainer:AccountContainer" as container
+
+participant ":AccountService" as service
+participant ":AccountRepository" as repository
 participant "account:Account" as account
 
 activate administrator
-administrator -> ui : Changes account status to "Active"
+
+administrator -> ui : Changes account status to "Inactive"
 activate ui
 ui -->> administrator: requests data (email, status)
 deactivate ui
@@ -21,24 +24,24 @@ administrator -> ui: Enters requested data
 activate ui
 ui -> controller: changeStatus(email, status)
 activate controller
-controller -> company: validateProfileRequired(email, profileNameRequired)
-activate company
-ref over company: validateAdministrator_sequenceDiagram
-company -->> controller: true
-deactivate company
-controller -> company: changeStatus(email, status)
-activate company
-company -> container: changeStatus(email, status)
-activate container
-container -> container: getAccountByEmail(email)
-container -> account: setStatus(status)
+controller -> service: changeStatus(email, status)
+activate service
+service-> repository: getAccountByEmail(email)
+activate repository
+repository --> service: account
+deactivate repository
+service -> account: statusUpdated = changeStatus(status)
 activate account
-container <-- account: true
+service <-- account: accountUpdated
 deactivate account
-container --> company: true
-deactivate container
-company --> controller: true
-deactivate company
+
+service -> repository: updateAccount(accountUpdated)
+activate repository
+repository --> service: true
+
+deactivate repository
+service --> controller: true
+deactivate service
 controller -->> ui: true
 deactivate controller
 ui -->> administrator: informs account status updated
