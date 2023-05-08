@@ -8,6 +8,7 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 public class AccountRepository implements IAccountRepository {
@@ -75,5 +76,23 @@ public class AccountRepository implements IAccountRepository {
     @Override
     public List<Account> getAccounts() {
         return this.accounts;
+    }
+
+    /**
+     * This method returns an option of an account.
+     * @param email to search for the account.
+     * @return an optional of account with the requested account or optional of null if
+     * it does not find the desired account.
+     */
+    @Override
+    public Optional<Account> getAccountByEmail(String email) {
+        Account accountRequested = null;
+        int i = 0;
+        while (i < this.accounts.size() && accountRequested == null) {
+            if (accounts.get(i).hasEmail(email)) {
+                accountRequested = accounts.get(i);
+            }
+        }
+        return Optional.ofNullable(accountRequested);
     }
 }
