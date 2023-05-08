@@ -43,6 +43,38 @@ public class Customer implements Entity<Customer> {
     }
 
     /**
+     * This method checks if an instance of Customer is equal to another object.
+     *
+     * @param toCompare object to compare with.
+     * @return <code>true</code> if the two have the same VAT, and <code>false</code> otherwise.
+     */
+    @Override
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) {
+            return true;
+        }
+        if (toCompare == null) {
+            return false;
+        }
+        if (this.getClass() != toCompare.getClass()) {
+            return false;
+        }
+        Customer customer = (Customer) toCompare;
+
+        return sameIdentityAs(customer);
+    }
+
+    /**
+     * This method is used to generate a unique hash for an object, based on the object's state.
+     *
+     * @return a unique value that represents the object.
+     */
+    @Override
+    public int hashCode() {
+        return customerTaxId.hashCode();
+    }
+
+    /**
      * Checks if this Customer instance has a specific tax ID.
      *
      * @param taxId the tax ID to check.
