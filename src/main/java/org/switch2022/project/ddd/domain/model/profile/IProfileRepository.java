@@ -14,11 +14,5 @@ public interface IProfileRepository {
 
     boolean add(Profile profile);
 
-    /**
-     * This method gets the size of the repository list
-     *
-     * @return the integer equivalent to the size of the list profiles
-     */
-    int getSize();
 }
 

@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.springframework.stereotype.Component;
+import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
@@ -32,11 +33,9 @@ public class ProfileRepository implements IProfileRepository {
         if (this == o) {
             return true;
         }
-        if (o == null) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
-        }
-        if (o.getClass() != this.getClass()) {
-            return false;
+
         }
         ProfileRepository that = (ProfileRepository) o;
         return Objects.equals(profiles, that.profiles);
@@ -62,24 +61,15 @@ public class ProfileRepository implements IProfileRepository {
 
 
     public boolean add(Profile profile) {
-        if (!profiles.contains(profile)) {
+        if (profiles.contains(profile)) {
             throw new AlreadyExistsInRepoException("The profile already exists in the repository.");
         } else {
             profiles.add(profile);
             return true;
         }
     }
-
-    /**
-     * This method gets the size of the repository list
-     *
-     * @return the integer equivalent to the size of the list profiles
-     */
-
-    @Override
-    public int getSize() {
-        return profiles.size();
-    }
 }
+
+
 
 
