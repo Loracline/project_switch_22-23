@@ -27,21 +27,21 @@ const reducer = (state, action) => {
         }
         case CHECK_PROJECT_SPRINT: {
             const projectCode = action.payload.projectToCheck;
-            return {
-                ...state, selectedProject: state.bodyProjectsSprints.find((project, _) => {
-                    return project.code === projectCode;
-                })
+            return { ...state, selectedProject: state.projects.find((project, _) => {
+                return project.code === projectCode;
+            })
             }
         }
+
         case CREATE_SPRINT: {
             const sprint = action.payload.sprintToAdd;
-            const updatedBodyProjectsSprints = [...state.bodyProjectsSprints];
-            const bodyProjectSprintIndex = state.bodyProjectsSprints.findIndex(projectSprint => {
-                return projectSprint.code === state.selectedProject.code;
-            });
-            updatedBodyProjectsSprints[bodyProjectSprintIndex].sprints.push(sprint);
-            return {...state, bodyProjectsSprints: updatedBodyProjectsSprints}
+            const updatedProjects = [...state.projects];
+            const bodyProjectIndex = state.projects.findIndex(projectSprint => {
+                return projectSprint.code === sprint.projectCode; });
+            updatedProjects[bodyProjectIndex].sprints.push(sprint);
+            return {...state, projects: updatedProjects}
         }
+
         case SELECT_PROJECT: {
             const project = action.payload.project;
             return {...state, detailedProject: project};

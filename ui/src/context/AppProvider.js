@@ -107,7 +107,7 @@ const AppProvider = ({children}) => {
             endDate: "31/12/2022",
         }, userStories: [], sprints: []
     }]
-    const bodyProjectsSprints = [{code: "P01", sprints: []}, {code: "P02", sprints: []}, {code: "P03", sprints: []}]
+
     const usHeaders = ["US ID", "US Description", "US Status"]
     const initialState = {
         nav,
@@ -115,7 +115,6 @@ const AppProvider = ({children}) => {
         projects,
         usHeaders,
         selectedProject: undefined,
-        bodyProjectsSprints,
         detailedProject
     }
     const [state, dispatch] = useReducer(reducer, initialState);
