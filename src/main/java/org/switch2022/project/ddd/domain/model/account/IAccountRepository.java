@@ -1,5 +1,7 @@
 package org.switch2022.project.ddd.domain.model.account;
 
+import java.util.List;
+
 /**
  * Interface for a repository of Accounts.
  */
@@ -14,4 +16,6 @@ public interface IAccountRepository {
      * @return true if the account is added, and throws an AlreadyExistInRepoException otherwise.
      */
     boolean add(Account account);
+
+    List<Account> getAccounts();
 }

@@ -84,15 +84,38 @@ public class Account implements Entity<Account> {
         return this.email.equals(other.email);
     }
 
+    /**
+     * Getter method that returns a String with the Account name
+     * @return account name.
+     */
     public String getAccountName() {
         return name.getName();
     }
+
+    /**
+     * Getter method that returns a String with the Account email
+     * @return account email.
+     */
 
     public String getAccountEmail() {
         return email.getEmail();
     }
 
+    /**
+     * Getter method that returns a boolean with the Account status
+     * @return account status.
+     */
     public boolean getAccountStatus() {
         return accountStatus;
+    }
+
+    /**
+     * Method change the status of the account.
+     * @param status to be used to change.
+     * @return the updated status.
+     */
+    public boolean changeStatus(boolean status) {
+        this.accountStatus = status;
+        return getAccountStatus();
     }
 }

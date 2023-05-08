@@ -17,6 +17,14 @@ public class RegisterAccountController {
     @Autowired
     private AccountService accountService;
 
+    /**
+     * This method receives a dto with Account information and registers a new account.
+     *
+     * @param accountCreationDto that contains all Account information.
+     * @return TRUE if the account is registered, and throws an
+     * AlreadyExistsInRepoException exception otherwise.
+     */
+
     public boolean registerAccount(AccountCreationDto accountCreationDto) {
         Validate.notNull(accountCreationDto, "The account Dto can't be null");
 
