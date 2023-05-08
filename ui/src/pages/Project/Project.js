@@ -6,7 +6,7 @@ import './Project.css';
 
 const Project = () => {
     const {state, dispatch} = useContext(AppContext);
-    const data = state.detailedProject;
+    const data = state.detailedProject.basicInfo;
     return (
         <div className='page projectPage'>
             <section className='projectCard'>

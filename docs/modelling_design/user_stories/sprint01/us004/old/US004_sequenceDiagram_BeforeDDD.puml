@@ -1,0 +1,32 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS
+legend top
+US004 - As Administrator, I want to get a list of all user accounts and their status.
+end legend
+autonumber
+actor Administrator
+participant ":ListAccountUI" as ui
+participant ":ListAccountController" as controller
+participant ":Company" as company
+participant "accountContainer:AccountContainer" as container
+
+activate Administrator
+Administrator -> ui: Lists all accounts
+activate ui
+ui -> controller: listAllAccounts()
+activate controller
+controller -> company: listAllAccounts()
+activate company
+company -> container: listAllAccounts()
+activate container
+container --> company: list
+deactivate container
+company --> controller: list
+deactivate company
+controller -->> ui: list
+deactivate controller
+ui -->>Administrator: list
+deactivate ui
+
+@enduml

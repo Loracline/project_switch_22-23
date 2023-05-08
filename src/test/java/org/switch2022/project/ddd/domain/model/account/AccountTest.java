@@ -218,4 +218,65 @@ class AccountTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * METHOD getAccountName()
+     * <br>
+     * Scenario 1: should return the name of the Account.
+     */
+    @Test
+    void getAccountNameReturnsCorrectName() {
+        // Arrange
+        Name name = new Name("John Doe");
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        // Act
+        String accountName = account.getAccountName();
+
+        // Assert
+        assertEquals("john doe", accountName);
+    }
+    /**
+     * METHOD getAccountEmail()
+     * <br>
+     * Scenario 1: should return the email of the Account.
+     */
+    @Test
+    void getAccountEmailReturnsCorrectEmail() {
+        // Arrange
+        Name name = new Name("john doe");
+        Email email = new Email("johndoe@example.com");
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        // Act
+        String accountEmail = account.getAccountEmail();
+
+        // Assert
+        assertEquals("johndoe@example.com", accountEmail);
+    }
+    /**
+     * METHOD getAccountStatus()
+     * <br>
+     * Scenario 1: should return the status of the Account.
+     */
+    @Test
+    void getAccountStatusReturnsCorrectStatus() {
+        // Arrange
+        Name name = new Name("john Doe");
+        Email email = new Email("johndoe@example.com");
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        // Act
+        boolean accountStatus = account.getAccountStatus();
+
+        // Assert
+        assertTrue(accountStatus);
+    }
+
 }

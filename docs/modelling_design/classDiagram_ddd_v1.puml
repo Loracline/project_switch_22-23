@@ -270,6 +270,47 @@ BusinessSectorRepository --> BusinessSector: has
 "ProjectDto" "*" <.up. "1" "ProjectMapper": uses
 "Project" "*" <-down- "1" "ProjectRepository": has
 
+class RegisterAccountController {
+- accountService
++ registerAccount (accountCreationDto)
+}
+
+class AccountService{
+- accountRepository
+- accountFactory
++ registerAccount(name, email, phoneNumber, photo)
+}
+
+interface IAccountFactory{
++ createAccount(name, email, phoneNumber, photo)
+}
+
+class AccountFactory{
++ createAccount(name, email, phoneNumber, photo)
+}
+
+interface IAccountRepository{
++ add(account)
+}
+
+class AccountRepository{
++ add(account)
+}
+
+class Account{
+- name
+- email
+-phoneNumber
+-photo
+}
+
+RegisterAccountController <.. AccountService: is injected
+AccountService <.. IAccountRepository: is injected
+AccountService <.. IAccountFactory: is injected
+IAccountFactory <|.. AccountFactory: implements
+AccountFactory ..> Account: creates
+IAccountRepository <|.. AccountRepository: implements
+AccountRepository --> Account: has
 
 @enduml
 
