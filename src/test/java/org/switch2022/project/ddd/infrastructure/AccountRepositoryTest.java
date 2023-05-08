@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -177,6 +181,49 @@ class AccountRepositoryTest {
 
         //Assert
         assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Method getAccounts()
+     *
+     * Scenario 1: returns a list with all Accounts
+     */
+    @Test
+    void ensureThatAListWithAccountsISReturned() {
+        // Arrange
+        Account accountOne = mock(Account.class);
+        Account accountTwo = mock(Account.class);
+        Account accountThree = mock(Account.class);
+
+        List<Account> expected = Arrays.asList(accountOne, accountTwo, accountThree);
+
+        AccountRepository repository = new AccountRepository();
+        repository.add(accountOne);
+        repository.add(accountTwo);
+        repository.add(accountThree);
+
+        // Act
+        List<Account> result = repository.getAccounts();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: returns an empty list
+     */
+    @Test
+    void ensureThatAnEmptyListISReturned() {
+        // Arrange
+        List<Account> expected = new ArrayList<>();
+
+        AccountRepository repository = new AccountRepository();
+
+        // Act
+        List<Account> result = repository.getAccounts();
+
+        // Assert
+        assertEquals(expected, result);
     }
 
 }
