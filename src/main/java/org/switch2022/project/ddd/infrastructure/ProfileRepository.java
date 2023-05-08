@@ -68,6 +68,17 @@ public class ProfileRepository implements IProfileRepository {
             return true;
         }
     }
+
+    /**
+     * This method gets the size of the repository list
+     *
+     * @return the integer equivalent to the size of the list of business sectors.
+     */
+
+    @Override
+    public int getSize() {
+        return profiles.size();
+    }
 }
 
 
