@@ -8,10 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.typology.IFactoryTypology;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
+import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -46,20 +45,23 @@ class TypologyServiceTest {
     }
 
     /**
-     * Scenario 01: The typology is not created.
+     * Scenario 02: The typology is not created.
      * Expected return: FALSE.
      */
 
     @Test
     void ensureTypologyIsCreatedInsuccessfully() {
         //Arrange
+        String expected = "The typology already exists in the repository.";
 
-        when(typologyRepository.add(any())).thenReturn(false);
+        when(typologyRepository.add(any())).thenThrow(new AlreadyExistsInRepoException(expected));
+
         //Act
-        boolean result = typologyService.createTypology("typology01");
+        AlreadyExistsInRepoException result =
+                assertThrows(AlreadyExistsInRepoException.class, () -> typologyService.createTypology("typology01"));
 
         //Assert
-        assertFalse(result);
+        assertEquals(expected, result.getMessage());
     }
 
 }
