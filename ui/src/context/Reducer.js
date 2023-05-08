@@ -1,6 +1,5 @@
 import {
-    CHECK_PROJECT,
-    CHECK_PROJECT_SPRINT,
+    CHECK_PROJECT, CHECK_PROJECT_SPRINT,
     CREATE_SPRINT,
     CREATE_USER_STORY,
     SELECT_MENU,
@@ -15,6 +14,8 @@ import {
  @param action - The action that was dispatched by the action creator.
  @returns The new state of the app.
  */
+
+
 const reducer = (state, action) => {
     switch (action.type) {
         case CREATE_USER_STORY: {
@@ -60,24 +61,22 @@ const reducer = (state, action) => {
 
         case CHECK_PROJECT_SPRINT: {
             const projectCode = action.payload.projectToCheck;
-
             return {
                 ...state, selectedProject: state.bodyProjectsSprints.find((project, _) => {
-                    return project.code === projectCode;
+                return project.code === projectCode;
                 })
             }
         }
 
-
-        case CREATE_SPRINT: {
-            const sprint = action.payload.sprintToAdd;
+        case CREATE_SPRINT: { const sprint = action.payload.sprintToAdd;
             const updatedBodyProjectsSprints = [...state.bodyProjectsSprints];
             const bodyProjectSprintIndex = state.bodyProjectsSprints.findIndex(projectSprint => {
-                return projectSprint.code === state.selectedProject.code;
+                return projectSprint.code === sprint.projectCode;
             });
             updatedBodyProjectsSprints[bodyProjectSprintIndex].sprints.push(sprint);
             return {...state, bodyProjectsSprints: updatedBodyProjectsSprints}
         }
+
 
         case SELECT_PROJECT: {
             const project = action.payload.project;

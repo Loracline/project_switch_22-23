@@ -1,8 +1,15 @@
-.creteSprintSection {
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createSprintSection {
     width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     background-color: #F0EEF5;
     margin: 40px auto;
     border-right: 6px;
