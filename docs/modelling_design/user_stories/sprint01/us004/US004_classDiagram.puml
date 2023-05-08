@@ -1,27 +1,59 @@
 @startuml
-
 skinparam sequenceMessageAlign center
 title TO LIST ALL ACCOUNTS
 legend top
 US004 - As Administrator, I want to get a list of all user accounts and their status.
 end legend
 
-class "ListAccountController" {
--company
+
+class ListAccountController {
+-accountService
+-accountMapper
++listAllAccounts()
++accountToDtoList(accounts)
+}
+
+class AccountService{
+-accountRepository
 +listAllAccounts()
 }
 
-class "Company"{
--accountContainer
-+listAllAccounts()
-
-}
-class "AccountContainer"{
--accounts
-+listAllAccounts()
+class AccountRepository{
++getAccounts()
 }
 
-"ListAccountController" ..> "Company"
-"Company" "1"-->"1" "AccountContainer": has
+interface IAccountRepository{
++getAccounts()
+}
+
+class AccountMapper {
++accountToDto(account)
++accountsToDtoList(accounts)
+}
+
+class AccountDto{
++account
++status
+}
+
+class "Account" <<root>>{
+-name
+-email
+-phoneNumber
+-accountStatus
+-photo
++getName()
++getEmail()
++getAccountStatus()
++getPhoto()
+}
+
+ListAccountController"1" <.. "1"AccountService : is injected
+AccountRepository -|> IAccountRepository : implements
+IAccountRepository ..> AccountService : is injected
+ListAccountController "1"--> "1"AccountMapper : has
+AccountMapper --> AccountDto : creates
+AccountRepository "1"->"*" Account: has
+AccountMapper ..> Account : knows
 
 @enduml

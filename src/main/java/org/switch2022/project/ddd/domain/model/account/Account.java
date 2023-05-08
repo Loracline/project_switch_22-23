@@ -83,4 +83,16 @@ public class Account implements Entity<Account> {
     public boolean sameIdentityAs(Account other) {
         return this.email.equals(other.email);
     }
+
+    public String getAccountName() {
+        return name.getName();
+    }
+
+    public String getAccountEmail() {
+        return email.getEmail();
+    }
+
+    public boolean getAccountStatus() {
+        return accountStatus;
+    }
 }
