@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.account;
 
+import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
@@ -15,7 +16,7 @@ import java.util.Objects;
  * account is INACTIVE.
  */
 
-public class Account {
+public class Account implements Entity<Account> {
 
     /**
      * Attributes
@@ -70,4 +71,16 @@ public class Account {
         return Objects.hash(email);
     }
 
+    /**
+     * This method checks if two instances of Account are equal by comparing the
+     * value of the attribute email.
+     *
+     * @param other Account instance to compare with.
+     * @return TRUE if the two have the same attribute value, and FALSE
+     * otherwise.
+     */
+    @Override
+    public boolean sameIdentityAs(Account other) {
+        return this.email.equals(other.email);
+    }
 }

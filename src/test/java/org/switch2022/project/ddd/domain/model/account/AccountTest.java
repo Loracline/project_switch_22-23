@@ -6,8 +6,6 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
 import org.switch2022.project.ddd.domain.value_object.Photo;
 
-import java.awt.image.BufferedImage;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -171,5 +169,53 @@ class AccountTest {
 
         // Assert
         assertNotEquals(accountOneHashCode, accountTwoHashCode);
+    }
+
+    /**
+     * METHOD sameIdentityAs()
+     * <br>
+     * Scenario 1: Check if two instances of Account are equal if the value of their
+     * email are the same.
+     */
+    @Test
+    void ensureThatTwoAccountsAreTheSame() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+        Account accountTwo = new Account(name, email, phoneNumber, photo);
+
+        // Act
+        boolean result = account.sameIdentityAs(accountTwo);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: Verify that two instances of Account are not equal if the value of
+     * email are not the same.
+     */
+    @Test
+    void ensureThatTwoAccountsAreNotTheSame() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Email emailTwo = mock(Email.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+        Account accountTwo = new Account(name, emailTwo, phoneNumber, photo);
+
+        // Act
+        boolean result = account.sameIdentityAs(accountTwo);
+
+        //Assert
+        assertFalse(result);
     }
 }
