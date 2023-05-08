@@ -15,7 +15,7 @@ public class AccountCreationDto {
     public final String name;
     public final String email;
     public final int phoneNumber;
-    private final BufferedImage photo;
+    public final BufferedImage photo;
 
     /**
      * Constructs a new AccountCreationDto object with the specified name, email, phone

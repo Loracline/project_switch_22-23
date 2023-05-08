@@ -30,7 +30,7 @@ activate factory
 factory -> ac
 factory --> service: account
 deactivate factory
-service -> repository: addA(account)
+service -> repository: add(account)
 activate repository
 repository --> service: true
 deactivate repository
