@@ -11,6 +11,7 @@ import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
 import org.switch2022.project.ddd.domain.value_object.Photo;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 /**
  * Class AccountService allows to create and manipulate the Account aggregate.
@@ -45,6 +46,14 @@ public class AccountService {
 
         Account account = accountFactory.create(name, email, phoneNumber, photo);
         return accountRepository.add(account);
+    }
+
+    /**
+     * This method asks the repository for the list of all Accounts and returns it.
+     * @return list with all accounts.
+     */
+    public List<Account> listAllAccounts() {
+        return accountRepository.getAccounts();
     }
 
 }

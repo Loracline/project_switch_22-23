@@ -47,7 +47,7 @@ class AccountMapperTest {
     void ensureThatListAccountsToDtoReturnsListOfAccountDtos() {
         // Arrange
         AccountMapper accountMapper = new AccountMapper();
-        List accounts = new ArrayList<>();
+        List<Account> accounts = new ArrayList<>();
         Account account1 = mock(Account.class);
         Account account2 = mock(Account.class);
         String accountName1 = "John";
@@ -70,7 +70,7 @@ class AccountMapperTest {
         expected.add(new AccountDto(accountName2, email2, status2));
 
         // Act
-        List<AccountDto> result = accountMapper.listAccountsToDto(accounts);
+        List<AccountDto> result = accountMapper.accountsToDtoList(accounts);
 
         // Assert
         assertEquals(expected, result);

@@ -25,7 +25,7 @@ public class AccountRepository implements IAccountRepository {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
@@ -49,7 +49,8 @@ public class AccountRepository implements IAccountRepository {
 
 
     /**
-     * This method adds an instance of Account to AccountRepository if that instance does not
+     * This method adds an instance of Account to AccountRepository if that instance
+     * does not
      * already exist there.
      *
      * @param account to be added to the repository.
@@ -58,10 +59,21 @@ public class AccountRepository implements IAccountRepository {
      */
     public boolean add(Account account) {
         if (accounts.contains(account)) {
-            throw new AlreadyExistsInRepoException("The account already exists in the repository.");
+            throw new AlreadyExistsInRepoException("The account already exists in the " +
+                    "repository.");
         } else {
             accounts.add(account);
             return true;
         }
+    }
+
+    /**
+     * This method gets all the Accounts
+     *
+     * @return a list with all accounts.
+     */
+    @Override
+    public List<Account> getAccounts() {
+        return this.accounts;
     }
 }
