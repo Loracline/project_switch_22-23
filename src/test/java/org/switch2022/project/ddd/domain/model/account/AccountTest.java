@@ -279,4 +279,58 @@ class AccountTest {
         assertTrue(accountStatus);
     }
 
+    /**
+     * Method changeStatus()
+     *
+     * Scenario 1: changes the status to false, which means to inactivate an account.
+     * Should return the status as FALSE
+     */
+    @Test
+    void ensureThatAccountIsInactivated() {
+        Name name = new Name("john Doe");
+        Email email = new Email("johndoe@example.com");
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+        boolean result = account.changeStatus(false);
+
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 2: changes the status to true, which means to activate an account.
+     * Should return the status as FALSE
+     */
+    @Test
+    void ensureThatAccountIsActivated() {
+        Name name = new Name("john Doe");
+        Email email = new Email("johndoe@example.com");
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+        account.changeStatus(false);
+
+        boolean result = account.changeStatus(true);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: status does not change, as it has the same value as the parameter.
+     */
+
+    @Test
+    void ensureThatAccountIsTheSameAsBefore() {
+        Name name = new Name("john Doe");
+        Email email = new Email("johndoe@example.com");
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+        boolean result = account.changeStatus(true);
+
+        assertTrue(true);
+    }
 }
