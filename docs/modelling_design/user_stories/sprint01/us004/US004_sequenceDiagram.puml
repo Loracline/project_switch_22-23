@@ -8,25 +8,46 @@ autonumber
 actor Administrator
 participant ":ListAccountUI" as ui
 participant ":ListAccountController" as controller
-participant ":Company" as company
-participant "accountContainer:AccountContainer" as container
+participant ":AccountService" as Aservice
+participant ":AccountRepository" as rep
+participant ":AccountMapper" as map
+participant ":accountsDto" as accountsDto
+participant ":accountsDto" as accountsDto
+participant "accountDto:AccountDto" as accountDto
 
 activate Administrator
 Administrator -> ui: Lists all accounts
 activate ui
 ui -> controller: listAllAccounts()
 activate controller
-controller -> company: listAllAccounts()
-activate company
-company -> container: listAllAccounts()
-activate container
-container --> company: list
-deactivate container
-company --> controller: list
-deactivate company
-controller -->> ui: list
+controller -> Aservice: listAllAccounts()
+activate Aservice
+Aservice -> rep: getAccounts()
+activate rep
+rep --> Aservice: accounts
+deactivate rep
+Aservice --> controller: accounts
+deactivate Aservice
+controller -> map : accountToDtoList(accounts)
+create "accountsDto"
+activate map
+map --> accountsDto: create ()
+
+loop for each account in accounts
+map -> accountDto:  accountToDto(account)
+activate accountDto
+accountDto --> map : accountDto
+deactivate accountDto
+map -> accountsDto: add(accountDto)
+end loop
+
+map --> controller : accountsDto
+deactivate map
+
+deactivate Aservice
+controller -->> ui: accountsDto
 deactivate controller
-ui -->>Administrator: list
+ui -->>Administrator: shows list
 deactivate ui
 
 @enduml

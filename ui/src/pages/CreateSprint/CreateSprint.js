@@ -5,12 +5,19 @@ import AppContext from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import './CreateSprint.css';
 
+/** This component provides a form for creating a new Sprint for a Project.
+ - It allows the user to select a start date for the new Sprint and submits the form. If the form is
+ submitted with an empty date or a past date, it should display an error message ("Please select a future date for the start date.")
+ - @requires AppContext - This component requires access to the AppContext to retrieve the detailedProject
+ and dispatch the createSprint action.
+ - @exports CreateSprint */
+
 function CreateSprint() {
     const { state, dispatch} = useContext(AppContext);
     const { detailedProject } = state;
     const [selectedDate, setSelectedDate] = useState(new Date());
     const initialSprintState = {
-        projectCode: detailedProject.code,
+        projectCode: detailedProject.basicInfo.code,
         date: '',
     };
     const [sprintToSubmit, setSprintToSubmit] = useState(initialSprintState);

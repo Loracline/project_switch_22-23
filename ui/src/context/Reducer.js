@@ -28,7 +28,7 @@ const reducer = (state, action) => {
         case CHECK_PROJECT_SPRINT: {
             const projectCode = action.payload.projectToCheck;
             return { ...state, selectedProject: state.projects.find((project, _) => {
-                return project.code === projectCode;
+                return project.basicInfo.code === projectCode;
             })
             }
         }
@@ -37,8 +37,10 @@ const reducer = (state, action) => {
             const sprint = action.payload.sprintToAdd;
             const updatedProjects = [...state.projects];
             const bodyProjectIndex = state.projects.findIndex(projectSprint => {
-                return projectSprint.code === sprint.projectCode; });
+                return projectSprint.basicInfo.code === sprint.projectCode;
+            });
             updatedProjects[bodyProjectIndex].sprints.push(sprint);
+            console.log(updatedProjects)
             return {...state, projects: updatedProjects}
         }
 
