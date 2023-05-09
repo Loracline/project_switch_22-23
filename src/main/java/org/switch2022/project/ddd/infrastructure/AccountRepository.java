@@ -79,7 +79,7 @@ public class AccountRepository implements IAccountRepository {
     }
 
     /**
-     * This method returns an option of an account.
+     * This method returns an optional of an account.
      * @param email to search for the account.
      * @return an optional of account with the requested account or optional of null if
      * it does not find the desired account.

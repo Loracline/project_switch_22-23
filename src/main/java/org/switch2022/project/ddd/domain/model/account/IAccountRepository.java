@@ -24,5 +24,10 @@ public interface IAccountRepository {
      */
     List<Account> getAccounts();
 
+    /**
+     * This method returns an account with the given.
+     * @param email to search for the account.
+     * @return an account with the given email.
+     */
     Optional<Account> getAccountByEmail(String email);
 }

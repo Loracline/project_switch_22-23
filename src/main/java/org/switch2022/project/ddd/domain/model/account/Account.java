@@ -116,7 +116,7 @@ public class Account implements Entity<Account> {
      */
     public boolean changeStatus(boolean status) {
         this.accountStatus = status;
-        return getAccountStatus();
+        return true;
     }
 
     /**

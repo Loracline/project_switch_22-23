@@ -298,7 +298,8 @@ class AccountTest {
         Account account = new Account(name, email, phoneNumber, photo);
         boolean result = account.changeStatus(false);
 
-        assertFalse(result);
+        assertTrue(result);
+        assertFalse(account.getAccountStatus());
     }
 
     /**
@@ -318,6 +319,7 @@ class AccountTest {
         boolean result = account.changeStatus(true);
 
         assertTrue(result);
+        assertTrue(account.getAccountStatus());
     }
 
     /**
@@ -335,6 +337,7 @@ class AccountTest {
         boolean result = account.changeStatus(true);
 
         assertTrue(result);
+        assertTrue(account.getAccountStatus());
     }
 
     /**
@@ -361,7 +364,7 @@ class AccountTest {
      * Scenario 2: account does not have the given email, should return FALSE.
      */
     @Test
-    void ensureThatAccountDoersNotHaveTheGivenEmail() {
+    void ensureThatAccountDoesNotHaveTheGivenEmail() {
         Name name = mock(Name.class);
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
