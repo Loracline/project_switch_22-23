@@ -176,6 +176,34 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * This method sets the budget for the project.
+     *
+     * @param budget the budget object
+     */
+    protected boolean isBudgetAssigned(Budget budget) {
+        boolean isBudgetAssigned = false;
+        if (projectStatus == ProjectStatus.INCEPTION) {
+            this.budget = budget;
+            isBudgetAssigned = true;
+        }
+        return isBudgetAssigned;
+    }
+
+    /**
+     * This method sets the numberOfPlannedSprints for the project.
+     *
+     * @param numberOfPlannedSprints of the project.
+     */
+    protected boolean isNumberOfPlannedSprintsDefined(NumberOfPlannedSprints numberOfPlannedSprints) {
+        boolean isNumberOfPlannedSprintsDefined = false;
+        if (projectStatus == ProjectStatus.INCEPTION) {
+            this.numberOfPlannedSprints = numberOfPlannedSprints;
+            isNumberOfPlannedSprintsDefined = true;
+        }
+        return isNumberOfPlannedSprintsDefined;
+    }
+
+    /**
      * This method verifies if the Project has the given Project code
      *
      * @param projectCode of the Project.

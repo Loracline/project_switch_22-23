@@ -898,12 +898,78 @@ class ProjectTest {
     @Test
     void ensureThatCustomerTaxIDIsRetrieved_IT() {
         //Arrange
-        TaxId expected = new TaxId("202020200", "Portugal");
+        TaxId expected = new TaxId("202020200");
         Project project = new Project(1, projectName, description, businessSectorId, expected,
                 projectTypologyId);
         //Act
         TaxId result = project.getCustomerTaxId();
         //Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD: isBudgetAssigned()
+     * Scenario 1: return true if budget is assigned.
+     */
+    @Test
+    void ensureThatBudgetIsAssigned() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        Budget budgetDouble = mock(Budget.class);
+        ProjectStatus projectStatus = ProjectStatus.INCEPTION;
+        project.setProjectStatus(projectStatus);
+        //Act
+        boolean result = project.isBudgetAssigned(budgetDouble);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: return false if budget is not assigned.
+     */
+    @Test
+    void ensureThatBudgetIsNotAssigned() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        Budget budgetDouble = mock(Budget.class);
+        //Act
+        boolean result = project.isBudgetAssigned(budgetDouble);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * METHOD: isNumberOfPlannedSprintsDefined()
+     * Scenario 1: return true if numberOfPlannedSprints is assigned.
+     */
+    @Test
+    void ensureThatNumberOfPlannedSprintsIsAssigned() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        NumberOfPlannedSprints numberOfPlannedSprintsDouble = mock(NumberOfPlannedSprints.class);
+        ProjectStatus projectStatus = ProjectStatus.INCEPTION;
+        project.setProjectStatus(projectStatus);
+        //Act
+        boolean result = project.isNumberOfPlannedSprintsDefined(numberOfPlannedSprintsDouble);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: return false if numberOfPlannedSprints is not assigned.
+     */
+    @Test
+    void ensureThatNumberOfPlannedSprintsIsNotAssigned() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        NumberOfPlannedSprints numberOfPlannedSprintsDouble = mock(NumberOfPlannedSprints.class);
+        //Act
+        boolean result = project.isNumberOfPlannedSprintsDefined(numberOfPlannedSprintsDouble);
+        //Assert
+        assertFalse(result);
     }
 }
