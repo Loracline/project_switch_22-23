@@ -3,7 +3,6 @@ package org.switch2022.project.container;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.container.*;
 import org.switch2022.project.model.*;
 
 import java.time.LocalDate;
@@ -244,35 +243,6 @@ class AccountContainerTest {
 
         assertEquals(expected, result);
     }
-
-
-    /**
-     * changeStatus(String email, boolean status)
-     */
-    @Test
-    void ensureStatusIsChangedSuccessfully() {
-        // ARRANGE
-        boolean expected = true;
-
-        // ACT
-        boolean result = accountContainer.changeStatus("claire@isep.ipp.pt", false);
-
-        // ASSERT
-        assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureStatusIsNotChanged() {
-        // ARRANGE
-        boolean expected = false;
-
-        // ACT
-        boolean result = accountContainer.changeStatus("claire@isep.ipp.pt", true);
-
-        // ASSERT
-        assertEquals(expected, result);
-    }
-
 
     /**
      * listAllUsers()

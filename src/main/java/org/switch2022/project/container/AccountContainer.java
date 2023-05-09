@@ -112,29 +112,6 @@ public class AccountContainer {
     }
 
 
-    // CHANGE INSTANCE IN CONTAINER
-
-    /**
-     * This method changes the status of account stored in the container.
-     *
-     * @param email  of given account.
-     * @param status one intend to change to.
-     * @return TRUE if changed, and FALSE otherwise.
-     */
-    public boolean changeStatus(String email, boolean status) {
-        boolean isChanged = false;
-        if (doesEmailExist(email)) {
-            Account account = getAccountByEmail(email);
-            Account copyAccount = new Account(account);
-            copyAccount.setStatus(status);
-            if (account.isAccountStatus() != copyAccount.isAccountStatus()) {
-                isChanged = true;
-            }
-        }
-        return isChanged;
-    }
-
-
     // LIST IN CONTAINER
 
     /**
