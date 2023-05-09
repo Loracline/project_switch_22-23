@@ -10,7 +10,7 @@ actor Manager
 
 participant ":ProjectListUI" as ui
 participant ":ProjectListController" as controller
-participant ":ProjectService" as service
+participant ":ProjectListService" as service
 participant ":CustomerRepository" as custRepo
 participant "ProjectMapper" as mapper
 participant "projectDto: List<ProjectDto>" as list
