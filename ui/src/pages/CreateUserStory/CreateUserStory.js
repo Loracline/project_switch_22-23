@@ -129,7 +129,7 @@ function CreateUserStory() {
                     <Button text="Create US"
                             isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
                 </form>
-                <Button isSecundary={true} onClick={() => dispatch(selectMenu('projects'))} text="Return to projects"/>
+                <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
             </section>
         </div>)
 
