@@ -13,18 +13,16 @@ class ChangeStatusController {
 
 class AccountService {
 -accountRepository
--account
+-accountFactory
 +changeStatus(email, status)
 }
 
 class AccountRepository{
 +getAccountByEmail(email)
-+updateAccount(accountUpdated)
 }
 
 interface IAccountRepository{
 +getAccountByEmail(email)
-+updateAccount(accountUpdated)
 }
 
 class Account <<root>>{

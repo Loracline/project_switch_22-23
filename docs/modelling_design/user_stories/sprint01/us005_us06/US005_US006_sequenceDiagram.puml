@@ -30,15 +30,10 @@ service-> repository: getAccountByEmail(email)
 activate repository
 repository --> service: account
 deactivate repository
-service -> account: statusUpdated = changeStatus(status)
+service -> account: changeStatus(status)
 activate account
-service <-- account: accountUpdated
+service <-- account: true
 deactivate account
-
-service -> repository: updateAccount(accountUpdated)
-activate repository
-repository --> service: true
-
 deactivate repository
 service --> controller: true
 deactivate service
