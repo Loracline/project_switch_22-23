@@ -4,11 +4,11 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Component
 public class AccountRepository implements IAccountRepository {
@@ -85,7 +85,7 @@ public class AccountRepository implements IAccountRepository {
      * it does not find the desired account.
      */
     @Override
-    public Optional<Account> getAccountByEmail(String email) {
+    public Account getAccountByEmail(String email) {
         Account accountRequested = null;
         int i = 0;
         while (i < this.accounts.size() && accountRequested == null) {
@@ -93,6 +93,8 @@ public class AccountRepository implements IAccountRepository {
                 accountRequested = accounts.get(i);
             }
         }
-        return Optional.ofNullable(accountRequested);
+        if (accountRequested == null) throw new NotFoundInRepoException("This account " +
+                "doesn't exist");
+        return accountRequested;
     }
 }

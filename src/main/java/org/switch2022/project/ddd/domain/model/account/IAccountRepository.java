@@ -1,7 +1,6 @@
 package org.switch2022.project.ddd.domain.model.account;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Interface for a repository of Accounts.
@@ -29,5 +28,5 @@ public interface IAccountRepository {
      * @param email to search for the account.
      * @return an account with the given email.
      */
-    Optional<Account> getAccountByEmail(String email);
+    Account getAccountByEmail(String email);
 }

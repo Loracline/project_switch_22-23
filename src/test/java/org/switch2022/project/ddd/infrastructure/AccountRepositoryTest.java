@@ -3,11 +3,11 @@ package org.switch2022.project.ddd.infrastructure;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -248,10 +248,10 @@ class AccountRepositoryTest {
         when(accountOne.hasEmail(email)).thenReturn(true);
 
         // Act
-        Optional<Account> result = repository.getAccountByEmail(email);
+        Account result = repository.getAccountByEmail(email);
 
         // Assert
-        assertEquals(Optional.of(accountOne), result);
+        assertEquals(accountOne, result);
     }
 
     @Test
@@ -259,12 +259,14 @@ class AccountRepositoryTest {
         //Arrange
         AccountRepository repository = new AccountRepository();
         String email = "ana@isep.pt";
+        String message = "This account doesn't exist";
 
         //Act
-        Optional<Account> result = repository.getAccountByEmail(email);
+        NotFoundInRepoException result =
+                assertThrows(NotFoundInRepoException.class, () ->repository.getAccountByEmail(email));
 
         //Assert
-        assertFalse(result.isPresent());
+        assertEquals(message, result.getMessage());
     }
 
     @Test
@@ -275,11 +277,13 @@ class AccountRepositoryTest {
         AccountRepository repository = new AccountRepository();
         String email = "ana@isep.pt";
         when(accountOne.hasEmail(email)).thenReturn(false);
+        String message = "This account doesn't exist";
 
         //Act
-        Optional<Account> result = repository.getAccountByEmail(email);
+        NotFoundInRepoException result =
+                assertThrows(NotFoundInRepoException.class, () ->repository.getAccountByEmail(email));
 
         //Assert
-        assertFalse(result.isPresent());
+        assertEquals(message, result.getMessage());
     }
 }
