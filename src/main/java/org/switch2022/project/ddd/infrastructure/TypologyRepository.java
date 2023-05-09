@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
 import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,5 +71,32 @@ public class TypologyRepository implements ITypologyRepository {
      */
     public int getSize() {
         return typologies.size();
+    }
+
+    /**
+     * Retrieves the ID of a typology with the given name from the repository.
+     *
+     * @param typologyName the name of the project typology whose ID is being requested.
+     * @return the ID of the project typology with the given name.
+     * @throws NotFoundInRepoException if a business sector with the given name is not found in the repository.
+     */
+
+    @Override
+    public String getTypologyIdByName(String typologyName) {
+        String requestedProjectTypologyId = null;
+        int i = 0;
+        while (i < this.typologies.size()) {
+            if (typologies.get(i).getTypologyName().contains(typologyName)) {
+                requestedProjectTypologyId = typologies.get(i).getTypologyId();
+                i = this.typologies.size();
+            }
+            i++;
+        }
+
+        if (requestedProjectTypologyId == null) {
+            throw new NotFoundInRepoException("Typology with this name does not exist in the Repository.");
+        }
+
+        return requestedProjectTypologyId;
     }
 }

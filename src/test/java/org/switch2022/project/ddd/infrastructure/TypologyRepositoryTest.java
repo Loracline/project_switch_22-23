@@ -1,11 +1,14 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class TypologyRepositoryTest {
     /**
@@ -202,4 +205,55 @@ class TypologyRepositoryTest {
 
     }
 
+    /**
+     * METHOD getTypologyIdByName()
+     * <p>
+     * Scenario 1: typology ID is retrieved successfully.
+     */
+    @Test
+    void ensureCustomerIdIsRetrievedSuccessfully() {
+        // Arrange
+        String typologyOne = "Fixed cost";
+        String typologyId = "c001";
+        Typology typologyDoubleOne = mock(Typology.class);
+
+        TypologyRepository repository = new TypologyRepository();
+        repository.add(typologyDoubleOne);
+
+        when(typologyDoubleOne.getTypologyName()).thenReturn(typologyOne);
+        when(typologyDoubleOne.getTypologyId()).thenReturn(typologyId);
+
+        // Act
+        String result = repository.getTypologyIdByName(typologyOne);
+
+        // Assert
+        assertEquals(typologyId, result);
+    }
+
+    /**
+     * Scenario 2: typology ID is not retrieved successfully.
+     */
+    @Test
+    void ensureCustomerIdIsNotRetrievedSuccessfully() {
+        // Arrange
+        String typologyOne = "Fixed cost";
+        String typologyTwo = "Fixed materials";
+        String typologyId = "c001";
+        Typology typologyDoubleOne = mock(Typology.class);
+
+        TypologyRepository repository = new TypologyRepository();
+        repository.add(typologyDoubleOne);
+
+        when(typologyDoubleOne.getTypologyName()).thenReturn(typologyOne);
+        when(typologyDoubleOne.getTypologyId()).thenReturn(typologyId);
+
+        // Act
+        NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class,
+                () -> repository.getTypologyIdByName(typologyTwo));
+
+        String expected = "Typology with this name does not exist in the Repository.";
+
+        // Assert
+        assertEquals(expected, exception.getMessage());
+    }
 }
