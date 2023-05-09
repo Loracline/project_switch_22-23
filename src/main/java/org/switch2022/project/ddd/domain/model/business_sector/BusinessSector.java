@@ -83,7 +83,7 @@ public class BusinessSector implements Entity<BusinessSector> {
      *
      * @return a String with the name of the business sector.
      */
-    protected String getBusinessSectorName() {
+    public String getBusinessSectorName() {
         return this.name.getName();
     }
 

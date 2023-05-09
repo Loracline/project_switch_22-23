@@ -2,12 +2,15 @@ package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
+import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class BusinessSectorRepositoryTest {
     /**
@@ -203,4 +206,57 @@ class BusinessSectorRepositoryTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * METHOD getBusinessSectorIdByName()
+     * <p>
+     * Scenario 1: business sector ID is retrieved successfully.
+     */
+    @Test
+    void ensureBusinessSectorIdIsRetrievedSuccessfully() {
+        // Arrange
+        String businessSectorName = "Sports";
+        String businessSectorId = "bs001";
+        BusinessSector businessSectorOne = mock(BusinessSector.class);
+
+        BusinessSectorRepository repository = new BusinessSectorRepository();
+        repository.add(businessSectorOne);
+
+        when(businessSectorOne.getBusinessSectorName()).thenReturn(businessSectorName);
+        when(businessSectorOne.getBusinessSectorId()).thenReturn(businessSectorId);
+
+        // Act
+        String result = repository.getBusinessSectorIdByName(businessSectorName);
+
+        // Assert
+        assertEquals(businessSectorId, result);
+    }
+
+    /**
+     * Scenario 2: business sector ID is not retrieved successfully.
+     */
+    @Test
+    void ensureBusinessSectorIdIsNotRetrievedSuccessfully() {
+        // Arrange
+        // Arrange
+        String businessSectorNameOne = "Sports";
+        String businessSectorNameTwo = "Fashion";
+        String businessSectorId = "bs001";
+        BusinessSector businessSectorOne = mock(BusinessSector.class);
+
+
+        BusinessSectorRepository repository = new BusinessSectorRepository();
+        repository.add(businessSectorOne);
+
+        when(businessSectorOne.getBusinessSectorName()).thenReturn(businessSectorNameOne);
+        when(businessSectorOne.getBusinessSectorId()).thenReturn(businessSectorId);
+
+        // Act
+        NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class,
+                () -> repository.getBusinessSectorIdByName(businessSectorNameTwo));
+
+        String expected = "Business sector with this name does not exist in the Repository.";
+
+        // Assert
+        assertEquals(expected, exception.getMessage());
+    }
 }
