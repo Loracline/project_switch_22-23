@@ -1,11 +1,13 @@
 package org.switch2022.project.ddd.dto.mapper;
 
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserStoryMapper {
 
     /**

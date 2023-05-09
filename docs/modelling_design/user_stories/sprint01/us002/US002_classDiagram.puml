@@ -1,47 +1,46 @@
 @startuml
 
-skinparam sequenceMessageAlign center
-title TO REGISTER NEW ACCOUNT
-legend top
-US002 - As Administrator, I want to register a user.
-end legend
-
-class "RegisterAccountController" {
--company
-+registerAccount(name, email, phoneNumber, photo)
+class RegisterAccountController {
+- accountService
++ registerAccount (accountCreationDto)
 }
 
-class "Company" {
--accountContainer
-+validateProfileRequired(email, profileNameRequired)
-+registerAccount(name, email, phoneNumber, photo)
+class AccountService{
+- accountRepository
+- accountFactory
++ registerAccount(name, email, phoneNumber, photo)
 }
 
-class "AccountContainer"{
--accounts
-+validateProfileRequired(email, profileNameRequired)
-+addAccount(name, email, phoneNumber, photo)
+interface IAccountFactory{
++ createAccount(name, email, phoneNumber, photo)
 }
 
-class "Account" {
--name
--email
+class AccountFactory{
++ createAccount(name, email, phoneNumber, photo)
+}
+
+interface IAccountRepository{
++ add(account)
+}
+
+class AccountRepository{
++ add(account)
+}
+
+class Account<<root>>{
+- name
+- email
 -phoneNumber
 -photo
-+equals(Object toCompare)
-+hashCode()
-+ isProfileRequired(profileNameRequired)
 }
 
-class "Profile"{
--profileName
-+isProfileRequired(profileNameRequired)
-+equals(Object toCompare)
-+hashCode()
-}
+RegisterAccountController <.. AccountService: is injected
+AccountService <.. IAccountRepository: is injected
+AccountService <.. IAccountFactory: is injected
+IAccountFactory <|.. AccountFactory: implements
+AccountFactory ..> Account: creates
+IAccountRepository <|.. AccountRepository: implements
+AccountRepository --> Account: has
 
-"RegisterAccountController" "1" --> "1" "Company": has
-"Company" "1"-->"1" "AccountContainer": has
-"AccountContainer" "1"-->"*" "Account": contains
-"Account" "*"--> "1""Profile": contains
+
 @enduml

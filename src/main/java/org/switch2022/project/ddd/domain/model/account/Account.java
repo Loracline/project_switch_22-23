@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.account;
 
+import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
@@ -15,7 +16,7 @@ import java.util.Objects;
  * account is INACTIVE.
  */
 
-public class Account {
+public class Account implements Entity<Account> {
 
     /**
      * Attributes
@@ -70,4 +71,60 @@ public class Account {
         return Objects.hash(email);
     }
 
+    /**
+     * This method checks if two instances of Account are equal by comparing the
+     * value of the attribute email.
+     *
+     * @param other Account instance to compare with.
+     * @return TRUE if the two have the same attribute value, and FALSE
+     * otherwise.
+     */
+    @Override
+    public boolean sameIdentityAs(Account other) {
+        return this.email.equals(other.email);
+    }
+
+    /**
+     * Getter method that returns a String with the Account name
+     * @return account name.
+     */
+    public String getAccountName() {
+        return name.getName();
+    }
+
+    /**
+     * Getter method that returns a String with the Account email
+     * @return account email.
+     */
+
+    public String getAccountEmail() {
+        return email.getEmail();
+    }
+
+    /**
+     * Getter method that returns a boolean with the Account status
+     * @return account status.
+     */
+    public boolean getAccountStatus() {
+        return accountStatus;
+    }
+
+    /**
+     * Method change the status of the account.
+     * @param status to be used to change.
+     * @return the updated status.
+     */
+    public boolean changeStatus(boolean status) {
+        this.accountStatus = status;
+        return true;
+    }
+
+    /**
+     * This method checks if the account has the same email as a given one.
+     * @param email to check is the account has a match
+     * @return true if account has the given email and false otherwise.
+     */
+    public boolean hasEmail(String email) {
+        return this.email.getEmail().equals(email);
+    }
 }

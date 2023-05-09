@@ -1,6 +1,6 @@
 import About from "../pages/About/About";
 import ListProjects from "../pages/ListProjects/ListProjects";
-import ConsultProductBacklog from "../pages/ConsultProductBacklog";
+import ConsultProductBacklog from "../pages/ConsultProductBacklog/ConsultProductBacklog";
 import CreateSprint from "../pages/CreateSprint/CreateSprint";
 import Project from "../pages/Project/Project";
 import CreateUserStory from "../pages/CreateUserStory/CreateUserStory";
