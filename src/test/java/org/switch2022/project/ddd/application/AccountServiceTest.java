@@ -84,7 +84,6 @@ class AccountServiceTest {
 
     /**
      * Method listAllAccounts()
-     *
      * Scenario 1: returns a lst of Accounts
      */
     @Test
@@ -102,11 +101,10 @@ class AccountServiceTest {
 
     /**
      * Method listAllAccounts()
-     *
      * Scenario 1: returns an empty lst
      */
     @Test
-    void ensureThatAnEmptyListtsIsReturned() {
+    void ensureThatAnEmptyListsIsReturned() {
         List<Account> expected = new ArrayList<>();
         when(accountRepository.getAccounts()).thenReturn(expected);
 
@@ -114,4 +112,28 @@ class AccountServiceTest {
 
         assertEquals(expected, result);
     }
+
+    /**
+     * Method changeStatus()
+     * Scenario 1: returns true if status changed.
+     */
+
+    @Test
+    void ensureThatStatusIsChanged() {
+        //Arrange
+        String email = "ana@isep.pt";
+        boolean newStatus = true;
+        Account expected = mock(Account.class);
+
+        when(accountRepository.getAccountByEmail(email)).thenReturn(expected);
+        when(expected.changeStatus(newStatus)).thenReturn(true);
+
+        //Act
+        boolean result = service.changeStatus(email, newStatus);
+
+        //Assert
+        assertTrue(result);
+    }
+
+
 }

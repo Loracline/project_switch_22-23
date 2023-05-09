@@ -8,6 +8,17 @@ export const CHECK_PROJECT = 'CHECK_PROJECT';
 export const CHECK_PROJECT_SPRINT = 'CHECK_PROJECT_SPRINT';
 export const SELECT_MENU = 'SELECT_MENU';
 export const SELECT_PROJECT = 'SELECT_PROJECT';
+export const CREATE_PROJECT ='CREATE_PROJECT';
+
+/**
+ Action for creating a new project.
+ */
+export const createProject = (project) => {
+    return {
+        type: CREATE_PROJECT,
+        payload: {projectToAdd: project}
+    };
+}
 
 /**
  Action for creating a new user story.

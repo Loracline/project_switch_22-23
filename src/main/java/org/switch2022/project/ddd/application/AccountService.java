@@ -56,4 +56,17 @@ public class AccountService {
         return accountRepository.getAccounts();
     }
 
+    /**
+     * This method changes the status of the account with the specified email address.
+     * @param email  the email address of the account to update.
+     * @param status the new status for the account.
+     * @return updates the account.
+     */
+
+    public boolean changeStatus(String email, boolean status) {
+        Account account = accountRepository.getAccountByEmail(email);
+        return account.changeStatus(status);
+    }
+
+
 }
