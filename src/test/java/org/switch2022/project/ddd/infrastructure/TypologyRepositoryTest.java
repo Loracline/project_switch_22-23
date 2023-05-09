@@ -211,10 +211,10 @@ class TypologyRepositoryTest {
      * Scenario 1: typology ID is retrieved successfully.
      */
     @Test
-    void ensureCustomerIdIsRetrievedSuccessfully() {
+    void ensureTypologyIdIsRetrievedSuccessfully() {
         // Arrange
         String typologyOne = "Fixed cost";
-        String typologyId = "c001";
+        String typologyId = "001";
         Typology typologyDoubleOne = mock(Typology.class);
 
         TypologyRepository repository = new TypologyRepository();
@@ -238,7 +238,7 @@ class TypologyRepositoryTest {
         // Arrange
         String typologyOne = "Fixed cost";
         String typologyTwo = "Fixed materials";
-        String typologyId = "c001";
+        String typologyId = "001";
         Typology typologyDoubleOne = mock(Typology.class);
 
         TypologyRepository repository = new TypologyRepository();

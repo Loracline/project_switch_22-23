@@ -215,7 +215,7 @@ class BusinessSectorRepositoryTest {
     void ensureBusinessSectorIdIsRetrievedSuccessfully() {
         // Arrange
         String businessSectorName = "Sports";
-        String businessSectorId = "bs001";
+        String businessSectorId = "001";
         BusinessSector businessSectorOne = mock(BusinessSector.class);
 
         BusinessSectorRepository repository = new BusinessSectorRepository();
@@ -240,7 +240,7 @@ class BusinessSectorRepositoryTest {
         // Arrange
         String businessSectorNameOne = "Sports";
         String businessSectorNameTwo = "Fashion";
-        String businessSectorId = "bs001";
+        String businessSectorId = "001";
         BusinessSector businessSectorOne = mock(BusinessSector.class);
 
 

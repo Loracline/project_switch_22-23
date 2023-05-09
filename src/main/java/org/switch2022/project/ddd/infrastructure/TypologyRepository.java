@@ -87,7 +87,8 @@ public class TypologyRepository implements ITypologyRepository {
         int i = 0;
         while (i < this.typologies.size()) {
             if (typologies.get(i).getTypologyName().contains(typologyName)) {
-                requestedProjectTypologyId = typologies.get(i).getTypologyId();
+                String typologyIdWithLetters = typologies.get(i).getTypologyId();
+                requestedProjectTypologyId = typologyIdWithLetters.replaceAll("[^0-9]", "");
                 i = this.typologies.size();
             }
             i++;
