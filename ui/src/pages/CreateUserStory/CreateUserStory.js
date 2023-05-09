@@ -8,7 +8,7 @@ import {createUserStory, selectMenu} from "../../context/Actions";
 import "./CreateUserStory.css";
 
 
-/**This component provides a form for creating a new project.*/
+/**This component provides a form for creating a new user story.*/
 
 function CreateUserStory() {
     const {state, dispatch} = useContext(AppContext);
@@ -16,13 +16,13 @@ function CreateUserStory() {
     const {detailedProject} = state;
 
     const initialUsState = {
-        projectCode: detailedProject.code,
+        projectCode: detailedProject.basicInfo.code,
         userStoryNumber: "",
         userStoryText: "",
         actor: "",
         acceptanceCriteria: [],
         status: "Planned",
-        priority: -1,
+        priority: undefined,
     };
 
     const [userStory, setUserStory] = useState(initialUsState);
@@ -54,7 +54,7 @@ function CreateUserStory() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(createUserStory({...userStory}));
+        dispatch(createUserStory({...userStory, priority: userStory.priority || -1}));
         window.alert(`The user story "${userStory.userStoryNumber}: ${userStory.userStoryText}" was successfully added to project ${userStory.projectCode}.`);
         setUserStory(initialUsState);
     }
@@ -114,12 +114,17 @@ function CreateUserStory() {
                             </ListItem>
                         ))}
                     </List>
-                    <TextField //todo make sure that priority only accepts positive values
+                    <TextField
                         name="priority"
                         label="Priority"
                         value={userStory.priority}
                         onChange={handleChange}
                         type="number"
+                        InputProps={{
+                            inputProps:{
+                                min:0
+                            }
+                        }}
                         variant="outlined"/>
                     <Button text="Create US"
                             isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
