@@ -7,9 +7,16 @@ import React from "react";
  * @returns {JSX.Element} an element representing an input field for selecting a date.
  */
 let DateInput;
-DateInput = ({value, onChange}) => {
+DateInput = ({title, name, value, onChange}) => {
     return (
-        <input type="date" id="date" name="date" value={value} onChange={onChange}/>
+        <>
+            <label htmlFor="myDate"> {title} </label>
+            <br/>
+            <br/>
+            <input type="date" id="date" name={name} value={value} onChange={onChange}/>
+            <br/>
+            <br/>
+        </>
     )
 };
 
