@@ -175,7 +175,7 @@ class SprintTest {
      * METHOD sameIdentityAs()
      * <br>
      * Scenario 1: Check if two instances of Sprint are equal if the value of their
-     * sprintNumber are the same.
+     * sprintID are the same.
      */
 
     @Test
@@ -199,25 +199,25 @@ class SprintTest {
 
 
     /**
-     * METHOD hasSprintNumber(sprintNumber)
-     * Verifies if Sprint has a given Sprint Number.
+     * METHOD hasSprintId(sprintID)
+     * Verifies if Sprint has a given Sprint ID.
      * <p>
      * Scenario 1: returns True.
      */
 
     @Test
-    void ensureThatReturnsTrueIfSprintHasSprintNumber() {
+    void ensureThatReturnsTrueIfSprintHasSprintID() {
         // Arrange
         Code projectCode =  new Code (1);
         LocalDate startDate= mock(LocalDate.class);
         Period period = new Period(startDate,2);
         SprintNumber sprintNumber = new SprintNumber(2);
-        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
         Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
-        String sprintNumberToCompare = "s002";
+        SprintId sprintIdToCompare = new SprintId("p001","s002");
 
         // Act
-        boolean result = sprint.hasSprintNumber(sprintNumberToCompare);
+        boolean result = sprint.hasSprintId(sprintIdToCompare);
 
         // Assert
         assertTrue(result);
@@ -227,23 +227,67 @@ class SprintTest {
      * Scenario 2: returns false.
      */
     @Test
-    void ensureThatReturnsFalseIfSprintDoesNotHaveSprintNumber() {
+    void ensureThatReturnsFalseIfSprintDoesNotHaveSprintID() {
         // Arrange
         Code projectCode =  new Code (1);
         LocalDate startDate= mock(LocalDate.class);
         Period period = new Period(startDate,2);
         SprintNumber sprintNumber = new SprintNumber(2);
-        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
         Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
-        String sprintNumberToCompare = "s008";
+        SprintId sprintIdToCompare = new SprintId("p001","s001");
 
         // Act
-        boolean result = sprint.hasSprintNumber(sprintNumberToCompare);
+        boolean result = sprint.hasSprintId(sprintIdToCompare);
 
         // Assert
         assertFalse(result);
     }
 
+    /**
+     * METHOD hasProjectCode(projectCode)
+     * Verifies if Sprint has a given ProjectCode.
+     * <p>
+     * Scenario 1: returns True.
+     */
+
+    @Test
+    void ensureThatReturnsTrueIfSprintHasProjectCode() {
+        // Arrange
+        Code projectCode =  new Code (1);
+        LocalDate startDate= mock(LocalDate.class);
+        Period period = new Period(startDate,2);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
+        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+
+        // Act
+        boolean result = sprint.hasProjectCode(projectCode);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: returns false.
+     */
+    @Test
+    void ensureThatReturnsFalseIfSprintDoesNotHaveProjectCode() {
+        // Arrange
+        Code projectCode =  new Code (1);
+        LocalDate startDate= mock(LocalDate.class);
+        Period period = new Period(startDate,2);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
+        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Code projectCodeOne =  new Code (3);
+
+        // Act
+        boolean result = sprint.hasProjectCode(projectCodeOne);
+
+        // Assert
+        assertFalse(result);
+    }
     /**
      * Method getSprintNumber() Returns the sprint number of the current object.
      */
