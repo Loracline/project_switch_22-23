@@ -8,7 +8,6 @@ import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.SprintBacklog;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -47,18 +46,6 @@ public class Company {
         this.projectTypologyContainer = projectTypologyContainer;
         this.customerContainer = customerContainer;
         this.accountInProjectContainer = accountInProjectContainer;
-    }
-
-
-    // "GETTERS"
-
-    /**
-     * Getter method for the attribute: accountContainer.
-     *
-     * @return the container of accounts of this company.
-     */
-    public AccountContainer getAccountContainer() {
-        return accountContainer;
     }
 
     // ACTOR VALIDATION METHODS
@@ -113,35 +100,6 @@ public class Company {
         return accountContainer.listAllUsers();
     }
 
-
-    // ACCOUNT METHODS
-
-    /**
-     * This method registers a new account and adds it to the container.
-     *
-     * @param accountName of the account.
-     * @param email       of the account.
-     * @param phoneNumber of the account.
-     * @param photo       of the account.
-     * @return TRUE if account is registered and FALSE otherwise.
-     */
-    public boolean registerAccount(String accountName, String email,
-                                   long phoneNumber, BufferedImage photo) {
-        return accountContainer.addAccount(accountName, email, phoneNumber, photo);
-    }
-
-    /**
-     * This method changes the status of an existing account in the container.
-     *
-     * @param email  of account.
-     * @param status one intend to change to (TRUE - Active, FALSE - Inactive).
-     * @return TRUE if changed, and FALSE otherwise.
-     */
-    public boolean changeStatus(String email, boolean status) {
-        return accountContainer.changeStatus(email, status);
-    }
-
-
     // PROJECT METHODS
 
     /**
@@ -164,16 +122,6 @@ public class Company {
                 iFactoryPeriod,
                 iFactorySprintBacklog, iFactorySprint));
     }
-
-    /**
-     * This method lists all projects in the container.
-     *
-     * @return a list of all projects.
-     */
-    public List<Project> listAllProjects() {
-        return projectContainer.getProjects();
-    }
-
 
     // BUSINESS SECTOR METHODS
 
