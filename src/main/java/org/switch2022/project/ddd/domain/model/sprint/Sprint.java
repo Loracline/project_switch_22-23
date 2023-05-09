@@ -2,7 +2,6 @@ package org.switch2022.project.ddd.domain.model.sprint;
 
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.utils.Validate;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +20,8 @@ public class Sprint implements Entity<Sprint> {
     private final SprintId sprintId;
     private final SprintNumber sprintNumber;
 
+    private final Code projectCode;
+
     private final Period period;
 
     private final List<UserStoryInSprint> userStoriesInSprint;
@@ -28,21 +29,20 @@ public class Sprint implements Entity<Sprint> {
 
     /**
      * Constructor
-     *
+     * @param projectCode the code of the project
+     * @param sprintId the id of the sprint
      * @param sprintNumber the number of the sprint.
      * @param period       the duration of the sprint.
      */
 
-    protected Sprint(String projectCode, int sprintNumber, Period period) {
-        Validate.notNull(period, "Period cannot be null");
-        Validate.notNegative(sprintNumber, "Sprint Number");
-        Validate.notNullOrEmptyOrBlank(projectCode, "project code");
-
-        SprintNumber sprintNumberVO = new SprintNumber(sprintNumber);
-        this.sprintId = new SprintId(projectCode, sprintNumberVO.getSprintNumber());
-        this.sprintNumber = sprintNumberVO;
+    protected Sprint(Code projectCode, SprintId sprintId, SprintNumber
+            sprintNumber, Period period) {
+        this.projectCode = projectCode;
+        this.sprintId =sprintId;
+        this.sprintNumber = sprintNumber;
         this.period = period;
         this.userStoriesInSprint = new ArrayList<>();
+
     }
 
     /**

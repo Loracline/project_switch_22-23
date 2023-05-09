@@ -1,0 +1,1 @@
+Put here deprecated artifacts related to US005 ans US006.

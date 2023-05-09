@@ -1,0 +1,1 @@
+All artifacts related to the modelling of user stories US005 and US006.

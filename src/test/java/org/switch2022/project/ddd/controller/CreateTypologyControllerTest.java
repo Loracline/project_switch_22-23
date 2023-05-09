@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.TypologyService;
+import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -44,18 +45,22 @@ class CreateTypologyControllerTest {
     }
 
     /**
-     * Scenario 01: The typology is not created.
+     * Scenario 02: The typology is not created.
      * Expected return: FALSE.
      */
     @Test
-    void ensureTypologyIsCreatedInuccessfully() {
+    void ensureTypologyIsCreatedUnsuccessfully() {
         //Arrange
-        when(typologyService.createTypology(any())).thenReturn(false);
+        String expected = "The typology already exists in the repository.";
+
+        when(typologyService.createTypology(any())).thenThrow(new AlreadyExistsInRepoException(expected));
+
         //Act
-        boolean result = controller.createTypology("test");
+        AlreadyExistsInRepoException result =
+                assertThrows(AlreadyExistsInRepoException.class, () -> controller.createTypology("typology01"));
 
         //Assert
-        assertFalse(result);
+        assertEquals(expected, result.getMessage());
     }
 
 }

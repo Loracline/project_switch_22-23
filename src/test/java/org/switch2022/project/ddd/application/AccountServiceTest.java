@@ -13,6 +13,9 @@ import org.switch2022.project.ddd.domain.model.account.IAccountFactory;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -78,4 +81,59 @@ class AccountServiceTest {
 
         assertFalse(result);
     }
+
+    /**
+     * Method listAllAccounts()
+     * Scenario 1: returns a lst of Accounts
+     */
+    @Test
+    void ensureThatAListWithAccountsIsReturned() {
+        Account accountOne = mock(Account.class);
+        Account accountTwo = mock(Account.class);
+        Account accountThree = mock(Account.class);
+        List<Account> expected = Arrays.asList(accountOne, accountTwo, accountThree);
+        when(accountRepository.getAccounts()).thenReturn(expected);
+
+        List<Account> result = service.listAllAccounts();
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method listAllAccounts()
+     * Scenario 1: returns an empty lst
+     */
+    @Test
+    void ensureThatAnEmptyListsIsReturned() {
+        List<Account> expected = new ArrayList<>();
+        when(accountRepository.getAccounts()).thenReturn(expected);
+
+        List<Account> result = service.listAllAccounts();
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method changeStatus()
+     * Scenario 1: returns true if status changed.
+     */
+
+    @Test
+    void ensureThatStatusIsChanged() {
+        //Arrange
+        String email = "ana@isep.pt";
+        boolean newStatus = true;
+        Account expected = mock(Account.class);
+
+        when(accountRepository.getAccountByEmail(email)).thenReturn(expected);
+        when(expected.changeStatus(newStatus)).thenReturn(true);
+
+        //Act
+        boolean result = service.changeStatus(email, newStatus);
+
+        //Assert
+        assertTrue(result);
+    }
+
+
 }

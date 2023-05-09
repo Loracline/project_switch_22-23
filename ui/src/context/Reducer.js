@@ -1,4 +1,5 @@
-import {CHECK_PROJECT_SPRINT, CREATE_SPRINT, CREATE_USER_STORY, SELECT_MENU, SELECT_PROJECT} from "./Actions";
+import {CHECK_PROJECT_SPRINT, CREATE_SPRINT, CREATE_USER_STORY, SELECT_MENU, SELECT_PROJECT,
+    CREATE_PROJECT} from "./Actions";
 
 /** Reducer function that updates the app state based on the dispatched actions.
  * @param state - The current state of the app.
@@ -8,6 +9,16 @@ import {CHECK_PROJECT_SPRINT, CREATE_SPRINT, CREATE_USER_STORY, SELECT_MENU, SEL
 
 const reducer = (state, action) => {
     switch (action.type) {
+
+        case CREATE_PROJECT: {
+            const project = action.payload.projectToAdd;
+            return {
+                ...state,
+                projects: [...state.projects, project]
+            };
+
+        }
+
         case CREATE_USER_STORY: {
             const {userStory} = action.payload;
             const updatedProjects = state.projects.map((project) => {

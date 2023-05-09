@@ -14,7 +14,7 @@ class "GetProductBacklogController" {
 }
 
 class "ProjectListController"{
--projectService
+-projectListService
 +listAllProjects()
 }
 
@@ -23,12 +23,17 @@ class "ProjectService"{
 -projectRepository
 -factoryProductBacklog
 -usRepository
--projectMapper
 -projectRepository
 -customerRepository
 +getProductBacklog(code)
 +getProjectByCode(code)
 +requestAllPlannedUserStories(usIds)
+}
+
+class "ProjectListService"{
+-projectMapper
+-projectRepository
+-customerRepository
 +requestAllProjects()
 }
 
@@ -259,13 +264,14 @@ BusinessSectorRepository --> BusinessSector: has
 
 "ProjectService" <.. "IProjectRepository" : is injected
 "ProjectService" <.. "IUsRepository" : is injected
-"ProjectListController" "1"<.."1" "ProjectService": is injected
-"ProjectService" "1"<.."1" "IProjectRepository": is injected
+
+"ProjectListController" "1"<.."1" "ProjectListService": is injected
+"ProjectListService" "1"<.."1" "IProjectRepository": is injected
 "ProjectRepository" "1" ..|> "1" "IProjectRepository": implements
-"ProjectService" "1"<.right."1" "ICustomerRepository": is injected
+"ProjectListService" "1"<.right."1" "ICustomerRepository": is injected
 "CustomerRepository" "1" ..|> "1" "ICustomerRepository": implements
-"ProjectService" "1" ..> "*" "Project": uses
-"ProjectMapper" "1" .up.> "1" "ProjectService": is injected
+"ProjectListService" "1" ..> "*" "Project": uses
+"ProjectMapper" "1" .up.> "1" "ProjectListService": is injected
 "ProjectMapper" "1" ..> "*" "Project": uses
 "ProjectDto" "*" <.up. "1" "ProjectMapper": uses
 "Project" "*" <-down- "1" "ProjectRepository": has
@@ -279,6 +285,8 @@ class AccountService{
 - accountRepository
 - accountFactory
 + registerAccount(name, email, phoneNumber, photo)
++changeStatus(email, status)
++listAllAccounts()
 }
 
 interface IAccountFactory{
@@ -291,17 +299,27 @@ class AccountFactory{
 
 interface IAccountRepository{
 + add(account)
++getAccountByEmail(email)
++getAccounts()
 }
 
 class AccountRepository{
 + add(account)
++getAccountByEmail(email)
++getAccounts()
 }
 
 class Account{
 - name
 - email
 -phoneNumber
+- accountStatus
 -photo
++changeStatus(status)
++hasEmail(email)
++getName()
++getEmail()
++getAccountStatus()
 }
 
 RegisterAccountController <.. AccountService: is injected
@@ -311,6 +329,36 @@ IAccountFactory <|.. AccountFactory: implements
 AccountFactory ..> Account: creates
 IAccountRepository <|.. AccountRepository: implements
 AccountRepository --> Account: has
+
+class ChangeStatusController {
+-accountService
++changeStatus(email, status)
+}
+
+ChangeStatusController"1 " <.. "1 "AccountService : is injected
+
+class ListAccountController {
+-accountService
+-accountMapper
++listAllAccounts()
++accountToDtoList(accounts)
+}
+
+class AccountMapper {
++accountToDto(account)
++accountsToDtoList(accounts)
+}
+
+class AccountDto{
++name
++email
++status
+}
+
+ListAccountController"1" <.. "1"AccountService : is injected
+ListAccountController "1"--> "1"AccountMapper : has
+AccountMapper --> AccountDto : creates
+AccountMapper ..> Account : knows
 
 @enduml
 

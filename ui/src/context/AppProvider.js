@@ -33,9 +33,15 @@ const AppProvider = ({children}) => {
             name: "Project1",
             customer: "ISEP",
             status: "planned",
-            startDate: "21/05/2023",
-            endDate: "31/12/2038",
+            startDate: "2023-05-23",
+            endDate: "2038-12-31",
         },
+        additionalInfo:
+            {
+                businessSector: "",
+                typology: "",
+                description: ""
+            },
         userStories: [{
             projectCode: "P01",
             userStoryNumber: "US001",
@@ -68,9 +74,16 @@ const AppProvider = ({children}) => {
             name: "Project2",
             customer: "ISEP",
             status: "finished",
-            startDate: "21/02/2010",
-            endDate: "31/12/2022",
+            startDate: "2010-02-23",
+            endDate: "2022-12-31",
         },
+
+        additionalInfo:
+            {
+                businessSector: "",
+                typology: "",
+                description: ""
+            },
         userStories: [{
             projectCode: "P01",
             userStoryNumber: "US001",
@@ -103,9 +116,17 @@ const AppProvider = ({children}) => {
             name: "Project3",
             customer: "Águas do Porto",
             status: "inception",
-            startDate: "21/02/2010",
-            endDate: "31/12/2022",
-        }, userStories: [], sprints: []
+            startDate: "2010-02-21",
+            endDate: "2022-12-30",
+                    },
+        additionalInfo:
+            {
+                businessSector: "",
+                typology: "",
+                description: ""
+            },
+        userStories: [],
+        sprints: []
     }]
 
     const usHeaders = ["US ID", "US Description", "US Status"]

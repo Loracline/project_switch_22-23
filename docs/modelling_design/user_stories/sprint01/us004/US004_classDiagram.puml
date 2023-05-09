@@ -32,7 +32,8 @@ class AccountMapper {
 }
 
 class AccountDto{
-+account
++name
++email
 +status
 }
 
@@ -45,7 +46,6 @@ class "Account" <<root>>{
 +getName()
 +getEmail()
 +getAccountStatus()
-+getPhoto()
 }
 
 ListAccountController"1" <.. "1"AccountService : is injected

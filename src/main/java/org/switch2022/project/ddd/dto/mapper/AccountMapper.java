@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.dto.mapper;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.dto.AccountDto;
 
@@ -7,6 +8,7 @@ import org.switch2022.project.ddd.dto.AccountDto;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class AccountMapper {
 
     /**
@@ -16,7 +18,7 @@ public class AccountMapper {
      * @return Dto carrying data.
      */
 
-   public static AccountDto accountToDto(Account account) {
+    public AccountDto accountToDto(Account account) {
         return new AccountDto(account.getAccountName(), account.getAccountEmail(),
                 account.getAccountStatus());
     }
@@ -30,7 +32,7 @@ public class AccountMapper {
      * @return a list of accountDto's.
      */
 
-    public static List<AccountDto> listAccountsToDto(List<Account> accounts) {
+    public List<AccountDto> accountsToDtoList(List<Account> accounts) {
         List<AccountDto> accountsDTO = new ArrayList<>();
         int i = 0;
         while (i < accounts.size()) {

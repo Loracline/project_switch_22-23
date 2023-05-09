@@ -168,21 +168,6 @@ class CompanyTest {
   }
 
   /**
-   * getAccountContainer()
-   */
-  @Test
-  void ensureAccountContainerIsRetrievedSuccessfully() {
-    // Arrange
-    AccountContainer expected = accountContainer;
-
-    // Act
-    AccountContainer result = company.getAccountContainer();
-
-    // Assert
-    assertEquals(expected, result);
-  }
-
-  /**
    * These tests verify if authorization process is successful regarding the
    * three account profile types of the actor performing tasks.
    */
@@ -356,37 +341,6 @@ class CompanyTest {
   }
 
   /**
-   * changeStatus(String email, boolean status)
-   */
-
-  @Test
-  void ensureStatusIsNotChanged() {
-    Company company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
-    boolean result = company.changeStatus("mike@isep.ipp.pt", true);
-    assertFalse(result);
-  }
-
-  @Test
-  void ensureChangeStatusReturnFalse() {
-    Company company = new Company(accountContainer, profileContainer, businessSectorContainer, projectContainer, projectTypologyContainer, accountInProjectContainer, customerContainer);
-    boolean result = company.changeStatus("mike@isep.ipp.pt", true);
-    assertFalse(result);
-  }
-
-  @Test
-  void ensureStatusIsChanged() {
-    // ARRANGE
-    accountOne.setStatus(true);
-    boolean expected = true;
-
-    // ACT
-    boolean result = company.changeStatus(accountOne.getEmail(), false);
-
-    // ASSERT
-    assertEquals(expected, result);
-  }
-
-  /**
    * These tests verify if a new project can be created successfully when
    * receiving a DTO carrying the relevant data.
    */
@@ -409,21 +363,6 @@ class CompanyTest {
 
     // Act
     boolean result = company.registerProject(projectOneDTO,factoryProductBacklog,factoryUserStory,factoryProject,factoryPeriod, factorySprintBacklog,factorySprint);
-
-    // Assert
-    assertEquals(expected, result);
-  }
-
-  /**
-   * listAllProjects()
-   */
-
-  @Test
-  void ensureAllProjectsAreListedSuccessfully() {
-    List<Project> expected = projectContainer.getProjects();
-
-    // Act
-    List<Project> result = company.listAllProjects();
 
     // Assert
     assertEquals(expected, result);

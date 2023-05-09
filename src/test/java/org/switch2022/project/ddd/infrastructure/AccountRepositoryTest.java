@@ -3,9 +3,15 @@ package org.switch2022.project.ddd.infrastructure;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class AccountRepositoryTest {
 
@@ -179,4 +185,105 @@ class AccountRepositoryTest {
         assertEquals(expected, exception.getMessage());
     }
 
+    /**
+     * Method getAccounts()
+     *
+     * Scenario 1: returns a list with all Accounts
+     */
+    @Test
+    void ensureThatAListWithAccountsISReturned() {
+        // Arrange
+        Account accountOne = mock(Account.class);
+        Account accountTwo = mock(Account.class);
+        Account accountThree = mock(Account.class);
+
+        List<Account> expected = Arrays.asList(accountOne, accountTwo, accountThree);
+
+        AccountRepository repository = new AccountRepository();
+        repository.add(accountOne);
+        repository.add(accountTwo);
+        repository.add(accountThree);
+
+        // Act
+        List<Account> result = repository.getAccounts();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: returns an empty list
+     */
+    @Test
+    void ensureThatAnEmptyListISReturned() {
+        // Arrange
+        List<Account> expected = new ArrayList<>();
+
+        AccountRepository repository = new AccountRepository();
+
+        // Act
+        List<Account> result = repository.getAccounts();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method getAccountByEmail()
+     *
+     * Scenario 1: returns
+     */
+
+    @Test
+    void ensureAccountIsReturned() {
+        // Arrange
+        Account accountOne = mock(Account.class);
+        Account accountTwo = mock(Account.class);
+
+        AccountRepository repository = new AccountRepository();
+        repository.add(accountOne);
+        repository.add(accountTwo);
+
+        String email = "ana@isep.pt";
+        when(accountOne.hasEmail(email)).thenReturn(true);
+
+        // Act
+        Account result = repository.getAccountByEmail(email);
+
+        // Assert
+        assertEquals(accountOne, result);
+    }
+
+    @Test
+    void ensureThatAccountIsNotFoundBecauseListIsEmpty() {
+        //Arrange
+        AccountRepository repository = new AccountRepository();
+        String email = "ana@isep.pt";
+        String message = "This account doesn't exist";
+
+        //Act
+        NotFoundInRepoException result =
+                assertThrows(NotFoundInRepoException.class, () ->repository.getAccountByEmail(email));
+
+        //Assert
+        assertEquals(message, result.getMessage());
+    }
+
+    @Test
+    void ensureThatAccountIsNotFoundBecauseIsNotInTheList() {
+        //Arrange
+        Account accountOne = mock(Account.class);
+
+        AccountRepository repository = new AccountRepository();
+        String email = "ana@isep.pt";
+        when(accountOne.hasEmail(email)).thenReturn(false);
+        String message = "This account doesn't exist";
+
+        //Act
+        NotFoundInRepoException result =
+                assertThrows(NotFoundInRepoException.class, () ->repository.getAccountByEmail(email));
+
+        //Assert
+        assertEquals(message, result.getMessage());
+    }
 }

@@ -50,10 +50,10 @@ class TypologyRepositoryTest {
 
     /**
      * Method: equals()
-     * Scenario 04: Test to ensure that two objects from the same class are different
+     * Scenario 03: Test to ensure that two objects from the same class are different
      */
     @Test
-    void ensureTwoProjectsAreNotEqual() {
+    void ensureTwoTypologiesAreNotEqual() {
         // Arrange
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
         Typology typologyDouble = mock(Typology.class);
@@ -69,10 +69,10 @@ class TypologyRepositoryTest {
 
     /**
      * Method: equals()
-     * Scenario 05: Test to ensure that two objects from the same class are equals.
+     * Scenario 04: Test to ensure that two objects from the same class are equals.
      */
     @Test
-    void ensureTwoProjectsAreEqual() {
+    void ensureTwoTypologiesAreEqual() {
         // Arrange
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
         Typology typologyDouble = mock(Typology.class);
@@ -89,10 +89,10 @@ class TypologyRepositoryTest {
 
     /**
      * Method: equals()
-     * Scenario 06: Test to ensure that Repository doesn't equals a null object
+     * Scenario 05: Test to ensure that Repository doesn't equals a null object
      */
     @Test
-    void ensureThatProjectDoesNotEqualsNull() {
+    void ensureThatTypologiesDoesNotEqualsNull() {
         // Arrange
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
         TypologyRepository typologyRepositoryTwo = null;
@@ -107,7 +107,7 @@ class TypologyRepositoryTest {
 
     /**
      * Method:hashCode()
-     * Scenario 01:Two equal ProjectsRepository objects are the same.
+     * Scenario 01:Two equal TypologiesRepository objects are the same.
      */
     @Test
     void ensureTwoUsIdInstancesHashcodeAreTheSame() {
@@ -127,7 +127,7 @@ class TypologyRepositoryTest {
      * Scenario 02:Two objects with the different code and different hash codes are two different objects
      */
     @Test
-    void ensureNoTwoProjectsHaveTheSameHashCode() {
+    void ensureNoTwoTypologiesHaveTheSameHashCode() {
         //Arrange
         Typology typologyOneDouble = mock(Typology.class);
         Typology typologyTwoDouble = mock(Typology.class);

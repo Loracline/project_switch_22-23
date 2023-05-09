@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class AccountRepository implements IAccountRepository {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
@@ -49,7 +50,8 @@ public class AccountRepository implements IAccountRepository {
 
 
     /**
-     * This method adds an instance of Account to AccountRepository if that instance does not
+     * This method adds an instance of Account to AccountRepository if that instance
+     * does not
      * already exist there.
      *
      * @param account to be added to the repository.
@@ -58,10 +60,41 @@ public class AccountRepository implements IAccountRepository {
      */
     public boolean add(Account account) {
         if (accounts.contains(account)) {
-            throw new AlreadyExistsInRepoException("The account already exists in the repository.");
+            throw new AlreadyExistsInRepoException("The account already exists in the " +
+                    "repository.");
         } else {
             accounts.add(account);
             return true;
         }
+    }
+
+    /**
+     * This method gets all the Accounts
+     *
+     * @return a list with all accounts.
+     */
+    @Override
+    public List<Account> getAccounts() {
+        return this.accounts;
+    }
+
+    /**
+     * This method returns an optional of an account.
+     * @param email to search for the account.
+     * @return an optional of account with the requested account or optional of null if
+     * it does not find the desired account.
+     */
+    @Override
+    public Account getAccountByEmail(String email) {
+        Account accountRequested = null;
+        int i = 0;
+        while (i < this.accounts.size() && accountRequested == null) {
+            if (accounts.get(i).hasEmail(email)) {
+                accountRequested = accounts.get(i);
+            }
+        }
+        if (accountRequested == null) throw new NotFoundInRepoException("This account " +
+                "doesn't exist");
+        return accountRequested;
     }
 }
