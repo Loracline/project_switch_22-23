@@ -2,7 +2,7 @@ package org.switch2022.project.ddd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.switch2022.project.ddd.application.ProjectService;
+import org.switch2022.project.ddd.application.ProjectListService;
 import org.switch2022.project.ddd.dto.ProjectDto;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class ProjectListController {
      * This controller handles the use case specified in the US015 where it is requested a list of all projects.
      */
     @Autowired
-    ProjectService projectService;
+    ProjectListService projectListService;
 
     /**
      * Constructor
@@ -26,9 +26,10 @@ public class ProjectListController {
 
     /**
      * This method requests a list of all projects
+     *
      * @return a projectDto list
      */
     public List<ProjectDto> ListAllProjects() {
-        return projectService.requestAllProjects();
+        return projectListService.requestAllProjects();
     }
 }
