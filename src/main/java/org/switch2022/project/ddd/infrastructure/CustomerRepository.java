@@ -95,4 +95,30 @@ public class CustomerRepository implements ICustomerRepository {
 
         return requestedName;
     }
+
+    /**
+     * Retrieves the ID of a customer with the given name from the repository.
+     *
+     * @param customerName the name of the customer whose ID is being requested.
+     * @return the ID of the customer with the given name.
+     * @throws NotFoundInRepoException if a customer with the given name is not found in the repository.
+     */
+    @Override
+    public String getCustomerTaxIdByName(String customerName) {
+        String requestedTaxId = null;
+        int i = 0;
+        while (i < this.customers.size()) {
+            if (customers.get(i).getName().contains(customerName)) {
+                requestedTaxId = customers.get(i).getTaxId();
+                i = this.customers.size();
+            }
+            i++;
+        }
+
+        if (requestedTaxId == null) {
+            throw new NotFoundInRepoException("Customer with this name does not exist in the Repository.");
+        }
+
+        return requestedTaxId;
+    }
 }
