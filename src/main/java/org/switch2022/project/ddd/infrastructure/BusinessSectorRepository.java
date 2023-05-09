@@ -88,7 +88,8 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
         int i = 0;
         while (i < this.businessSectors.size()) {
             if (businessSectors.get(i).getBusinessSectorName().contains(businessSectorName)) {
-                requestedBusinessSectorId = businessSectors.get(i).getBusinessSectorId();
+                String businessSectorIdWithLetters = businessSectors.get(i).getBusinessSectorId();
+                requestedBusinessSectorId = businessSectorIdWithLetters.replaceAll("[^0-9]", "");
                 i = this.businessSectors.size();
             }
             i++;
