@@ -46,7 +46,7 @@ const ListProjects = () => {
             <div className="tableWrap">
                 {tableData()}
                 <Button onClick={() => {
-                    dispatch(selectMenu('productBacklog'))
+                    dispatch(selectMenu('createProject'))
                 }} text='Create project'/>
             </div>
         </div>
