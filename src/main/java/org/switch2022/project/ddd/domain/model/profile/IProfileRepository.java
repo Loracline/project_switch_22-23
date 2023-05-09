@@ -1,5 +1,7 @@
 package org.switch2022.project.ddd.domain.model.profile;
 
+import org.switch2022.project.ddd.domain.value_object.Name;
+
 /**
  * Profile Repository Interface.
  */
@@ -20,6 +22,13 @@ public interface IProfileRepository {
      * @return the integer equivalent to the size of the list of profiles.
      */
     int getSize();
+
+    /**
+     * This method returns a profile with the given.
+     * @param profileName to search for the profile.
+     * @return a profile with the given name.
+     */
+    Profile getProfileByName(Name profileName);
 }
 
 
