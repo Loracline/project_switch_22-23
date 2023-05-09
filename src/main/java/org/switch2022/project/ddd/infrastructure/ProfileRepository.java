@@ -1,10 +1,11 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.springframework.stereotype.Component;
-import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
+import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,11 +75,35 @@ public class ProfileRepository implements IProfileRepository {
      *
      * @return the integer equivalent to the size of the list of business sectors.
      */
-
     @Override
     public int getSize() {
         return profiles.size();
     }
+
+    /**
+     *
+     * This method returns the profile in this repository with the given name.
+     * If the profile is not found, it throws a NotFoundInRepoException.
+     * @param profileName the name of the profile to be found
+     * @return the profile with the given name.
+     *
+     */
+    @Override
+    public Profile getProfileByName(Name profileName) {
+        Profile profileRequested = null;
+        int i = 0;
+        while (i < this.profiles.size() && profileRequested == null) {
+            if (profiles.get(i).hasName(profileName)) {
+                profileRequested = profiles.get(i);
+            }
+            i++;
+        }
+        if (profileRequested == null) throw new NotFoundInRepoException("This profile " +
+                "doesn't exist");
+        return profileRequested;
+
+    }
+
 }
 
 

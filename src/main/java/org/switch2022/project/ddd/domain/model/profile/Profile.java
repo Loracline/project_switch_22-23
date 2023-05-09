@@ -39,7 +39,6 @@ public class Profile implements Entity<Profile> {
      * @return true if the two Profile instances are the same object. Otherwise, checks if the
      * object parameter is null or has a different class than Profile, and return false if
      * either of these conditions are true.
-     *
      */
     @Override
     public boolean equals(Object toCompare) {
@@ -93,5 +92,19 @@ public class Profile implements Entity<Profile> {
      */
     public String getProfileId() {
         return this.profileId.getProfileId();
+    }
+
+
+    /**
+     * Checks if the profile has a name that matches the provided profile name.
+     *
+     * @param profileName the name to check against the account's name
+     * @return true if the account has a name that matches the provided profile name,
+     * false otherwise.
+     **/
+    public boolean hasName(Name profileName) {
+        return this.profileName.getName().equals(profileName.getName());
+
+
     }
 }

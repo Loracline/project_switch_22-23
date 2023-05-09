@@ -1,10 +1,13 @@
 package org.switch2022.project.ddd.domain.model.account;
 
+
+import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
 import org.switch2022.project.ddd.domain.value_object.Photo;
+
 
 import java.util.Objects;
 
@@ -26,6 +29,8 @@ public class Account implements Entity<Account> {
     private final PhoneNumber phoneNumber;
     private boolean accountStatus;
     private Photo photo;
+    private Profile profile;
+
 
     protected Account(Name name, Email email, PhoneNumber phoneNumber, Photo photo) {
         this.name = name;
@@ -126,5 +131,23 @@ public class Account implements Entity<Account> {
      */
     public boolean hasEmail(String email) {
         return this.email.getEmail().equals(email);
+    }
+
+    public Profile getProfile() {
+        return this.profile;
+    }
+
+    /**
+     * Setter method for the profile.
+     * Returns true if the profile was found and updated successfully,
+     * or false if the profile was not found.
+     */
+    public boolean setProfile(Profile profile) {
+        if (this.profile == null) {
+            this.profile = profile;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

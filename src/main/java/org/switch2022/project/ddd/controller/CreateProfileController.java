@@ -14,12 +14,12 @@ public class CreateProfileController {
     /**
      * This method receives a name as a String and creates a new profile with that name.
      *
-     * @param name that represents the name of a profile.
+     * @param profileName that represents the name of a profile.
      * @return TRUE if the profile is created, and throws an AlreadyExistsInRepoException
      * exception otherwise.
      */
-    public boolean createProfile(String name) {
-        return profileService.createProfile(name);
+    public boolean createProfile(String profileName) {
+        return profileService.createProfile(profileName);
     }
 }
 
