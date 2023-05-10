@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -201,7 +202,7 @@ public class Sprint implements Entity<Sprint> {
         for (UserStoryInSprint userStory : userStoriesInSprint) {
             sprintBacklog.add(userStory.getUsId());
         }
-        return sprintBacklog;
+        return Collections.unmodifiableList(sprintBacklog);
     }
 
     /**
@@ -244,5 +245,27 @@ public class Sprint implements Entity<Sprint> {
      */
     private boolean isDateBeforeStartDate(LocalDate date) {
         return !this.period.isDateEqualOrGreaterThanStartDate(date);
+    }
+
+    /**
+     * This method checks if the sprint start date is after or equal the date
+     *
+     * @param date
+     * @return true if the sprint start date is after or equal the date
+     */
+
+    public boolean isPeriodAfterOrEqualThanDate(LocalDate date) {
+        return period.isDateEqualOrLowerThanStartDate(date);
+
+    }
+
+    /**
+     * This method checks if the sprint end date is before or equal the date
+     *
+     * @param date
+     * @return true if the sprint end date is before or equal the  date
+     */
+    public boolean isEndDateBeforeOrGreaterThanDate(LocalDate date) {
+        return period.isDateEqualOrGreaterThanEndDate(date);
     }
 }

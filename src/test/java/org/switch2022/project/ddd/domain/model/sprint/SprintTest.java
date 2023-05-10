@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,15 +23,15 @@ class SprintTest {
     @Test
     public void testEqualsWhenDifferentSprintNumber() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintNumber sprintNumberOne = new SprintNumber(1);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
         SprintId sprintIdOne = new SprintId(projectCode.toString(), sprintNumberOne.getSprintNumber());
-        Sprint sprintOne = new Sprint(projectCode,sprintIdOne, sprintNumberOne,period);
-        Sprint sprintTwo = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintIdOne, sprintNumberOne, period);
+        Sprint sprintTwo = new Sprint(projectCode, sprintId, sprintNumber, period);
         boolean expected = false;
         // Act
         boolean result = sprintOne.equals(sprintTwo);
@@ -44,13 +46,13 @@ class SprintTest {
     @Test
     public void testEqualsWhenSameSprintNumber() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprintOne = new Sprint(projectCode,sprintId,sprintNumber, period);
-        Sprint sprintTwo = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, period);
+        Sprint sprintTwo = new Sprint(projectCode, sprintId, sprintNumber, period);
         boolean expected = true;
 
         // Act
@@ -67,12 +69,12 @@ class SprintTest {
     @Test
     public void testEqualsWhenComparedToDifferentObject() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprintOne = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, period);
         Object object = new Object();
         boolean expected = false;
         // Act
@@ -88,12 +90,12 @@ class SprintTest {
     @Test
     public void testSprintDoesNotEqualNull() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprintOne = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, period);
         Sprint other = null;
         boolean expected = false;
         //Act
@@ -109,12 +111,12 @@ class SprintTest {
     @Test
     public void testEqualsShouldReturnTrueWhenComparingTheSameObject() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprintOne = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, period);
         Sprint sprintTwo = sprintOne;
         // Act
         boolean result = sprintTwo.equals(sprintOne);
@@ -130,13 +132,13 @@ class SprintTest {
     @Test
     public void ensureTwoSprintHashcodeAreTheSame() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprintOne = new Sprint(projectCode,sprintId,sprintNumber, period);
-        Sprint sprintTwo = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, period);
+        Sprint sprintTwo = new Sprint(projectCode, sprintId, sprintNumber, period);
 
         //Act
         int sprintOneHashCode = sprintOne.hashCode();
@@ -153,15 +155,15 @@ class SprintTest {
     @Test
     public void ensureTwoSprintHashcodeAreNotTheSame() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintNumber sprintNumberOne = new SprintNumber(1);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
         SprintId sprintIdOne = new SprintId(projectCode.toString(), sprintNumberOne.getSprintNumber());
-        Sprint sprintOne = new Sprint(projectCode,sprintIdOne, sprintNumberOne,period);
-        Sprint sprintTwo = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintIdOne, sprintNumberOne, period);
+        Sprint sprintTwo = new Sprint(projectCode, sprintId, sprintNumber, period);
 
         //Act
         int sprintOneHashCode = sprintOne.hashCode();
@@ -181,13 +183,13 @@ class SprintTest {
     @Test
     void ensureThatTwoSprintsAreTheSame() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint reference = new Sprint(projectCode,sprintId,sprintNumber, period);
-        Sprint other = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint reference = new Sprint(projectCode, sprintId, sprintNumber, period);
+        Sprint other = new Sprint(projectCode, sprintId, sprintNumber, period);
         boolean expected = true;
 
         //Act
@@ -208,13 +210,13 @@ class SprintTest {
     @Test
     void ensureThatReturnsTrueIfSprintHasSprintID() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
-        SprintId sprintIdToCompare = new SprintId("p001","s002");
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        SprintId sprintIdToCompare = new SprintId("p001", "s002");
 
         // Act
         boolean result = sprint.hasSprintId(sprintIdToCompare);
@@ -229,13 +231,13 @@ class SprintTest {
     @Test
     void ensureThatReturnsFalseIfSprintDoesNotHaveSprintID() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
-        SprintId sprintIdToCompare = new SprintId("p001","s001");
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        SprintId sprintIdToCompare = new SprintId("p001", "s001");
 
         // Act
         boolean result = sprint.hasSprintId(sprintIdToCompare);
@@ -254,12 +256,12 @@ class SprintTest {
     @Test
     void ensureThatReturnsTrueIfSprintHasProjectCode() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
 
         // Act
         boolean result = sprint.hasProjectCode(projectCode);
@@ -274,13 +276,13 @@ class SprintTest {
     @Test
     void ensureThatReturnsFalseIfSprintDoesNotHaveProjectCode() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
-        Code projectCodeOne =  new Code (3);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        Code projectCodeOne = new Code(3);
 
         // Act
         boolean result = sprint.hasProjectCode(projectCodeOne);
@@ -288,6 +290,7 @@ class SprintTest {
         // Assert
         assertFalse(result);
     }
+
     /**
      * Method getSprintNumber() Returns the sprint number of the current object.
      */
@@ -295,12 +298,12 @@ class SprintTest {
     @Test
     void ensureThatSprintNumberIsReturnedSuccessfully() {
         // Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         int expected = 2;
 
         // Act
@@ -320,12 +323,12 @@ class SprintTest {
     public void ensureDateIsWithinPeriod() {
         //Arrange
         LocalDate dateToCompare = mock(LocalDate.class);
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         when(period.isDateEqualOrGreaterThanStartDate(dateToCompare)).thenReturn(true);
         when(period.isDateEqualOrLowerThanEndDate(dateToCompare)).thenReturn(true);
 
@@ -342,12 +345,12 @@ class SprintTest {
     public void ensureDateIsNotWithinPeriodBecauseIsLowerThenStartDate() {
         //Arrange
         LocalDate dateToCompare = mock(LocalDate.class);
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         when(period.isDateEqualOrGreaterThanStartDate(dateToCompare)).thenReturn(false);
         when(period.isDateEqualOrLowerThanEndDate(dateToCompare)).thenReturn(true);
 
@@ -365,12 +368,12 @@ class SprintTest {
     public void ensureDateIsNotWithinPeriodBecauseIsGreaterThenEndDate() {
         //Arrange
         LocalDate dateToCompare = mock(LocalDate.class);
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         when(period.isDateEqualOrGreaterThanStartDate(dateToCompare)).thenReturn(true);
         when(period.isDateEqualOrLowerThanEndDate(dateToCompare)).thenReturn(false);
 
@@ -389,12 +392,12 @@ class SprintTest {
     @Test
     void ensureThatDateIsBeforeSprintPeriod() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         LocalDate date = mock(LocalDate.class);
         when(period.isDateEqualOrGreaterThanStartDate(date)).thenReturn(false);
 
@@ -413,12 +416,12 @@ class SprintTest {
     @Test
     void ensureThatDateIsNotBeforeSprintPeriod() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         LocalDate date = mock(LocalDate.class);
         when(period.isDateEqualOrGreaterThanStartDate(date)).thenReturn(true);
 
@@ -437,15 +440,15 @@ class SprintTest {
     @Test
     void ensurePeriodIsNotOverlapping() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
         LocalDate endDate = mock(LocalDate.class);
-        Period period = new Period(startDate,endDate);
-        Period periodOne = new Period(startDate,endDate);
+        Period period = new Period(startDate, endDate);
+        Period periodOne = new Period(startDate, endDate);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
-        Sprint sprintOne = new Sprint(projectCode,sprintId,sprintNumber, periodOne);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, periodOne);
         when(period.isPeriodNotOverlapping(periodOne)).thenReturn(true);
 
 
@@ -462,16 +465,16 @@ class SprintTest {
     @Test
     void ensurePeriodIsOverlapping() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
         LocalDate endDate = mock(LocalDate.class);
-        Period period = new Period(startDate,endDate);
+        Period period = new Period(startDate, endDate);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         when(period.isPeriodNotOverlapping(period)).thenReturn(false);
 
-        Sprint sprintOne = new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, period);
         //Act
         boolean result = sprint.isPeriodNotOverlapping(sprintOne);
 
@@ -487,12 +490,12 @@ class SprintTest {
     @Test
     void ensureUserStoryIsAdded_becauseTheListIsEmpty() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         Effort effort = Effort.ONE;
         //Act
@@ -509,12 +512,12 @@ class SprintTest {
     @Test
     void ensureUserStoryIsAdded_becauseUSisNotAlreadyThere() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         Effort effort = mock(Effort.class);
         UsId usIdDouble = mock(UsId.class);
@@ -533,12 +536,12 @@ class SprintTest {
     @Test
     void ensureUserStoryIsNotAdded_becauseUSisAlreadyThere() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         Effort effort = Effort.ONE;
         sprint.addUserStory(usId, effort);
@@ -557,12 +560,12 @@ class SprintTest {
     @Test
     void ensureItReturnsTrueIfItHasUserStory() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         Effort effort = Effort.ONE;
         sprint.addUserStory(usId, effort);
@@ -581,12 +584,12 @@ class SprintTest {
     @Test
     void ensureItReturnsFalseBecauseUserStoryIsNotInTheList() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         Effort effort = Effort.ONE;
         UsId usIdDouble = mock(UsId.class);
@@ -605,12 +608,12 @@ class SprintTest {
     @Test
     void ensureItReturnsFalseBecauseUserStoryIsEmpty() {
         //Arrange
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
 
         //Act
@@ -629,12 +632,12 @@ class SprintTest {
     void ensureEstimateEffortHasChanged() {
         //Arrange
         LocalDate date = mock(LocalDate.class);
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         Effort effort = Effort.ONE;
         sprint.addUserStory(usId, effort);
@@ -655,12 +658,12 @@ class SprintTest {
     void ensureEstimateEffortIsNotChangedBecauseDateIsAfterStartDate() {
         //Arrange
         LocalDate date = mock(LocalDate.class);
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         Effort effort = Effort.ONE;
         when(period.isDateEqualOrGreaterThanStartDate(date)).thenReturn(true);
@@ -679,12 +682,12 @@ class SprintTest {
     void ensureEstimateEffortHasNotChanged() {
         //Arrange
         LocalDate date = mock(LocalDate.class);
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         Effort effort = Effort.ONE;
         sprint.addUserStory(usId, effort);
@@ -704,12 +707,12 @@ class SprintTest {
     void ensureEstimateEffortHasNotChangedBecauseUSDoesNotExist() {
         //Arrange
         LocalDate date = mock(LocalDate.class);
-        Code projectCode =  new Code (1);
-        LocalDate startDate= mock(LocalDate.class);
-        Period period = new Period(startDate,2);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint= new Sprint(projectCode,sprintId,sprintNumber, period);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         UsId usIdDouble = mock(UsId.class);
         Effort effort = Effort.TWO;
@@ -723,4 +726,142 @@ class SprintTest {
         assertFalse(result);
     }
 
+    /**
+     * METHOD getSprintBacklog()
+     * Scenario 1 : ensure it returns an empty list.
+     */
+    @Test
+    void ensureItReturnsAnEmptyList() {
+        //Arrange
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        List<UsId> expected = new ArrayList<>();
+        //Act
+        List<UsId> result = sprint.getSprintBacklog();
+
+        //Assert
+        assertEquals(result, expected);
+    }
+
+    /**
+     * Scenario 2: ensure it returns a list of UsId's.
+     */
+
+    @Test
+    void ensureItReturnsAListOfUsIds() {
+        //Arrange
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        Effort effort = mock(Effort.class);
+        List<UsId> expected = new ArrayList<>();
+        UsId usId = mock(UsId.class);
+        UsId usIdDouble = mock(UsId.class);
+        UsId usIdTriple = mock(UsId.class);
+        expected.add(usId);
+        expected.add(usIdDouble);
+        expected.add(usIdTriple);
+        sprint.addUserStory(usId, effort);
+        sprint.addUserStory(usIdDouble, effort);
+        sprint.addUserStory(usIdTriple, effort);
+
+        //Act
+        List<UsId> result = sprint.getSprintBacklog();
+
+        //Assert
+        assertEquals(expected, result);
+
+
+    }
+
+    /**
+     * Method:isPeriodAfterOrEqualThanDate
+     * scenario 1: returns true
+     */
+    @Test
+    void ensurePeriodIsAfterOrEqualDate() {
+        //Arrange
+        LocalDate date = mock(LocalDate.class);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        when(period.isDateEqualOrLowerThanStartDate(date)).thenReturn(true);
+        //Act
+        boolean result = sprint.isPeriodAfterOrEqualThanDate(date);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * scenario 2: returns false
+     */
+    @Test
+    void ensurePeriodIsNotAfterOrEqualDate() {
+        //Arrange
+        LocalDate date = mock(LocalDate.class);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        when(period.isDateEqualOrLowerThanStartDate(date)).thenReturn(false);
+        //Act
+        boolean result = sprint.isPeriodAfterOrEqualThanDate(date);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method: isEndDateBeforeOrGreaterThanDate
+     * scenario 1: returns true
+     */
+    @Test
+    void ensurePeriodIsBeforeOrEqualDate() {
+        //Arrange
+        LocalDate date = mock(LocalDate.class);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        LocalDate endDate = mock(LocalDate.class);
+        Period period = new Period(startDate, endDate);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        when(period.isDateEqualOrGreaterThanEndDate(date)).thenReturn(true);
+        //Act
+        boolean result = sprint.isEndDateBeforeOrGreaterThanDate(date);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * scenario 2: returns true
+     */
+    @Test
+    void ensurePeriodIsNotBeforeOrEqualDate() {
+        //Arrange
+        LocalDate date = mock(LocalDate.class);
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        LocalDate endDate = mock(LocalDate.class);
+        Period period = new Period(startDate, endDate);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        when(period.isDateEqualOrGreaterThanEndDate(date)).thenReturn(false);
+        //Act
+        boolean result = sprint.isEndDateBeforeOrGreaterThanDate(date);
+        //Assert
+        assertFalse(result);
+    }
 }
