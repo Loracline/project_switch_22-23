@@ -7,13 +7,13 @@ import './TableBody.css';
  * @returns {JSX.Element} a body created accordingly with the props passed.
  * */
 
-function TableBody({isClickable, body, onClick}) {
+function TableBody({body, onClick}) {
     return (
         <tbody>
         {body.map((item, index) => (
             <tr key={index}
-                className={isClickable ? "tableBody clickRow" : "tableBody"}
-                onClick={isClickable && onClick ? () => onClick(index) : undefined}>
+                className={onClick ? "tableBody clickRow" : "tableBody"}
+                onClick={onClick ? () => onClick(index) : null}>
                 {Object.values(item).map((value, i) => (
                     <td key={i}>{value}</td>
                 ))}
@@ -23,9 +23,4 @@ function TableBody({isClickable, body, onClick}) {
     );
 }
 
-TableBody.defaultProps = {
-    isClickable: false
-}
-
 export default TableBody;
-
