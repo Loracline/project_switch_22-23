@@ -1,0 +1,11 @@
+.label {
+    display: block;
+    margin-bottom: 12px;
+}
+
+.input {
+    border: none;
+    padding:10px;
+    border-radius: 6px;
+}
+

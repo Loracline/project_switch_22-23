@@ -13,14 +13,14 @@ import './CreateSprint.css';
  - @exports CreateSprint */
 
 function CreateSprint() {
-    const { state, dispatch} = useContext(AppContext);
-    const { detailedProject } = state;
+    const {state, dispatch} = useContext(AppContext);
+    const {detailedProject} = state;
     const [selectedDate, setSelectedDate] = useState(new Date());
     const initialSprintState = {
         projectCode: detailedProject.basicInfo.code,
         idSprint: '',
         endDate: '',
-        description:'',
+        description: '',
         userStories: []
     };
     const [sprintToSubmit, setSprintToSubmit] = useState(initialSprintState);
@@ -55,10 +55,10 @@ function CreateSprint() {
                 <form className="sprint-form" onSubmit={handleSubmit}>
                     <TextField label="Start Date" type="date" value={selectedDate}
                                onChange={handleDateChange}
-                               variant="outlined" required helperText="* Required"/>
-                    <div className="buttons">
+                               variant="outlined"/>
+                    <div className="sprint-buttons">
                         <Button text="Submit" isdisabled={!sprintToSubmit.date}/>
-                        <Button onClick={() => dispatch(selectMenu('projects'))} text="Return"/>
+                        <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
                     </div>
                 </form>
             </section>

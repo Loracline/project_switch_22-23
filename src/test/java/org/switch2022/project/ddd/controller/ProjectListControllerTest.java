@@ -17,9 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = ProjectListController.class
-)
+        classes = ProjectListController.class)
 class ProjectListControllerTest {
 
     @InjectMocks

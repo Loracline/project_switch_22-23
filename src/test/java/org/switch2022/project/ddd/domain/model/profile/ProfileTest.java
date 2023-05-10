@@ -248,4 +248,41 @@ public class ProfileTest {
         //ASSERT
         assertEquals(expected, result);
     }
+
+    /**
+     * Method: hasName().
+     *
+     * Scenario 01: Ensures that the profile with a given name doesn't match a different name.
+     * Should return FALSE.
+     */
+    @Test
+    void ensureThatProfileDoesNotHaveDifferentName() {
+        // Arrange
+        Name profileName = new Name("Test Profile");
+        Profile profile = new Profile(profileName, 1);
+
+        // Act
+        boolean result = profile.hasName(new Name("Different Profile"));
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 02: Tests the hasName() method for the Profile class when the name provided
+     * is the same as the profile's name.
+     * Should return TRUE.
+     */
+    @Test
+    void ensureThatProfileHasSameName() {
+        // Arrange
+        Name profileName = new Name("Test Profile");
+        Profile profile = new Profile(profileName, 1);
+
+        // Act
+        boolean result = profile.hasName(profileName);
+
+        // Assert
+        assertTrue(result);
+    }
 }

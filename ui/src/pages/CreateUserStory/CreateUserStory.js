@@ -71,7 +71,7 @@ function CreateUserStory() {
                         onChange={handleChange}
                         variant="outlined"
                         required
-                        helperText="* Required"
+                        className="textField"
                     />
                     <TextField
                         name="userStoryText"
@@ -81,13 +81,14 @@ function CreateUserStory() {
                         onChange={handleChange}
                         variant="outlined"
                         required
-                        helperText="* Required"/>
+                        className="textField"/>
                     <TextField
                         name="actor"
                         label="Actor"
                         value={userStory.actor}
                         onChange={handleChange}
-                        variant="outlined"/>
+                        variant="outlined"
+                        className="textField"/>
                     <div className="ac-container">
                         <TextField style={{width: "90%"}}
                                    name="acceptanceCriteria"
@@ -95,7 +96,7 @@ function CreateUserStory() {
                                    value={newAcceptanceCriteria}
                                    onChange={handleChangeCriteria}
                                    variant="outlined"
-                                   helperText="Click + to add an acceptance criteria"
+                                   className="textField"
                         />
                         <IconButton style={{margin: "auto"}} aria-label="add" onClick={addCriteria}>
                             <AddIcon/>
@@ -121,15 +122,19 @@ function CreateUserStory() {
                         onChange={handleChange}
                         type="number"
                         InputProps={{
-                            inputProps:{
-                                min:0
+                            inputProps: {
+                                min: 0
                             }
                         }}
-                        variant="outlined"/>
-                    <Button text="Create US"
-                            isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
+                        variant="outlined"
+                        className="textField"/>
+                    <div className="buttons-createUs">
+                        <Button text="Create US"
+                                isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
+                        <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))}
+                                text="Return to project"/>
+                    </div>
                 </form>
-                <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
             </section>
         </div>)
 

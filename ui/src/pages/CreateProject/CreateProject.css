@@ -1,0 +1,20 @@
+.project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.project-form button{
+    width: fit-content;
+    margin: .75rem auto 1.5rem;
+}
+
+.project-form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.dateRow {
+    display: flex;
+    gap: 6rem;
+}
