@@ -157,6 +157,21 @@ public class Period implements ValueObject<Period> {
     }
 
     /**
+     * This method checks if date is equal or lower than start date.
+     *
+     * @param date to compare.
+     * @return true if date is equal or lower than start date or false otherwise.
+     */
+    public boolean isDateEqualOrLowerThanStartDate(LocalDate date) {
+        boolean isEqualOrLower = false;
+        if (date != null) {
+            isEqualOrLower =
+                    date.isBefore(this.startDate) || date.isEqual(this.startDate);
+        }
+        return isEqualOrLower;
+    }
+
+    /**
      * This method checks if date is equal or lower than end date.
      *
      * @param date to compare.
@@ -168,5 +183,18 @@ public class Period implements ValueObject<Period> {
             isEqualOrLower = date.isBefore(this.endDate) || date.isEqual(this.endDate);
         }
         return isEqualOrLower;
+    }
+    /**
+     * This method checks if date is equal or greater than end date.
+     *
+     * @param date to compare.
+     * @return true if date is equal or greater than end date or false otherwise.
+     */
+    public boolean isDateEqualOrGreaterThanEndDate(LocalDate date) {
+        boolean isEqualOrGreater = false;
+        if (date != null) {
+            isEqualOrGreater = date.isAfter(this.endDate) || date.isEqual(this.endDate);
+        }
+        return isEqualOrGreater;
     }
 }

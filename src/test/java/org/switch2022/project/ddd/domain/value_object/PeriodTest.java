@@ -6,6 +6,8 @@ import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PeriodTest {
     /**
@@ -864,5 +866,118 @@ class PeriodTest {
 
         //Assert
         assertTrue(result);
+    }
+
+    /**
+     *Method: isDateEqualOrLowerThanStartDate
+     * scenario 1: returns true because date is equal
+     *
+     */
+    @Test
+    public void testIfDateToCompareEqualsToStartDate() {
+        //Arrange
+        LocalDate dateToCompare = mock(LocalDate.class);
+        LocalDate startDate = mock(LocalDate.class);
+        Period periodToTest = new Period(startDate,2);
+        when(dateToCompare.isBefore(startDate)).thenReturn(false);
+        when(dateToCompare.isEqual(startDate)).thenReturn(true);
+        //Act
+        boolean result = periodToTest.isDateEqualOrLowerThanStartDate(dateToCompare);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * scenario 2: returns true because date is lower
+     */
+
+    @Test
+    public void testIfDateToCompareIsLowerThanStartDate() {
+        //Arrange
+        LocalDate dateToCompare = mock(LocalDate.class);
+        LocalDate startDate = mock(LocalDate.class);
+        Period periodToTest = new Period(startDate,2);
+        when(dateToCompare.isBefore(startDate)).thenReturn(true);
+        when(dateToCompare.isEqual(startDate)).thenReturn(false);
+        //Act
+        boolean result = periodToTest.isDateEqualOrLowerThanStartDate(dateToCompare);
+
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * scenario 3: returns false because date is greater
+     */
+    @Test
+    public void testIfDateToCompareIsNotEqualNeitherLowerThanStartDate() {
+        //Arrange
+        LocalDate dateToCompare = mock(LocalDate.class);
+        LocalDate startDate = mock(LocalDate.class);
+        Period periodToTest = new Period(startDate,2);
+        when(dateToCompare.isBefore(startDate)).thenReturn(false);
+        when(dateToCompare.isEqual(startDate)).thenReturn(false);
+        //Act
+        boolean result = periodToTest.isDateEqualOrLowerThanStartDate(dateToCompare);
+
+        //Assert
+        assertFalse(result);
+    }
+    /**
+     *Method: isDateEqualOrGreaterThanEndDate
+     * scenario 1: returns true because date is equal
+     *
+     */
+    @Test
+    public void testIfDateToCompareEqualsToEndDate() {
+        //Arrange
+        LocalDate dateToCompare = mock(LocalDate.class);
+        LocalDate startDate = mock(LocalDate.class);
+        LocalDate endDate = mock(LocalDate.class);
+        Period periodToTest = new Period(startDate,endDate);
+        when(dateToCompare.isAfter(endDate)).thenReturn(false);
+        when(dateToCompare.isEqual(endDate)).thenReturn(true);
+        //Act
+        boolean result = periodToTest.isDateEqualOrGreaterThanEndDate(dateToCompare);
+
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * scenario 2: returns true because date is greater
+     */
+    @Test
+    public void testIfDateToCompareIsGreaterThanEndDate() {
+        //Arrange
+        LocalDate dateToCompare = mock(LocalDate.class);
+        LocalDate startDate = mock(LocalDate.class);
+        LocalDate endDate = mock(LocalDate.class);
+        Period periodToTest = new Period(startDate,endDate);
+        when(dateToCompare.isAfter(endDate)).thenReturn(true);
+        when(dateToCompare.isEqual(endDate)).thenReturn(false);
+        //Act
+        boolean result = periodToTest.isDateEqualOrGreaterThanEndDate(dateToCompare);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * scenario 3: returns false because date is lower
+     */
+    @Test
+    public void testIfDateToCompareIsLowerThanEndDate() {
+        //Arrange
+        LocalDate dateToCompare = mock(LocalDate.class);
+        LocalDate startDate = mock(LocalDate.class);
+        LocalDate endDate = mock(LocalDate.class);
+        Period periodToTest = new Period(startDate,endDate);
+        when(dateToCompare.isAfter(endDate)).thenReturn(false);
+        when(dateToCompare.isEqual(endDate)).thenReturn(false);
+        //Act
+        boolean result = periodToTest.isDateEqualOrGreaterThanEndDate(dateToCompare);
+
+        //Assert
+        assertFalse(result);
     }
 }
