@@ -1,0 +1,61 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW PROJECT
+legend top
+US010 - As Manager, I want to register/create a new project.
+end legend
+autonumber
+
+actor Manager as manager
+participant ":ProjectCreationUI" as ui
+participant ":CreateProjectController" as controller
+participant ":ProjectCreationService" as service
+participant ":CustomerRepository" as custRepo
+participant ":BusinessRepository" as busRepo
+participant ":TypologyRepository" as typoRepo
+participant ":dto:ProjectCreationDto" as dto
+participant ":FactoryProject" as factProj
+participant "project:Project" as project
+participant "ProjectRepository" as projRepo
+
+activate manager
+"manager" ->ui : create new project
+activate ui
+"ui" -->> manager: requests data (name, description, ...)
+manager -> ui: types requested data
+
+create dto
+ui -> dto: create (name, description, ...)
+ui -> controller: createProject(projectCreationDto)
+activate controller
+controller -> service: createProject(projectCreationDto)
+activate service
+service -> service: calculateNextProjectNumber()
+service -> custRepo: getCustomerTaxIdByName(customerName)
+activate custRepo
+custRepo --> service: customerTaxId
+deactivate custRepo
+service -> busRepo: getBusinessSectorIdByName(businessSectorName)
+activate busRepo
+busRepo --> service: businessSectorId
+deactivate busRepo
+service -> typoRepo: getTypologyIdByName(typologyName)
+activate typoRepo
+typoRepo --> service: typologyId
+deactivate typoRepo
+service -> factProj : createProject(projectNumber, projectName, projectDescription,\n businessSectorId, customerTaxId, projectTypologyId)
+activate factProj
+create project
+factProj ->> project : create (code, name, ...)
+deactivate factProj
+service -> projRepo : addProjectToProjectRepository(project)
+projRepo -->> service : true
+service -->>controller: projectId
+deactivate service
+controller -->> ui : projectId
+deactivate controller
+ui -->> manager :  informs project created
+deactivate ui
+
+@enduml
