@@ -1,0 +1,100 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO REGISTER NEW PROJECT
+legend top
+US010 - As Manager, I want to register/create a new project.
+end legend
+
+class CreateProjectController {
+- projectCreationService
++ createProject(projectCreationDto)
+}
+
+class ProjectCreationService {
+- factoryProject
+- projectRepository
+- typologyRepository
+- businessSectorRepository
+- customerRepository
++ createProject(projectCreationDto)
++ calculateNextProjectNumber()
++ getProjectByCode(code)
++ addProject(project)
+}
+
+class ProjectCreationDto{
++ code
++ name
++ status
++ customer
++ projectTypology
++ businessSector
+}
+
+class Project{
+- projectCode
+- Name projectName
+- description
+- businessSectorId
+- customerTaxId
+- projectTypologyId
+}
+
+class ProjectRepository{
+- List<Project> projects
++ addProjectToProjectRepository(project)
+}
+
+class BusinessSectorRepository{
+- List<BusinessSector> businessSectors
++ getBusinessSectorIdByName(businessSectorName)
+}
+
+class CustomerRepository{
+- List<Customer> customers
++ getCustomerTaxIdByName(customerName)
+}
+
+class TypologyRepository{
+- List<Typology> typologies
++ getProjectTypologyIdByName(typologyName)
+}
+
+interface IProjectRepository{
+addProjectToProjectRepository(project)
+}
+
+interface IFactoryProject {
+createProject(projectNumber, projectName, description,
+businessSectorId, customerTaxId, projectTypologyId)
+}
+
+interface ICustomerRepository {
+getCustomerTaxIdByName(customerName)
+}
+
+interface ITypologyRepository {
+getProjectTypologyIdByName(typologyName)
+}
+
+interface IBusinessSectorRepository {
+getBusinessSectorIdByName(businessSectorName)
+}
+
+
+CreateProjectController "1"<-right-.."1" ProjectCreationService: is injected
+IFactoryProject "1" .-up-.> "1" ProjectCreationService: is injected
+Project "*" <.-up-. "1" IFactoryProject: creates
+ProjectCreationDto "1" <.-left-. "*" ProjectCreationService: uses
+BusinessSectorRepository "1" ..|> "1" IBusinessSectorRepository: implements
+TypologyRepository "1" ..|> "1" ITypologyRepository: implements
+CustomerRepository "1" ..|> "1" ICustomerRepository: implements
+ProjectRepository "1" .-up-.|> "1" IProjectRepository: implements
+ProjectRepository "1" -left-> "*" Project: has
+ProjectRepository "1" .left.> "*" ProjectCreationService: is injected
+ICustomerRepository "1" ..> "1" ProjectCreationService: is injected
+ITypologyRepository "1" ..> "1" ProjectCreationService: is injected
+IBusinessSectorRepository "1" ..> "1" ProjectCreationService: is injected
+
+@enduml
