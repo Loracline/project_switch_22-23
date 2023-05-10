@@ -7,11 +7,11 @@ US015 - As a Manager, I want to get a list of all projects.
 end legend
 
 class "ProjectListController" {
--projectService
+-projectListService
 +listAllProjects()
 }
 
-class "ProjectService"{
+class "ProjectListService"{
 -projectMapper
 -projectRepository
 -customerRepository
@@ -62,13 +62,13 @@ class "ProjectDto" {
 +endDate
 }
 
-"ProjectListController" "1"<.."1" "ProjectService": is injected
-"ProjectService" "1"<.."1" "IProjectRepository": is injected
+"ProjectListController" "1"<.."1" "ProjectListService": is injected
+"ProjectListService" "1"<.."1" "IProjectRepository": is injected
 "ProjectRepository" "1" ..|> "1" "IProjectRepository": implements
-"ProjectService" "1"<.."1" "ICustomerRepository": is injected
+"ProjectListService" "1"<.."1" "ICustomerRepository": is injected
 "CustomerRepository" "1" ..|> "1" "ICustomerRepository": implements
-"ProjectService" "1" ..> "*" "Project": uses
-"ProjectMapper" "1" ..> "1" "ProjectService": is injected
+"ProjectListService" "1" ..> "*" "Project": uses
+"ProjectMapper" "1" ..> "1" "ProjectListService": is injected
 "ProjectMapper" "1" ..> "*" "Project": uses
 "ProjectDto" "*" <.. "1" "ProjectMapper": uses
 "Project" "*" <-down- "1" "ProjectRepository": has

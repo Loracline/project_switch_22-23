@@ -239,4 +239,56 @@ class CustomerRepositoryTest {
         // ASSERT
         assertEquals(expected, result);
     }
+
+    /**
+     * METHOD getCustomerTaxIdByName()
+     * <p>
+     * Scenario 1: customer ID is retrieved successfully.
+     */
+    @Test
+    void ensureCustomerIdIsRetrievedSuccessfully() {
+        // Arrange
+        String customerNameOne = "Philips";
+        String customerTaxId = "c001";
+        Customer customerOne = mock(Customer.class);
+
+        CustomerRepository repository = new CustomerRepository();
+        repository.addCustomerToRepository(customerOne);
+
+        when(customerOne.getName()).thenReturn(customerNameOne);
+        when(customerOne.getTaxId()).thenReturn(customerTaxId);
+
+        // Act
+        String result = repository.getCustomerTaxIdByName(customerNameOne);
+
+        // Assert
+        assertEquals(customerTaxId, result);
+    }
+
+    /**
+     * Scenario 2: customer ID is not retrieved successfully.
+     */
+    @Test
+    void ensureCustomerIdIsNotRetrievedSuccessfully() {
+        // Arrange
+        String customerNameOne = "Philips";
+        String customerNameTwo = "Sony";
+        String customerTaxId = "c001";
+        Customer customerOne = mock(Customer.class);
+
+        CustomerRepository repository = new CustomerRepository();
+        repository.addCustomerToRepository(customerOne);
+
+        when(customerOne.getName()).thenReturn(customerNameOne);
+        when(customerOne.getTaxId()).thenReturn(customerTaxId);
+
+        // Act
+        NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class,
+                () -> repository.getCustomerTaxIdByName(customerNameTwo));
+
+        String expected = "Customer with this name does not exist in the Repository.";
+
+        // Assert
+        assertEquals(expected, exception.getMessage());
+    }
 }

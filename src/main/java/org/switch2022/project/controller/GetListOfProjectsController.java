@@ -1,13 +1,6 @@
 package org.switch2022.project.controller;
 
 import org.switch2022.project.container.Company;
-import org.switch2022.project.model.Profile;
-import org.switch2022.project.model.Project;
-import org.switch2022.project.dto.ProjectDto;
-import org.switch2022.project.dto.mapper.ProjectMapper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class GetListOfProjectsController is built to allow access to ProjectContainer
@@ -32,7 +25,7 @@ public class GetListOfProjectsController {
      *
      * @param email Email of the account to be verified
      * @return a list of Projects DTO
-     */
+     *//*
     public List<ProjectDto> getListOfProjects(String email) {
         List<ProjectDto> listOfProjectsDTO = new ArrayList<>();
         if (company.validateProfileRequired(email, Profile.MANAGER)) {
@@ -40,5 +33,5 @@ public class GetListOfProjectsController {
             listOfProjectsDTO = ProjectMapper.getListOfProjectsDto(projects);
         }
         return listOfProjectsDTO;
-    }
+    }*/
 }

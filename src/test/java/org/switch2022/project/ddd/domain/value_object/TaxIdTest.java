@@ -23,7 +23,7 @@ class TaxIdTest {
 
         // ACT
         IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
+                () -> new TaxId(number));
 
         // ASSERT
         assertEquals(expected, result.getMessage());
@@ -41,7 +41,7 @@ class TaxIdTest {
 
         // ACT
         IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
+                () -> new TaxId(number));
 
         // ASSERT
         assertEquals(expected, result.getMessage());
@@ -59,61 +59,7 @@ class TaxIdTest {
 
         // ACT
         IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
-
-        // ASSERT
-        assertEquals(expected, result.getMessage());
-    }
-
-    @SuppressWarnings("all")
-    @DisplayName("Tax ID's country is null")
-    @Test
-    void ensureATaxIdIsNotCreatedBecauseCountryIsNull() {
-        // ARRANGE
-        String number = "514024054";
-        String country = null;
-
-        String expected = "The country must not be null";
-
-        // ACT
-        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
-
-        // ASSERT
-        assertEquals(expected, result.getMessage());
-    }
-
-    @SuppressWarnings("all")
-    @DisplayName("Tax ID's country is empty")
-    @Test
-    void ensureATaxIdIsNotCreatedBecauseCountryIsEmpty() {
-        // ARRANGE
-        String number = "514024054";
-        String country = "";
-
-        String expected = "The country must not be empty";
-
-        // ACT
-        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
-
-        // ASSERT
-        assertEquals(expected, result.getMessage());
-    }
-
-    @SuppressWarnings("all")
-    @DisplayName("Tax ID's country is blank")
-    @Test
-    void ensureATaxIdIsNotCreatedBecauseCountryIsBlank() {
-        // ARRANGE
-        String number = "514024054";
-        String country = "   ";
-
-        String expected = "The country must not be blank";
-
-        // ACT
-        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
+                () -> new TaxId(number));
 
         // ASSERT
         assertEquals(expected, result.getMessage());
@@ -124,9 +70,8 @@ class TaxIdTest {
     void ensureReturnsTrueWhenTwoTaxIdsHaveSameAttributes() {
         // ARRANGE
         String number = "514024054";
-        String country = "portugal";
-        TaxId taxIdOne = new TaxId(number, country);
-        TaxId taxIdTwo = new TaxId(number, country);
+        TaxId taxIdOne = new TaxId(number);
+        TaxId taxIdTwo = new TaxId(number);
 
         boolean expected = true;
 
@@ -143,9 +88,8 @@ class TaxIdTest {
         // ARRANGE
         String numberOne = "514024054";
         String numberTwo = "228019885";
-        String country = "portugal";
-        TaxId taxIdOne = new TaxId(numberOne, country);
-        TaxId taxIdTwo = new TaxId(numberTwo, country);
+        TaxId taxIdOne = new TaxId(numberOne);
+        TaxId taxIdTwo = new TaxId(numberTwo);
 
         boolean expected = false;
 
@@ -162,10 +106,8 @@ class TaxIdTest {
         // ARRANGE
         String numberOne = "514024054";
         String numberTwo = "12345678Z";
-        String countryOne = "portugal";
-        String countryTwo = "spain";
-        TaxId taxIdOne = new TaxId(numberOne, countryOne);
-        TaxId taxIdTwo = new TaxId(numberTwo, countryTwo);
+        TaxId taxIdOne = new TaxId(numberOne);
+        TaxId taxIdTwo = new TaxId(numberTwo);
 
         boolean expected = false;
 
@@ -182,8 +124,7 @@ class TaxIdTest {
     void ensureReturnsFalseWhenOneOfTheTaxIdIsNull() {
         // ARRANGE
         String numberOne = "514024054";
-        String country = "portugal";
-        TaxId taxIdOne = new TaxId(numberOne, country);
+        TaxId taxIdOne = new TaxId(numberOne);
         TaxId taxIdTwo = null;
 
         boolean expected = false;

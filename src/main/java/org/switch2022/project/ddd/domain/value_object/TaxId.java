@@ -9,20 +9,15 @@ import org.switch2022.project.ddd.utils.Validate;
  */
 public class TaxId implements ValueObject<TaxId> {
 
-    private final String country;
     private final String number;
 
     /**
      * Constructor.
      *
      * @param number of the Customer.
-     * @param country of the Customer.
      */
-    public TaxId(String number, String country) {
+    public TaxId(String number) {
         Validate.notNullOrEmptyOrBlank(number, "number");
-        Validate.notNullOrEmptyOrBlank(country, "country");
-
-        this.country = country.toLowerCase();
         this.number = number.trim();
     }
 
@@ -36,6 +31,6 @@ public class TaxId implements ValueObject<TaxId> {
      */
     @Override
     public boolean sameValueAs(TaxId other) {
-        return other != null && this.number.equals(other.number) && this.country.equals(other.country);
+        return other != null && this.number.equals(other.number);
     }
 }

@@ -6,27 +6,25 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.application.ProjectService;
+import org.switch2022.project.ddd.application.ProjectListService;
 import org.switch2022.project.ddd.dto.ProjectDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = ProjectListController.class
-)
+        classes = ProjectListController.class)
 class ProjectListControllerTest {
 
     @InjectMocks
     ProjectListController controller;
 
     @MockBean
-    ProjectService projectService;
+    ProjectListService projectListService;
 
     @BeforeEach
     void setUp() {
@@ -44,7 +42,7 @@ class ProjectListControllerTest {
         List<ProjectDto> expected = new ArrayList<>();
         ProjectDto projectDtoDouble = mock(ProjectDto.class);
         expected.add(projectDtoDouble);
-        when(projectService.requestAllProjects()).thenReturn(expected);
+        when(projectListService.requestAllProjects()).thenReturn(expected);
 
         //Act
         List<ProjectDto> result = controller.ListAllProjects();
@@ -59,7 +57,7 @@ class ProjectListControllerTest {
     void ensureThatAListOfProjectsDtoIsReturnedEmpty() {
         //Arrange
         List<ProjectDto> expected = new ArrayList<>();
-        when(projectService.requestAllProjects()).thenReturn(expected);
+        when(projectListService.requestAllProjects()).thenReturn(expected);
 
         //Act
         List<ProjectDto> result = controller.ListAllProjects();

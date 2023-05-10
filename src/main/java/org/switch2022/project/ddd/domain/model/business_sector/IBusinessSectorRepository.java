@@ -1,5 +1,7 @@
 package org.switch2022.project.ddd.domain.model.business_sector;
 
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
+
 /**
  * Interface for a repository of business sectors.
  */
@@ -18,4 +20,13 @@ public interface IBusinessSectorRepository {
      * @return the integer equivalent to the size of the list of business sectors.
      */
     int getSize();
+
+    /**
+     * Retrieves the ID of a customer with the given name from the repository.
+     *
+     * @param businessSectorName the name of the business sector whose ID is being requested.
+     * @return the ID of the business sector with the given name.
+     * @throws NotFoundInRepoException if a business sector with the given name is not found in the repository.
+     */
+    String getBusinessSectorIdByName(String businessSectorName);
 }

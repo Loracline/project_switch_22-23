@@ -1,14 +1,13 @@
 package org.switch2022.project.ddd.application;
 
-import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
-import org.switch2022.project.ddd.domain.model.project.*;
-import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
+import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
+import org.switch2022.project.ddd.domain.model.project.Project;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.ProjectDto;
-import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 import org.switch2022.project.ddd.utils.Utils;
 
@@ -31,48 +30,6 @@ public class ProjectService {
     private IProjectRepository projectRepository;
     @Autowired
     private IUsRepository usRepository;
-    @Autowired
-    private ProjectMapper projectMapper;
-    @Autowired
-    private ICustomerRepository customerRepository;
-
-
-    /**
-     * This method creates a new Project with the next project code available and adds it to the repository.
-     *
-     * @param description           the description of the project.
-     * @param businessSectorId      the identifier of the businessSector.
-     * @param customerTaxId            the identifier of the customer.
-     * @param projectTypologyId     the identifier of the projectTypology.
-     *
-     * @return returns the code of the created Project.
-     */
-    public String createProject(Name projectName, Description description, BusinessSectorId businessSectorId,
-                                TaxId customerTaxId, ProjectTypologyId projectTypologyId) {
-        int projectNumber = calculateNextProjectNumber();
-        Project project = factoryProject.createProject(projectNumber, projectName, description, businessSectorId,
-                customerTaxId, projectTypologyId);
-        projectRepository.addProjectToProjectRepository(project);
-        return project.getProjectCode();
-    }
-
-    /**
-     * This method adds a Project to the Repository.
-     *
-     * @param project to be added to the Repository
-     */
-
-    public boolean addProject(Project project) {
-        return projectRepository.addProjectToProjectRepository(project);
-    }
-
-    /**
-     * This method calculates the number of project to include in the project code using the repository size.
-     */
-    public int calculateNextProjectNumber() {
-        return projectRepository.getProjectNumber() + 1;
-    }
-
 
     /**
      * This method will return an Optional Project from the repository.
@@ -124,20 +81,5 @@ public class ProjectService {
             }
         }
         return userStoriesPlanned;
-    }
-
-    /**
-     * Requests a list of all projects
-     *
-     * @return a list of all projectsDto.
-     */
-    public List<ProjectDto> requestAllProjects() {
-        List<ProjectDto> projectsDto = new ArrayList<>();
-        List<Project> projects = projectRepository.findAll();
-        for (Project project : projects) {
-            String customerName = customerRepository.getCustomerNameByTaxId(project.getCustomerTaxId());
-            projectsDto.add(projectMapper.projectToDto(project, customerName));
-        }
-        return projectsDto;
     }
 }

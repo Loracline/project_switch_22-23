@@ -13,7 +13,6 @@ import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 
@@ -94,96 +93,6 @@ class ProjectServiceTest {
     }
 
     /**
-     * Method: createProject(projectCreationDto, customerId,businessSectorId,
-     * projectTypologyId)
-     *
-     * scenario1: the project is created successfully. This always happens as all ids
-     * are uniques and generated automatically.
-     */
-    @Test
-   void ensureProjectIsCreated() {
-        //Arrange
-        Name projectNameDouble = mock(Name.class);
-        Description descriptionDouble = mock(Description.class);
-        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
-        TaxId customerTaxIdDouble = mock(TaxId.class);
-        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
-        String expected = "p002";
-        when(projectRepository.getProjectNumber()).thenReturn(1);
-        Project projectDouble = mock(Project.class);
-        when(factoryProject.createProject(any(),any(),any(),any(),any(),any())).thenReturn(projectDouble);
-        when(projectDouble.getProjectCode()).thenReturn(expected);
-
-        //Act
-        String result = projectService.createProject(projectNameDouble, descriptionDouble, businessSectorIdDouble,
-                customerTaxIdDouble, projectTypologyIdDouble);
-
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Method: addProject
-     * scenario1: the project is added successfully
-     */
-    @Test
-    void ensureProjectIsAdded() {
-        //Arrange
-        Project projectDouble = mock(Project.class);
-        when(projectRepository.addProjectToProjectRepository(any())).thenReturn(true);
-        boolean expected = true;
-        //Act
-        boolean result = projectService.addProject(projectDouble);
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * scenario2: the project is not added
-     */
-    @Test
-    void ensureProjectIsNotAdded() {
-        //Arrange
-        Project projectDouble = mock(Project.class);
-        when(projectRepository.addProjectToProjectRepository(any())).thenReturn(false);
-        boolean expected = false;
-        //Act
-        boolean result = projectService.addProject(projectDouble);
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Method createCode
-     * scenario1: the method returns number 1 when Repository is empty
-     */
-    @Test
-    void ensureProjectCodeIsCreatedWithEmptyRepository() {
-        //Arrange
-        when(projectRepository.getProjectNumber()).thenReturn(0);
-        int expected = 1;
-        //Act
-        int result = projectService.calculateNextProjectNumber();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * scenario2: the method returns number 2, when the Repository has one project
-     */
-    @Test
-    void ensureProjectCodeIsCreatedWithRepositoryWithOneProject() {
-        //Arrange
-        when(projectRepository.getProjectNumber()).thenReturn(1);
-        int expected = 2;
-        //Act
-        int result = projectService.calculateNextProjectNumber();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-
-    /**
      * Method: getProjectByCode
      * scenario 1: returns an optional
      */
@@ -203,7 +112,7 @@ class ProjectServiceTest {
      * scenario 1: returns a list of usId
      */
     @Test
-    void ensureProductBacklogIsRetrievedSuccessfully()  {
+    void ensureProductBacklogIsRetrievedSuccessfully() {
         //Arrange
         UsId usIdDouble = mock(UsId.class);
         UsId usIdDoubleTwo = mock(UsId.class);
@@ -299,7 +208,7 @@ class ProjectServiceTest {
      */
 
     @Test
-    void ensureThatReturnsAnEmptyListIfThereAreNoUserStories()  {
+    void ensureThatReturnsAnEmptyListIfThereAreNoUserStories() {
         //Arrange
         List<UsId> usIds = new ArrayList<>();
         List<UserStory> expected = new ArrayList<>();
@@ -317,7 +226,7 @@ class ProjectServiceTest {
      * Scenario 03: check if returns an empty list when there are no UserStories with planned status.
      */
     @Test
-    void ensureThatReturnsAnEmptyListBecauseThereAreNoUserStoriesWithPlannedStatus(){
+    void ensureThatReturnsAnEmptyListBecauseThereAreNoUserStoriesWithPlannedStatus() {
         //Arrange
         List<UsId> usIds = new ArrayList<>();
         UserStory userStory = mock(UserStory.class);
@@ -337,56 +246,9 @@ class ProjectServiceTest {
 
     }
 
-    /**
-     * METHOD: requestAllProjects
-     * Scenario 1: returns and emtpy list because there are no Projects
-     */
-
-    @Test
-    void ensureThatReturnsAnEmptyListBecauseThereAreNoProjects(){
-        //Arrange
-        List<ProjectDto> expected = new ArrayList<>();
-        List<Project> projects = new ArrayList<>();
-        when(projectRepository.findAll()).thenReturn(projects);
-        //Act
-        List<ProjectDto> result = projectService.requestAllProjects();
-        //Assert
-        assertEquals(expected, result);
-    }
-
-    /**
-     * Scenario 2: returns a list of ProjectDto
-     */
-
-    @Test
-    void ensureThatReturnsAListOfProjectsDto(){
-        //Arrange
-        List<ProjectDto> expected = new ArrayList<>();
-        Project projectDouble = mock(Project.class);
-        Project projectDoubleTwo = mock(Project.class);
-        ProjectDto projectDtoDouble = mock(ProjectDto.class);
-        List<Project> projects = new ArrayList<>();
-        String customerName = "ISEP";
-        projects.add(projectDouble);
-        projects.add(projectDoubleTwo);
-        TaxId taxIdDouble = mock(TaxId.class);
-        when(projectRepository.findAll()).thenReturn(projects);
-        when(customerRepository.getCustomerNameByTaxId(taxIdDouble)).thenReturn(customerName);
-        when(projectDouble.getCustomerTaxId()).thenReturn(taxIdDouble);
-        when(projectDoubleTwo.getCustomerTaxId()).thenReturn(taxIdDouble);
-        when (projectMapper.projectToDto(projectDouble,customerName)).thenReturn(projectDtoDouble);
-        when (projectMapper.projectToDto(projectDoubleTwo,customerName)).thenReturn(projectDtoDouble);
-        expected.add(projectDtoDouble);
-        expected.add(projectDtoDouble);
-        //Act
-        List<ProjectDto> result = projectService.requestAllProjects();
-        //Assert
-        assertEquals(expected, result);
-    }
-
     // Integration testes: ProjectService + Project + ProjectRepository
-/*
-    *//**
+    /*
+     *//**
      * METHOD createProject(projectCreationDto, customerId,businessSectorId,
      * projectTypologyId) creates a new Project and adds it to the repository, and
      * creates a ProjectCode using the projectRepository.
@@ -419,7 +281,7 @@ class ProjectServiceTest {
      *
      * @throws Exception if User Story is already added or project doesn't exist.
      *                   Should return TRUE.
-      *//*
+     *//*
     @Test
     void ensureUserStoryIsAddedToProductBacklog() throws Exception {
         //Arrange
