@@ -8,6 +8,7 @@ import org.switch2022.project.ddd.domain.value_object.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -969,6 +970,83 @@ class ProjectTest {
         NumberOfPlannedSprints numberOfPlannedSprintsDouble = mock(NumberOfPlannedSprints.class);
         //Act
         boolean result = project.isNumberOfPlannedSprintsDefined(numberOfPlannedSprintsDouble);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method: getSprintDuration
+     * scenario 1: returns an empty optional because project has status Planned
+     */
+    @Test
+    void ensureSprintDurationIsNotRetrievedDueToStatusBePlanned() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        Optional<SprintDuration> expected = Optional.empty();
+        //Act
+        Optional<SprintDuration> result = project.getSprintDuration();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 2: returns an empty optional because project has no duration
+     */
+    @Test
+    void ensureSprintDurationIsNotRetrievedDueToBeNull() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        project.setProjectStatus(ProjectStatus.INCEPTION);
+        Optional<SprintDuration> expected = Optional.empty();
+        //Act
+        Optional<SprintDuration> result = project.getSprintDuration();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 3: returns an optional with a duration
+     */
+    @Test
+    void ensureSprintDurationIsRetrieved() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        project.setProjectStatus(ProjectStatus.INCEPTION);
+        project.setSprintDuration(3);
+        Optional<SprintDuration> expected = Optional.of(new SprintDuration(3));
+        //Act
+        Optional<SprintDuration> result = project.getSprintDuration();
+        //Assert
+        assertEquals(expected, result);
+    }
+    /**
+     * Method: hasStatus
+     * scenario 1: returns true
+     */
+    @Test
+    void ensureProjectHasTheSameStatus() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        //Act
+        boolean result = project.hasStatus(ProjectStatus.PLANNED);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * scenario 2: returns false
+     */
+    @Test
+    void ensureProjectHasNotTheSameStatus() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        //Act
+        boolean result = project.hasStatus(ProjectStatus.INCEPTION);
         //Assert
         assertFalse(result);
     }

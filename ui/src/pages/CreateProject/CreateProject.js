@@ -18,8 +18,8 @@ function CreateProject() {
             name: undefined,
             customer: undefined,
             status: "planned",
-            startDate: undefined,
-            endDate: undefined
+            startDate: "-",
+            endDate: "-"
         },
         additionalInfo: {
             businessSector: undefined,
@@ -36,6 +36,9 @@ function CreateProject() {
         const {name, value} = event.target;
         const newBasicInfo = {...basicInfo};
         newBasicInfo[name] = value;
+        if (name === "startDate" || name === "endDate") {
+            newBasicInfo.status = "inception";
+        }
         setBasicInfo(newBasicInfo);
     }
 

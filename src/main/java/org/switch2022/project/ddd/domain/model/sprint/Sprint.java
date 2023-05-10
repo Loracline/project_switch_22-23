@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,8 +30,9 @@ public class Sprint implements Entity<Sprint> {
 
     /**
      * Constructor
-     * @param projectCode the code of the project
-     * @param sprintId the id of the sprint
+     *
+     * @param projectCode  the code of the project
+     * @param sprintId     the id of the sprint
      * @param sprintNumber the number of the sprint.
      * @param period       the duration of the sprint.
      */
@@ -38,7 +40,7 @@ public class Sprint implements Entity<Sprint> {
     protected Sprint(Code projectCode, SprintId sprintId, SprintNumber
             sprintNumber, Period period) {
         this.projectCode = projectCode;
-        this.sprintId =sprintId;
+        this.sprintId = sprintId;
         this.sprintNumber = sprintNumber;
         this.period = period;
         this.userStoriesInSprint = new ArrayList<>();
@@ -72,7 +74,7 @@ public class Sprint implements Entity<Sprint> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(sprintNumber);
+        return Objects.hash(sprintId);
     }
 
     /**
@@ -85,7 +87,7 @@ public class Sprint implements Entity<Sprint> {
      */
     @Override
     public boolean sameIdentityAs(Sprint other) {
-        return this.sprintNumber.equals(other.sprintNumber);
+        return this.sprintId.equals(other.sprintId);
     }
 
     /**
@@ -133,35 +135,46 @@ public class Sprint implements Entity<Sprint> {
     /**
      * This method sets the effort of a userStory.
      *
-     * @param usId from the user story to estimate the effort.
-     * @param effort  of the userStory.
-     * @param date         to check of the date is before the start date of the sprint
+     * @param usId   from the user story to estimate the effort.
+     * @param effort of the userStory.
+     * @param date   to check of the date is before the start date of the sprint
      * @return true if the effort is set and false otherwise.
      */
 
     public boolean estimateEffortUserStory(UsId usId, Effort effort,
 
-                                           LocalDate date){
+                                           LocalDate date) {
         boolean hasEffortChanged = false;
         if (isDateBeforeStartDate(date)) {
             for (UserStoryInSprint userStory : userStoriesInSprint) {
                 if (userStory.getUsId().equals(usId)) {
-                    hasEffortChanged = userStory.changeEffort(effort) ;
+                    hasEffortChanged = userStory.changeEffort(effort);
                 }
             }
         }
-        return  hasEffortChanged;
+        return hasEffortChanged;
     }
 
     /**
-     * This method verifies if the Sprint has the given Sprint Number
+     * This method verifies if the Sprint has the given Sprint ID
      *
-     * @param sprintNumber of the seeked Sprint.
-     * @return TRUE if Sprint has the given Sprint Number, and FALSE otherwise.
+     * @param sprintId of the seeked Sprint.
+     * @return TRUE if Sprint has the given Sprint ID, and FALSE otherwise.
      */
 
-    public boolean hasSprintNumber(String sprintNumber) {
-        return this.sprintNumber.getSprintNumber().equalsIgnoreCase(sprintNumber);
+    public boolean hasSprintId(SprintId sprintId) {
+        return this.sprintId.equals(sprintId);
+    }
+
+    /**
+     * This method verifies if the Sprint has the given Project Code
+     *
+     * @param projectCode of the seeked Sprint.
+     * @return TRUE if Sprint has the given projectCode, and FALSE otherwise.
+     */
+
+    public boolean hasProjectCode(Code projectCode) {
+        return this.projectCode.equals(projectCode);
     }
 
     /**
@@ -189,7 +202,7 @@ public class Sprint implements Entity<Sprint> {
         for (UserStoryInSprint userStory : userStoriesInSprint) {
             sprintBacklog.add(userStory.getUsId());
         }
-        return sprintBacklog;
+        return Collections.unmodifiableList(sprintBacklog);
     }
 
     /**
@@ -232,5 +245,27 @@ public class Sprint implements Entity<Sprint> {
      */
     private boolean isDateBeforeStartDate(LocalDate date) {
         return !this.period.isDateEqualOrGreaterThanStartDate(date);
+    }
+
+    /**
+     * This method checks if the sprint start date is after or equal the date
+     *
+     * @param date
+     * @return true if the sprint start date is after or equal the date
+     */
+
+    public boolean isPeriodAfterOrEqualThanDate(LocalDate date) {
+        return period.isDateEqualOrLowerThanStartDate(date);
+
+    }
+
+    /**
+     * This method checks if the sprint end date is before or equal the date
+     *
+     * @param date
+     * @return true if the sprint end date is before or equal the  date
+     */
+    public boolean isEndDateBeforeOrGreaterThanDate(LocalDate date) {
+        return period.isDateEqualOrGreaterThanEndDate(date);
     }
 }

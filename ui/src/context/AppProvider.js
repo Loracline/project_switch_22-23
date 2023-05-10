@@ -33,8 +33,8 @@ const AppProvider = ({children}) => {
             name: "Project1",
             customer: "ISEP",
             status: "planned",
-            startDate: "2023-05-23",
-            endDate: "2038-12-31",
+            startDate: "-",
+            endDate: "-",
         },
         additionalInfo:
             {

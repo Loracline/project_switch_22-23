@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class Project is built to create and manage new projects.
@@ -242,6 +243,16 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * Method to check if status given is the same as the project status
+     * @param projectStatus
+     * @return true if status given is the same as the project status
+     */
+
+    public boolean hasStatus(ProjectStatus projectStatus){
+        return this.projectStatus.equals(projectStatus);
+    }
+
+    /**
      * Getter method for the attribute: startDate
      *
      * @return a String with the startDate of the project if there is a period otherwise it will
@@ -269,6 +280,18 @@ public class Project implements Entity<Project> {
             endDAte = this.period.getEndDate();
         }
         return endDAte;
+    }
+
+    /**
+     *This method returns an optional of a sprint duration
+     * If the project is in status planned the duration will be null.
+     */
+    public Optional<SprintDuration> getSprintDuration(){
+        Optional<SprintDuration> result = Optional.empty();
+        if (!projectStatus.equals(ProjectStatus.PLANNED) && sprintDuration!= null){
+            result = Optional.of(this.sprintDuration);
+        }
+        return result;
     }
 }
 

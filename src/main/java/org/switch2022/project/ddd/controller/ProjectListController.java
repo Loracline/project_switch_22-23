@@ -18,13 +18,6 @@ public class ProjectListController {
     ProjectListService projectListService;
 
     /**
-     * Constructor
-     */
-
-    public ProjectListController() {
-    }
-
-    /**
      * This method requests a list of all projects
      *
      * @return a projectDto list
