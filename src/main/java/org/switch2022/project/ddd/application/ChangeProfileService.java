@@ -30,10 +30,11 @@ public class ChangeProfileService {
      * @param email       the email of the account to change the profile.
      * @param profileName the name of the new profile to assign to the account.
      * @return true if the profile was successfully changed, false otherwise.
+     * @throws InvalidInputException if either email or profileName is null.
      */
     public boolean changeProfile(String email, String profileName) {
-        if (email == null || email.isEmpty() || profileName == null || profileName.isEmpty()) {
-            throw new InvalidInputException("Email and profile name cannot be null or empty");
+        if (email == null || profileName == null) {
+            throw new InvalidInputException("Email and profile name cannot be null");
         }
 
         boolean wasAccountProfileUpdated = false;
