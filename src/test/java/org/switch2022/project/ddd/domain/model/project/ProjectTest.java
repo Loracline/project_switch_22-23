@@ -898,7 +898,7 @@ class ProjectTest {
     @Test
     void ensureThatCustomerTaxIDIsRetrieved_IT() {
         //Arrange
-        TaxId expected = new TaxId("202020200", "Portugal");
+        TaxId expected = new TaxId("202020200");
         Project project = new Project(1, projectName, description, businessSectorId, expected,
                 projectTypologyId);
         //Act

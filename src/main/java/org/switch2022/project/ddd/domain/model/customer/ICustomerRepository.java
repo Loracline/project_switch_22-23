@@ -6,6 +6,7 @@ import org.switch2022.project.ddd.domain.value_object.TaxId;
  * An interface representing a repository for managing customers.
  */
 public interface ICustomerRepository {
+
     /**
      * Retrieves the customer name with the specified tax ID from the repository, if it exists.
      *

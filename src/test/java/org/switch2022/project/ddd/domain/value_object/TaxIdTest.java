@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TaxIdTest {
 
@@ -17,13 +17,12 @@ class TaxIdTest {
     void ensureATaxIdIsNotCreatedBecauseNumberIsNull() {
         // ARRANGE
         String number = null;
-        String country = "portugal";
 
         String expected = "The number must not be null";
 
         // ACT
         IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
+                () -> new TaxId(number));
 
         // ASSERT
         assertEquals(expected, result.getMessage());
@@ -35,13 +34,12 @@ class TaxIdTest {
     void ensureATaxIdIsNotCreatedBecauseNumberIsEmpty() {
         // ARRANGE
         String number = "";
-        String country = "portugal";
 
         String expected = "The number must not be empty";
 
         // ACT
         IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
+                () -> new TaxId(number));
 
         // ASSERT
         assertEquals(expected, result.getMessage());
@@ -53,80 +51,27 @@ class TaxIdTest {
     void ensureATaxIdIsNotCreatedBecauseNumberIsBlank() {
         // ARRANGE
         String number = "   ";
-        String country = "portugal";
 
         String expected = "The number must not be blank";
 
         // ACT
         IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
+                () -> new TaxId(number));
 
         // ASSERT
         assertEquals(expected, result.getMessage());
     }
 
-    @SuppressWarnings("all")
-    @DisplayName("Tax ID's country is null")
-    @Test
-    void ensureATaxIdIsNotCreatedBecauseCountryIsNull() {
-        // ARRANGE
-        String number = "514024054";
-        String country = null;
-
-        String expected = "The country must not be null";
-
-        // ACT
-        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
-
-        // ASSERT
-        assertEquals(expected, result.getMessage());
-    }
-
-    @SuppressWarnings("all")
-    @DisplayName("Tax ID's country is empty")
-    @Test
-    void ensureATaxIdIsNotCreatedBecauseCountryIsEmpty() {
-        // ARRANGE
-        String number = "514024054";
-        String country = "";
-
-        String expected = "The country must not be empty";
-
-        // ACT
-        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
-
-        // ASSERT
-        assertEquals(expected, result.getMessage());
-    }
-
-    @SuppressWarnings("all")
-    @DisplayName("Tax ID's country is blank")
-    @Test
-    void ensureATaxIdIsNotCreatedBecauseCountryIsBlank() {
-        // ARRANGE
-        String number = "514024054";
-        String country = "   ";
-
-        String expected = "The country must not be blank";
-
-        // ACT
-        IllegalArgumentException result = Assertions.assertThrows(IllegalArgumentException.class,
-                () -> new TaxId(number, country));
-
-        // ASSERT
-        assertEquals(expected, result.getMessage());
-    }
-
+    /**
+     * METHOD sameValueAs()
+     */
     @DisplayName("Two tax IDs are the same")
     @Test
     void ensureReturnsTrueWhenTwoTaxIdsHaveSameAttributes() {
         // ARRANGE
         String number = "514024054";
-        String country = "portugal";
-        TaxId taxIdOne = new TaxId(number, country);
-        TaxId taxIdTwo = new TaxId(number, country);
+        TaxId taxIdOne = new TaxId(number);
+        TaxId taxIdTwo = new TaxId(number);
 
         boolean expected = true;
 
@@ -143,29 +88,8 @@ class TaxIdTest {
         // ARRANGE
         String numberOne = "514024054";
         String numberTwo = "228019885";
-        String country = "portugal";
-        TaxId taxIdOne = new TaxId(numberOne, country);
-        TaxId taxIdTwo = new TaxId(numberTwo, country);
-
-        boolean expected = false;
-
-        // ACT
-        boolean result = taxIdOne.sameValueAs(taxIdTwo);
-
-        // ASSERT
-        assertEquals(expected, result);
-    }
-
-    @DisplayName("Number and country are not the same")
-    @Test
-    void ensureReturnsFalseWhenTwoTaxIdsHaveDifferentAttributes() {
-        // ARRANGE
-        String numberOne = "514024054";
-        String numberTwo = "12345678Z";
-        String countryOne = "portugal";
-        String countryTwo = "spain";
-        TaxId taxIdOne = new TaxId(numberOne, countryOne);
-        TaxId taxIdTwo = new TaxId(numberTwo, countryTwo);
+        TaxId taxIdOne = new TaxId(numberOne);
+        TaxId taxIdTwo = new TaxId(numberTwo);
 
         boolean expected = false;
 
@@ -182,8 +106,7 @@ class TaxIdTest {
     void ensureReturnsFalseWhenOneOfTheTaxIdIsNull() {
         // ARRANGE
         String numberOne = "514024054";
-        String country = "portugal";
-        TaxId taxIdOne = new TaxId(numberOne, country);
+        TaxId taxIdOne = new TaxId(numberOne);
         TaxId taxIdTwo = null;
 
         boolean expected = false;
@@ -192,6 +115,201 @@ class TaxIdTest {
         boolean result = taxIdOne.sameValueAs(taxIdTwo);
 
         // ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD equals()
+     */
+    @SuppressWarnings("all")
+    @DisplayName("Same object equals itself")
+    @Test
+    void ensureSameTaxIdEqualsItself() {
+        // Arrange
+        String number = "514024054";
+
+        TaxId reference = new TaxId(number);
+        TaxId other = reference;
+
+        boolean expected = true;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Two taxId are equal - one with spaces")
+    @Test
+    void ensureTwoTaxIdAreEqualIfNumberIsTheSameWithSpaces() {
+        // Arrange
+        String numberOne = "514 024 054";
+        String numberTwo = "514024054";
+
+        TaxId reference = new TaxId(numberOne);
+        TaxId other = new TaxId(numberTwo);
+
+        boolean expected = true;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Two taxId are equal - one with hyphens")
+    @Test
+    void ensureTwoTaxIdAreEqualIfNumberIsTheSameWithHyphens() {
+        // Arrange
+        String numberOne = "514 024 054";
+        String numberTwo = "514-024-054";
+
+        TaxId reference = new TaxId(numberOne);
+        TaxId other = new TaxId(numberTwo);
+
+        boolean expected = true;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Two taxId are different")
+    @Test
+    void ensureTwoTaxIdAreDifferentIfNumberIsNotTheSame() {
+        // Arrange
+        String numberOne = "514024054";
+        String numberTwo = "514024053";
+
+        TaxId reference = new TaxId(numberOne);
+        TaxId other = new TaxId(numberTwo);
+
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @SuppressWarnings("all")
+    @DisplayName("TaxId does not equal null")
+    @Test
+    void ensureTaxIdDoesNotEqualNullObject() {
+        // Arrange
+        String numberOne = "514024054";
+
+        TaxId reference = new TaxId(numberOne);
+        TaxId other = null;
+
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @SuppressWarnings("all")
+    @DisplayName("TaxId does not equal other type of object")
+    @Test
+    void ensureTaxIdDoesNotEqualOtherTypeOfObject() {
+        // Arrange
+        String numberOne = "514024054";
+        Number numberTwo = 514024054;
+
+        TaxId reference = new TaxId(numberOne);
+        Code other = new Code(numberTwo);
+
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD hashCode()
+     */
+    @DisplayName("Two taxId have same hashcode - one with spaces")
+    @Test
+    void ensureTwoTaxIdHaveSameHashCodeIfEqualWithSpaces() {
+        // Arrange
+        String numberOne = "514 024 054";
+        String numberTwo = "514024054";
+
+        TaxId reference = new TaxId(numberOne);
+        TaxId other = new TaxId(numberTwo);
+
+        int expected = reference.hashCode();
+
+        // Act
+        int result = other.hashCode();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Two taxId have same hashcode - one with hyphens")
+    @Test
+    void ensureTwoTaxIdHaveSameHashCodeIfEqualWithHyphens() {
+        // Arrange
+        String numberOne = "514 024 054";
+        String numberTwo = "514-024-054";
+
+        TaxId reference = new TaxId(numberOne);
+        TaxId other = new TaxId(numberTwo);
+
+        int expected = reference.hashCode();
+
+        // Act
+        int result = other.hashCode();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Two taxId have different hashcode")
+    @Test
+    void ensureTwoTaxIdHaveDifferentHashCodeIfNotTheSame() {
+        // Arrange
+        String numberOne = "514024054";
+        String numberTwo = "514024053";
+
+        TaxId reference = new TaxId(numberOne);
+        TaxId other = new TaxId(numberTwo);
+
+        int expected = reference.hashCode();
+
+        // Act
+        int result = other.hashCode();
+
+        // Assert
+        assertNotEquals(expected, result);
+    }
+
+    /**
+     * METHOD getNumber()
+     */
+    @DisplayName("Tax ID's number is retrieved successfully")
+    @Test
+    void ensureNumberIsRetrievedSuccessfully() {
+        // Arrange
+        String expected = "514 024 054";
+        TaxId taxId = new TaxId(expected);
+
+        // Act
+        String result = taxId.getNumber();
+
+        // Assert
         assertEquals(expected, result);
     }
 }

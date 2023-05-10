@@ -7,6 +7,7 @@ import org.switch2022.project.ddd.domain.value_object.TaxId;
  * An interface representing a factory for creating customers.
  */
 public interface ICustomerFactory {
+
     /**
      * Creates a new costumer with the specified tax ID, name and phone number.
      *
