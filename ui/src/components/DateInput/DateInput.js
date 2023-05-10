@@ -1,4 +1,5 @@
 import React from "react";
+import './DateInput.css';
 
 /**
  * Renders an input field for selecting a date.
@@ -9,14 +10,10 @@ import React from "react";
 let DateInput;
 DateInput = ({title, name, value, onChange}) => {
     return (
-        <>
-            <label htmlFor="myDate"> {title} </label>
-            <br/>
-            <br/>
-            <input type="date" id="date" name={name} value={value} onChange={onChange}/>
-            <br/>
-            <br/>
-        </>
+        <div>
+            <label className='label' htmlFor="myDate"> {title} </label>
+            <input className='input' type="date" id="date" name={name} value={value} onChange={onChange}/>
+        </div>
     )
 };
 

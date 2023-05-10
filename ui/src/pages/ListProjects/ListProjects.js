@@ -2,10 +2,10 @@ import React, {useContext} from 'react';
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableBody from "../../components/TableBody/TableBody";
 import AppContext from "../../context/AppContext";
-import "./ListProjects.css";
 import Alert from "@mui/material/Alert";
 import {selectMenu, setCurrentProject} from "../../context/Actions";
 import Button from "../../components/Button/Button";
+import './ListProjects.css';
 
 /**
  * A functional component that displays a list of all projects.
@@ -28,7 +28,7 @@ const ListProjects = () => {
                 dispatch(selectMenu('project'));
             };
             tableData = (
-                <table>
+                <table className='table'>
                     <TableHeader headers={headers}/>
                     <TableBody body={data} onClick={onClickTableBody} isClickable={true}/>
                 </table>)
@@ -41,14 +41,12 @@ const ListProjects = () => {
     };
 
     return (
-        <div className='page'>
-            <h2 className="pageH1">Projects</h2>
-            <div className="tableWrap">
-                {tableData()}
-                <Button onClick={() => {
-                    dispatch(selectMenu('createProject'))
-                }} text='Create project'/>
-            </div>
+        <div className='page pageTable'>
+            <h2 className="pageH2">Projects</h2>
+            {tableData()}
+            <Button onClick={() => {
+                dispatch(selectMenu('createProject'))
+            }} text='Create project'/>
         </div>
     );
 }

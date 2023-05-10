@@ -7,7 +7,10 @@ body {
     width: 90vw;
     margin-right: 5vw;
     margin-left: 5vw;
-    min-height: calc(100vh - 172px);
+    min-height: calc(100vh - 172px - 5rem);
+    align-items: flex-start;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
 }
 
 .formCard {
@@ -16,10 +19,10 @@ body {
     flex-direction: column;
     align-items: center;
     background-color: #F0EEF5;
-    margin: 40px auto;
+    margin: 0 auto;
     border-right: 6px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    padding: 40px 0;
+    padding: 2.5rem 0;
 }
 
 .formCard h2 {
@@ -28,17 +31,17 @@ body {
     margin-top: 0;
 }
 
-.page H2 {
+.pageH2 {
     font-family: 'Roboto', sans-serif;font-style: normal;
     font-weight: 700;
     font-size: 36px;
     line-height: 42px;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 table {
     border-spacing: 0 20px;
-    width: 100%
+    width: 100%;
 }
 
 th, td {
@@ -54,4 +57,8 @@ th:first-child, td:first-child {
 th:last-child, td:last-child {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+}
+
+.textField {
+    background-color: white;
 }

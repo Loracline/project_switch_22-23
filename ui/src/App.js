@@ -1,6 +1,6 @@
 import './App.css';
 import Nav from "./components/Nav/Nav";
-import Route from "./route/Route";
+import Router from "./router/Router";
 import Footer from "./components/Footer/Footer";
 import {useContext} from "react";
 import AppContext from "./context/AppContext";
@@ -12,7 +12,7 @@ function App() {
     return (
         <div className="App">
             <Nav items={menu.filter((item) => !item.hidden)} dispatch={dispatch}/>
-            <Route selected={selectedMenu.key}/>
+            <Router selected={selectedMenu.key}/>
             <Footer/>
         </div>
     );
