@@ -13,7 +13,7 @@ function TableBody({isClickable, body, onClick}) {
         {body.map((item, index) => (
             <tr key={index}
                 className={isClickable ? "tableBody clickRow" : "tableBody"}
-                onClick={() => onClick(index)}>
+                onClick={isClickable && onClick ? () => onClick(index) : undefined}>
                 {Object.values(item).map((value, i) => (
                     <td key={i}>{value}</td>
                 ))}
