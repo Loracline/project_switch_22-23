@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.model.customer;
 
 import org.switch2022.project.ddd.domain.value_object.TaxId;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 /**
  * An interface representing a repository for managing customers.
@@ -26,4 +27,14 @@ public interface ICustomerRepository {
      *                                                                            the specified customer.
      */
     boolean addCustomerToRepository(Customer customer);
+
+    /**
+     * Retrieves the ID of a customer with the given name from the repository.
+     *
+     * @param customerName the name of the customer whose ID is being requested.
+     * @return the ID of the customer with the given name.
+     * @throws NotFoundInRepoException if a customer with the given name is not found in the repository.
+     */
+
+    String getCustomerTaxIdByName(String customerName);
 }

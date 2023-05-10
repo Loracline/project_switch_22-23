@@ -31,43 +31,6 @@ public class ProjectService {
     @Autowired
     private IUsRepository usRepository;
 
-
-    /**
-     * This method creates a new Project with the next project code available and adds it to the repository.
-     *
-     * @param description       the description of the project.
-     * @param businessSectorId  the identifier of the businessSector.
-     * @param customerTaxId     the identifier of the customer.
-     * @param projectTypologyId the identifier of the projectTypology.
-     * @return returns the code of the created Project.
-     */
-    public String createProject(Name projectName, Description description, BusinessSectorId businessSectorId,
-                                TaxId customerTaxId, ProjectTypologyId projectTypologyId) {
-        int projectNumber = calculateNextProjectNumber();
-        Project project = factoryProject.createProject(projectNumber, projectName, description, businessSectorId,
-                customerTaxId, projectTypologyId);
-        projectRepository.addProjectToProjectRepository(project);
-        return project.getProjectCode();
-    }
-
-    /**
-     * This method adds a Project to the Repository.
-     *
-     * @param project to be added to the Repository
-     */
-
-    public boolean addProject(Project project) {
-        return projectRepository.addProjectToProjectRepository(project);
-    }
-
-    /**
-     * This method calculates the number of project to include in the project code using the repository size.
-     */
-    public int calculateNextProjectNumber() {
-        return projectRepository.getProjectNumber() + 1;
-    }
-
-
     /**
      * This method will return an Optional Project from the repository.
      *

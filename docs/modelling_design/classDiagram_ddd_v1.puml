@@ -360,5 +360,47 @@ ListAccountController "1"--> "1"AccountMapper : has
 AccountMapper --> AccountDto : creates
 AccountMapper ..> Account : knows
 
+class "CreateProfileController" {
+- profileService
++ createProfile(profileName)
+}
+
+class ProfileService{
+- profileRepository
+- profileFactory
++ createProfile(profileName)
++ calculateNextProfileNumber()
+}
+
+interface IProfileFactory{
++ createProfile(profileName, idProfileNumber)
+}
+
+class ProfileFactory{
++ createProfile(profileName, idProfileNumber)
+}
+
+interface IProfileRepository{
++ add(profile)
++ getSize()
+}
+
+class ProfileRepository{
++ add(profile)
++ getSize()
+}
+
+class Profile<<root>>{
+- profileName
+}
+
+CreateProfileController <.. ProfileService: is injected
+ProfileService <.. IProfileRepository: is injected
+ProfileService <.. IProfileFactory: is injected
+IProfileFactory <|.. ProfileFactory: implements
+ProfileFactory ..> Profile: creates
+IProfileRepository <|.. ProfileRepository: implements
+ProfileRepository --> Profile: has
+
 @enduml
 

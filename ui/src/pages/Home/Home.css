@@ -10,6 +10,8 @@
     align-items: center;
     padding: 11% 15%;
     justify-content: space-between;
+    max-width: 1010px;
+    margin: auto;
 }
 
 .content h1{

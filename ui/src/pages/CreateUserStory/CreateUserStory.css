@@ -17,3 +17,9 @@
     display: flex;
     justify-content: space-between;
 }
+
+.buttons-createUs {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.875rem;
+}

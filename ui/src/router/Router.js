@@ -7,7 +7,7 @@ import Project from "../pages/Project/Project";
 import CreateUserStory from "../pages/CreateUserStory/CreateUserStory";
 import Home from "../pages/Home/Home";
 
-const Route = ({ selected }) => {
+const Router = ({ selected }) => {
     return (
         <div>
             {selected === 'createProject' && <CreateProject />}
@@ -21,4 +21,4 @@ const Route = ({ selected }) => {
         </div>
     )
 }
-export default Route;
+export default Router;

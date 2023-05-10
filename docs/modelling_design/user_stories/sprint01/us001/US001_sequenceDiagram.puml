@@ -1,5 +1,4 @@
 @startuml
-
 skinparam sequenceMessageAlign center
 title TO CREATE NEW PROFILE
 legend top
@@ -11,9 +10,11 @@ autonumber
 actor Administrator as a
 participant ":CreateProfileUI" as ui
 participant "CreateProfileController" as ct
-participant ":Company" as c
-participant "ProfileContainer" as cn
-participant "profile:Profile" as p
+participant ":ProfileService" as s
+participant ":ProfileFactory" as fp
+participant "profile:Profile" as profile
+participant "ProfileRepository" as pr
+
 
 
 activate a
@@ -23,22 +24,22 @@ ui --> a: requests data (profileName)
 a -> ui: types requested data
 ui -> ct: createProfile(profileName)
 activate ct
-ct -> c: validateProfileRequired(email, profileNameRequired)
-activate c
-ref over c: validateAdministrator_sequenceDiagram
-c --> ct: true
-deactivate c
-ct -> c: createProfile(profileName)
-activate c
-c -> cn: createProfile(name)
-activate cn
-create p
-cn -> p: create()
-cn -> cn: addProfile(name)
-cn --> c: true
-deactivate cn
-c --> ct: true
-deactivate c
+
+deactivate s
+ct -> s: createProfile(profileName)
+activate s
+s -> fp: createProfile(profileName, idProfileNumber)
+activate fp
+create profile
+fp -> profile
+
+fp --> s: profile
+deactivate fp
+s -> pr: addProfile(name, id)
+
+
+s --> ct: true
+deactivate s
 ct --> ui: true
 deactivate ct
 ui --> a: informs operation success
@@ -46,5 +47,3 @@ deactivate ui
 
 deactivate a
 @enduml
-
-

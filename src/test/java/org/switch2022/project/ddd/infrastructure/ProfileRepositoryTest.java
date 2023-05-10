@@ -1,14 +1,14 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.account.Account;
-import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
+import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 class ProfileRepositoryTest {
@@ -184,7 +184,7 @@ class ProfileRepositoryTest {
 
     /**
      * Method: getSize().
-     *
+     * <p>
      * Scenario 01: return the number of profiles from a list
      * Expected result: the number of Profile instances in the list.
      */
@@ -203,6 +203,78 @@ class ProfileRepositoryTest {
 
         assertEquals(expected, result);
     }
+
+    /**
+     * Method: getProfileByName()
+     * <p>
+     * Scenario 01: tests getting a profile by name.
+     * Expects the method to return the correct profile.
+     */
+    @Test
+    void ensureProfileIsReturned() {
+        // Arrange
+        Profile profileOne = mock(Profile.class);
+        Profile profileTwo = mock(Profile.class);
+
+        ProfileRepository repository = new ProfileRepository();
+        repository.add(profileOne);
+        repository.add(profileTwo);
+
+        Name profileName = mock(Name.class);
+        when(profileOne.hasName(profileName)).thenReturn(true);
+
+        // Act
+        Profile result = repository.getProfileByName(profileName);
+
+        // Assert
+        assertEquals(profileOne, result);
+    }
+
+    /**
+     * Scenario 02: tests retrieving a profile by name.
+     * Expects the method to throw a NotFoundInRepoException
+     * because the list is empty.
+     */
+    @Test
+    void ensureThatProfileIsNotFoundBecauseListIsEmpty() {
+        //Arrange
+        ProfileRepository repository = new ProfileRepository();
+        Name profileName = new Name("manager");
+        String message = "This profile doesn't exist";
+
+        //Act
+        NotFoundInRepoException result =
+                assertThrows(NotFoundInRepoException.class,
+                        () -> repository.getProfileByName(profileName));
+
+        //Assert
+        assertEquals(message, result.getMessage());
+    }
+
+    /**
+     * Scenario 03: This method retrieves a profile by name from the repository.
+     *
+     * @return the profile with the given name
+     * @throws NotFoundInRepoException if the profile is not found in the repository
+     */
+    @Test
+    void ensureThatProfileIsNotFoundBecauseIsNotInTheList() {
+        //Arrange
+        Profile profileOne = mock(Profile.class);
+
+        ProfileRepository repository = new ProfileRepository();
+        Name profileName = new Name("manager");
+        when(profileOne.hasName(profileName)).thenReturn(false);
+        String message = "This profile doesn't exist";
+
+        //Act
+        NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
+                () -> repository.getProfileByName(profileName));
+
+        //Assert
+        assertEquals(message, result.getMessage());
+    }
+
 
 }
 

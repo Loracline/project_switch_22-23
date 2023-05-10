@@ -1,10 +1,13 @@
 package org.switch2022.project.ddd.domain.model.account;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.profile.Profile;
+import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
 import org.switch2022.project.ddd.domain.value_object.Photo;
+import org.switch2022.project.ddd.infrastructure.ProfileRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -376,4 +379,71 @@ class AccountTest {
 
         assertFalse(result);
     }
+
+    /**
+     * Method setProfile()
+     *
+     * Scenario 1: Tests the successful change of a profile in an account.
+     * Compares if the account with a profile and
+     * the same account without a profile are not equal.
+     */
+
+    @Test
+    void ensureThatAccountProfileIsSetSuccessfully() {
+        // Arrange
+        ProfileFactory profileFactory = new ProfileFactory();
+        ProfileRepository profileRepository = mock(ProfileRepository.class);
+        Name profileName = new Name("Manager");
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        when(profileRepository.getProfileByName(profileName)).thenReturn(profileFactory.createProfile(name,1));
+
+        // Act
+        //Change Profile User (default) to Manager
+        boolean result = account.setProfile(profileFactory.createProfile(name, 1));
+
+        // Assert
+        assertTrue(result);
+        assertEquals(profileFactory.createProfile(name, 1), account.getProfile());
+    }
+
+
+    /**
+     * Scenario 2: Tests the unsuccessful addition of a profile in an account. Tests that the account
+     * cannot have more than one profile associated with it.
+     */
+    @Test
+    void ensureThatAccountCanHaveOnlyOneProfile() {
+        // Arrange
+        ProfileFactory profileFactory = new ProfileFactory();
+        Name profileName = new Name("User");
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+        Profile profile1 = profileFactory.createProfile(profileName, 1);
+        account.setProfile(profile1);
+
+        // Create another profile
+        Profile profile2 = profileFactory.createProfile(new Name("Another User"), 2);
+
+        // Act
+        boolean result = account.setProfile(profile2);
+        Profile actualProfile = account.getProfile();
+        Profile expectedProfile = profile1;
+
+        // Assert
+        assertFalse(result);
+        assertEquals(expectedProfile.getProfileName(), actualProfile.getProfileName());
+    }
 }
+
+
+

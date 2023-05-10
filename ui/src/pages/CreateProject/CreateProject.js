@@ -3,7 +3,8 @@ import Button from "../../components/Button/Button";
 import {createProject, selectMenu} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
 import {TextField} from "@mui/material";
-import DateInput from "../../components/DateInput";
+import DateInput from "../../components/DateInput/DateInput";
+import './CreateProject.css';
 
 /**
  * Form component in React.
@@ -18,8 +19,8 @@ function CreateProject() {
             name: undefined,
             customer: undefined,
             status: "planned",
-            startDate: undefined,
-            endDate: undefined
+            startDate: "-",
+            endDate: "-"
         },
         additionalInfo: {
             businessSector: undefined,
@@ -36,6 +37,9 @@ function CreateProject() {
         const {name, value} = event.target;
         const newBasicInfo = {...basicInfo};
         newBasicInfo[name] = value;
+        if (name === "startDate" || name === "endDate") {
+            newBasicInfo.status = "inception";
+        }
         setBasicInfo(newBasicInfo);
     }
 
@@ -67,42 +71,46 @@ function CreateProject() {
             <section className="formCard">
                 <h2>Create Project</h2>
                 <form className="project-form" onSubmit={handleSubmit}>
-                    <TextField
-                        name="code"
-                        label="Project Code"
-                        value={basicInfo.code}
-                        onChange={handleChangeBasic}
-                        variant="outlined"
-                        required
-                        helperText="* Required"
-                    />
-                    <TextField
-                        name="name"
-                        label="Project Name"
-                        value={basicInfo.name}
-                        onChange={handleChangeBasic}
-                        variant="outlined"
-                        required
-                        helperText="* Required"
-                    />
-                    <TextField
-                        name="customer"
-                        label="Customer"
-                        value={basicInfo.customer}
-                        onChange={handleChangeBasic}
-                        variant="outlined"
-                        required
-                        helperText="* Required"
-                    />
-                    <TextField
-                        name="businessSector"
-                        label="Business Sector"
-                        value={additionalInfo.businessSector}
-                        onChange={handleChangeAdditional}
-                        variant="outlined"
-                        required
-                        helperText="* Required"
-                    />
+                    <div className="project-form-row">
+                        <TextField
+                            name="code"
+                            label="Project Code"
+                            value={basicInfo.code}
+                            onChange={handleChangeBasic}
+                            variant="outlined"
+                            required
+                            className="textField"
+                        />
+                        <TextField
+                            name="name"
+                            label="Project Name"
+                            value={basicInfo.name}
+                            onChange={handleChangeBasic}
+                            variant="outlined"
+                            required
+                            className="textField"
+                        />
+                    </div>
+                    <div className="project-form-row">
+                        <TextField
+                            name="customer"
+                            label="Customer"
+                            value={basicInfo.customer}
+                            onChange={handleChangeBasic}
+                            variant="outlined"
+                            required
+                            className="textField"
+                        />
+                        <TextField
+                            name="businessSector"
+                            label="Business Sector"
+                            value={additionalInfo.businessSector}
+                            onChange={handleChangeAdditional}
+                            variant="outlined"
+                            required
+                            className="textField"
+                        />
+                    </div>
                     <TextField
                         name="typology"
                         label="Typology"
@@ -110,7 +118,7 @@ function CreateProject() {
                         onChange={handleChangeAdditional}
                         variant="outlined"
                         required
-                        helperText="* Required"
+                        className="textField"
                     />
                     <TextField
                         name="description"
@@ -119,24 +127,26 @@ function CreateProject() {
                         onChange={handleChangeAdditional}
                         variant="outlined"
                         required
-                        helperText="* Required"
                         multiline
                         rows={4}
+                        className="textField"
                     />
-                    <br/>
-                    <br/>
-                    <DateInput
-                        name="startDate"
-                        title="Start Date"
-                        value={basicInfo.startDate}
-                        onChange={handleChangeBasic}
-                    />
-                    <DateInput
-                        name="endDate"
-                        title="End Date"
-                        value={basicInfo.endDate}
-                        onChange={handleChangeBasic}
-                    />
+                    <div className="dateRow">
+                        <DateInput
+                            name="startDate"
+                            title="Start Date"
+                            value={basicInfo.startDate}
+                            onChange={handleChangeBasic}
+                            helperText="* Optional"
+                        />
+                        <DateInput
+                            name="endDate"
+                            title="End Date"
+                            value={basicInfo.endDate}
+                            onChange={handleChangeBasic}
+                            helperText="* Optional"
+                        />
+                    </div>
                     <Button
                         text="Create Project"
                     />

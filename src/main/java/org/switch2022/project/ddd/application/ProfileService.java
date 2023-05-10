@@ -18,16 +18,16 @@ public class ProfileService {
     /**
      * This method receives a name, creates a profile and adds it to the repository.
      *
-     * @param name
+     * @param profileName
      * @return TRUE if the Profile is created and added to the profile repository
      * successfully, and throws an
      * AlreadyExistsInRepoException otherwise.
      */
 
-    public boolean createProfile(String name) {
-        Name profileName = new Name(name);
+    public boolean createProfile(String profileName) {
+        Name name = new Name(profileName);
         int idProfileNumber = calculateNextProfileNumber();
-        Profile profile = profileFactory.createProfile(profileName,idProfileNumber);
+        Profile profile = profileFactory.createProfile(name,idProfileNumber);
         return profileRepository.add(profile);
     }
 

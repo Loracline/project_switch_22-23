@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +73,32 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
      */
     public int getSize() {
         return businessSectors.size();
+    }
+
+    /**
+     * Retrieves the ID of a customer with the given name from the repository.
+     *
+     * @param businessSectorName the name of the business sector whose ID is being requested.
+     * @return the ID of the business sector with the given name.
+     * @throws NotFoundInRepoException if a business sector with the given name is not found in the repository.
+     */
+    @Override
+    public String getBusinessSectorIdByName(String businessSectorName) {
+        String requestedBusinessSectorId = null;
+        int i = 0;
+        while (i < this.businessSectors.size()) {
+            if (businessSectors.get(i).getBusinessSectorName().contains(businessSectorName)) {
+                String businessSectorIdWithLetters = businessSectors.get(i).getBusinessSectorId();
+                requestedBusinessSectorId = businessSectorIdWithLetters.replaceAll("[^0-9]", "");
+                i = this.businessSectors.size();
+            }
+            i++;
+        }
+
+        if (requestedBusinessSectorId == null) {
+            throw new NotFoundInRepoException("Business sector with this name does not exist in the Repository.");
+        }
+
+        return requestedBusinessSectorId;
     }
 }

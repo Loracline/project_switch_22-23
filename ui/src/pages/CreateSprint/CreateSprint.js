@@ -13,26 +13,29 @@ import './CreateSprint.css';
  - @exports CreateSprint */
 
 function CreateSprint() {
-    const { state, dispatch} = useContext(AppContext);
-    const { detailedProject } = state;
+    const {state, dispatch} = useContext(AppContext);
+    const {detailedProject} = state;
     const [selectedDate, setSelectedDate] = useState(new Date());
     const initialSprintState = {
         projectCode: detailedProject.basicInfo.code,
-        date: '',
+        idSprint: '',
+        endDate: '',
+        description: '',
+        userStories: []
     };
     const [sprintToSubmit, setSprintToSubmit] = useState(initialSprintState);
     const handleDateChange = (event) => {
         setSelectedDate(event.target.value);
         setSprintToSubmit({
             ...sprintToSubmit,
-            date: event.target.value,
+            startDate: event.target.value,
         });
     };
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (sprintToSubmit.date.length === 0) {
+        if (sprintToSubmit.startDate.length === 0) {
             alert('Please, insert initial date.');
-        } else if (new Date(sprintToSubmit.date) < new Date()) {
+        } else if (new Date(sprintToSubmit.startDate) < new Date()) {
             alert('Please select a future date for the start date.');
         } else {
             dispatch(createSprint({
@@ -52,10 +55,10 @@ function CreateSprint() {
                 <form className="sprint-form" onSubmit={handleSubmit}>
                     <TextField label="Start Date" type="date" value={selectedDate}
                                onChange={handleDateChange}
-                               variant="outlined" required helperText="* Required"/>
-                    <div className="buttons">
+                               variant="outlined"/>
+                    <div className="sprint-buttons">
                         <Button text="Submit" isdisabled={!sprintToSubmit.date}/>
-                        <Button onClick={() => dispatch(selectMenu('projects'))} text="Return"/>
+                        <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
                     </div>
                 </form>
             </section>

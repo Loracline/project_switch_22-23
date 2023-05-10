@@ -1,0 +1,47 @@
+@startuml
+title Package Diagram
+package "Project G4" {
+    package Components {
+        file Button.js
+        file Calendar.js
+        file Header.js
+        file TableBody.js
+        file TableHeader.js
+        file NavItem.js
+        file Footer.js
+        file InputText.js
+        file Nav.js
+        file AlertMessages.js
+        file DateInput.js
+        file Form.js
+        file Header.js
+        file Table.js
+    }
+
+    package Context {
+        file Actions.js
+        file AppContext.js
+        file AppProvider.js
+        file Reducer.js
+    }
+
+    package Pages {
+        file ConsultProductBacklog.js
+        file CreateProject.js
+        file CreateSprint.js
+        file CreateUserStory.js
+        file ListProjects.js
+        file Home.js
+        file About.js
+        file Project.js
+    }
+
+    package Route {
+        file Route.js
+    }
+
+    Components ..> Context
+    Context ..> Route
+    Pages ..> Route
+}
+@enduml
