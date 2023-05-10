@@ -7,6 +7,7 @@ import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.value_object.Name;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 
 /**
@@ -31,6 +32,10 @@ public class ChangeProfileService {
      * @return true if the profile was successfully changed, false otherwise.
      */
     public boolean changeProfile(String email, String profileName) {
+        if (email == null || email.isEmpty() || profileName == null || profileName.isEmpty()) {
+            throw new InvalidInputException("Email and profile name cannot be null or empty");
+        }
+
         boolean wasAccountProfileUpdated = false;
         Account account = accountRepository.getAccountByEmail(email);
         Profile profile = profileRepository.getProfileByName(new Name(profileName));
@@ -40,6 +45,7 @@ public class ChangeProfileService {
         }
         return wasAccountProfileUpdated;
     }
+
 }
 
 

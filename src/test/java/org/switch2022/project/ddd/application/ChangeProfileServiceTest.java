@@ -15,6 +15,7 @@ import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
 import org.switch2022.project.ddd.domain.value_object.Photo;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -75,13 +76,11 @@ class ChangeProfileServiceTest {
 
 
     /**
-     *
-     * Scenario 02: this test Attempting to change to an invalid profile.
+     * Scenario 2: this test verifies the attempting to change to an invalid profile.
      * Should return false and leave the profile unchanged in the account.
-     *
      */
     @Test
-    void givenInvalidProfileWhenChangingProfileThenReturnFalse() {
+    void ensureThatAccountProfileIsNotChangedWhenGivenInvalidProfile() {
         // Arrange
         String profileName = "invalid_profile";
         Name name = mock(Name.class);
@@ -101,6 +100,54 @@ class ChangeProfileServiceTest {
         verify(accountRepository).getAccountByEmail(String.valueOf(email));
         verify(profileRepository).getProfileByName(new Name(profileName));
         assertFalse(result);
+        assertNull(accountTest.getProfile());
+    }
+
+    /**
+     * Scenario 3: this test verifies the attempting to change profile with null inputs.
+     * Should return false and leave the profile unchanged in the account.
+     */
+    @Test
+    void ensureThatAccountProfileIsNotChangedWhenGivenNullInputs() {
+        // Arrange
+        String profileName = "admin";
+        // Inputs nulls
+        Name name = null;
+        Email email = null;
+        PhoneNumber phoneNumber = null;
+        Photo photo = null;
+        AccountFactory accountFactory = new AccountFactory();
+        Account accountTest = accountFactory.create(name, email, phoneNumber, photo);
+
+        // Act
+        boolean result = changeProfileService.changeProfile(String.valueOf(email), profileName);
+
+        // Assert
+        assertFalse(result);
+        assertNull(accountTest.getProfile());
+    }
+
+    /**
+     * Scenario 4: this test verifies the attempting to change to a null profile.
+     * Should return false and leave the profile unchanged in the account.
+     */
+    @Test
+    void ensureThatAccountProfileIsNotChangedWhenGivenNullProfile() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        AccountFactory accountFactory = new AccountFactory();
+        Account accountTest = accountFactory.create(name, email, phoneNumber, photo);
+
+        when(accountRepository.getAccountByEmail(String.valueOf(email))).thenReturn(accountTest);
+        when(profileRepository.getProfileByName(null)).thenReturn(null);
+
+        // Act & Assert
+        assertThrows(InvalidInputException.class, () -> {
+            changeProfileService.changeProfile(String.valueOf(email), null);
+        });
         assertNull(accountTest.getProfile());
     }
 }
