@@ -34,8 +34,8 @@ body {
 .pageH2 {
     font-family: 'Roboto', sans-serif;font-style: normal;
     font-weight: 700;
-    font-size: 36px;
-    line-height: 42px;
+    font-size: 2.25rem;
+    line-height: 2.625;
     margin: 0;
 }
 
@@ -45,7 +45,7 @@ table {
 }
 
 th, td {
-    padding: 0 20px;
+    padding: 0 1.39vw;
     text-align: left;
 }
 
@@ -68,12 +68,28 @@ th:last-child, td:last-child {
         width: 95vw;
         margin-right: 2.5vw;
         margin-left: 2.5vw;
-        min-height: fit-content;
         align-items: flex-start;
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
+        min-height: calc(100vh - 220px);
+    }
+
+    .pageH2 {
+        font-size: 1.5rem;
+        line-height: 2.25rem;
+    }
+
+    th, td {
+        padding: 0 1vw;
+        text-align: left;
     }
 }
 
-/*481*/
-/*769*/
+@media only screen and (max-width: 768px) {
+    .pageH2 {
+        font-weight: 700;
+        font-size: 1.75rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+}

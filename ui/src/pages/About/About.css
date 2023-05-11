@@ -1,5 +1,6 @@
 .aboutPage {
     display: flex;
+    align-items: flex-start;
     padding: 5.5rem;
     gap: 5rem;
     max-width: 1295px;
@@ -25,6 +26,27 @@
 .team-about {
     font-size: 1.5rem;
     margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 425px) {
+    .aboutPage img {
+        width: 90vw;
+    }
+}
+
+@media only screen and (max-width: 1030px) {
+    .aboutPage {
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        gap: 2rem;
+        max-width: 1295px;
+        margin: 0 auto;
+    }
+
+    .aboutPage img {
+        width: 60vw;
+    }
 }
 
 
