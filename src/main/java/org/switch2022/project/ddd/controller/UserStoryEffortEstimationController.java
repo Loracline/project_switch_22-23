@@ -1,7 +1,8 @@
-package org.switch2022.project.ddd.application;
+package org.switch2022.project.ddd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.switch2022.project.ddd.application.UserStoryInSprintService;
 
 @Controller
 public class UserStoryEffortEstimationController {

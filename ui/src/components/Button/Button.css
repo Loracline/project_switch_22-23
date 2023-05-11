@@ -6,7 +6,7 @@
     font-style: normal;
     font-weight: 700;
     font-size: 1.25rem;
-    line-height: 28px;
+    line-height: 1.75rem;
     text-align: center;
     color: #FFFFFF;
     border: none;
@@ -36,4 +36,22 @@
 .secondaryButton:hover {
     background-color: #282c34;
     color: white;
+}
+
+@media only screen and (max-width: 425px) {
+    .button{
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        padding: 10px 20px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .button{
+        font-weight: 700;
+        font-size: 1rem;
+        line-height: 1.5rem;
+        padding: 14px 25px;
+    }
 }
