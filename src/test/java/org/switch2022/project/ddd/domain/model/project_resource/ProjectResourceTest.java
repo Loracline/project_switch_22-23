@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.project_resource;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
+import org.switch2022.project.ddd.infrastructure.ProjectResourceRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -44,7 +45,7 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource( null, codeDouble, emailDouble,
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(null, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble));
     }
 
@@ -233,7 +234,8 @@ class ProjectResourceTest {
     }
 
     /**
-     * Tests for the equals() method.
+     * Method: equals()
+     * Scenario 01: Test to ensure the object equals itself.
      */
     @Test
     void ensureThatProjectResourceEqualsItself() {
@@ -248,13 +250,16 @@ class ProjectResourceTest {
 
         ProjectResource expected = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource result = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
-                periodDouble, costDouble, percentageOfAllocationDouble);
+        ProjectResource result = expected;
 
         // Act, Assert
         assertEquals(expected, result);
     }
 
+    /**
+     * Method: equals()
+     * Scenario 02: Test to ensure that two different objects from the same class are different.
+     */
     @Test
     void ensureThatTwoDifferentProjectResourcesAreNotEqual() {
         // Arrange
@@ -278,10 +283,14 @@ class ProjectResourceTest {
     }
 
     @SuppressWarnings("all")
+    /**
+     * Method: equals()
+     * Scenario 03: Test to ensure that two objects from different classes are different.
+     */
     @Test
     void ensureThatProjectResourceIsNotEqualToOtherTypeOfObject() {
         // Arrange
-        String expected = "Hello World!";
+        String otherType = "Hello World!";
         ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
@@ -290,11 +299,62 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        // Act
+        boolean result = resource.equals(otherType);
+        // Assert
+        assertFalse(result);
+    }
+
+
+    /**
+     * Method: equals()
+     * Scenario 04: Test to ensure that two equal objects from the same class are equal.
+     */
+    @Test
+    void ensureTwoObjectsAreEqual() {
+        // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource expected = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
         ProjectResource result = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
 
         // Act, Assert
-        assertNotEquals(expected, result);
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: equals()
+     * Scenario 05: Test to ensure that one object doesn't equal null.
+     * It should throw an InvalidInputException.
+     */
+    @SuppressWarnings("all")
+    @Test
+    void ensureThatObjectDoesNotEqualNull() {
+        // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        // Act, Assert
+        assertThrows(InvalidInputException.class, () -> resource.equals(null));
     }
 
     /**
@@ -353,7 +413,7 @@ class ProjectResourceTest {
     /**
      * Method hasProjectCode(ProjectCode projectCode) checks if an instance of ProjectResource has a given project
      * code as attribute or not.
-     *
+     * <p>
      * Scenario 01: The instance of ProjectResource has as attribute a project code that is equal to the project code
      * of interest.
      * It should assert true.
@@ -383,7 +443,7 @@ class ProjectResourceTest {
     /**
      * Method hasProjectCode(ProjectCode projectCode) checks if an instance of ProjectResource has a given project
      * code as attribute or not.
-     *
+     * <p>
      * Scenario 02: The instance of ProjectResource has as attribute a project code that is different from the
      * project code of interest.
      * It should assert false.
@@ -417,7 +477,7 @@ class ProjectResourceTest {
      * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
      * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
      * instance.
-     *
+     * <p>
      * Scenario 01: The instance of ProjectResource has the same allocation info as the ProjectResource instance that
      * is passed as argument.
      * It should assert true.
@@ -450,7 +510,7 @@ class ProjectResourceTest {
      * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
      * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
      * instance.
-     *
+     * <p>
      * Scenario 02: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
      * that is passed as argument because the projectCode is different.
      * It should assert true.
@@ -485,7 +545,7 @@ class ProjectResourceTest {
      * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
      * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
      * instance.
-     *
+     * <p>
      * Scenario 03: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
      * that is passed as argument because the accountEmail is different.
      * It should assert false.
@@ -520,7 +580,7 @@ class ProjectResourceTest {
      * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
      * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
      * instance.
-     *
+     * <p>
      * Scenario 03: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
      * that is passed as argument because the roleInProject is different.
      * It should assert false.
@@ -555,7 +615,7 @@ class ProjectResourceTest {
      * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
      * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
      * instance.
-     *
+     * <p>
      * Scenario 04: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
      * that is passed as argument because the timeInProject is different.
      * It should assert true.
