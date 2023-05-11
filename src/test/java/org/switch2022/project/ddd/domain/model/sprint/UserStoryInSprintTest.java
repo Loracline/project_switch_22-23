@@ -259,7 +259,7 @@ public class UserStoryInSprintTest {
         //ARRANGE
         UsId usIdDouble = mock(UsId.class);
         UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble, ONE);
-        boolean result = userStoryInSprint_One.changeEffort(TWO);
+        boolean result = userStoryInSprint_One.changeEffort(2);
 
         //ACT & ASSERT
         assertTrue(result);
@@ -279,7 +279,7 @@ public class UserStoryInSprintTest {
         Effort initialEffort = userStoryInSprint_One.getEffort();
 
         //ACT
-        boolean result = userStoryInSprint_One.changeEffort(effortDouble);
+        boolean result = userStoryInSprint_One.changeEffort(effortDouble.getEffortValue());
 
         //ASSERT
         assertFalse(result);
