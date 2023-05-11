@@ -1,5 +1,5 @@
 @startuml
-title Package Diagram
+title Packages Diagram
 package "Project G4" {
     package Components {
         file Button.js
@@ -36,12 +36,15 @@ package "Project G4" {
         file Project.js
     }
 
-    package Route {
-        file Route.js
+    package Router {
+        file Router.js
     }
 
-    Components ..> Context
-    Context ..> Route
-    Pages ..> Route
+    Context  <... Pages: use
+    Pages ..> Components: import
+    Router ...> Pages: renders
+
+
+
 }
 @enduml

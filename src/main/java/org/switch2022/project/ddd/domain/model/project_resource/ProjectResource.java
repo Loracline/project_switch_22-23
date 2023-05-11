@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.project_resource;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
@@ -9,7 +10,6 @@ import java.util.Objects;
 
 public class ProjectResource implements Entity<ProjectResource> {
 
-    private final ProjectResourceId projectResourceId;
     private final Code projectCode;
     private final Email accountEmail;
     private Role roleInProject;
@@ -20,54 +20,24 @@ public class ProjectResource implements Entity<ProjectResource> {
     /**
      * Constructor
      */
-    protected ProjectResource(final ProjectResourceId projectResourceId, final Code code, final Email email) {
-        Validate.notNull(projectResourceId, "Project Resource ID must not be null");
+    protected ProjectResource(final Code code, final Email email,
+                              final Role roleInProject, final Period allocationPeriod, final CostPerHour costPerHour,
+                              final PercentageOfAllocation percentageOfAllocation) {
+
         Validate.notNull(code, "Project Code must not be null");
         Validate.notNull(email, "Email must not be null");
-        this.projectResourceId = projectResourceId;
+        if (roleInProject == null) {
+            throw new InvalidInputException("Role must not be null");
+        }
+        Validate.notNull(allocationPeriod, "Period must not be null");
+        Validate.notNull(costPerHour, "Cost/hour must not be null");
+        Validate.notNull(percentageOfAllocation, "Percentage of Allocation can not be null");
+
         this.projectCode = code;
         this.accountEmail = email;
-    }
-
-    /**
-     * Setter method for the attribute: Role.
-     *
-     * @param roleInProject of the project.
-     */
-    protected void setRole(Role roleInProject) {
-        if(roleInProject == null){
-            throw new InvalidInputException("Role can not be null");
-        }
         this.roleInProject = roleInProject;
-    }
-
-    /**
-     * Setter method for the attribute: Period.
-     *
-     * @param timeInProject of the project.
-     */
-    public void setPeriod(Period timeInProject) {
-        Validate.notNull(timeInProject, "Period can not be null");
-        this.timeInProject = timeInProject;
-    }
-
-    /**
-     * Setter method for the attribute: CostPerHour.
-     *
-     * @param costPerHour of the project.
-     */
-    public void setCost(CostPerHour costPerHour) {
-        Validate.notNull(costPerHour, "Cost can not be null");
+        this.timeInProject = allocationPeriod;
         this.costPerHour = costPerHour;
-    }
-
-    /**
-     * Setter method for the attribute: Percentage of Allocation.
-     *
-     * @param percentageOfAllocation of the project.
-     */
-    public void setPercentageOfAllocation(PercentageOfAllocation percentageOfAllocation) {
-        Validate.notNull(percentageOfAllocation, "Percentage of Allocation can not be null");
         this.percentageOfAllocation = percentageOfAllocation;
     }
 
@@ -81,7 +51,10 @@ public class ProjectResource implements Entity<ProjectResource> {
     @Override
     public boolean sameIdentityAs(ProjectResource other) {
         Validate.notNull(other, "Project to compare can not be null");
-        return this.projectResourceId.equals(other.projectResourceId);
+        return this.accountEmail.equals(other.accountEmail) &&
+                this.projectCode.equals(other.projectCode) &&
+                this.roleInProject.equals(other.roleInProject) &&
+                this.timeInProject.equals(other.timeInProject);
     }
 
     /**
@@ -93,8 +66,12 @@ public class ProjectResource implements Entity<ProjectResource> {
     @Override
     public boolean equals(Object other) {
         Validate.notNull(other, "The Object To Compare must not be null");
-        if (this == other) return true;
-        if (getClass() != other.getClass()) return false;
+        if (this == other) {
+            return true;
+        }
+        if (getClass() != other.getClass()) {
+            return false;
+        }
         return sameIdentityAs((ProjectResource) other);
     }
 
@@ -105,6 +82,16 @@ public class ProjectResource implements Entity<ProjectResource> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(projectResourceId);
+        return Objects.hash(accountEmail, projectCode, roleInProject, timeInProject);
+    }
+
+    /**
+     * This method checks if an instance of ProjectResource has a given project code.
+     * @param projectCode project code of interest.
+     * @return true if the project code of interest is equal to the project code of the instance of ProjectResuorce,
+     * and false otherwise.
+     */
+    public boolean hasProjectCode(Code projectCode){
+        return this.projectCode == projectCode;
     }
 }

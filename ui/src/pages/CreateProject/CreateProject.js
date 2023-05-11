@@ -3,7 +3,6 @@ import Button from "../../components/Button/Button";
 import {createProject, selectMenu} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
 import {TextField} from "@mui/material";
-import DateInput from "../../components/DateInput/DateInput";
 import './CreateProject.css';
 
 /**
@@ -37,9 +36,6 @@ function CreateProject() {
         const {name, value} = event.target;
         const newBasicInfo = {...basicInfo};
         newBasicInfo[name] = value;
-        if (name === "startDate" || name === "endDate") {
-            newBasicInfo.status = "inception";
-        }
         setBasicInfo(newBasicInfo);
     }
 
@@ -131,22 +127,6 @@ function CreateProject() {
                         rows={4}
                         className="textField"
                     />
-                    <div className="dateRow">
-                        <DateInput
-                            name="startDate"
-                            title="Start Date"
-                            value={basicInfo.startDate}
-                            onChange={handleChangeBasic}
-                            helperText="* Optional"
-                        />
-                        <DateInput
-                            name="endDate"
-                            title="End Date"
-                            value={basicInfo.endDate}
-                            onChange={handleChangeBasic}
-                            helperText="* Optional"
-                        />
-                    </div>
                     <Button
                         text="Create Project"
                     />

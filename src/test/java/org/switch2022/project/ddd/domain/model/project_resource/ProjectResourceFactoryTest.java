@@ -9,57 +9,30 @@ import static org.mockito.Mockito.*;
 class ProjectResourceFactoryTest {
 
     /**
-     * Method createProjectResource(ProjectResourceId projectResourceId, Code code, Email email):
+     * Method createProjectResource(ProjectResourceId projectResourceId, Code code, Email email, Role roleInProject,
+     * Period allocationPeriod, CostPerHour costPerHour, PercentageOfAllocation percentageOfAllocation):
      * <p>
-     * Creates a Project Resource with minimal required atributes.
+     * Creates a Project Resource if all the arguments passed in the method are not null.
+     * The new instance of ProjectResource should assert to not null.
      */
     @Test
-    void ensureThatProjectResourceIsCreatedSucessfullyWhitThreeArguments() {
+    void ensureThatProjectResourceIsCreatedSuccessfully() {
         // Arrange
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
-        ProjectResourceId projectResourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act
-        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceIdDouble,
-                codeDouble, emailDouble);
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(
+                codeDouble, emailDouble, roleDouble, periodDouble, costDouble,
+                percentageOfAllocationDouble);
 
         //Assert
         assertNotNull(projectResource);
     }
 
-    /**
-     * Method createProjectResource(ProjectResourceId projectResourceId, Code code, Email email, Role role, Period period,
-     * CostPerHour cost, PercentageOfAllocation percentageOfAllocation):
-     * <p>
-     * Creates a Project Resource.
-     */
-
-    @Test
-    void ensureThatProjectResourceIsCreatedSucessfullyWhitSevenArguments() {
-        // Arrange
-        ProjectResourceFactory factory = new ProjectResourceFactory();
-        ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
-        Code code = mock(Code.class);
-        Email email = mock(Email.class);
-        Role role = mock(Role.class);
-        Period period = mock(Period.class);
-        CostPerHour cost = mock(CostPerHour.class);
-        PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
-        ProjectResource expected = factory.createProjectResource(projectResourceId, code, email, role, period,
-                cost, percentageOfAllocation);
-
-        //Act
-        ProjectResource result = factory.createProjectResource(projectResourceId, code, email);
-        result.setRole(role);
-        result.setPeriod(period);
-        result.setCost(cost);
-        result.setPercentageOfAllocation(percentageOfAllocation);
-
-        //Result:
-        assertEquals(expected, result);
-
-
-    }
 }
