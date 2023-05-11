@@ -412,6 +412,179 @@ class ProjectResourceTest {
         //Assert
         assertFalse(result);
     }
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     *
+     * Scenario 01: The instance of ProjectResource has the same allocation info as the ProjectResource instance that
+     * is passed as argument.
+     * It should assert true.
+     */
+    @Test
+    void ensureItReturnsTrueIfTheAllocationInfoIsTheSame() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertTrue(result);
+    }
+
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     *
+     * Scenario 02: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
+     * that is passed as argument because the projectCode is different.
+     * It should assert true.
+     */
+    @Test
+    void ensureItReturnsFalseIfTheAllocationInfoIsDifferentDueToDifferentProjectCodes() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+
+        Code codeOneDouble = mock(Code.class);
+        Code codeTwoDouble = mock(Code.class);
+
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeOneDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeTwoDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     *
+     * Scenario 03: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
+     * that is passed as argument because the accountEmail is different.
+     * It should assert false.
+     */
+    @Test
+    void ensureItReturnsFalseIfTheAllocationInfoIsDifferentDueToDifferentAccountEmails() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+
+        Email emailOneDouble = mock(Email.class);
+        Email emailTwoDouble = mock(Email.class);
+
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailOneDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeDouble, emailTwoDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     *
+     * Scenario 03: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
+     * that is passed as argument because the roleInProject is different.
+     * It should assert false.
+     */
+    @Test
+    void ensureItReturnsFalseIfTheAllocationInfoIsDifferentDueToDifferentRoles() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+
+        Role roleOneDouble = mock(Role.class);
+        Role roleTwoDouble = mock(Role.class);
+
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleOneDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleTwoDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     *
+     * Scenario 04: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
+     * that is passed as argument because the timeInProject is different.
+     * It should assert true.
+     */
+    @Test
+    void ensureItReturnsFalseIfTheAllocationInfoIsDifferentDueToDifferentPeriods() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+
+        Period periodOneDouble = mock(Period.class);
+        Period periodTwoDouble = mock(Period.class);
+
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodOneDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodTwoDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertFalse(result);
+    }
 }
 
 

@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.domain.model.project_resource;
 
-import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
@@ -87,11 +86,26 @@ public class ProjectResource implements Entity<ProjectResource> {
 
     /**
      * This method checks if an instance of ProjectResource has a given project code.
+     *
      * @param projectCode project code of interest.
      * @return true if the project code of interest is equal to the project code of the instance of ProjectResuorce,
      * and false otherwise.
      */
-    public boolean hasProjectCode(Code projectCode){
+    public boolean hasProjectCode(Code projectCode) {
         return this.projectCode.equals(projectCode);
+    }
+
+    /**
+     * This method checks if an instance of ProjectResource has the same basic allocation info (projectCode,
+     * accountEmail, roleInProject, and timeInProject).
+     *
+     * @param otherResource project resource to compare to.
+     * @return true if this project resource has the same allocation info as the other project resource, and false
+     * otherwise.
+     */
+    public boolean hasSameAllocationInfo(ProjectResource otherResource) {
+        return this.projectCode.equals(otherResource.projectCode) && this.accountEmail.equals(
+                otherResource.accountEmail) && this.roleInProject.equals(
+                otherResource.roleInProject) && this.timeInProject.equals(otherResource.timeInProject);
     }
 }
