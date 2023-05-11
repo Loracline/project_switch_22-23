@@ -4,7 +4,6 @@ package org.switch2022.project.container;
 import org.switch2022.project.dto.*;
 import org.switch2022.project.factories.*;
 import org.switch2022.project.model.Account;
-import org.switch2022.project.model.ProductBacklog;
 import org.switch2022.project.model.Project;
 import org.switch2022.project.model.SprintBacklog;
 
@@ -261,15 +260,6 @@ public class Company {
     }
 
     /**
-     * This method creates an userStory in the requested project
-     * returns true if the userStory is successfully created
-     */
-    public boolean createUserStory(ProjectDto projectDto,
-                                   UserStoryCreationDto userStoryCreationDto) {
-        return projectContainer.createUserStory(projectDto, userStoryCreationDto);
-    }
-
-    /**
      * This method sets the effort of an userStory.
      *
      * @param userStoryDto to estimate the effort.
@@ -281,16 +271,6 @@ public class Company {
         String projectCode = projectDto.code;
         return projectContainer.estimateEffortUserStory(userStoryDto, effort,
                 projectCode, date);
-    }
-
-    /**
-     * This method returns the product backlog of the project of interest.
-     *
-     * @param projectCode of interest.
-     * @return an Optional object of the Product Backlog.
-     */
-    public Optional<ProductBacklog> getProductBacklog(String projectCode) {
-        return projectContainer.getProductBacklog(projectCode);
     }
 
     /**

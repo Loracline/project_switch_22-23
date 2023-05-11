@@ -18,6 +18,7 @@ function CreateSprint() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const initialSprintState = {
         projectCode: detailedProject.basicInfo.code,
+        startDate: '',
         idSprint: '',
         endDate: '',
         description: '',
@@ -35,14 +36,19 @@ function CreateSprint() {
         event.preventDefault();
         if (sprintToSubmit.startDate.length === 0) {
             alert('Please, insert initial date.');
+            setSelectedDate(new Date());
+            setSprintToSubmit(initialSprintState);
         } else if (new Date(sprintToSubmit.startDate) < new Date()) {
+            setSelectedDate(new Date());
             alert('Please select a future date for the start date.');
+            setSprintToSubmit(initialSprintState);
         } else {
             dispatch(createSprint({
                 ...sprintToSubmit
             }));
             window.alert('The sprint was successfully created.');
             setSprintToSubmit(initialSprintState);
+            setSelectedDate(new Date());
         }
     };
 
@@ -57,7 +63,7 @@ function CreateSprint() {
                                onChange={handleDateChange}
                                variant="outlined"/>
                     <div className="sprint-buttons">
-                        <Button text="Submit" isdisabled={!sprintToSubmit.date}/>
+                        <Button text="Submit" isdisabled={!sprintToSubmit.startDate}/>
                         <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
                     </div>
                 </form>

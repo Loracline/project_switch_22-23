@@ -19,6 +19,7 @@ class ProjectResourceFactoryTest {
     void ensureThatProjectResourceIsCreatedSuccessfully() {
         // Arrange
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ProjectResourceId resourceId = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -27,8 +28,8 @@ class ProjectResourceFactoryTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act
-        ProjectResource projectResource = projectResourceFactory.createProjectResource(
-                codeDouble, emailDouble, roleDouble, periodDouble, costDouble,
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(resourceId, codeDouble,
+                emailDouble, roleDouble, periodDouble, costDouble,
                 percentageOfAllocationDouble);
 
         //Assert

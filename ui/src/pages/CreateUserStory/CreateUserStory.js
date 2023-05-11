@@ -22,7 +22,7 @@ function CreateUserStory() {
         actor: "",
         acceptanceCriteria: [],
         status: "Planned",
-        priority: undefined,
+        priority: "",
     };
 
     const [userStory, setUserStory] = useState(initialUsState);
@@ -31,7 +31,11 @@ function CreateUserStory() {
     const handleChange = (event) => {
         const {name, value} = event.target;
         const newUserStory = {...userStory}
-        newUserStory[name] = value
+        if(name === "priority"){
+            newUserStory[name] = Number(value)
+        } else {
+            newUserStory[name] = value
+        }
         setUserStory(newUserStory)
     }
 
@@ -134,6 +138,8 @@ function CreateUserStory() {
                         <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))}
                                 text="Return to project"/>
                     </div>
+                    <Button isSecundary={true} onClick={() => dispatch(selectMenu('productBacklog'))}
+                            text="Go to Product Backlog" />
                 </form>
             </section>
         </div>)

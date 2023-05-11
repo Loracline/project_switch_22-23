@@ -17,8 +17,7 @@ import java.util.Optional;
 import static java.lang.Integer.parseInt;
 
 /**
- * Class ProjectService allows to create and
- * manipulate Project aggregate.
+ * Class ProjectCreationService allows to interact with Sprint aggregate.
  */
 
 @Service

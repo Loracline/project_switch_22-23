@@ -135,7 +135,6 @@ const AppProvider = ({children}) => {
         headersProjects,
         projects,
         usHeaders,
-        selectedProject: undefined,
         detailedProject
     }
     const [state, dispatch] = useReducer(reducer, initialState);

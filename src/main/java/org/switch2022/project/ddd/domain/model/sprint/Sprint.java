@@ -94,14 +94,14 @@ public class Sprint implements Entity<Sprint> {
      * This method adds a new User Story to the list of user stories in sprint
      *
      * @param usId   from the new User Story to be added
-     * @param effort of the user story in this sprint.
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise.
      */
 
 
-    public boolean addUserStory(UsId usId, Effort effort) {
-        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId, effort);
+    public boolean addUserStory(UsId usId, int effort) {
+        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId, Effort.ONE);
+        userStoryInSprint.changeEffort(effort);
         boolean isAdded = true;
         if (userStoriesInSprint.contains(userStoryInSprint)) {
             isAdded = false;
@@ -137,21 +137,16 @@ public class Sprint implements Entity<Sprint> {
      *
      * @param usId   from the user story to estimate the effort.
      * @param effort of the userStory.
-     * @param date   to check of the date is before the start date of the sprint
      * @return true if the effort is set and false otherwise.
      */
 
-    public boolean estimateEffortUserStory(UsId usId, Effort effort,
-
-                                           LocalDate date) {
+    public boolean estimateEffortUserStory(UsId usId, int effort) {
         boolean hasEffortChanged = false;
-        if (isDateBeforeStartDate(date)) {
-            for (UserStoryInSprint userStory : userStoriesInSprint) {
+        for (UserStoryInSprint userStory : userStoriesInSprint) {
                 if (userStory.getUsId().equals(usId)) {
                     hasEffortChanged = userStory.changeEffort(effort);
                 }
             }
-        }
         return hasEffortChanged;
     }
 
@@ -235,16 +230,6 @@ public class Sprint implements Entity<Sprint> {
      */
     public boolean isPeriodNotOverlapping(Sprint sprint) {
         return this.period.isPeriodNotOverlapping(sprint.period);
-    }
-
-    /**
-     * This method checks if date is equal or greater than start date
-     *
-     * @param date to compare
-     * @return true if date is equal or greater than start date or false otherwise.
-     */
-    private boolean isDateBeforeStartDate(LocalDate date) {
-        return !this.period.isDateEqualOrGreaterThanStartDate(date);
     }
 
     /**

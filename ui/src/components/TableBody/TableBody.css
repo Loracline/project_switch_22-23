@@ -17,3 +17,21 @@
     color: white;
     background-color: #6145AF;
 }
+
+@media only screen and (max-width: 425px) {
+    .tableBody {
+        height: 0.625rem;
+        font-size: 0.625rem;
+        line-height: 0.875rem;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .tableBody {
+        height: 60px;
+        font-size: 0.875rem;
+        line-height: 1.125rem;
+        width: 100%;
+    }
+}

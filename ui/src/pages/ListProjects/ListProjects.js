@@ -30,7 +30,7 @@ const ListProjects = () => {
             tableData = (
                 <table className='table'>
                     <TableHeader headers={headers}/>
-                    <TableBody body={data} onClick={onClickTableBody} isClickable={true}/>
+                    <TableBody body={data} onClick={onClickTableBody}/>
                 </table>)
         } else {
             tableData = <Alert variant="filled" severity="info">

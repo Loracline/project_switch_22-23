@@ -7,6 +7,7 @@ public interface IProjectResourceFactory {
      * @param code  the code of the Project.
      * @param email the email of the Account allocated to Project.
      */
-    ProjectResource createProjectResource(Code code, Email email, Role role, Period period,
-                                          CostPerHour cost, PercentageOfAllocation percentageOfAllocation);
+    ProjectResource createProjectResource(ProjectResourceId resourceId, Code code, Email email, Role role,
+                                          Period period, CostPerHour cost,
+                                          PercentageOfAllocation percentageOfAllocation);
 }

@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.project_resource;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
+import org.switch2022.project.ddd.infrastructure.ProjectResourceRepository;
 
 import java.time.LocalDate;
 
@@ -18,6 +19,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatProjectResourceIsCreatedSuccessfully() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -26,10 +28,28 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertDoesNotThrow(() -> new ProjectResource(codeDouble, emailDouble, roleDouble,
+        assertDoesNotThrow(() -> new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble));
     }
 
+    /**
+     * Testing if Project Resource is not created when ID Is Null.
+     * It should throw an InvalidInputException.
+     */
+    @Test
+    void ensureThatProjectResourceIsNotCreatedWhenIdIsNull() {
+        // Arrange
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        // Act, Assert
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(null, codeDouble, emailDouble,
+                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble));
+    }
 
     /**
      * Testing if Project Resource is not created when Code Is Null.
@@ -38,6 +58,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatProjectResourceIsNotCreatedWhenCodeIsNull() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
         Period periodDouble = mock(Period.class);
@@ -45,7 +66,7 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource(null,
+        assertThrows(InvalidInputException.class, () -> new ProjectResource( null,
                 emailDouble, roleDouble, periodDouble, costDouble, percentageOfAllocationDouble));
     }
 
@@ -56,6 +77,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatProjectResourceIsNotCreatedWhenEmailIsNull() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Role roleDouble = mock(Role.class);
         Period periodDouble = mock(Period.class);
@@ -63,7 +85,7 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource(codeDouble, null
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(resourceIdDouble, codeDouble, null
                 , roleDouble, periodDouble, costDouble, percentageOfAllocationDouble));
     }
 
@@ -74,6 +96,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatProjectResourceIsNotCreatedWhenRoleIsNull() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Period periodDouble = mock(Period.class);
@@ -81,8 +104,8 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource(codeDouble, emailDouble
-                , null, periodDouble, costDouble, percentageOfAllocationDouble));
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(resourceIdDouble, codeDouble,
+                emailDouble, null, periodDouble, costDouble, percentageOfAllocationDouble));
     }
 
     /**
@@ -92,6 +115,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatProjectResourceIsNotCreatedWhenPeriodIsNull() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -99,8 +123,8 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource(codeDouble, emailDouble
-                , roleDouble, null, costDouble, percentageOfAllocationDouble));
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(resourceIdDouble, codeDouble,
+                emailDouble, roleDouble, null, costDouble, percentageOfAllocationDouble));
     }
 
     /**
@@ -110,6 +134,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatProjectResourceIsNotCreatedWhenCostIsNull() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -117,7 +142,7 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource(codeDouble, emailDouble
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(resourceIdDouble, codeDouble, emailDouble
                 , roleDouble, periodDouble, null, percentageOfAllocationDouble));
     }
 
@@ -128,6 +153,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatProjectResourceIsNotCreatedWhenPercentageOfAllocationIsNull() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -135,7 +161,7 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource(codeDouble, emailDouble
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(resourceIdDouble, codeDouble, emailDouble
                 , roleDouble, periodDouble, costDouble, null));
     }
 
@@ -146,6 +172,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatTwoProjectResourcesHaveTheSameIdentity() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -153,9 +180,9 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailDouble,
+        ProjectResource projectResourceOne = new ProjectResource(resourceIdDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeDouble, emailDouble,
+        ProjectResource projectResourceTwo = new ProjectResource(resourceIdDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
 
         // Act
@@ -166,96 +193,22 @@ class ProjectResourceTest {
     }
 
     @Test
-    void ensureThatTwoProjectResourcesDoNotHaveTheSameIdentityBecauseProjectCodesAreDifferent() {
+    void ensureThatTwoProjectResourcesDoNotHaveTheSameIdentityBecauseResourceIdsAreDifferent() {
         // Arrange
-        Code codeOneDouble = mock(Code.class);
-        Code codeTwoDouble = mock(Code.class);
+        ProjectResourceId resourceIdOneDouble = mock(ProjectResourceId.class);
+        ProjectResourceId resourceIdTwoDouble = mock(ProjectResourceId.class);
 
+        Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
         Period periodDouble = mock(Period.class);
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource projectResourceOne = new ProjectResource(codeOneDouble, emailDouble,
+        ProjectResource projectResourceOne = new ProjectResource(resourceIdOneDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeTwoDouble, emailDouble,
+        ProjectResource projectResourceTwo = new ProjectResource(resourceIdTwoDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-
-        // Act
-        boolean result = projectResourceOne.sameIdentityAs(projectResourceTwo);
-
-        // Assert
-        assertFalse(result);
-    }
-
-    @Test
-    void ensureThatTwoProjectResourcesDoNotHaveTheSameIdentityBecauseAccountEmailsAreDifferent() {
-        // Arrange
-        Code codeDouble = mock(Code.class);
-
-        Email emailOneDouble = mock(Email.class);
-        Email emailTwoDouble = mock(Email.class);
-
-        Role roleDouble = mock(Role.class);
-        Period periodDouble = mock(Period.class);
-        CostPerHour costDouble = mock(CostPerHour.class);
-        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
-
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailOneDouble,
-                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeDouble, emailTwoDouble,
-                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-
-        // Act
-        boolean result = projectResourceOne.sameIdentityAs(projectResourceTwo);
-
-        // Assert
-        assertFalse(result);
-    }
-
-    @Test
-    void ensureThatTwoProjectResourcesDoNotHaveTheSameIdentityBecauseRolesAreDifferent() {
-        // Arrange
-        Code codeDouble = mock(Code.class);
-        Email emailDouble = mock(Email.class);
-
-        Role roleOneDouble = mock(Role.class);
-        Role roleTwoDouble = mock(Role.class);
-
-        Period periodDouble = mock(Period.class);
-        CostPerHour costDouble = mock(CostPerHour.class);
-        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
-
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailDouble,
-                roleOneDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeDouble, emailDouble,
-                roleTwoDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-
-        // Act
-        boolean result = projectResourceOne.sameIdentityAs(projectResourceTwo);
-
-        // Assert
-        assertFalse(result);
-    }
-
-    @Test
-    void ensureThatTwoProjectResourcesDoNotHaveTheSameIdentityBecauseAllocationPeriodsAreDifferent() {
-        // Arrange
-        Code codeDouble = mock(Code.class);
-        Email emailDouble = mock(Email.class);
-        Role roleDouble = mock(Role.class);
-
-        Period periodOneDouble = mock(Period.class);
-        Period periodTwoDouble = mock(Period.class);
-
-        CostPerHour costDouble = mock(CostPerHour.class);
-        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
-
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailDouble,
-                roleDouble, periodOneDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeDouble, emailDouble,
-                roleDouble, periodTwoDouble, costDouble, percentageOfAllocationDouble);
 
         // Act
         boolean result = projectResourceOne.sameIdentityAs(projectResourceTwo);
@@ -267,6 +220,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatTwoProjectResourcesDoNotHaveTheSameIdentityBecauseOneIsNull() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -274,7 +228,7 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailDouble,
+        ProjectResource projectResourceOne = new ProjectResource(resourceIdDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
 
         // Act, Assert
@@ -282,11 +236,13 @@ class ProjectResourceTest {
     }
 
     /**
-     * Tests for the equals() method.
+     * Method: equals()
+     * Scenario 01: Test to ensure the object equals itself.
      */
     @Test
     void ensureThatProjectResourceEqualsItself() {
         // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -294,30 +250,34 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource expected = new ProjectResource(codeDouble, emailDouble, roleDouble,
+        ProjectResource expected = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource result = new ProjectResource(codeDouble, emailDouble, roleDouble,
-                periodDouble, costDouble, percentageOfAllocationDouble);
+        ProjectResource result = expected;
 
         // Act, Assert
         assertEquals(expected, result);
     }
 
+    /**
+     * Method: equals()
+     * Scenario 02: Test to ensure that two different objects from the same class are different.
+     */
     @Test
     void ensureThatTwoDifferentProjectResourcesAreNotEqual() {
         // Arrange
-        Code codeOneDouble = mock(Code.class);
-        Code codeTwoDouble = mock(Code.class);
+        ProjectResourceId resourceIdOneDouble = mock(ProjectResourceId.class);
+        ProjectResourceId resourceIdTwoDouble = mock(ProjectResourceId.class);
 
+        Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
         Period periodDouble = mock(Period.class);
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource expected = new ProjectResource(codeOneDouble, emailDouble, roleDouble,
+        ProjectResource expected = new ProjectResource(resourceIdOneDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource result = new ProjectResource(codeTwoDouble, emailDouble, roleDouble,
+        ProjectResource result = new ProjectResource(resourceIdTwoDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
 
         // Act, Assert
@@ -325,10 +285,15 @@ class ProjectResourceTest {
     }
 
     @SuppressWarnings("all")
+    /**
+     * Method: equals()
+     * Scenario 03: Test to ensure that two objects from different classes are different.
+     */
     @Test
     void ensureThatProjectResourceIsNotEqualToOtherTypeOfObject() {
         // Arrange
-        String expected = "Hello World!";
+        String otherType = "Hello World!";
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -336,11 +301,62 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource result = new ProjectResource(codeDouble, emailDouble, roleDouble,
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        // Act
+        boolean result = resource.equals(otherType);
+        // Assert
+        assertFalse(result);
+    }
+
+
+    /**
+     * Method: equals()
+     * Scenario 04: Test to ensure that two equal objects from the same class are equal.
+     */
+    @Test
+    void ensureTwoObjectsAreEqual() {
+        // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource expected = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        ProjectResource result = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
 
         // Act, Assert
-        assertNotEquals(expected, result);
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: equals()
+     * Scenario 05: Test to ensure that one object doesn't equal null.
+     * It should throw an InvalidInputException.
+     */
+    @SuppressWarnings("all")
+    @Test
+    void ensureThatObjectDoesNotEqualNull() {
+        // Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        // Act, Assert
+        assertThrows(InvalidInputException.class, () -> resource.equals(null));
     }
 
     /**
@@ -349,6 +365,7 @@ class ProjectResourceTest {
     @Test
     void ensureThatTwoProjectResourcesHaveSameHashCode() {
         // ARRANGE
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -356,9 +373,9 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailDouble,
+        ProjectResource projectResourceOne = new ProjectResource(resourceIdDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeDouble, emailDouble,
+        ProjectResource projectResourceTwo = new ProjectResource(resourceIdDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
 
         // ACT
@@ -370,99 +387,22 @@ class ProjectResourceTest {
     }
 
     @Test
-    void ensureThatTwoProjectResourcesWithDifferentProjectCodesHaveDifferentHashCodes() {
+    void ensureThatTwoProjectResourcesWithDifferentIdsHaveDifferentHashCodes() {
         // ARRANGE
-        Code codeOneDouble = mock(Code.class);
-        Code codeTwoDouble = mock(Code.class);
+        ProjectResourceId resourceIdOneDouble = mock(ProjectResourceId.class);
+        ProjectResourceId resourceIdTwoDouble = mock(ProjectResourceId.class);
 
+        Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
         Period periodDouble = mock(Period.class);
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource projectResourceOne = new ProjectResource(codeOneDouble, emailDouble,
+        ProjectResource projectResourceOne = new ProjectResource(resourceIdOneDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeTwoDouble, emailDouble,
+        ProjectResource projectResourceTwo = new ProjectResource(resourceIdTwoDouble, codeDouble, emailDouble,
                 roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-
-        // ACT
-        int hashCodeReference = projectResourceOne.hashCode();
-        int hashCodeOther = projectResourceTwo.hashCode();
-
-        // ASSERT
-        assertNotEquals(hashCodeOther, hashCodeReference);
-    }
-
-    @Test
-    void ensureThatTwoProjectResourcesWithDifferentAccountEmailsHaveDifferentHashCodes() {
-        // ARRANGE
-        Code codeDouble = mock(Code.class);
-
-        Email emailOneDouble = mock(Email.class);
-        Email emailTwoDouble = mock(Email.class);
-
-        Role roleDouble = mock(Role.class);
-        Period periodDouble = mock(Period.class);
-        CostPerHour costDouble = mock(CostPerHour.class);
-        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
-
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailOneDouble,
-                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeDouble, emailTwoDouble,
-                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-
-        // ACT
-        int hashCodeReference = projectResourceOne.hashCode();
-        int hashCodeOther = projectResourceTwo.hashCode();
-
-        // ASSERT
-        assertNotEquals(hashCodeOther, hashCodeReference);
-    }
-
-    @Test
-    void ensureThatTwoProjectResourcesWithDifferentRolesHaveDifferentHashCodes() {
-        // ARRANGE
-        Code codeDouble = mock(Code.class);
-        Email emailDouble = mock(Email.class);
-
-        Role roleOneDouble = mock(Role.class);
-        Role roleTwoDouble = mock(Role.class);
-
-        Period periodDouble = mock(Period.class);
-        CostPerHour costDouble = mock(CostPerHour.class);
-        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
-
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailDouble,
-                roleOneDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeDouble, emailDouble,
-                roleTwoDouble, periodDouble, costDouble, percentageOfAllocationDouble);
-
-        // ACT
-        int hashCodeReference = projectResourceOne.hashCode();
-        int hashCodeOther = projectResourceTwo.hashCode();
-
-        // ASSERT
-        assertNotEquals(hashCodeOther, hashCodeReference);
-    }
-
-    @Test
-    void ensureThatTwoProjectResourcesWithDifferentPeriodsHaveDifferentHashCodes() {
-        // ARRANGE
-        Code codeDouble = mock(Code.class);
-        Email emailDouble = mock(Email.class);
-        Role roleDouble = mock(Role.class);
-
-        Period periodOneDouble = mock(Period.class);
-        Period periodTwoDouble = mock(Period.class);
-
-        CostPerHour costDouble = mock(CostPerHour.class);
-        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
-
-        ProjectResource projectResourceOne = new ProjectResource(codeDouble, emailDouble,
-                roleDouble, periodOneDouble, costDouble, percentageOfAllocationDouble);
-        ProjectResource projectResourceTwo = new ProjectResource(codeDouble, emailDouble,
-                roleDouble, periodTwoDouble, costDouble, percentageOfAllocationDouble);
 
         // ACT
         int hashCodeReference = projectResourceOne.hashCode();
@@ -483,6 +423,7 @@ class ProjectResourceTest {
     @Test
     void ensureItReturnsTrueIfTheProjectCodesAreEqual() {
         //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -490,7 +431,8 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource resource = new ProjectResource(codeDouble, emailDouble, roleDouble, periodDouble, costDouble,
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble,
                 percentageOfAllocationDouble);
         //Act
         boolean result = resource.hasProjectCode(codeDouble);
@@ -503,7 +445,7 @@ class ProjectResourceTest {
     /**
      * Method hasProjectCode(ProjectCode projectCode) checks if an instance of ProjectResource has a given project
      * code as attribute or not.
-     *
+     * <p>
      * Scenario 02: The instance of ProjectResource has as attribute a project code that is different from the
      * project code of interest.
      * It should assert false.
@@ -511,6 +453,8 @@ class ProjectResourceTest {
     @Test
     void ensureItReturnsFalseIfTheProjectCodesAreDifferent() {
         //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+
         Code codeOneDouble = mock(Code.class);
         Code codeTwoDouble = mock(Code.class);
 
@@ -520,10 +464,185 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
-        ProjectResource resource = new ProjectResource(codeOneDouble, emailDouble, roleDouble, periodDouble, costDouble,
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeOneDouble, emailDouble, roleDouble,
+                periodDouble,
+                costDouble,
                 percentageOfAllocationDouble);
         //Act
         boolean result = resource.hasProjectCode(codeTwoDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     * <p>
+     * Scenario 01: The instance of ProjectResource has the same allocation info as the ProjectResource instance that
+     * is passed as argument.
+     * It should assert true.
+     */
+    @Test
+    void ensureItReturnsTrueIfTheAllocationInfoIsTheSame() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertTrue(result);
+    }
+
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     * <p>
+     * Scenario 02: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
+     * that is passed as argument because the projectCode is different.
+     * It should assert true.
+     */
+    @Test
+    void ensureItReturnsFalseIfTheAllocationInfoIsDifferentDueToDifferentProjectCodes() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+
+        Code codeOneDouble = mock(Code.class);
+        Code codeTwoDouble = mock(Code.class);
+
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeOneDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeTwoDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     * <p>
+     * Scenario 03: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
+     * that is passed as argument because the accountEmail is different.
+     * It should assert false.
+     */
+    @Test
+    void ensureItReturnsFalseIfTheAllocationInfoIsDifferentDueToDifferentAccountEmails() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+
+        Email emailOneDouble = mock(Email.class);
+        Email emailTwoDouble = mock(Email.class);
+
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailOneDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeDouble, emailTwoDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     * <p>
+     * Scenario 03: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
+     * that is passed as argument because the roleInProject is different.
+     * It should assert false.
+     */
+    @Test
+    void ensureItReturnsFalseIfTheAllocationInfoIsDifferentDueToDifferentRoles() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+
+        Role roleOneDouble = mock(Role.class);
+        Role roleTwoDouble = mock(Role.class);
+
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleOneDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleTwoDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
+     * same allocation info (projectCode, accountEmail, roleInProject, and timeInProject) as another ProjectResource
+     * instance.
+     * <p>
+     * Scenario 04: The instance of ProjectResource has not the same allocation info as the ProjectResource instance
+     * that is passed as argument because the timeInProject is different.
+     * It should assert true.
+     */
+    @Test
+    void ensureItReturnsFalseIfTheAllocationInfoIsDifferentDueToDifferentPeriods() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+
+        Period periodOneDouble = mock(Period.class);
+        Period periodTwoDouble = mock(Period.class);
+
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodOneDouble, costDouble, percentageOfAllocationDouble);
+
+        ProjectResource otherResource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodTwoDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = resource.hasSameAllocationInfo(otherResource);
 
         //Assert
         assertFalse(result);

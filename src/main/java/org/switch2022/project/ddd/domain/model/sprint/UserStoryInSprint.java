@@ -109,9 +109,9 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
      *
      * @param effortEstimate of the User Story to be set.
      */
-    protected boolean changeEffort(Effort effortEstimate) {
+    public boolean changeEffort(int effortEstimate) {
         for (Effort effort : Effort.values()) {
-            if (effort == effortEstimate) {
+            if (effort.getEffortValue() == effortEstimate) {
                 this.effort = effort;
                 return true;
             }
