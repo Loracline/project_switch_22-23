@@ -20,6 +20,11 @@
 
 .buttons-createUs {
     display: flex;
-    justify-content: space-between;
     margin-top: 1.875rem;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.user-story-form button:last-child {
+    width: fit-content;
 }
