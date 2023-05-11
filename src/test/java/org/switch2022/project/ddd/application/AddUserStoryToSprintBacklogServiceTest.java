@@ -8,16 +8,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
+import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.Status;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -55,8 +57,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), any())).thenReturn(true);
-
+        when(sprintDouble.addUserStory(any(),anyInt())).thenReturn(true);
         //Act
         boolean result = service.addUserStoryToSprintBacklog(usId, sprintId);
         //Assert
@@ -80,7 +81,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), any())).thenReturn(true);
+        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
         service.addUserStoryToSprintBacklog(usId, sprintId);
 
         //Act
@@ -106,7 +107,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), any())).thenReturn(false);
+        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(false);
 
         //Act
         boolean result = service.addUserStoryToSprintBacklog(usId, sprintId);
@@ -132,7 +133,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(Status.FINISHED)).thenReturn(true);
         when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), any())).thenReturn(true);
+        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 service.addUserStoryToSprintBacklog(usId, sprintId));
         //Act
@@ -159,7 +160,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(Status.BLOCKED)).thenReturn(true);
         when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), any())).thenReturn(true);
+        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 service.addUserStoryToSprintBacklog(usId, sprintId));
         //Act
@@ -186,7 +187,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(true);
-        when(sprintDouble.addUserStory(any(), any())).thenReturn(true);
+        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 service.addUserStoryToSprintBacklog(usId, sprintId));
         //Act
@@ -209,7 +210,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(userStoryList);
         when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), any())).thenReturn(true);
+        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 service.addUserStoryToSprintBacklog(usId, sprintId));
         //Act
