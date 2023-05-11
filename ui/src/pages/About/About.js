@@ -30,7 +30,7 @@ function About() {
                         <li>Rui Pinho</li>
                     </ul>
                 </div>
-                <img src="/team.png" alt="Group photo"/>
+                <img src="/team.png" alt="Group"/>
             </div>
         </div>
     );
