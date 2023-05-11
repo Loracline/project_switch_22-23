@@ -19,7 +19,7 @@ public enum Role implements ValueObject<Role> {
     @Override
     public boolean sameValueAs(Role other) {
         Validate.notNull(other, "Role to compare can not be null");
-        return this.equals(other);
+        return this == other;
     }
 
     /**

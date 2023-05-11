@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -43,7 +45,7 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource( null,
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(null,
                 emailDouble, roleDouble, periodDouble, costDouble, percentageOfAllocationDouble));
     }
 
@@ -473,7 +475,7 @@ class ProjectResourceTest {
     /**
      * Method hasProjectCode(ProjectCode projectCode) checks if an instance of ProjectResource has a given project
      * code as attribute or not.
-     *
+     * <p>
      * Scenario 01: The instance of ProjectResource has as attribute a project code that is equal to the project code
      * of interest.
      * It should assert true.
@@ -525,6 +527,105 @@ class ProjectResourceTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    @Test
+    void ensureItReturnsTrueIfTheResourceAlreadyHasARole() {
+        //Arrange
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
+                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
+
+        //Act
+        boolean result = projectResource.hasRole(roleDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+
+    @Test
+    void ensureThatRoleOfResourceIsTheSameOfAGivenRole() {
+        //Arrange
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
+                Role.TEAM_MEMBER, periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = projectResource.hasRole(Role.TEAM_MEMBER);
+
+        //Assert
+        assertTrue(result);
+
+    }
+
+    @Test
+    void ensureThatRoleOfResourceIsNotTheSameOfAGivenRole() {
+        //Arrange
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
+                Role.TEAM_MEMBER, periodDouble, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = projectResource.hasRole(Role.PRODUCT_OWNER);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void ensureThatPeriodIsOverlapped_StartDateMatchesEndDate() {
+        //Arrange
+        Period periodOne = new Period(LocalDate.of(2023, 5, 10), 2);
+        Period periodTwo = new Period(LocalDate.of(2023, 5, 24), 2);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
+                roleDouble, periodOne, costDouble, percentageOfAllocationDouble);
+
+        //Act
+        boolean result = projectResource.isPeriodOverlapping(periodTwo);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureThatPeriodIsNotOverlapped_StartDateIsAfterEndDate() {
+        //Arrange
+        Period periodOne = new Period(LocalDate.of(2023, 5, 11), 1);
+        Period periodTwo = new Period(LocalDate.of(2023, 5, 25), 2);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
+                roleDouble, periodOne, costDouble, percentageOfAllocationDouble);
+        //Act
+        boolean result = projectResource.isPeriodOverlapping(periodTwo);
+        //Assert
+        assertFalse(result);
+
     }
 }
 

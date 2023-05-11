@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.domain.model.project_resource;
 
-import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
@@ -13,7 +12,7 @@ public class ProjectResource implements Entity<ProjectResource> {
     private final Code projectCode;
     private final Email accountEmail;
     private Role roleInProject;
-    private Period timeInProject;
+    private Period allocationPeriod;
     private CostPerHour costPerHour;
     private PercentageOfAllocation percentageOfAllocation;
 
@@ -36,7 +35,7 @@ public class ProjectResource implements Entity<ProjectResource> {
         this.projectCode = code;
         this.accountEmail = email;
         this.roleInProject = roleInProject;
-        this.timeInProject = allocationPeriod;
+        this.allocationPeriod = allocationPeriod;
         this.costPerHour = costPerHour;
         this.percentageOfAllocation = percentageOfAllocation;
     }
@@ -54,7 +53,7 @@ public class ProjectResource implements Entity<ProjectResource> {
         return this.accountEmail.equals(other.accountEmail) &&
                 this.projectCode.equals(other.projectCode) &&
                 this.roleInProject.equals(other.roleInProject) &&
-                this.timeInProject.equals(other.timeInProject);
+                this.allocationPeriod.equals(other.allocationPeriod);
     }
 
     /**
@@ -82,16 +81,38 @@ public class ProjectResource implements Entity<ProjectResource> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(accountEmail, projectCode, roleInProject, timeInProject);
+        return Objects.hash(accountEmail, projectCode, roleInProject, allocationPeriod);
     }
 
     /**
      * This method checks if an instance of ProjectResource has a given project code.
+     *
      * @param projectCode project code of interest.
      * @return true if the project code of interest is equal to the project code of the instance of ProjectResuorce,
      * and false otherwise.
      */
-    public boolean hasProjectCode(Code projectCode){
+    public boolean hasProjectCode(Code projectCode) {
         return this.projectCode == projectCode;
+    }
+
+    /**
+     * This method checks if an instance of ProjectResource has a given role.
+     *
+     * @param role to ckeck.
+     * @return <code>true</code> if the role is equal to the role of the ProjectResuorce and <code>false</code>
+     * otherwise.
+     */
+    public boolean hasRole(Role role) {
+        return this.roleInProject == role;
+    }
+
+    /**
+     * This method checks if an instance of ProjectResource has a period that overlaps with another period.
+     *
+     * @param period to ckeck.
+     * @return <code>true</code> if the period is overlapping and <code>false</code> otherwise.
+     */
+    public boolean isPeriodOverlapping(Period period) {
+        return !this.allocationPeriod.isPeriodNotOverlapping(period);
     }
 }
