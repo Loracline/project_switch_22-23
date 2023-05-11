@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class ProjectResource implements Entity<ProjectResource> {
 
+    private final ProjectResourceId projectResourceId;
     private final Code projectCode;
     private final Email accountEmail;
     private Role roleInProject;
@@ -20,10 +21,11 @@ public class ProjectResource implements Entity<ProjectResource> {
     /**
      * Constructor
      */
-    protected ProjectResource(final Code code, final Email email,
+    protected ProjectResource(final ProjectResourceId projectResourceId, final Code code, final Email email,
                               final Role roleInProject, final Period allocationPeriod, final CostPerHour costPerHour,
                               final PercentageOfAllocation percentageOfAllocation) {
 
+        Validate.notNull(projectResourceId, "Project Resource ID must not be null");
         Validate.notNull(code, "Project Code must not be null");
         Validate.notNull(email, "Email must not be null");
         if (roleInProject == null) {
@@ -33,6 +35,7 @@ public class ProjectResource implements Entity<ProjectResource> {
         Validate.notNull(costPerHour, "Cost/hour must not be null");
         Validate.notNull(percentageOfAllocation, "Percentage of Allocation can not be null");
 
+        this.projectResourceId = projectResourceId;
         this.projectCode = code;
         this.accountEmail = email;
         this.roleInProject = roleInProject;
@@ -51,10 +54,7 @@ public class ProjectResource implements Entity<ProjectResource> {
     @Override
     public boolean sameIdentityAs(ProjectResource other) {
         Validate.notNull(other, "Project to compare can not be null");
-        return this.accountEmail.equals(other.accountEmail) &&
-                this.projectCode.equals(other.projectCode) &&
-                this.roleInProject.equals(other.roleInProject) &&
-                this.timeInProject.equals(other.timeInProject);
+        return this.projectResourceId.equals(other.projectResourceId);
     }
 
     /**
@@ -82,7 +82,7 @@ public class ProjectResource implements Entity<ProjectResource> {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(accountEmail, projectCode, roleInProject, timeInProject);
+        return Objects.hash(projectResourceId);
     }
 
     /**
