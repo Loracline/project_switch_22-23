@@ -92,6 +92,6 @@ public class ProjectResource implements Entity<ProjectResource> {
      * and false otherwise.
      */
     public boolean hasProjectCode(Code projectCode){
-        return this.projectCode == projectCode;
+        return this.projectCode.equals(projectCode);
     }
 }
