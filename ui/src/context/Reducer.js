@@ -26,8 +26,10 @@ const reducer = (state, action) => {
                     return {...project, userStories: [...project.userStories, userStory]}
                 }
                 return project;
-            }) /*console.log(updatedProjects)*/
-            return {...state, projects: updatedProjects,}
+            });
+            /*console.log(updatedProjects)*/
+            const updatedDetailedProject = updatedProjects.find((project) => project.basicInfo.code === state.detailedProject.basicInfo.code);
+            return {...state, projects: updatedProjects, detailedProject: updatedDetailedProject}
         }
         case SELECT_MENU: {
             const key = action.payload.key;
