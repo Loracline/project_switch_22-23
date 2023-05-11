@@ -443,6 +443,29 @@ class AccountTest {
         assertFalse(result);
         assertEquals(expectedProfile.getProfileName(), actualProfile.getProfileName());
     }
+
+    /**
+     * METHOD getAccountProfile()
+     * <br>
+     * Scenario 1: should return the profile of the Account.
+     */
+    @Test
+    void getAccountProfileReturnsCorrectProfile() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+        Profile profile = mock(Profile.class);
+        account.setProfile(profile);
+
+        // Act
+        Profile accountProfile = account.getProfile();
+
+        // Assert
+        assertEquals(profile, accountProfile);
+    }
 }
 
 

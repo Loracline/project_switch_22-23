@@ -133,6 +133,10 @@ public class Account implements Entity<Account> {
         return this.email.getEmail().equals(email);
     }
 
+    /**
+     * Getter method that returns the Profile of the Account
+     * @return account Profile.
+     */
     public Profile getProfile() {
         return this.profile;
     }

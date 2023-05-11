@@ -150,4 +150,24 @@ class ChangeProfileServiceTest {
         });
         assertNull(accountTest.getProfile());
     }
+
+    /**
+     * Scenario 5: Tests that an InvalidInputException is thrown when the email parameter is null.
+     */
+    @Test
+    void ensureThatAnExceptionsIsThrowWhenEmailIsNull() {
+        assertThrows(InvalidInputException.class, () -> {
+            changeProfileService.changeProfile(null, "admin");
+        });
+    }
+
+    /**
+     * Scenario 6: Tests that an InvalidInputException is thrown when the profileName parameter is null.
+     */
+    @Test
+    void ensureThatAnExceptionsIsThrowWhenProfileNameIsNull() {
+        assertThrows(InvalidInputException.class, () -> {
+            changeProfileService.changeProfile("user@example.com", null);
+        });
+    }
 }
