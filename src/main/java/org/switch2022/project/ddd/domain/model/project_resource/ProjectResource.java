@@ -1,6 +1,6 @@
 package org.switch2022.project.ddd.domain.model.project_resource;
 
-import org.springframework.stereotype.Component;
+
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
@@ -107,7 +107,7 @@ public class ProjectResource implements Entity<ProjectResource> {
     public boolean hasSameAllocationInfo(ProjectResource otherResource) {
         return this.projectCode.equals(otherResource.projectCode) && this.accountEmail.equals(
                 otherResource.accountEmail) && this.roleInProject.equals(
-                otherResource.roleInProject) && this.allocationPeriod.equals(otherResource.timeInProject);
+                otherResource.roleInProject) && this.allocationPeriod.equals(otherResource.allocationPeriod);
     }
 
     /**

@@ -3,7 +3,6 @@ package org.switch2022.project.ddd.domain.model.project_resource;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
-import org.switch2022.project.ddd.infrastructure.ProjectResourceRepository;
 
 import java.time.LocalDate;
 
@@ -66,7 +65,7 @@ class ProjectResourceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
 
         // Act, Assert
-        assertThrows(InvalidInputException.class, () -> new ProjectResource( null,
+        assertThrows(InvalidInputException.class, () -> new ProjectResource(resourceIdDouble, null,
                 emailDouble, roleDouble, periodDouble, costDouble, percentageOfAllocationDouble));
     }
 
@@ -651,6 +650,7 @@ class ProjectResourceTest {
     @Test
     void ensureItReturnsTrueIfTheResourceAlreadyHasARole() {
         //Arrange
+        ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
@@ -658,8 +658,8 @@ class ProjectResourceTest {
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
-        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
-                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceId, codeDouble,
+                emailDouble, roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
 
         //Act
         boolean result = projectResource.hasRole(roleDouble);
@@ -672,14 +672,15 @@ class ProjectResourceTest {
     @Test
     void ensureThatRoleOfResourceIsTheSameOfAGivenRole() {
         //Arrange
+        ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Period periodDouble = mock(Period.class);
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
-        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
-                Role.TEAM_MEMBER, periodDouble, costDouble, percentageOfAllocationDouble);
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceId, codeDouble,
+                emailDouble, Role.TEAM_MEMBER, periodDouble, costDouble, percentageOfAllocationDouble);
         //Act
         boolean result = projectResource.hasRole(Role.TEAM_MEMBER);
 
@@ -691,14 +692,15 @@ class ProjectResourceTest {
     @Test
     void ensureThatRoleOfResourceIsNotTheSameOfAGivenRole() {
         //Arrange
+        ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Period periodDouble = mock(Period.class);
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
-        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
-                Role.TEAM_MEMBER, periodDouble, costDouble, percentageOfAllocationDouble);
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceId, codeDouble,
+                emailDouble, Role.TEAM_MEMBER, periodDouble, costDouble, percentageOfAllocationDouble);
         //Act
         boolean result = projectResource.hasRole(Role.PRODUCT_OWNER);
 
@@ -711,14 +713,15 @@ class ProjectResourceTest {
         //Arrange
         Period periodOne = new Period(LocalDate.of(2023, 5, 10), 2);
         Period periodTwo = new Period(LocalDate.of(2023, 5, 24), 2);
+        ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
-        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
-                roleDouble, periodOne, costDouble, percentageOfAllocationDouble);
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceId, codeDouble,
+                emailDouble, roleDouble, periodOne, costDouble, percentageOfAllocationDouble);
 
         //Act
         boolean result = projectResource.isPeriodOverlapping(periodTwo);
@@ -732,14 +735,15 @@ class ProjectResourceTest {
         //Arrange
         Period periodOne = new Period(LocalDate.of(2023, 5, 11), 1);
         Period periodTwo = new Period(LocalDate.of(2023, 5, 25), 2);
+        ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Role roleDouble = mock(Role.class);
         CostPerHour costDouble = mock(CostPerHour.class);
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
-        ProjectResource projectResource = projectResourceFactory.createProjectResource(codeDouble, emailDouble,
-                roleDouble, periodOne, costDouble, percentageOfAllocationDouble);
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceId, codeDouble,
+                emailDouble, roleDouble, periodOne, costDouble, percentageOfAllocationDouble);
         //Act
         boolean result = projectResource.isPeriodOverlapping(periodTwo);
         //Assert
