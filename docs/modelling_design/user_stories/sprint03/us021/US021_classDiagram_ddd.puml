@@ -1,0 +1,50 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+title TO ESTIMATE THE EFFORT OF A USER STORY
+legend top
+US021 - As Team Member, I want to estimate the effort of a user story in a sprint, during the sprint planning ceremony.
+end legend
+skinparam sequenceMessageAlign center
+
+class "EstimateUserStoryEffortController" {
+- userStoryInSprintService
++ estimateEffortUserStory(usId, effort, sprintId)
+}
+class "UserStoryInSprintService" {
+- ISprintRepository sprintRepository;
++ estimateEffortUserStory(usId, effort, sprintId)
++ getSprintById(sprintId)
++ isSprintInValidPeriod(sprint, date)
+}
+class "SprintRepository" {
+- sprints
++ estimateEffortUserStory(usId, effort, sprintId)
++ getSprintById(sprintId)
+}
+class "Sprint"{
+- sprintId
+- userStoriesInSprint
++ estimateEffortUserStory(usId, effort) {
+}
+class "UserStoryInSprint" {
+- userStories
+- getUsId()
++ changeEffort(effortEstimate)
+}
+enum "Effort"{
+- effortValue
++ getEffortValue(effortValue)
+
+}
+interface "ISprintRepository"{
++ estimateEffortUserStory(usId, effort, sprintId)
++ getSprintById(sprintId)
+}
+
+"EstimateUserStoryEffortController" "1" <.. "1" "UserStoryInSprintService": is injected
+"SprintRepository" "1" ..|> "1" "ISprintRepository": implements
+"ISprintRepository" "1" ..> "1" "UserStoryInSprintService": is injected
+"SprintRepository" "1" --> "*" "Sprint": has
+"Sprint" "1" --> "*" "UserStoryInSprint" : contains
+"UserStoryInSprint" "1" --> "1" "Effort" : has
+@enduml
