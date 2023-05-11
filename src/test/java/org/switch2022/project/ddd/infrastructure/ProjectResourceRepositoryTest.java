@@ -3,7 +3,7 @@ package org.switch2022.project.ddd.infrastructure;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
-import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import java.util.ArrayList;
@@ -168,6 +168,7 @@ class ProjectResourceRepositoryTest {
         //Arrange
         ProjectResourceRepository repository = new ProjectResourceRepository();
         ProjectResource resourceDouble = mock(ProjectResource.class);
+        when(resourceDouble.hasSameAllocationInfo(resourceDouble)).thenReturn(true);
         repository.add(resourceDouble);
 
         String expected = "The project resource already exists in the repository.";

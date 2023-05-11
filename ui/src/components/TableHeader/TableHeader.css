@@ -3,7 +3,23 @@
     height: 72px;
     font-family: 'Roboto',sans-serif;
     font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
+    font-size: 1.25rem;
+    line-height: 1.4375rem;
     width: 100%;
+}
+
+@media only screen and (max-width: 425px) {
+    .tableHeader {
+        height: 50px;
+        font-size: 0.625rem;
+        line-height: 1rem;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .tableHeader {
+        height: 60px;
+        font-size: 1rem;
+        line-height: 1.25rem;
+    }
 }

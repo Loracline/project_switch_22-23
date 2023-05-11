@@ -1,0 +1,66 @@
+@startuml
+skinparam sequenceMessageAlign center
+title ESTIMATE USER STORY EFFORT
+legend top
+US021 - As Team Member, I want to estimate the effort of a user story in a sprint, during the sprint planning ceremony
+end legend
+autonumber
+actor TeamMember
+participant ":UserStoryEffortEstimationUI" as ui
+participant ":UserStoryEffortEstimationController" as controller
+participant ":UserStoryInSprintService" as service
+participant ":SprintRepository" as sprintRepo
+participant ":Sprint" as sprint
+participant ":UserStoryInSprint" as usSprint
+
+
+
+activate TeamMember
+
+TeamMember -> ui: requests list of projects
+ui --> TeamMember: request data
+TeamMember -> ui: types requested data
+ui -> controller: estimateEffortUserStory (usId, effort, sprintId)
+activate controller
+
+controller -> service: estimateEffortUserStory (usId, effort, sprintId)
+activate service
+loop for each sprintId in SprintRepository
+service -> sprintRepo: getSprintById(sprintIdVO)
+activate sprintRepo
+sprintRepo --> service: sprint
+deactivate sprintRepo
+end loop
+service -> service: isSprintInValidPeriod(sprint, LocalDate.now())
+service -> sprint: hasUserStory(usIdVO)
+activate sprint
+sprint --> service: true
+deactivate sprint
+service -> sprintRepo: estimateEffortUserStory (usIdVO, effort, sprintIdVO)
+activate sprintRepo
+loop for each sprint in Sprint
+sprintRepo -> sprint: getSprintById (sprintId)
+activate sprint
+sprint --> sprintRepo: sprint
+deactivate sprint
+
+end loop
+sprintRepo -> sprint: estimateEffortUserStory (usId, effort)
+activate sprint
+sprint -> usSprint: changeEffort(effortEstimate)
+activate usSprint
+sprint <-- usSprint: true
+deactivate usSprint
+sprintRepo <-- sprint: true
+deactivate sprint
+service <-- sprintRepo: true
+deactivate sprintRepo
+
+service --> controller: true
+deactivate service
+controller --> ui: true
+
+deactivate controller
+ui --> TeamMember: shows success message
+deactivate ui
+@enduml

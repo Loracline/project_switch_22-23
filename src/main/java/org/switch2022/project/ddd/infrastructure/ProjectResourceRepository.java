@@ -57,7 +57,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * @return true if the project resource is added, and throws an exception otherwise.
      */
     public boolean add(ProjectResource projectResource) {
-        if (projectResources.contains(projectResource)) {
+        if (hasResource(projectResource)) {
             throw new AlreadyExistsInRepoException("The project resource already exists in the repository.");
         } else {
             projectResources.add(projectResource);
@@ -81,4 +81,23 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
         }
         return Collections.unmodifiableList(resourcesInProject);
     }
+
+    /**
+     * This method checks if a given instance of ProjectResource already exists in the list of project resources.
+     * @param projectResource project resource to look for in the project resource list.
+     * @return true if an instance of ProjectResource with the same projectCode, accountEmail, role, and
+     * allocationPeriod as the projectResource of interest already exists in the list, and false otherwise.
+     */
+    private boolean hasResource(ProjectResource projectResource){
+        boolean hasResource = false;
+
+        for (int i = 0; i < projectResources.size(); i++) {
+            if(projectResources.get(i).hasSameAllocationInfo(projectResource)){
+                hasResource = true;
+                i = projectResources.size();
+            }
+        }
+        return hasResource;
+    }
+
 }
