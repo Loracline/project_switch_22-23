@@ -1,57 +1,54 @@
 @startuml
-
-skinparam sequenceMessageAlign center
-title TO CHANGE PROFILE
 legend top
 US003 - As Administrator, I want to change the profile of a user account.
 end legend
+skinparam sequenceMessageAlign center
+title TO CHANGE PROFILE
 
 class ChangeProfileController {
--company
-+changeProfile(email, profileName, actorEmail)
-}
-
-class Company {
--profileContainer
--accountContainer
-+validateProfileRequired(email, profileNameRequired)
+-changeProfileService
 +changeProfile(email, profileName)
 }
 
-class ProfileContainer {
--profiles
-+getProfileByName(profileName)
+class ChangeProfileService {
+-accountRepository
+-profileRepository
++changeProfile(email, profileName)
 }
 
-class AccountContainer {
--accounts
-+validateProfileRequired(email, profileNameRequired)
+class AccountRepository{
 +getAccountByEmail(email)
 }
 
-class Account{
+class ProfileRepository{
++getProfileByName(profileName)
+}
+
+interface IAccountRepository{
++getAccountByEmail(email)
+}
+
+interface IProfileRepository{
++getProfileByName(profileName)
+}
+
+class Account <<root>>{
 -email
 -profile
-+equals(Object toCompare)
-+hashCode()
-+ isProfileRequired(profileNameRequired)
-+checkAccountFromEmail(email)
++hasEmail(email)
 +setProfile(profile)
 }
 
-class Profile{
+class Profile <<root>>{
 -profileName
-+ isProfileRequired(profileNameRequired)
-+equals(Object toCompare)
-+hashCode()
++hasName(profileName)
 }
 
-
-ChangeProfileController "1"-->"1" Company
-Company "1"-->"1" AccountContainer: has
-Company "1"-->"1" ProfileContainer: has
-AccountContainer "1"-->"*" Account: contains
-ProfileContainer "1"-->"*" Profile: contains
-Account "*"-->"1" Profile: has
-
+AccountRepository "1"->"*" Account: has
+ProfileRepository "1"->"*" Profile: has
+ChangeProfileController"1 " <.. "1 "ChangeProfileService: is injected
+IAccountRepository ..> ChangeProfileService : is injected
+IProfileRepository ..> ChangeProfileService : is injected
+AccountRepository --|> IAccountRepository : implements
+ProfileRepository --|> IProfileRepository : implements
 @enduml
