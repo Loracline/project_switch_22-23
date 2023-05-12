@@ -35,6 +35,5 @@ public interface ICustomerRepository {
      * @return the ID of the customer with the given name.
      * @throws NotFoundInRepoException if a customer with the given name is not found in the repository.
      */
-
     String getCustomerTaxIdByName(String customerName);
 }
