@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.value_object;
 
+import net.bytebuddy.asm.Advice;
 import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
@@ -196,5 +197,20 @@ public class Period implements ValueObject<Period> {
             isEqualOrGreater = date.isAfter(this.endDate) || date.isEqual(this.endDate);
         }
         return isEqualOrGreater;
+    }
+
+    /**
+     * This method verifies whether an instance of Period is contained within another instance of Period passed as an
+     * argument.
+     *
+     * @param otherPeriod to compare to.
+     * @return true if the instance of Period is contained within the other instance of Period, and false otherwise
+     */
+    public boolean isContained(Period otherPeriod){
+        Validate.notNull(otherPeriod, "The period must not be null");
+        LocalDate otherStart = LocalDate.parse(otherPeriod.getStartDate());
+        LocalDate otherEnd = LocalDate.parse(otherPeriod.getEndDate());
+
+        return this.startDate.compareTo(otherStart)>=0 && this.endDate.compareTo(otherEnd)<=0;
     }
 }
