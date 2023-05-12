@@ -1,11 +1,13 @@
 package org.switch2022.project.ddd.domain.model.customer;
 
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
 
 /**
  * An implementation of the {@link ICustomerFactory} interface that creates new customers.
  */
+@Component
 public class CustomerFactory implements ICustomerFactory {
 
     /**

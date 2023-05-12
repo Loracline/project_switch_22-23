@@ -1,0 +1,48 @@
+@startuml
+
+actor Administrator
+participant ":ChangeProfileUI" as ui
+participant ":ChangeProfileController" as controller
+participant ":ChangeProfileService" as service
+participant ":ProfileRepository" as profileRepository
+participant ":AccountRepository" as accountRepository
+participant "profile:Profile" as pf
+participant "account:Account" as account
+
+
+skinparam sequenceMessageAlign center
+title TO CHANGE PROFILE
+legend top
+US003 - As Administrator, I want to change the profile of a user account.
+end legend
+autonumber
+
+activate Administrator
+Administrator -> ui:  changes account profile
+activate ui
+Administrator <-- ui:  requests data (email, profileName)
+Administrator -> ui:  enters account data
+ui -> controller: changeProfile(email, profileName)
+activate controller
+controller -> service: changeProfile(email, profileName)
+activate service
+service -> profileRepository: getProfileByName(profileName)
+activate profileRepository
+service <-- profileRepository: profile
+deactivate profileRepository
+service -> accountRepository: getAccountByEmail(email)
+activate accountRepository
+service <-- accountRepository: account
+deactivate accountRepository
+service -> account: setProfile(profile)
+activate account
+service <-- account: true
+deactivate account
+controller <-- service: true
+deactivate service
+controller --> ui: true
+deactivate controller
+ui -->> Administrator: informs account profile updated
+deactivate ui
+
+@enduml
