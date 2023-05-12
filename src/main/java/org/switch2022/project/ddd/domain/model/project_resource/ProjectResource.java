@@ -160,4 +160,12 @@ public class ProjectResource implements Entity<ProjectResource> {
     public float getPercentageOfAllocation() {
         return percentageOfAllocation.getValue();
     }
+
+    /**
+     * This method returns a String representation of the Project Resource email.
+     * @return the email of the project resource.
+     */
+    public String getEmail() {
+        return accountEmail.getEmail();
+    }
 }

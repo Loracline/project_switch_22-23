@@ -1,0 +1,85 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS IN A GIVEN PROJECT
+legend top
+US014 - As Manager, I want to get a list of all human resources in a project.
+end legend
+
+
+class "ListAccountsInProjectController" {
+- allocationService
++ listAccountsByProjectCode(projectCode)
+}
+
+class "AllocationService" {
+- iProjectResourceRepository
+- iAccountRepository
+- accountMapper
++ listAccountsByProjectCode(projectCode)
+}
+
+interface "IProjectResourceRepository" {
++ getEmailsByProjectCode(projectCode)
+}
+
+class "ProjectResourceRepository" {
+- projectResources
++ getEmailsByProjectCode(projectCode)
+}
+
+interface "IAccountRepository" {
++ getAccounts(emails)
++ getAccountByEmail(email)
+}
+
+class "AccountRepository" {
+- accounts
++ getAccounts(emails)
++ getAccountByEmail(email)
+}
+
+class "AccountMapper" {
++ accountToDto(account)
++ accountsToDto(accounts)
+}
+
+class "AccountDto" {
++ name
++ email
++ status
++ AccountDto(name, email, status)
+
+}
+
+class "Account" {
+- name
+- email
+- accountStatus
++ getAccountName()
++ getAccountEmail()
++ getAccountStatus()
+}
+
+class "ProjectResource" {
+- projectCode
+- accountEmail
+- accountStatus
++ hasProjectCode()
++ getEmail()
+}
+
+ListAccountsInProjectController <.. AllocationService: is injected
+
+AllocationService <.. IAccountRepository: is injected
+IAccountRepository <|.. AccountRepository: implements
+AccountRepository --> Account: has
+
+AllocationService <.. IProjectResourceRepository: is injected
+IProjectResourceRepository <|.. ProjectResourceRepository: implements
+ProjectResourceRepository --> ProjectResource: has
+
+AllocationService <.. AccountMapper: is injected
+AccountMapper ...> AccountDto: creates
+AccountDto ..> Account: uses
+
+@enduml

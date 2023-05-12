@@ -32,6 +32,7 @@ interface IBusinessSectorRepository{
 }
 
 class BusinessSectorRepository{
+- businessSectors
 + add(businessSector)
 }
 

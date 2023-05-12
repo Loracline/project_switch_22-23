@@ -24,6 +24,13 @@ public interface IAccountRepository {
     List<Account> getAccounts();
 
     /**
+     * This method returns all the accounts with emails matching a given list of emails that is passed as argument.
+     * @param emails list of emails to match with accounts.
+     * @return a list with accounts with matching emails, or an empty list if no accounts have matching emails.
+     */
+    List<Account> getAccounts(List<String> emails);
+
+    /**
      * This method returns an account with the given.
      * @param email to search for the account.
      * @return an account with the given email.
