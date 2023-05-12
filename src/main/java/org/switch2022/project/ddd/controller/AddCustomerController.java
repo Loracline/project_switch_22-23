@@ -8,7 +8,7 @@ import org.switch2022.project.ddd.application.CustomerService;
  * Controller responsible for creating a new customer.
  */
 @Controller
-public class CreateCustomerController {
+public class AddCustomerController {
 
     /**
      * The customer service used to create the customer.
@@ -24,7 +24,7 @@ public class CreateCustomerController {
      * @param name        the name of the customer.
      * @return TRUE if the customer was successfully created, or FALSE otherwise.
      */
-    public boolean createCustomer(String taxIdNumber, String name) {
-        return service.createCustomer(taxIdNumber, name);
+    public boolean addCustomer(String taxIdNumber, String name) {
+        return service.addCustomer(taxIdNumber, name);
     }
 }
