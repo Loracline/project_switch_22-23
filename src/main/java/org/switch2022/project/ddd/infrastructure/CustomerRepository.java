@@ -77,7 +77,7 @@ public class CustomerRepository implements ICustomerRepository {
      * @throws NotFoundInRepoException if a customer with the given tax ID is not found in the repository.
      */
     @Override
-    public String getNameBy(TaxId taxId) {
+    public String getCustomerNameByTaxId(TaxId taxId) {
         String requestedName = null;
 
         int i = 0;
