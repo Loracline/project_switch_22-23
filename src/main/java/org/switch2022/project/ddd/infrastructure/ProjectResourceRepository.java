@@ -209,8 +209,8 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     }
 
     /**
-     * Checks if the total percentage of allocation for a given account email and date, after adding the value of a given
-     * PercentageOfAllocation object, is less than or equal to the maximum allowed value.
+     * Checks if the total percentage of allocation for a given account email and date, after adding the value of a
+     * given PercentageOfAllocation object, is less than or equal to the maximum allowed value.
      *
      * @param accountEmail the email of the account to check the allocation for.
      * @param date         the date to check the allocation for.
