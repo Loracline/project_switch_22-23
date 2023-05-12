@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.model.project_resource;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.TestPropertySource;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProjectResourceTest {
 
@@ -749,6 +751,36 @@ class ProjectResourceTest {
         //Assert
         assertFalse(result);
 
+    }
+
+    /**
+     * Method getEmail() returns a String representation of the Project Resource email.
+     * <p>
+     * Scenario 01: The string corresponding to the project resource email is returned.
+     */
+    @Test
+    public void ensureThatTheEmailIsReturnedSuccessfully(){
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        when(emailDouble.getEmail()).thenReturn("example@isep.ipp.pt");
+
+        String expected = "example@isep.ipp.pt";
+
+        //Act
+        String result = resource.getEmail();
+
+        //Assert
+        assertEquals(expected, result);
     }
 }
 

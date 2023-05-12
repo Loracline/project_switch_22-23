@@ -130,4 +130,12 @@ public class ProjectResource implements Entity<ProjectResource> {
     public boolean isPeriodOverlapping(Period period) {
         return !this.allocationPeriod.isPeriodNotOverlapping(period);
     }
+
+    /**
+     * This method returns a String representation of the Project Resource email.
+     * @return the email of the project resource.
+     */
+    public String getEmail() {
+        return accountEmail.getEmail();
+    }
 }
