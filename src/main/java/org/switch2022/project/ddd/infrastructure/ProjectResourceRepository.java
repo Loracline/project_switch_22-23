@@ -139,7 +139,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * <code>false</code> otherwise.
      */
     private boolean projectAlreadyHasProductOwnerInThatPeriod(Role role, Code code, Period period) {
-        return role ==PRODUCT_OWNER && projectHasRoleInThatPeriod(role, code, period);
+        return role == PRODUCT_OWNER && projectHasRoleInThatPeriod(role, code, period);
     }
 
     /**
@@ -170,7 +170,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * @return <code>true</code> if role is Project Manager and <code>false</code> otherwise.
      */
     public boolean isProjectManager(Role role) {
-        return role == (PROJECT_MANAGER);
+        return role == PROJECT_MANAGER;
     }
 }
 
