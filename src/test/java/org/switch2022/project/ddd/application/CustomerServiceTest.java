@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerFactory;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
-import org.switch2022.project.ddd.exceptions.InvalidTaxIdException;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -78,11 +78,11 @@ class CustomerServiceTest {
         String customerTaxId = "514 024 0O4";
 
         String expected = "Invalid or unsupported country for tax ID validation.";
-        when(factory.createCustomer(any(), any())).thenThrow(new InvalidTaxIdException(expected));
+        when(factory.createCustomer(any(), any())).thenThrow(new InvalidInputException(expected));
 
         // Act
-        InvalidTaxIdException result =
-                assertThrows(InvalidTaxIdException.class, () -> service.addCustomer(customerTaxId, customerName));
+        InvalidInputException result =
+                assertThrows(InvalidInputException.class, () -> service.addCustomer(customerTaxId, customerName));
 
 
         // Assert

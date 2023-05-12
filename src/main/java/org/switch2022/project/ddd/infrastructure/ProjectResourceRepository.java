@@ -110,7 +110,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * This method checks if one specific Project already has the role of Scrum Master or Product Owner in a specific
      * period.
      *
-     * @param role, code, period to ckeck.
+     * @param role, code, period to check.
      * @return <code>true</code> if the project already has a Scrum Master or Product Owner in a specific Period and
      * <code>false</code> otherwise.
      */
@@ -123,7 +123,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * This method checks if one specific Project already has the role of Scrum Master in a specific
      * period.
      *
-     * @param code, role, period to ckeck.
+     * @param code, role, period to check.
      * @return <code>true</code> if the project already has a Scrum Master in a specific Period and
      * <code>false</code> otherwise.
      */
@@ -134,7 +134,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     /**
      * This method checks if one specific Project already has the role of Product Owner in a specific period.
      *
-     * @param code, role, period to ckeck.
+     * @param code, role, period to check.
      * @return <code>true</code> if the project already has a Product Owner in a specific Period and
      * <code>false</code> otherwise.
      */
@@ -145,7 +145,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     /**
      * This method checks if one specific Project already has a specific role in a specific period.
      *
-     * @param role, code, period to ckeck.
+     * @param role, code, period to check.
      * @return <code>true</code> if the project already has a Role in a specific Period and
      * <code>false</code> otherwise.
      */
@@ -166,7 +166,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     /**
      * This method checks if a given role is Project Manager.
      *
-     * @param role to ckeck.
+     * @param role to check.
      * @return <code>true</code> if role is Project Manager and <code>false</code> otherwise.
      */
     public boolean isProjectManager(Role role) {

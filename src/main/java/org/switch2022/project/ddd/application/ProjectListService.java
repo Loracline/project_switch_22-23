@@ -33,7 +33,7 @@ public class ProjectListService {
         List<ProjectDto> projectsDto = new ArrayList<>();
         List<Project> projects = projectRepository.findAll();
         for (Project project : projects) {
-            String customerName = customerRepository.getNameBy(project.getCustomerTaxId());
+            String customerName = customerRepository.getCustomerNameByTaxId(project.getCustomerTaxId());
             projectsDto.add(projectMapper.projectToDto(project, customerName));
         }
         return projectsDto;

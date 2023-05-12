@@ -1,7 +1,7 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.switch2022.project.ddd.domain.shared.ValueObject;
-import org.switch2022.project.ddd.exceptions.InvalidTaxIdException;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.utils.Validate;
 
 /**
@@ -84,13 +84,13 @@ public class TaxId implements ValueObject<TaxId> {
      * Validates whether the tax ID is a valid ID for Portugal or Spain.
      *
      * @return {@code TRUE} if the tax ID is valid for Portugal or Spain.
-     * @throws InvalidTaxIdException if the tax ID is not valid for either Portugal or Spain, or if the
+     * @throws InvalidInputException if the tax ID is not valid for either Portugal or Spain, or if the
      *                               country is not supported for tax ID validation.
      */
-    public boolean isValid() throws InvalidTaxIdException {
+    public boolean isValid() throws InvalidInputException {
         if (isValidPortugalTaxId(this.number) || isValidSpainTaxId(this.number)) {
             return true;
-        } else throw new InvalidTaxIdException("Invalid or unsupported country for tax ID validation.");
+        } else throw new InvalidInputException("Invalid or unsupported country for tax ID validation.");
     }
 
     /**
