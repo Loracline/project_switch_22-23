@@ -53,7 +53,7 @@ class CustomerRepositoryTest {
         // Arrange
         Customer customer = mock(Customer.class);
         CustomerRepository reference = new CustomerRepository();
-        reference.addCustomerToRepository(customer);
+        reference.add(customer);
 
         CustomerRepository other = new CustomerRepository();
         boolean expected = false;
@@ -121,7 +121,7 @@ class CustomerRepositoryTest {
         // Arrange
         Customer customer = mock(Customer.class);
         CustomerRepository reference = new CustomerRepository();
-        reference.addCustomerToRepository(customer);
+        reference.add(customer);
 
         CustomerRepository other = new CustomerRepository();
         int expected = reference.hashCode();
@@ -146,7 +146,7 @@ class CustomerRepositoryTest {
         boolean expected = true;
 
         // ACT
-        boolean result = repository.addCustomerToRepository(customer);
+        boolean result = repository.add(customer);
 
         // ASSERT
         assertEquals(expected, result);
@@ -157,12 +157,12 @@ class CustomerRepositoryTest {
     void ensureCustomerIsNotAddedWhenAlreadyExists() {
         CustomerRepository repository = new CustomerRepository();
         Customer customer = mock(Customer.class);
-        repository.addCustomerToRepository(customer);
+        repository.add(customer);
 
         String expected = "Customer's tax ID already exists!";
 
         AlreadyExistsInRepoException exception = assertThrows(AlreadyExistsInRepoException.class,
-                () -> repository.addCustomerToRepository(customer));
+                () -> repository.add(customer));
 
         // ACT
         String result = exception.getMessage();
@@ -196,15 +196,15 @@ class CustomerRepositoryTest {
 
         // Adding customers to the Repository.
         CustomerRepository repository = new CustomerRepository();
-        repository.addCustomerToRepository(customerOne);
-        repository.addCustomerToRepository(customerTwo);
-        repository.addCustomerToRepository(customerThree);
+        repository.add(customerOne);
+        repository.add(customerTwo);
+        repository.add(customerThree);
 
         // The customer's name one wishes to retrieve - Customer One.
         String expected = customerNameOne;
 
         // ACT
-        String result = repository.getCustomerNameByTaxId(customerTaxIdOne);
+        String result = repository.getNameBy(customerTaxIdOne);
 
         // ASSERT
         assertEquals(expected, result);
@@ -223,12 +223,12 @@ class CustomerRepositoryTest {
 
         // Adding customers One and Two to the Repository.
         CustomerRepository repository = new CustomerRepository();
-        repository.addCustomerToRepository(customerOne);
-        repository.addCustomerToRepository(customerTwo);
+        repository.add(customerOne);
+        repository.add(customerTwo);
 
         // Exception thrown when searching for the Customer Three in Repository.
         NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class,
-                () -> repository.getCustomerNameByTaxId(customerTaxIdThree));
+                () -> repository.getNameBy(customerTaxIdThree));
 
         // An exception message is expected because Customer Three is not in Repository.
         String expected = "Customer with this tax ID does not exist in Repository.";
@@ -253,7 +253,7 @@ class CustomerRepositoryTest {
         Customer customerOne = mock(Customer.class);
 
         CustomerRepository repository = new CustomerRepository();
-        repository.addCustomerToRepository(customerOne);
+        repository.add(customerOne);
 
         when(customerOne.getName()).thenReturn(customerNameOne);
         when(customerOne.getTaxId()).thenReturn(customerTaxId);
@@ -277,7 +277,7 @@ class CustomerRepositoryTest {
         Customer customerOne = mock(Customer.class);
 
         CustomerRepository repository = new CustomerRepository();
-        repository.addCustomerToRepository(customerOne);
+        repository.add(customerOne);
 
         when(customerOne.getName()).thenReturn(customerNameOne);
         when(customerOne.getTaxId()).thenReturn(customerTaxId);

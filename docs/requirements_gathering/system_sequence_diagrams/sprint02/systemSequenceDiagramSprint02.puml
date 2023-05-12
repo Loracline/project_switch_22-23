@@ -38,7 +38,7 @@ Administrator <-- ":System":informs operation success
 
 @startuml
 legend top
-US009 - As Administrator, I want to add a customer.
+US009 - "As Administrator, I want to add a customer."
 end legend
 skinparam sequenceMessageAlign center
 title TO ADD A CUSTOMER
@@ -49,8 +49,8 @@ note left
 Account is authenticated.
 ":System" grants access.
 end note
-Administrator <-- ":System": requests data (customerName, customerNIF)
-Administrator-> ":System": sends requested data
+Administrator <-- ":System": requests data (taxIdNumber, name)
+Administrator-> ":System": enters requested data
 Administrator <-- ":System":informs operation success
 @enduml
 

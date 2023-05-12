@@ -4,11 +4,16 @@ import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceRepository;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.Period;
+import org.switch2022.project.ddd.domain.value_object.Role;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
 @Repository
 public class ProjectResourceRepository implements IProjectResourceRepository {
@@ -71,11 +76,11 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * @param projectCode the code of the project from which the resources are being queried.
      * @return an unmodifiable list of resources whose attribute projectCode equals the projectCode of interest.
      */
-    public List<ProjectResource> getResourcesByProjectCode(Code projectCode){
+    public List<ProjectResource> getResourcesByProjectCode(Code projectCode) {
         List<ProjectResource> resourcesInProject = new ArrayList<>();
 
         for (int i = 0; i < projectResources.size(); i++) {
-            if(projectResources.get(i).hasProjectCode(projectCode)){
+            if (projectResources.get(i).hasProjectCode(projectCode)) {
                 resourcesInProject.add(projectResources.get(i));
             }
         }
@@ -84,15 +89,16 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
 
     /**
      * This method checks if a given instance of ProjectResource already exists in the list of project resources.
+     *
      * @param projectResource project resource to look for in the project resource list.
      * @return true if an instance of ProjectResource with the same projectCode, accountEmail, role, and
      * allocationPeriod as the projectResource of interest already exists in the list, and false otherwise.
      */
-    private boolean hasResource(ProjectResource projectResource){
+    private boolean hasResource(ProjectResource projectResource) {
         boolean hasResource = false;
 
         for (int i = 0; i < projectResources.size(); i++) {
-            if(projectResources.get(i).hasSameAllocationInfo(projectResource)){
+            if (projectResources.get(i).hasSameAllocationInfo(projectResource)) {
                 hasResource = true;
                 i = projectResources.size();
             }
@@ -100,4 +106,71 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
         return hasResource;
     }
 
+    /**
+     * This method checks if one specific Project already has the role of Scrum Master or Product Owner in a specific
+     * period.
+     *
+     * @param role, code, period to ckeck.
+     * @return <code>true</code> if the project already has a Scrum Master or Product Owner in a specific Period and
+     * <code>false</code> otherwise.
+     */
+    public boolean projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
+        return projectAlreadyHasScrumMasterInThatPeriod(role, code, period) ||
+                projectAlreadyHasProductOwnerInThatPeriod(role, code, period);
+    }
+
+    /**
+     * This method checks if one specific Project already has the role of Scrum Master in a specific
+     * period.
+     *
+     * @param code, role, period to ckeck.
+     * @return <code>true</code> if the project already has a Scrum Master in a specific Period and
+     * <code>false</code> otherwise.
+     */
+    private boolean projectAlreadyHasScrumMasterInThatPeriod(Role role, Code code, Period period) {
+        return role == SCRUM_MASTER && projectHasRoleInThatPeriod(role, code, period);
+    }
+
+    /**
+     * This method checks if one specific Project already has the role of Product Owner in a specific period.
+     *
+     * @param code, role, period to ckeck.
+     * @return <code>true</code> if the project already has a Product Owner in a specific Period and
+     * <code>false</code> otherwise.
+     */
+    private boolean projectAlreadyHasProductOwnerInThatPeriod(Role role, Code code, Period period) {
+        return role == PRODUCT_OWNER && projectHasRoleInThatPeriod(role, code, period);
+    }
+
+    /**
+     * This method checks if one specific Project already has a specific role in a specific period.
+     *
+     * @param role, code, period to ckeck.
+     * @return <code>true</code> if the project already has a Role in a specific Period and
+     * <code>false</code> otherwise.
+     */
+    private boolean projectHasRoleInThatPeriod(Role role, Code code, Period period) {
+        boolean result = false;
+        int i = 0;
+        while (i < projectResources.size() && !result) {
+            ProjectResource resource = projectResources.get(i);
+            if (resource.hasProjectCode(code) && resource.isPeriodOverlapping(period)
+                    && resource.hasRole(role)) {
+                result = true;
+            }
+            i++;
+        }
+        return result;
+    }
+
+    /**
+     * This method checks if a given role is Project Manager.
+     *
+     * @param role to ckeck.
+     * @return <code>true</code> if role is Project Manager and <code>false</code> otherwise.
+     */
+    public boolean isProjectManager(Role role) {
+        return role == PROJECT_MANAGER;
+    }
 }
+

@@ -1,15 +1,17 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
+import org.switch2022.project.ddd.domain.model.project_resource.ProjectResourceFactory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -236,4 +238,224 @@ class ProjectResourceRepositoryTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void ensureThatTheRoleOfResoureIsProjectManager() {
+        //Arrange
+        Role projectManager = Role.PROJECT_MANAGER;
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+
+        //Act
+        boolean result = projectResourceRepository.isProjectManager(projectManager);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureThatTheRoleOfResoureIsNotProjectManager() {
+        //Arrange
+        Role teamMember = Role.TEAM_MEMBER;
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+
+        //Act
+        boolean result = projectResourceRepository.isProjectManager(teamMember);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueWhenRepositoryAlreadyHasAScrumMasterInThatPeriod() {
+        //Arrange
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+
+        Role scrumMaster = Role.SCRUM_MASTER;
+        Code code = new Code(1);
+        Period period = new Period(LocalDate.of(2023, 5, 10), 2);
+        ProjectResourceId projectResourceIdDouble = mock(ProjectResourceId.class);
+        Email email = mock(Email.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceIdDouble,
+                code, email, scrumMaster, period, costDouble, percentageOfAllocationDouble);
+
+        projectResourceRepository.add(projectResource);
+
+        //Act
+        boolean result =
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(scrumMaster, code,
+                        period);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureThatReturnsTrueWhenRepositoryAlreadyHasAProductOwnerInThatPeriod() {
+        //Arrange
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+
+        Role productOwner = Role.PRODUCT_OWNER;
+        Code code = new Code(1);
+        Period period = new Period(LocalDate.of(2023, 5, 10), 2);
+        ProjectResourceId projectResourceIdDouble = mock(ProjectResourceId.class);
+        Email email = mock(Email.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceIdDouble,
+                code, email, productOwner, period, costDouble, percentageOfAllocationDouble);
+
+        projectResourceRepository.add(projectResource);
+
+        //Act
+        boolean result =
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(productOwner, code,
+                        period);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureThatReturnsFalseWhenRepositoryDoesNotHaveScrumMasterInThatPeriod() {
+        //Arrange
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+
+        Role scrumMaster = Role.SCRUM_MASTER;
+        Code code = new Code(1);
+        Period period = new Period(LocalDate.of(2023, 5, 10), 2);
+        Period diferentPeriod = new Period(LocalDate.of(2023, 5, 30), 2);
+        ProjectResourceId projectResourceIdDouble = mock(ProjectResourceId.class);
+        Email email = mock(Email.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource projectResourceOne = projectResourceFactory.createProjectResource(projectResourceIdDouble,
+                code, email, scrumMaster, period, costDouble, percentageOfAllocationDouble);
+
+        projectResourceRepository.add(projectResourceOne);
+
+        //Act
+        boolean otherResult = projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(scrumMaster, code,
+                diferentPeriod);
+
+        //Assert
+        assertFalse(otherResult);
+    }
+
+    @Test
+    void ensureThatReturnsFalseWhenRepositoryDoesNotHaveProductOwnerInThatPeriod() {
+        //Arrange
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+
+        Role productOwner = Role.PRODUCT_OWNER;
+        Code code = new Code(1);
+        Period period = new Period(LocalDate.of(2023, 5, 10), 2);
+        Period diferentPeriod = new Period(LocalDate.of(2023, 5, 30), 2);
+        ProjectResourceId projectResourceIdDouble = mock(ProjectResourceId.class);
+        Email email = mock(Email.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource projectResourceTwo = projectResourceFactory.createProjectResource(projectResourceIdDouble,
+                code, email, productOwner, period, costDouble, percentageOfAllocationDouble);
+
+        projectResourceRepository.add(projectResourceTwo);
+
+        //Act
+        boolean otherResult = projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(productOwner, code,
+                diferentPeriod);
+
+        //Assert
+        assertFalse(otherResult);
+    }
+
+    @Test
+    void ensureThatReturnsFalseWhenRepositoryIsEmpty() {
+        //Arrange
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+
+        Role roleDouble = mock(Role.class);
+        Code codeDouble = mock(Code.class);
+        Period periodDouble = mock(Period.class);
+
+        //Act
+        boolean result = projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble
+                , codeDouble, periodDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+    @Test
+    void ensureThatReturnFalseWhenRoleToCheckIsNotProductOwnerOrScrumMaster() {
+        //Arrange
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        Role teamMember = Role.TEAM_MEMBER;
+        Code codeDouble = mock(Code.class);
+        Period periodDouble = mock(Period.class);
+
+        //Act
+        boolean result =
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(teamMember, codeDouble,
+                        periodDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void ensureThatReturnTrueWhenRepositoryAlreadyHasProductOwner() {
+        //Arrange
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        Role productOwner = Role.PRODUCT_OWNER;
+        Code codeDouble = mock(Code.class);
+        Period periodDouble = mock(Period.class);
+
+        ProjectResourceFactory projectResourceFactory = mock(ProjectResourceFactory.class);
+        ProjectResource projectResource = mock(ProjectResource.class);
+        when(projectResourceFactory.createProjectResource(any(), any(), any(), any(), any(), any(), any())).thenReturn(projectResource);
+        projectResourceRepository.add(projectResource);
+        when(projectResource.hasProjectCode(any())).thenReturn(true);
+        when(projectResource.isPeriodOverlapping(any())).thenReturn(true);
+        when(projectResource.hasRole(any())).thenReturn(true);
+
+        //Act
+        boolean result =
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(productOwner, codeDouble,
+                        periodDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureThatReturnTrueWhenRepositoryAlreadyHasScrumMaster() {
+        //Arrange
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        Role scrumMaster = Role.SCRUM_MASTER;
+        Code codeDouble = mock(Code.class);
+        Period periodDouble = mock(Period.class);
+
+        ProjectResourceFactory projectResourceFactory = mock(ProjectResourceFactory.class);
+        ProjectResource projectResource = mock(ProjectResource.class);
+        when(projectResourceFactory.createProjectResource(any(), any(), any(), any(), any(), any(), any())).thenReturn(projectResource);
+        projectResourceRepository.add(projectResource);
+        when(projectResource.hasProjectCode(any())).thenReturn(true);
+        when(projectResource.isPeriodOverlapping(any())).thenReturn(true);
+        when(projectResource.hasRole(any())).thenReturn(true);
+
+        //Act
+        boolean result =
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(scrumMaster, codeDouble,
+                        periodDouble);
+
+        //Assert
+        assertTrue(result);
+    }
 }

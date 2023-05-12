@@ -4,6 +4,7 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class Name implements ValueObject<Name> {
+
     private final String denomination;
 
     /**
@@ -62,7 +63,6 @@ public class Name implements ValueObject<Name> {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return denomination.hashCode();
