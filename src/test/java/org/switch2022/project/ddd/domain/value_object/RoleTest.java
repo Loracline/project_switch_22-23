@@ -44,4 +44,54 @@ class RoleTest {
         // Act, Assert
         assertThrows(InvalidInputException.class, () -> productOwnerOne.sameValueAs(null));
     }
+
+    @Test
+    void ensureThatRoleIsGeneratedSuccessfullyWhenIsInUpperCase() {
+        // Arrange
+        Role expected = Role.PRODUCT_OWNER;
+        String productOwner = "PRODUCT_OWNER";
+
+        // Act
+        Role result = Role.generateRole(productOwner);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleIsGeneratedSuccessfullyWhenIsInLowerCase() {
+        // Arrange
+        Role expected = Role.PRODUCT_OWNER;
+        String productOwner = "product_owner";
+
+        // Act
+        Role result = Role.generateRole(productOwner);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleIsGeneratedSuccessfullyWhenHasBlankSpaces() {
+        // Arrange
+        Role expected = Role.PRODUCT_OWNER;
+        String productOwner = "PRODUCT OWNER";
+
+        // Act
+        Role result = Role.generateRole(productOwner);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatRoleIsNotGeneratedSuccessfullyBecauseDoesNotExist() {
+        // Arrange
+        String owner = "OWNER";
+
+        // Act, Assert
+        assertThrows(InvalidInputException.class, () -> Role.generateRole(owner));
+
+
+    }
 }
