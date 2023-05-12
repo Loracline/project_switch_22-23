@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.project_resource;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProjectResourceTest {
 
@@ -164,7 +166,6 @@ class ProjectResourceTest {
                 , roleDouble, periodDouble, costDouble, null));
     }
 
-
     /**
      * Tests for sameIdentityAs()
      */
@@ -309,7 +310,6 @@ class ProjectResourceTest {
         assertFalse(result);
     }
 
-
     /**
      * Method: equals()
      * Scenario 04: Test to ensure that two equal objects from the same class are equal.
@@ -412,7 +412,7 @@ class ProjectResourceTest {
     }
 
     /**
-     * Method hasProjectCode(ProjectCode projectCode) checks if an instance of ProjectResource has a given project
+     * Method hasProjectCode(ProjectCode) checks if an instance of ProjectResource has a given project
      * code as attribute or not.
      * <p>
      * Scenario 01: The instance of ProjectResource has as attribute a project code that is equal to the project code
@@ -440,9 +440,8 @@ class ProjectResourceTest {
         assertTrue(result);
     }
 
-
     /**
-     * Method hasProjectCode(ProjectCode projectCode) checks if an instance of ProjectResource has a given project
+     * Method hasProjectCode(ProjectCode) checks if an instance of ProjectResource has a given project
      * code as attribute or not.
      * <p>
      * Scenario 02: The instance of ProjectResource has as attribute a project code that is different from the
@@ -505,7 +504,6 @@ class ProjectResourceTest {
         //Assert
         assertTrue(result);
     }
-
 
     /**
      * Method hasSameAllocationInfo(ProjectResource otherResource) checks if an instance of ProjectResource has the
@@ -668,7 +666,6 @@ class ProjectResourceTest {
         assertTrue(result);
     }
 
-
     @Test
     void ensureThatRoleOfResourceIsTheSameOfAGivenRole() {
         //Arrange
@@ -749,6 +746,258 @@ class ProjectResourceTest {
         //Assert
         assertFalse(result);
 
+    }
+
+    /**
+     * METHOD allocationPeriodIncludesDate
+     */
+    @DisplayName("Date is within the allocation period")
+    @Test
+    void ensureReturnsTrueWhenDateIsWithinPeriod() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        Period period = mock(Period.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+        PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, allocation);
+
+        LocalDate date = mock(LocalDate.class);
+
+        when(period.isDateEqualOrGreaterThanStartDate(date)).thenReturn(true);
+        when(period.isDateEqualOrLowerThanEndDate(date)).thenReturn(true);
+
+        // Act
+        boolean result = resource.allocationPeriodIncludesDate(date);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Date is equal to the start date of the allocation period")
+    @Test
+    void ensureReturnsTrueWhenDateIsEqualToStartDate() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+        PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
+
+        LocalDate startDate = LocalDate.of(2023,1,1);
+        LocalDate endDate = LocalDate.of(2023,12,31);
+        Period period = new Period(startDate, endDate);
+        LocalDate date = LocalDate.of(2023,1,1);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, allocation);
+
+        // Act
+        boolean result = resource.allocationPeriodIncludesDate(date);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Date is equal to the end date of the allocation period")
+    @Test
+    void ensureReturnsTrueWhenDateIsEqualToEndDate() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+        PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
+
+        LocalDate startDate = LocalDate.of(2023,1,1);
+        LocalDate endDate = LocalDate.of(2023,12,31);
+        Period period = new Period(startDate, endDate);
+        LocalDate date = LocalDate.of(2023,12,31);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, allocation);
+
+        // Act
+        boolean result = resource.allocationPeriodIncludesDate(date);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Date is before the start date of the allocation period")
+    @Test
+    void ensureReturnsFalseWhenDateIsBeforeStartDate() {
+        boolean expected = false;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        Period period = mock(Period.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+        PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, allocation);
+
+        LocalDate date = mock(LocalDate.class);
+
+        when(period.isDateEqualOrGreaterThanStartDate(date)).thenReturn(false);
+        when(period.isDateEqualOrLowerThanEndDate(date)).thenReturn(true);
+
+        // Act
+        boolean result = resource.allocationPeriodIncludesDate(date);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Date is after the end date of the allocation period")
+    @Test
+    void ensureReturnsFalseWhenDateIsAfterEndDate() {
+        boolean expected = false;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        Period period = mock(Period.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+        PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, allocation);
+
+        LocalDate date = mock(LocalDate.class);
+
+        when(period.isDateEqualOrGreaterThanStartDate(date)).thenReturn(true);
+        when(period.isDateEqualOrLowerThanEndDate(date)).thenReturn(false);
+
+        // Act
+        boolean result = resource.allocationPeriodIncludesDate(date);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD hasAccount
+     */
+    @DisplayName("Email matches the account email")
+    @Test
+    void ensureReturnsTrueIfEmailMatches() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        Period period = mock(Period.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+        PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, allocation);
+
+        // Act
+        boolean result = resource.hasAccount(accountEmail);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Email does not match the account email")
+    @Test
+    void ensureReturnsFalseIfEmailDoesNotMatch() {
+        // Arrange
+        boolean expected = false;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        Period period = mock(Period.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+        PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, allocation);
+
+        Email email = mock(Email.class);
+
+        // Act
+        boolean result = resource.hasAccount(email);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @SuppressWarnings("all")
+    @DisplayName("Email is null")
+    @Test
+    void ensureReturnsFalseIfEmailIsNull() {
+        // Arrange
+        boolean expected = false;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        Period period = mock(Period.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+        PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, allocation);
+
+        Email email = null;
+
+        // Act
+        boolean result = resource.hasAccount(email);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD getPercentageOfAllocation()
+     */
+    @DisplayName("Percentage of allocation is retrieved successfully")
+    @Test
+    void ensurePercentageOfAllocationIsRetrievedSuccessfully() {
+        // Arrange
+        float expected = 25.0F;
+
+        ProjectResourceId id = mock(ProjectResourceId.class);
+        Code projectCode = mock(Code.class);
+        Email accountEmail = mock(Email.class);
+        Role role = mock(Role.class);
+        Period period = mock(Period.class);
+        CostPerHour costPerHour = mock(CostPerHour.class);
+
+        PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(expected);
+
+        ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
+                period, costPerHour, percentageOfAllocation);
+
+        // Act
+        float result = resource.getPercentageOfAllocation();
+
+        // Assert
+        assertEquals(expected, result);
     }
 }
 
