@@ -1,6 +1,5 @@
 @startuml
 
-
 class "CreateUsController" {
 - usService
 + createUs(projectCodeOfInterest, userStoryCreationDto)
@@ -243,7 +242,6 @@ BusinessSectorFactory ..> BusinessSector: creates
 IBusinessSectorRepository <|.. BusinessSectorRepository: implements
 BusinessSectorRepository --> BusinessSector: has
 
-
 "UsService" "1" <.. "1" "IProjectRepository": is injected
 "IProjectRepository" <|.. "ProjectRepository": implements
 "ProjectRepository" "1"-->"*" "Project": has
@@ -401,6 +399,47 @@ IProfileFactory <|.. ProfileFactory: implements
 ProfileFactory ..> Profile: creates
 IProfileRepository <|.. ProfileRepository: implements
 ProfileRepository --> Profile: has
+
+class AddCustomerController {
+-customerService
++addCustomer(taxIdNumber, name)
+}
+
+class CustomerService {
+-iCustomerRepository
+-iCustomerFactory
++addCustomer(taxIdNumber, name)
+}
+
+interface ICustomerFactory {
++createCustomer(taxId, name)
+}
+
+class CustomerFactory {
++createCustomer(taxId, name)
+}
+
+interface ICustomerRepository {
++add(customer)
+}
+
+class CustomerRepository {
++add(customer)
+}
+
+class Customer {
+-taxId
+-name
+#Customer(taxId, name)
+}
+
+AddCustomerController <.. CustomerService: is injected
+CustomerService <.. ICustomerRepository: is injected
+CustomerService <.. ICustomerFactory: is injected
+ICustomerFactory <|.. CustomerFactory: implements
+CustomerFactory ..> Customer: creates
+ICustomerRepository <|.. CustomerRepository: implements
+CustomerRepository --> Customer: has
 
 @enduml
 

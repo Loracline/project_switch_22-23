@@ -41,12 +41,12 @@ class CustomerServiceTest {
         String customerName = "Partilha Cortesia, Lda.";
         String customerTaxId = "514024054";
 
-        when(repository.addCustomerToRepository(any())).thenReturn(true);
+        when(repository.add(any())).thenReturn(true);
 
         boolean expected = true;
 
         // Act
-        boolean result = service.createCustomer(customerTaxId, customerName);
+        boolean result = service.addCustomer(customerTaxId, customerName);
 
         // Assert
         assertEquals(expected, result);
@@ -60,11 +60,11 @@ class CustomerServiceTest {
         String customerTaxId = "514 024 054";
 
         String expected = "Customer's tax ID already exists!";
-        when(repository.addCustomerToRepository(any())).thenThrow(new AlreadyExistsInRepoException(expected));
+        when(repository.add(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         // Act
         AlreadyExistsInRepoException result =
-                assertThrows(AlreadyExistsInRepoException.class, () -> service.createCustomer(customerTaxId, customerName));
+                assertThrows(AlreadyExistsInRepoException.class, () -> service.addCustomer(customerTaxId, customerName));
 
         // Assert
         assertEquals(expected, result.getMessage());
@@ -82,7 +82,7 @@ class CustomerServiceTest {
 
         // Act
         InvalidTaxIdException result =
-                assertThrows(InvalidTaxIdException.class, () -> service.createCustomer(customerTaxId, customerName));
+                assertThrows(InvalidTaxIdException.class, () -> service.addCustomer(customerTaxId, customerName));
 
 
         // Assert

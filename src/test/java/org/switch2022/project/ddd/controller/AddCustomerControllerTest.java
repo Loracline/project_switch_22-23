@@ -21,13 +21,13 @@ import static org.mockito.Mockito.when;
 @AutoConfigureMockMvc // Configures an instance that can be used to send HTTP requests to the app and verify the responses.
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK, // App should be started with a mock web environment.
-        classes = CreateCustomerController.class // Class that should be loaded by the Spring context.
+        classes = AddCustomerController.class // Class that should be loaded by the Spring context.
 )
 
-class CreateCustomerControllerTest {
+class AddCustomerControllerTest {
 
     @InjectMocks
-    CreateCustomerController controller;
+    AddCustomerController controller;
 
     @MockBean
     CustomerService service;
@@ -39,12 +39,12 @@ class CreateCustomerControllerTest {
         String name = "Partilha Cortesia, Lda.";
         String taxIdNumber = "514 024 054";
 
-        when(service.createCustomer(any(), any())).thenReturn(true);
+        when(service.addCustomer(any(), any())).thenReturn(true);
 
         boolean expected = true;
 
         // Act
-        boolean result = controller.createCustomer(taxIdNumber, name);
+        boolean result = controller.addCustomer(taxIdNumber, name);
 
         // Assert
         assertEquals(expected, result);
@@ -58,11 +58,11 @@ class CreateCustomerControllerTest {
         String taxIdNumber = "514 024 054";
 
         String expected = "Customer's tax ID already exists!";
-        when(service.createCustomer(any(), any())).thenThrow(new AlreadyExistsInRepoException(expected));
+        when(service.addCustomer(any(), any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         //Act
         AlreadyExistsInRepoException result =
-                assertThrows(AlreadyExistsInRepoException.class, () -> controller.createCustomer(taxIdNumber, name));
+                assertThrows(AlreadyExistsInRepoException.class, () -> controller.addCustomer(taxIdNumber, name));
 
         //Assert
         assertEquals(expected, result.getMessage());
@@ -76,11 +76,11 @@ class CreateCustomerControllerTest {
         String taxIdNumber = "514 024 0X4";
 
         String expected = "Invalid or unsupported country for tax ID validation.";
-        when(service.createCustomer(any(), any())).thenThrow(new InvalidTaxIdException(expected));
+        when(service.addCustomer(any(), any())).thenThrow(new InvalidTaxIdException(expected));
 
         //Act
         InvalidTaxIdException result =
-                assertThrows(InvalidTaxIdException.class, () -> controller.createCustomer(taxIdNumber, name));
+                assertThrows(InvalidTaxIdException.class, () -> controller.addCustomer(taxIdNumber, name));
 
         //Assert
         assertEquals(expected, result.getMessage());

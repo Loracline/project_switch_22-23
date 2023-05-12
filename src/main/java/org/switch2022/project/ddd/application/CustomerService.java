@@ -38,13 +38,13 @@ public class CustomerService {
      * @throws InvalidTaxIdException if the tax ID number is invalid or unsupported according to the TaxId validation
      *                               rules.
      */
-    public boolean createCustomer(String taxIdNumber, String name) {
+    public boolean addCustomer(String taxIdNumber, String name) {
         Name customerName = new Name(name);
         TaxId customerTaxId = new TaxId(taxIdNumber);
 
         if (customerTaxId.isValid()) {
             Customer customer = factory.createCustomer(customerTaxId, customerName);
-            return repository.addCustomerToRepository(customer);
+            return repository.add(customer);
         } else throw new InvalidTaxIdException("Invalid or unsupported country for tax ID validation.");
     }
 }

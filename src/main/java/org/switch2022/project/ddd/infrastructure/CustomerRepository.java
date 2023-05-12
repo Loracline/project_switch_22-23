@@ -60,7 +60,7 @@ public class CustomerRepository implements ICustomerRepository {
      *                                      the specified customer.
      */
     @Override
-    public boolean addCustomerToRepository(Customer customer) {
+    public boolean add(Customer customer) {
         if (!customers.contains(customer)) {
             customers.add(customer);
             return true;
@@ -77,7 +77,7 @@ public class CustomerRepository implements ICustomerRepository {
      * @throws NotFoundInRepoException if a customer with the given tax ID is not found in the repository.
      */
     @Override
-    public String getCustomerNameByTaxId(TaxId taxId) {
+    public String getNameBy(TaxId taxId) {
         String requestedName = null;
 
         int i = 0;

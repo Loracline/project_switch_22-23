@@ -1,0 +1,50 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO ADD A CUSTOMER
+legend top
+US009 - "As Administrator, I want to add a customer".
+end legend
+
+class AddCustomerController {
+-customerService
++addCustomer(taxIdNumber, name)
+}
+
+class CustomerService {
+-iCustomerRepository
+-iCustomerFactory
++addCustomer(taxIdNumber, name)
+}
+
+interface ICustomerFactory {
++createCustomer(taxId, name)
+}
+
+class CustomerFactory {
++createCustomer(taxId, name)
+}
+
+interface ICustomerRepository {
++add(customer)
+}
+
+class CustomerRepository {
++add(customer)
+}
+
+class Customer {
+-taxId
+-name
+#Customer(taxId, name)
+}
+
+AddCustomerController <.. CustomerService: is injected
+CustomerService <.. ICustomerRepository: is injected
+CustomerService <.. ICustomerFactory: is injected
+ICustomerFactory <|.. CustomerFactory: implements
+CustomerFactory ..> Customer: creates
+ICustomerRepository <|.. CustomerRepository: implements
+CustomerRepository --> Customer: has
+
+@enduml
