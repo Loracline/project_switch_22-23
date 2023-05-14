@@ -69,6 +69,16 @@ public class AccountRepository implements IAccountRepository {
     }
 
     /**
+     * This method checks if the account exists and if its status is active (if the account is valid).
+     * @param account to check if it exists and if it does, if the status is activated.
+     * @return true if the account exists and the status is activated. If one of these conditions is not true,
+     * it returns false.
+     */
+    public boolean IsAValidAccount(Account account){
+        return (accounts.contains(account) && account.getAccountStatus());
+    }
+
+    /**
      * This method gets all the Accounts
      *
      * @return a list with all accounts.
