@@ -70,16 +70,6 @@ public class AccountRepository implements IAccountRepository {
     }
 
     /**
-     * This method checks if the account exists and if its status is active (if the account is valid).
-     * @param account to check if it exists and if it does, if the status is activated.
-     * @return true if the account exists and the status is activated. If one of these conditions is not true,
-     * it returns false.
-     */
-    public boolean IsAValidAccount(Account account){
-        return (accounts.contains(account) && account.getAccountStatus());
-    }
-
-    /**
      * This method gets all the Accounts
      *
      * @return a list with all accounts.
@@ -91,6 +81,7 @@ public class AccountRepository implements IAccountRepository {
 
     /**
      * This method returns all the accounts with emails matching a given list of emails that is passed as argument.
+     *
      * @param emails list of emails to match with accounts.
      * @return a list with accounts with matching emails, or an empty list if no accounts have matching emails.
      */
@@ -100,7 +91,7 @@ public class AccountRepository implements IAccountRepository {
         List<Account> accounts = new ArrayList<>();
         for (int i = 0; i < this.accounts.size(); i++) {
             for (int j = 0; j < emails.size(); j++) {
-                if(this.accounts.get(i).hasEmail(emails.get(j))){
+                if (this.accounts.get(i).hasEmail(emails.get(j))) {
                     accounts.add(this.accounts.get(i));
                 }
             }
@@ -110,6 +101,7 @@ public class AccountRepository implements IAccountRepository {
 
     /**
      * This method returns an optional of an account.
+     *
      * @param email to search for the account.
      * @return an optional of account with the requested account or optional of null if
      * it does not find the desired account.
@@ -127,4 +119,16 @@ public class AccountRepository implements IAccountRepository {
                 "doesn't exist");
         return accountRequested;
     }
+
+    /**
+     * This method checks if the account exists and if its status is active (if the account is valid).
+     *
+     * @param account to check if it exists and if it does, if the status is activated.
+     * @return true if the account exists and the status is activated. If one of these conditions is not true,
+     * it returns false.
+     */
+    public boolean IsAValidAccount(Account account) {
+        return (accounts.contains(account) && account.getAccountStatus());
+    }
+
 }

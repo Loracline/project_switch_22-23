@@ -240,7 +240,7 @@ class AccountRepositoryTest {
     void ensureThatAListWithAccountsISReturnedIfThereAreMatchingEmails() {
         // Arrange
         AccountRepository repository = new AccountRepository();
-        List<String> emails =  mock(List.class);
+        List<String> emails = mock(List.class);
 
         Account accountOneDouble = mock(Account.class);
         Account accountTwoDouble = mock(Account.class);
@@ -372,7 +372,7 @@ class AccountRepositoryTest {
 
         //Act
         NotFoundInRepoException result =
-                assertThrows(NotFoundInRepoException.class, () ->repository.getAccountByEmail(email));
+                assertThrows(NotFoundInRepoException.class, () -> repository.getAccountByEmail(email));
 
         //Assert
         assertEquals(message, result.getMessage());
@@ -390,9 +390,75 @@ class AccountRepositoryTest {
 
         //Act
         NotFoundInRepoException result =
-                assertThrows(NotFoundInRepoException.class, () ->repository.getAccountByEmail(email));
+                assertThrows(NotFoundInRepoException.class, () -> repository.getAccountByEmail(email));
 
         //Assert
         assertEquals(message, result.getMessage());
     }
+
+    /**
+     * Method IsAValidAccount().
+     * Scenario 01:Make sure the account is valid and active.
+     * Expected return: True.
+     */
+    @Test
+    void ensureThatAccountIsValid() {
+        //Arrange
+        Account accountDouble = mock(Account.class);
+        AccountRepository repository = new AccountRepository();
+        repository.add(accountDouble);
+        when(accountDouble.getAccountStatus()).thenReturn(true);
+        //Act
+        boolean result = repository.IsAValidAccount(accountDouble);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scerario 02: the account exists, but is inactive.
+     * Expected return: false.
+     */
+    @Test
+    void ensureTheAccointExistisButIsInactivate() {
+        //Arrange
+        Account accountDouble = mock(Account.class);
+        AccountRepository repository = new AccountRepository();
+        repository.add(accountDouble);
+        when(accountDouble.getAccountStatus()).thenReturn(false);
+        //Act
+        boolean result = repository.IsAValidAccount(accountDouble);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 03: the account is invalid, because the account does not exist in the list.
+     * Expected return: false.
+     */
+    @Test
+    void ensureTheAccountIsInvalidBecauseTheAccountDoesNotExist() {
+        //Arrange
+        Account accountDouble = mock(Account.class);
+        AccountRepository repository = new AccountRepository();
+        when(accountDouble.getAccountStatus()).thenReturn(false);
+        //Act
+        boolean result = repository.IsAValidAccount(accountDouble);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 03: the account is invalid, because the account is null.
+     * Expected return: false.
+     */
+    @Test
+    void ensureTheAccountIsInvalidBecauseTheAccountIsNull() {
+        //Arrange
+        AccountRepository repository = new AccountRepository();
+        //Act
+        boolean result = repository.IsAValidAccount(null);
+        //Assert
+        assertFalse(result);
+    }
+
 }
