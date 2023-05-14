@@ -313,11 +313,13 @@ class Account{
 -phoneNumber
 - accountStatus
 -photo
+-profile
 +changeStatus(status)
 +hasEmail(email)
 +getName()
 +getEmail()
 +getAccountStatus()
++setProfile(profile)
 }
 
 RegisterAccountController <.. AccountService: is injected
@@ -326,7 +328,8 @@ AccountService <.. IAccountFactory: is injected
 IAccountFactory <|.. AccountFactory: implements
 AccountFactory ..> Account: creates
 IAccountRepository <|.. AccountRepository: implements
-AccountRepository --> Account: has
+AccountRepository "1"->"*" Account: has
+
 
 class ChangeStatusController {
 -accountService
@@ -381,15 +384,18 @@ class ProfileFactory{
 interface IProfileRepository{
 + add(profile)
 + getSize()
++ getProfileByName(profileName)
 }
 
 class ProfileRepository{
 + add(profile)
 + getSize()
++ getProfileByName(profileName)
 }
 
 class Profile<<root>>{
 - profileName
++hasName(profileName)
 }
 
 CreateProfileController <.. ProfileService: is injected
@@ -398,7 +404,7 @@ ProfileService <.. IProfileFactory: is injected
 IProfileFactory <|.. ProfileFactory: implements
 ProfileFactory ..> Profile: creates
 IProfileRepository <|.. ProfileRepository: implements
-ProfileRepository --> Profile: has
+
 
 class AddCustomerController {
 -customerService
@@ -440,6 +446,22 @@ ICustomerFactory <|.. CustomerFactory: implements
 CustomerFactory ..> Customer: creates
 ICustomerRepository <|.. CustomerRepository: implements
 CustomerRepository --> Customer: has
+
+class ChangeProfileController {
+-changeProfileService
++changeProfile(email, profileName)
+}
+
+class ChangeProfileService {
+-accountRepository
+-profileRepository
++changeProfile(email, profileName)
+}
+
+ProfileRepository "1"->"*" Profile: has
+ChangeProfileController"1 " <.. "1 "ChangeProfileService: is injected
+IAccountRepository ..> ChangeProfileService : is injected
+IProfileRepository ..> ChangeProfileService : is injected
 
 @enduml
 

@@ -3,11 +3,10 @@ package org.switch2022.project.ddd.infrastructure;
 import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceRepository;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.Period;
-import org.switch2022.project.ddd.domain.value_object.Role;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,11 +16,11 @@ import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
 @Repository
 public class ProjectResourceRepository implements IProjectResourceRepository {
+
     /**
      * Attributes
      */
     private final List<ProjectResource> projectResources = new ArrayList<>();
-
 
     /**
      * Method equals(Object o)
@@ -49,7 +48,6 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(projectResources);
@@ -110,7 +108,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * This method checks if one specific Project already has the role of Scrum Master or Product Owner in a specific
      * period.
      *
-     * @param role, code, period to ckeck.
+     * @param role, code, period to check.
      * @return <code>true</code> if the project already has a Scrum Master or Product Owner in a specific Period and
      * <code>false</code> otherwise.
      */
@@ -123,7 +121,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * This method checks if one specific Project already has the role of Scrum Master in a specific
      * period.
      *
-     * @param code, role, period to ckeck.
+     * @param code, role, period to check.
      * @return <code>true</code> if the project already has a Scrum Master in a specific Period and
      * <code>false</code> otherwise.
      */
@@ -134,7 +132,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     /**
      * This method checks if one specific Project already has the role of Product Owner in a specific period.
      *
-     * @param code, role, period to ckeck.
+     * @param code, role, period to check.
      * @return <code>true</code> if the project already has a Product Owner in a specific Period and
      * <code>false</code> otherwise.
      */
@@ -145,7 +143,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     /**
      * This method checks if one specific Project already has a specific role in a specific period.
      *
-     * @param role, code, period to ckeck.
+     * @param role, code, period to check.
      * @return <code>true</code> if the project already has a Role in a specific Period and
      * <code>false</code> otherwise.
      */
@@ -166,11 +164,64 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     /**
      * This method checks if a given role is Project Manager.
      *
-     * @param role to ckeck.
+     * @param role to check.
      * @return <code>true</code> if role is Project Manager and <code>false</code> otherwise.
      */
     public boolean isProjectManager(Role role) {
         return role == PROJECT_MANAGER;
+    }
+
+    /**
+     * Calculates the current percentage allocation for a given account email and date, by iterating through all project
+     * resources and summing up the percentage allocations for the resources that match the given email and date.
+     *
+     * @param accountEmail the email of the account to calculate the allocation for.
+     * @param date         the date to calculate the allocation for.
+     * @return the current percentage allocation for the given account email and date.
+     */
+    private float currentPercentageOfAllocation(Email accountEmail, LocalDate date) {
+        float sum = 0.0F;
+
+        for (int i = 0; i < this.projectResources.size(); i++) {
+            if (this.projectResources.get(i).hasAccount(accountEmail)
+                    && this.projectResources.get(i).allocationPeriodIncludesDate(date)) {
+
+                sum += this.projectResources.get(i).getPercentageOfAllocation();
+
+            }
+        }
+
+        return sum;
+    }
+
+    /**
+     * Calculates the total percentage of allocation for a given account email and date by adding the value of a given
+     * PercentageOfAllocation object to the current allocation percentage.
+     *
+     * @param accountEmail the email of the account to calculate the allocation for.
+     * @param date         the date to calculate the allocation for.
+     * @param toAdd        the PercentageOfAllocation object to add to the current allocation percentage.
+     * @return the total percentage of allocation for the given account email and date after adding the value of the
+     * given PercentageOfAllocation object
+     */
+    private float totalPercentageOfAllocation(Email accountEmail, LocalDate date, PercentageOfAllocation toAdd) {
+        return currentPercentageOfAllocation(accountEmail, date) + toAdd.getValue();
+    }
+
+    /**
+     * Checks if the total percentage of allocation for a given account email and date, after adding the value of a
+     * given PercentageOfAllocation object, is less than or equal to the maximum allowed value.
+     *
+     * @param accountEmail the email of the account to check the allocation for.
+     * @param date         the date to check the allocation for.
+     * @param toAdd        the PercentageOfAllocation object to add to the current allocation percentage.
+     * @return TRUE if the total percentage of allocation is less than or equal to the maximum allowed value, FALSE
+     * otherwise.
+     */
+    public boolean validatePercentageOfAllocation(Email accountEmail, LocalDate date, PercentageOfAllocation toAdd) {
+        final int MAXIMUM_ALLOWED = 100;
+
+        return totalPercentageOfAllocation(accountEmail, date, toAdd) <= MAXIMUM_ALLOWED;
     }
 }
 

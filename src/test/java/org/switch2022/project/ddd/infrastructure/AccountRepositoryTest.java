@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.infrastructure;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,6 +21,7 @@ class AccountRepositoryTest {
      * Method: equals()
      * Scenario 01: Test to ensure the object equals itself
      */
+    @SuppressWarnings("all")
     @Test
     void ensureSameObjectEqualsItself() {
         // Arrange
@@ -95,6 +98,7 @@ class AccountRepositoryTest {
      * Method: equals()
      * Scenario 05: Test to ensure that a AccountRepository doesn't equal a null object.
      */
+    @SuppressWarnings("all")
     @Test
     void ensureThatAccountRepositoryDoesNotEqualsNull() {
         // Arrange
@@ -187,7 +191,6 @@ class AccountRepositoryTest {
 
     /**
      * Method getAccounts()
-     *
      * Scenario 1: returns a list with all Accounts
      */
     @Test
@@ -229,8 +232,114 @@ class AccountRepositoryTest {
     }
 
     /**
+     * Method getAccounts(emails) returns all the accounts with emails matching a given list of emails that is passed
+     * as argument.
+     * Scenario 01: returns a list with all Accounts that have matching emails.
+     */
+    @Test
+    void ensureThatAListWithAccountsISReturnedIfThereAreMatchingEmails() {
+        // Arrange
+        AccountRepository repository = new AccountRepository();
+        List<String> emails =  mock(List.class);
+
+        Account accountOneDouble = mock(Account.class);
+        Account accountTwoDouble = mock(Account.class);
+        Account accountThreeDouble = mock(Account.class);
+
+        repository.add(accountOneDouble);
+        repository.add(accountTwoDouble);
+        repository.add(accountThreeDouble);
+
+        when(emails.size()).thenReturn(1);
+        when(accountOneDouble.hasEmail(any())).thenReturn(true);
+        when(accountTwoDouble.hasEmail(any())).thenReturn(true);
+
+        List<Account> expected = new ArrayList<>();
+        expected.add(accountOneDouble);
+        expected.add(accountTwoDouble);
+
+        // Act
+        List<Account> result = repository.getAccounts(emails);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method getAccounts(emails) returns all the accounts with emails matching a given list of emails that is passed
+     * as argument.
+     * Scenario 02: returns an empty list if no accounts have matching emails.
+     */
+    @Test
+    void ensureThatAnEmptyListIsReturnedIfThereAreNoMatchingEmails() {
+        // Arrange
+        AccountRepository repository = new AccountRepository();
+        List<String> emails = mock(List.class);
+
+        Account accountOneDouble = mock(Account.class);
+        Account accountTwoDouble = mock(Account.class);
+        Account accountThreeDouble = mock(Account.class);
+
+        repository.add(accountOneDouble);
+        repository.add(accountTwoDouble);
+        repository.add(accountThreeDouble);
+
+        when(emails.size()).thenReturn(1);
+
+        List<Account> expected = new ArrayList<>();
+
+        // Act
+        List<Account> result = repository.getAccounts(emails);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method getAccounts(emails) returns all the accounts with emails matching a given list of emails that is passed
+     * as argument.
+     * Scenario 03: returns an empty list if an empty list of emails has been passed as argument.
+     */
+    @Test
+    void ensureThatAnEmptyListIsReturnedIfThereAreNoEmailsToMatch() {
+        // Arrange
+        AccountRepository repository = new AccountRepository();
+        List<String> emails = mock(List.class);
+
+        Account accountOneDouble = mock(Account.class);
+        Account accountTwoDouble = mock(Account.class);
+        Account accountThreeDouble = mock(Account.class);
+
+        repository.add(accountOneDouble);
+        repository.add(accountTwoDouble);
+        repository.add(accountThreeDouble);
+
+        List<Account> expected = new ArrayList<>();
+
+        // Act
+        List<Account> result = repository.getAccounts(emails);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method getAccounts(emails) returns all the accounts with emails matching a given list of emails that is passed
+     * as argument.
+     * Scenario 04: throws an exception if a null object has been passed as argument.
+     * It should throw an InvalidInputException.
+     */
+    @Test
+    void ensureThatThrowsAnExceptionIfTheEmailListIsNull() {
+        // Arrange
+        AccountRepository repository = new AccountRepository();
+
+        // Act and Assert
+        assertThrows(InvalidInputException.class, () -> repository.getAccounts(null));
+    }
+
+    /**
      * Method getAccountByEmail()
-     *
      * Scenario 1: returns
      */
 

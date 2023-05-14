@@ -26,7 +26,7 @@ class PeriodTest {
         //Act
         InvalidInputException exception =
                 assertThrowsExactly(InvalidInputException.class, () ->
-                new Period(null, duration));
+                        new Period(null, duration));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -37,6 +37,7 @@ class PeriodTest {
      * duration passed as argument is null.
      * Should throw an IllegalArgumentException.
      */
+    @SuppressWarnings("all")
     @Test
     void ensureThatAnExceptionIsThrownWhenDurationIsNull() {
         //Arrange
@@ -47,7 +48,7 @@ class PeriodTest {
         //Act
         InvalidInputException exception =
                 assertThrowsExactly(InvalidInputException.class, () ->
-                new Period(date, duration));
+                        new Period(date, duration));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -68,7 +69,7 @@ class PeriodTest {
         //Act
         InvalidInputException exception =
                 assertThrowsExactly(InvalidInputException.class, () ->
-                new Period(date, duration));
+                        new Period(date, duration));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -91,7 +92,7 @@ class PeriodTest {
         //Act
         InvalidInputException exception =
                 assertThrowsExactly(InvalidInputException.class, () ->
-                new Period(null, endDate));
+                        new Period(null, endDate));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -102,6 +103,7 @@ class PeriodTest {
      * date passed as argument is null.
      * Should throw an IllegalArgumentException.
      */
+    @SuppressWarnings("all")
     @Test
     void ensureThatAnExceptionIsThrownWhenEndDateIsNull() {
         //Arrange
@@ -113,7 +115,7 @@ class PeriodTest {
         //Act
         InvalidInputException exception =
                 assertThrowsExactly(InvalidInputException.class, () ->
-                new Period(startDate, endDate));
+                        new Period(startDate, endDate));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -136,7 +138,7 @@ class PeriodTest {
         //Act
         InvalidInputException exception =
                 assertThrowsExactly(InvalidInputException.class, () ->
-                new Period(startDate, endDate));
+                        new Period(startDate, endDate));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -282,6 +284,7 @@ class PeriodTest {
      * <br>
      * Scenario 1: Verify if the same object equals itself.
      */
+    @SuppressWarnings("all")
     @Test
     void ensureSamePeriodEqualsItself() {
         // Arrange
@@ -359,6 +362,7 @@ class PeriodTest {
     /**
      * Scenario 5: Verify if a Period and a null object are not the same.
      */
+    @SuppressWarnings("all")
     @Test
     void ensurePeriodInstanceDoesNotEqualNull() {
         //Arrange
@@ -754,6 +758,7 @@ class PeriodTest {
     /**
      * Scenario 6: Date to compare is null.
      */
+    @SuppressWarnings("all")
     @Test
     public void ensureMethodComparingStartDateReturnsFalseWhenDateToCompareIsNull() {
         //Arrange
@@ -821,6 +826,7 @@ class PeriodTest {
     /**
      * Scenario 4: Date to compare is null.
      */
+    @SuppressWarnings("all")
     @Test
     public void ensureMethodComparingEndDateReturnsFalseWhenDateToCompareIsNull() {
         //Arrange
@@ -869,16 +875,15 @@ class PeriodTest {
     }
 
     /**
-     *Method: isDateEqualOrLowerThanStartDate
+     * Method: isDateEqualOrLowerThanStartDate
      * scenario 1: returns true because date is equal
-     *
      */
     @Test
     public void testIfDateToCompareEqualsToStartDate() {
         //Arrange
         LocalDate dateToCompare = mock(LocalDate.class);
         LocalDate startDate = mock(LocalDate.class);
-        Period periodToTest = new Period(startDate,2);
+        Period periodToTest = new Period(startDate, 2);
         when(dateToCompare.isBefore(startDate)).thenReturn(false);
         when(dateToCompare.isEqual(startDate)).thenReturn(true);
         //Act
@@ -897,7 +902,7 @@ class PeriodTest {
         //Arrange
         LocalDate dateToCompare = mock(LocalDate.class);
         LocalDate startDate = mock(LocalDate.class);
-        Period periodToTest = new Period(startDate,2);
+        Period periodToTest = new Period(startDate, 2);
         when(dateToCompare.isBefore(startDate)).thenReturn(true);
         when(dateToCompare.isEqual(startDate)).thenReturn(false);
         //Act
@@ -906,6 +911,7 @@ class PeriodTest {
         //Assert
         assertTrue(result);
     }
+
     /**
      * scenario 3: returns false because date is greater
      */
@@ -914,7 +920,7 @@ class PeriodTest {
         //Arrange
         LocalDate dateToCompare = mock(LocalDate.class);
         LocalDate startDate = mock(LocalDate.class);
-        Period periodToTest = new Period(startDate,2);
+        Period periodToTest = new Period(startDate, 2);
         when(dateToCompare.isBefore(startDate)).thenReturn(false);
         when(dateToCompare.isEqual(startDate)).thenReturn(false);
         //Act
@@ -923,10 +929,10 @@ class PeriodTest {
         //Assert
         assertFalse(result);
     }
+
     /**
-     *Method: isDateEqualOrGreaterThanEndDate
+     * Method: isDateEqualOrGreaterThanEndDate
      * scenario 1: returns true because date is equal
-     *
      */
     @Test
     public void testIfDateToCompareEqualsToEndDate() {
@@ -934,7 +940,7 @@ class PeriodTest {
         LocalDate dateToCompare = mock(LocalDate.class);
         LocalDate startDate = mock(LocalDate.class);
         LocalDate endDate = mock(LocalDate.class);
-        Period periodToTest = new Period(startDate,endDate);
+        Period periodToTest = new Period(startDate, endDate);
         when(dateToCompare.isAfter(endDate)).thenReturn(false);
         when(dateToCompare.isEqual(endDate)).thenReturn(true);
         //Act
@@ -943,6 +949,7 @@ class PeriodTest {
         //Assert
         assertTrue(result);
     }
+
     /**
      * scenario 2: returns true because date is greater
      */
@@ -952,7 +959,7 @@ class PeriodTest {
         LocalDate dateToCompare = mock(LocalDate.class);
         LocalDate startDate = mock(LocalDate.class);
         LocalDate endDate = mock(LocalDate.class);
-        Period periodToTest = new Period(startDate,endDate);
+        Period periodToTest = new Period(startDate, endDate);
         when(dateToCompare.isAfter(endDate)).thenReturn(true);
         when(dateToCompare.isEqual(endDate)).thenReturn(false);
         //Act
@@ -971,7 +978,7 @@ class PeriodTest {
         LocalDate dateToCompare = mock(LocalDate.class);
         LocalDate startDate = mock(LocalDate.class);
         LocalDate endDate = mock(LocalDate.class);
-        Period periodToTest = new Period(startDate,endDate);
+        Period periodToTest = new Period(startDate, endDate);
         when(dateToCompare.isAfter(endDate)).thenReturn(false);
         when(dateToCompare.isEqual(endDate)).thenReturn(false);
         //Act
@@ -980,4 +987,143 @@ class PeriodTest {
         //Assert
         assertFalse(result);
     }
+
+    /**
+     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
+     * another instance of Period passed as an argument.
+     * <p>
+     * Scenario 01: The instance of Period is contained within another instance of Period because the start date of
+     * the instance is after the start date of the other instance, and the end date of the instance is before the end
+     * date of the other instance.
+     * It should assert true.
+     */
+    @Test
+    public void ensureThatReturnsTrueIfOnePeriodIsContainedWithinAnotherIfStartAndEndDatesAreWithinInterval() {
+        //Arrange
+        //This period
+        LocalDate startDate = LocalDate.of(2023,5,12);
+        LocalDate endDate = LocalDate.of(2023,5,18);
+        Period period = new Period(startDate, endDate);
+
+        //Other period
+        LocalDate otherStartDate = LocalDate.of(2023,5,10);
+        LocalDate otherEndDate = LocalDate.of(2023,5,20);
+        Period otherPeriod = new Period(otherStartDate, otherEndDate);
+
+        //Act
+        boolean result = period.isContained(otherPeriod);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
+     * another instance of Period passed as an argument.
+     * <p>
+     * Scenario 02: The instance of Period is contained within another instance of Period because the start date of
+     * the instance is on the start date of the other instance, and the end date of the instance is on the end
+     * date of the other instance.
+     * It should assert true.
+     */
+    @Test
+    public void ensureThatReturnsTrueIfOnePeriodIsContainedWithinAnotherIfStartAndEndDatesAreOnTheIntervalLimits() {
+        //Arrange
+        //This period
+        LocalDate startDate = LocalDate.of(2023,5,12);
+        LocalDate endDate = LocalDate.of(2023,5,18);
+        Period period = new Period(startDate, endDate);
+
+        //Other period
+        LocalDate otherStartDate = LocalDate.of(2023,5,12);
+        LocalDate otherEndDate = LocalDate.of(2023,5,18);
+        Period otherPeriod = new Period(otherStartDate, otherEndDate);
+
+        //Act
+        boolean result = period.isContained(otherPeriod);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
+     * another instance of Period passed as an argument.
+     * <p>
+     * Scenario 03: The instance of Period is not contained within another instance of Period because the start date of
+     * the instance is before the start date of the other instance.
+     * It should assert false.
+     */
+    @Test
+    public void ensureThatReturnsFalseIfStartDateIsOutsidePeriod() {
+        //Arrange
+        //This period
+        LocalDate startDate = LocalDate.of(2023,5,8);
+        LocalDate endDate = LocalDate.of(2023,5,18);
+        Period period = new Period(startDate, endDate);
+
+        //Other period
+        LocalDate otherStartDate = LocalDate.of(2023,5,10);
+        LocalDate otherEndDate = LocalDate.of(2023,5,20);
+        Period otherPeriod = new Period(otherStartDate, otherEndDate);
+
+
+        //Act
+        boolean result = period.isContained(otherPeriod);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
+     * another instance of Period passed as an argument.
+     * <p>
+     * Scenario 04: The instance of Period is not contained within another instance of Period because the end date of
+     * the instance is after the end date of the other instance.
+     * It should assert false.
+     */
+    @Test
+    public void ensureThatReturnsFalseIfEndDateIsOutsidePeriod() {
+        //Arrange
+        //This period
+        LocalDate startDate = LocalDate.of(2023,5,12);
+        LocalDate endDate = LocalDate.of(2023,5,18);
+        Period period = new Period(startDate, endDate);
+
+        //Other period
+        LocalDate otherStartDate = LocalDate.of(2023,5,10);
+        LocalDate otherEndDate = LocalDate.of(2023,5,16);
+        Period otherPeriod = new Period(otherStartDate, otherEndDate);
+
+
+        //Act
+        boolean result = period.isContained(otherPeriod);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
+     * another instance of Period passed as an argument.
+     * <p>
+     * Scenario 05: The instance of Period is not contained within another instance of Period because the instance of
+     * Period to compare to is null.
+     * It should throw an InvalidInputException.
+     */
+    @Test
+    public void ensureThatThrowsAnExceptionIfPeriodIsNull() {
+        //Arrange
+        //This period
+        LocalDate startDateDouble = mock(LocalDate.class);
+        LocalDate endDateDouble = mock(LocalDate.class);
+        Period period = new Period(startDateDouble, endDateDouble);
+
+        //Act and Assert
+        assertThrows(InvalidInputException.class, () ->
+                period.isContained(null));
+    }
+
+
 }

@@ -1,11 +1,13 @@
 package org.switch2022.project.ddd.domain.value_object;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PercentageOfAllocationTest {
+
     /**
      * Testing if Percentage of Allocation is created when is equals to 100%.
      */
@@ -19,7 +21,7 @@ class PercentageOfAllocationTest {
     }
 
     /**
-     * Testing if percentage of allocation is not cerated when is 0%.
+     * Testing if percentage of allocation is not created when is 0%.
      */
     @Test
     void ensureThatPercentageOfAllocationIsNotCreated_PercentAllocationEqualsZero() {
@@ -31,7 +33,7 @@ class PercentageOfAllocationTest {
     }
 
     /**
-     * Testing if percentage of allocation is not cerated when is above 100%.
+     * Testing if percentage of allocation is not created when is above 100%.
      */
     @Test
     void ensureThatPercentageOfAllocationIsNotCreated_PercentAllocationAboveOneHundred() {
@@ -43,7 +45,7 @@ class PercentageOfAllocationTest {
     }
 
     /**
-     * Testing if percentage of allocation is not cerated when is below 0%.
+     * Testing if percentage of allocation is not created when is below 0%.
      */
     @Test
     void ensureThatPercentageOfAllocationIsNotCreated_PercentAllocationBelowZero() {
@@ -105,7 +107,6 @@ class PercentageOfAllocationTest {
         assertEquals(hashCodeOther, hashCodeReference);
     }
 
-
     @Test
     void ensureThatTwoPercentageOfAllocationHaveDifferentHashCode() {
         // ARRANGE
@@ -147,5 +148,22 @@ class PercentageOfAllocationTest {
 
         // Assert
         assertFalse(result);
+    }
+
+    /**
+     * METHOD getValue()
+     */
+    @DisplayName("Percentage of allocation is retrieved successfully")
+    @Test
+    void ensurePercentageOfAllocationIsRetrievedSuccessfully() {
+        // Arrange
+        float expected = 25.0F;
+        PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(expected);
+
+        // Act
+        float result = percentageOfAllocation.getValue();
+
+        // Assert
+        assertEquals(expected, result);
     }
 }

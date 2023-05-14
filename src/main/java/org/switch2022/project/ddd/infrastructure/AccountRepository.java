@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
+import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,25 @@ public class AccountRepository implements IAccountRepository {
     @Override
     public List<Account> getAccounts() {
         return this.accounts;
+    }
+
+    /**
+     * This method returns all the accounts with emails matching a given list of emails that is passed as argument.
+     * @param emails list of emails to match with accounts.
+     * @return a list with accounts with matching emails, or an empty list if no accounts have matching emails.
+     */
+    @Override
+    public List<Account> getAccounts(List<String> emails) {
+        Validate.notNull(emails, "The list of emails must not be null.");
+        List<Account> accounts = new ArrayList<>();
+        for (int i = 0; i < this.accounts.size(); i++) {
+            for (int j = 0; j < emails.size(); j++) {
+                if(this.accounts.get(i).hasEmail(emails.get(j))){
+                    accounts.add(this.accounts.get(i));
+                }
+            }
+        }
+        return accounts;
     }
 
     /**
