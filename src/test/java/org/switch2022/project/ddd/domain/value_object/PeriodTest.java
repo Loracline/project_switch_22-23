@@ -989,11 +989,11 @@ class PeriodTest {
     }
 
     /**
-     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
-     * another instance of Period passed as an argument.
+     * Method contains(Period otherPeriod) verifies whether an instance of Period contains another instance of
+     * Period passed as an argument.
      * <p>
-     * Scenario 01: The instance of Period is contained within another instance of Period because the start date of
-     * the instance is after the start date of the other instance, and the end date of the instance is before the end
+     * Scenario 01: The instance of Period contains another instance of Period because the start date of
+     * the instance is before the start date of the other instance, and the end date of the instance is after the end
      * date of the other instance.
      * It should assert true.
      */
@@ -1001,27 +1001,27 @@ class PeriodTest {
     public void ensureThatReturnsTrueIfOnePeriodIsContainedWithinAnotherIfStartAndEndDatesAreWithinInterval() {
         //Arrange
         //This period
-        LocalDate startDate = LocalDate.of(2023,5,12);
-        LocalDate endDate = LocalDate.of(2023,5,18);
+        LocalDate startDate = LocalDate.of(2023,5,10);
+        LocalDate endDate = LocalDate.of(2023,5,20);
         Period period = new Period(startDate, endDate);
 
         //Other period
-        LocalDate otherStartDate = LocalDate.of(2023,5,10);
-        LocalDate otherEndDate = LocalDate.of(2023,5,20);
+        LocalDate otherStartDate = LocalDate.of(2023,5,12);
+        LocalDate otherEndDate = LocalDate.of(2023,5,18);
         Period otherPeriod = new Period(otherStartDate, otherEndDate);
 
         //Act
-        boolean result = period.isContained(otherPeriod);
+        boolean result = period.contains(otherPeriod);
 
         //Assert
         assertTrue(result);
     }
 
     /**
-     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
-     * another instance of Period passed as an argument.
+     * Method contains(Period otherPeriod) verifies whether an instance of Period contains another instance of
+     * Period passed as an argument.
      * <p>
-     * Scenario 02: The instance of Period is contained within another instance of Period because the start date of
+     * Scenario 02: The instance of Period contains another instance of Period because the start date of
      * the instance is on the start date of the other instance, and the end date of the instance is on the end
      * date of the other instance.
      * It should assert true.
@@ -1040,75 +1040,75 @@ class PeriodTest {
         Period otherPeriod = new Period(otherStartDate, otherEndDate);
 
         //Act
-        boolean result = period.isContained(otherPeriod);
+        boolean result = period.contains(otherPeriod);
 
         //Assert
         assertTrue(result);
     }
 
     /**
-     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
-     * another instance of Period passed as an argument.
+     * Method contains(Period otherPeriod) verifies whether an instance of Period contains another instance of Period
+     * passed as an argument.
      * <p>
-     * Scenario 03: The instance of Period is not contained within another instance of Period because the start date of
-     * the instance is before the start date of the other instance.
+     * Scenario 03: The instance of Period does not contain another instance of Period because the start
+     * date of the instance is after the start date of the other instance.
      * It should assert false.
      */
     @Test
     public void ensureThatReturnsFalseIfStartDateIsOutsidePeriod() {
         //Arrange
         //This period
-        LocalDate startDate = LocalDate.of(2023,5,8);
-        LocalDate endDate = LocalDate.of(2023,5,18);
+        LocalDate startDate = LocalDate.of(2023,5,10);
+        LocalDate endDate = LocalDate.of(2023,5,20);
         Period period = new Period(startDate, endDate);
 
         //Other period
-        LocalDate otherStartDate = LocalDate.of(2023,5,10);
-        LocalDate otherEndDate = LocalDate.of(2023,5,20);
+        LocalDate otherStartDate = LocalDate.of(2023,5,8);
+        LocalDate otherEndDate = LocalDate.of(2023,5,18);
         Period otherPeriod = new Period(otherStartDate, otherEndDate);
 
 
         //Act
-        boolean result = period.isContained(otherPeriod);
+        boolean result = period.contains(otherPeriod);
 
         //Assert
         assertFalse(result);
     }
 
     /**
-     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
-     * another instance of Period passed as an argument.
+     * Method contains(Period otherPeriod) verifies whether an instance of Period contains another instance of Period
+     * passed as an argument.
      * <p>
-     * Scenario 04: The instance of Period is not contained within another instance of Period because the end date of
-     * the instance is after the end date of the other instance.
+     * Scenario 04: The instance of Period does not contain another instance of Period because the end date of
+     * the instance is before the end date of the other instance.
      * It should assert false.
      */
     @Test
     public void ensureThatReturnsFalseIfEndDateIsOutsidePeriod() {
         //Arrange
         //This period
-        LocalDate startDate = LocalDate.of(2023,5,12);
-        LocalDate endDate = LocalDate.of(2023,5,18);
+        LocalDate startDate = LocalDate.of(2023,5,10);
+        LocalDate endDate = LocalDate.of(2023,5,16);
         Period period = new Period(startDate, endDate);
 
         //Other period
-        LocalDate otherStartDate = LocalDate.of(2023,5,10);
-        LocalDate otherEndDate = LocalDate.of(2023,5,16);
+        LocalDate otherStartDate = LocalDate.of(2023,5,12);
+        LocalDate otherEndDate = LocalDate.of(2023,5,18);
         Period otherPeriod = new Period(otherStartDate, otherEndDate);
 
 
         //Act
-        boolean result = period.isContained(otherPeriod);
+        boolean result = period.contains(otherPeriod);
 
         //Assert
         assertFalse(result);
     }
 
     /**
-     * Method isContained(Period otherPeriod) verifies whether an instance of Period is contained within
-     * another instance of Period passed as an argument.
+     * Method contains(Period otherPeriod) verifies whether an instance of Period contains another instance of Period
+     * passed as an argument.
      * <p>
-     * Scenario 05: The instance of Period is not contained within another instance of Period because the instance of
+     * Scenario 05: The instance of Period does not contain another instance of Period because the instance of
      * Period to compare to is null.
      * It should throw an InvalidInputException.
      */
@@ -1122,7 +1122,7 @@ class PeriodTest {
 
         //Act and Assert
         assertThrows(InvalidInputException.class, () ->
-                period.isContained(null));
+                period.contains(null));
     }
 
 
