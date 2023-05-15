@@ -49,6 +49,6 @@ ProfileRepository "1"->"*" Profile: has
 ChangeProfileController"1 " <.. "1 "ChangeProfileService: is injected
 IAccountRepository ..> ChangeProfileService : is injected
 IProfileRepository ..> ChangeProfileService : is injected
-AccountRepository --|> IAccountRepository : implements
-ProfileRepository --|> IProfileRepository : implements
+AccountRepository ..> IAccountRepository : implements
+ProfileRepository ..> IProfileRepository : implements
 @enduml

@@ -32,10 +32,11 @@ public class CustomerService {
     /**
      * Creates a new customer with the given tax ID number and name, and adds them to the customer repository.
      *
-     * @param taxIdNumber the tax ID number of the customer, which must be valid according to the TaxId validation rules.
+     * @param taxIdNumber the tax ID number of the customer, which must be valid, according to the TaxId validation
+     *                    rules.
      * @param name        the name of the customer.
      * @return TRUE if the customer was successfully added to the repository, or FALSE otherwise.
-     * @throws InvalidInputException if the tax ID number is invalid or unsupported according to the TaxId validation
+     * @throws InvalidInputException if the tax ID number is invalid or unsupported, according to the TaxId validation
      *                               rules.
      */
     public boolean addCustomer(String taxIdNumber, String name) {
@@ -45,6 +46,8 @@ public class CustomerService {
         if (customerTaxId.isValid()) {
             Customer customer = factory.createCustomer(customerTaxId, customerName);
             return repository.add(customer);
-        } else throw new InvalidInputException("Invalid or unsupported country for tax ID validation.");
+        } else {
+            throw new InvalidInputException("Invalid or unsupported country for tax ID validation.");
+        }
     }
 }

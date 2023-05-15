@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.domain.value_object;
 
-import net.bytebuddy.asm.Advice;
 import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
@@ -8,9 +7,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Period implements ValueObject<Period> {
+
     private final LocalDate startDate;
     private final LocalDate endDate;
-
 
     /**
      * Constructor.
@@ -70,8 +69,8 @@ public class Period implements ValueObject<Period> {
      * @param duration  the duration of the period.
      * @return the end date of the period.
      */
-    private static final LocalDate calculateEndDate(final LocalDate startDate,
-                                                    final Number duration) {
+    private static LocalDate calculateEndDate(final LocalDate startDate,
+                                              final Number duration) {
         return startDate.plusWeeks(duration.intValue());
     }
 
@@ -116,7 +115,6 @@ public class Period implements ValueObject<Period> {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(startDate, endDate);
@@ -185,6 +183,7 @@ public class Period implements ValueObject<Period> {
         }
         return isEqualOrLower;
     }
+
     /**
      * This method checks if date is equal or greater than end date.
      *

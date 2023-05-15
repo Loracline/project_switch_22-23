@@ -90,7 +90,9 @@ public class TaxId implements ValueObject<TaxId> {
     public boolean isValid() throws InvalidInputException {
         if (isValidPortugalTaxId(this.number) || isValidSpainTaxId(this.number)) {
             return true;
-        } else throw new InvalidInputException("Invalid or unsupported country for tax ID validation.");
+        } else {
+            throw new InvalidInputException("Invalid or unsupported country for tax ID validation.");
+        }
     }
 
     /**

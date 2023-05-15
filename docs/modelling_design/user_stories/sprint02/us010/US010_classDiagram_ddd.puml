@@ -34,7 +34,7 @@ class ProjectCreationDto{
 
 class Project{
 - projectCode
-- Name projectName
+- projectName
 - description
 - businessSectorId
 - customerTaxId
@@ -42,22 +42,22 @@ class Project{
 }
 
 class ProjectRepository{
-- List<Project> projects
+- projects
 + addProjectToProjectRepository(project)
 }
 
 class BusinessSectorRepository{
-- List<BusinessSector> businessSectors
+- businessSectors
 + getBusinessSectorIdByName(businessSectorName)
 }
 
 class CustomerRepository{
-- List<Customer> customers
+- customers
 + getCustomerTaxIdByName(customerName)
 }
 
 class TypologyRepository{
-- List<Typology> typologies
+- typologies
 + getProjectTypologyIdByName(typologyName)
 }
 

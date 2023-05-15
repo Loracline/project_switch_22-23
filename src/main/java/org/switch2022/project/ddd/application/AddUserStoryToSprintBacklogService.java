@@ -6,7 +6,6 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.Effort;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;

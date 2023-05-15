@@ -22,7 +22,7 @@ public class ProjectListController {
      *
      * @return a projectDto list
      */
-    public List<ProjectDto> ListAllProjects() {
+    public List<ProjectDto> listAllProjects() {
         return projectListService.requestAllProjects();
     }
 }
