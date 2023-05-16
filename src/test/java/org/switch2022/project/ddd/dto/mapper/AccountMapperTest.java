@@ -27,10 +27,10 @@ class AccountMapperTest {
         Account account = mock(Account.class);
         String accountName = "Jose";
         String email = "jose@isep.pt";
-        boolean status = true;
+        String status = "active";
         when(account.getAccountName()).thenReturn(accountName);
         when(account.getAccountEmail()).thenReturn(email);
-        when(account.getAccountStatus()).thenReturn(true);
+        when(account.getAccountStatus()).thenReturn("active");
         AccountDto expected = new AccountDto(accountName,email,status);
         //Act
         AccountDto result = accountMapper.accountToDto(account);
@@ -52,10 +52,10 @@ class AccountMapperTest {
         Account account2 = mock(Account.class);
         String accountName1 = "John";
         String email1 = "john@example.com";
-        boolean status1 = true;
+        String status1 = "active";
         String accountName2 = "Jane";
         String email2 = "jane@example.com";
-        boolean status2 = false;
+        String status2 = "inactive";
         when(account1.getAccountName()).thenReturn(accountName1);
         when(account1.getAccountEmail()).thenReturn(email1);
         when(account1.getAccountStatus()).thenReturn(status1);

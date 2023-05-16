@@ -20,7 +20,7 @@ public class ChangeAccountStatusController {
      * @param status the new status of the account
      * @return true if the status was successfully changed, false otherwise
      */
-    public boolean changeStatus(String email, boolean status) {
+    public boolean changeStatus(String email, String status) {
         Validate.notNullOrEmptyOrBlank(email, "email");
         return accountService.changeStatus(email, status);
 

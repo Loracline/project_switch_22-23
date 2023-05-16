@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountFactory;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
-import org.switch2022.project.ddd.domain.value_object.Email;
-import org.switch2022.project.ddd.domain.value_object.Name;
-import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
-import org.switch2022.project.ddd.domain.value_object.Photo;
+import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -63,10 +60,17 @@ public class AccountService {
      * @return updates the account.
      */
 
-    public boolean changeStatus(String email, boolean status) {
-        Account account = accountRepository.getAccountByEmail(email);
-        return account.changeStatus(status);
+    public boolean changeStatus(String email, String status) {
+        boolean result = false;
+        for (AccountStatus accountStatus : AccountStatus.values()) {
+            if (accountStatus.getAccountStatus().equals(status)) {
+                Account account = accountRepository.getAccountByEmail(email);
+                result = account.changeStatus(accountStatus);
+            }
+        }
+        return result;
     }
+
 
 
 }

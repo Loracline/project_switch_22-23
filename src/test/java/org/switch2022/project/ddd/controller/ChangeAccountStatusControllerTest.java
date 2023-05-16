@@ -26,7 +26,6 @@ class ChangeAccountStatusControllerTest {
 
     /**
      * Method changeStatus
-     *
      * Scenario 1: status is not changed because email is null.
      */
     @Test
@@ -38,7 +37,7 @@ class ChangeAccountStatusControllerTest {
         // Act
         IllegalArgumentException exception =
                 assertThrows(IllegalArgumentException.class,
-                        () -> controller.changeStatus(email, true));
+                        () -> controller.changeStatus(email, "active"));
 
         // Assert
         assertEquals(expectedMessage, exception.getMessage());
@@ -56,7 +55,7 @@ class ChangeAccountStatusControllerTest {
         // Act
         IllegalArgumentException exception =
                 assertThrows(IllegalArgumentException.class,
-                        () -> controller.changeStatus(email, true));
+                        () -> controller.changeStatus(email, "active"));
 
         // Assert
         assertEquals(expectedMessage, exception.getMessage());
@@ -68,9 +67,9 @@ class ChangeAccountStatusControllerTest {
     @Test
     void ensureThatAccountStatusIsChanged(){
         String email = "ana@isep.pt";
-        when(accountService.changeStatus(email, false)).thenReturn(true);
+        when(accountService.changeStatus(email, "inactive")).thenReturn(true);
 
-        boolean result = controller.changeStatus(email, false);
+        boolean result = controller.changeStatus(email, "inactive");
 
         assertTrue(result);
     }
