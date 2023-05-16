@@ -17,30 +17,23 @@ public class AccountMapper {
      * @param account one must convert.
      * @return Dto carrying data.
      */
-
     public AccountDto accountToDto(Account account) {
         return new AccountDto(account.getAccountName(), account.getAccountEmail(),
                 account.getAccountStatus());
     }
 
-    // LIST OF ACCOUNTS -> LIST OF DTO
-
     /**
-     * This method converts a list of accounts into a list of accountDto's.
+     * This method converts a list of accounts into a list of accountDtos.
      *
      * @param accounts list one must convert in Dto
-     * @return a list of accountDto's.
+     * @return a list of accountDtos.
      */
-
-    public List<AccountDto> accountsToDtoList(List<Account> accounts) {
-        List<AccountDto> accountsDTO = new ArrayList<>();
-        int i = 0;
-        while (i < accounts.size()) {
+    public List<AccountDto> listAccountsToDto(List<Account> accounts) {
+        List<AccountDto> accountDtos = new ArrayList<>();
+        for (int i = 0; i < accounts.size(); i++) {
             AccountDto accountDTO = accountToDto(accounts.get(i));
-            accountsDTO.add(accountDTO);
-            i++;
+            accountDtos.add(accountDTO);
         }
-        return accountsDTO;
+        return accountDtos;
     }
-
 }

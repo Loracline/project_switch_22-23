@@ -53,7 +53,7 @@ class ListAllAccountsControllerTest {
                 Arrays.asList(accountDto);
 
         when(accountService.listAllAccounts()).thenReturn(accounts);
-        when(accountMapper.accountsToDtoList(any())).thenReturn(expectedAccountDtoList);
+        when(accountMapper.listAccountsToDto(any())).thenReturn(expectedAccountDtoList);
 
         // Act
         List<AccountDto> actualAccountDtoList =

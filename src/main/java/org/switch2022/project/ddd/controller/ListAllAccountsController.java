@@ -27,6 +27,6 @@ public class ListAllAccountsController {
 
     public List<AccountDto> listAllAccounts() {
         List<Account> accounts = accountService.listAllAccounts();
-        return accountMapper.accountsToDtoList(accounts);
+        return accountMapper.listAccountsToDto(accounts);
     }
 }

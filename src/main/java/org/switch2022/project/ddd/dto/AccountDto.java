@@ -30,8 +30,6 @@ public class AccountDto {
      * @param o accountDto to compare to.
      * @return TRUE if equal, and FALSE otherwise.
      */
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,13 +37,13 @@ public class AccountDto {
         AccountDto that = (AccountDto) o;
         return status.equals(that.status) && Objects.equals(name, that.name) && Objects.equals(email, that.email);
     }
+
     /**
      * The hashCode() method is used to generate a unique hash code for an
      * object, based on the object's state.
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(name, email, status);

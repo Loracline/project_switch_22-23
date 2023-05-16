@@ -70,7 +70,7 @@ class AccountMapperTest {
         expected.add(new AccountDto(accountName2, email2, status2));
 
         // Act
-        List<AccountDto> result = accountMapper.accountsToDtoList(accounts);
+        List<AccountDto> result = accountMapper.listAccountsToDto(accounts);
 
         // Assert
         assertEquals(expected, result);
