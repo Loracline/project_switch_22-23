@@ -1,11 +1,12 @@
 package org.switch2022.project.ddd.domain.model.profile;
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.value_object.Name;
 
 /**
  * Class ProfileFactory implements IProfileFactory in order to create
  * a Profile object.
  */
-
+@Component
 public class ProfileFactory implements IProfileFactory {
     /**
      * This method creates a new Profile object.

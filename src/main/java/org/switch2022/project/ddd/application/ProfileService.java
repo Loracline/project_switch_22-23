@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.profile.IProfileFactory;
 import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
@@ -9,6 +10,7 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 /**
  * Class ProfileService allows to create and manipulate the Profile aggregate.
  */
+@Service
 public class ProfileService {
     @Autowired
     private IProfileFactory profileFactory;
