@@ -376,6 +376,48 @@ class AccountTest {
     }
 
     /**
+     * Method isAccountActive().
+     * Scenario 01:  account is activate.
+     */
+    @Test
+    void ensureThatAccountIsActivate() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        AccountStatus accountStatus = mock(AccountStatus.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+        when(accountStatus.getAccountStatus()).thenReturn(AccountStatus.ACTIVE.getAccountStatus());
+
+        // Act
+        boolean result = account.isAccountActive(accountStatus.getAccountStatus());
+
+        // Assert
+        assertTrue(result);
+    }
+    /**
+     * Scenario 02:  account is inactive.
+     */
+    @Test
+    void ensureThatAccountIsInactive() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        AccountStatus accountStatus = mock(AccountStatus.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+        when(accountStatus.getAccountStatus()).thenReturn(AccountStatus.INACTIVE.getAccountStatus());
+
+        // Act
+        boolean result = account.isAccountActive(accountStatus.getAccountStatus());
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
      * Method setProfile()
      * Scenario 1: Tests the successful change of a profile in an account.
      * Compares if the account with a profile and
