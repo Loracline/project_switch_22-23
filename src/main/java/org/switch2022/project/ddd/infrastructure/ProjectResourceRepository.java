@@ -174,7 +174,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     /**
      * This method checks if a given role is not Project Manager.
      *
-     * @param role to ckeck.
+     * @param role to check.
      * @return <code>true</code> if role is not Project Manager and <code>false</code> otherwise.
      */
     public boolean isNotProjectManager(Role role) {
