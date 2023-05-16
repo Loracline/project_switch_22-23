@@ -1,11 +1,11 @@
 package org.switch2022.project.ddd.domain.model.project_resource;
 
 import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.List;
 
 public interface IProjectResourceRepository {
+
     /**
      * This method adds a new projectResource to the repository of project resources.
      *
@@ -14,13 +14,11 @@ public interface IProjectResourceRepository {
      */
     boolean add(ProjectResource projectResource);
 
-
     /**
-     * This method returns a list of project resources with a given project code.
+     * Retrieves a list of email accounts allocated to a specific project.
      *
-     * @param projectCode the code of the project from which the resources are being queried.
-     * @return a list of accounts whose attribute projectCode equals the projectCode of interest.
+     * @param projectCode The project code used to filter the allocated accounts.
+     * @return A list of email accounts allocated to the specified project.
      */
-    List<ProjectResource> getResourcesByProjectCode(Code projectCode);
-
+    List<String> getAccountsAllocatedToProject(Code projectCode);
 }

@@ -4,9 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.Period;
 import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
-import org.switch2022.project.ddd.exceptions.InvalidInputException;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -325,171 +324,193 @@ class ProjectRepositoryTest {
     }
 
     /**
-     * METHOD doesProjectExist()
+     * METHOD isProjectValidForAllocation()
      */
-    @DisplayName("Project already exists in repository")
+    @DisplayName("Project in INCEPTION phase valid for allocation.")
     @Test
-    void ensureReturnsTrueWhenProjectAlreadyExistsInRepo() {
+    void ensureProjectIsValidForAllocationWhenStatusInception() {
         // Arrange
-        boolean expected = true;
-
         ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
         Project project = mock(Project.class);
         repository.addProjectToProjectRepository(project);
 
-        // Act
-        boolean result = repository.doesProjectExist(project);
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    @DisplayName("Project doesn't exist in repository")
-    @Test
-    void ensureAnExceptionIsThrownWhenProjectDoNotExist() {
-        // Arrange
-        String expected = "The requested project does not exist.";
-
-        ProjectRepository repository = new ProjectRepository();
-        Project project = mock(Project.class);
-
-        // Act
-        NotFoundInRepoException result = assertThrows(
-                NotFoundInRepoException.class,
-                () -> repository.doesProjectExist(project));
-
-        // Assert
-        assertEquals(expected, result.getMessage());
-    }
-
-    /**
-     * METHOD isNotClosed()
-     */
-    @DisplayName("Project status: Closed")
-    @Test
-    void ensureAnExceptionIsThrownWhenProjectIsClosed() {
-        // Arrange
-        String expected = "The requested project has already been closed.";
-
-        ProjectRepository repository = new ProjectRepository();
-        Project project = mock(Project.class);
-        repository.addProjectToProjectRepository(project);
-        when(project.hasStatus(ProjectStatus.CLOSED)).thenReturn(true);
-
-        // Act
-        InvalidInputException result = assertThrows(
-                InvalidInputException.class,
-                () -> repository.isNotClosed(project));
-
-        // Assert
-        assertEquals(expected, result.getMessage());
-    }
-
-    @DisplayName("Project status: Planned")
-    @Test
-    void ensureReturnsTrueWhenStatusIsPlanned() {
-        // Arrange
-        boolean expected = true;
-
-        ProjectRepository repository = new ProjectRepository();
-        Project project = mock(Project.class);
-        repository.addProjectToProjectRepository(project);
-        when(project.hasStatus(ProjectStatus.PLANNED)).thenReturn(true);
-
-        // Act
-        boolean result = repository.isNotClosed(project);
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
-    @DisplayName("Project status: Inception")
-    @Test
-    void ensureReturnsTrueWhenStatusIsInception() {
-        // Arrange
-        boolean expected = true;
-
-        ProjectRepository repository = new ProjectRepository();
-        Project project = mock(Project.class);
-        repository.addProjectToProjectRepository(project);
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
         when(project.hasStatus(ProjectStatus.INCEPTION)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(true);
 
         // Act
-        boolean result = repository.isNotClosed(project);
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
 
         // Assert
-        assertEquals(expected, result);
+        assertTrue(result);
     }
 
-    @DisplayName("Project status: Elaboration")
+    @DisplayName("Project in ELABORATION phase valid for allocation.")
     @Test
-    void ensureReturnsTrueWhenStatusIsElaboration() {
+    void ensureProjectIsValidForAllocationWhenStatusElaboration() {
         // Arrange
-        boolean expected = true;
-
         ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
         Project project = mock(Project.class);
         repository.addProjectToProjectRepository(project);
+
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
         when(project.hasStatus(ProjectStatus.ELABORATION)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(true);
 
         // Act
-        boolean result = repository.isNotClosed(project);
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
 
         // Assert
-        assertEquals(expected, result);
+        assertTrue(result);
     }
 
-    @DisplayName("Project status: Construction")
+    @DisplayName("Project in CONSTRUCTION phase valid for allocation.")
     @Test
-    void ensureReturnsTrueWhenStatusIsConstruction() {
+    void ensureProjectIsValidForAllocationWhenStatusConstruction() {
         // Arrange
-        boolean expected = true;
-
         ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
         Project project = mock(Project.class);
         repository.addProjectToProjectRepository(project);
+
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
         when(project.hasStatus(ProjectStatus.CONSTRUCTION)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(true);
 
         // Act
-        boolean result = repository.isNotClosed(project);
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
 
         // Assert
-        assertEquals(expected, result);
+        assertTrue(result);
     }
 
-    @DisplayName("Project status: Transition")
+    @DisplayName("Project in TRANSITION phase valid for allocation.")
     @Test
-    void ensureReturnsTrueWhenStatusIsTransition() {
+    void ensureProjectIsValidForAllocationWhenStatusTransition() {
         // Arrange
-        boolean expected = true;
-
         ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
         Project project = mock(Project.class);
         repository.addProjectToProjectRepository(project);
+
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
         when(project.hasStatus(ProjectStatus.TRANSITION)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(true);
 
         // Act
-        boolean result = repository.isNotClosed(project);
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
 
         // Assert
-        assertEquals(expected, result);
+        assertTrue(result);
     }
 
-    @DisplayName("Project status: Warranty")
+    @DisplayName("Project in WARRANTY phase valid for allocation.")
     @Test
-    void ensureReturnsTrueWhenStatusIsWarranty() {
+    void ensureProjectIsValidForAllocationWhenStatusWarranty() {
         // Arrange
-        boolean expected = true;
-
         ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
         Project project = mock(Project.class);
         repository.addProjectToProjectRepository(project);
+
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
         when(project.hasStatus(ProjectStatus.WARRANTY)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(true);
 
         // Act
-        boolean result = repository.isNotClosed(project);
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
 
         // Assert
-        assertEquals(expected, result);
+        assertTrue(result);
+    }
+
+    @DisplayName("Project in PLANNED phase invalid for allocation.")
+    @Test
+    void ensureReturnsFalseWhenProjectInPlannedStatus() {
+        // Arrange
+        ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
+        when(project.hasStatus(ProjectStatus.PLANNED)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @DisplayName("Project in CLOSED phase invalid for allocation.")
+    @Test
+    void ensureReturnsFalseWhenProjectInClosedStatus() {
+        // Arrange
+        ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
+        when(project.hasStatus(ProjectStatus.CLOSED)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @DisplayName("Project does not exist in repository.")
+    @Test
+    void ensureReturnsFalseWhenProjectDoesNotExist() {
+        // Arrange
+        ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
+        Project project = mock(Project.class);
+
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
+        when(project.hasStatus(ProjectStatus.INCEPTION)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @DisplayName("Project does not contain allocation period.")
+    @Test
+    void ensureReturnsFalseWhenProjectDoesNotContainAllocationPeriod() {
+        // Arrange
+        ProjectRepository repository = new ProjectRepository();
+        Code projectCode = mock(Code.class);
+        Period allocationPeriod = mock(Period.class);
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+
+        when(project.hasProjectCode(projectCode)).thenReturn(true);
+        when(project.hasStatus(ProjectStatus.INCEPTION)).thenReturn(true);
+        when(project.contains(allocationPeriod)).thenReturn(false);
+
+        // Act
+        boolean result = repository.isProjectValidForAllocation(projectCode, allocationPeriod);
+
+        // Assert
+        assertFalse(result);
     }
 }

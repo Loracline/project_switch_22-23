@@ -44,12 +44,10 @@ public class AccountRepository implements IAccountRepository {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(accounts);
     }
-
 
     /**
      * This method adds an instance of Account to AccountRepository if that instance
