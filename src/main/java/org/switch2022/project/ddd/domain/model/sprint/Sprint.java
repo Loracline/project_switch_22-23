@@ -253,4 +253,13 @@ public class Sprint implements Entity<Sprint> {
     public boolean isEndDateBeforeOrGreaterThanDate(LocalDate date) {
         return period.isDateEqualOrGreaterThanEndDate(date);
     }
+
+    /**
+     * Getter method for the attribute: userStoriesInSprint
+     *
+     * @return a list of User Story In Sprint
+     */
+    public List<UserStoryInSprint> getUserStoriesInSprint() {
+        return userStoriesInSprint;
+    }
 }
