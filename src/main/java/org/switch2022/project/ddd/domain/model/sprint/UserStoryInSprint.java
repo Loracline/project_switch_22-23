@@ -91,7 +91,7 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
      *
      * @return a String with the UserStoryInSprint id.
      */
-    protected UsId getUsId() {
+    public UsId getUsId() {
         return this.usId;
     }
 

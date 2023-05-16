@@ -28,16 +28,23 @@ ui -> controller: listAccountsByProject(projectCode)
 activate controller
 controller -> service: listAccountsByProject(projectCode)
 activate service
-service -> resourceRepo: getEmailsByProjectCode(projectCode)
+service -> resourceRepo: getAccountsAllocatedToProject(projectCode)
 activate resourceRepo
 create emailList
 resourceRepo -> emailList: create()
 loop for each resource in repository
 resourceRepo -> resource: hasProject(projectCode)
+activate resource
 resource --> resourceRepo: true
+deactivate
 resourceRepo -> resource: getEmail()
+activate resource
 resource --> resourceRepo: email
+deactivate
 resourceRepo -> emailList: add(email)
+activate emailList
+emailList --> resourceRepo: true
+deactivate
 end loop
 service <-- resourceRepo:  emails
 deactivate resourceRepo
@@ -48,6 +55,9 @@ accountRepo -> list: create ()
 loop for each email in emails
 accountRepo -> accountRepo: getAccountByEmail(email)
 accountRepo -> list: add(account)
+activate list
+list --> accountRepo: true
+deactivate
 end loop
 accountRepo --> service: accounts
 deactivate accountRepo
@@ -59,8 +69,10 @@ loop for each account in accounts
 mapper -> mapper: accountToDto
 create dto
 mapper -> dto: create(name, email, status)
-mapper <-- dto: accountDto
 mapper -> dtoList: add(accountDto)
+activate dtoList
+dtoList --> mapper: true
+deactivate
 end loop
 mapper --> service: accountDtos
 deactivate mapper
