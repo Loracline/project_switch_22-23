@@ -12,10 +12,11 @@ participant ":ListAccountsInProjectUI" as ui
 participant ":ListAccountsInProjectController" as controller
 participant ":AllocationService" as service
 participant ":ProjectResourceRepository" as resourceRepo
-participant "emails: List<Email>" as emailList
+participant "emails: List<String>" as emailList
 participant ":ProjectResource" as resource
 participant ":AccountRepository" as accountRepo
 participant "accounts: List<Account>" as list
+participant ":Account" as account
 participant ":AccountMapper" as mapper
 participant "accountDtos: List<AccountDto>" as dtoList
 participant "accountDto:AccountDto" as dto
@@ -53,7 +54,10 @@ activate accountRepo
 create list
 accountRepo -> list: create ()
 loop for each email in emails
-accountRepo -> accountRepo: getAccountByEmail(email)
+accountRepo -> account: hasEmail(email)
+activate account
+account --> accountRepo: true
+deactivate account
 accountRepo -> list: add(account)
 activate list
 list --> accountRepo: true
