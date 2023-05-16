@@ -7,9 +7,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Period implements ValueObject<Period> {
+
     private final LocalDate startDate;
     private final LocalDate endDate;
-
 
     /**
      * Constructor.
@@ -69,8 +69,8 @@ public class Period implements ValueObject<Period> {
      * @param duration  the duration of the period.
      * @return the end date of the period.
      */
-    private static final LocalDate calculateEndDate(final LocalDate startDate,
-                                                    final Number duration) {
+    private static LocalDate calculateEndDate(final LocalDate startDate,
+                                              final Number duration) {
         return startDate.plusWeeks(duration.intValue());
     }
 
@@ -115,7 +115,6 @@ public class Period implements ValueObject<Period> {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(startDate, endDate);
@@ -184,6 +183,7 @@ public class Period implements ValueObject<Period> {
         }
         return isEqualOrLower;
     }
+
     /**
      * This method checks if date is equal or greater than end date.
      *
@@ -196,5 +196,20 @@ public class Period implements ValueObject<Period> {
             isEqualOrGreater = date.isAfter(this.endDate) || date.isEqual(this.endDate);
         }
         return isEqualOrGreater;
+    }
+
+    /**
+     * This method verifies whether an instance of Period is contained within another instance of Period passed as an
+     * argument.
+     *
+     * @param otherPeriod to compare to.
+     * @return true if the instance of Period is contained within the other instance of Period, and false otherwise
+     */
+    public boolean contains(Period otherPeriod){
+        Validate.notNull(otherPeriod, "The period must not be null");
+        LocalDate otherStart = LocalDate.parse(otherPeriod.getStartDate());
+        LocalDate otherEnd = LocalDate.parse(otherPeriod.getEndDate());
+
+        return this.startDate.compareTo(otherStart)<=0 && this.endDate.compareTo(otherEnd)>=0;
     }
 }

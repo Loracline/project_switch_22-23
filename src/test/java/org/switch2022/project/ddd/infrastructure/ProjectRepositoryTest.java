@@ -1,8 +1,12 @@
 package org.switch2022.project.ddd.infrastructure;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +112,6 @@ class ProjectRepositoryTest {
         assertEquals(expected, result);
     }
 
-
     /**
      * Method:hashCode()
      * Scenario 01:Two equal ProjectsRepository objects are the same.
@@ -124,7 +127,6 @@ class ProjectRepositoryTest {
         //Assert
         assertEquals(projectRepositoryOne.hashCode(), projectRepositoryTwo.hashCode());
     }
-
 
     /**
      * Method:hashCode()
@@ -143,7 +145,6 @@ class ProjectRepositoryTest {
         //Assert
         assertNotEquals(projectRepositoryOne.hashCode(), projectRepositoryTwo.hashCode());
     }
-
 
     /**
      * Method: addProjectToProjectRepository(project).
@@ -284,25 +285,25 @@ class ProjectRepositoryTest {
 
     /**
      * Method: findAll()
-     *
+     * <p>
      * scenario 1: Verify that an empty list is returned when the project list is empty
      */
     @Test
-    void ensureProjectReturnsAnEmptyListWhenThereAreNoProjects(){
+    void ensureProjectReturnsAnEmptyListWhenThereAreNoProjects() {
         //Arrange
         ProjectRepository projectRepositoryOne = new ProjectRepository();
         List<Project> expected = new ArrayList<>();
         //Act
         List<Project> result = projectRepositoryOne.findAll();
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
      * scenario 2: Verify that a list pf projects is returned when the project list has projects
      */
     @Test
-    void ensureProjectReturnsAListOfProjects(){
+    void ensureProjectReturnsAListOfProjects() {
         //Arrange
         Project projectOne = mock(Project.class);
         Project projectTwo = mock(Project.class);
@@ -320,6 +321,175 @@ class ProjectRepositoryTest {
         List<Project> result = projectRepositoryOne.findAll();
 
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD doesProjectExist()
+     */
+    @DisplayName("Project already exists in repository")
+    @Test
+    void ensureReturnsTrueWhenProjectAlreadyExistsInRepo() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+
+        // Act
+        boolean result = repository.doesProjectExist(project);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Project doesn't exist in repository")
+    @Test
+    void ensureAnExceptionIsThrownWhenProjectDoNotExist() {
+        // Arrange
+        String expected = "The requested project does not exist.";
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+
+        // Act
+        NotFoundInRepoException result = assertThrows(
+                NotFoundInRepoException.class,
+                () -> repository.doesProjectExist(project));
+
+        // Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * METHOD isNotClosed()
+     */
+    @DisplayName("Project status: Closed")
+    @Test
+    void ensureAnExceptionIsThrownWhenProjectIsClosed() {
+        // Arrange
+        String expected = "The requested project has already been closed.";
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+        when(project.hasStatus(ProjectStatus.CLOSED)).thenReturn(true);
+
+        // Act
+        InvalidInputException result = assertThrows(
+                InvalidInputException.class,
+                () -> repository.isNotClosed(project));
+
+        // Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    @DisplayName("Project status: Planned")
+    @Test
+    void ensureReturnsTrueWhenStatusIsPlanned() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+        when(project.hasStatus(ProjectStatus.PLANNED)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isNotClosed(project);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Project status: Inception")
+    @Test
+    void ensureReturnsTrueWhenStatusIsInception() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+        when(project.hasStatus(ProjectStatus.INCEPTION)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isNotClosed(project);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Project status: Elaboration")
+    @Test
+    void ensureReturnsTrueWhenStatusIsElaboration() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+        when(project.hasStatus(ProjectStatus.ELABORATION)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isNotClosed(project);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Project status: Construction")
+    @Test
+    void ensureReturnsTrueWhenStatusIsConstruction() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+        when(project.hasStatus(ProjectStatus.CONSTRUCTION)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isNotClosed(project);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Project status: Transition")
+    @Test
+    void ensureReturnsTrueWhenStatusIsTransition() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+        when(project.hasStatus(ProjectStatus.TRANSITION)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isNotClosed(project);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Project status: Warranty")
+    @Test
+    void ensureReturnsTrueWhenStatusIsWarranty() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectRepository repository = new ProjectRepository();
+        Project project = mock(Project.class);
+        repository.addProjectToProjectRepository(project);
+        when(project.hasStatus(ProjectStatus.WARRANTY)).thenReturn(true);
+
+        // Act
+        boolean result = repository.isNotClosed(project);
+
+        // Assert
+        assertEquals(expected, result);
     }
 }

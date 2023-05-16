@@ -29,7 +29,8 @@ class SprintTest {
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintNumber sprintNumberOne = new SprintNumber(1);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        SprintId sprintIdOne = new SprintId(projectCode.toString(), sprintNumberOne.getSprintNumber());
+        SprintId sprintIdOne = new SprintId(projectCode.toString(),
+                sprintNumberOne.getSprintNumber());
         Sprint sprintOne = new Sprint(projectCode, sprintIdOne, sprintNumberOne, period);
         Sprint sprintTwo = new Sprint(projectCode, sprintId, sprintNumber, period);
         boolean expected = false;
@@ -161,7 +162,8 @@ class SprintTest {
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintNumber sprintNumberOne = new SprintNumber(1);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        SprintId sprintIdOne = new SprintId(projectCode.toString(), sprintNumberOne.getSprintNumber());
+        SprintId sprintIdOne = new SprintId(projectCode.toString(),
+                sprintNumberOne.getSprintNumber());
         Sprint sprintOne = new Sprint(projectCode, sprintIdOne, sprintNumberOne, period);
         Sprint sprintTwo = new Sprint(projectCode, sprintId, sprintNumber, period);
 
@@ -829,5 +831,27 @@ class SprintTest {
         boolean result = sprint.isEndDateBeforeOrGreaterThanDate(date);
         //Assert
         assertFalse(result);
+    }
+
+    /**
+     * Method: getUserStoriesInSprint().
+     * Scenario 1: This test evaluates if a list of User Story In Sprint is retrieved.
+     */
+    @Test
+    public void ensureUserStoriesInSprintIsRetrieved() {
+        //ARRANGE
+        List<UserStoryInSprint> expected = new ArrayList<>();
+
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        //ACT
+        List<UserStoryInSprint> result = sprint.getUserStoriesInSprint();
+
+        //ASSERT
+        assertEquals(expected, result);
     }
 }

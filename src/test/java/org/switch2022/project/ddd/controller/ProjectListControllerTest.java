@@ -45,7 +45,7 @@ class ProjectListControllerTest {
         when(projectListService.requestAllProjects()).thenReturn(expected);
 
         //Act
-        List<ProjectDto> result = controller.ListAllProjects();
+        List<ProjectDto> result = controller.listAllProjects();
         //Assert
         assertEquals(expected, result);
     }
@@ -60,7 +60,7 @@ class ProjectListControllerTest {
         when(projectListService.requestAllProjects()).thenReturn(expected);
 
         //Act
-        List<ProjectDto> result = controller.ListAllProjects();
+        List<ProjectDto> result = controller.listAllProjects();
         //Assert
         assertEquals(expected, result);
     }

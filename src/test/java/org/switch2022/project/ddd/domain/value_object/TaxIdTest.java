@@ -3,9 +3,10 @@ package org.switch2022.project.ddd.domain.value_object;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.exceptions.InvalidTaxIdException;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class TaxIdTest {
 
@@ -371,7 +372,7 @@ class TaxIdTest {
         TaxId taxId = new TaxId("028014885");
 
         // Act
-        InvalidTaxIdException result = Assertions.assertThrows(InvalidTaxIdException.class,
+        InvalidInputException result = Assertions.assertThrows(InvalidInputException.class,
                 taxId::isValid);
 
         // Assert
@@ -387,7 +388,7 @@ class TaxIdTest {
         TaxId taxId = new TaxId("228-01-885");
 
         // Act
-        InvalidTaxIdException result = Assertions.assertThrows(InvalidTaxIdException.class,
+        InvalidInputException result = Assertions.assertThrows(InvalidInputException.class,
                 taxId::isValid);
 
         // Assert
@@ -403,7 +404,7 @@ class TaxIdTest {
         TaxId taxId = new TaxId("228-01X-885");
 
         // Act
-        InvalidTaxIdException result = Assertions.assertThrows(InvalidTaxIdException.class,
+        InvalidInputException result = Assertions.assertThrows(InvalidInputException.class,
                 taxId::isValid);
 
         // Assert

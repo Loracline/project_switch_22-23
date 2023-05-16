@@ -18,10 +18,9 @@ function CreateSprint() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const initialSprintState = {
         projectCode: detailedProject.basicInfo.code,
+        sprintNumber: '',
         startDate: '',
-        idSprint: '',
         endDate: '',
-        description: '',
         userStories: []
     };
     const [sprintToSubmit, setSprintToSubmit] = useState(initialSprintState);

@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResourceFactory;
@@ -16,6 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ProjectResourceRepositoryTest {
+
     /**
      * Method: equals()
      * Scenario 01: Test to ensure the object equals itself.
@@ -103,7 +105,6 @@ class ProjectResourceRepositoryTest {
         assertFalse(result);
     }
 
-
     /**
      * Method:hashCode()
      * Scenario 01:Two objects with the same hashcode are equal.
@@ -118,13 +119,12 @@ class ProjectResourceRepositoryTest {
         assertEquals(repositoryOne.hashCode(), repositoryTwo.hashCode());
     }
 
-
     /**
      * Method:hashCode()
      * Scenario 02:Two objects with the different code and different hash codes are two different objects
      */
     @Test
-    void ensureTwoObjectsWithDifferentHashcodesAreNotEqual() {
+    void ensureTwoObjectsWithDifferentHashcodeAreNotEqual() {
         //Arrange
         ProjectResourceRepository repositoryOne = new ProjectResourceRepository();
         ProjectResource resourceDouble = mock(ProjectResource.class);
@@ -136,9 +136,8 @@ class ProjectResourceRepositoryTest {
         assertNotEquals(repositoryOne.hashCode(), repositoryTwo.hashCode());
     }
 
-
     /**
-     * Method: add(ProjectResource projectResource).
+     * Method: add(ProjectResource).
      * Adds a new ProjectResource instance to the repository of project resources.
      * <br>
      * Scenario 01: Check if an instance of ProjectResource is added to the list of project resources.
@@ -158,7 +157,7 @@ class ProjectResourceRepositoryTest {
     }
 
     /**
-     * Method: add(ProjectResource projectResource).
+     * Method: add(ProjectResource).
      * Adds a new ProjectResource instance to the repository of project resources.
      * <p>
      * Scenario 02: Check that an instance of ProjectResource is not added to the repository if it already exists one
@@ -239,7 +238,7 @@ class ProjectResourceRepositoryTest {
     }
 
     @Test
-    void ensureThatTheRoleOfResoureIsProjectManager() {
+    void ensureThatTheRoleOfResourceIsProjectManager() {
         //Arrange
         Role projectManager = Role.PROJECT_MANAGER;
         ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
@@ -252,7 +251,7 @@ class ProjectResourceRepositoryTest {
     }
 
     @Test
-    void ensureThatTheRoleOfResoureIsNotProjectManager() {
+    void ensureThatTheRoleOfResourceIsNotProjectManager() {
         //Arrange
         Role teamMember = Role.TEAM_MEMBER;
         ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
@@ -392,6 +391,7 @@ class ProjectResourceRepositoryTest {
         //Assert
         assertFalse(result);
     }
+
     @Test
     void ensureThatReturnFalseWhenRoleToCheckIsNotProductOwnerOrScrumMaster() {
         //Arrange
@@ -457,5 +457,152 @@ class ProjectResourceRepositoryTest {
 
         //Assert
         assertTrue(result);
+    }
+
+    /**
+     * METHOD validatePercentageOfAllocation()
+     */
+    @DisplayName("Sum < 100%")
+    @Test
+    void ensureReturnsTrueWhenPercentageOfAllocationIsValid() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectResourceRepository repository = new ProjectResourceRepository();
+
+        // Searching for John's allocations in repository...
+        ProjectResource johnInProjectOne = mock(ProjectResource.class);
+        ProjectResource johnInProjectTwo = mock(ProjectResource.class);
+        ProjectResource johnInProjectThree = mock(ProjectResource.class);
+
+        ProjectResource maryInProjectOne = mock(ProjectResource.class);
+        ProjectResource maryInProjectTwo = mock(ProjectResource.class);
+
+        repository.add(johnInProjectOne);
+        repository.add(johnInProjectTwo);
+        repository.add(johnInProjectThree);
+
+        repository.add(maryInProjectTwo);
+        repository.add(maryInProjectOne);
+
+        Email accountEmail = mock(Email.class);
+        LocalDate date = mock(LocalDate.class);
+        PercentageOfAllocation toAdd = mock(PercentageOfAllocation.class);
+
+        when(johnInProjectOne.hasAccount(accountEmail)).thenReturn(true);
+        when(johnInProjectTwo.hasAccount(accountEmail)).thenReturn(true);
+        when(johnInProjectThree.hasAccount(accountEmail)).thenReturn(true);
+
+        when(johnInProjectOne.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(johnInProjectTwo.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(johnInProjectThree.allocationPeriodIncludesDate(date)).thenReturn(false);
+
+        when(johnInProjectOne.getPercentageOfAllocation()).thenReturn(25.0F);
+        when(johnInProjectTwo.getPercentageOfAllocation()).thenReturn(25.0F);
+        when(johnInProjectThree.getPercentageOfAllocation()).thenReturn(50.0F);
+
+        when(toAdd.getValue()).thenReturn(25.0F);
+
+        // Act
+        boolean result = repository.validatePercentageOfAllocation(accountEmail, date, toAdd);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Sum > 100%")
+    @Test
+    void ensureReturnsFalseWhenSumIsAboveMaximumAllowed() {
+        // Arrange
+        boolean expected = false;
+
+        ProjectResourceRepository repository = new ProjectResourceRepository();
+
+        // Searching for John's allocations in repository...
+        ProjectResource johnInProjectOne = mock(ProjectResource.class);
+        ProjectResource johnInProjectTwo = mock(ProjectResource.class);
+        ProjectResource johnInProjectThree = mock(ProjectResource.class);
+
+        ProjectResource maryInProjectOne = mock(ProjectResource.class);
+        ProjectResource maryInProjectTwo = mock(ProjectResource.class);
+
+        repository.add(johnInProjectOne);
+        repository.add(johnInProjectTwo);
+        repository.add(johnInProjectThree);
+
+        repository.add(maryInProjectTwo);
+        repository.add(maryInProjectOne);
+
+        Email accountEmail = mock(Email.class);
+        LocalDate date = mock(LocalDate.class);
+        PercentageOfAllocation toAdd = mock(PercentageOfAllocation.class);
+
+        when(johnInProjectOne.hasAccount(accountEmail)).thenReturn(true);
+        when(johnInProjectTwo.hasAccount(accountEmail)).thenReturn(true);
+        when(johnInProjectThree.hasAccount(accountEmail)).thenReturn(true);
+
+        when(johnInProjectOne.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(johnInProjectTwo.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(johnInProjectThree.allocationPeriodIncludesDate(date)).thenReturn(false);
+
+        when(johnInProjectOne.getPercentageOfAllocation()).thenReturn(25.0F);
+        when(johnInProjectTwo.getPercentageOfAllocation()).thenReturn(25.0F);
+        when(johnInProjectThree.getPercentageOfAllocation()).thenReturn(50.0F);
+
+        when(toAdd.getValue()).thenReturn(100.0F);
+
+        // Act
+        boolean result = repository.validatePercentageOfAllocation(accountEmail, date, toAdd);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Sum = 100%")
+    @Test
+    void ensureReturnsTrueWhenSumIsEqualToMaximumAllowed() {
+        // Arrange
+        boolean expected = true;
+
+        ProjectResourceRepository repository = new ProjectResourceRepository();
+
+        // Searching for John's allocations in repository...
+        ProjectResource johnInProjectOne = mock(ProjectResource.class);
+        ProjectResource johnInProjectTwo = mock(ProjectResource.class);
+        ProjectResource johnInProjectThree = mock(ProjectResource.class);
+
+        ProjectResource maryInProjectOne = mock(ProjectResource.class);
+        ProjectResource maryInProjectTwo = mock(ProjectResource.class);
+
+        repository.add(johnInProjectOne);
+        repository.add(johnInProjectTwo);
+        repository.add(johnInProjectThree);
+
+        repository.add(maryInProjectTwo);
+        repository.add(maryInProjectOne);
+
+        Email accountEmail = mock(Email.class);
+        LocalDate date = mock(LocalDate.class);
+        PercentageOfAllocation toAdd = mock(PercentageOfAllocation.class);
+
+        when(johnInProjectOne.hasAccount(accountEmail)).thenReturn(true);
+        when(johnInProjectTwo.hasAccount(accountEmail)).thenReturn(true);
+        when(johnInProjectThree.hasAccount(accountEmail)).thenReturn(true);
+
+        when(johnInProjectOne.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(johnInProjectTwo.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(johnInProjectThree.allocationPeriodIncludesDate(date)).thenReturn(false);
+
+        when(johnInProjectOne.getPercentageOfAllocation()).thenReturn(25.0F);
+        when(johnInProjectTwo.getPercentageOfAllocation()).thenReturn(25.0F);
+        when(johnInProjectThree.getPercentageOfAllocation()).thenReturn(50.0F);
+
+        when(toAdd.getValue()).thenReturn(50.0F);
+
+        // Act
+        boolean result = repository.validatePercentageOfAllocation(accountEmail, date, toAdd);
+
+        // Assert
+        assertEquals(expected, result);
     }
 }

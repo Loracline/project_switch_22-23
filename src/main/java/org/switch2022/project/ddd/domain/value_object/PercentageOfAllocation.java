@@ -20,7 +20,7 @@ public class PercentageOfAllocation implements ValueObject<PercentageOfAllocatio
             this.percentageAllocation = percentageOfAllocation;
         } else {
             throw new InvalidInputException("Percentage of Allocation must be greater than 0% and " +
-                "less or equal than 100%");
+                    "less or equal than 100%");
         }
     }
 
@@ -45,7 +45,7 @@ public class PercentageOfAllocation implements ValueObject<PercentageOfAllocatio
      */
     @Override
     public boolean sameValueAs(PercentageOfAllocation other) {
-        Validate.notNull(other,"Percentage of Allocation can not be null");
+        Validate.notNull(other, "Percentage of Allocation can not be null");
         return Float.compare(this.percentageAllocation, other.percentageAllocation) == 0;
     }
 
@@ -75,5 +75,14 @@ public class PercentageOfAllocation implements ValueObject<PercentageOfAllocatio
     @Override
     public int hashCode() {
         return Objects.hash(percentageAllocation);
+    }
+
+    /**
+     * Gets the value of this allocation as a percentage.
+     *
+     * @return the percentage allocation value.
+     */
+    public float getValue() {
+        return percentageAllocation;
     }
 }

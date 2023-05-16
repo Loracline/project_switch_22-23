@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.utils.Validate;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class ProjectResource implements Entity<ProjectResource> {
@@ -12,10 +13,10 @@ public class ProjectResource implements Entity<ProjectResource> {
     private final ProjectResourceId projectResourceId;
     private final Code projectCode;
     private final Email accountEmail;
-    private Role roleInProject;
-    private Period allocationPeriod;
-    private CostPerHour costPerHour;
-    private PercentageOfAllocation percentageOfAllocation;
+    private final Role roleInProject;
+    private final Period allocationPeriod;
+    private final CostPerHour costPerHour;
+    private final PercentageOfAllocation percentageOfAllocation;
 
     /**
      * Constructor
@@ -88,7 +89,7 @@ public class ProjectResource implements Entity<ProjectResource> {
      * This method checks if an instance of ProjectResource has a given project code.
      *
      * @param projectCode project code of interest.
-     * @return true if the project code of interest is equal to the project code of the instance of ProjectResuorce,
+     * @return true if the project code of interest is equal to the project code of the instance of ProjectResource,
      * and false otherwise.
      */
     public boolean hasProjectCode(Code projectCode) {
@@ -112,8 +113,8 @@ public class ProjectResource implements Entity<ProjectResource> {
     /**
      * This method checks if an instance of ProjectResource has a given role.
      *
-     * @param role to ckeck.
-     * @return <code>true</code> if the role is equal to the role of the ProjectResuorce and <code>false</code>
+     * @param role to check.
+     * @return <code>true</code> if the role is equal to the role of the ProjectResource and <code>false</code>
      * otherwise.
      */
     public boolean hasRole(Role role) {
@@ -123,10 +124,48 @@ public class ProjectResource implements Entity<ProjectResource> {
     /**
      * This method checks if an instance of ProjectResource has a period that overlaps with another period.
      *
-     * @param period to ckeck.
+     * @param period to check.
      * @return <code>true</code> if the period is overlapping and <code>false</code> otherwise.
      */
     public boolean isPeriodOverlapping(Period period) {
         return !this.allocationPeriod.isPeriodNotOverlapping(period);
+    }
+
+    /**
+     * Checks if the given date falls within the allocation period.
+     *
+     * @param date the date to check.
+     * @return TRUE if the date is within the allocation period, FALSE otherwise.
+     */
+    public boolean allocationPeriodIncludesDate(LocalDate date) {
+        return this.allocationPeriod.isDateEqualOrGreaterThanStartDate(date)
+                && this.allocationPeriod.isDateEqualOrLowerThanEndDate(date);
+    }
+
+    /**
+     * Checks if the account email matches the given email.
+     *
+     * @param email the email to check.
+     * @return TRUE if the account email matches the given email, FALSE otherwise.
+     */
+    public boolean hasAccount(Email email) {
+        return this.accountEmail.equals(email);
+    }
+
+    /**
+     * Gets the percentage value of this allocation.
+     *
+     * @return the percentage allocation value.
+     */
+    public float getPercentageOfAllocation() {
+        return percentageOfAllocation.getValue();
+    }
+
+    /**
+     * This method returns a String representation of the Project Resource email.
+     * @return the email of the project resource.
+     */
+    public String getEmail() {
+        return accountEmail.getEmail();
     }
 }

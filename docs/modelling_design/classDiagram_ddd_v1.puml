@@ -1,10 +1,41 @@
 @startuml
 
+class CreateProjectController {
+- projectCreationService
++ createProject(projectCreationDto)
+}
+
+CreateProjectController "1"<--.."1" ProjectCreationService: is injected
+IFactoryProject "1" .-up-.> "1" ProjectCreationService: is injected
+Project "*" <.-up-. "1" IFactoryProject: creates
+ProjectCreationDto "1" <.-left-. "*" ProjectCreationService: uses
+BusinessSectorRepository "1" ..|> "1" IBusinessSectorRepository: implements
+TypologyRepository "1" ..|> "1" ITypologyRepository: implements
+CustomerRepository "1" ..|> "1" ICustomerRepository: implements
+ProjectRepository "1" .-up-.|> "1" IProjectRepository: implements
+ProjectRepository "1" -left-> "*" Project: has
+ProjectRepository "1" .left.> "*" ProjectCreationService: is injected
+ICustomerRepository "1" ..> "1" ProjectCreationService: is injected
+ITypologyRepository "1" ..> "1" ProjectCreationService: is injected
+IBusinessSectorRepository "1" ..> "1" ProjectCreationService: is injected
+
 class "CreateUsController" {
 - usService
 + createUs(projectCodeOfInterest, userStoryCreationDto)
 -convertListOfStringsToAnAcceptanceCriteriaList(userStoryCreationDto)
 }
+
+class "EstimateUserStoryEffortController" {
+- userStoryInSprintService
++ estimateEffortUserStory(usId, effort, sprintId)
+}
+
+"EstimateUserStoryEffortController" "1" <.. "1" "UserStoryInSprintService": is injected
+"SprintRepository" "1" ..|> "1" "ISprintRepository": implements
+"ISprintRepository" "1" ..> "1" "UserStoryInSprintService": is injected
+"SprintRepository" "1" --> "*" "Sprint": has
+"Sprint" "1" --> "*" "UserStoryInSprint" : contains
+"UserStoryInSprint" "1" --> "1" "Effort" : has
 
 class "GetProductBacklogController" {
 -projectService
@@ -15,6 +46,18 @@ class "GetProductBacklogController" {
 class "ProjectListController"{
 -projectListService
 +listAllProjects()
+}
+
+class ProjectCreationService {
+- factoryProject
+- projectRepository
+- typologyRepository
+- businessSectorRepository
+- customerRepository
++ createProject(projectCreationDto)
++ calculateNextProjectNumber()
++ getProjectByCode(code)
++ addProject(project)
 }
 
 class "ProjectService"{
@@ -44,6 +87,13 @@ class "UserStoryCreationDto"{
 +priority
 }
 
+class "UserStoryInSprintService" {
+- ISprintRepository sprintRepository;
++ estimateEffortUserStory(usId, effort, sprintId)
++ getSprintById(sprintId)
++ isSprintInValidPeriod(sprint, date)
+}
+
 class "UsService" {
 - usRepository
 - projectRepository
@@ -63,6 +113,7 @@ class "FactoryUserStory"{
 
 interface "IProjectRepository"{
 +getProjectByCode(code)
++addProjectToProjectRepository(project)
 +findAll()
 }
 
@@ -70,6 +121,7 @@ class "ProjectRepository"{
 - projects
 +getProjectByCode(code)
 +findAll()
++ addProjectToProjectRepository(project)
 }
 
 interface "IUsRepository"{
@@ -85,13 +137,65 @@ class "UsRepository"{
 +delete(usId)
 }
 
+class BusinessSectorRepository{
+- businessSectors
++ getBusinessSectorIdByName(businessSectorName)
+}
+
+interface IBusinessSectorRepository {
+getBusinessSectorIdByName(businessSectorName)
+}
+
 class "CustomerRepository"{
 -customers
 +getCustomerNameByTaxId(taxId)
++getCustomerTaxIdByName(customerName)
 }
 
 interface "ICustomerRepository"{
 +getCustomerNameByTaxId(taxId)
++getCustomerTaxIdByName(customerName)
+}
+
+class TypologyRepository{
+- typologies
++ getProjectTypologyIdByName(typologyName)
+}
+
+interface ITypologyRepository {
+getProjectTypologyIdByName(typologyName)
+}
+
+class "SprintRepository" {
+- sprints
++ estimateEffortUserStory(usId, effort, sprintId)
++ getSprintById(sprintId)
+}
+
+interface "ISprintRepository"{
++ estimateEffortUserStory(usId, effort, sprintId)
++ getSprintById(sprintId)
+}
+
+class "Sprint"{
+- sprintId
+- userStoriesInSprint
++ estimateEffortUserStory(usId, effort) {
+}
+class "UserStoryInSprint" {
+- userStories
+- getUsId()
++ changeEffort(effortEstimate)
+}
+
+enum "Effort"{
+- effortValue
++ getEffortValue(effortValue)
+}
+
+interface IFactoryProject {
+createProject(projectNumber, projectName, description,
+businessSectorId, customerTaxId, projectTypologyId)
 }
 
 class "UserStoryMapper"{
@@ -115,6 +219,9 @@ class "Project"{
 -projectStatus
 -period
 -productBacklog
+- description
+- businessSectorId
+- projectTypologyId
 +hasProjectCode(projectCode)
 +getProductBacklog()
 + addUserStory(priority, usId)
@@ -142,6 +249,15 @@ class "UserStoryDto"{
 +userStoryNumber
 +userStoryText
 +status
+}
+
+class ProjectCreationDto{
++ code
++ name
++ status
++ customer
++ projectTypology
++ businessSector
 }
 
 class "ProjectDto"{
@@ -313,11 +429,13 @@ class Account{
 -phoneNumber
 - accountStatus
 -photo
+-profile
 +changeStatus(status)
 +hasEmail(email)
 +getName()
 +getEmail()
 +getAccountStatus()
++setProfile(profile)
 }
 
 RegisterAccountController <.. AccountService: is injected
@@ -326,7 +444,8 @@ AccountService <.. IAccountFactory: is injected
 IAccountFactory <|.. AccountFactory: implements
 AccountFactory ..> Account: creates
 IAccountRepository <|.. AccountRepository: implements
-AccountRepository --> Account: has
+AccountRepository "1"->"*" Account: has
+
 
 class ChangeStatusController {
 -accountService
@@ -381,15 +500,18 @@ class ProfileFactory{
 interface IProfileRepository{
 + add(profile)
 + getSize()
++ getProfileByName(profileName)
 }
 
 class ProfileRepository{
 + add(profile)
 + getSize()
++ getProfileByName(profileName)
 }
 
 class Profile<<root>>{
 - profileName
++hasName(profileName)
 }
 
 CreateProfileController <.. ProfileService: is injected
@@ -398,7 +520,7 @@ ProfileService <.. IProfileFactory: is injected
 IProfileFactory <|.. ProfileFactory: implements
 ProfileFactory ..> Profile: creates
 IProfileRepository <|.. ProfileRepository: implements
-ProfileRepository --> Profile: has
+
 
 class AddCustomerController {
 -customerService
@@ -440,6 +562,22 @@ ICustomerFactory <|.. CustomerFactory: implements
 CustomerFactory ..> Customer: creates
 ICustomerRepository <|.. CustomerRepository: implements
 CustomerRepository --> Customer: has
+
+class ChangeProfileController {
+-changeProfileService
++changeProfile(email, profileName)
+}
+
+class ChangeProfileService {
+-accountRepository
+-profileRepository
++changeProfile(email, profileName)
+}
+
+ProfileRepository "1"->"*" Profile: has
+ChangeProfileController"1 " <.. "1 "ChangeProfileService: is injected
+IAccountRepository ..> ChangeProfileService : is injected
+IProfileRepository ..> ChangeProfileService : is injected
 
 @enduml
 

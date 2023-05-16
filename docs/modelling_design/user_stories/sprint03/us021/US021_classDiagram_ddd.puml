@@ -34,8 +34,8 @@ class "UserStoryInSprint" {
 enum "Effort"{
 - effortValue
 + getEffortValue(effortValue)
-
 }
+
 interface "ISprintRepository"{
 + estimateEffortUserStory(usId, effort, sprintId)
 + getSprintById(sprintId)

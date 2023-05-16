@@ -1,0 +1,87 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO LIST ALL ACCOUNTS IN A GIVEN PROJECT
+legend top
+US014 - As Manager, I want to get a list of all human resources in a project.
+end legend
+autonumber
+actor Manager
+
+participant ":ListAccountsInProjectUI" as ui
+participant ":ListAccountsInProjectController" as controller
+participant ":AllocationService" as service
+participant ":ProjectResourceRepository" as resourceRepo
+participant "emails: List<Email>" as emailList
+participant ":ProjectResource" as resource
+participant ":AccountRepository" as accountRepo
+participant "accounts: List<Account>" as list
+participant ":AccountMapper" as mapper
+participant "accountDtos: List<AccountDto>" as dtoList
+participant "accountDto:AccountDto" as dto
+
+
+activate Manager
+Manager -> ui: requests list of all accounts\n allocated to a project of interest
+activate ui
+ui -> controller: listAccountsByProject(projectCode)
+activate controller
+controller -> service: listAccountsByProject(projectCode)
+activate service
+service -> resourceRepo: getAccountsAllocatedToProject(projectCode)
+activate resourceRepo
+create emailList
+resourceRepo -> emailList: create()
+loop for each resource in repository
+resourceRepo -> resource: hasProject(projectCode)
+activate resource
+resource --> resourceRepo: true
+deactivate
+resourceRepo -> resource: getEmail()
+activate resource
+resource --> resourceRepo: email
+deactivate
+resourceRepo -> emailList: add(email)
+activate emailList
+emailList --> resourceRepo: true
+deactivate
+end loop
+service <-- resourceRepo:  emails
+deactivate resourceRepo
+service -> accountRepo: getAccounts(emails)
+activate accountRepo
+create list
+accountRepo -> list: create ()
+loop for each email in emails
+accountRepo -> accountRepo: getAccountByEmail(email)
+accountRepo -> list: add(account)
+activate list
+list --> accountRepo: true
+deactivate
+end loop
+accountRepo --> service: accounts
+deactivate accountRepo
+service -> mapper: listAccountsToDto(accounts)
+activate mapper
+create dtoList
+mapper -> dtoList: create ()
+loop for each account in accounts
+mapper -> mapper: accountToDto
+create dto
+mapper -> dto: create(name, email, status)
+mapper -> dtoList: add(accountDto)
+activate dtoList
+dtoList --> mapper: true
+deactivate
+end loop
+mapper --> service: accountDtos
+deactivate mapper
+service --> controller: accountDtos
+deactivate service
+controller --> ui: accountDtos
+deactivate controller
+ui --> Manager: shows list of all accounts\n allocated to the project of interest
+deactivate ui
+deactivate Manager
+
+@enduml
