@@ -1,0 +1,136 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO DEFINE TEAM MEMBER / PRODUCT OWNER / SCRUM MASTER OF A PROJECT
+legend top
+US011 - "As Manager, I want to associate a User as Team Member of a project."
+US012 - "As Manager, I want to define the Product Owner of a project."
+US013 - "As Manager, I want to define the Scrum Master of a project."
+end legend
+
+class AddUserToProjectController {
+-resourceAllocationService
++addUserToProject(allocationDto)
+}
+
+class ResourceAllocationService {
+-iProjectRepository
+-iAccountRepository
+-iProjectResourceRepository
+-iProjectResourceFactory
++addUserToProject(allocationDto)
+-calculateNextResourceNumber()
+}
+
+interface IProjectResourceRepository {
++isAllocationInfoValid(code, email, role, \n period, percentageOfAllocation)
++getNumberOfResources()
++add(projectResource)
+}
+
+class ProjectResourceRepository {
+-projectResources
++isAllocationInfoValid(code, email, role, \n period, percentageOfAllocation)
++getNumberOfResources()
+-projectAlreadyHasScrumMasterInThatPeriod(role, code, period)
+-projectAlreadyHasProductOwnerInThatPeriod(role, code, period)
+-projectHasRoleInThatPeriod(role, code, period)
++projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(role, \n code, period)
+-isProjectManager(role)
++isNotProjectManager(role)
+-currentPercentageOfAllocation(email, \n localDate)
+-totalPercentageOfAllocation(email, \n localDate, percentageOfAllocation)
++validatePercentageOfAllocation(email, \n localDate, percentageOfAllocation)
+-hasResource(projectResource)
++add(projectResource)
+}
+
+interface IAccountRepository {
++isAccountValidForAllocation(email)
+}
+
+class AccountRepository {
+-accounts
++isAccountValidForAllocation(email)
+}
+
+interface IProjectRepository {
++isProjectValidForAllocation(code, \n period)
+}
+
+class ProjectRepository {
+-projects
+-doesProjectExist(code)
+-isProjectInStatus(projectStatus)
+-doesProjectContainsPeriod(period)
++isProjectValidForAllocation(code, \n period)
+}
+
+interface IProjectResourceFactory {
++createProjectResource(projectResourceId, \n code, email, role, period, costPerHour, \n percentageOfAllocation)
+}
+
+class ProjectResourceFactory {
++createProjectResource(projectResourceId, \n code, email, role, period, costPerHour, \n percentageOfAllocation)
+}
+
+class ProjectResource {
+-projectResourceId
+-code
+-email
+-role
+-period
+-costPerHour
+-percentageOfAllocation
+#ProjectResource(projectResourceId, \n code, email, role, period, costPerHour, \n percentageOfAllocation)
++hasProjectCode(code)
++isPeriodOverlapping(period)
++hasRole(role)
++getPercentageOfAllocation()
++hasSameAllocationInfo(projectResource)
+}
+
+class Project {
+-code
+-budget
+-name
+-description
+-projectStatus
+-numberOfPlannedSprints
+-period
+-sprintDuration
+-sprints
+-businessSectorId
+-customerTaxId
+-projectTypologyId
+-productBacklog
++hasProjectCode()
++hasStatus()
++contains()
+}
+
+class Account {
+-name
+-email
+-phoneNumber
+-accountStatus
+-photo
+-profile
++hasEmail()
+}
+
+AddUserToProjectController <.. ResourceAllocationService: is injected
+ResourceAllocationService <.. IProjectRepository: is injected
+ResourceAllocationService <.. IAccountRepository: is injected
+ResourceAllocationService <.. IProjectResourceRepository: is injected
+ResourceAllocationService <.. IProjectResourceFactory: is injected
+IProjectRepository <|.. ProjectRepository: implements
+IAccountRepository <|.. AccountRepository: implements
+IProjectResourceRepository <|.. ProjectResourceRepository: implements
+IProjectResourceFactory <|.. ProjectResourceFactory: implements
+ProjectResourceRepository --> ProjectResource: has
+ProjectResourceFactory ..> ProjectResource: creates
+ProjectRepository --> Project: has
+AccountRepository --> Account: has
+
+@enduml
