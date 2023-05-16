@@ -605,4 +605,126 @@ class ProjectResourceRepositoryTest {
         // Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * Method isResourceOverlapping()
+     * Scenario 01: Make sure resource is overlapping, projectCode, accountEmail are same and period is overlapping.
+     * Expected return: True.
+     */
+    @Test
+    void ensureResourceIsOverlapping() {
+        //Arrange
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceTwoDouble = mock(ProjectResource.class);
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        projectResourceRepository.add(projectResourceOneDouble);
+
+        when(projectResourceOneDouble.getCode()).thenReturn("P001");
+        when(projectResourceOneDouble.getEmail()).thenReturn("test@project.com");
+        when(projectResourceOneDouble.getPeriod()).thenReturn(new Period(LocalDate.now(), LocalDate.now().plusDays(1)));
+
+        when(projectResourceTwoDouble.getCode()).thenReturn("P001");
+        when(projectResourceTwoDouble.getEmail()).thenReturn("test@project.com");
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(new Period(LocalDate.now().plusDays(1), LocalDate.now().plusDays(2)));
+
+        when(projectResourceOneDouble.isPeriodOverlapping(projectResourceTwoDouble.getPeriod())).thenReturn(true);
+
+        //Act
+        boolean result = projectResourceRepository.isResourceOverlapping(projectResourceTwoDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 02: Check resource is not overlapping, projectCode is not equal, accountEmail is same,
+     * and the period is overlapped.
+     * Expected return: false.
+     */
+    @Test
+    void ensureResourceIsNotOverlappingBecauseTheProjectCodeIsNotTheSame() {
+        //Arrange
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceTwoDouble = mock(ProjectResource.class);
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        projectResourceRepository.add(projectResourceOneDouble);
+
+        when(projectResourceOneDouble.getCode()).thenReturn("P001");
+        when(projectResourceOneDouble.getEmail()).thenReturn("test@project.com");
+        when(projectResourceOneDouble.getPeriod()).thenReturn(new Period(LocalDate.now(), LocalDate.now().plusDays(1)));
+
+        when(projectResourceTwoDouble.getCode()).thenReturn("P002");
+        when(projectResourceTwoDouble.getEmail()).thenReturn("test@project.com");
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(new Period(LocalDate.now().plusDays(1), LocalDate.now().plusDays(2)));
+
+        when(projectResourceOneDouble.isPeriodOverlapping(projectResourceTwoDouble.getPeriod())).thenReturn(true);
+
+        //Act
+        boolean result = projectResourceRepository.isResourceOverlapping(projectResourceTwoDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
+
+    /**
+     * Scenario 02: Check resource is not overlapped, projectCode is same but accountEmail is not same
+     * and the period is overlapped.
+     * Expected return: false.
+     */
+    @Test
+    void assureResourceIsNotOverlappingBecauseTheAccountEmailIsNotTheSame() { //Arrange
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceTwoDouble = mock(ProjectResource.class);
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        projectResourceRepository.add(projectResourceOneDouble);
+
+        when(projectResourceOneDouble.getCode()).thenReturn("P001");
+        when(projectResourceOneDouble.getEmail()).thenReturn("test@project.com");
+        when(projectResourceOneDouble.getPeriod()).thenReturn(new Period(LocalDate.now(), LocalDate.now().plusDays(1)));
+
+        when(projectResourceTwoDouble.getCode()).thenReturn("P001");
+        when(projectResourceTwoDouble.getEmail()).thenReturn("test2@project.com");
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(new Period(LocalDate.now().plusDays(1), LocalDate.now().plusDays(2)));
+
+        when(projectResourceOneDouble.isPeriodOverlapping(projectResourceTwoDouble.getPeriod())).thenReturn(true);
+
+        //Act
+        boolean result = projectResourceRepository.isResourceOverlapping(projectResourceTwoDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 05: Check resource is not overlapped, projectCode, accountEmail are same and period is not
+     * overlay.
+     * Expected return: false.
+     */
+    @Test
+    void ensureResourceIsNotOverlappingbecauseThePeriodIsNotOverllapping() {
+
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceTwoDouble = mock(ProjectResource.class);
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        projectResourceRepository.add(projectResourceOneDouble);
+
+        when(projectResourceOneDouble.getCode()).thenReturn("P001");
+        when(projectResourceOneDouble.getEmail()).thenReturn("test@project.com");
+        when(projectResourceOneDouble.getPeriod()).thenReturn(new Period(LocalDate.now(), LocalDate.now().plusDays(5)));
+
+        when(projectResourceTwoDouble.getCode()).thenReturn("P001");
+        when(projectResourceTwoDouble.getEmail()).thenReturn("test2@project.com");
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(new Period(LocalDate.now().plusDays(1), LocalDate.now().plusDays(2)));
+
+        when(projectResourceOneDouble.isPeriodOverlapping(projectResourceTwoDouble.getPeriod())).thenReturn(true);
+
+        //Act
+        boolean result = projectResourceRepository.isResourceOverlapping(projectResourceTwoDouble);
+
+        //Assert
+        assertFalse(result);
+    }
+
+
 }
