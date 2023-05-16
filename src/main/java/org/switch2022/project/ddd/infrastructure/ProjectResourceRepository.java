@@ -69,20 +69,20 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     }
 
     /**
-     * This method returns a list of project resources with a given project code.
+     * Retrieves a list of email accounts allocated to a specific project.
      *
-     * @param projectCode the code of the project from which the resources are being queried.
-     * @return an unmodifiable list of resources whose attribute projectCode equals the projectCode of interest.
+     * @param projectCode The project code used to filter the allocated accounts.
+     * @return A list of email accounts allocated to the specified project.
      */
-    public List<ProjectResource> getResourcesByProjectCode(Code projectCode) {
-        List<ProjectResource> resourcesInProject = new ArrayList<>();
-
+    public List<String> getAccountsAllocatedToProject(Code projectCode) {
+        List<String> emails = new ArrayList<>();
         for (int i = 0; i < projectResources.size(); i++) {
             if (projectResources.get(i).hasProjectCode(projectCode)) {
-                resourcesInProject.add(projectResources.get(i));
+                String email = this.projectResources.get(i).getEmail();
+                emails.add(email);
             }
         }
-        return Collections.unmodifiableList(resourcesInProject);
+        return Collections.unmodifiableList(emails);
     }
 
     /**

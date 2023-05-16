@@ -38,7 +38,7 @@ class ListAllAccountsControllerTest {
 
     /**
      * Method listAllAccounts()
-     *
+     * <p>
      * Scenario 1: returns a list of AccountsDto
      */
     @Test
@@ -65,7 +65,7 @@ class ListAllAccountsControllerTest {
 
     /**
      * Method listAllAccounts()
-     *
+     * <p>
      * Scenario 2: returns an empty list of AccountDto
      */
     @Test

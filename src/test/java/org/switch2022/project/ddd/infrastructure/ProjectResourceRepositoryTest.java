@@ -183,7 +183,7 @@ class ProjectResourceRepositoryTest {
     }
 
     /**
-     * Method: getResourcesByProjectCode(Code projectCode).
+     * Method: getAccountsAllocatedToProject(Code projectCode).
      * Returns a list of project resources with a given project code.
      * <br>
      * Scenario 01: Check if an empty list is returned if the list of project resources is empty.
@@ -194,15 +194,15 @@ class ProjectResourceRepositoryTest {
         //Arrange
         ProjectResourceRepository repository = new ProjectResourceRepository();
         Code projectCode = mock(Code.class);
-        List<ProjectResource> expected = new ArrayList<>();
+        List<String> expected = new ArrayList<>();
         //Act
-        List<ProjectResource> result = repository.getResourcesByProjectCode(projectCode);
+        List<String> result = repository.getAccountsAllocatedToProject(projectCode);
         //Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Method: getResourcesByProjectCode(Code projectCode).
+     * Method: getAccountsAllocatedToProject(Code projectCode).
      * Returns a list of project resources with a given project code.
      * <br>
      * Scenario 02: Check that a list is of project resources is returned if the list of project resources has entries.
@@ -210,30 +210,32 @@ class ProjectResourceRepositoryTest {
      */
     @Test
     void ensureThatAListOfProjectResourcesIsSuccessfullyReturned() {
-        //Arrange
+        // Arrange
+        List<String> expected = new ArrayList<>();
+        String emailOne = "person@isep.ipp.pt";
+        String emailTwo = "other_person@isep.ipp.pt";
+        expected.add(emailOne);
+        expected.add(emailTwo);
+
         ProjectResourceRepository repository = new ProjectResourceRepository();
         ProjectResource resourceOne = mock(ProjectResource.class);
         ProjectResource resourceTwo = mock(ProjectResource.class);
         ProjectResource resourceThree = mock(ProjectResource.class);
+        repository.add(resourceOne);
+        repository.add(resourceTwo);
+        repository.add(resourceThree);
 
         Code projectCode = mock(Code.class);
 
         when(resourceOne.hasProjectCode(projectCode)).thenReturn(true);
         when(resourceTwo.hasProjectCode(projectCode)).thenReturn(true);
+        when(resourceOne.getEmail()).thenReturn(emailOne);
+        when(resourceTwo.getEmail()).thenReturn(emailTwo);
 
-        repository.add(resourceOne);
-        repository.add(resourceTwo);
-        repository.add(resourceThree);
+        // Act
+        List<String> result = repository.getAccountsAllocatedToProject(projectCode);
 
-
-        List<ProjectResource> expected = new ArrayList<>();
-        expected.add(resourceOne);
-        expected.add(resourceTwo);
-
-        //Act
-        List<ProjectResource> result = repository.getResourcesByProjectCode(projectCode);
-
-        //Assert
+        // Assert
         assertEquals(expected, result);
     }
 
