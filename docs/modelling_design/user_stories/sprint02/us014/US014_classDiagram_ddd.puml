@@ -19,12 +19,12 @@ class "AllocationService" {
 }
 
 interface "IProjectResourceRepository" {
-+ getEmailsByProjectCode(projectCode)
++ getAccountsAllocatedToProject(projectCode)
 }
 
 class "ProjectResourceRepository" {
 - projectResources
-+ getEmailsByProjectCode(projectCode)
++ getAccountsAllocatedToProject(projectCode)
 }
 
 interface "IAccountRepository" {

@@ -1,0 +1,57 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO ASSOCIATE/DEFINE TEAM MEMBER/PRODUCT OWNER/SCRUM MASTER OF A PROJECT
+legend top
+US011 - As Manager, I want to associate a User as Team Member of a project.
+US012 - As Manager, I want to define the Product Owner of a project.
+US013 - As Manager, I want to define the Scrum Master of a project.
+end legend
+autonumber
+
+actor Manager
+participant ":AddUserToProjectUI" as ui
+participant ":AddUserToProjectController" as controller
+participant ":ResourceAllocationService" as service
+participant ":ProjectRepository" as projectRepo
+participant ":AccountRepository" as accountRepo
+participant ":ProjectResourceRepository" as resourceRepo
+participant ":ProjectResourceFactory" as factory
+participant "projectResource:ProjectResource" as resource
+
+Manager -> ui: asks to associate of a User as the Product Owner/\nTeam Member/Scrum Master of a given project
+activate ui
+ui --> Manager: requests data
+Manager -> ui: sends data (code, email, role,\n costPerHour, percentageOfAllocation, startDate, endDate)
+ui -> controller: addUserToProject(allocationDto)
+activate controller
+controller -> service: addUserToProject(allocationDto)
+activate service
+service -> projectRepo: isProjectValidForAllocation(code, period)
+activate projectRepo
+projectRepo --> service: true
+deactivate
+service -> accountRepo: isAccountValidForAllocation(email)
+activate accountRepo
+accountRepo --> service: true
+deactivate
+service -> resourceRepo: isAllocationInfoValid(role, percentageOfAllocation,\n email, code, period)
+activate resourceRepo
+resourceRepo --> service: true
+deactivate
+service -> factory: createProjectResource(projectResourceId, code, email, role, period, costPerHour, percentageOfAllocation)
+activate factory
+create resource
+factory -> resource: create()
+factory --> service: projectResource
+deactivate
+service -> resourceRepo: add(projectResource)
+activate resourceRepo
+resourceRepo --> service: true
+deactivate
+service --> controller: true
+deactivate
+controller --> ui: true
+deactivate
+ui --> Manager: informs about operation success
+deactivate
+@enduml
