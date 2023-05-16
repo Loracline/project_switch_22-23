@@ -245,10 +245,10 @@ class ProjectResourceRepositoryTest {
         ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
 
         //Act
-        boolean result = projectResourceRepository.isProjectManager(projectManager);
+        boolean result = projectResourceRepository.isNotProjectManager(projectManager);
 
         //Assert
-        assertTrue(result);
+        assertFalse(result);
     }
 
     @Test
@@ -258,10 +258,10 @@ class ProjectResourceRepositoryTest {
         ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
 
         //Act
-        boolean result = projectResourceRepository.isProjectManager(teamMember);
+        boolean result = projectResourceRepository.isNotProjectManager(teamMember);
 
         //Assert
-        assertFalse(result);
+        assertTrue(result);
     }
 
     @Test
