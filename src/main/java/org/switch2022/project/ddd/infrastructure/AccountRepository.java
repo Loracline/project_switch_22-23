@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.infrastructure;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
+import org.switch2022.project.ddd.domain.value_object.AccountStatus;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
@@ -127,10 +128,11 @@ public class AccountRepository implements IAccountRepository {
      * it returns false.
      */
 
-    public boolean IsAValidAccount(Email accountEmail) {
+    public boolean IsAValidAccount(Email accountEmail, AccountStatus accountStatus) {
         boolean accointIsValid= false;
         for (int i = 0; i < this.accounts.size(); i++) {
-            accointIsValid = (accounts.get(i).hasEmail(accountEmail.getEmail()) && accounts.get(i).getAccountStatus());
+            accointIsValid = (accounts.get(i).hasEmail(accountEmail.getEmail()) &&
+                    accounts.get(i).isAccountActive(accountStatus.getAccountStatus()));
         }
         return accointIsValid;
     }
