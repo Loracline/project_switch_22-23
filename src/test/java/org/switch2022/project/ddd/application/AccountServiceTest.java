@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountFactory;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
+import org.switch2022.project.ddd.domain.value_object.AccountStatus;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -122,14 +123,13 @@ class AccountServiceTest {
     void ensureThatStatusIsChanged() {
         //Arrange
         String email = "ana@isep.pt";
-        boolean newStatus = true;
         Account expected = mock(Account.class);
 
         when(accountRepository.getAccountByEmail(email)).thenReturn(expected);
-        when(expected.changeStatus(newStatus)).thenReturn(true);
+        when(expected.changeStatus(AccountStatus.ACTIVE)).thenReturn(true);
 
         //Act
-        boolean result = service.changeStatus(email, newStatus);
+        boolean result = service.changeStatus(email,AccountStatus.ACTIVE.getAccountStatus());
 
         //Assert
         assertTrue(result);
