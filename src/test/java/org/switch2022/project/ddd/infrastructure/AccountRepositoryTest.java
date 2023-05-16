@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.account.Account;
+import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
@@ -404,12 +405,14 @@ class AccountRepositoryTest {
     @Test
     void ensureThatAccountIsValid() {
         //Arrange
+        Email accountEmailDouble= mock(Email.class);
         Account accountDouble = mock(Account.class);
         AccountRepository repository = new AccountRepository();
         repository.add(accountDouble);
+        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(true);
         when(accountDouble.getAccountStatus()).thenReturn(true);
         //Act
-        boolean result = repository.IsAValidAccount(accountDouble);
+        boolean result = repository.IsAValidAccount(accountEmailDouble);
         //Assert
         assertTrue(result);
     }
@@ -421,12 +424,14 @@ class AccountRepositoryTest {
     @Test
     void ensureTheAccointExistisButIsInactivate() {
         //Arrange
+        Email accountEmailDouble= mock(Email.class);
         Account accountDouble = mock(Account.class);
         AccountRepository repository = new AccountRepository();
         repository.add(accountDouble);
+        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(true);
         when(accountDouble.getAccountStatus()).thenReturn(false);
         //Act
-        boolean result = repository.IsAValidAccount(accountDouble);
+        boolean result = repository.IsAValidAccount(accountEmailDouble);
         //Assert
         assertFalse(result);
     }
@@ -438,11 +443,12 @@ class AccountRepositoryTest {
     @Test
     void ensureTheAccountIsInvalidBecauseTheAccountDoesNotExist() {
         //Arrange
+        Email accountEmailDouble= mock(Email.class);
         Account accountDouble = mock(Account.class);
         AccountRepository repository = new AccountRepository();
         when(accountDouble.getAccountStatus()).thenReturn(false);
         //Act
-        boolean result = repository.IsAValidAccount(accountDouble);
+        boolean result = repository.IsAValidAccount(accountEmailDouble);
         //Assert
         assertFalse(result);
     }
