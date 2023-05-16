@@ -24,13 +24,13 @@ activate manager
 activate ui
 "ui" -->> manager: requests data (name, description, ...)
 manager -> ui: types requested data
-
-create dto
-ui -> dto: create (name, description, ...)
-ui -> controller: createProject(projectCreationDto)
+ui -> controller: createProject()
 activate controller
-controller -> service: createProject(projectCreationDto)
+controller -> service: createProject()
+create dto
 activate service
+
+service -> dto: create (name, description, ...)
 service -> service: calculateNextProjectNumber()
 service -> custRepo: getCustomerTaxIdByName(customerName)
 activate custRepo
