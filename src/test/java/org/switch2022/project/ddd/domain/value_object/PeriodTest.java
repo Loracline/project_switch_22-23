@@ -1125,5 +1125,26 @@ class PeriodTest {
                 period.contains(null));
     }
 
+    @Test
+    void ensureThatProjectContainsCurrentDate() {
+        //Arrange
+        Period period = new Period(LocalDate.now().minusDays(1), 4);
 
+        //Act
+        boolean result = period.containsCurrentDate();
+
+        //Assert
+        assertTrue(result);
+    }
+    @Test
+    void ensureThatProjectDoesNotContainCurrentDate() {
+        //Arrange
+        Period period = new Period(LocalDate.of(2023, 4, 10), 4);
+
+        //Act
+        boolean result = period.containsCurrentDate();
+
+        //Assert
+        assertFalse(result);
+    }
 }
