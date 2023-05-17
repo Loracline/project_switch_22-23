@@ -1,0 +1,105 @@
+@startuml
+skinparam sequenceMessageAlign center
+title LIST ALL PROJECTS THE AUTHENTICATED USER IS ALLOCATED TO
+legend top
+US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to.
+end legend
+
+
+class "ListProjectsOfAccountController" {
+- projectListAllocationService
++ listProjectsByAccount(email)
+}
+
+class "ProjectListAllocationService" {
+- iProjectResourceRepository
+- iProjectRepository
+- projectMapper
++ listProjectsByAccount(email)
+}
+
+interface "IProjectResourceRepository" {
++ getProjectsOfAccount(email)
+}
+
+class "ProjectResourceRepository" {
+- projectResources
++ getProjectsOfAccount(email)
+}
+
+interface "IProjectRepository" {
++ getProjects(projectCodes)
++ hasEmail(email)
+}
+
+class "ProjectRepository" {
+- projects
++ getProjects(projectCodes)
+}
+
+interface "ICustomerRepository" {
++ getCustomerNameByTaxId(taxId)
+}
+
+class "CustomerRepository" {
+- customers
++ getCustomerNameByTaxId(taxId)
+}
+
+class "ProjectMapper" {
++ projectToDto(project, customerName)
+
+}
+
+class "ProjectDto" {
++ code
++ name
++ customerName
++ status
++ startDate
++ endDate
++ ProjectDto(code, projectName, customerName, status, startDate, endDate)
+
+}
+class "Project" {
+- projectCode
+- period
+- customerTaxId
++ hasProjectCode(code)
++ containsCurrentDate()
++ getCustomerTaxId()
+}
+
+class "ProjectResource" {
+- projectCode
+- accountEmail
++ hasEmail(email)
++ getProjectCode()
+}
+
+class "Customer" {
+- customerTaxId
+- customerName
++ hasTaxId(taxId)
++ getName()
+}
+
+ListProjectsOfAccountController <.. ProjectListAllocationService: is injected
+
+ProjectListAllocationService <.. IProjectRepository: is injected
+IProjectRepository <|.. ProjectRepository: implements
+ProjectRepository --> Project: has
+
+ProjectListAllocationService <.. IProjectResourceRepository: is injected
+IProjectResourceRepository <|.. ProjectResourceRepository: implements
+ProjectResourceRepository --> ProjectResource: has
+
+ProjectListAllocationService <.. ICustomerRepository: is injected
+ICustomerRepository <|.. CustomerRepository: implements
+CustomerRepository --> Customer: has
+
+ProjectListAllocationService <.. ProjectMapper: is injected
+ProjectMapper ...> ProjectDto: creates
+ProjectDto ..> Project: uses
+
+@enduml

@@ -10,13 +10,15 @@ actor User
 
 participant ":ListProjectsOfAccountUI" as ui
 participant ":ListProjectsOfAccountController" as controller
-participant ":AllocationService" as service
+participant ":ProjectListAllocationService" as service
 participant ":ProjectResourceRepository" as resourceRepo
 participant "projectCodes: List<String>" as projectList
 participant ":ProjectResource" as resource
 participant ":ProjectRepository" as projectRepo
 participant "projects: List<Project>" as list
 participant ":Project" as project
+participant ":CustomerRepository" as customerRepo
+participant ":Customer" as customer
 participant ":ProjectMapper" as mapper
 participant "projectDtos: List<ProjectDto>" as dtoList
 participant "projectDto:ProjectDto" as dto
@@ -38,7 +40,7 @@ resourceRepo -> resource: hasEmail(email)
 activate resource
 resource --> resourceRepo: true
 deactivate
-resourceRepo -> resource: getCode()
+resourceRepo -> resource: getProjectCode()
 activate resource
 resource --> resourceRepo: code
 deactivate
@@ -69,20 +71,36 @@ deactivate
 end loop
 projectRepo --> service: projects
 deactivate projectRepo
-service -> mapper: listProjectsToDto(projects)
-activate mapper
 create dtoList
-mapper -> dtoList: create ()
+service -> dtoList: create ()
 loop for each project in projects
-mapper -> mapper: projectToDto
+service -> customerRepo: getCustomerNameByTaxId()
+activate customerRepo
+customerRepo -> project: getCustomerTaxId()
+activate project
+project --> customerRepo: taxId
+deactivate project
+customerRepo -> customer: hasTaxId(taxId)
+activate customer
+customer --> customerRepo: true
+deactivate customer
+customerRepo -> customer: getName()
+activate customer
+customer --> customerRepo: costumerName
+deactivate customer
+customerRepo --> service: customerName
+deactivate customerRepo
+service -> mapper: projectToDto(project, customerName)
+activate mapper
 create dto
-mapper -> dto: create(code, name, customerName, \nstatus, startDate, endDate)
-mapper -> dtoList: add(projectDto)
+mapper -> dto: create(code, projectName, customerName, \nstatus, startDate, endDate)
+mapper --> service: projectDto
+deactivate mapper
+service -> dtoList: add(projectDto)
 activate dtoList
-dtoList --> mapper: true
+dtoList --> service: true
 deactivate
 end loop
-mapper --> service: projectDtos
 deactivate mapper
 service --> controller: projectDtos
 deactivate service
