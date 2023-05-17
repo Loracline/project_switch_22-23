@@ -2,6 +2,8 @@ package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.account.Account;
+import org.switch2022.project.ddd.domain.value_object.AccountStatus;
+import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
@@ -240,7 +242,7 @@ class AccountRepositoryTest {
     void ensureThatAListWithAccountsISReturnedIfThereAreMatchingEmails() {
         // Arrange
         AccountRepository repository = new AccountRepository();
-        List<String> emails =  mock(List.class);
+        List<String> emails = mock(List.class);
 
         Account accountOneDouble = mock(Account.class);
         Account accountTwoDouble = mock(Account.class);
@@ -340,7 +342,7 @@ class AccountRepositoryTest {
 
     /**
      * Method getAccountByEmail()
-     * Scenario 1: returns
+     * Scenario 1: returns an account with the given e-mail
      */
 
     @Test
@@ -363,6 +365,9 @@ class AccountRepositoryTest {
         assertEquals(accountOne, result);
     }
 
+    /**
+     * Scenario 2: Account is not retrieved because the list is empty
+     */
     @Test
     void ensureThatAccountIsNotFoundBecauseListIsEmpty() {
         //Arrange
@@ -372,12 +377,15 @@ class AccountRepositoryTest {
 
         //Act
         NotFoundInRepoException result =
-                assertThrows(NotFoundInRepoException.class, () ->repository.getAccountByEmail(email));
+                assertThrows(NotFoundInRepoException.class, () -> repository.getAccountByEmail(email));
 
         //Assert
         assertEquals(message, result.getMessage());
     }
 
+    /**
+     * Scenario 2: Account is not retrieved because it is not found.
+     */
     @Test
     void ensureThatAccountIsNotFoundBecauseIsNotInTheList() {
         //Arrange
@@ -390,9 +398,68 @@ class AccountRepositoryTest {
 
         //Act
         NotFoundInRepoException result =
-                assertThrows(NotFoundInRepoException.class, () ->repository.getAccountByEmail(email));
+                assertThrows(NotFoundInRepoException.class, () -> repository.getAccountByEmail(email));
 
         //Assert
         assertEquals(message, result.getMessage());
+    }
+
+    /**
+     * Method IsAValidAccount().
+     * Scenario 01:Make sure the account is valid and active.
+     * Expected return: True.
+     */
+    @Test
+    void ensureThatAccountIsValid() {
+        //Arrange
+        Email accountEmailDouble= mock(Email.class);
+        AccountStatus accountStatus=mock(AccountStatus.class);
+        Account accountDouble = mock(Account.class);
+        AccountRepository repository = new AccountRepository();
+        repository.add(accountDouble);
+        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(true);
+        when(accountDouble.isAccountActive(accountStatus.getAccountStatus())).thenReturn(true);
+        //Act
+        boolean result = repository.IsAValidAccount(accountEmailDouble, accountStatus);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scerario 02: the account exists, but is inactive.
+     * Expected return: false.
+     */
+    @Test
+    void ensureTheAccointExistisButIsInactivate() {
+        //Arrange
+        Email accountEmailDouble= mock(Email.class);
+        AccountStatus accountStatus=mock(AccountStatus.class);
+        Account accountDouble = mock(Account.class);
+        AccountRepository repository = new AccountRepository();
+        repository.add(accountDouble);
+        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(true);
+        when(accountDouble.isAccountActive(accountStatus.getAccountStatus())).thenReturn(false);
+        //Act
+        boolean result = repository.IsAValidAccount(accountEmailDouble, accountStatus);
+        //Assert
+        assertFalse(result);
+    }
+    /**
+     * Scerario 03: the account does not exist.
+     * Expected return: false.
+     */
+    @Test
+    void ensureTheAccountDoesNotExist() {
+        //Arrange
+        Email accountEmailDouble= mock(Email.class);
+        AccountStatus accountStatus=mock(AccountStatus.class);
+        Account accountDouble = mock(Account.class);
+        AccountRepository repository = new AccountRepository();
+        repository.add(accountDouble);
+        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(false);
+        //Act
+        boolean result = repository.IsAValidAccount(accountEmailDouble, accountStatus);
+        //Assert
+        assertFalse(result);
     }
 }

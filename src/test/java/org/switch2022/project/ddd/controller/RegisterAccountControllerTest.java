@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.application.AccountService;
+import org.switch2022.project.ddd.application.AccountCreationService;
 import org.switch2022.project.ddd.dto.AccountCreationDto;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
@@ -26,7 +26,7 @@ class RegisterAccountControllerTest {
     @InjectMocks
     RegisterAccountController controller;
     @MockBean
-    AccountService accountService;
+    AccountCreationService accountService;
 
     /**
      * Method: registerAccount()

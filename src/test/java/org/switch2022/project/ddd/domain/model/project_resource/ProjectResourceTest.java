@@ -2,7 +2,6 @@ package org.switch2022.project.ddd.domain.model.project_resource;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.TestPropertySource;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
@@ -1029,6 +1028,65 @@ class ProjectResourceTest {
         //Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * Method: getCode()
+     * Scenario 01: Return the string corresponding to the project resource projectCode is returned.
+     */
+    @Test
+    void ensureThatTheProjectCodeIsReturnedSuccessfully() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        when(codeDouble.getCode()).thenReturn("P001");
+
+        String expected = "P001";
+
+        //Act
+        String result = resource.getCode();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+    /**
+     * Method: getPeriod()
+     * Scenario 01: Return the period to the project resource is returned.
+     */
+    @Test
+    void ensureThatThePeriodIsReturnedSuccessfully() {
+        //Arrange
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+
+        ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
+                periodDouble, costDouble, percentageOfAllocationDouble);
+
+        when(periodDouble.getStartDate()).thenReturn("2023-08-07");
+        when(periodDouble.getEndDate()).thenReturn("2023-08-21");
+
+        Period expected = periodDouble;
+
+        //Act
+        Period result = resource.getPeriod();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
 }
 
 

@@ -7,7 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.application.AccountService;
+import org.switch2022.project.ddd.application.AccountChangeStatusService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -22,11 +22,10 @@ class ChangeAccountStatusControllerTest {
     @InjectMocks
     ChangeAccountStatusController controller;
     @MockBean
-    AccountService accountService;
+    AccountChangeStatusService accountService;
 
     /**
      * Method changeStatus
-     *
      * Scenario 1: status is not changed because email is null.
      */
     @Test
@@ -38,7 +37,7 @@ class ChangeAccountStatusControllerTest {
         // Act
         IllegalArgumentException exception =
                 assertThrows(IllegalArgumentException.class,
-                        () -> controller.changeStatus(email, true));
+                        () -> controller.changeStatus(email, "active"));
 
         // Assert
         assertEquals(expectedMessage, exception.getMessage());
@@ -56,7 +55,7 @@ class ChangeAccountStatusControllerTest {
         // Act
         IllegalArgumentException exception =
                 assertThrows(IllegalArgumentException.class,
-                        () -> controller.changeStatus(email, true));
+                        () -> controller.changeStatus(email, "active"));
 
         // Assert
         assertEquals(expectedMessage, exception.getMessage());
@@ -66,12 +65,25 @@ class ChangeAccountStatusControllerTest {
      * Scenario 3: Status is updated, should return TRUE.
      */
     @Test
-    void ensureThatAccountStatusIsChanged(){
+    void ensureThatAccountStatusHasChanged(){
         String email = "ana@isep.pt";
-        when(accountService.changeStatus(email, false)).thenReturn(true);
+        when(accountService.changeStatus(email, "inactive")).thenReturn(true);
 
-        boolean result = controller.changeStatus(email, false);
+        boolean result = controller.changeStatus(email, "inactive");
 
         assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: Status is not updated, should return FALSE.
+     */
+    @Test
+    void ensureThatAccountStatusHasNotChanged(){
+        String email = "ana@isep.pt";
+        when(accountService.changeStatus(email, "online")).thenReturn(false);
+
+        boolean result = controller.changeStatus(email, "online");
+
+        assertFalse(result);
     }
 }

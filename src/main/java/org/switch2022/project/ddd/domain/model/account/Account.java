@@ -1,12 +1,8 @@
 package org.switch2022.project.ddd.domain.model.account;
 
-
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.shared.Entity;
-import org.switch2022.project.ddd.domain.value_object.Email;
-import org.switch2022.project.ddd.domain.value_object.Name;
-import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
-import org.switch2022.project.ddd.domain.value_object.Photo;
+import org.switch2022.project.ddd.domain.value_object.*;
 
 
 import java.util.Objects;
@@ -27,7 +23,7 @@ public class Account implements Entity<Account> {
     private final Name name;
     private final Email email;
     private final PhoneNumber phoneNumber;
-    private boolean accountStatus;
+    private AccountStatus accountStatus;
     private Photo photo;
     private Profile profile;
 
@@ -36,7 +32,7 @@ public class Account implements Entity<Account> {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.accountStatus = true;
+        this.accountStatus  = AccountStatus.ACTIVE;
 
         if (photo != null) {
             this.photo = photo;
@@ -110,8 +106,8 @@ public class Account implements Entity<Account> {
      * Getter method that returns a boolean with the Account status
      * @return account status.
      */
-    public boolean getAccountStatus() {
-        return accountStatus;
+    public String getAccountStatus() {
+        return accountStatus.getAccountStatus();
     }
 
     /**
@@ -119,7 +115,7 @@ public class Account implements Entity<Account> {
      * @param status to be used to change.
      * @return the updated status.
      */
-    public boolean changeStatus(boolean status) {
+    public boolean changeStatus(AccountStatus status) {
         this.accountStatus = status;
         return true;
     }
@@ -133,6 +129,14 @@ public class Account implements Entity<Account> {
         return this.email.getEmail().equals(email);
     }
 
+    /**
+     * This method checks if the account has the same accountStatus as a given one.
+     * @param  accountStatus to check is the account has a match
+     * @return true if account has the given accountStatus and false otherwise.
+     */
+    public  boolean isAccountActive(String accountStatus){
+        return this.accountStatus.getAccountStatus().equals(accountStatus);
+    }
     /**
      * Getter method that returns the Profile of the Account
      * @return account Profile.

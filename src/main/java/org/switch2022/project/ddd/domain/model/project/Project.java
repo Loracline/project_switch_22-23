@@ -237,18 +237,16 @@ public class Project implements Entity<Project> {
      *
      * @return a String with the status of the project.
      */
-
     public String getProjectStatus() {
         return this.projectStatus.getStatus();
     }
 
     /**
      * Method to check if status given is the same as the project status
-     * @param projectStatus
+     *
      * @return true if status given is the same as the project status
      */
-
-    public boolean hasStatus(ProjectStatus projectStatus){
+    public boolean hasStatus(ProjectStatus projectStatus) {
         return this.projectStatus.equals(projectStatus);
     }
 
@@ -258,7 +256,6 @@ public class Project implements Entity<Project> {
      * @return a String with the startDate of the project if there is a period otherwise it will
      * return an empty string
      */
-
     public String getStartDate() {
         String startDate = "";
         if (period != null) {
@@ -273,7 +270,6 @@ public class Project implements Entity<Project> {
      * @return a String with the endDate of the project if there is a period otherwise it will
      * return an empty string
      */
-
     public String getEndDate() {
         String endDAte = "";
         if (period != null) {
@@ -283,16 +279,27 @@ public class Project implements Entity<Project> {
     }
 
     /**
-     *This method returns an optional of a sprint duration
+     * This method returns an optional of a sprint duration
      * If the project is in status planned the duration will be null.
      */
-    public Optional<SprintDuration> getSprintDuration(){
+    public Optional<SprintDuration> getSprintDuration() {
         Optional<SprintDuration> result = Optional.empty();
-        if (!projectStatus.equals(ProjectStatus.PLANNED) && sprintDuration!= null){
+        if (!projectStatus.equals(ProjectStatus.PLANNED) && sprintDuration != null) {
             result = Optional.of(this.sprintDuration);
         }
         return result;
     }
+
+    /**
+     * Checks if this period contains the specified period.
+     *
+     * @param otherPeriod The period to check for containment.
+     * @return {@code TRUE} if this period contains the specified period, {@code FALSE} otherwise.
+     */
+    public boolean contains(Period otherPeriod) {
+        return this.period.contains(otherPeriod);
+    }
+
     /**
      * This method verifies that current date is contained in Project period.
      *

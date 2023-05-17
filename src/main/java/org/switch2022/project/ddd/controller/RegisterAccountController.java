@@ -2,7 +2,7 @@ package org.switch2022.project.ddd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.switch2022.project.ddd.application.AccountService;
+import org.switch2022.project.ddd.application.AccountCreationService;
 import org.switch2022.project.ddd.dto.AccountCreationDto;
 import org.switch2022.project.ddd.utils.Validate;
 
@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
 @Controller
 public class RegisterAccountController {
     @Autowired
-    private AccountService accountService;
+    private AccountCreationService accountService;
 
     /**
      * This method receives a dto with Account information and registers a new account.
