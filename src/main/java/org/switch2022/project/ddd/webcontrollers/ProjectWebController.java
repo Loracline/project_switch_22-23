@@ -10,6 +10,7 @@ import org.switch2022.project.ddd.application.ProjectService;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.dto.ProjectDto;
+import org.switch2022.project.ddd.dto.UserStoryDto;
 
 import java.util.List;
 
@@ -66,8 +67,8 @@ public class ProjectWebController {
      */
     @GetMapping("/{code}/productBacklog")
     @ResponseBody
-    public ResponseEntity<List<UserStory>> getProductBacklog(@PathVariable String code) {
-        List<UserStory> userStories = projectService.getProductBacklog(code);
+    public ResponseEntity<List<UserStoryDto>> getProductBacklog(@PathVariable String code) {
+        List<UserStoryDto> userStories = projectService.getProductBacklog(code);
         return new ResponseEntity<>(userStories, HttpStatus.OK);
     }
 }
