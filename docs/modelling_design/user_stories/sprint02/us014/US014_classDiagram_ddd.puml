@@ -7,11 +7,11 @@ end legend
 
 
 class "ListAccountsInProjectController" {
-- allocationService
+- resourceListAllocationService
 + listAccountsByProjectCode(projectCode)
 }
 
-class "AllocationService" {
+class "ResourceListAllocationService" {
 - iProjectResourceRepository
 - iAccountRepository
 - accountMapper
@@ -29,13 +29,13 @@ class "ProjectResourceRepository" {
 
 interface "IAccountRepository" {
 + getAccounts(emails)
-+ getAccountByEmail(email)
++ hasEmail(email)
 }
 
 class "AccountRepository" {
 - accounts
 + getAccounts(emails)
-+ getAccountByEmail(email)
++ hasEmail(email)
 }
 
 class "AccountMapper" {
@@ -63,22 +63,21 @@ class "Account" {
 class "ProjectResource" {
 - projectCode
 - accountEmail
-- accountStatus
-+ hasProjectCode()
++ hasProjectCode(projectCode)
 + getEmail()
 }
 
-ListAccountsInProjectController <.. AllocationService: is injected
+ListAccountsInProjectController <.. ResourceListAllocationService: is injected
 
-AllocationService <.. IAccountRepository: is injected
+ResourceListAllocationService <.. IAccountRepository: is injected
 IAccountRepository <|.. AccountRepository: implements
 AccountRepository --> Account: has
 
-AllocationService <.. IProjectResourceRepository: is injected
+ResourceListAllocationService <.. IProjectResourceRepository: is injected
 IProjectResourceRepository <|.. ProjectResourceRepository: implements
 ProjectResourceRepository --> ProjectResource: has
 
-AllocationService <.. AccountMapper: is injected
+ResourceListAllocationService <.. AccountMapper: is injected
 AccountMapper ...> AccountDto: creates
 AccountDto ..> Account: uses
 
