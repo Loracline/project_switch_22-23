@@ -4,9 +4,8 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.Period;
 import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
-import org.switch2022.project.ddd.exceptions.InvalidInputException;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.*;
 
@@ -55,7 +54,7 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     /**
-     * This method verify the existence of a project by code confirmation.
+     * This method verifies the existence of a project by code confirmation.
      *
      * @return the project with given code.
      */
@@ -84,7 +83,7 @@ public class ProjectRepository implements IProjectRepository {
      * This method adds a Project to Project repository if the Project does not exist.
      *
      * @param project to be added.
-     * @return TRUE if the Project was added to Project Repository and false otherwise.
+     * @return TRUE if the Project was added to the Project Repository and false otherwise.
      */
     public boolean addProjectToProjectRepository(Project project) {
         boolean projectRegistered = false;
@@ -96,29 +95,69 @@ public class ProjectRepository implements IProjectRepository {
     }
 
     /**
-     * This method verifies if the project already exists in the container through the
-     * project code.
+     * Checks if a project with the specified project code exists.
      *
-     * @param project existence that shall be verified.
-     * @return TRUE if exists, and FALSE otherwise.
+     * @param projectCode The project code to search for.
+     * @return {@code TRUE} if a project with the given project code exists, {@code FALSE} otherwise.
      */
-    public boolean doesProjectExist(Project project) {
-        if (projects.contains(project)) {
-            return true;
-        } else throw new NotFoundInRepoException("The requested project does not exist.");
+    private boolean doesProjectExist(Code projectCode) {
+        boolean exists = false;
+        for (int i = 0; i < this.projects.size(); i++) {
+            if (this.projects.get(i).hasProjectCode(projectCode)) {
+                exists = true;
+            }
+        }
+        return exists;
     }
 
     /**
-     * Checks if the given project is not closed.
+     * Checks if a project with the specified project code is in the specified project status.
      *
-     * @param project the project to check
-     * @return true if the project is not closed, false otherwise
-     * @throws InvalidInputException if the project has already been closed
+     * @param projectStatus The project status to check against.
+     * @return {@code TRUE} if a project with the given project code exists and has the specified project status,
+     * {@code FALSE} otherwise.
      */
-    public boolean isNotClosed(Project project) {
-        if (!project.hasStatus(ProjectStatus.CLOSED)) {
-            return true;
-        } else throw new InvalidInputException("The requested project has already been closed.");
+    private boolean isProjectInStatus(ProjectStatus projectStatus) {
+        boolean statusOfInterest = false;
+        for (int i = 0; i < this.projects.size(); i++) {
+            if (this.projects.get(i).hasStatus(projectStatus)) {
+                statusOfInterest = true;
+            }
+        }
+        return statusOfInterest;
+    }
+
+    /**
+     * Checks if any project within this collection contains the specified allocation period.
+     *
+     * @param allocationPeriod The allocation period to check for containment within the projects.
+     * @return {@code TRUE} if any project within this collection contains the specified allocation period,
+     * {@code FALSE} otherwise.
+     */
+    private boolean doesProjectContainsPeriod(Period allocationPeriod) {
+        boolean contains = false;
+        for (int i = 0; i < this.projects.size(); i++) {
+            if (this.projects.get(i).contains(allocationPeriod)) {
+                contains = true;
+            }
+        }
+        return contains;
+    }
+
+    /**
+     * Checks if a project with the specified project code is valid for allocation within the specified period.
+     *
+     * @param projectCode      The project code to check for validity.
+     * @param allocationPeriod The allocation period to check against.
+     * @return {@code TRUE} if the project with the given project code exists,
+     * is not in the "PLANNED" or "CLOSED" status, and contains the specified allocation period;
+     * {@code FALSE} otherwise.
+     */
+    public boolean isProjectValidForAllocation(Code projectCode, Period allocationPeriod) {
+        return doesProjectExist(projectCode) &&
+                !isProjectInStatus(ProjectStatus.PLANNED) &&
+                !isProjectInStatus(ProjectStatus.CLOSED) &&
+                doesProjectContainsPeriod(allocationPeriod);
     }
 
     /**

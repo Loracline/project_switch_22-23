@@ -199,17 +199,17 @@ public class Period implements ValueObject<Period> {
     }
 
     /**
-     * This method verifies whether an instance of Period is contained within another instance of Period passed as an
-     * argument.
+     * Checks if this period contains the specified period.
      *
-     * @param otherPeriod to compare to.
-     * @return true if the instance of Period is contained within the other instance of Period, and false otherwise
+     * @param otherPeriod The period to check for containment.
+     * @return {@code TRUE} if this period contains the specified period, {@code FALSE} otherwise.
+     * @throws IllegalArgumentException if the specified period is null.
      */
-    public boolean contains(Period otherPeriod){
+    public boolean contains(Period otherPeriod) {
         Validate.notNull(otherPeriod, "The period must not be null");
         LocalDate otherStart = LocalDate.parse(otherPeriod.getStartDate());
         LocalDate otherEnd = LocalDate.parse(otherPeriod.getEndDate());
 
-        return this.startDate.compareTo(otherStart)<=0 && this.endDate.compareTo(otherEnd)>=0;
+        return this.startDate.compareTo(otherStart) <= 0 && this.endDate.compareTo(otherEnd) >= 0;
     }
 }

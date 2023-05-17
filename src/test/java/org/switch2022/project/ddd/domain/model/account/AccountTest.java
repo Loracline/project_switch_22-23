@@ -3,10 +3,7 @@ package org.switch2022.project.ddd.domain.model.account;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
-import org.switch2022.project.ddd.domain.value_object.Email;
-import org.switch2022.project.ddd.domain.value_object.Name;
-import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
-import org.switch2022.project.ddd.domain.value_object.Photo;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.infrastructure.ProfileRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -91,7 +88,7 @@ class AccountTest {
      * Scenario 4: Verify if an Account instance and a different type of object are not
      * the same.
      */
-    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
+    @SuppressWarnings("All")
     @Test
     void ensureAccountDoesNotEqualOtherTypeOfObject() {
         // Arrange
@@ -277,17 +274,16 @@ class AccountTest {
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
         Account account = new Account(name, email, phoneNumber, photo);
-
+        String expected = "active";
         // Act
-        boolean accountStatus = account.getAccountStatus();
+        String accountStatus = account.getAccountStatus();
 
         // Assert
-        assertTrue(accountStatus);
+        assertEquals(expected, accountStatus);
     }
 
     /**
      * Method changeStatus()
-     *
      * Scenario 1: changes the status to false, which means to inactivate an account.
      * Should return the status as FALSE
      */
@@ -297,12 +293,12 @@ class AccountTest {
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
-
+        String expected = "inactive";
         Account account = new Account(name, email, phoneNumber, photo);
-        boolean result = account.changeStatus(false);
+        boolean result = account.changeStatus(AccountStatus.INACTIVE);
 
         assertTrue(result);
-        assertFalse(account.getAccountStatus());
+        assertEquals(expected, account.getAccountStatus());
     }
 
     /**
@@ -315,14 +311,14 @@ class AccountTest {
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
-
+        String expected = "active";
         Account account = new Account(name, email, phoneNumber, photo);
-        account.changeStatus(false);
+        account.changeStatus(AccountStatus.INACTIVE);
 
-        boolean result = account.changeStatus(true);
+        boolean result = account.changeStatus(AccountStatus.ACTIVE);
 
         assertTrue(result);
-        assertTrue(account.getAccountStatus());
+        assertEquals(expected, account.getAccountStatus());
     }
 
     /**
@@ -335,17 +331,16 @@ class AccountTest {
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
-
+        String expected = "active";
         Account account = new Account(name, email, phoneNumber, photo);
-        boolean result = account.changeStatus(true);
+        boolean result = account.changeStatus(AccountStatus.ACTIVE);
 
         assertTrue(result);
-        assertTrue(account.getAccountStatus());
+        assertEquals(expected , account.getAccountStatus());
     }
 
     /**
      * Method hasEmail()
-     *
      * Scenario 1: account has the given email, should return TRUE.
      */
     @Test
@@ -381,8 +376,49 @@ class AccountTest {
     }
 
     /**
+     * Method isAccountActive().
+     * Scenario 01:  account is activate.
+     */
+    @Test
+    void ensureThatAccountIsActivate() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        AccountStatus accountStatus = mock(AccountStatus.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+        when(accountStatus.getAccountStatus()).thenReturn(AccountStatus.ACTIVE.getAccountStatus());
+
+        // Act
+        boolean result = account.isAccountActive(accountStatus.getAccountStatus());
+
+        // Assert
+        assertTrue(result);
+    }
+    /**
+     * Scenario 02:  account is inactive.
+     */
+    @Test
+    void ensureThatAccountIsInactive() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        AccountStatus accountStatus = mock(AccountStatus.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+        when(accountStatus.getAccountStatus()).thenReturn(AccountStatus.INACTIVE.getAccountStatus());
+
+        // Act
+        boolean result = account.isAccountActive(accountStatus.getAccountStatus());
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
      * Method setProfile()
-     *
      * Scenario 1: Tests the successful change of a profile in an account.
      * Compares if the account with a profile and
      * the same account without a profile are not equal.

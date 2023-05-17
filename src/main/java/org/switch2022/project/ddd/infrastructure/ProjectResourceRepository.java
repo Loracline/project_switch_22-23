@@ -69,20 +69,20 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     }
 
     /**
-     * This method returns a list of project resources with a given project code.
+     * Retrieves a list of email accounts allocated to a specific project.
      *
-     * @param projectCode the code of the project from which the resources are being queried.
-     * @return an unmodifiable list of resources whose attribute projectCode equals the projectCode of interest.
+     * @param projectCode The project code used to filter the allocated accounts.
+     * @return A list of email accounts allocated to the specified project.
      */
-    public List<ProjectResource> getResourcesByProjectCode(Code projectCode) {
-        List<ProjectResource> resourcesInProject = new ArrayList<>();
-
+    public List<String> getAccountsAllocatedToProject(Code projectCode) {
+        List<String> emails = new ArrayList<>();
         for (int i = 0; i < projectResources.size(); i++) {
             if (projectResources.get(i).hasProjectCode(projectCode)) {
-                resourcesInProject.add(projectResources.get(i));
+                String email = this.projectResources.get(i).getEmail();
+                emails.add(email);
             }
         }
-        return Collections.unmodifiableList(resourcesInProject);
+        return Collections.unmodifiableList(emails);
     }
 
     /**
@@ -174,7 +174,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     /**
      * This method checks if a given role is not Project Manager.
      *
-     * @param role to ckeck.
+     * @param role to check.
      * @return <code>true</code> if role is not Project Manager and <code>false</code> otherwise.
      */
     public boolean isNotProjectManager(Role role) {
@@ -232,6 +232,25 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
         final int MAXIMUM_ALLOWED = 100;
 
         return totalPercentageOfAllocation(accountEmail, date, toAdd) <= MAXIMUM_ALLOWED;
+    }
+
+    /**
+     * This method checks if there are any projectresource in the repository that have the same project ID,
+     * same account email, and overlapping period.
+     * @param projectCode being checked.
+     * @param email being checked.
+     * @param period being checked.
+     * @return return true if the projectResource is overllaping, false otherwise.
+     */
+    public boolean isResourceOverlapping(Code projectCode, Email email, Period period){
+        boolean resourceIsOverlapping = false;
+        for (int i = 0; i < this.projectResources.size(); i++) {
+            if (this.projectResources.get(i).hasProjectCode(projectCode) &&
+                    this.projectResources.get(i).hasAccount(email) &&
+                    this.projectResources.get(i).isPeriodOverlapping(period)){
+                resourceIsOverlapping = true;
+            }
+        } return resourceIsOverlapping;
     }
 }
 

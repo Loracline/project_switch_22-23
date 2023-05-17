@@ -6,8 +6,8 @@ public enum ProjectStatus implements ValueObject<ProjectStatus> {
     PLANNED("planned"), INCEPTION("inception"), ELABORATION("elaboration"),
     CONSTRUCTION("construction"), TRANSITION("transition"), WARRANTY("warranty"),
     CLOSED("closed");
-    private final String value;
 
+    private final String value;
 
     ProjectStatus(String value) {
         this.value = value.toLowerCase().trim();
@@ -19,7 +19,6 @@ public enum ProjectStatus implements ValueObject<ProjectStatus> {
     public String getStatus() {
         return value;
     }
-
 
     @Override
     public boolean sameValueAs(final ProjectStatus other) {
