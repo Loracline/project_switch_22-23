@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.application;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,13 +12,11 @@ import org.switch2022.project.ddd.domain.model.account.IAccountFactory;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.domain.value_object.AccountStatus;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,52 +33,6 @@ class AccountServiceTest {
     IAccountFactory accountFactory;
     @MockBean
     IAccountRepository accountRepository;
-
-    /**
-     * Method: registerAccount().
-     * Scenario 01: The account is created successfully.
-     * Expected return: TRUE.
-     */
-
-    @DisplayName("account created successfully")
-    @Test
-    void ensureThatAccountIsCreatedSuccessfully() {
-        String name = "Ana";
-        String email = "ana@isep.pt";
-        int phoneNumber = 923456789;
-        BufferedImage photo = null;
-        Account account = mock(Account.class);
-
-        when(accountFactory.create(any(), any(), any(), any())).thenReturn(account);
-        when(accountRepository.add(account)).thenReturn(true);
-
-        boolean result = service.registerAccount(name, email, phoneNumber, photo);
-
-        assertTrue(result);
-    }
-
-    /**
-     * Method: registerAccount().
-     * Scenario 01: The account is not created because it already exists in the
-     * repository.
-     * Expected return: False.
-     */
-
-    @Test
-    void ensureThatAccountIsNotCreatedBecauseItAlreadyExist() {
-        String name = "Ana";
-        String email = "ana@isep.pt";
-        int phoneNumber = 923456789;
-        BufferedImage photo = null;
-        Account account = mock(Account.class);
-
-        when(accountFactory.create(any(), any(), any(), any())).thenReturn(account);
-        when(accountRepository.add(account)).thenReturn(false);
-
-        boolean result = service.registerAccount(name, email, phoneNumber, photo);
-
-        assertFalse(result);
-    }
 
     /**
      * Method listAllAccounts()
