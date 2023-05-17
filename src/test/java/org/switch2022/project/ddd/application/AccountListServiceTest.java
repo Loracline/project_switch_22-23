@@ -9,12 +9,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
+import org.switch2022.project.ddd.dto.mapper.AccountMapper;
+import org.switch2022.project.ddd.dto.AccountDto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,6 +32,8 @@ class AccountListServiceTest {
     AccountListService service;
     @MockBean
     IAccountRepository accountRepository;
+    @MockBean
+    AccountMapper accountMapper;
 
     /**
      * Method listAllAccounts()
@@ -40,11 +45,17 @@ class AccountListServiceTest {
         Account accountOne = mock(Account.class);
         Account accountTwo = mock(Account.class);
         Account accountThree = mock(Account.class);
-        List<Account> expected = Arrays.asList(accountOne, accountTwo, accountThree);
-        when(accountRepository.getAccounts()).thenReturn(expected);
+        List<Account> accounts = Arrays.asList(accountOne, accountTwo, accountThree);
+        when(accountRepository.getAccounts()).thenReturn(accounts);
+        AccountDto accountDtoOne = mock(AccountDto.class);
+        AccountDto accountDtoTwo = mock(AccountDto.class);
+        AccountDto accountDtoThree = mock(AccountDto.class);
+        List<AccountDto> expected = Arrays.asList(accountDtoOne, accountDtoTwo,
+                accountDtoThree);
+        when(accountMapper.listAccountsToDto(any())).thenReturn(expected);
 
         // Act
-        List<Account> result = service.listAllAccounts();
+        List<AccountDto> result = service.listAllAccounts();
 
         // Assert
         assertEquals(expected, result);
@@ -57,11 +68,13 @@ class AccountListServiceTest {
     @Test
     void ensureThatAnEmptyListsIsReturned() {
         // Arrange
-        List<Account> expected = new ArrayList<>();
-        when(accountRepository.getAccounts()).thenReturn(expected);
+        List<Account> accounts = new ArrayList<>();
+        List<AccountDto> expected = new ArrayList<>();
+        when(accountRepository.getAccounts()).thenReturn(accounts);
+        when(accountMapper.listAccountsToDto(any())).thenReturn(expected);
 
         // Act
-        List<Account> result = service.listAllAccounts();
+        List<AccountDto> result = service.listAllAccounts();
 
         // Assert
         assertEquals(expected, result);
