@@ -7,7 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.application.AccountService;
+import org.switch2022.project.ddd.application.AccountListService;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.dto.AccountDto;
 import org.switch2022.project.ddd.dto.mapper.AccountMapper;
@@ -32,7 +32,7 @@ class ListAllAccountsControllerTest {
     @InjectMocks
     ListAllAccountsController controller;
     @MockBean
-    AccountService accountService;
+    AccountListService accountService;
     @MockBean
     AccountMapper accountMapper;
 

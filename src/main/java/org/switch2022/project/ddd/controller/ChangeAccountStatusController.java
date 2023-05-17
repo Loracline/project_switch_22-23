@@ -2,7 +2,7 @@ package org.switch2022.project.ddd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.switch2022.project.ddd.application.AccountService;
+import org.switch2022.project.ddd.application.AccountChangeStatusService;
 import org.switch2022.project.ddd.utils.Validate;
 
 /**
@@ -11,7 +11,7 @@ import org.switch2022.project.ddd.utils.Validate;
 @Controller
 public class ChangeAccountStatusController {
     @Autowired
-    private AccountService accountService;
+    private AccountChangeStatusService accountService;
 
     /**
      * Changes the status of the account with the given email.

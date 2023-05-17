@@ -7,7 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.application.AccountService;
+import org.switch2022.project.ddd.application.AccountChangeStatusService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -22,7 +22,7 @@ class ChangeAccountStatusControllerTest {
     @InjectMocks
     ChangeAccountStatusController controller;
     @MockBean
-    AccountService accountService;
+    AccountChangeStatusService accountService;
 
     /**
      * Method changeStatus

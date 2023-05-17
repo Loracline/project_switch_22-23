@@ -60,8 +60,7 @@ class AccountCreationServiceTest {
     }
 
     /**
-     * Method: registerAccount().
-     * Scenario 01: The account is not created because it already exists in the
+     * Scenario 02: The account is not created because it already exists in the
      * repository.
      * Expected return: False.
      */
