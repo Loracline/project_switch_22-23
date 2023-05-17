@@ -413,21 +413,23 @@ class ProjectResourceRepositoryTest {
     void ensureThatReturnTrueWhenRepositoryAlreadyHasProductOwner() {
         //Arrange
         ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
-        Role productOwner = Role.PRODUCT_OWNER;
+        Role roleDouble = mock(Role.class);
         Code codeDouble = mock(Code.class);
         Period periodDouble = mock(Period.class);
-
         ProjectResourceFactory projectResourceFactory = mock(ProjectResourceFactory.class);
         ProjectResource projectResource = mock(ProjectResource.class);
+
         when(projectResourceFactory.createProjectResource(any(), any(), any(), any(), any(), any(), any())).thenReturn(projectResource);
         projectResourceRepository.add(projectResource);
+
+        when(roleDouble.sameValueAs(Role.PRODUCT_OWNER)).thenReturn(true);
         when(projectResource.hasProjectCode(any())).thenReturn(true);
         when(projectResource.isPeriodOverlapping(any())).thenReturn(true);
         when(projectResource.hasRole(any())).thenReturn(true);
 
         //Act
         boolean result =
-                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(productOwner, codeDouble,
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble,
                         periodDouble);
 
         //Assert
@@ -438,21 +440,23 @@ class ProjectResourceRepositoryTest {
     void ensureThatReturnTrueWhenRepositoryAlreadyHasScrumMaster() {
         //Arrange
         ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
-        Role scrumMaster = Role.SCRUM_MASTER;
+        Role roleDouble = mock(Role.class);
         Code codeDouble = mock(Code.class);
         Period periodDouble = mock(Period.class);
-
         ProjectResourceFactory projectResourceFactory = mock(ProjectResourceFactory.class);
         ProjectResource projectResource = mock(ProjectResource.class);
+
         when(projectResourceFactory.createProjectResource(any(), any(), any(), any(), any(), any(), any())).thenReturn(projectResource);
         projectResourceRepository.add(projectResource);
+
+        when(roleDouble.sameValueAs(Role.SCRUM_MASTER)).thenReturn(true);
         when(projectResource.hasProjectCode(any())).thenReturn(true);
         when(projectResource.isPeriodOverlapping(any())).thenReturn(true);
         when(projectResource.hasRole(any())).thenReturn(true);
 
         //Act
         boolean result =
-                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(scrumMaster, codeDouble,
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble,
                         periodDouble);
 
         //Assert

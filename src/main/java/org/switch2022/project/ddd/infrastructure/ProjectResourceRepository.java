@@ -126,7 +126,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * <code>false</code> otherwise.
      */
     private boolean projectAlreadyHasScrumMasterInThatPeriod(Role role, Code code, Period period) {
-        return role == SCRUM_MASTER && projectHasRoleInThatPeriod(role, code, period);
+        return role.sameValueAs(Role.SCRUM_MASTER) && projectHasRoleInThatPeriod(role, code, period);
     }
 
     /**
@@ -137,7 +137,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * <code>false</code> otherwise.
      */
     private boolean projectAlreadyHasProductOwnerInThatPeriod(Role role, Code code, Period period) {
-        return role == PRODUCT_OWNER && projectHasRoleInThatPeriod(role, code, period);
+        return role.sameValueAs(PRODUCT_OWNER) && projectHasRoleInThatPeriod(role, code, period);
     }
 
     /**
