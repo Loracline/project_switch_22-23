@@ -293,6 +293,14 @@ public class Project implements Entity<Project> {
         }
         return result;
     }
+    /**
+     * This method verifies that current date is contained in Project period.
+     *
+     * @return true if the current date is contained in Project period, and false otherwise.
+     */
+    public boolean containsCurrentDate(){
+        return this.period.containsCurrentDate();
+    }
 }
 
 
