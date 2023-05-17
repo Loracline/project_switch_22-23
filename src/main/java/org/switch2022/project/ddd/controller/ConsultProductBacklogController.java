@@ -24,10 +24,6 @@ public class ConsultProductBacklogController {
     @Autowired
     private ProjectService projectService;
 
-    @Autowired
-    private UserStoryMapper userStoryMapper;
-
-
     /**
      * This method receives the input data from the UI (projectCode) to get the respective
      * Product Backlog through the responsible domain service (ProjectService).
@@ -43,7 +39,6 @@ public class ConsultProductBacklogController {
     public List<UserStoryDto> getProductBacklog(String projectCode) {
         Validate.notNullOrEmptyOrBlank(projectCode, "Project Code");
 
-        List<UserStory> userStories = projectService.getProductBacklog(projectCode);
-        return userStoryMapper.userStoryToDtoList(userStories);
+        return projectService.getProductBacklog(projectCode);
     }
 }

@@ -35,9 +35,6 @@ class ConsultProductBacklogControllerTest {
     ConsultProductBacklogController controller;
 
     @MockBean
-    UserStoryMapper userStoryMapper;
-
-    @MockBean
     ProjectService projectService;
 
     /*
@@ -189,7 +186,7 @@ class ConsultProductBacklogControllerTest {
     void ensureThatAnEmptyUserStoryDtoListIsReturned()  {
         // ARRANGE
         String projectCode = "P001";
-        List<UserStory> emptyProductBacklog = new ArrayList<>();
+        List<UserStoryDto> emptyProductBacklog = new ArrayList<>();
         when(projectService.getProductBacklog(projectCode)).thenReturn(emptyProductBacklog);
 
         // ACT
@@ -209,14 +206,10 @@ class ConsultProductBacklogControllerTest {
     void ensureThatProductBacklogIsRetrievedSuccessfully() {
         String projectCode = "P001";
 
-        List<UserStory> userStories = Arrays.asList(mock(UserStory.class));
-
         UserStoryDto userStoryDto = mock(UserStoryDto.class);
-        List<UserStoryDto> expectedUserStoryDtoList =
-                Arrays.asList(userStoryDto);
+        List<UserStoryDto> expectedUserStoryDtoList = Arrays.asList(userStoryDto);
 
-        when(projectService.getProductBacklog(projectCode)).thenReturn(userStories);
-        when(userStoryMapper.userStoryToDtoList(any())).thenReturn(expectedUserStoryDtoList);
+        when(projectService.getProductBacklog(projectCode)).thenReturn(expectedUserStoryDtoList);
 
         // ACT
         List<UserStoryDto> actualUserStoryDtoList =
