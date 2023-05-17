@@ -12,6 +12,7 @@ import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.domain.value_object.AccountStatus;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,5 +50,24 @@ class AccountChangeStatusServiceTest {
         assertTrue(result);
     }
 
+    /**
+     * Method changeStatus()
+     * Scenario 2: returns false if status has not changed.
+     */
 
+    @Test
+    void ensureThatStatusIsNotChanged() {
+        //Arrange
+        String email = "ana@isep.pt";
+        Account expected = mock(Account.class);
+
+        when(accountRepository.getAccountByEmail(email)).thenReturn(expected);
+        when(expected.changeStatus(any())).thenReturn(false);
+
+        //Act
+        boolean result = service.changeStatus(email,AccountStatus.ACTIVE.getAccountStatus());
+
+        //Assert
+        assertFalse(result);
+    }
 }

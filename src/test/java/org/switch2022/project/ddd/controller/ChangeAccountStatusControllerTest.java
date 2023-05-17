@@ -65,12 +65,25 @@ class ChangeAccountStatusControllerTest {
      * Scenario 3: Status is updated, should return TRUE.
      */
     @Test
-    void ensureThatAccountStatusIsChanged(){
+    void ensureThatAccountStatusHasChanged(){
         String email = "ana@isep.pt";
         when(accountService.changeStatus(email, "inactive")).thenReturn(true);
 
         boolean result = controller.changeStatus(email, "inactive");
 
         assertTrue(result);
+    }
+
+    /**
+     * Scenario 3: Status is not updated, should return FALSE.
+     */
+    @Test
+    void ensureThatAccountStatusHasNotChanged(){
+        String email = "ana@isep.pt";
+        when(accountService.changeStatus(email, "online")).thenReturn(false);
+
+        boolean result = controller.changeStatus(email, "online");
+
+        assertFalse(result);
     }
 }

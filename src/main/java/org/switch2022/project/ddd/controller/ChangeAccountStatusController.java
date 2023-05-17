@@ -23,6 +23,5 @@ public class ChangeAccountStatusController {
     public boolean changeStatus(String email, String status) {
         Validate.notNullOrEmptyOrBlank(email, "email");
         return accountService.changeStatus(email, status);
-
     }
 }

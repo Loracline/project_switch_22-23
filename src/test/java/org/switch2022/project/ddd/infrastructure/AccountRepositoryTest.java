@@ -342,7 +342,7 @@ class AccountRepositoryTest {
 
     /**
      * Method getAccountByEmail()
-     * Scenario 1: returns
+     * Scenario 1: returns an account with the given e-mail
      */
 
     @Test
@@ -365,6 +365,9 @@ class AccountRepositoryTest {
         assertEquals(accountOne, result);
     }
 
+    /**
+     * Scenario 2: Account is not retrieved because the list is empty
+     */
     @Test
     void ensureThatAccountIsNotFoundBecauseListIsEmpty() {
         //Arrange
@@ -380,6 +383,9 @@ class AccountRepositoryTest {
         assertEquals(message, result.getMessage());
     }
 
+    /**
+     * Scenario 2: Account is not retrieved because it is not found.
+     */
     @Test
     void ensureThatAccountIsNotFoundBecauseIsNotInTheList() {
         //Arrange
