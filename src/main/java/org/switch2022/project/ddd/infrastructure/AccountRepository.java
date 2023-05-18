@@ -3,13 +3,12 @@ package org.switch2022.project.ddd.infrastructure;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
-import org.switch2022.project.ddd.domain.value_object.AccountStatus;
-import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,67 +73,51 @@ public class AccountRepository implements IAccountRepository {
      *
      * @return a list with all accounts.
      */
-    @Override
-    public List<Account> getAccounts() {
-        return this.accounts;
-    }
 
-    /**
-     * This method returns all the accounts with emails matching a given list of emails that is passed as argument.
-     *
-     * @param emails list of emails to match with accounts.
-     * @return a list with accounts with matching emails, or an empty list if no accounts have matching emails.
-     */
     @Override
-    public List<Account> getAccounts(List<String> emails) {
-        Validate.notNull(emails, "The list of emails must not be null.");
-        List<Account> accounts = new ArrayList<>();
-        for (int i = 0; i < this.accounts.size(); i++) {
-            for (int j = 0; j < emails.size(); j++) {
-                if (this.accounts.get(i).hasEmail(emails.get(j))) {
-                    accounts.add(this.accounts.get(i));
+    public List<Account> findAll() {
+        return Collections.unmodifiableList(accounts);}
+
+
+
+        /**
+         * This method returns all the accounts with emails matching a given list of emails that is passed as argument.
+         *
+         * @param emails list of emails to match with accounts.
+         * @return a list with accounts with matching emails, or an empty list if no accounts have matching emails.
+         */
+        @Override
+        public List<Account> getAccounts (List < String > emails) {
+            Validate.notNull(emails, "The list of emails must not be null.");
+            List<Account> accounts = new ArrayList<>();
+            for (int i = 0; i < this.accounts.size(); i++) {
+                for (int j = 0; j < emails.size(); j++) {
+                    if (this.accounts.get(i).hasEmail(emails.get(j))) {
+                        accounts.add(this.accounts.get(i));
+                    }
                 }
             }
+            return accounts;
         }
-        return accounts;
-    }
 
-    /**
-     * This method returns an optional of an account.
-     *
-     * @param email to search for the account.
-     * @return an optional of account with the requested account or optional of null if
-     * it does not find the desired account.
-     */
-    @Override
-    public Account getAccountByEmail(String email) {
-        Account accountRequested = null;
-        int i = 0;
-        while (i < this.accounts.size() && accountRequested == null) {
-            if (accounts.get(i).hasEmail(email)) {
-                accountRequested = accounts.get(i);
+        /**
+         * This method returns an optional of an account.
+         *
+         * @param email to search for the account.
+         * @return an optional of account with the requested account or optional of null if
+         * it does not find the desired account.
+         */
+        @Override
+        public Account getAccountByEmail (String email){
+            Account accountRequested = null;
+            int i = 0;
+            while (i < this.accounts.size() && accountRequested == null) {
+                if (accounts.get(i).hasEmail(email)) {
+                    accountRequested = accounts.get(i);
+                }
             }
+            if (accountRequested == null) throw new NotFoundInRepoException("This account " +
+                    "doesn't exist");
+            return accountRequested;
         }
-        if (accountRequested == null) throw new NotFoundInRepoException("This account " +
-                "doesn't exist");
-        return accountRequested;
-    }
-
-    /**
-     * This method checks if the account exists and if its status is active (if the account is valid).
-     *
-     * @param accountEmail to check if it exists and if it does, if the status is activated.
-     * @return true if the account exists and the status is activated. If one of these conditions is not true,
-     * it returns false.
-     */
-
-    public boolean IsAValidAccount(Email accountEmail, AccountStatus accountStatus) {
-        boolean accointIsValid= false;
-        for (int i = 0; i < this.accounts.size(); i++) {
-            accointIsValid = (accounts.get(i).hasEmail(accountEmail.getEmail()) &&
-                    accounts.get(i).isAccountActive(accountStatus.getAccountStatus()));
-        }
-        return accointIsValid;
-    }
-
 }
