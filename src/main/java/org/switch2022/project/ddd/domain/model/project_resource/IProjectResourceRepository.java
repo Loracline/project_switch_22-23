@@ -21,4 +21,11 @@ public interface IProjectResourceRepository {
      * @return A list of email accounts allocated to the specified project.
      */
     List<String> getAccountsAllocatedToProject(Code projectCode);
+
+    /**
+     * Retrieves a list of resources to a specific project.
+     * @return a list of resources to a specific project.
+     */
+    List<ProjectResource> findAll();
+
 }

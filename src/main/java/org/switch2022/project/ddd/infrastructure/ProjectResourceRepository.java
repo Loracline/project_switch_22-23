@@ -233,24 +233,14 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
 
         return totalPercentageOfAllocation(accountEmail, date, toAdd) <= MAXIMUM_ALLOWED;
     }
-
     /**
-     * This method checks if there are any projectresource in the repository that have the same project ID,
-     * same account email, and overlapping period.
-     * @param projectCode being checked.
-     * @param email being checked.
-     * @param period being checked.
-     * @return return true if the projectResource is overllaping, false otherwise.
+     * This method returns an unmodifiable view of the projects.
+     *
+     * @return an unmodifiable view of the projects.
      */
-    public boolean isResourceOverlapping(Code projectCode, Email email, Period period){
-        boolean resourceIsOverlapping = false;
-        for (int i = 0; i < this.projectResources.size(); i++) {
-            if (this.projectResources.get(i).hasProjectCode(projectCode) &&
-                    this.projectResources.get(i).hasAccount(email) &&
-                    this.projectResources.get(i).isPeriodOverlapping(period)){
-                resourceIsOverlapping = true;
-            }
-        } return resourceIsOverlapping;
+    public List<ProjectResource> findAll() {
+        return Collections.unmodifiableList(projectResources);
     }
+
 }
 
