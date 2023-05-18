@@ -8,14 +8,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
-
-import java.util.List;
 
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK,
@@ -41,7 +40,7 @@ class CreateUserStoryControllerTest {
 
     /**
      * Method: createUs()
-     * Scenario 1: Tests the behavior of the createUs method in the CreateUsController class
+     * Scenario 1: Tests the behavior of the createUs method in the CreateUserStoryController class
      * when a null projectCodeOfInterest string is passed as input.
      * The method should throw an IllegalArgumentException with a message indicating that the
      * input parameters cannot be null.
@@ -68,12 +67,9 @@ class CreateUserStoryControllerTest {
     }
 
     /**
-     * Scenario 2: Tests the behavior of the createUs method in the CreateUsController class
-     * when
-     * a null
-     * UserStoryCreationDto object is passed as input. The method should throw an
-     * IllegalArgumentException with
-     * a message indicating that the input parameters cannot be null.
+     * Scenario 2: Tests the behavior of the createUs method in the CreateUserStoryController class
+     * when a null UserStoryCreationDto object is passed as input. The method should throw an
+     * IllegalArgumentException with a message indicating that the input parameters cannot be null.
      *
      * @throws IllegalArgumentException if the input parameters are null.
      */
@@ -93,39 +89,28 @@ class CreateUserStoryControllerTest {
 
     /**
      * Scenario 3: This test verifies the behavior of the createUs method in the
-     * CreateUsController class when a valid UserStoryCreationDto object is passed as input.
-     * The method should successfully create a User Story and return true. The test arranges the
-     * input by creating mock objects for the UsService, and setting up
-     * the appropriate
-     * mock method behavior to return a UsId and true when called.
-     * Then it acts by invoking the method and verifying that it returns true. Finally, it
-     * asserts that the
-     * result is true.
+     * CreateUserStoryController class when a valid UserStoryCreationDto object is passed as input.
+     * The method should successfully create a User Story and return a User Story Id. It verifies
+     * that a User Story is created successfully by mocking the necessary dependencies,
+     * setting up the required test data, and asserting that the result is not null.
      */
     @Test
     void ensureUserStoryIsCreatedSuccessfully() throws Exception {
         // Arrange
+        UsId usId = mock(UsId.class);
         String projectCode = "P001";
         String acceptanceCriteria = "E-mail must have an @ and a dot";
         userStoryCreationDto = new UserStoryCreationDto("US001",
                 "As a user, I want to be able to log in to the system.", "User",
                 singletonList(acceptanceCriteria), 1);
 
-        UsNumber userStoryNumber = new UsNumber(userStoryCreationDto.userStoryNumber);
-        UsText userStoryText = new UsText(userStoryCreationDto.userStoryText);
-        Actor actor = new Actor(userStoryCreationDto.actor);
-        int priority = userStoryCreationDto.priority;
-        List<AcceptanceCriteria> acceptanceCriteriaList = singletonList(new AcceptanceCriteria(acceptanceCriteria));
-        Code projectCodeObj = new Code(1);
-
-        when(usService.createUs(userStoryNumber, userStoryText, actor, priority,
-                acceptanceCriteriaList, projectCodeObj)).thenReturn(true);
+        when(usService.createUs(projectCode, userStoryCreationDto)).thenReturn(usId);
 
         // Act
-        boolean result = controller.createUs(projectCode, userStoryCreationDto);
+        UsId result = controller.createUs(projectCode, userStoryCreationDto);
 
         // Assert
-        assertTrue(result);
+        assertNotNull(result);
     }
 
 //
