@@ -8,13 +8,12 @@ import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 /**
- * Class AccountService allows to create and manipulate the Account aggregate.
+ * Class AccountService allows to create an account.
  */
 @Service
-public class AccountService {
+public class AccountCreationService {
     @Autowired
     private IAccountFactory accountFactory;
     @Autowired
@@ -44,33 +43,4 @@ public class AccountService {
         Account account = accountFactory.create(name, email, phoneNumber, photo);
         return accountRepository.add(account);
     }
-
-    /**
-     * This method asks the repository for the list of all Accounts and returns it.
-     * @return list with all accounts.
-     */
-    public List<Account> listAllAccounts() {
-        return accountRepository.getAccounts();
-    }
-
-    /**
-     * This method changes the status of the account with the specified email address.
-     * @param email  the email address of the account to update.
-     * @param status the new status for the account.
-     * @return updates the account.
-     */
-
-    public boolean changeStatus(String email, String status) {
-        boolean result = false;
-        for (AccountStatus accountStatus : AccountStatus.values()) {
-            if (accountStatus.getAccountStatus().equals(status)) {
-                Account account = accountRepository.getAccountByEmail(email);
-                result = account.changeStatus(accountStatus);
-            }
-        }
-        return result;
-    }
-
-
-
 }

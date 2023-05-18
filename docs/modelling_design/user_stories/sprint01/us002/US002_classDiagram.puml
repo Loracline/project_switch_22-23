@@ -5,7 +5,7 @@ class RegisterAccountController {
 + registerAccount (accountCreationDto)
 }
 
-class AccountService{
+class AccountCreationService{
 - accountRepository
 - accountFactory
 + registerAccount(name, email, phoneNumber, photo)
@@ -34,9 +34,9 @@ class Account<<root>>{
 -photo
 }
 
-RegisterAccountController <.. AccountService: is injected
-AccountService <.. IAccountRepository: is injected
-AccountService <.. IAccountFactory: is injected
+RegisterAccountController <.. AccountCreationService: is injected
+AccountCreationService <.. IAccountRepository: is injected
+AccountCreationService <.. IAccountFactory: is injected
 IAccountFactory <|.. AccountFactory: implements
 AccountFactory ..> Account: creates
 IAccountRepository <|.. AccountRepository: implements

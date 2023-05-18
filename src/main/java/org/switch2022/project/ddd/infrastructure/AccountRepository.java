@@ -3,6 +3,8 @@ package org.switch2022.project.ddd.infrastructure;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
+import org.switch2022.project.ddd.domain.value_object.AccountStatus;
+import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.utils.Validate;
@@ -117,4 +119,22 @@ public class AccountRepository implements IAccountRepository {
                 "doesn't exist");
         return accountRequested;
     }
+
+    /**
+     * This method checks if the account exists and if its status is active (if the account is valid).
+     *
+     * @param accountEmail to check if it exists and if it does, if the status is activated.
+     * @return true if the account exists and the status is activated. If one of these conditions is not true,
+     * it returns false.
+     */
+
+    public boolean IsAValidAccount(Email accountEmail, AccountStatus accountStatus) {
+        boolean accointIsValid= false;
+        for (int i = 0; i < this.accounts.size(); i++) {
+            accointIsValid = (accounts.get(i).hasEmail(accountEmail.getEmail()) &&
+                    accounts.get(i).isAccountActive(accountStatus.getAccountStatus()));
+        }
+        return accointIsValid;
+    }
+
 }

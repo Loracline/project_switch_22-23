@@ -415,21 +415,23 @@ class ProjectResourceRepositoryTest {
     void ensureThatReturnTrueWhenRepositoryAlreadyHasProductOwner() {
         //Arrange
         ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
-        Role productOwner = Role.PRODUCT_OWNER;
+        Role roleDouble = mock(Role.class);
         Code codeDouble = mock(Code.class);
         Period periodDouble = mock(Period.class);
-
         ProjectResourceFactory projectResourceFactory = mock(ProjectResourceFactory.class);
         ProjectResource projectResource = mock(ProjectResource.class);
+
         when(projectResourceFactory.createProjectResource(any(), any(), any(), any(), any(), any(), any())).thenReturn(projectResource);
         projectResourceRepository.add(projectResource);
+
+        when(roleDouble.sameValueAs(Role.PRODUCT_OWNER)).thenReturn(true);
         when(projectResource.hasProjectCode(any())).thenReturn(true);
         when(projectResource.isPeriodOverlapping(any())).thenReturn(true);
         when(projectResource.hasRole(any())).thenReturn(true);
 
         //Act
         boolean result =
-                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(productOwner, codeDouble,
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble,
                         periodDouble);
 
         //Assert
@@ -440,21 +442,23 @@ class ProjectResourceRepositoryTest {
     void ensureThatReturnTrueWhenRepositoryAlreadyHasScrumMaster() {
         //Arrange
         ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
-        Role scrumMaster = Role.SCRUM_MASTER;
+        Role roleDouble = mock(Role.class);
         Code codeDouble = mock(Code.class);
         Period periodDouble = mock(Period.class);
-
         ProjectResourceFactory projectResourceFactory = mock(ProjectResourceFactory.class);
         ProjectResource projectResource = mock(ProjectResource.class);
+
         when(projectResourceFactory.createProjectResource(any(), any(), any(), any(), any(), any(), any())).thenReturn(projectResource);
         projectResourceRepository.add(projectResource);
+
+        when(roleDouble.sameValueAs(Role.SCRUM_MASTER)).thenReturn(true);
         when(projectResource.hasProjectCode(any())).thenReturn(true);
         when(projectResource.isPeriodOverlapping(any())).thenReturn(true);
         when(projectResource.hasRole(any())).thenReturn(true);
 
         //Act
         boolean result =
-                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(scrumMaster, codeDouble,
+                projectResourceRepository.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble,
                         periodDouble);
 
         //Assert
@@ -606,5 +610,103 @@ class ProjectResourceRepositoryTest {
 
         // Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * Method isResourceOverlapping()
+     * Scenario 01: Make sure resource is overlapping, projectCode, accountEmail are same and period is overlapping.
+     * Expected return: True.
+     */
+    @Test
+    void ensureResourceIsOverlapping() {
+        // Arrange
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Period periodDouble = mock(Period.class);
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        projectResourceRepository.add(projectResourceOneDouble);
+        when(projectResourceOneDouble.hasProjectCode(codeDouble)).thenReturn(true);
+        when(projectResourceOneDouble.hasAccount(emailDouble)).thenReturn(true);
+        when(projectResourceOneDouble.isPeriodOverlapping(periodDouble)).thenReturn(true);
+        // Act
+        boolean result = projectResourceRepository.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 02: Check resource is not overlapping, projectCode is not equal, accountEmail is same,
+     * and the period is overlapped.
+     * Expected return: false.
+     */
+    @Test
+    void ensureResourceIsNotOverlappingBecauseTheProjectCodeIsNotTheSame() {
+        // Arrange
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Period periodDouble = mock(Period.class);
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        projectResourceRepository.add(projectResourceOneDouble);
+        when(projectResourceOneDouble.hasProjectCode(codeDouble)).thenReturn(false);
+        when(projectResourceOneDouble.hasAccount(emailDouble)).thenReturn(true);
+        when(projectResourceOneDouble.isPeriodOverlapping(periodDouble)).thenReturn(true);
+        // Act
+        boolean result = projectResourceRepository.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
+
+        // Assert
+        assertFalse(result);
+    }
+
+
+    /**
+     * Scenario 03: Check resource is not overlapped, projectCode is same but accountEmail is not same
+     * and the period is overlapped.
+     * Expected return: false.
+     */
+    @Test
+    void assureResourceIsNotOverlappingBecauseTheAccountEmailIsNotTheSame() {
+        // Arrange
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Period periodDouble = mock(Period.class);
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        projectResourceRepository.add(projectResourceOneDouble);
+        when(projectResourceOneDouble.hasProjectCode(codeDouble)).thenReturn(true);
+        when(projectResourceOneDouble.hasAccount(emailDouble)).thenReturn(false);
+        when(projectResourceOneDouble.isPeriodOverlapping(periodDouble)).thenReturn(true);
+        // Act
+        boolean result = projectResourceRepository.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 04: Check resource is not overlapped, projectCode, accountEmail are same and period is not
+     * overlay.
+     * Expected return: false.
+     */
+    @Test
+    void ensureResourceIsNotOverlappingbecauseThePeriodIsNotOverllapping() {
+        // Arrange
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Period periodDouble = mock(Period.class);
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResourceRepository projectResourceRepository = new ProjectResourceRepository();
+        projectResourceRepository.add(projectResourceOneDouble);
+        when(projectResourceOneDouble.hasProjectCode(codeDouble)).thenReturn(true);
+        when(projectResourceOneDouble.hasAccount(emailDouble)).thenReturn(true);
+        when(projectResourceOneDouble.isPeriodOverlapping(periodDouble)).thenReturn(false);
+        // Act
+        boolean result = projectResourceRepository.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
+
+        // Assert
+        assertFalse(result);
+
     }
 }

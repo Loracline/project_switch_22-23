@@ -37,9 +37,8 @@ class "EstimateUserStoryEffortController" {
 "Sprint" "1" --> "*" "UserStoryInSprint" : contains
 "UserStoryInSprint" "1" --> "1" "Effort" : has
 
-class "GetProductBacklogController" {
+class "ConsultProductBacklogController" {
 -projectService
--userStoryMapper
 +getProductBacklog(projectCode)
 }
 
@@ -63,13 +62,12 @@ class ProjectCreationService {
 class "ProjectService"{
 -factoryProject
 -projectRepository
--factoryProductBacklog
 -usRepository
--projectRepository
--customerRepository
+-userStoryMapper
 +getProductBacklog(code)
 +getProjectByCode(code)
 +requestAllPlannedUserStories(usIds)
++userStoryToDtoList(userStories)
 }
 
 class "ProjectListService"{
@@ -395,12 +393,16 @@ class RegisterAccountController {
 + registerAccount (accountCreationDto)
 }
 
-class AccountService{
+class AccountChangeStatusService{
+- accountRepository
++changeStatus(email, status)
+
+}
+
+class AccountCreationService{
 - accountRepository
 - accountFactory
 + registerAccount(name, email, phoneNumber, photo)
-+changeStatus(email, status)
-+listAllAccounts()
 }
 
 interface IAccountFactory{
@@ -435,12 +437,21 @@ class Account{
 +getName()
 +getEmail()
 +getAccountStatus()
-+setProfile(profile)
++changeProfile(profile)
 }
 
-RegisterAccountController <.. AccountService: is injected
-AccountService <.. IAccountRepository: is injected
-AccountService <.. IAccountFactory: is injected
+class AccountListService{
+-accountRepository
++listAllAccounts()
+}
+
+
+
+RegisterAccountController <.. AccountCreationService: is injected
+AccountCreationService <|.. IAccountFactory : is injected
+AccountCreationService <|.. IAccountRepository : is injected
+AccountChangeStatusService <.. IAccountRepository: is injected
+AccountChangeStatusService <.. IAccountFactory: is injected
 IAccountFactory <|.. AccountFactory: implements
 AccountFactory ..> Account: creates
 IAccountRepository <|.. AccountRepository: implements
@@ -452,7 +463,7 @@ class ChangeStatusController {
 +changeStatus(email, status)
 }
 
-ChangeStatusController"1 " <.. "1 "AccountService : is injected
+ChangeStatusController"1 " <.. "1 "AccountChangeStatusService : is injected
 
 class ListAccountController {
 -accountService
@@ -471,9 +482,9 @@ class AccountDto{
 +email
 +status
 }
-
-ListAccountController"1" <.. "1"AccountService : is injected
-ListAccountController "1"--> "1"AccountMapper : has
+AccountListService <|.. AccountRepository : is injected
+ListAccountController"1" <.. "1"AccountListService : is injected
+AccountListService "1"--> "1"AccountMapper : has
 AccountMapper --> AccountDto : creates
 AccountMapper ..> Account : knows
 

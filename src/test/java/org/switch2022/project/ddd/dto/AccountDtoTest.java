@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.dto;
 
 import org.junit.jupiter.api.Test;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -26,7 +27,8 @@ class AccountDtoTest {
         // ASSERT
         assertEquals(expected, result);
     }
-     /**
+
+    /**
      * Scenario 2 : ensure two accountDto are not equals.
      */
     @Test
@@ -45,6 +47,7 @@ class AccountDtoTest {
         // ASSERT
         assertEquals(expected, result);
     }
+
     /**
      * Scenario 3 : ensure accountDto are not equal to other object.
      */
@@ -53,12 +56,30 @@ class AccountDtoTest {
         // ARRANGE
         AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
-        Object other = new Object();
+        String other = "User";
 
         boolean expected = false;
 
         // ACT
         boolean result = reference.equals(other);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 4: ensure AccountDto does not equal a different type of object.
+     */
+    @Test
+    void ensureAccountDtoNotEqualsDifferentObjectType() {
+        // ARRANGE
+        AccountDto accountDto = new AccountDto("John", "john@isep.ipp.pt", "Planned");
+        AccountDto differentObject = null;
+
+        boolean expected = false;
+
+        // ACT
+        boolean result = accountDto.equals(differentObject);
 
         // ASSERT
         assertEquals(expected, result);
@@ -84,7 +105,7 @@ class AccountDtoTest {
     }
 
     /**
-     *Scenario 2 : ensure AccountDto have different hash code.
+     * Scenario 2 : ensure AccountDto have different hash code.
      */
     @Test
     void ensureAccountDtoHaveDifferentHashCode() {
@@ -101,4 +122,20 @@ class AccountDtoTest {
         // ASSERT
         assertNotEquals(hashCodeOther, hashCodeReference);
     }
+
+    /**
+     * Scenario 3 : ensure HashCode returns non zero value.
+     */
+    @Test
+    void ensureHashCodeReturnsNonZeroValue() {
+        // ARRANGE
+        AccountDto accountDto = new AccountDto("John", "john@isep.ipp.pt", "Planned");
+
+        // ACT
+        int hashCode = accountDto.hashCode();
+
+        // ASSERT
+        assertNotEquals(0, hashCode);
+    }
+
 }

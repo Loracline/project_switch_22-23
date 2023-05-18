@@ -2,10 +2,8 @@ package org.switch2022.project.ddd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.switch2022.project.ddd.application.AccountService;
-import org.switch2022.project.ddd.domain.model.account.Account;
+import org.switch2022.project.ddd.application.AccountListService;
 import org.switch2022.project.ddd.dto.AccountDto;
-import org.switch2022.project.ddd.dto.mapper.AccountMapper;
 
 import java.util.List;
 
@@ -16,9 +14,7 @@ import java.util.List;
 @Controller
 public class ListAllAccountsController {
     @Autowired
-    private AccountService accountService;
-    @Autowired
-    private AccountMapper accountMapper;
+    private AccountListService accountService;
 
     /**
      * This method requests a list of all accounts
@@ -26,7 +22,6 @@ public class ListAllAccountsController {
      */
 
     public List<AccountDto> listAllAccounts() {
-        List<Account> accounts = accountService.listAllAccounts();
-        return accountMapper.listAccountsToDto(accounts);
+        return accountService.listAllAccounts();
     }
 }

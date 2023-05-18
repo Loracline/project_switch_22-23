@@ -7,8 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.application.AccountService;
-import org.switch2022.project.ddd.domain.model.account.Account;
+import org.switch2022.project.ddd.application.AccountListService;
 import org.switch2022.project.ddd.dto.AccountDto;
 import org.switch2022.project.ddd.dto.mapper.AccountMapper;
 
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -32,7 +30,7 @@ class ListAllAccountsControllerTest {
     @InjectMocks
     ListAllAccountsController controller;
     @MockBean
-    AccountService accountService;
+    AccountListService accountService;
     @MockBean
     AccountMapper accountMapper;
 
@@ -44,16 +42,12 @@ class ListAllAccountsControllerTest {
     @Test
     void ensureThatAListOfAccountDtoIsReturned() {
         // Arrange
-        Account account = mock(Account.class);
-        List<Account> accounts = new ArrayList<>();
-        accounts.add(account);
-
         AccountDto accountDto = mock(AccountDto.class);
+        AccountDto accountDtoTwo = mock(AccountDto.class);
         List<AccountDto> expectedAccountDtoList =
-                Arrays.asList(accountDto);
+                Arrays.asList(accountDto, accountDtoTwo);
 
-        when(accountService.listAllAccounts()).thenReturn(accounts);
-        when(accountMapper.listAccountsToDto(any())).thenReturn(expectedAccountDtoList);
+        when(accountService.listAllAccounts()).thenReturn(expectedAccountDtoList);
 
         // Act
         List<AccountDto> actualAccountDtoList =
@@ -71,7 +65,7 @@ class ListAllAccountsControllerTest {
     @Test
     void ensureThatAnEmptyListOfAccountDtoIsReturned() {
         // Arrange
-        List<Account> emptyAccountList = new ArrayList<>();
+        List<AccountDto> emptyAccountList = new ArrayList<>();
         when(accountService.listAllAccounts()).thenReturn(emptyAccountList);
 
         // Act

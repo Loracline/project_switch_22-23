@@ -6,61 +6,53 @@ US022 - As Team Member, I want to view the Scrum Board of current sprint.
 end legend
 autonumber
 actor "Team Member" as member
-participant ":ViewScrumBoardUI" as ui
-participant ":ViewScrumBoardController" as controller
-participant ":Company" as company
-participant ":ProjectContainer" as projectContainer
-participant ":Project" as project
-participant ":Sprint" as sprint
-participant ":SprintBacklog" as backlog
-participant ":UserStoryDtoListAssembler" as dto
+participant ":UserStoriesInSprintUI" as ui
+participant ":UserStoriesInSprintController" as controller
+participant ":UserStoriesInSprintService" as service
+participant ":SprintRepository" as repository
 
+participant ":UserStoryRepository" as usRepository
+participant ":UserStoryMapper" as dto
 
 activate member
 activate ui
-member -> ui : requests list of projects
-ref over ui: US016: list all projects the user is allocated as authenticated
-ui --> member : show list of projects
-member -> ui : select project
-deactivate ui
 member -> ui : requests to view the Scrum Board of current sprint
-activate ui
-"ui" -> controller : getScrumBoard(projectDto, date, iFactoryUserStory)
-activate controller
-"controller" -> company : getScrumBoard(projectCode, date, iFactoryUserStory)
-activate company
-"company" -> projectContainer : getScrumBoard(projectCode, date, iFactoryUserStory)
-activate projectContainer
-"projectContainer" -> project: getSprintBacklogByDate(date, iFactoryUserStory)
-activate project
-"project" -> sprint : getSprintBacklogCopy(iFactoryUserStory)
-activate sprint
-"sprint"-> backlog: getUserStoriesCopy(iFactoryUserStory)
-activate backlog
 
-"backlog"--> sprint : userStories
-deactivate backlog
-"sprint" --> project : sprintBacklog
-deactivate sprint
-project --> projectContainer : sprintBacklog
-deactivate project
-projectContainer --> company : sprintBacklog
-deactivate projectContainer
-company --> controller : sprintBacklog
-deactivate company
-controller-> dto : backlogToDto(sprintBacklog, iFactoryUserStory)
+ui --> member : requests data (projectCode, date)
+member -> ui : enters requested data
+
+"ui" -> controller : getScrumBoard(projectCode, date)
+activate controller
+"controller" -> service : getScrumBoard(projectCode, date)
+activate service
+
+"service" -> repository : getScrumBoard(projectCode, date)
+activate repository
+"repository"--> service : sprints
+deactivate repository
+"service" -> usRepository : getScrumBoard(projectCode, date)
+deactivate repository
+activate usRepository
+
+usRepository -->"service"   : userStories
+deactivate usRepository
+deactivate repository
+
+service-> dto : userStoryToDtoList(userStories)
+deactivate service
 activate dto
-"dto" ->backlog: getUserStoriesCopy(iFactoryUserStory))
-activate backlog
-"backlog" --> dto: userStories
-deactivate backlog
+
+activate repository
+
+deactivate repository
 
 ref over dto: To create a user story DTO
 
-dto --> controller : userStoryDtoList
+dto --> controller : userStoryDto
 deactivate dto
-controller -> ui : userStoryDtoList
+controller --> ui : userStoryDto
 deactivate controller
-ui -> member : shows Scrum Board of current sprint
+ui --> member : shows Scrum Board of current sprint
+deactivate ui
 
 @enduml

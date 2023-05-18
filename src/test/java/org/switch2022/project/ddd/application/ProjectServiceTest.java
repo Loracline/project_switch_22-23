@@ -13,13 +13,12 @@ import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
+import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -47,6 +46,8 @@ class ProjectServiceTest {
     ProjectMapper projectMapper;
     @MockBean
     ICustomerRepository customerRepository;
+    @MockBean
+    UserStoryMapper userStoryMapper;
 
 
     /*
@@ -119,18 +120,23 @@ class ProjectServiceTest {
         List<UsId> usIds = Arrays.asList(usIdDoubleTwo, usIdDouble);
 
         UserStory userStoryOne = mock(UserStory.class);
-        List<UserStory> expected = Arrays.asList(userStoryOne);
+        List<UserStory> userStories = Arrays.asList(userStoryOne);
+
+        UserStoryDto userStoryDto = mock(UserStoryDto.class);
+        List<UserStoryDto> expected = Arrays.asList(userStoryDto);
+        List<UserStoryDto> userStoryDtos = Arrays.asList(userStoryDto);
 
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
 
         when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         when(projectDouble.getProductBacklog()).thenReturn(usIds);
-        when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(expected);
+        when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(userStories);
         when(userStoryOne.hasStatus(any())).thenReturn(true);
+        when(userStoryMapper.userStoryToDtoList(userStories)).thenReturn(userStoryDtos);
 
         //Act
-        List<UserStory> result = projectService.getProductBacklog("P001");
+        List<UserStoryDto> result = projectService.getProductBacklog("P001");
         //Assert
         assertEquals(expected, result);
     }
@@ -147,9 +153,10 @@ class ProjectServiceTest {
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
         when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         when(projectDouble.getProductBacklog()).thenReturn(usIds);
+        when(userStoryMapper.userStoryToDtoList(expected)).thenReturn(Collections.emptyList());
 
         //Act
-        List<UserStory> result = projectService.getProductBacklog("P001");
+        List<UserStoryDto> result = projectService.getProductBacklog("P001");
 
         //Assert
         assertEquals(expected, result);

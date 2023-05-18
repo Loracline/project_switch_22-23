@@ -1050,4 +1050,33 @@ class ProjectTest {
         //Assert
         assertFalse(result);
     }
+
+    @Test
+    void ensureThatProjectContainsCurrentDate() {
+        //Arrange
+        Period period = new Period(LocalDate.now().minusDays(1), 4);
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId, projectTypologyId);
+        project.setProjectStatus(ProjectStatus.INCEPTION);
+        project.isPeriodAssigned(period);
+
+        //Act
+        boolean result = project.containsCurrentDate();
+
+        //Assert
+        assertTrue(result);
+    }
+    @Test
+    void ensureThatProjectDoesNotContainCurrentDate() {
+        //Arrange
+        Period period = new Period(LocalDate.of(2023, 4, 10), 4);
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId, projectTypologyId);
+        project.setProjectStatus(ProjectStatus.INCEPTION);
+        project.isPeriodAssigned(period);
+
+        //Act
+        boolean result = project.containsCurrentDate();
+
+        //Assert
+        assertFalse(result);
+    }
 }
