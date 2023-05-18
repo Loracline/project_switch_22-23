@@ -21,7 +21,8 @@ public interface IAccountRepository {
      * This method returns all the account
      * @return a list with all accounts.
      */
-    List<Account> getAccounts();
+    List<Account> findAll();
+
 
     /**
      * This method returns all the accounts with emails matching a given list of emails that is passed as argument.

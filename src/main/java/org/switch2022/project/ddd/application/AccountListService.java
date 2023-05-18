@@ -24,7 +24,7 @@ public class AccountListService {
      * @return list with all accounts.
      */
     public List<AccountDto> listAllAccounts() {
-        List<Account> accounts = accountRepository.getAccounts();
+        List<Account> accounts = accountRepository.findAll();
         return accountMapper.listAccountsToDto(accounts);
     }
 }
