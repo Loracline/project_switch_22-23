@@ -83,10 +83,10 @@ class "UserStoryDto"{
 "ProjectRepository" -> "Project" : contains
 
 "UsRepository" "1"->"*" "UserStory": has
-"ConsultProductBacklogController" "1"-->"1" "UserStoryMapper" : has
 "UserStoryMapper" "1 "..> "*" "UserStoryDto" : creates
 "UserStoryMapper" ..> "UserStory" : knows
 "ProjectRepository" --|> "IProjectRepository" : implements
+"ProjectService" "1"-->"1" "UserStoryMapper" : has
 "ProjectService" <.. "IProjectRepository" : is injected
 "ProjectService" <.. "IUsRepository" : is injected
 "UsRepository" --|> "IUsRepository" :implements
