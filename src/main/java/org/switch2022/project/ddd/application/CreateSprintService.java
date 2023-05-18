@@ -98,9 +98,8 @@ public class CreateSprintService {
      * @return true if the sprint start date is after or equal the project start date
      */
 
-    private boolean isSprintPeriodAfterProjectStartDate(Project project, Sprint sprint) {
+    private static boolean isSprintPeriodAfterProjectStartDate(Project project, Sprint sprint) {
         return sprint.isPeriodAfterOrEqualThanDate(LocalDate.parse(project.getStartDate()));
-
     }
 
     /**
@@ -110,7 +109,7 @@ public class CreateSprintService {
      * @param sprint that was created
      * @return true if the sprint end date is before or equal the project end date
      */
-    private boolean isSprintEndDateBeforeProjectEndDate(Project project, Sprint sprint) {
+    private static boolean isSprintEndDateBeforeProjectEndDate(Project project, Sprint sprint) {
         return sprint.isEndDateBeforeOrGreaterThanDate(LocalDate.parse(project.getEndDate()));
     }
 
@@ -121,7 +120,7 @@ public class CreateSprintService {
      * @return returns int 1 is the project is suitable to create sprint
      * @throws Exception if the project is unsuitable to create a sprint
      */
-    private int isProjectInStatus(Project project) throws Exception {
+    private static int isProjectInStatus(Project project) throws Exception {
         int result;
         if (!project.hasStatus(ProjectStatus.PLANNED) && !project.hasStatus(ProjectStatus.CLOSED)) {
             result = 1;
@@ -138,7 +137,7 @@ public class CreateSprintService {
      * @param sprint  to be added to project
      * @return true if period does not overlap
      */
-    private boolean isSprintPeriodValid(List<Sprint> sprints, Sprint sprint) {
+    private static boolean isSprintPeriodValid(List<Sprint> sprints, Sprint sprint) {
         boolean isSprintPeriodNotOverlapping = false;
         int i = 0;
         if (sprints.isEmpty()) {
@@ -192,7 +191,7 @@ public class CreateSprintService {
      * @throws Exception that the Project doesn't have a sprint duration
      */
 
-    private SprintDuration getSprintDuration(Project project) throws Exception {
+    private static SprintDuration getSprintDuration(Project project) throws Exception {
         SprintDuration sprintDuration;
         if (project.getSprintDuration().isPresent()) {
             sprintDuration = project.getSprintDuration().get();
