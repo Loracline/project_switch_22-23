@@ -19,4 +19,6 @@ public interface IProjectRepository {
     boolean addProjectToProjectRepository(Project project);
 
     List<Project> findAll();
+
+    List<Project> findAllByProjectCodes(List<Code> projectCodes);
 }

@@ -3,11 +3,13 @@ package org.switch2022.project.ddd.infrastructure;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project.Project;
+import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Period;
 import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -512,5 +514,63 @@ class ProjectRepositoryTest {
 
         // Assert
         assertFalse(result);
+    }
+
+    /**
+     * Method findAllByProjectCodes(List<Code> projectCodes) retrieves a list of all projects whose project code is
+     * contained in a list of project codes.
+     * <p>
+     * Scenario 01: Check if an empty list is returned if no instances of Project with the given project code were
+     * found.
+     * The two (empty) lists should assert equal.
+     */
+    @Test
+    void ensureThatAnEmptyListIsReturnedIfThereAreNoProjectsWithGivenProjectCode() {
+        //Arrange
+        ProjectRepository repository = new ProjectRepository();
+        List<Code> projectCodesDouble = mock(List.class);
+
+        List<Project> expected = new ArrayList<>();
+
+        //Act
+        List<Project> result = repository.findAllByProjectCodes(projectCodesDouble);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method findAllByProjectCodes(List<Code> projectCodes) retrieves a list of all projects whose project code is
+     * contained in a list of project codes.
+     * <p>
+     * Scenario 02: Check that a list of projects is returned.
+     * The two lists should assert equal.
+     */
+    @Test
+    void ensureThatAListOfProjectsIsSuccessfullyReturned() {
+        // Arrange
+        ProjectRepository repository = new ProjectRepository();
+        List<Code> projectCodesDouble = mock(List.class);
+
+        Project projectOne = mock(Project.class);
+        Project projectTwo = mock(Project.class);
+        Project projectThree = mock(Project.class);
+
+        repository.addProjectToProjectRepository(projectOne);
+        repository.addProjectToProjectRepository(projectTwo);
+        repository.addProjectToProjectRepository(projectThree);
+
+        when(projectCodesDouble.size()).thenReturn(1);
+
+        when(projectOne.hasProjectCode(any())).thenReturn(true);
+        when(projectTwo.hasProjectCode(any())).thenReturn(true);
+
+        List<Project> expected = Arrays.asList(projectOne,projectTwo);
+
+        // Act
+        List<Project> result = repository.findAllByProjectCodes(projectCodesDouble);
+
+        // Assert
+        assertEquals(expected, result);
     }
 }

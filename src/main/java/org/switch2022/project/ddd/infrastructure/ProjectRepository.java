@@ -168,4 +168,24 @@ public class ProjectRepository implements IProjectRepository {
     public List<Project> findAll() {
         return Collections.unmodifiableList(projects);
     }
+
+    /**
+     * This method retrieves a list of all projects whose project code is contained in a list of project codes.
+     *
+     * @param projectCodes the list of String representations of project codes to search the corresponding projects for.
+     * @return a list of projects whose project codes were found in the list passed as argument, and en empty list if
+     * no project with the given codes were found.
+     */
+    public List<Project> findAllByProjectCodes(List<Code> projectCodes){
+        List<Project> projects = new ArrayList<>();
+
+        for (int i = 0; i < this.projects.size(); i++) {
+            for (int j = 0; j < projectCodes.size(); j++) {
+                if(this.projects.get(i).hasProjectCode(projectCodes.get(j))){
+                    projects.add(this.projects.get(i));
+                }
+            }
+        }
+        return Collections.unmodifiableList(projects);
+    }
 }
