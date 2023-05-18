@@ -37,9 +37,8 @@ class "EstimateUserStoryEffortController" {
 "Sprint" "1" --> "*" "UserStoryInSprint" : contains
 "UserStoryInSprint" "1" --> "1" "Effort" : has
 
-class "GetProductBacklogController" {
+class "ConsultProductBacklogController" {
 -projectService
--userStoryMapper
 +getProductBacklog(projectCode)
 }
 
@@ -63,13 +62,12 @@ class ProjectCreationService {
 class "ProjectService"{
 -factoryProject
 -projectRepository
--factoryProductBacklog
 -usRepository
--projectRepository
--customerRepository
+-userStoryMapper
 +getProductBacklog(code)
 +getProjectByCode(code)
 +requestAllPlannedUserStories(usIds)
++userStoryToDtoList(userStories)
 }
 
 class "ProjectListService"{
