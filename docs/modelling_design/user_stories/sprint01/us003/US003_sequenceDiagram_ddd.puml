@@ -34,7 +34,7 @@ service -> accountRepository: getAccountByEmail(email)
 activate accountRepository
 service <-- accountRepository: account
 deactivate accountRepository
-service -> account: setProfile(profile)
+service -> account: changeProfile(profile)
 activate account
 service <-- account: true
 deactivate account
