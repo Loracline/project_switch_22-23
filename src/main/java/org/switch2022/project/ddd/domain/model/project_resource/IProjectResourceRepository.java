@@ -24,6 +24,14 @@ public interface IProjectResourceRepository {
     List<String> getAccountsAllocatedToProject(Code projectCode);
 
     /**
+     * This method returns an unmodifiable list (read-only) of Project Resources.
+     *
+     * @return an unmodifiable view of Project Resources.
+     */
+    List<ProjectResource> findAll();
+
+
+    /**
      * This method retrieves a list of string representations of project codes to which a given account is allocated
      * to.
      *
