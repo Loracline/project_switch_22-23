@@ -36,7 +36,7 @@ class Account <<root>>{
 -email
 -profile
 +hasEmail(email)
-+setProfile(profile)
++changeProfile(profile)
 }
 
 class Profile <<root>>{
