@@ -81,7 +81,7 @@ public class ProjectCreationService {
     public Optional<Project> getProjectByCode(String code) {
         int codeNumber = Utils.getIntFromAlphanumericString(code, "P");
         Code projectCode = new Code(codeNumber);
-        return projectRepository.getProjectByCode(projectCode);
+        return projectRepository.findByCode(projectCode);
     }
 
     /**

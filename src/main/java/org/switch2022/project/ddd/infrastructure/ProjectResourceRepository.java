@@ -1,6 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceRepository;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.*;
@@ -15,7 +15,7 @@ import java.util.Objects;
 
 import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
-@Repository
+@Component
 public class ProjectResourceRepository implements IProjectResourceRepository {
 
     /**

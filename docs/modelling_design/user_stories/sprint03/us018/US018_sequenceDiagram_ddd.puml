@@ -1,0 +1,77 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO CONSULT THE PRODUCT BACKLOG
+legend top
+US018 - As PO/SM/Team Member, I want to consult the product backlog, i.e. to get the list of user stories sorted by priority.
+end legend
+autonumber
+
+actor "Product Owner\nScrum Master\nTeam Member" as actor
+participant ":ConsultProductBacklogUI" as ui
+participant ":ConsultProductBacklogController" as controller
+participant ":ProjectService" as pservice
+participant ":ProjectRepository" as prepo
+participant "project:Project" as project
+participant ":ProductBacklog" as backlog
+participant ":UsService" as uservice
+participant ":UsRepository" as usrep
+participant ":userStoryMapper" as usmapper
+participant ":userStoryDtos" as userStoryDtos
+participant "userStoryDto:UserStoryDto" as userStoryDto
+
+
+
+actor -> ui: requests product backlog (list of all US) from selected project
+activate ui
+ui -> controller: getProductBacklog(projectCode)
+activate controller
+controller -> pservice: getProductBacklog(code)
+activate pservice
+pservice -> prepo: getProjectByCode(code)
+activate prepo
+prepo --> pservice : project
+deactivate prepo
+pservice -> project: getProductBacklog()
+activate project
+project -> backlog: getUserStories()
+activate backlog
+backlog --> project: usIds
+deactivate backlog
+project --> prepo: usIds
+deactivate project
+prepo --> pservice: usIds
+
+
+pservice -> pservice : requestAllPlannedUserStories(usIds)
+
+pservice -> usrep : getListOfUsWithMatchingIds(usIds)
+activate usrep
+usrep --> pservice : userStories
+deactivate usrep
+pservice --> controller : userStories
+pservice -> usmapper: userStoryToDtoList(userStories)
+deactivate pservice
+activate usmapper
+create "userStoryDtos"
+usmapper --> userStoryDtos: create ()
+loop for each userStory in userStories
+usmapper -> userStoryDto:  userStoryToDto(userStory)
+activate userStoryDto
+userStoryDto --> usmapper : userStoryDto
+deactivate userStoryDto
+
+usmapper -> userStoryDtos: add(userStoryDto)
+
+
+end loop
+usmapper --> controller :userStoryDtos
+deactivate usmapper
+
+deactivate uservice
+deactivate pservice
+controller --> ui : userStoryDtos
+deactivate controller
+
+ui --> actor: shows list of all US
+deactivate ui
+@enduml

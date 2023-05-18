@@ -12,7 +12,7 @@ public interface IProjectRepository {
     /**
      * Signatures of ProjectRepository class methods to ensure that the interface implements all methods.
      */
-    Optional<Project> getProjectByCode(Code code);
+    Optional<Project> findByCode(Code code);
 
     int getProjectNumber();
 

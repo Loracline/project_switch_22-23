@@ -1,0 +1,60 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO VIEW THE SCRUM BOARD OF SPRINT
+legend top
+US022 - As Team Member, I want to view the Scrum Board of current sprint.
+end legend
+
+class "UserStoriesInSprintController" {
+- userStoriesInSprintService
++ getScrumBoard(projectCode, date)
+}
+
+class UserStoriesInSprintService{
+- sprintRepository
+- userStoryRepository
++ getScrumBoard(projectCode, date)
+}
+
+interface ISprintRepository{
++ findAllByProject(projectCode)
+}
+
+class UsRepository{
++ getListOfUsWithMatchingIds(usId)
+}
+
+interface IUsRepository{
++ getListOfUsWithMatchingIds(usId)
+}
+
+class SprintRepository{
++ findAllByProject(projectCode)
+}
+
+class Sprint<<root>>{
+- sprintId
+- sprintNumber
+- projectCode
+- period
+- userStoriesInSprint
+}
+
+class UserStory<<root>>{
+- usId
+- acceptanceCriteria
+- usNumber
+- actor
+- usText
+- status
+}
+
+UserStoriesInSprintController <.. UserStoriesInSprintService: is injected
+UserStoriesInSprintService <.. ISprintRepository: is injected
+UserStoriesInSprintService <.. IUsRepository: is injected
+IUsRepository <|.. UsRepository: implements
+ISprintRepository <|.. SprintRepository: implements
+SprintRepository --> Sprint: has
+UsRepository --> UserStory: has
+@enduml
