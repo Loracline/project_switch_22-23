@@ -8,6 +8,8 @@ import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 import org.switch2022.project.ddd.utils.Utils;
 
@@ -30,6 +32,8 @@ public class ProjectService {
     private IProjectRepository projectRepository;
     @Autowired
     private IUsRepository usRepository;
+    @Autowired
+    private UserStoryMapper userStoryMapper;
 
     /**
      * This method will return an Optional Project from the repository.
@@ -51,13 +55,15 @@ public class ProjectService {
      * @throws Exception if the projectCode doesn't match any Project in the repository.
      */
 
-    public List<UserStory> getProductBacklog(String code) {
+    public List<UserStoryDto> getProductBacklog(String code) {
         Optional<Project> projectOptional = getProjectByCode(code);
 
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
             List<UsId> productBacklog = project.getProductBacklog();
-            return requestAllPlannedUserStories(productBacklog);
+            List<UserStory> userStories = requestAllPlannedUserStories(productBacklog);
+
+            return userStoryMapper.userStoryToDtoList(userStories);
         } else {
             throw new ProjectNotFoundException("No project with that code");
         }

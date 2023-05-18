@@ -32,10 +32,18 @@ public class AccountDto {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null) {
+            return false;
+        }
+        if (o.getClass() != this.getClass()) {
+            return false;
+        }
         AccountDto that = (AccountDto) o;
-        return status.equals(that.status) && Objects.equals(name, that.name) && Objects.equals(email, that.email);
+        return Objects.equals(status, that.status) && Objects.equals(name, that.name) && Objects.equals(email, that.email);
     }
 
     /**

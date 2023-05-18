@@ -212,4 +212,13 @@ public class Period implements ValueObject<Period> {
 
         return this.startDate.compareTo(otherStart) <= 0 && this.endDate.compareTo(otherEnd) >= 0;
     }
+
+    /**
+     * This method verifies that current date is contained in a period.
+     *
+     * @return true if the current date is contained in the period, and false otherwise.
+     */
+    public boolean containsCurrentDate() {
+        return  this.startDate.isBefore(LocalDate.now()) && this.endDate.isAfter(LocalDate.now());
+    }
 }

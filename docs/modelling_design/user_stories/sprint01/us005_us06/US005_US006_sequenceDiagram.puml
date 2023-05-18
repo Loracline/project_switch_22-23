@@ -10,7 +10,7 @@ actor "Administrator" as administrator
 participant ":ChangeStatusUI" as ui
 participant ":ChangeStatusController" as controller
 
-participant ":AccountService" as service
+participant ":AccountChangeStatusService" as service
 participant ":AccountRepository" as repository
 participant "account:Account" as account
 

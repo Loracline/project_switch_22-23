@@ -1,9 +1,7 @@
 package org.switch2022.project.ddd.domain.model.account;
 
-import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
-
 
 import java.util.Objects;
 
@@ -25,14 +23,14 @@ public class Account implements Entity<Account> {
     private final PhoneNumber phoneNumber;
     private AccountStatus accountStatus;
     private Photo photo;
-    private Profile profile;
+    private ProfileId profileId;
 
 
     protected Account(Name name, Email email, PhoneNumber phoneNumber, Photo photo) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.accountStatus  = AccountStatus.ACTIVE;
+        this.accountStatus = AccountStatus.ACTIVE;
 
         if (photo != null) {
             this.photo = photo;
@@ -87,6 +85,7 @@ public class Account implements Entity<Account> {
 
     /**
      * Getter method that returns a String with the Account name
+     *
      * @return account name.
      */
     public String getAccountName() {
@@ -95,6 +94,7 @@ public class Account implements Entity<Account> {
 
     /**
      * Getter method that returns a String with the Account email
+     *
      * @return account email.
      */
 
@@ -104,6 +104,7 @@ public class Account implements Entity<Account> {
 
     /**
      * Getter method that returns a boolean with the Account status
+     *
      * @return account status.
      */
     public String getAccountStatus() {
@@ -112,6 +113,7 @@ public class Account implements Entity<Account> {
 
     /**
      * Method change the status of the account.
+     *
      * @param status to be used to change.
      * @return the updated status.
      */
@@ -122,6 +124,7 @@ public class Account implements Entity<Account> {
 
     /**
      * This method checks if the account has the same email as a given one.
+     *
      * @param email to check is the account has a match
      * @return true if account has the given email and false otherwise.
      */
@@ -131,31 +134,38 @@ public class Account implements Entity<Account> {
 
     /**
      * This method checks if the account has the same accountStatus as a given one.
-     * @param  accountStatus to check is the account has a match
+     *
+     * @param accountStatus to check is the account has a match
      * @return true if account has the given accountStatus and false otherwise.
      */
-    public  boolean isAccountActive(String accountStatus){
+    public boolean isAccountActive(String accountStatus) {
         return this.accountStatus.getAccountStatus().equals(accountStatus);
-    }
-    /**
-     * Getter method that returns the Profile of the Account
-     * @return account Profile.
-     */
-    public Profile getProfile() {
-        return this.profile;
     }
 
     /**
-     * Setter method for the profile.
-     * Returns true if the profile was found and updated successfully,
-     * or false if the profile was not found.
+     * Checks and updates the profile.
+     *
+     * @param profileId the profile to be set
+     * @return true if the profile was updated, false if the profile remains the same.
      */
-    public boolean setProfile(Profile profile) {
-        if (this.profile == null) {
-            this.profile = profile;
+    public boolean changeProfile(ProfileId profileId) {
+        if (this.profileId == null || !this.profileId.sameValueAs(profileId)) {
+            this.profileId = profileId;
             return true;
         } else {
             return false;
         }
     }
+
+    /**
+     * Getter method that returns a String with the profileId
+     *
+     * @return profileId.
+     */
+    public String getProfileId() {
+        return profileId.getProfileId();
+    }
 }
+
+
+

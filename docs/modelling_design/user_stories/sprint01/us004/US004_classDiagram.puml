@@ -13,7 +13,7 @@ class ListAccountController {
 +accountToDtoList(accounts)
 }
 
-class AccountService{
+class AccountListService{
 -accountRepository
 +listAllAccounts()
 }
@@ -48,10 +48,10 @@ class "Account" <<root>>{
 +getAccountStatus()
 }
 
-ListAccountController"1" <.. "1"AccountService : is injected
+ListAccountController"1" <.. "1"AccountListService : is injected
 AccountRepository -|> IAccountRepository : implements
-IAccountRepository ..> AccountService : is injected
-ListAccountController "1"--> "1"AccountMapper : has
+IAccountRepository ..> AccountListService : is injected
+AccountListService "1"--> "1"AccountMapper : has
 AccountMapper --> AccountDto : creates
 AccountRepository "1"->"*" Account: has
 AccountMapper ..> Account : knows

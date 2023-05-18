@@ -133,6 +133,7 @@ public class Project implements Entity<Project> {
         return businessSectorId.getBusinessSectorId();
     }
 
+
     /**
      * Getter method for the attribute: customerTaxId.
      *
@@ -297,6 +298,15 @@ public class Project implements Entity<Project> {
      */
     public boolean contains(Period otherPeriod) {
         return this.period.contains(otherPeriod);
+    }
+
+    /**
+     * This method verifies that current date is contained in Project period.
+     *
+     * @return true if the current date is contained in Project period, and false otherwise.
+     */
+    public boolean containsCurrentDate(){
+        return this.period.containsCurrentDate();
     }
 }
 

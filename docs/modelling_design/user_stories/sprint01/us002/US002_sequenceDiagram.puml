@@ -8,7 +8,7 @@ autonumber
 actor "Administrator" as administrator
 participant ":RegisterAccountUI" as ui
 participant ":RegisterAccountController" as ct
-participant ":AccountService" as service
+participant ":AccountCreationService" as service
 participant ":AccountFactory" as factory
 participant "account:Account" as ac
 participant ":AccountRepository" as repository
