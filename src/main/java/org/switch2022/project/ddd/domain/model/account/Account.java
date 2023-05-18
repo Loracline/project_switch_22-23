@@ -1,9 +1,7 @@
 package org.switch2022.project.ddd.domain.model.account;
 
-import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
-
 
 import java.util.Objects;
 
@@ -136,12 +134,14 @@ public class Account implements Entity<Account> {
 
     /**
      * This method checks if the account has the same accountStatus as a given one.
-     * @param  accountStatus to check is the account has a match
+     *
+     * @param accountStatus to check is the account has a match
      * @return true if account has the given accountStatus and false otherwise.
      */
-    public  boolean isAccountActive(String accountStatus){
+    public boolean isAccountActive(String accountStatus) {
         return this.accountStatus.getAccountStatus().equals(accountStatus);
     }
+
     /**
      * Checks and updates the profile.
      *
@@ -157,7 +157,14 @@ public class Account implements Entity<Account> {
         }
     }
 
-    public String getProfileId (){return  profileId.getProfileId();}
+    /**
+     * Getter method that returns a String with the profileId
+     *
+     * @return profileId.
+     */
+    public String getProfileId() {
+        return profileId.getProfileId();
+    }
 }
 
 
