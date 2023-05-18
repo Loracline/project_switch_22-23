@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.model.account;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.value_object.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -498,6 +499,30 @@ class AccountTest {
 
         // Assert
         assertTrue(result);
+    }
+
+    /**
+     * METHOD getProfileId()
+     * Scenario 1: should return the profile of the Account.
+     */
+    @Test
+    void getProfileIdReturnsCorrectProfileId() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+        ProfileId expectedProfileId = mock(ProfileId.class);
+        String expectedProfileIdString = "pr001";
+        when(expectedProfileId.getProfileId()).thenReturn(expectedProfileIdString);
+        account.changeProfile(expectedProfileId);
+
+        // Act
+        String actualProfileIdString = account.getProfileId();
+
+        // Assert
+        assertEquals(expectedProfileIdString, actualProfileIdString);
     }
 }
 
