@@ -12,15 +12,15 @@ participant ":ListProjectsOfAccountUI" as ui
 participant ":ListProjectsOfAccountController" as controller
 participant ":ProjectListAllocationService" as service
 participant ":ProjectResourceRepository" as resourceRepo
-participant "projectCodes: List<String>" as projectList
+participant "projectCodes: List<Codes>" as projectList
 participant ":ProjectResource" as resource
 participant ":ProjectRepository" as projectRepo
 participant "projects: List<Project>" as list
 participant ":Project" as project
+participant "projectDtos: List<ProjectDto>" as dtoList
 participant ":CustomerRepository" as customerRepo
 participant ":Customer" as customer
 participant ":ProjectMapper" as mapper
-participant "projectDtos: List<ProjectDto>" as dtoList
 participant "projectDto:ProjectDto" as dto
 
 
@@ -31,16 +31,16 @@ ui -> controller: listProjectsByAccount(email)
 activate controller
 controller -> service: listProjectsByAccount(email)
 activate service
-service -> resourceRepo: getProjectsOfAccount(email)
+service -> resourceRepo: findProjectCodesByAccountEmail(accountEmail)
 activate resourceRepo
 create projectList
 resourceRepo -> projectList: create()
 loop for each resource in repository
-resourceRepo -> resource: hasEmail(email)
+resourceRepo -> resource: hasAccount(email)
 activate resource
 resource --> resourceRepo: true
 deactivate
-resourceRepo -> resource: getProjectCode()
+resourceRepo -> resource: getCode()
 activate resource
 resource --> resourceRepo: code
 deactivate
@@ -51,7 +51,7 @@ deactivate
 end loop
 service <-- resourceRepo:  projectCodes
 deactivate resourceRepo
-service -> projectRepo: getProjects(projectCodes)
+service -> projectRepo: findByCodes(projectCodes)
 activate projectRepo
 create list
 projectRepo -> list: create ()
@@ -60,10 +60,6 @@ projectRepo -> project: hasProjectCode(code)
 activate project
 project --> projectRepo: true
 deactivate project
-projectRepo -> project: containsCurrentDate()
-activate project
-project --> projectRepo: true
-deactivate
 projectRepo -> list: add(project)
 activate list
 list --> projectRepo: true
@@ -74,12 +70,16 @@ deactivate projectRepo
 create dtoList
 service -> dtoList: create ()
 loop for each project in projects
-service -> customerRepo: getCustomerNameByTaxId()
-activate customerRepo
-customerRepo -> project: getCustomerTaxId()
+service -> project: containsCurrentDate()
 activate project
-project --> customerRepo: taxId
-deactivate project
+service <-- project: true
+deactivate
+service -> project: getCustomerTaxId()
+activate project
+service <-- project: taxId
+deactivate
+service -> customerRepo: findCustomerNameByTaxId(taxId)
+activate customerRepo
 customerRepo -> customer: hasTaxId(taxId)
 activate customer
 customer --> customerRepo: true

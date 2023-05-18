@@ -14,36 +14,36 @@ class "ListProjectsOfAccountController" {
 class "ProjectListAllocationService" {
 - iProjectResourceRepository
 - iProjectRepository
+- iCustomerRepository
 - projectMapper
 + listProjectsByAccount(email)
 }
 
 interface "IProjectResourceRepository" {
-+ getProjectsOfAccount(email)
++ findProjectCodesByAccountEmail(email)
 }
 
 class "ProjectResourceRepository" {
 - projectResources
-+ getProjectsOfAccount(email)
++ findProjectCodesByAccountEmail(email)
 }
 
 interface "IProjectRepository" {
-+ getProjects(projectCodes)
-+ hasEmail(email)
++ findByCodes(projectCodes)
 }
 
 class "ProjectRepository" {
 - projects
-+ getProjects(projectCodes)
++ findByCodes(projectCodes)
 }
 
 interface "ICustomerRepository" {
-+ getCustomerNameByTaxId(taxId)
++ findCustomerNameByTaxId(taxId)
 }
 
 class "CustomerRepository" {
 - customers
-+ getCustomerNameByTaxId(taxId)
++ findNameByTaxId(taxId)
 }
 
 class "ProjectMapper" {
@@ -73,8 +73,8 @@ class "Project" {
 class "ProjectResource" {
 - projectCode
 - accountEmail
-+ hasEmail(email)
-+ getProjectCode()
++ hasAccount(email)
++ getCode()
 }
 
 class "Customer" {
