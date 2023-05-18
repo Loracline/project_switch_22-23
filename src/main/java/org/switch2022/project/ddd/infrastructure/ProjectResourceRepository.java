@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
 @Repository
 public class ProjectResourceRepository implements IProjectResourceRepository {
@@ -51,6 +50,16 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     @Override
     public int hashCode() {
         return Objects.hash(projectResources);
+    }
+
+
+    /**
+     * This method returns an unmodifiable list (read-only) of Project Resources.
+     *
+     * @return an unmodifiable view of Project Resources.
+     */
+    public List<ProjectResource> findAll() {
+        return Collections.unmodifiableList(projectResources);
     }
 
     /**
@@ -102,83 +111,6 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
             }
         }
         return hasResource;
-    }
-
-    /**
-     * This method checks if one specific Project already has the role of Scrum Master or Product Owner in a specific
-     * period.
-     *
-     * @param role, code, period to check.
-     * @return <code>true</code> if the project already has a Scrum Master or Product Owner in a specific Period and
-     * <code>false</code> otherwise.
-     */
-    public boolean projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
-        return projectAlreadyHasScrumMasterInThatPeriod(role, code, period) ||
-                projectAlreadyHasProductOwnerInThatPeriod(role, code, period);
-    }
-
-    /**
-     * This method checks if one specific Project already has the role of Scrum Master in a specific
-     * period.
-     *
-     * @param code, role, period to check.
-     * @return <code>true</code> if the project already has a Scrum Master in a specific Period and
-     * <code>false</code> otherwise.
-     */
-    private boolean projectAlreadyHasScrumMasterInThatPeriod(Role role, Code code, Period period) {
-        return role.sameValueAs(Role.SCRUM_MASTER) && projectHasRoleInThatPeriod(role, code, period);
-    }
-
-    /**
-     * This method checks if one specific Project already has the role of Product Owner in a specific period.
-     *
-     * @param code, role, period to check.
-     * @return <code>true</code> if the project already has a Product Owner in a specific Period and
-     * <code>false</code> otherwise.
-     */
-    private boolean projectAlreadyHasProductOwnerInThatPeriod(Role role, Code code, Period period) {
-        return role.sameValueAs(PRODUCT_OWNER) && projectHasRoleInThatPeriod(role, code, period);
-    }
-
-    /**
-     * This method checks if one specific Project already has a specific role in a specific period.
-     *
-     * @param role, code, period to check.
-     * @return <code>true</code> if the project already has a Role in a specific Period and
-     * <code>false</code> otherwise.
-     */
-    private boolean projectHasRoleInThatPeriod(Role role, Code code, Period period) {
-        boolean result = false;
-        int i = 0;
-        while (i < projectResources.size() && !result) {
-            ProjectResource resource = projectResources.get(i);
-            if (resource.hasProjectCode(code) && resource.isPeriodOverlapping(period)
-                    && resource.hasRole(role)) {
-                result = true;
-            }
-            i++;
-        }
-        return result;
-    }
-
-    /**
-     * This method checks if a given role is Project Manager.
-     *
-     * @param role to check.
-     * @return <code>true</code> if role is Project Manager and <code>false</code> otherwise.
-     */
-    private boolean isProjectManager(Role role) {
-        return role == PROJECT_MANAGER;
-    }
-
-    /**
-     * This method checks if a given role is not Project Manager.
-     *
-     * @param role to check.
-     * @return <code>true</code> if role is not Project Manager and <code>false</code> otherwise.
-     */
-    public boolean isNotProjectManager(Role role) {
-        return !isProjectManager(role);
     }
 
     /**
