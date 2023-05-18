@@ -3,7 +3,6 @@ package org.switch2022.project.ddd.domain.model.typology;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Name;
-import org.switch2022.project.model.ProjectTypology;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -79,7 +78,7 @@ class TypologyTest {
         //Arrange
         Name nameDouble = mock(Name.class);
         Typology reference = new Typology(8, nameDouble);
-        ProjectTypology other = null;
+        Typology other = null;
 
         //Act
         boolean result = reference.equals(other);

@@ -2,9 +2,7 @@ package org.switch2022.project.ddd.domain.model.account;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
-import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.infrastructure.ProfileRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -219,6 +217,7 @@ class AccountTest {
         //Assert
         assertFalse(result);
     }
+
     /**
      * METHOD getAccountName()
      * <br>
@@ -240,6 +239,7 @@ class AccountTest {
         // Assert
         assertEquals("john doe", accountName);
     }
+
     /**
      * METHOD getAccountEmail()
      * <br>
@@ -261,6 +261,7 @@ class AccountTest {
         // Assert
         assertEquals("johndoe@example.com", accountEmail);
     }
+
     /**
      * METHOD getAccountStatus()
      * <br>
@@ -336,7 +337,7 @@ class AccountTest {
         boolean result = account.changeStatus(AccountStatus.ACTIVE);
 
         assertTrue(result);
-        assertEquals(expected , account.getAccountStatus());
+        assertEquals(expected, account.getAccountStatus());
     }
 
     /**
@@ -396,6 +397,7 @@ class AccountTest {
         // Assert
         assertTrue(result);
     }
+
     /**
      * Scenario 02:  account is inactive.
      */
@@ -418,7 +420,7 @@ class AccountTest {
     }
 
     /**
-     * Method setProfile()
+     * Method changeProfile()
      * Scenario 1: Tests the successful change of a profile in an account.
      * Compares if the account with a profile and
      * the same account without a profile are not equal.
@@ -427,80 +429,123 @@ class AccountTest {
     @Test
     void ensureThatAccountProfileIsSetSuccessfully() {
         // Arrange
-        ProfileFactory profileFactory = new ProfileFactory();
-        ProfileRepository profileRepository = mock(ProfileRepository.class);
-        Name profileName = new Name("Manager");
         Name name = mock(Name.class);
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
-
+        ProfileId profileIdDouble = mock(ProfileId.class);
+        ProfileId profileIdDoubleTwo = mock(ProfileId.class);
         Account account = new Account(name, email, phoneNumber, photo);
 
-        when(profileRepository.getProfileByName(profileName)).thenReturn(profileFactory.createProfile(name,1));
+        when(profileIdDouble.sameValueAs(profileIdDoubleTwo)).thenReturn(true);
 
         // Act
-        //Change Profile User (default) to Manager
-        boolean result = account.setProfile(profileFactory.createProfile(name, 1));
+        ProfileId profileId = new ProfileId(2);
+        boolean result = account.changeProfile(profileId);
 
         // Assert
         assertTrue(result);
-        assertEquals(profileFactory.createProfile(name, 1), account.getProfile());
     }
 
-
     /**
-     * Scenario 2: Tests the unsuccessful addition of a profile in an account. Tests that the account
-     * cannot have more than one profile associated with it.
+     * Scenario 2: This test ensures that the account's profile is not changed when the same profile is added.
+     * The method should return false to indicate that the profile was not changed.
+     * The expected behavior is that the account's profile remains unchanged.
      */
     @Test
-    void ensureThatAccountCanHaveOnlyOneProfile() {
+    void ensureAccountProfileIsNotChangedWhenSameProfileIsAdded() {
         // Arrange
-        ProfileFactory profileFactory = new ProfileFactory();
-        Name profileName = new Name("User");
         Name name = mock(Name.class);
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
-
+        ProfileId profileIdDouble = mock(ProfileId.class);
+        ProfileId profileIdDoubleTwo = mock(ProfileId.class);
         Account account = new Account(name, email, phoneNumber, photo);
-        Profile profile1 = profileFactory.createProfile(profileName, 1);
-        account.setProfile(profile1);
 
-        // Create another profile
-        Profile profile2 = profileFactory.createProfile(new Name("Another User"), 2);
+        ProfileId profileId = new ProfileId(2);
+        account.changeProfile(profileId);
+
+        when(profileIdDouble.sameValueAs(profileIdDoubleTwo)).thenReturn(false);
 
         // Act
-        boolean result = account.setProfile(profile2);
-        Profile actualProfile = account.getProfile();
-        Profile expectedProfile = profile1;
+        boolean result = account.changeProfile(profileId);
 
         // Assert
         assertFalse(result);
-        assertEquals(expectedProfile.getProfileName(), actualProfile.getProfileName());
     }
 
     /**
-     * METHOD getAccountProfile()
-     * <br>
-     * Scenario 1: should return the profile of the Account.
+     * Scenario 3: Ensure that an account can have a profile added when it does not have an existing profile.
+     * The method should return true to indicate that the profile was successfully added.
      */
     @Test
-    void getAccountProfileReturnsCorrectProfile() {
+    void ensureAccountCanAddProfileWhenNoProfileExists() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        ProfileId profileIdDouble = mock(ProfileId.class);
+        ProfileId profileIdDoubleTwo = mock(ProfileId.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        ProfileId profileId = new ProfileId(2);
+
+        when(profileIdDouble.sameValueAs(profileIdDoubleTwo)).thenReturn(true);
+
+        // Act
+        boolean result = account.changeProfile(profileId);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 4: Ensures that the profile is changed when the profile ID is null.
+     * The method should return true to indicate that the profile was successfully added.
+     */
+    @Test
+    void ensureProfileIsChangedWhenProfileIdIsNull() {
         // Arrange
         Name name = mock(Name.class);
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
         Account account = new Account(name, email, phoneNumber, photo);
-        Profile profile = mock(Profile.class);
-        account.setProfile(profile);
+
+        ProfileId profileId = new ProfileId(2);
 
         // Act
-        Profile accountProfile = account.getProfile();
+        boolean result = account.changeProfile(profileId);
 
         // Assert
-        assertEquals(profile, accountProfile);
+        assertTrue(result);
+    }
+
+
+    /**
+     * METHOD getProfileId()
+     * Scenario 1: should return the profile of the Account.
+     */
+    @Test
+    void getProfileIdReturnsCorrectProfileId() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+        ProfileId expectedProfileId = mock(ProfileId.class);
+        String expectedProfileIdString = "pr001";
+        when(expectedProfileId.getProfileId()).thenReturn(expectedProfileIdString);
+        account.changeProfile(expectedProfileId);
+
+        // Act
+        String actualProfileIdString = account.getProfileId();
+
+        // Assert
+        assertEquals(expectedProfileIdString, actualProfileIdString);
     }
 }
 

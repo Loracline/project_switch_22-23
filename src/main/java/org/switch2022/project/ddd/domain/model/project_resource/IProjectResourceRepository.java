@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.model.project_resource;
 
 import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.Email;
 
 import java.util.List;
 
@@ -21,4 +22,13 @@ public interface IProjectResourceRepository {
      * @return A list of email accounts allocated to the specified project.
      */
     List<String> getAccountsAllocatedToProject(Code projectCode);
+
+    /**
+     * This method retrieves a list of string representations of project codes to which a given account is allocated
+     * to.
+     *
+     * @param email the value object email that represents the desired account.
+     * @return a list of string representations of the project codes, or an empty list if no resource with the given account email was found.
+     */
+    List<Code> findProjectCodesByAccountEmail(Email email);
 }

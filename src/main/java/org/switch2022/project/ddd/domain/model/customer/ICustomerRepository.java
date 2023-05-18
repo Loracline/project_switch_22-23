@@ -15,7 +15,7 @@ public interface ICustomerRepository {
      * @return an Optional containing the customer with the specified tax ID, or an empty Optional if no such customer
      * exists.
      */
-    String getCustomerNameByTaxId(TaxId taxId);
+    String findCustomerNameByTaxId(TaxId taxId);
 
     /**
      * Adds the specified customer to the repository.

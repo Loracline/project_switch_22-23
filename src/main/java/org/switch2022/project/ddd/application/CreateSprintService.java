@@ -81,7 +81,7 @@ public class CreateSprintService {
         Project project;
         int codeNumber = Utils.getIntFromAlphanumericString(code, "p");
         Code projectCode = new Code(codeNumber);
-        Optional<Project> projectOptional = projectRepository.getProjectByCode(projectCode);
+        Optional<Project> projectOptional = projectRepository.findByCode(projectCode);
         if (projectOptional.isPresent()) {
             project = projectOptional.get();
         } else {

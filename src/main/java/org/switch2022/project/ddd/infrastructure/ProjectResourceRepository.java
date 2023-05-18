@@ -1,10 +1,11 @@
 package org.switch2022.project.ddd.infrastructure;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceRepository;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-@Repository
+@Component
 public class ProjectResourceRepository implements IProjectResourceRepository {
 
     /**
@@ -183,6 +184,26 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
                 resourceIsOverlapping = true;
             }
         } return resourceIsOverlapping;
+    }
+
+    /**
+     * This method retrieves a list of string representations of project codes to which a given account is allocated
+     * to.
+     *
+     * @param email the value object email that represents the desired account.
+     * @return a list of string representations of the project codes, or an empty list if no resource with the given account email was found.
+     */
+    public List<Code> findProjectCodesByAccountEmail(Email email){
+        List <Code> projectCodes = new ArrayList<>();
+
+        for (int i = 0; i < projectResources.size(); i++) {
+            if(projectResources.get(i).hasAccount(email)){
+                int codeNumber = Utils.getIntFromAlphanumericString(projectResources.get(i).getCode(), "P");
+                Code code = new Code(codeNumber);
+                projectCodes.add(code);
+            }
+        }
+        return Collections.unmodifiableList(projectCodes);
     }
 }
 

@@ -11,9 +11,8 @@ class ChangeStatusController {
 +changeStatus(email, status)
 }
 
-class AccountService {
+class AccountChangeStatusService {
 -accountRepository
--accountFactory
 +changeStatus(email, status)
 }
 
@@ -32,8 +31,8 @@ class Account <<root>>{
 }
 
 AccountRepository "1"->"*" Account: has
-ChangeStatusController"1 " <.. "1 "AccountService : is injected
-IAccountRepository ..> AccountService : is injected
+ChangeStatusController"1 " <.. "1 "AccountChangeStatusService : is injected
+IAccountRepository ..> AccountChangeStatusService : is injected
 AccountRepository --|> IAccountRepository : implements
 
 @enduml

@@ -7,20 +7,20 @@ legend top
 US018 - As PO/SM/Team Member, I want to consult the product backlog, i.e. to get the list of user stories sorted by priority.
 end legend
 
-class "GetProductBacklogController" {
+class "ConsultProductBacklogController" {
 -projectService
--userStoryMapper
 +getProductBacklog(projectCode)
 }
 
 class "ProjectService"{
 -factoryProject
 -projectRepository
--factoryProductBacklog
 -usRepository
+-userStoryMapper
 +getProductBacklog(code)
 +getProjectByCode(code)
 +requestAllPlannedUserStories(usIds)
++userStoryToDtoList(userStories)
 }
 
 
@@ -76,17 +76,17 @@ class "UserStoryDto"{
 +status
 }
 
-"GetProductBacklogController" "1"<.."1" "ProjectService":  is injected
+"ConsultProductBacklogController" "1"<.."1" "ProjectService":  is injected
 
 "Project" "1"-->"1" "ProductBacklog": has
 "ProductBacklog" "1"-->"*" "UserStory": has
 "ProjectRepository" -> "Project" : contains
 
 "UsRepository" "1"->"*" "UserStory": has
-"GetProductBacklogController" "1"-->"1" "UserStoryMapper" : has
 "UserStoryMapper" "1 "..> "*" "UserStoryDto" : creates
 "UserStoryMapper" ..> "UserStory" : knows
 "ProjectRepository" --|> "IProjectRepository" : implements
+"ProjectService" "1"-->"1" "UserStoryMapper" : has
 "ProjectService" <.. "IProjectRepository" : is injected
 "ProjectService" <.. "IUsRepository" : is injected
 "UsRepository" --|> "IUsRepository" :implements
