@@ -9,6 +9,7 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -708,5 +709,68 @@ class ProjectResourceRepositoryTest {
         // Assert
         assertFalse(result);
 
+    }
+
+    /**
+     * Method findProjectsByAccountEmail(Email email) checks if there is an instance of ProjectResource in the
+     * ProjectResourceRepository that contains an account with the email passed as argument and retrieves the project
+     * of the corresponding allocation. It returns a list of string representations of the project codes, or an empty
+     * list if no ProjectResource instance with the given account email was found.
+     *
+     * Scenario 01: Check if an empty list is returned if no ProjectResource instance with the given account
+     * email was found.
+     * The two (empty) lists should assert equal.
+     */
+    @Test
+    void ensureThatAnEmptyListIsReturnedIfThereAreNoResourcesWithGivenAccountEmail() {
+        //Arrange
+        ProjectResourceRepository repository = new ProjectResourceRepository();
+        Email emailDouble = mock(Email.class);
+        List<Code> expected = new ArrayList<>();
+        //Act
+        List<Code> result = repository.findProjectCodesByAccountEmail(emailDouble);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method findProjectsByAccountEmail(Email email) checks if there is an instance of ProjectResource inf the
+     * ProjectResourceRepository that contains an account with the email passed as argument and retrieves the project
+     * of the corresponding allocation. It returns a list of string representations of the project codes, or an empty
+     * list if no ProjectResource instance with the given account email was found.
+     *
+     * Scenario 02: Check that a list of project codes is returned.
+     * The two lists should assert equal.
+     */
+    @Test
+    void ensureThatAListOfProjectCodesIsSuccessfullyReturned() {
+        // Arrange
+        ProjectResourceRepository repository = new ProjectResourceRepository();
+        Email emailDouble = mock(Email.class);
+
+        ProjectResource resourceOne = mock(ProjectResource.class);
+        ProjectResource resourceTwo = mock(ProjectResource.class);
+        ProjectResource resourceThree = mock(ProjectResource.class);
+
+        repository.add(resourceOne);
+        repository.add(resourceTwo);
+        repository.add(resourceThree);
+
+        when(resourceOne.hasAccount(emailDouble)).thenReturn(true);
+        when(resourceThree.hasAccount(emailDouble)).thenReturn(true);
+
+        when(resourceOne.getCode()).thenReturn("P01");
+        when(resourceTwo.getCode()).thenReturn("P02");
+        when(resourceThree.getCode()).thenReturn("P03");
+
+        Code codeOne = new Code(1);
+        Code codeTwo = new Code(3);
+        List<Code> expected = Arrays.asList(codeOne,codeTwo);
+
+        // Act
+        List<Code> result = repository.findProjectCodesByAccountEmail(emailDouble);
+
+        // Assert
+        assertEquals(expected, result);
     }
 }
