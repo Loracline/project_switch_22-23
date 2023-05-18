@@ -76,7 +76,7 @@ class ProjectListServiceTest {
         projects.add(projectDoubleTwo);
         TaxId taxIdDouble = mock(TaxId.class);
         when(projectRepository.findAll()).thenReturn(projects);
-        when(customerRepository.getCustomerNameByTaxId(taxIdDouble)).thenReturn(customerName);
+        when(customerRepository.findCustomerNameByTaxId(taxIdDouble)).thenReturn(customerName);
         when(projectDouble.getCustomerTaxId()).thenReturn(taxIdDouble);
         when(projectDoubleTwo.getCustomerTaxId()).thenReturn(taxIdDouble);
         when(projectMapper.projectToDto(projectDouble, customerName)).thenReturn(projectDtoDouble);
