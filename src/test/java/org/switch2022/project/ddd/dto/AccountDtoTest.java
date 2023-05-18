@@ -1,9 +1,9 @@
 package org.switch2022.project.ddd.dto;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.dto.AccountDto;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AccountDtoTest {
 
@@ -14,9 +14,9 @@ class AccountDtoTest {
     @Test
     void ensureSameAccountDtoEqualsItself() {
         // ARRANGE
-        org.switch2022.project.dto.AccountDto reference = new org.switch2022.project.dto.AccountDto("John", "john@isep.ipp.pt", true);
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
-        org.switch2022.project.dto.AccountDto other = reference;
+        AccountDto other = reference;
 
         boolean expected = true;
 
@@ -32,10 +32,10 @@ class AccountDtoTest {
     @Test
     void ensureTwoAccountDtoAreNotEqual() {
         // ARRANGE
-        org.switch2022.project.dto.AccountDto reference = new org.switch2022.project.dto.AccountDto("John", "john@isep.ipp.pt", true);
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
 
-        org.switch2022.project.dto.AccountDto other = new org.switch2022.project.dto.AccountDto("Mary", "mary@isep.ipp.pt", true);
+        AccountDto other = new AccountDto("Mary", "mary@isep.ipp.pt", "true");
 
         boolean expected = false;
 
@@ -51,7 +51,7 @@ class AccountDtoTest {
     @Test
     void ensureAccountDtoNotEqualsOtherTypeObject() {
         // ARRANGE
-        org.switch2022.project.dto.AccountDto reference = new org.switch2022.project.dto.AccountDto("John", "john@isep.ipp.pt", true);
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
         Object other = new Object();
 
@@ -71,9 +71,9 @@ class AccountDtoTest {
     @Test
     void ensureAccountDtoHaveSameHashCode() {
         // ARRANGE
-        org.switch2022.project.dto.AccountDto reference = new org.switch2022.project.dto.AccountDto("John", "john@isep.ipp.pt", true);
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
-        org.switch2022.project.dto.AccountDto other = new org.switch2022.project.dto.AccountDto("John", "john@isep.ipp.pt", true);
+        AccountDto other = new AccountDto("John", "john@isep.ipp.pt", "true");
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -89,10 +89,10 @@ class AccountDtoTest {
     @Test
     void ensureAccountDtoHaveDifferentHashCode() {
         // ARRANGE
-        org.switch2022.project.dto.AccountDto reference = new org.switch2022.project.dto.AccountDto("John", "john@isep.ipp.pt", true);
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
 
-        org.switch2022.project.dto.AccountDto other = new AccountDto("Mary", "mary@isep.ipp.pt", false);
+        AccountDto other = new AccountDto("Mary", "mary@isep.ipp.pt", "false");
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -101,7 +101,4 @@ class AccountDtoTest {
         // ASSERT
         assertNotEquals(hashCodeOther, hashCodeReference);
     }
-
-
-
 }

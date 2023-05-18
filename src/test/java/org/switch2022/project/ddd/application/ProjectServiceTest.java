@@ -100,7 +100,7 @@ class ProjectServiceTest {
     void ensureProjectIsRetrieved() {
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         //Act
         Optional<Project> result = projectService.getProjectByCode("P001");
         //Assert
@@ -124,7 +124,7 @@ class ProjectServiceTest {
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
 
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         when(projectDouble.getProductBacklog()).thenReturn(usIds);
         when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(expected);
         when(userStoryOne.hasStatus(any())).thenReturn(true);
@@ -145,7 +145,7 @@ class ProjectServiceTest {
         List<UserStory> expected = new ArrayList<>();
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         when(projectDouble.getProductBacklog()).thenReturn(usIds);
 
         //Act
@@ -162,7 +162,7 @@ class ProjectServiceTest {
     void ensureThatProductBacklogIsNotRetrievedBecauseCodeDoesNotMatchAnyProject() {
         //Arrange
         Optional<Project> optionalProject = Optional.empty();
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         ProjectNotFoundException exception = assertThrows(ProjectNotFoundException.class, () ->
                 projectService.getProductBacklog("P001"));
         String expected = "No project with that code";

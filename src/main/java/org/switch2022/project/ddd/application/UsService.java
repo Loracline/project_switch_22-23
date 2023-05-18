@@ -81,7 +81,7 @@ public class UsService {
 
     public boolean addUsToProductBacklog(UsId usId, Code projectCode, int priority) {
 
-        Optional<Project> projectOptional = projectRepository.getProjectByCode(projectCode);
+        Optional<Project> projectOptional = projectRepository.findByCode(projectCode);
 
         Project project;
 

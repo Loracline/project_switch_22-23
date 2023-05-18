@@ -9,21 +9,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
-import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
+import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @AutoConfigureMockMvc
 @SpringBootTest(
@@ -141,7 +139,7 @@ class UsServiceTest {
 
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(projectCode)).thenReturn(optionalProject);
+        when(projectRepository.findByCode(projectCode)).thenReturn(optionalProject);
         UsId usId = new UsId("P001","US003");
         when(projectDouble.addUserStory(priority, usId)).thenReturn(true);
 
@@ -249,7 +247,7 @@ class UsServiceTest {
         int priority = 1;
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(true);
 
         //Act
@@ -269,7 +267,7 @@ class UsServiceTest {
         int priority = 1;
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(false);
         Exception exception = assertThrows(Exception.class, () ->
                 usService.addUsToProductBacklog(usIdDouble, projectCode, priority));
@@ -291,7 +289,7 @@ class UsServiceTest {
         Code projectCode = new Code(1);
         int priority = 1;
         Optional<Project> optionalProject = Optional.empty();
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         Exception exception = assertThrows(Exception.class, () ->
                 usService.addUsToProductBacklog(usIdDouble, projectCode, priority));
         String expected = "No project with that code";
