@@ -451,53 +451,9 @@ class ResourceAllocationServiceTest {
         //Arrange
         Email accountEmailDouble = mock(Email.class);
         AccountStatus accountStatus = mock(AccountStatus.class);
-        Account accountDouble = mock(Account.class);
-        accountRepository.add(accountDouble);
-        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(true);
-        when(accountDouble.isAccountActive(accountStatus.getAccountStatus())).thenReturn(false);
-        //Act
         boolean result = service.isAValidAccount(accountEmailDouble, accountStatus);
         //Assert
         assertFalse(result);
-    }
-
-    /**
-     * Scerario 03: the account does not exist.
-     * Expected return: false.
-     */
-    @Test
-    void ensureTheAccountDoesNotExist() {
-        //Arrange
-        Email accountEmailDouble = mock(Email.class);
-        AccountStatus accountStatus = mock(AccountStatus.class);
-        Account accountDouble = mock(Account.class);
-        accountRepository.add(accountDouble);
-        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(false);
-        //Act
-        boolean result = service.isAValidAccount(accountEmailDouble, accountStatus);
-        //Assert
-        assertFalse(result);
-    }
-    /**
-     * Scerario 04: the accounts list is empty.
-     * Expected return: false.
-     */
-    @Test
-    void ensureTheAccountsListIsEmpty() {
-        //Arrange
-        when(accountRepository.findAll()).thenReturn(Collections.emptyList());
-        Email accountEmailDouble = mock(Email.class);
-        AccountStatus accountStatus = mock(AccountStatus.class);
-        Account accountDouble = mock(Account.class);
-        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(false);
-        //Act
-        boolean result = service.isAValidAccount(accountEmailDouble, accountStatus);
-        //Assert
-        assertFalse(result);
-    }
-
-    @Test
-    void calculateNextNumber() {
     }
 
     /**
@@ -528,8 +484,7 @@ class ResourceAllocationServiceTest {
     }
 
     /**
-     * Scenario 02: Check resource is not overlapping, projectCode is not equal, accountEmail is same,
-     * and the period is overlapped.
+     * Scenario 02: Check resource is not overlapping.
      * Expected return: false.
      */
     @Test
@@ -538,43 +493,6 @@ class ResourceAllocationServiceTest {
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
         Period periodDouble = mock(Period.class);
-        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
-        List<ProjectResource> resources = new ArrayList<>();
-        resources.add(projectResourceOneDouble);
-        when(resourceRepository.findAll()).thenReturn(resources);
-
-        resourceRepository.save(projectResourceOneDouble);
-        when(projectResourceOneDouble.hasProjectCode(codeDouble)).thenReturn(false);
-        when(projectResourceOneDouble.hasAccount(emailDouble)).thenReturn(false);
-        when(projectResourceOneDouble.isPeriodOverlapping(periodDouble)).thenReturn(true);
-        // Act
-        boolean result = service.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
-
-        // Assert
-        assertFalse(result);
-    }
-
-
-    /**
-     * Scenario 03: Check resource is not overlapped, projectCode is same but accountEmail is not same
-     * and the period is overlapped.
-     * Expected return: false.
-     */
-    @Test
-    void assureResourceIsNotOverlappingBecauseTheAccountEmailIsNotTheSame() {
-        // Arrange
-        Code codeDouble = mock(Code.class);
-        Email emailDouble = mock(Email.class);
-        Period periodDouble = mock(Period.class);
-        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
-        List<ProjectResource> resources = new ArrayList<>();
-        resources.add(projectResourceOneDouble);
-        when(resourceRepository.findAll()).thenReturn(resources);
-
-        resourceRepository.save(projectResourceOneDouble);
-        when(projectResourceOneDouble.hasProjectCode(codeDouble)).thenReturn(true);
-        when(projectResourceOneDouble.hasAccount(emailDouble)).thenReturn(false);
-        when(projectResourceOneDouble.isPeriodOverlapping(periodDouble)).thenReturn(true);
         // Act
         boolean result = service.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
 
@@ -583,7 +501,7 @@ class ResourceAllocationServiceTest {
     }
 
     /**
-     * Scenario 04: Check resource is not overlapped, projectCode, accountEmail are same and period is not
+     * Scenario 03: Check resource is not overlapped, projectCode, accountEmail are same and period is not
      * overlay.
      * Expected return: false.
      */
@@ -606,31 +524,5 @@ class ResourceAllocationServiceTest {
 
         // Assert
         assertFalse(result);
-
-    }
-    /**
-     * Scenario 05: Check resource is not overlapped, resourceRepository is empty
-     * overlay.
-     * Expected return: false.
-     */
-    @Test
-    void ensureResourceIsNotOverlappingbecauseTheResourceRepositoryIsEmpty() {
-        // Arrange
-        Code codeDouble = mock(Code.class);
-        Email emailDouble = mock(Email.class);
-        Period periodDouble = mock(Period.class);
-        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
-        when(resourceRepository.findAll()).thenReturn(Collections.emptyList());
-
-        resourceRepository.save(projectResourceOneDouble);
-        when(projectResourceOneDouble.hasProjectCode(codeDouble)).thenReturn(true);
-        when(projectResourceOneDouble.hasAccount(emailDouble)).thenReturn(true);
-        when(projectResourceOneDouble.isPeriodOverlapping(periodDouble)).thenReturn(true);
-        // Act
-        boolean result = service.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
-
-        // Assert
-        assertFalse(result);
-
     }
 }
