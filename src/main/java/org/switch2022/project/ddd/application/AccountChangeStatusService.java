@@ -25,7 +25,7 @@ public class AccountChangeStatusService {
         boolean result = false;
         for (AccountStatus accountStatus : AccountStatus.values()) {
             if (accountStatus.getAccountStatus().equals(status)) {
-                Account account = accountRepository.getAccountByEmail(email);
+                Account account = accountRepository.findAccountByEmail(email);
                 result = account.changeStatus(accountStatus);
             }
         }

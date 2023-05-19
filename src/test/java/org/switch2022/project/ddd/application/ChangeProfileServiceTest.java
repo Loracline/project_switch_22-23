@@ -55,7 +55,7 @@ class ChangeProfileServiceTest {
         AccountFactory accountFactory = new AccountFactory();
         Account accountTest = accountFactory.create(name, email, phoneNumber, photo);
 
-        when(accountRepository.getAccountByEmail(any())).thenReturn(accountTest);
+        when(accountRepository.findAccountByEmail(any())).thenReturn(accountTest);
         ProfileFactory profileFactory = new ProfileFactory();
         Profile profile = profileFactory.createProfile(name, 2);
         when(profileRepository.getProfileByName(any())).thenReturn(profile);
@@ -83,7 +83,7 @@ class ChangeProfileServiceTest {
         AccountFactory accountFactory = new AccountFactory();
         Account accountTest = accountFactory.create(name, email, phoneNumber, photo);
 
-        when(accountRepository.getAccountByEmail(String.valueOf(email))).thenReturn(accountTest);
+        when(accountRepository.findAccountByEmail(String.valueOf(email))).thenReturn(accountTest);
         when(profileRepository.getProfileByName(null)).thenReturn(null);
 
         // Act & Assert
@@ -131,7 +131,7 @@ class ChangeProfileServiceTest {
         Account accountTest = accountFactory.create(name, email, phoneNumber, photo);
         accountTest.changeProfile(new ProfileId(1));
 
-        when(accountRepository.getAccountByEmail(String.valueOf(email))).thenReturn(accountTest);
+        when(accountRepository.findAccountByEmail(String.valueOf(email))).thenReturn(accountTest);
 
         ProfileFactory profileFactory = new ProfileFactory();
         Profile assignedProfile = profileFactory.createProfile(name, 1);

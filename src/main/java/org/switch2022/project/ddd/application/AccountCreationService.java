@@ -41,6 +41,6 @@ public class AccountCreationService {
         Photo photo = new Photo(photoBuf);
 
         Account account = accountFactory.create(name, email, phoneNumber, photo);
-        return accountRepository.add(account);
+        return accountRepository.save(account);
     }
 }
