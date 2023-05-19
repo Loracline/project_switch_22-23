@@ -302,7 +302,7 @@ class ResourceAllocationServiceTest {
         resources.add(resourceTwo);
         resources.add(resourceThree);
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
         when(resourceOne.getPercentageOfAllocation()).thenReturn(25.0F);
         when(percentageOfAllocation.getValue()).thenReturn(50.0F);
@@ -330,7 +330,7 @@ class ResourceAllocationServiceTest {
         resources.add(resourceTwo);
         resources.add(resourceThree);
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
         when(resourceOne.getPercentageOfAllocation()).thenReturn(50.0F);
         when(percentageOfAllocation.getValue()).thenReturn(50.0F);
@@ -358,7 +358,7 @@ class ResourceAllocationServiceTest {
         resources.add(resourceTwo);
         resources.add(resourceThree);
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
         when(resourceOne.getPercentageOfAllocation()).thenReturn(50.1F);
         when(percentageOfAllocation.getValue()).thenReturn(50.0F);
@@ -386,7 +386,7 @@ class ResourceAllocationServiceTest {
         resources.add(resourceTwo);
         resources.add(resourceThree);
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
         when(resourceOne.getPercentageOfAllocation()).thenReturn(100.0F);
         when(percentageOfAllocation.getValue()).thenReturn(0.1F);
@@ -408,7 +408,7 @@ class ResourceAllocationServiceTest {
 
         List<ProjectResource> resources = new ArrayList<>();
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(percentageOfAllocation.getValue()).thenReturn(50.0F);
 
         // Act

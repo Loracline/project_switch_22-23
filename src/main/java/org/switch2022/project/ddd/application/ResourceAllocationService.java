@@ -188,7 +188,7 @@ public class ResourceAllocationService {
      */
     private float currentPercentageOfAllocation(Email accountEmail, LocalDate date) {
         float sum = 0.0F;
-        List<ProjectResource> resources = resourceRepository.findResourcesByEmail(accountEmail);
+        List<ProjectResource> resources = resourceRepository.findResourcesByAccountEmail(accountEmail);
         for (int i = 0; i < resources.size(); i++) {
             if (resources.get(i).allocationPeriodIncludesDate(date)) {
                 sum += resources.get(i).getPercentageOfAllocation();

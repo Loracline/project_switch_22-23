@@ -65,41 +65,39 @@ class ProjectResourceRepositoryTest {
     }
 
     /**
-     * Method: getAccountsAllocatedToProject(Code projectCode).
-     * Returns a list of project resources with a given project code.
-     * <br>
-     * Scenario 01: Check if an empty list is returned if the list of project resources is empty.
-     * The two (empty) lists should assert equal.
+     * METHOD findAccountEmailsByProjectCode()
      */
+    @DisplayName("No resources allocated to project")
     @Test
-    void ensureThatAnEmptyListIsReturnedIfThereAreNoProjectResourcesWithGivenProjectCode() {
-        //Arrange
+    void ensureReturnsEmptyListWhenNoResourceIsAllocatedToProject() {
+        // Arrange
         ProjectResourceRepository repository = new ProjectResourceRepository();
         Code projectCode = mock(Code.class);
-        List<String> expected = new ArrayList<>();
-        //Act
-        List<String> result = repository.getAccountsAllocatedToProject(projectCode);
-        //Assert
+        List<Email> expected = new ArrayList<>();
+        ProjectResource resourceOne = mock(ProjectResource.class);
+        ProjectResource resourceTwo = mock(ProjectResource.class);
+        repository.save(resourceOne);
+        repository.save(resourceTwo);
+
+        // Act
+        List<Email> result = repository.findAccountEmailsByProjectCode(projectCode);
+
+        // Assert
         assertEquals(expected, result);
     }
 
-    /**
-     * Method: getAccountsAllocatedToProject(Code projectCode).
-     * Returns a list of project resources with a given project code.
-     * <br>
-     * Scenario 02: Check that a list is of project resources is returned if the list of project resources has entries.
-     * The two lists should assert equal.
-     */
+    @DisplayName("List of e-mails of the resources of a project")
     @Test
     void ensureThatAListOfProjectResourcesIsSuccessfullyReturned() {
         // Arrange
-        List<String> expected = new ArrayList<>();
-        String emailOne = "person@isep.ipp.pt";
-        String emailTwo = "other_person@isep.ipp.pt";
-        expected.add(emailOne);
-        expected.add(emailTwo);
-
         ProjectResourceRepository repository = new ProjectResourceRepository();
+        Code projectCode = mock(Code.class);
+
+        List<Email> expected = new ArrayList<>();
+        String stringOf_emailOne = "person@isep.ipp.pt";
+        Email emailOne = new Email(stringOf_emailOne);
+        expected.add(emailOne);
+
         ProjectResource resourceOne = mock(ProjectResource.class);
         ProjectResource resourceTwo = mock(ProjectResource.class);
         ProjectResource resourceThree = mock(ProjectResource.class);
@@ -107,15 +105,11 @@ class ProjectResourceRepositoryTest {
         repository.save(resourceTwo);
         repository.save(resourceThree);
 
-        Code projectCode = mock(Code.class);
-
         when(resourceOne.hasProjectCode(projectCode)).thenReturn(true);
-        when(resourceTwo.hasProjectCode(projectCode)).thenReturn(true);
-        when(resourceOne.getEmail()).thenReturn(emailOne);
-        when(resourceTwo.getEmail()).thenReturn(emailTwo);
+        when(resourceOne.getEmail()).thenReturn(stringOf_emailOne);
 
         // Act
-        List<String> result = repository.getAccountsAllocatedToProject(projectCode);
+        List<Email> result = repository.findAccountEmailsByProjectCode(projectCode);
 
         // Assert
         assertEquals(expected, result);
@@ -299,7 +293,7 @@ class ProjectResourceRepositoryTest {
         repository.save(resourceThree);
 
         // Act
-        List<ProjectResource> result = repository.findResourcesByEmail(email);
+        List<ProjectResource> result = repository.findResourcesByAccountEmail(email);
 
         // Arrange
         assertEquals(expected, result);
@@ -324,7 +318,7 @@ class ProjectResourceRepositoryTest {
         expected.add(resourceTwo);
 
         // Act
-        List<ProjectResource> result = repository.findResourcesByEmail(email);
+        List<ProjectResource> result = repository.findResourcesByAccountEmail(email);
 
         // Arrange
         assertEquals(expected, result);
