@@ -1,0 +1,113 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title LIST ALL PROJECTS THE AUTHENTICATED USER IS ALLOCATED TO
+legend top
+US016 - As Authenticated User, I want to get a list of all projects I'm currently allocated to.
+end legend
+autonumber
+actor User
+
+participant ":ListProjectsOfAccountUI" as ui
+participant ":ListProjectsOfAccountController" as controller
+participant ":ProjectListAllocationService" as service
+participant ":ProjectResourceRepository" as resourceRepo
+participant "projectCodes: List<Codes>" as projectList
+participant ":ProjectResource" as resource
+participant ":ProjectRepository" as projectRepo
+participant "projects: List<Project>" as list
+participant ":Project" as project
+participant "projectDtos: List<ProjectDto>" as dtoList
+participant ":CustomerRepository" as customerRepo
+participant ":Customer" as customer
+participant ":ProjectMapper" as mapper
+participant "projectDto:ProjectDto" as dto
+
+
+activate User
+User -> ui: requests list of all projects a given\n user is currently allocated to
+activate ui
+ui -> controller: listProjectsByAccount(email)
+activate controller
+controller -> service: listProjectsByAccount(email)
+activate service
+service -> resourceRepo: findProjectCodesByAccountEmail(accountEmail)
+activate resourceRepo
+create projectList
+resourceRepo -> projectList: create()
+loop for each resource in repository
+resourceRepo -> resource: hasAccount(email)
+activate resource
+resource --> resourceRepo: true
+deactivate
+resourceRepo -> resource: getCode()
+activate resource
+resource --> resourceRepo: code
+deactivate
+resourceRepo -> projectList: add(code)
+activate projectList
+projectList --> resourceRepo: true
+deactivate
+end loop
+service <-- resourceRepo:  projectCodes
+deactivate resourceRepo
+service -> projectRepo: findByCodes(projectCodes)
+activate projectRepo
+create list
+projectRepo -> list: create ()
+loop for each code in projectCodes
+projectRepo -> project: hasProjectCode(code)
+activate project
+project --> projectRepo: true
+deactivate project
+projectRepo -> list: add(project)
+activate list
+list --> projectRepo: true
+deactivate
+end loop
+projectRepo --> service: projects
+deactivate projectRepo
+create dtoList
+service -> dtoList: create ()
+loop for each project in projects
+service -> project: containsCurrentDate()
+activate project
+service <-- project: true
+deactivate
+service -> project: getCustomerTaxId()
+activate project
+service <-- project: taxId
+deactivate
+service -> customerRepo: findCustomerNameByTaxId(taxId)
+activate customerRepo
+customerRepo -> customer: hasTaxId(taxId)
+activate customer
+customer --> customerRepo: true
+deactivate customer
+customerRepo -> customer: getName()
+activate customer
+customer --> customerRepo: costumerName
+deactivate customer
+customerRepo --> service: customerName
+deactivate customerRepo
+service -> mapper: projectToDto(project, customerName)
+activate mapper
+create dto
+mapper -> dto: create(code, projectName, customerName, \nstatus, startDate, endDate)
+mapper --> service: projectDto
+deactivate mapper
+service -> dtoList: add(projectDto)
+activate dtoList
+dtoList --> service: true
+deactivate
+end loop
+deactivate mapper
+service --> controller: projectDtos
+deactivate service
+controller --> ui: projectDtos
+deactivate controller
+ui --> User: shows list of all projects\n a user is allocated to
+deactivate ui
+deactivate User
+
+@enduml

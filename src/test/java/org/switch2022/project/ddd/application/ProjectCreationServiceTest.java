@@ -12,15 +12,12 @@ import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
-import org.switch2022.project.ddd.domain.model.typology.Typology;
-import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -117,7 +114,7 @@ class ProjectCreationServiceTest {
     void ensureProjectIsRetrieved() {
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         //Act
         Optional<Project> result = projectCreationService.getProjectByCode("P001");
         //Assert
