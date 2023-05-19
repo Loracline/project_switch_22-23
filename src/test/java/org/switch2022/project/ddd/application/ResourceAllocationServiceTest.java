@@ -30,7 +30,7 @@ import static org.switch2022.project.ddd.domain.value_object.Role.SCRUM_MASTER;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = ResourceAllocationService.class
+        classes = ResourceAllocationServiceTest.class
 )
 
 class ResourceAllocationServiceTest {
