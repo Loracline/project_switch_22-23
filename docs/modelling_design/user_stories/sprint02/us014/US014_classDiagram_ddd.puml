@@ -7,35 +7,35 @@ end legend
 
 
 class "ListAccountsInProjectController" {
-- resourceListAllocationService
-+ listAccountsByProjectCode(projectCode)
+-service
++listAccountsInProject(code)
 }
 
 class "ResourceListAllocationService" {
-- iProjectResourceRepository
-- iAccountRepository
-- accountMapper
-+ listAccountsByProjectCode(projectCode)
+-iResourceRepository
+-iAccountRepository
+-accountMapper
++listAccountsInProject(code)
 }
 
 interface "IProjectResourceRepository" {
-+ getAccountsAllocatedToProject(projectCode)
++findAccountEmailsByProjectCode(code)
 }
 
 class "ProjectResourceRepository" {
-- projectResources
-+ getAccountsAllocatedToProject(projectCode)
+-resources
++findAccountEmailsByProjectCode(code)
 }
 
 interface "IAccountRepository" {
-+ getAccounts(emails)
-+ hasEmail(email)
++findAccountsByEmails(email)
++findAccountByEmail(email)
 }
 
 class "AccountRepository" {
 - accounts
-+ getAccounts(emails)
-+ hasEmail(email)
++findAccountsByEmails(email)
++findAccountByEmail(email)
 }
 
 class "AccountMapper" {
@@ -47,24 +47,24 @@ class "AccountDto" {
 + name
 + email
 + status
-+ AccountDto(name, email, status)
-
+#AccountDto(name, email, status)
 }
 
 class "Account" {
 - name
 - email
-- accountStatus
-+ getAccountName()
-+ getAccountEmail()
-+ getAccountStatus()
+- status
++hasEmail(email)
++getAccountName()
++getAccountEmail()
++getAccountStatus()
 }
 
 class "ProjectResource" {
-- projectCode
-- accountEmail
-+ hasProjectCode(projectCode)
-+ getEmail()
+-code
+-email
++hasProjectCode(code)
++getEmail()
 }
 
 ListAccountsInProjectController <.. ResourceListAllocationService: is injected
