@@ -5,7 +5,6 @@ import org.switch2022.project.ddd.domain.model.project_resource.IProjectResource
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Email;
-import org.switch2022.project.ddd.domain.value_object.Period;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.utils.Utils;
 
@@ -119,14 +118,6 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
             }
         }
         return resources;
-    }
-    /**
-     * This method returns an unmodifiable view of the projects.
-     *
-     * @return an unmodifiable view of the projects.
-     */
-    public List<ProjectResource> findAll() {
-        return Collections.unmodifiableList(projectResources);
     }
 }
 

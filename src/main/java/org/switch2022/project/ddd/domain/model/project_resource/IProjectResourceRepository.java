@@ -39,11 +39,4 @@ public interface IProjectResourceRepository {
      */
     List<ProjectResource> findResourcesByEmail(Email email);
 
-    /**
-     * Retrieves a list of resources to a specific project.
-     * @return a list of resources to a specific project.
-     */
-    List<ProjectResource> findAll();
-
-
 }
