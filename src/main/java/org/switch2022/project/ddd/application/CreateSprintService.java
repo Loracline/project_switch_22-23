@@ -15,6 +15,7 @@ import org.switch2022.project.ddd.utils.Utils;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class CreateSprintService {
      * After it adds the sprint to the sprint repository
      *
      * @param projectCode of the project
-     * @param startDate of the sprint
+     * @param startDate   of the sprint
      * @return a String of the stringID
      * @throws Exception if the sprint is already in the repository
      */
@@ -75,7 +76,6 @@ public class CreateSprintService {
      *
      * @param code of the project to be retrieved.
      * @return a project from the repository.
-     * 
      */
     private Project getProjectByCode(String code) {
         Project project;
@@ -94,7 +94,7 @@ public class CreateSprintService {
      * This method checks if the sprint start date is after or equal the project start date
      *
      * @param project of the project
-     * @param sprint that was created
+     * @param sprint  that was created
      * @return true if the sprint start date is after or equal the project start date
      */
 
@@ -106,7 +106,7 @@ public class CreateSprintService {
      * This method checks if the sprint end date is before or equal the project end date
      *
      * @param project of the project
-     * @param sprint that was created
+     * @param sprint  that was created
      * @return true if the sprint end date is before or equal the project end date
      */
     private static boolean isSprintEndDateBeforeProjectEndDate(Project project, Sprint sprint) {
@@ -139,13 +139,13 @@ public class CreateSprintService {
      */
     private static boolean isSprintPeriodValid(List<Sprint> sprints, Sprint sprint) {
         boolean isSprintPeriodNotOverlapping = false;
-        int i = 0;
         if (sprints.isEmpty()) {
             isSprintPeriodNotOverlapping = true;
         } else {
-            while (i < sprints.size() && !isSprintPeriodNotOverlapping) {
-                isSprintPeriodNotOverlapping = sprints.get(i).isPeriodNotOverlapping(sprint);
-                i++;
+            Iterator<Sprint> sprintIterator = sprints.iterator();
+            while (sprintIterator.hasNext() && !isSprintPeriodNotOverlapping) {
+                Sprint s = sprintIterator.next();
+                isSprintPeriodNotOverlapping = s.isPeriodNotOverlapping(sprint);
             }
         }
         return isSprintPeriodNotOverlapping;
@@ -156,7 +156,7 @@ public class CreateSprintService {
      * and with the other sprints
      *
      * @param project to be checked
-     * @param sprint that was created
+     * @param sprint  that was created
      * @return a 1 if the period is valid for the sprint
      * @throws Exception if the sprint period is overlapping with other sprint,
      *                   if the sprint end date is after the project end date and
@@ -193,8 +193,9 @@ public class CreateSprintService {
 
     private static SprintDuration getSprintDuration(Project project) throws Exception {
         SprintDuration sprintDuration;
-        if (project.getSprintDuration().isPresent()) {
-            sprintDuration = project.getSprintDuration().get();
+        Optional<SprintDuration> optionalSprintDuration = project.getSprintDuration();
+        if (optionalSprintDuration.isPresent()) {
+            sprintDuration = optionalSprintDuration.get();
         } else {
             throw (new Exception("No Sprint Duration in this Project"));
         }
