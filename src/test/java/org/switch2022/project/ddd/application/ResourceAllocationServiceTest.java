@@ -12,27 +12,19 @@ import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceFactory;
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceRepository;
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.Period;
-import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
+import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
+import org.switch2022.project.ddd.domain.value_object.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
-
-import org.switch2022.project.ddd.domain.value_object.*;
-
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.ArgumentMatchers.any;
 import static org.switch2022.project.ddd.domain.value_object.Role.PRODUCT_OWNER;
 import static org.switch2022.project.ddd.domain.value_object.Role.SCRUM_MASTER;
 
@@ -289,5 +281,140 @@ class ResourceAllocationServiceTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    /**
+     * METHOD validatePercentageOfAllocation()
+     */
+    @DisplayName("Sum < 100%")
+    @Test
+    void ensureReturnsTrueWhenPercentageOfAllocationIsValid() {
+        // Arrange
+        Email email = mock(Email.class);
+        LocalDate date = mock(LocalDate.class);
+        PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resourceOne = mock(ProjectResource.class);
+        ProjectResource resourceTwo = mock(ProjectResource.class);
+        ProjectResource resourceThree = mock(ProjectResource.class);
+        List<ProjectResource> resources = new ArrayList<>();
+        resources.add(resourceOne);
+        resources.add(resourceTwo);
+        resources.add(resourceThree);
+
+        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(resourceOne.getPercentageOfAllocation()).thenReturn(25.0F);
+        when(percentageOfAllocation.getValue()).thenReturn(50.0F);
+
+        // Act
+        boolean result = service.validatePercentageOfAllocation(email, date, percentageOfAllocation);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @DisplayName("Sum = 100%")
+    @Test
+    void ensureReturnsTrueWhenPercentageOfAllocationIsValidAtMaximumAllowed() {
+        // Arrange
+        Email email = mock(Email.class);
+        LocalDate date = mock(LocalDate.class);
+        PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resourceOne = mock(ProjectResource.class);
+        ProjectResource resourceTwo = mock(ProjectResource.class);
+        ProjectResource resourceThree = mock(ProjectResource.class);
+        List<ProjectResource> resources = new ArrayList<>();
+        resources.add(resourceOne);
+        resources.add(resourceTwo);
+        resources.add(resourceThree);
+
+        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(resourceOne.getPercentageOfAllocation()).thenReturn(50.0F);
+        when(percentageOfAllocation.getValue()).thenReturn(50.0F);
+
+        // Act
+        boolean result = service.validatePercentageOfAllocation(email, date, percentageOfAllocation);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @DisplayName("Sum > 100%")
+    @Test
+    void ensureReturnsFalseWhenPercentageOfAllocationIsInvalidAboveMaximum() {
+        // Arrange
+        Email email = mock(Email.class);
+        LocalDate date = mock(LocalDate.class);
+        PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resourceOne = mock(ProjectResource.class);
+        ProjectResource resourceTwo = mock(ProjectResource.class);
+        ProjectResource resourceThree = mock(ProjectResource.class);
+        List<ProjectResource> resources = new ArrayList<>();
+        resources.add(resourceOne);
+        resources.add(resourceTwo);
+        resources.add(resourceThree);
+
+        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(resourceOne.getPercentageOfAllocation()).thenReturn(50.1F);
+        when(percentageOfAllocation.getValue()).thenReturn(50.0F);
+
+        // Act
+        boolean result = service.validatePercentageOfAllocation(email, date, percentageOfAllocation);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @DisplayName("Already allocated at 100%")
+    @Test
+    void ensureReturnsFalseWhenAlreadyAllocatedAtMaximum() {
+        // Arrange
+        Email email = mock(Email.class);
+        LocalDate date = mock(LocalDate.class);
+        PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
+
+        ProjectResource resourceOne = mock(ProjectResource.class);
+        ProjectResource resourceTwo = mock(ProjectResource.class);
+        ProjectResource resourceThree = mock(ProjectResource.class);
+        List<ProjectResource> resources = new ArrayList<>();
+        resources.add(resourceOne);
+        resources.add(resourceTwo);
+        resources.add(resourceThree);
+
+        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
+        when(resourceOne.getPercentageOfAllocation()).thenReturn(100.0F);
+        when(percentageOfAllocation.getValue()).thenReturn(0.1F);
+
+        // Act
+        boolean result = service.validatePercentageOfAllocation(email, date, percentageOfAllocation);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @DisplayName("Not allocated in any project yet")
+    @Test
+    void ensureReturnsTrueWhenIsFirstAllocation() {
+        // Arrange
+        Email email = mock(Email.class);
+        LocalDate date = mock(LocalDate.class);
+        PercentageOfAllocation percentageOfAllocation = mock(PercentageOfAllocation.class);
+
+        List<ProjectResource> resources = new ArrayList<>();
+
+        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(percentageOfAllocation.getValue()).thenReturn(50.0F);
+
+        // Act
+        boolean result = service.validatePercentageOfAllocation(email, date, percentageOfAllocation);
+
+        // Assert
+        assertTrue(result);
     }
 }
