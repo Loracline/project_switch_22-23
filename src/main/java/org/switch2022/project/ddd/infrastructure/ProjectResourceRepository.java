@@ -44,19 +44,18 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
         }
     }
 
-    //TODO change name and review implementation
-
     /**
-     * Retrieves a list of email accounts allocated to a specific project.
+     * Retrieves a list of Email objects associated with the specified project code.
      *
-     * @param projectCode The project code used to filter the allocated accounts.
-     * @return A list of email accounts allocated to the specified project.
+     * @param code The project code used to filter the account emails.
+     * @return A List of Email objects representing the account emails.
      */
-    public List<String> getAccountsAllocatedToProject(Code projectCode) {
-        List<String> emails = new ArrayList<>();
+    public List<Email> findAccountEmailsByProjectCode(Code code) {
+        List<Email> emails = new ArrayList<>();
         for (int i = 0; i < projectResources.size(); i++) {
-            if (projectResources.get(i).hasProjectCode(projectCode)) {
-                String email = this.projectResources.get(i).getEmail();
+            if (projectResources.get(i).hasProjectCode(code)) {
+                String stringOf_email = this.projectResources.get(i).getEmail();
+                Email email = new Email(stringOf_email);
                 emails.add(email);
             }
         }
@@ -81,8 +80,6 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
         }
         return hasResource;
     }
-
-    //TODO review location of method (and name)
 
     /**
      * This method retrieves a list of string representations of project codes to which a given account is allocated
@@ -110,7 +107,7 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
      * @param email The email address used to search for project resources.
      * @return A List of ProjectResource objects that match the provided email.
      */
-    public List<ProjectResource> findResourcesByEmail(Email email) {
+    public List<ProjectResource> findResourcesByAccountEmail(Email email) {
         List<ProjectResource> resources = new ArrayList<>();
         for (int i = 0; i < this.projectResources.size(); i++) {
             if (this.projectResources.get(i).hasAccount(email)) {

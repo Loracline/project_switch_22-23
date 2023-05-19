@@ -27,12 +27,12 @@ import static org.mockito.Mockito.when;
 import static org.switch2022.project.ddd.domain.value_object.Role.PRODUCT_OWNER;
 import static org.switch2022.project.ddd.domain.value_object.Role.SCRUM_MASTER;
 
-
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = ResourceAllocationServiceTest.class
+        classes = ResourceAllocationService.class
 )
+
 class ResourceAllocationServiceTest {
 
     @InjectMocks
@@ -301,7 +301,7 @@ class ResourceAllocationServiceTest {
         resources.add(resourceTwo);
         resources.add(resourceThree);
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
         when(resourceOne.getPercentageOfAllocation()).thenReturn(25.0F);
         when(percentageOfAllocation.getValue()).thenReturn(50.0F);
@@ -329,7 +329,7 @@ class ResourceAllocationServiceTest {
         resources.add(resourceTwo);
         resources.add(resourceThree);
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
         when(resourceOne.getPercentageOfAllocation()).thenReturn(50.0F);
         when(percentageOfAllocation.getValue()).thenReturn(50.0F);
@@ -357,7 +357,7 @@ class ResourceAllocationServiceTest {
         resources.add(resourceTwo);
         resources.add(resourceThree);
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
         when(resourceOne.getPercentageOfAllocation()).thenReturn(50.1F);
         when(percentageOfAllocation.getValue()).thenReturn(50.0F);
@@ -385,7 +385,7 @@ class ResourceAllocationServiceTest {
         resources.add(resourceTwo);
         resources.add(resourceThree);
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(resourceOne.allocationPeriodIncludesDate(date)).thenReturn(true);
         when(resourceOne.getPercentageOfAllocation()).thenReturn(100.0F);
         when(percentageOfAllocation.getValue()).thenReturn(0.1F);
@@ -407,7 +407,7 @@ class ResourceAllocationServiceTest {
 
         List<ProjectResource> resources = new ArrayList<>();
 
-        when(resourceRepository.findResourcesByEmail(email)).thenReturn(resources);
+        when(resourceRepository.findResourcesByAccountEmail(email)).thenReturn(resources);
         when(percentageOfAllocation.getValue()).thenReturn(50.0F);
 
         // Act

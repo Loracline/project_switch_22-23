@@ -1,4 +1,4 @@
-package org.switch2022.project.ddd.application;
+package org.switch2022.project.ddd.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.controller.UserStoryEffortEstimationController;
+import org.switch2022.project.ddd.application.UserStoryInSprintService;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

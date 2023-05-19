@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = ListAllAccountsController.class
 )
+
 class ListAllAccountsControllerTest {
     @InjectMocks
     ListAllAccountsController controller;

@@ -12,11 +12,10 @@ participant ":ListAccountsInProjectUI" as ui
 participant ":ListAccountsInProjectController" as controller
 participant ":ResourceListAllocationService" as service
 participant ":ProjectResourceRepository" as resourceRepo
-participant "emails: List<String>" as emailList
+participant "emails: List<Email>" as emailList
 participant ":ProjectResource" as resource
 participant ":AccountRepository" as accountRepo
 participant "accounts: List<Account>" as list
-participant ":Account" as account
 participant ":AccountMapper" as mapper
 participant "accountDtos: List<AccountDto>" as dtoList
 participant "accountDto:AccountDto" as dto
@@ -25,16 +24,16 @@ participant "accountDto:AccountDto" as dto
 activate Manager
 Manager -> ui: requests list of all accounts\n allocated to a project of interest
 activate ui
-ui -> controller: listAccountsByProject(projectCode)
+ui -> controller: listAccountsInProject(code)
 activate controller
-controller -> service: listAccountsByProject(projectCode)
+controller -> service: listAccountsInProject(code)
 activate service
-service -> resourceRepo: getAccountsAllocatedToProject(projectCode)
+service -> resourceRepo: findAccountEmailsByProjectCode(code)
 activate resourceRepo
 create emailList
 resourceRepo -> emailList: create()
 loop for each resource in repository
-resourceRepo -> resource: hasProjectCode(projectCode)
+resourceRepo -> resource: hasProjectCode(code)
 activate resource
 resource --> resourceRepo: true
 deactivate
@@ -49,15 +48,12 @@ deactivate
 end loop
 service <-- resourceRepo:  emails
 deactivate resourceRepo
-service -> accountRepo: getAccounts(emails)
+service -> accountRepo: findAccountsByEmails(emails)
 activate accountRepo
 create list
 accountRepo -> list: create ()
 loop for each email in emails
-accountRepo -> account: hasEmail(email)
-activate account
-account --> accountRepo: true
-deactivate account
+accountRepo -> accountRepo: account = findAccountByEmail(email)
 accountRepo -> list: add(account)
 activate list
 list --> accountRepo: true

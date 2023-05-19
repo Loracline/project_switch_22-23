@@ -32,11 +32,18 @@ public interface IProjectResourceRepository {
     List<Code> findProjectCodesByAccountEmail(Email email);
 
     /**
+     * Retrieves a list of Email objects associated with the specified project code.
+     *
+     * @param code The project code used to filter the account emails.
+     * @return A List of Email objects representing the account emails.
+     */
+    List<Email> findAccountEmailsByProjectCode(Code code);
+
+    /**
      * Finds project resources associated with the specified email.
      *
      * @param email The email address used to search for project resources.
      * @return A List of ProjectResource objects that match the provided email.
      */
-    List<ProjectResource> findResourcesByEmail(Email email);
-
+    List<ProjectResource> findResourcesByAccountEmail(Email email);
 }

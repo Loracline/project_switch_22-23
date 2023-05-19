@@ -40,7 +40,7 @@ class AccountChangeStatusServiceTest {
         String email = "ana@isep.pt";
         Account expected = mock(Account.class);
 
-        when(accountRepository.getAccountByEmail(email)).thenReturn(expected);
+        when(accountRepository.findAccountByEmail(email)).thenReturn(expected);
         when(expected.changeStatus(AccountStatus.ACTIVE)).thenReturn(true);
 
         //Act
@@ -61,7 +61,7 @@ class AccountChangeStatusServiceTest {
         String email = "ana@isep.pt";
         Account expected = mock(Account.class);
 
-        when(accountRepository.getAccountByEmail(email)).thenReturn(expected);
+        when(accountRepository.findAccountByEmail(email)).thenReturn(expected);
         when(expected.changeStatus(any())).thenReturn(false);
 
         //Act

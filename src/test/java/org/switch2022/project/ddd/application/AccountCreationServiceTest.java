@@ -50,7 +50,7 @@ class AccountCreationServiceTest {
         Account account = mock(Account.class);
 
         when(accountFactory.create(any(), any(), any(), any())).thenReturn(account);
-        when(accountRepository.add(account)).thenReturn(true);
+        when(accountRepository.save(account)).thenReturn(true);
 
         // Act
         boolean result = service.registerAccount(name, email, phoneNumber, photo);
@@ -75,7 +75,7 @@ class AccountCreationServiceTest {
         Account account = mock(Account.class);
 
         when(accountFactory.create(any(), any(), any(), any())).thenReturn(account);
-        when(accountRepository.add(account)).thenReturn(false);
+        when(accountRepository.save(account)).thenReturn(false);
 
         // Act
         boolean result = service.registerAccount(name, email, phoneNumber, photo);

@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.switch2022.project.ddd.domain.shared.ValueObject;
+import org.switch2022.project.ddd.utils.Utils;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class Code implements ValueObject<Code> {
@@ -63,9 +64,19 @@ public class Code implements ValueObject<Code> {
      *
      * @return a unique value that represents the object.
      */
-
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    /**
+     * Creates a Code object from a string representation of project code.
+     *
+     * @param stringOf_projectCode The string representation of project code.
+     * @return A Code object representing the project code.
+     */
+    public static Code getCodeFromString(String stringOf_projectCode) {
+        int codeNumber = Utils.getIntFromAlphanumericString(stringOf_projectCode, "P");
+        return new Code(codeNumber);
     }
 }

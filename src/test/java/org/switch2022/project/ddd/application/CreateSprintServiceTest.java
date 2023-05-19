@@ -25,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
-        classes = org.switch2022.project.ddd.application.CreateSprintServiceTest.class)
+        classes = org.switch2022.project.ddd.application.CreateSprintService.class)
 class CreateSprintServiceTest {
     /**
      * BeforeEach execute common code before running the

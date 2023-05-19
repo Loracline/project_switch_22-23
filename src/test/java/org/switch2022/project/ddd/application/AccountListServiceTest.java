@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = AccountListService.class
 )
+
 class AccountListServiceTest {
     @InjectMocks
     AccountListService service;
@@ -79,5 +80,4 @@ class AccountListServiceTest {
         // Assert
         assertEquals(expected, result);
     }
-
 }

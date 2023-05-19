@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = ProfileServiceTest.class
+        classes = ProfileService.class
 )
 class ProfileServiceTest {
     @InjectMocks
