@@ -1,16 +1,16 @@
 package org.switch2022.project.ddd.controller;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.CreateSprintService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         classes = CreateSprintController.class)
 class CreateSprintControllerTest {
@@ -19,11 +19,6 @@ class CreateSprintControllerTest {
 
     @MockBean
     CreateSprintService service;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     /**
      * Method: createSprint
