@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @AutoConfigureMockMvc
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = UsServiceTest.class
+        classes = UsService.class
 )
 class UsServiceTest {
 

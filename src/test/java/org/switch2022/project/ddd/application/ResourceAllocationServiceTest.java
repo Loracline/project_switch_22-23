@@ -28,12 +28,12 @@ import static org.mockito.Mockito.when;
 import static org.switch2022.project.ddd.domain.value_object.Role.PRODUCT_OWNER;
 import static org.switch2022.project.ddd.domain.value_object.Role.SCRUM_MASTER;
 
-
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = ResourceAllocationServiceTest.class
+        classes = ResourceAllocationService.class
 )
+
 class ResourceAllocationServiceTest {
 
     @InjectMocks

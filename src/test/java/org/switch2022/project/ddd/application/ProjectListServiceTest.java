@@ -21,7 +21,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
-        classes = org.switch2022.project.ddd.application.ProjectListServiceTest.class
+        classes = org.switch2022.project.ddd.application.ProjectListService.class
 )
 class ProjectListServiceTest {
     /**
