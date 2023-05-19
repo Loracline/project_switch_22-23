@@ -80,7 +80,7 @@ public class AddUserStoryToSprintBacklogService {
      * @return 1 if the sprint period is valid
      * @throws Exception if the sprint has already started or has finished
      */
-    private int isSprintInValidPeriod(Sprint sprint, LocalDate date) throws Exception {
+    private static int isSprintInValidPeriod(Sprint sprint, LocalDate date) throws Exception {
         int result;
 
         if (sprint.isPeriodAfterOrEqualThanDate(date)) {
