@@ -1147,4 +1147,16 @@ class PeriodTest {
         //Assert
         assertFalse(result);
     }
+
+    @Test
+    void ensureThatProjectContainsCurrentDate_startDateEqualsToCurrentDate() {
+        //Arrange
+        Period period = new Period(LocalDate.now(), 4);
+
+        //Act
+        boolean result = period.containsCurrentDate();
+
+        //Assert
+        assertTrue(result);
+    }
 }
