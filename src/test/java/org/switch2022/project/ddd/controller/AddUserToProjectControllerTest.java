@@ -38,4 +38,19 @@ class AddUserToProjectControllerTest {
         //Assert
         assertTrue(result);
     }
+
+    @Test
+    void ensureThatUserIsNotAllocatedToProject() {
+        //Arrange
+        LocalDate startDateDouble = mock(LocalDate.class);
+        LocalDate endaDateDouble = mock(LocalDate.class);
+        when(service.addUserToProject(anyInt(), anyString(), anyString(), anyFloat(), anyFloat(), any(), any())).thenReturn(false);
+
+        //Act
+        boolean result = controller.addUserToProject(1, "Email", "Role", 10, 100
+                , startDateDouble, endaDateDouble);
+
+        //Assert
+        assertFalse(result);
+    }
 }
