@@ -89,6 +89,27 @@ class PercentageOfAllocationTest {
         // Act, Assert
         assertNotEquals(expected, result);
     }
+    @Test
+    @SuppressWarnings("all")
+    void ensureThatPercentageOfAllocationIsEqualToItself() {
+        // Arrange
+        PercentageOfAllocation expected = new PercentageOfAllocation(11);
+        PercentageOfAllocation result = expected;
+
+        // Act, Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void ensureThatPercentageOfAllocationIsNotEqualToObjectFromADiferrentClass() {
+        // Arrange
+        PercentageOfAllocation expected = new PercentageOfAllocation(11);
+        Code result = new Code(10);
+
+        // Act, Assert
+        assertNotEquals(expected, result);
+    }
 
     /**
      * Tests for hashCode()

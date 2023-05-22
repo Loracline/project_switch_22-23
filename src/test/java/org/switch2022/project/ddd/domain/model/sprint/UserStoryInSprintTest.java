@@ -263,7 +263,7 @@ public class UserStoryInSprintTest {
 
         //ACT & ASSERT
         assertTrue(result);
-        assertEquals(TWO, userStoryInSprint_One.getEffort());
+        assertEquals(2, userStoryInSprint_One.getEffort());
     }
 
     /**
@@ -276,7 +276,7 @@ public class UserStoryInSprintTest {
         UsId usIdDouble = mock(UsId.class);
         Effort effortDouble = mock(Effort.class);
         UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble, ONE);
-        Effort initialEffort = userStoryInSprint_One.getEffort();
+        int initialEffort = userStoryInSprint_One.getEffort();
 
         //ACT
         boolean result = userStoryInSprint_One.changeEffort(effortDouble.getEffortValue());

@@ -436,7 +436,7 @@ class ResourceAllocationServiceTest {
         when(accountRepository.findAll()).thenReturn(accounts);
 
         // Act
-        boolean result = service.isAValidAccount(accountEmailDouble, accountStatus);
+        boolean result = service.isAccountValidForAllocation(accountEmailDouble, accountStatus);
 
         // Assert
         assertTrue(result);
@@ -451,7 +451,7 @@ class ResourceAllocationServiceTest {
         //Arrange
         Email accountEmailDouble = mock(Email.class);
         AccountStatus accountStatus = mock(AccountStatus.class);
-        boolean result = service.isAValidAccount(accountEmailDouble, accountStatus);
+        boolean result = service.isAccountValidForAllocation(accountEmailDouble, accountStatus);
         //Assert
         assertFalse(result);
     }
