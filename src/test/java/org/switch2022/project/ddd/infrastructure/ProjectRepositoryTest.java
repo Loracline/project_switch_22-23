@@ -2,7 +2,6 @@ package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project.Project;
-import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.Code;
 
 import java.util.ArrayList;
@@ -334,12 +333,12 @@ class ProjectRepositoryTest {
     void ensureThatAnEmptyListIsReturnedIfThereAreNoProjectsWithGivenProjectCode() {
         //Arrange
         ProjectRepository repository = new ProjectRepository();
-        List<Code> projectCodesDouble = mock(List.class);
+        List<Code> projectCodes = new ArrayList<>();
 
         List<Project> expected = new ArrayList<>();
 
         //Act
-        List<Project> result = repository.findAllByProjectCodes(projectCodesDouble);
+        List<Project> result = repository.findAllByProjectCodes(projectCodes);
 
         //Assert
         assertEquals(expected, result);
@@ -356,7 +355,11 @@ class ProjectRepositoryTest {
     void ensureThatAListOfProjectsIsSuccessfullyReturned() {
         // Arrange
         ProjectRepository repository = new ProjectRepository();
-        List<Code> projectCodesDouble = mock(List.class);
+        Code codeOne = mock(Code.class);
+        Code codeTwo= mock(Code.class);
+        Code codeThree = mock(Code.class);
+
+        List<Code> projectCodes = Arrays.asList(codeOne, codeTwo, codeThree);
 
         Project projectOne = mock(Project.class);
         Project projectTwo = mock(Project.class);
@@ -366,15 +369,14 @@ class ProjectRepositoryTest {
         repository.addProjectToProjectRepository(projectTwo);
         repository.addProjectToProjectRepository(projectThree);
 
-        when(projectCodesDouble.size()).thenReturn(1);
 
-        when(projectOne.hasProjectCode(any())).thenReturn(true);
-        when(projectTwo.hasProjectCode(any())).thenReturn(true);
+        when(projectOne.hasProjectCode(codeOne)).thenReturn(true);
+        when(projectTwo.hasProjectCode(codeTwo)).thenReturn(true);
 
         List<Project> expected = Arrays.asList(projectOne,projectTwo);
 
         // Act
-        List<Project> result = repository.findAllByProjectCodes(projectCodesDouble);
+        List<Project> result = repository.findAllByProjectCodes(projectCodes);
 
         // Assert
         assertEquals(expected, result);
