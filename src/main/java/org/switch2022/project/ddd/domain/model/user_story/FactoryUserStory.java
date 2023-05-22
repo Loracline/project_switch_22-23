@@ -13,13 +13,12 @@ public class FactoryUserStory implements IFactoryUserStory {
      * @param usNumber the number of the userStory.
      * @param usText the description of the userStory.
      * @param actor the actor of the userStory.
-     * @param priority the priority of the userStory.
      * @param projectCode the code of the Project where the User Story belongs to.
      * @param acceptanceCriteria the list of acceptance criteria.
      * @return the newly created User Story object.
      */
     @Override
-    public UserStory createUserStory(UsNumber usNumber, UsText usText, Actor actor, int priority,
+    public UserStory createUserStory(UsNumber usNumber, UsText usText, Actor actor,
                                      List<AcceptanceCriteria> acceptanceCriteria, Code projectCode) {
 
         return new UserStory(projectCode, usNumber, actor, usText, acceptanceCriteria);

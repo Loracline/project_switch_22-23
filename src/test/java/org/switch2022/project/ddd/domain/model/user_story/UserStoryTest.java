@@ -601,9 +601,10 @@ class UserStoryTest {
 
         UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        List<AcceptanceCriteria> expected= userStory.getAcceptanceCriteria();
+        List<String> expected= new ArrayList<>();
+        expected.add(acceptanceCriteriaElementDouble.getAcceptanceCriteria());
         //Act
-        List<AcceptanceCriteria> result = acceptanceCriteriaDouble;
+        List<String> result = userStory.getAcceptanceCriteria();
 
         //Assert
         assertEquals(expected, result);

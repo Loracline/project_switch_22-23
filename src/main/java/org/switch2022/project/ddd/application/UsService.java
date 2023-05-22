@@ -121,11 +121,10 @@ public class UsService {
         UsNumber userStoryNumber = new UsNumber(userStoryCreationDto.userStoryNumber);
         UsText userStoryText = new UsText(userStoryCreationDto.userStoryText);
         Actor actor = new Actor(userStoryCreationDto.actor);
-        int priority = userStoryCreationDto.priority;
         List<AcceptanceCriteria> acceptanceCriteria =
                 convertToAcceptanceCriteriaList(userStoryCreationDto.acceptanceCriteria);
 
-        return factoryUserStory.createUserStory(userStoryNumber, userStoryText, actor, priority,
+        return factoryUserStory.createUserStory(userStoryNumber, userStoryText, actor,
                 acceptanceCriteria, projectCode);
     }
 

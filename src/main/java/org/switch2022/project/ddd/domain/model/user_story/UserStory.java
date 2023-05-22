@@ -4,6 +4,7 @@ import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.utils.Validate;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +27,8 @@ public class UserStory implements Entity<UserStory> {
     private UsText usText;
     private Status status;
 
+    private Code projectCode;
+
     /**
      * Constructor
      * It creates an userStory using its identifier: usId  and your minimals attributs.
@@ -38,6 +41,7 @@ public class UserStory implements Entity<UserStory> {
         Validate.notNull(actor, "User Story's actor can't be null.");
         Validate.notNull(usText, "User Story's Text can't be null");
         Validate.notNull(acceptanceCriteria, "User Story's Acceptance Criteria can't be null.");
+        this.projectCode = projectCode;
         this.usNumber = usNumber;
         this.actor =actor;
         this.usText = usText;
@@ -151,7 +155,11 @@ public class UserStory implements Entity<UserStory> {
     /**
      * This getter returns the Acceptance Criteria of a user story.
      */
-    public List<AcceptanceCriteria> getAcceptanceCriteria() {
+    public List<String> getAcceptanceCriteria() {
+        List<String> acceptanceCriteria = new ArrayList<>();
+        for(AcceptanceCriteria ac : this.acceptanceCriteria){
+            acceptanceCriteria.add(ac.getAcceptanceCriteria());
+        }
         return Collections.unmodifiableList(acceptanceCriteria);
     }
 
@@ -183,6 +191,17 @@ public class UserStory implements Entity<UserStory> {
      */
     public boolean hasUsId(UsId usId) {
         return usId.equals(this.usId);
+    }
+
+    /**
+     * This getter method returns a String with the actor.
+     */
+    public String getActor() {
+        return actor.getActor();
+    }
+
+    public String getProjectCode() {
+        return projectCode.getCode();
     }
 }
 

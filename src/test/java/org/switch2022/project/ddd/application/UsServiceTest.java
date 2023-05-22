@@ -71,7 +71,7 @@ class UsServiceTest {
         int priority = 1;
         UserStory userStoryDouble = mock(UserStory.class);
         Code code = new Code(1);
-        when(factoryUserStory.createUserStory(any(), any(), any(), anyInt(), any(), any())).thenReturn(userStoryDouble);
+        when(factoryUserStory.createUserStory(any(), any(), any(), any(), any())).thenReturn(userStoryDouble);
         when(userStoryDouble.getUsNumber()).thenReturn("US003");
 
         Project projectDouble = mock(Project.class);
@@ -115,7 +115,7 @@ class UsServiceTest {
         String projectCode = "P001";
 
         // Act
-        when(factoryUserStory.createUserStory(any(), any(), any(), anyInt(), any(), any()))
+        when(factoryUserStory.createUserStory(any(), any(), any(), any(), any()))
                 .thenReturn(userStoryDouble);
 
         usRepository.add(userStoryDouble);
