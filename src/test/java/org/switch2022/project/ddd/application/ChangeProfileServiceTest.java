@@ -48,24 +48,24 @@ class ChangeProfileServiceTest {
     void ensureThatAccountProfileIsChangedSuccessfully() {
         // Arrange
         String profileName = "user";
-        Name name = mock(Name.class);
-        Email email = mock(Email.class);
-        PhoneNumber phoneNumber = mock(PhoneNumber.class);
-        Photo photo = mock(Photo.class);
-        AccountFactory accountFactory = new AccountFactory();
-        Account accountTest = accountFactory.create(name, email, phoneNumber, photo);
+        String email = "maria@isep.pt";
 
-        when(accountRepository.findAccountByEmail(any())).thenReturn(accountTest);
-        ProfileFactory profileFactory = new ProfileFactory();
-        Profile profile = profileFactory.createProfile(name, 2);
-        when(profileRepository.getProfileByName(any())).thenReturn(profile);
+        Account accountTest = mock(Account.class);
+        Profile assignedProfile = mock(Profile.class);
+
+        when(accountRepository.findAccountByEmail(email)).thenReturn(accountTest);
+        when(profileRepository.getProfileByName(any())).thenReturn(assignedProfile);
+        when(assignedProfile.getProfileId()).thenReturn("pr001");
+        when(accountTest.getProfileId()).thenReturn("pr001");
 
         // Act
-        boolean result = changeProfileService.changeProfile(String.valueOf(email), profileName);
+        boolean result = changeProfileService.changeProfile(email, profileName);
 
         // Assert
         assertTrue(result);
+        assertEquals("pr001", accountTest.getProfileId());
     }
+
 
     /**
      * Scenario 2: This test verifies that attempting to change the profile to a null profile results in no
@@ -76,14 +76,11 @@ class ChangeProfileServiceTest {
     @Test
     void ensureThatAccountProfileIsNotChangedWhenGivenNullProfile() {
         // Arrange
-        Name name = mock(Name.class);
-        Email email = mock(Email.class);
-        PhoneNumber phoneNumber = mock(PhoneNumber.class);
-        Photo photo = mock(Photo.class);
-        AccountFactory accountFactory = new AccountFactory();
-        Account accountTest = accountFactory.create(name, email, phoneNumber, photo);
+        String email = "maria@isep.pt";
 
-        when(accountRepository.findAccountByEmail(String.valueOf(email))).thenReturn(accountTest);
+        Account accountTest = mock(Account.class);
+
+        when(accountRepository.findAccountByEmail((email))).thenReturn(accountTest);
         when(profileRepository.getProfileByName(null)).thenReturn(null);
 
         // Act & Assert
@@ -122,29 +119,52 @@ class ChangeProfileServiceTest {
     void ensureThatAccountProfileIsNotChangedWhenProfileNameAlreadyAssigned() {
         // Arrange
         String profileName = "user";
+        String email = "maria@isep.pt";
+
+        Account accountTest = mock(Account.class);
+
+        when(accountRepository.findAccountByEmail(email)).thenReturn(accountTest);
+        Profile assignedProfile = mock(Profile.class);
+        when(profileRepository.getProfileByName(any())).thenReturn(assignedProfile);
+        when(assignedProfile.getProfileId()).thenReturn("pr001");
+        when(accountTest.getProfileId()).thenReturn("pr001");
+
+        // Act
+        boolean result = changeProfileService.changeProfile(email, profileName);
+
+        // Assert
+        assertTrue(result);
+        assertEquals("pr001", accountTest.getProfileId());
+    }
+
+    /**
+     * Scenario 6: This test ensures that a new profile is successfully added to the account.
+     * The expected behavior is that the account's profile is changed to the newly added profile,
+     * and the method should return true.
+     */
+    @Test
+    void ensureThatNewProfileIsAddedSuccessfully() {
+        // Arrange
+        String profileName = "admin";
         Name name = mock(Name.class);
         Email email = mock(Email.class);
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
-
         AccountFactory accountFactory = new AccountFactory();
         Account accountTest = accountFactory.create(name, email, phoneNumber, photo);
-        accountTest.changeProfile(new ProfileId(1));
 
-        when(accountRepository.findAccountByEmail(String.valueOf(email))).thenReturn(accountTest);
-
+        when(accountRepository.findAccountByEmail(any())).thenReturn(accountTest);
         ProfileFactory profileFactory = new ProfileFactory();
-        Profile assignedProfile = profileFactory.createProfile(name, 1);
-        when(profileRepository.getProfileByName(new Name(profileName))).thenReturn(assignedProfile);
+        Profile profile = profileFactory.createProfile(name, 3);
+        when(profileRepository.getProfileByName(any())).thenReturn(profile);
 
         // Act
         boolean result = changeProfileService.changeProfile(String.valueOf(email), profileName);
 
         // Assert
-        assertEquals("pr001", accountTest.getProfileId().toString());
+        assertTrue(result);
+        assertEquals("pr003", accountTest.getProfileId());
     }
-
-
 }
 
 
