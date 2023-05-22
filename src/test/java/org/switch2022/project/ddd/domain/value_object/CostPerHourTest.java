@@ -77,6 +77,28 @@ class CostPerHourTest {
         assertNotEquals(expected, result);
     }
 
+    @Test
+    @SuppressWarnings("all")
+    void ensureThatCostPerHourIsEqualToItself() {
+        // Arrange
+        CostPerHour expected = new CostPerHour(10);
+        CostPerHour result = expected;
+
+        // Act, Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    @SuppressWarnings("all")
+    void ensureThatCostPerHourIsNotEqualToObjectFromADiferrentClass() {
+        // Arrange
+        CostPerHour expected = new CostPerHour(10);
+        Code result = new Code(10);
+
+        // Act, Assert
+        assertNotEquals(expected, result);
+    }
+
     /**
      * Tests for hashCode()
      */
