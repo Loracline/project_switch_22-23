@@ -523,6 +523,34 @@ class AccountTest {
         assertTrue(result);
     }
 
+    /**
+     * Scenario 5: Ensure that an account can add a profile when no profile exists (null case).
+     * The method should return true to indicate that the profile was successfully added.
+     */
+    @Test
+    void ensureAccountCanAddProfileWhenNoProfileExists_null() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        ProfileId profileIdDouble = mock(ProfileId.class);
+        ProfileId profileIdDoubleTwo = mock(ProfileId.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        ProfileId profileId = new ProfileId(2);
+
+        account.changeProfile(null);
+
+        when(profileIdDouble.sameValueAs(profileIdDoubleTwo)).thenReturn(true);
+
+        // Act
+        boolean result = account.changeProfile(profileId);
+
+        // Assert
+        assertTrue(result);
+    }
+
 
     /**
      * METHOD getProfileId()
