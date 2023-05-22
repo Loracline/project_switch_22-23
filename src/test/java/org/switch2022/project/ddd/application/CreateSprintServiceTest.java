@@ -25,7 +25,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
-        classes = org.switch2022.project.ddd.application.CreateSprintServiceTest.class)
+        classes = org.switch2022.project.ddd.application.CreateSprintService.class)
 class CreateSprintServiceTest {
     /**
      * BeforeEach execute common code before running the
@@ -64,7 +64,7 @@ class CreateSprintServiceTest {
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
         when(sprintRepository.getSprintNumber()).thenReturn(0);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);
@@ -100,7 +100,7 @@ class CreateSprintServiceTest {
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);
@@ -138,7 +138,7 @@ class CreateSprintServiceTest {
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);
@@ -180,7 +180,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         Optional<SprintDuration> sprintDurationOptional = Optional.empty();
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);
@@ -223,7 +223,7 @@ class CreateSprintServiceTest {
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);
@@ -266,7 +266,7 @@ class CreateSprintServiceTest {
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);
@@ -309,7 +309,7 @@ class CreateSprintServiceTest {
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(ProjectStatus.PLANNED)).thenReturn(false);
         when(projectDouble.hasStatus(ProjectStatus.CLOSED)).thenReturn(true);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -353,7 +353,7 @@ class CreateSprintServiceTest {
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(ProjectStatus.PLANNED)).thenReturn(true);
         when(projectDouble.hasStatus(ProjectStatus.CLOSED)).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -390,7 +390,7 @@ class CreateSprintServiceTest {
         Sprint sprintDoubleTwo = mock(Sprint.class);
         Optional<Project> projectOptional = Optional.empty();
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(true);
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
@@ -428,7 +428,7 @@ class CreateSprintServiceTest {
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
         when(sprintRepository.getSprintNumber()).thenReturn(1);
-        when(projectRepository.getProjectByCode(any())).thenReturn(projectOptional);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);

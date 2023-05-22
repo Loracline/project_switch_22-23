@@ -6,12 +6,13 @@ import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.domain.value_object.AccountStatus;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class AccountRepository implements IAccountRepository {
@@ -22,35 +23,6 @@ public class AccountRepository implements IAccountRepository {
     private final List<Account> accounts = new ArrayList<>();
 
     /**
-     * This method checks if an instance of AccountRepository is equal to another object.
-     *
-     * @param o object to compare with.
-     * @return true if the two have the same attribute value, and false otherwise.
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        AccountRepository that = (AccountRepository) o;
-        return Objects.equals(accounts, that.accounts);
-    }
-
-    /**
-     * This method is used to generate a unique hash code for an object, based on the
-     * object's state.
-     *
-     * @return a unique value that represents the object.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(accounts);
-    }
-
-    /**
      * This method adds an instance of Account to AccountRepository if that instance
      * does not
      * already exist there.
@@ -59,7 +31,7 @@ public class AccountRepository implements IAccountRepository {
      * @return true if the account was added to the account repository, and throws an
      * AlreadyExistInRepoException otherwise.
      */
-    public boolean add(Account account) {
+    public boolean save(Account account) {
         if (accounts.contains(account)) {
             throw new AlreadyExistsInRepoException("The account already exists in the " +
                     "repository.");
@@ -75,26 +47,25 @@ public class AccountRepository implements IAccountRepository {
      * @return a list with all accounts.
      */
     @Override
-    public List<Account> getAccounts() {
-        return this.accounts;
-    }
+    public List<Account> findAll() {
+        return Collections.unmodifiableList(accounts);}
+
+
 
     /**
-     * This method returns all the accounts with emails matching a given list of emails that is passed as argument.
+     * Retrieves a list of accounts that match the given list of emails.
      *
-     * @param emails list of emails to match with accounts.
-     * @return a list with accounts with matching emails, or an empty list if no accounts have matching emails.
+     * @param emails the list of emails to match accounts against.
+     * @return a list of accounts matching the provided emails.
+     * @throws InvalidInputException if the object is null.
      */
     @Override
-    public List<Account> getAccounts(List<String> emails) {
-        Validate.notNull(emails, "The list of emails must not be null.");
+    public List<Account> findAccountsByEmails(List<Email> emails) {
+        Validate.notNull(emails, "E-mail's list can't be null.");
         List<Account> accounts = new ArrayList<>();
-        for (int i = 0; i < this.accounts.size(); i++) {
-            for (int j = 0; j < emails.size(); j++) {
-                if (this.accounts.get(i).hasEmail(emails.get(j))) {
-                    accounts.add(this.accounts.get(i));
-                }
-            }
+        for (int i = 0; i < emails.size(); i++) {
+            Account account = findAccountByEmail(emails.get(i).getEmail());
+            accounts.add(account);
         }
         return accounts;
     }
@@ -107,10 +78,9 @@ public class AccountRepository implements IAccountRepository {
      * it does not find the desired account.
      */
     @Override
-    public Account getAccountByEmail(String email) {
+    public Account findAccountByEmail(String email) {
         Account accountRequested = null;
-        int i = 0;
-        while (i < this.accounts.size() && accountRequested == null) {
+        for (int i = 0; i < this.accounts.size(); i++) {
             if (accounts.get(i).hasEmail(email)) {
                 accountRequested = accounts.get(i);
             }
@@ -127,14 +97,12 @@ public class AccountRepository implements IAccountRepository {
      * @return true if the account exists and the status is activated. If one of these conditions is not true,
      * it returns false.
      */
-
     public boolean IsAValidAccount(Email accountEmail, AccountStatus accountStatus) {
-        boolean accointIsValid= false;
+        boolean accountIsValid = false;
         for (int i = 0; i < this.accounts.size(); i++) {
-            accointIsValid = (accounts.get(i).hasEmail(accountEmail.getEmail()) &&
+            accountIsValid = (accounts.get(i).hasEmail(accountEmail.getEmail()) &&
                     accounts.get(i).isAccountActive(accountStatus.getAccountStatus()));
         }
-        return accointIsValid;
+        return accountIsValid;
     }
-
 }

@@ -38,19 +38,16 @@ public class ChangeProfileService {
         if (email == null || profileName == null) {
             throw new InvalidInputException("Email and profile name cannot be null");
         }
-        boolean wasAccountProfileUpdated = false;
-        Account account = accountRepository.getAccountByEmail(email);
+        Account account = accountRepository.findAccountByEmail(email);
         Profile profile = profileRepository.getProfileByName(new Name(profileName));
 
         String[] parts = profile.getProfileId().split("pr");
         int profileNumber = Integer.parseInt(parts[1]);
 
         ProfileId profileId = new ProfileId(profileNumber);
-        if (account != null) {
-            account.changeProfile(profileId);
-            wasAccountProfileUpdated = true;
-        }
-        return wasAccountProfileUpdated;
+        account.changeProfile(profileId);
+
+        return true;
     }
 }
 

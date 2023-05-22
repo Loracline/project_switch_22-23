@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @AutoConfigureMockMvc
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = UsServiceTest.class
+        classes = UsService.class
 )
 class UsServiceTest {
 
@@ -75,7 +75,7 @@ class UsServiceTest {
         when(userStoryDouble.getUsNumber()).thenReturn("US003");
 
         Project projectDouble = mock(Project.class);
-        when(projectRepository.getProjectByCode(code)).thenReturn(Optional.of(projectDouble));
+        when(projectRepository.findByCode(code)).thenReturn(Optional.of(projectDouble));
         when(projectDouble.addUserStory(priority, new UsId("P001", "US003"))).thenReturn(true);
 
         List<String> acceptanceCriteria = new ArrayList<>();
@@ -186,7 +186,7 @@ class UsServiceTest {
         int priority = 1;
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(true);
 
         //Act
@@ -207,7 +207,7 @@ class UsServiceTest {
         int priority = 1;
         Project projectDouble = mock(Project.class);
         Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         when(projectDouble.addUserStory(priority, usIdDouble)).thenReturn(false);
         Exception exception = assertThrows(Exception.class, () ->
                 usService.addUsToProductBacklog(usIdDouble, projectCode, priority));
@@ -230,7 +230,7 @@ class UsServiceTest {
         Code projectCode = new Code(1);
         int priority = 1;
         Optional<Project> optionalProject = Optional.empty();
-        when(projectRepository.getProjectByCode(any())).thenReturn(optionalProject);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
         Exception exception = assertThrows(Exception.class, () ->
                 usService.addUsToProductBacklog(usIdDouble, projectCode, priority));
         String expected = "No project with that code";

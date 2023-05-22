@@ -1,5 +1,8 @@
 package org.switch2022.project.ddd.domain.model.account;
 
+import org.switch2022.project.ddd.domain.value_object.Email;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
+
 import java.util.List;
 
 /**
@@ -8,32 +11,33 @@ import java.util.List;
 
 public interface IAccountRepository {
 
-
     /**
      * This method adds a new business sector to the repository of business sectors.
      *
      * @param account to be added to the repository.
      * @return true if the account is added, and throws an AlreadyExistInRepoException otherwise.
      */
-    boolean add(Account account);
+    boolean save(Account account);
 
     /**
      * This method returns all the account
      * @return a list with all accounts.
      */
-    List<Account> getAccounts();
+    List<Account> findAll();
 
     /**
-     * This method returns all the accounts with emails matching a given list of emails that is passed as argument.
-     * @param emails list of emails to match with accounts.
-     * @return a list with accounts with matching emails, or an empty list if no accounts have matching emails.
+     * Retrieves a list of accounts that match the given list of emails.
+     *
+     * @param emails the list of emails to match accounts against.
+     * @return a list of accounts matching the provided emails.
+     * @throws InvalidInputException if the object is null.
      */
-    List<Account> getAccounts(List<String> emails);
+    List<Account> findAccountsByEmails(List<Email> emails);
 
     /**
      * This method returns an account with the given.
      * @param email to search for the account.
      * @return an account with the given email.
      */
-    Account getAccountByEmail(String email);
+    Account findAccountByEmail(String email);
 }

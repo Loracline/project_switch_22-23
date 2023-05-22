@@ -9,20 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
-import org.switch2022.project.ddd.domain.model.typology.IFactoryTypology;
-import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = BusinessSectorServiceTest.class
+        classes = BusinessSectorService.class
 )
 class BusinessSectorServiceTest {
     @InjectMocks

@@ -1,11 +1,13 @@
 package org.switch2022.project.ddd.domain.value_object;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CodeTest {
+
     /**
      * METHOD constructor
      * <p>
@@ -45,7 +47,6 @@ class CodeTest {
         //Assert
         assertEquals(expected, exception.getMessage());
     }
-
 
     /**
      * METHOD getCode()
@@ -189,7 +190,7 @@ class CodeTest {
      * Scenario 1: Two equal Code objects are the same.
      */
     @Test
-    public void ensureTwoCodeInstancesHashcodeAreTheSame() {
+    void ensureTwoCodeInstancesHashcodeAreTheSame() {
         // Arrange
         Code codeOne = new Code(1);
         Code codeTwo = new Code(1);
@@ -206,7 +207,7 @@ class CodeTest {
      * Scenario 2: Two different Code objects are not the same.
      */
     @Test
-    public void ensureTwoCodeInstancesHashcodeAreNotTheSame() {
+    void ensureTwoCodeInstancesHashcodeAreNotTheSame() {
         // Arrange
         Code codeOne = new Code(1);
         Code codeThree = new Code(3);
@@ -219,4 +220,21 @@ class CodeTest {
         assertNotEquals(codeOneHashCode, codeThreeHashCode);
     }
 
+    /**
+     * METHOD getCodeFromString()
+     */
+    @DisplayName("From string to code")
+    @Test
+    void ensureCodeIsRetrievedSuccessfullyFromString() {
+        // Arrange
+        String stringOf_projectCode = "P001";
+        Number projectNumber = 1;
+        Code expected = new Code(projectNumber);
+
+        // Act
+        Code result = Code.getCodeFromString(stringOf_projectCode);
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
-import org.switch2022.project.model.Account;
+import org.switch2022.project.ddd.domain.model.account.Account;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;

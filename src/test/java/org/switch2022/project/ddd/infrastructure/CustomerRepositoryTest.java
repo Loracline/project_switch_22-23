@@ -204,7 +204,7 @@ class CustomerRepositoryTest {
         String expected = customerNameOne;
 
         // ACT
-        String result = repository.getCustomerNameByTaxId(customerTaxIdOne);
+        String result = repository.findCustomerNameByTaxId(customerTaxIdOne);
 
         // ASSERT
         assertEquals(expected, result);
@@ -228,7 +228,7 @@ class CustomerRepositoryTest {
 
         // Exception thrown when searching for the Customer Three in Repository.
         NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class,
-                () -> repository.getCustomerNameByTaxId(customerTaxIdThree));
+                () -> repository.findCustomerNameByTaxId(customerTaxIdThree));
 
         // An exception message is expected because Customer Three is not in Repository.
         String expected = "Customer with this tax ID does not exist in Repository.";

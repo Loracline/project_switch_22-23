@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = AccountListService.class
 )
+
 class AccountListServiceTest {
     @InjectMocks
     AccountListService service;
@@ -46,7 +47,7 @@ class AccountListServiceTest {
         Account accountTwo = mock(Account.class);
         Account accountThree = mock(Account.class);
         List<Account> accounts = Arrays.asList(accountOne, accountTwo, accountThree);
-        when(accountRepository.getAccounts()).thenReturn(accounts);
+        when(accountRepository.findAll()).thenReturn(accounts);
         AccountDto accountDtoOne = mock(AccountDto.class);
         AccountDto accountDtoTwo = mock(AccountDto.class);
         AccountDto accountDtoThree = mock(AccountDto.class);
@@ -70,7 +71,7 @@ class AccountListServiceTest {
         // Arrange
         List<Account> accounts = new ArrayList<>();
         List<AccountDto> expected = new ArrayList<>();
-        when(accountRepository.getAccounts()).thenReturn(accounts);
+        when(accountRepository.findAll()).thenReturn(accounts);
         when(accountMapper.listAccountsToDto(any())).thenReturn(expected);
 
         // Act
@@ -79,5 +80,4 @@ class AccountListServiceTest {
         // Assert
         assertEquals(expected, result);
     }
-
 }

@@ -7,35 +7,35 @@ end legend
 
 
 class "ListAccountsInProjectController" {
-- allocationService
-+ listAccountsByProjectCode(projectCode)
+-service
++listAccountsInProject(code)
 }
 
-class "AllocationService" {
-- iProjectResourceRepository
-- iAccountRepository
-- accountMapper
-+ listAccountsByProjectCode(projectCode)
+class "ResourceListAllocationService" {
+-iResourceRepository
+-iAccountRepository
+-accountMapper
++listAccountsInProject(code)
 }
 
 interface "IProjectResourceRepository" {
-+ getAccountsAllocatedToProject(projectCode)
++findAccountEmailsByProjectCode(code)
 }
 
 class "ProjectResourceRepository" {
-- projectResources
-+ getAccountsAllocatedToProject(projectCode)
+-resources
++findAccountEmailsByProjectCode(code)
 }
 
 interface "IAccountRepository" {
-+ getAccounts(emails)
-+ getAccountByEmail(email)
++findAccountsByEmails(email)
++findAccountByEmail(email)
 }
 
 class "AccountRepository" {
 - accounts
-+ getAccounts(emails)
-+ getAccountByEmail(email)
++findAccountsByEmails(email)
++findAccountByEmail(email)
 }
 
 class "AccountMapper" {
@@ -47,38 +47,37 @@ class "AccountDto" {
 + name
 + email
 + status
-+ AccountDto(name, email, status)
-
+#AccountDto(name, email, status)
 }
 
 class "Account" {
 - name
 - email
-- accountStatus
-+ getAccountName()
-+ getAccountEmail()
-+ getAccountStatus()
+- status
++hasEmail(email)
++getAccountName()
++getAccountEmail()
++getAccountStatus()
 }
 
 class "ProjectResource" {
-- projectCode
-- accountEmail
-- accountStatus
-+ hasProjectCode()
-+ getEmail()
+-code
+-email
++hasProjectCode(code)
++getEmail()
 }
 
-ListAccountsInProjectController <.. AllocationService: is injected
+ListAccountsInProjectController <.. ResourceListAllocationService: is injected
 
-AllocationService <.. IAccountRepository: is injected
+ResourceListAllocationService <.. IAccountRepository: is injected
 IAccountRepository <|.. AccountRepository: implements
 AccountRepository --> Account: has
 
-AllocationService <.. IProjectResourceRepository: is injected
+ResourceListAllocationService <.. IProjectResourceRepository: is injected
 IProjectResourceRepository <|.. ProjectResourceRepository: implements
 ProjectResourceRepository --> ProjectResource: has
 
-AllocationService <.. AccountMapper: is injected
+ResourceListAllocationService <.. AccountMapper: is injected
 AccountMapper ...> AccountDto: creates
 AccountDto ..> Account: uses
 

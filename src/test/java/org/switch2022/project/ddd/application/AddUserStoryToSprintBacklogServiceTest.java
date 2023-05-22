@@ -8,23 +8,22 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.Status;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
-        classes = org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogServiceTest.class)
+        classes = org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService.class)
 class AddUserStoryToSprintBacklogServiceTest {
 
     @InjectMocks

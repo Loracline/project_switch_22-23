@@ -3,7 +3,8 @@ package org.switch2022.project.ddd.dto;
 import org.junit.jupiter.api.Test;
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class AccountDtoTest {
 
@@ -14,7 +15,7 @@ class AccountDtoTest {
     @Test
     void ensureSameAccountDtoEqualsItself() {
         // ARRANGE
-        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "Planned");
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
         AccountDto other = reference;
 
@@ -33,10 +34,10 @@ class AccountDtoTest {
     @Test
     void ensureTwoAccountDtoAreNotEqual() {
         // ARRANGE
-        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "Planned");
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
 
-        AccountDto other = new AccountDto("Mary", "mary@isep.ipp.pt", "Planned");
+        AccountDto other = new AccountDto("Mary", "mary@isep.ipp.pt", "true");
 
         boolean expected = false;
 
@@ -53,7 +54,7 @@ class AccountDtoTest {
     @Test
     void ensureAccountDtoNotEqualsOtherTypeObject() {
         // ARRANGE
-        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "Planned");
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
         String other = "User";
 
@@ -91,9 +92,9 @@ class AccountDtoTest {
     @Test
     void ensureAccountDtoHaveSameHashCode() {
         // ARRANGE
-        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "Planned");
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
-        AccountDto other = new AccountDto("John", "john@isep.ipp.pt", "Planned");
+        AccountDto other = new AccountDto("John", "john@isep.ipp.pt", "true");
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -109,10 +110,10 @@ class AccountDtoTest {
     @Test
     void ensureAccountDtoHaveDifferentHashCode() {
         // ARRANGE
-        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "Planned");
+        AccountDto reference = new AccountDto("John", "john@isep.ipp.pt", "true");
 
 
-        AccountDto other = new AccountDto("Mary", "mary@isep.ipp.pt", "Planned");
+        AccountDto other = new AccountDto("Mary", "mary@isep.ipp.pt", "false");
 
         // ACT
         int hashCodeReference = reference.hashCode();
