@@ -67,6 +67,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
         <!-- Students can only add new dependencies to this section -->
 
@@ -168,10 +172,10 @@
 
                     </targetClasses>
                     <targetTests>
-                       <!-- <param>org.switch2022.project.container.*</param>
-                        <param>org.switch2022.project.controller.*</param>
-                        <param>org.switch2022.project.dto.*</param>
-                        <param>org.switch2022.project.model.*</param>-->
+                        <!-- <param>org.switch2022.project.container.*</param>
+                         <param>org.switch2022.project.controller.*</param>
+                         <param>org.switch2022.project.dto.*</param>
+                         <param>org.switch2022.project.model.*</param>-->
                         <param>org.switch2022.project.ddd.application.*</param>
                         <param>org.switch2022.project.ddd.domain.*</param>
                         <param>org.switch2022.project.ddd.dto.*</param>
