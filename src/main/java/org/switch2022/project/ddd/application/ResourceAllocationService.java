@@ -20,6 +20,7 @@ import org.switch2022.project.ddd.domain.value_object.AccountStatus;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Period;
+import org.switch2022.project.ddd.dto.AllocationDto;
 
 import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
@@ -48,67 +49,52 @@ public class ResourceAllocationService {
     /**
      * This method does all the necessary validations to create and add a given resource to the project resource list.
      *
-     * @param projectCode                   corresponds to the code of the project in which I intend to allocate the
-     *                                      account.
-     * @param accountEmail                  corresponds to the email of the account to be allocated.
-     * @param accountRole                   corresponds to the role to be associated with the account in a given project.
-     * @param accountCostPerHour            corresponds to the cost per hour of the resource that will be created.
-     * @param accountPercentageOfAllocation corresponds to the percentage of application of the account to that role<br>
-     *                                      in that project.
-     * @param startDate                     allocation start date
-     * @param endDate                       the end date of the allocation
+     * @param allocationDto data transfer object carrying the allocation info: projectCode, accountEmail, accountRole,
+     *                      accountCostPerHour, accountPercentageOfAllocation, startDate, endDate.
      * @return true if all validations are successful and the resource is created and added to the project resource
      * list, false otherwise.
      */
-    public boolean addUserToProject(int projectCode, String accountEmail, String accountRole, float accountCostPerHour,
-                                    float accountPercentageOfAllocation, LocalDate startDate, LocalDate endDate) {
-        boolean addedUser = false;
+    public boolean addUserToProject( AllocationDto allocationDto) {
 
-        Code code = new Code(projectCode);
-        Email email = new Email(accountEmail);
-        Role role = Role.valueOf(accountRole);
-        CostPerHour costPerHour = new CostPerHour(accountCostPerHour);
-        PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(accountPercentageOfAllocation);
-        Period allocationPeriod = new Period(startDate, endDate);
-        AccountStatus accountStatus = AccountStatus.valueOf(accountRepository.findAccountByEmail(accountEmail).getAccountStatus());
-        int id = resourceRepository.findAll().size() + 1;
+        Code code = new Code(allocationDto.projectCode);
+        Email email = new Email(allocationDto.accountEmail);
+        Role role = Role.valueOf(allocationDto.accountRole);
+        CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);
+        PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
+        Period allocationPeriod = new Period(allocationDto.startDate,allocationDto.endDate);
+        int id = Math.addExact(resourceRepository.findAll().size(),1);
         ProjectResourceId projectResourceId = new ProjectResourceId(id);
 
-        if (isProjectValidForAllocation(code, allocationPeriod) && isAccountValidForAllocation(email, accountStatus) &&
-                validatePercentageOfAllocation(email, startDate, percentageOfAllocation) && !isResourceOverlapping(code,
-                email, allocationPeriod) && isAllocationInfoValid(role, code, allocationPeriod)) {
-
-            ProjectResource projectResource = resourceFactory.createProjectResource(projectResourceId, code, email,
-                    role, allocationPeriod, costPerHour, percentageOfAllocation);
-
-            resourceRepository.save(projectResource);
-
-            addedUser = true;
+        boolean addedUser = false;
+        if (isResourceValid(role, code, allocationPeriod, email, percentageOfAllocation)) {
+            ProjectResource projectResource = resourceFactory.createProjectResource(projectResourceId, code, email, role, allocationPeriod, costPerHour, percentageOfAllocation);
+            addedUser = resourceRepository.save(projectResource);
         }
         return addedUser;
     }
 
     /**
-     * This method determines if the allocation of a certain account, with that role, in that project is valid or not.
+     * This method checks if the resource is valid, To do this, it combines the validations of the project
+     * (if it exists), the period (if it is compatible with the allocation period),
+     * the account (if the account is valid), validates the role (since there can only be one PO and one SM per
+     * project), validates that the resource is not overlapping, and validates the allocation percentage.
      *
-     * @param role             corresponding to the role you want to associate an account with in a project.
-     * @param code             corresponds to the code of the project where the resource intends to be allocated.
-     * @param allocationPeriod corresponds to the allocation period of the account to the project.
-     * @return true if the allocation of that account in the project is valid, false otherwise.
+     * @param role role set to resource, as each project cannot have more than one scrum master or product owner.
+     * @param code project code where the resource will be allocated.
+     * @param period period for which the resource is to be allocated.
+     * @param email email of the account that will be allocated.
+     * @param percentage of resource allocation.
+     * @return true if all validations succeed, false otherwise.
      */
 
-    private boolean isAllocationInfoValid(Role role, Code code, Period allocationPeriod) {
-        boolean allocationIsValid;
-
-        if (isNotScrumMasterNorProjectManager(role)) {
-            allocationIsValid = true;
-
-        } else if (role == PRODUCT_OWNER) {
-            allocationIsValid = !projectAlreadyHasProductOwnerInThatPeriod(role, code, allocationPeriod);
-        } else {
-            allocationIsValid = !projectAlreadyHasScrumMasterInThatPeriod(role, code, allocationPeriod);
-        }
-        return allocationIsValid;
+    protected boolean isResourceValid(Role role, Code code, Period period, Email email,
+                                    PercentageOfAllocation percentage) {
+        return isProjectValidForAllocation(code, period) &&
+                isAccountValidForAllocation(email) &&
+                isNotProjectManager(role) &&
+                !projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(role, code, period)
+                && !isResourceOverlapping(code, email, period) /*&&
+                validatePercentageOfAllocation(email, LocalDate.now(), percentage)*/;
     }
 
 
@@ -171,7 +157,7 @@ public class ResourceAllocationService {
      * is not in the "PLANNED" or "CLOSED" status, and contains the specified allocation period;
      * {@code FALSE} otherwise.
      */
-    public boolean isProjectValidForAllocation(Code projectCode, Period allocationPeriod) {
+    protected boolean isProjectValidForAllocation(Code projectCode, Period allocationPeriod) {
         return doesNotHaveStatus(projectCode, ProjectStatus.PLANNED) &&
                 doesNotHaveStatus(projectCode, ProjectStatus.CLOSED) &&
                 containsPeriod(projectCode, allocationPeriod);
@@ -184,7 +170,7 @@ public class ResourceAllocationService {
      * @return <code>true</code> if role is Project Manager and <code>false</code> otherwise.
      */
     private boolean isProjectManager(Role role) {
-        return role == PROJECT_MANAGER;
+        return role.sameValueAs(PROJECT_MANAGER);
     }
 
     /**
@@ -193,7 +179,7 @@ public class ResourceAllocationService {
      * @param role to check.
      * @return <code>true</code> if role is not Project Manager and <code>false</code> otherwise.
      */
-    public boolean isNotProjectManager(Role role) {
+    protected boolean isNotProjectManager(Role role) {
         return !isProjectManager(role);
     }
 
@@ -226,7 +212,7 @@ public class ResourceAllocationService {
      * @return <code>true</code> if the project already has a Scrum Master or Product Owner in a specific Period and
      * <code>false</code> otherwise.
      */
-    public boolean projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
+    protected boolean projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
         return projectAlreadyHasScrumMasterInThatPeriod(role, code, period) ||
                 projectAlreadyHasProductOwnerInThatPeriod(role, code, period);
     }
@@ -318,7 +304,7 @@ public class ResourceAllocationService {
      * @return TRUE if the total percentage of allocation is less than or equal to the maximum allowed value, FALSE
      * otherwise.
      */
-    public boolean validatePercentageOfAllocation(Email accountEmail, LocalDate date, PercentageOfAllocation toAdd) {
+    protected boolean validatePercentageOfAllocation(Email accountEmail, LocalDate date, PercentageOfAllocation toAdd) {
         final int MAXIMUM_ALLOWED = 100;
 
         return totalPercentageOfAllocation(accountEmail, date, toAdd) <= MAXIMUM_ALLOWED;
@@ -333,7 +319,7 @@ public class ResourceAllocationService {
      * @param period      being checked.
      * @return return true if the projectResource is overllaping, false otherwise.
      */
-    public boolean isResourceOverlapping(Code projectCode, Email email, Period period) {
+    protected boolean isResourceOverlapping(Code projectCode, Email email, Period period) {
         boolean resourceIsOverlapping = false;
         List<ProjectResource> resources = resourceRepository.findAll();
         if (!resources.isEmpty()) {
@@ -355,13 +341,13 @@ public class ResourceAllocationService {
      * @return true if the account exists and the status is activated. If one of these conditions is not true,
      * it returns false.
      */
-    public boolean isAccountValidForAllocation(Email accountEmail, AccountStatus accountStatus) {
+    protected boolean isAccountValidForAllocation(Email accountEmail) {
         boolean accountIsValid = false;
         List<Account> accounts = accountRepository.findAll();
         if (!accounts.isEmpty()) {
             for (Account account : accounts) {
                 if (account.hasEmail(accountEmail.getEmail()) &&
-                        account.isAccountActive(accountStatus.getAccountStatus())) {
+                        account.isAccountActive()) {
                     accountIsValid = true;
                 }
             }

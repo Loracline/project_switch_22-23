@@ -9,29 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CodeTest {
 
     /**
-     * METHOD constructor
-     * <p>
      * Scenario 1: verifies if an instance of Code is not created because the number passed as
-     * argument is null.
-     * Should throw an IllegalArgumentException.
-     */
-    @Test
-    void ensureThatAnExceptionIsThrownWhenNumberIsNull() {
-        //Arrange
-        Number number = null;
-
-        String expected = "The project number must not be null";
-
-        //Act
-        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
-                new Code(number));
-
-        //Assert
-        assertEquals(expected, exception.getMessage());
-    }
-
-    /**
-     * Scenario 2: verifies if an instance of Code is not created because the number passed as
      * argument is negative.
      * Should throw an IllegalArgumentException.
      */
@@ -228,7 +206,7 @@ class CodeTest {
     void ensureCodeIsRetrievedSuccessfullyFromString() {
         // Arrange
         String stringOf_projectCode = "P001";
-        Number projectNumber = 1;
+        int projectNumber = 1;
         Code expected = new Code(projectNumber);
 
         // Act

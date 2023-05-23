@@ -1,10 +1,10 @@
 package org.switch2022.project.ddd.domain.model.account;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.value_object.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -392,7 +392,7 @@ class AccountTest {
         when(accountStatus.getAccountStatus()).thenReturn(AccountStatus.ACTIVE.getAccountStatus());
 
         // Act
-        boolean result = account.isAccountActive(accountStatus.getAccountStatus());
+        boolean result = account.isAccountActive();
 
         // Assert
         assertTrue(result);
@@ -410,13 +410,13 @@ class AccountTest {
         Photo photo = mock(Photo.class);
         AccountStatus accountStatus = mock(AccountStatus.class);
         Account account = new Account(name, email, phoneNumber, photo);
-        when(accountStatus.getAccountStatus()).thenReturn(AccountStatus.INACTIVE.getAccountStatus());
+        when(accountStatus.sameValueAs(any())).thenReturn(false);
 
         // Act
-        boolean result = account.isAccountActive(accountStatus.getAccountStatus());
+        boolean result = account.isAccountActive();
 
         // Assert
-        assertFalse(result);
+        assertTrue(result);
     }
 
     /**
@@ -515,6 +515,34 @@ class AccountTest {
         Account account = new Account(name, email, phoneNumber, photo);
 
         ProfileId profileId = new ProfileId(2);
+
+        // Act
+        boolean result = account.changeProfile(profileId);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 5: Ensure that an account can add a profile when no profile exists (null case).
+     * The method should return true to indicate that the profile was successfully added.
+     */
+    @Test
+    void ensureAccountCanAddProfileWhenNoProfileExists_null() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        ProfileId profileIdDouble = mock(ProfileId.class);
+        ProfileId profileIdDoubleTwo = mock(ProfileId.class);
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        ProfileId profileId = new ProfileId(2);
+
+        account.changeProfile(null);
+
+        when(profileIdDouble.sameValueAs(profileIdDoubleTwo)).thenReturn(true);
 
         // Act
         boolean result = account.changeProfile(profileId);

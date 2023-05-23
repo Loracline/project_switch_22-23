@@ -12,12 +12,11 @@ public interface IFactoryUserStory {
      * @param userStoryNumber the number of the userStory.
      * @param userStoryText the description of the userStory.
      * @param actor the actor of the userStory.
-     * @param priority the priority of the userStory.
      * @param acceptanceCriteria the list of acceptance criteria.
      * @param projectCode          the code of the Project where the User Story belongs to.
      * @return the newly created User Story object.
      */
-    UserStory createUserStory(UsNumber userStoryNumber, UsText userStoryText, Actor actor, int priority,
+    UserStory createUserStory(UsNumber userStoryNumber, UsText userStoryText, Actor actor,
                               List<AcceptanceCriteria> acceptanceCriteria,
                               Code projectCode);
 }

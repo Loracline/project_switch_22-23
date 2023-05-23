@@ -18,6 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -138,7 +139,7 @@ class ProjectCreationServiceTest {
         when(typologyRepository.getTypologyIdByName(any())).thenReturn("001");
         when(businessSectorRepository.getBusinessSectorIdByName(any())).thenReturn("001");
 
-        when(factoryProject.createProject(any(),any(),any(),any(),any(),any())).thenReturn(projectDouble);
+        when(factoryProject.createProject(anyInt(),any(),any(),any(),any(),any())).thenReturn(projectDouble);
         when(projectRepository.addProjectToProjectRepository(projectDouble)).thenReturn(true);
         when(projectDouble.getProjectCode()).thenReturn("P001");
 
