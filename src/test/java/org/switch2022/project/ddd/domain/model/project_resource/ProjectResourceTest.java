@@ -747,6 +747,28 @@ class ProjectResourceTest {
         assertFalse(result);
     }
 
+    @Test
+    void ensureThatTwoPeriodsAreNotOverlapped() {
+        //Arrange
+        Period periodOne = new Period(LocalDate.of(2023, 5, 10), LocalDate.of(2023, 5, 30));
+        Period periodTwo = new Period(LocalDate.of(2023, 5, 31), LocalDate.of(2023,6,30));
+        ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceId, codeDouble,
+                emailDouble, roleDouble, periodOne, costDouble, percentageOfAllocationDouble);
+
+        //Act
+        boolean result = projectResource.isPeriodNotOverlapping(periodTwo);
+
+        //Assert
+        assertTrue(result);
+    }
+
     /**
      * METHOD allocationPeriodIncludesDate
      */
