@@ -2,11 +2,9 @@ package org.switch2022.project.ddd.datamodel.JPA;
 
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -23,7 +21,6 @@ public class UserStoryJpa {
      * Attributes
      */
     @Id
-    @Embedded
     @Getter
     private String usId;
     @ElementCollection
