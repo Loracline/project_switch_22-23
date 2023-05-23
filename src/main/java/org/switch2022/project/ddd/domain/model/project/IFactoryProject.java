@@ -16,7 +16,7 @@ public interface IFactoryProject {
      *
      * @return the newly created Project object.
      */
-    Project createProject(final Number projectNumber, Name projectName, Description description,
+    Project createProject(final int projectNumber, Name projectName, Description description,
                                  BusinessSectorId businessSectorId, TaxId customerTaxId,
                                  ProjectTypologyId projectTypologyId);
 }

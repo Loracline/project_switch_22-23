@@ -135,11 +135,10 @@ public class Account implements Entity<Account> {
     /**
      * This method checks if the account has the same accountStatus as a given one.
      *
-     * @param accountStatus to check is the account has a match
      * @return true if account has the given accountStatus and false otherwise.
      */
-    public boolean isAccountActive(String accountStatus) {
-        return this.accountStatus.getAccountStatus().equals(accountStatus);
+    public boolean isAccountActive() {
+        return this.accountStatus.sameValueAs(AccountStatus.ACTIVE);
     }
 
     /**
