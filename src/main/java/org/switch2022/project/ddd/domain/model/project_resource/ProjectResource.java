@@ -132,6 +132,15 @@ public class ProjectResource implements Entity<ProjectResource> {
     }
 
     /**
+     * This method counts the number of days included in a time period including the first day, and the last day.
+     *
+     * @return the number of days contained in period.
+     */
+    public int numberOfDaysContainedInPeriod() {
+    return this.allocationPeriod.numberOfDaysContainedInPeriod();
+    }
+
+    /**
      * Checks if the given date falls within the allocation period.
      *
      * @param date the date to check.
