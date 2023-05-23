@@ -1112,6 +1112,7 @@ class ProjectTest {
         //Assert
         assertEquals(expected,result);
     }
+
     /**
      * Method:getProductBacklogId
      */
@@ -1123,6 +1124,22 @@ class ProjectTest {
         String expected = "p001_pb";
         //Act
         String result = project.getProductBacklogId();
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Method:getCustomerTaxID
+     */
+    @Test
+    void ensureCustomerTaxIdIsRetrieved() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        when(customerTaxId.getNumber()).thenReturn("272829202");
+        String expected = "272829202";
+        //Act
+        String result = project.getCustomerTaxID();
         //Assert
         assertEquals(expected,result);
     }

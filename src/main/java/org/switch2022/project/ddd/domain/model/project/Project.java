@@ -136,10 +136,20 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: customerTaxId.
      *
-     * @return a String with the customer ID of the project.
+     * @return a TaxID with the customer ID of the project.
      */
     public TaxId getCustomerTaxId() {
         return customerTaxId;
+    }
+
+    /**
+     * Getter method for the attribute: customerTaxId.
+     *
+     * @return a String with the customer ID of the project.
+     */
+
+    public String getCustomerTaxID() {
+        return customerTaxId.getNumber();
     }
 
     /**
