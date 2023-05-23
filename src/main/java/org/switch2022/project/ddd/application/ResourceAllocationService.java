@@ -369,4 +369,73 @@ public class ResourceAllocationService {
         return accountIsValid;
     }
 
+    /**
+     * This method retrieves a list of resources to which a given account is allocate to during a period of time.
+     *
+     * @param email the value object email that represents the desired account.
+     * @param period the value object that represents the period of time to search for a given resource.
+     *
+     * @return a list of resources to which a given account is allocate to during a period of time.
+     */
+    private List<ProjectResource> findResourcesByEmailWithPeriodOverlapping(Period period, Email email) {
+        List<ProjectResource> repository = resourceRepository.findResourcesByAccountEmail(email);
+        for (int i = 0; i < repository.size(); i++) {
+            boolean isPeriodNotOverlapping = repository.get(i).isPeriodNotOverlapping(period);
+            if (isPeriodNotOverlapping) {
+                repository.remove(repository.get(i));
+            }
+        }
+        return repository;
+    }
+
+    /**
+     * Calculates the percentage of allocation for a specific account's resources on a given period.
+     *
+     * @param email The email associated with the account for which allocation is being calculated.
+     * @param period The date for which the allocation percentage is calculated.
+     * @return an array that represents the total of the percentage of allocation per day that the account is allocated
+     * to.
+     */
+    private float[] percentageOfAllocationDuringAPeriod(Period period, Email email) {
+        List<ProjectResource> repository = findResourcesByEmailWithPeriodOverlapping(period, email);
+        int numberOfDays = period.numberOfDaysContainedInPeriod();
+        float[] totalPercentageOfAllocation = new float[numberOfDays];
+        LocalDate startDateToAdd = LocalDate.parse(period.getStartDate());
+        for (int i = 0; i < repository.size(); i++) {
+            for (int j = 0; j < numberOfDays; j++) {
+                for (int k = 0; k < repository.get(i).numberOfDaysContainedInPeriod(); k++) {
+                    LocalDate resourceStartDate = LocalDate.parse(repository.get(i).getPeriod().getStartDate());
+                    if (startDateToAdd.plusDays(j).equals(resourceStartDate.plusDays(k))) {
+                        totalPercentageOfAllocation[j] += repository.get(i).getPercentageOfAllocation();
+                    }
+                }
+            }
+        }
+        return totalPercentageOfAllocation;
+    }
+
+    /**
+     * Checks if the total percentage of allocation for a given account during a period of time is valid, after adding
+     * the value of a given PercentageOfAllocation (less than or equal to 100).
+     *
+     * @param email the email of the account to check the allocation for.
+     * @param period the period to check the allocation for.
+     * @param percentageOfAllocationToAdd the PercentageOfAllocation object to add to the current allocation percentage.
+     * @return TRUE if the total percentage of allocation is less than or equal to the maximum allowed value, FALSE
+     * otherwise.
+     */
+    public boolean isPercentageOfAllocationValid(Period period, Email email,
+                                                 PercentageOfAllocation percentageOfAllocationToAdd) {
+        float[] totalPercentageOfAllocation = percentageOfAllocationDuringAPeriod(period, email);
+        boolean result = true;
+        int i = 0;
+        while (i < totalPercentageOfAllocation.length && result) {
+            totalPercentageOfAllocation[i] += percentageOfAllocationToAdd.getValue();
+            if (totalPercentageOfAllocation[i] > 100) {
+                result = false;
+            }
+            i++;
+        }
+        return result;
+    }
 }

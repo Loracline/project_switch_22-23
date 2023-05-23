@@ -32,7 +32,6 @@ import static org.switch2022.project.ddd.domain.value_object.Role.SCRUM_MASTER;
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = ResourceAllocationServiceTest.class
 )
-
 class ResourceAllocationServiceTest {
 
     @InjectMocks
@@ -416,6 +415,7 @@ class ResourceAllocationServiceTest {
         // Assert
         assertTrue(result);
     }
+
     /**
      * Method IsAValidAccount().
      * Scenario 01: Make sure the account is valid and active.
@@ -523,6 +523,98 @@ class ResourceAllocationServiceTest {
         boolean result = service.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
 
         // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void ensureThatPercentageOfAllocationIsValid() {
+        //Arrange
+        //1
+        Email emailDouble = mock(Email.class);
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceTwoDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceThreeDouble = mock(ProjectResource.class);
+        List<ProjectResource> resources = new ArrayList<>();
+        resources.add(projectResourceOneDouble);
+        resources.add(projectResourceTwoDouble);
+        resources.add(projectResourceThreeDouble);
+        when(resourceRepository.findResourcesByAccountEmail(emailDouble)).thenReturn(resources);
+        //2
+        Period periodDouble = mock(Period.class);
+        when(resources.get(0).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
+        when(resources.get(1).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
+        when(resources.get(2).isPeriodNotOverlapping(periodDouble)).thenReturn(true);
+        //3
+        when(periodDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //4
+        when(periodDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 1).toString());
+        //5
+        when(projectResourceOneDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        when(projectResourceTwoDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //6
+        Period periodOneDouble = mock(Period.class);
+        Period periodTwoDouble = mock(Period.class);
+        when(projectResourceOneDouble.getPeriod()).thenReturn(periodOneDouble);
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(periodTwoDouble);
+        when(periodOneDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 9).toString());
+        when(periodTwoDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 10).toString());
+        //7
+        when(projectResourceOneDouble.getPercentageOfAllocation()).thenReturn(40f);
+        when(projectResourceTwoDouble.getPercentageOfAllocation()).thenReturn(10f);
+        //8
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        when(percentageOfAllocationDouble.getValue()).thenReturn(50f);
+
+        //Act
+        boolean result = service.isPercentageOfAllocationValid(periodDouble, emailDouble, percentageOfAllocationDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureThatPercentageOfAllocationIsInvalid_LastDayHas101percent() {
+        //Arrange
+        //1
+        Email emailDouble = mock(Email.class);
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceTwoDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceThreeDouble = mock(ProjectResource.class);
+        List<ProjectResource> resources = new ArrayList<>();
+        resources.add(projectResourceOneDouble);
+        resources.add(projectResourceTwoDouble);
+        resources.add(projectResourceThreeDouble);
+        when(resourceRepository.findResourcesByAccountEmail(emailDouble)).thenReturn(resources);
+        //2
+        Period periodDouble = mock(Period.class);
+        when(resources.get(0).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
+        when(resources.get(1).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
+        when(resources.get(2).isPeriodNotOverlapping(periodDouble)).thenReturn(true);
+        //3
+        when(periodDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //4
+        when(periodDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 1).toString());
+        //5
+        when(projectResourceOneDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        when(projectResourceTwoDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //6
+        Period periodOneDouble = mock(Period.class);
+        Period periodTwoDouble = mock(Period.class);
+        when(projectResourceOneDouble.getPeriod()).thenReturn(periodOneDouble);
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(periodTwoDouble);
+        when(periodOneDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 9).toString());
+        when(periodTwoDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 10).toString());
+        //7
+        when(projectResourceOneDouble.getPercentageOfAllocation()).thenReturn(40f);
+        when(projectResourceTwoDouble.getPercentageOfAllocation()).thenReturn(11f);
+        //8
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        when(percentageOfAllocationDouble.getValue()).thenReturn(50f);
+
+        //Act
+        boolean result = service.isPercentageOfAllocationValid(periodDouble, emailDouble, percentageOfAllocationDouble);
+
+        //Assert
         assertFalse(result);
     }
 }
