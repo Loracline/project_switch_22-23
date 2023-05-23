@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import org.switch2022.project.ddd.domain.value_object.AccountStatus;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Period;
@@ -54,17 +53,15 @@ public class ResourceAllocationService {
      * @return true if all validations are successful and the resource is created and added to the project resource
      * list, false otherwise.
      */
-    public boolean addUserToProject( AllocationDto allocationDto) {
-
+    public boolean addUserToProject(AllocationDto allocationDto) {
         Code code = new Code(allocationDto.projectCode);
         Email email = new Email(allocationDto.accountEmail);
         Role role = Role.valueOf(allocationDto.accountRole);
         CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);
         PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
-        Period allocationPeriod = new Period(allocationDto.startDate,allocationDto.endDate);
-        int id = Math.addExact(resourceRepository.findAll().size(),1);
+        Period allocationPeriod = new Period(allocationDto.startDate, allocationDto.endDate);
+        int id = Math.addExact(resourceRepository.findAll().size(), 1);
         ProjectResourceId projectResourceId = new ProjectResourceId(id);
-
         boolean addedUser = false;
         if (isResourceValid(role, code, allocationPeriod, email, percentageOfAllocation)) {
             ProjectResource projectResource = resourceFactory.createProjectResource(projectResourceId, code, email, role, allocationPeriod, costPerHour, percentageOfAllocation);
@@ -79,22 +76,19 @@ public class ResourceAllocationService {
      * the account (if the account is valid), validates the role (since there can only be one PO and one SM per
      * project), validates that the resource is not overlapping, and validates the allocation percentage.
      *
-     * @param role role set to resource, as each project cannot have more than one scrum master or product owner.
-     * @param code project code where the resource will be allocated.
-     * @param period period for which the resource is to be allocated.
-     * @param email email of the account that will be allocated.
+     * @param role       role set to resource, as each project cannot have more than one scrum master or product owner.
+     * @param code       project code where the resource will be allocated.
+     * @param period     period for which the resource is to be allocated.
+     * @param email      email of the account that will be allocated.
      * @param percentage of resource allocation.
      * @return true if all validations succeed, false otherwise.
      */
 
-    protected boolean isResourceValid(Role role, Code code, Period period, Email email,
+    private boolean isResourceValid(Role role, Code code, Period period, Email email,
                                     PercentageOfAllocation percentage) {
-        return isProjectValidForAllocation(code, period) &&
-                isAccountValidForAllocation(email) &&
-                isNotProjectManager(role) &&
-                !projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(role, code, period)
-                && !isResourceOverlapping(code, email, period) /*&&
-                validatePercentageOfAllocation(email, LocalDate.now(), percentage)*/;
+        return isProjectValidForAllocation(code, period) && isAccountValidForAllocation(email) &&
+                isNotProjectManager(role) && projectDoesNotHaveScrumMasterOrProductOwnerInThatPeriod(role, code, period)
+                && resourceDoesNotExist(code, email, period) && isPercentageOfAllocationValid(period, email, percentage);
     }
 
 
@@ -184,27 +178,6 @@ public class ResourceAllocationService {
     }
 
     /**
-     * This method checks if a given role is Scrum Master.
-     *
-     * @param role to check.
-     * @return <code>true</code> if role is Scrum Master and <code>false</code> otherwise.
-     */
-
-    private boolean isScrumMaster(Role role) {
-        return role == SCRUM_MASTER;
-    }
-
-    /**
-     * This method checks that a given role is neither Project Manager nor Scrum Master.
-     *
-     * @param role to check.
-     * @return <code>true</code> if role is not Project Managern nor Scrum Master and <code>false</code> otherwise.
-     */
-    private boolean isNotScrumMasterNorProjectManager(Role role) {
-        return !isScrumMaster(role) && !isProjectManager(role);
-    }
-
-    /**
      * This method checks if one specific Project already has the role of Scrum Master or Product Owner in a specific
      * period.
      *
@@ -215,6 +188,17 @@ public class ResourceAllocationService {
     protected boolean projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
         return projectAlreadyHasScrumMasterInThatPeriod(role, code, period) ||
                 projectAlreadyHasProductOwnerInThatPeriod(role, code, period);
+    }
+
+    /**
+     * This method checks if one specific Project does not have a Scrum Master or Product Owner in a specific period.
+     *
+     * @param role, code, period to check.
+     * @return <code>true</code> if the project does not have a Scrum Master or Product Owner in a specific Period and
+     * <code>false</code> otherwise.
+     */
+    private boolean projectDoesNotHaveScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
+        return !projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(role, code, period);
     }
 
     /**
@@ -335,6 +319,19 @@ public class ResourceAllocationService {
     }
 
     /**
+     * This method checks if there are any resource in the repository that have the same project, account and a
+     * overlapping period.
+     *
+     * @param projectCode being checked.
+     * @param email       being checked.
+     * @param period      being checked.
+     * @return return true if the resource already exist and false otherwise.
+     */
+    private boolean resourceDoesNotExist(Code projectCode, Email email, Period period) {
+    return !isResourceOverlapping(projectCode, email, period);
+    }
+
+    /**
      * This method checks if the account exists and if its status is active (if the account is valid).
      *
      * @param accountEmail to check if it exists and if it does, if the status is activated.
@@ -358,9 +355,8 @@ public class ResourceAllocationService {
     /**
      * This method retrieves a list of resources to which a given account is allocate to during a period of time.
      *
-     * @param email the value object email that represents the desired account.
+     * @param email  the value object email that represents the desired account.
      * @param period the value object that represents the period of time to search for a given resource.
-     *
      * @return a list of resources to which a given account is allocate to during a period of time.
      */
     private List<ProjectResource> findResourcesByEmailWithPeriodOverlapping(Period period, Email email) {
@@ -377,7 +373,7 @@ public class ResourceAllocationService {
     /**
      * Calculates the percentage of allocation for a specific account's resources on a given period.
      *
-     * @param email The email associated with the account for which allocation is being calculated.
+     * @param email  The email associated with the account for which allocation is being calculated.
      * @param period The date for which the allocation percentage is calculated.
      * @return an array that represents the total of the percentage of allocation per day that the account is allocated
      * to.
