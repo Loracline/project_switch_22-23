@@ -1022,6 +1022,7 @@ class ProjectTest {
         //Assert
         assertEquals(expected, result);
     }
+
     /**
      * Method: hasStatus
      * scenario 1: returns true
@@ -1065,6 +1066,7 @@ class ProjectTest {
         //Assert
         assertTrue(result);
     }
+
     @Test
     void ensureThatProjectDoesNotContainCurrentDate() {
         //Arrange
@@ -1079,4 +1081,50 @@ class ProjectTest {
         //Assert
         assertFalse(result);
     }
+
+    /**
+     * Method:getBudget
+     * returns 0 when budget is null
+     */
+    @Test
+    void ensureBudgetIsRetrieved() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        double expected = 0;
+        //Act
+        double result = project.getBudget();
+        //Assert
+        assertEquals(expected,result);
+    }
+    /**
+     * Method:getPlannedSprints
+     * returns 0 when budget is null
+     */
+    @Test
+    void ensurePlannedSprintsIsRetrieved() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        int expected = 0;
+        //Act
+        int result = project.getPlannedSprints();
+        //Assert
+        assertEquals(expected,result);
+    }
+    /**
+     * Method:getProductBacklogId
+     */
+    @Test
+    void ensureProductBacklogIdIsRetrieved() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        String expected = "p001_pb";
+        //Act
+        String result = project.getProductBacklogId();
+        //Assert
+        assertEquals(expected,result);
+    }
+
 }
