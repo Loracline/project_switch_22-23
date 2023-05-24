@@ -22,7 +22,7 @@ class UserStoryCreationDtoTest {
         // Arrange
         List<String> acceptanceCriteria = new ArrayList<>();
 
-        UserStoryCreationDto reference = new UserStoryCreationDto("US001",
+        UserStoryCreationDto reference = new UserStoryCreationDto("P001", "US001",
                 "As a user, I want to create a profile", "User", acceptanceCriteria, 1);
         UserStoryCreationDto other = reference;
         boolean expected = true;
@@ -45,9 +45,9 @@ class UserStoryCreationDtoTest {
         List<String> acceptanceCriteriaTwo = new ArrayList<>();
         AcceptanceCriteria acceptanceCriteriaElement = mock(AcceptanceCriteria.class);
         acceptanceCriteria.add(String.valueOf(acceptanceCriteriaElement));
-        UserStoryCreationDto reference = new UserStoryCreationDto("US001",
+        UserStoryCreationDto reference = new UserStoryCreationDto("P001","US001",
                 "As a user, I want to create a profile", "User", acceptanceCriteria, 1);
-        UserStoryCreationDto other = new UserStoryCreationDto("US002",
+        UserStoryCreationDto other = new UserStoryCreationDto("P002","US002",
                 "As a user, I want to log in", "User", acceptanceCriteriaTwo, 2);
         boolean expected = false;
 
@@ -66,7 +66,7 @@ class UserStoryCreationDtoTest {
     void ensureUserStoryCreationDtoIsNotEqualToNull() {
         // Arrange
         List<String> acceptanceCriteria = new ArrayList<>();
-        UserStoryCreationDto reference = new UserStoryCreationDto("US001",
+        UserStoryCreationDto reference = new UserStoryCreationDto("P001","US001",
                 "As a user, I want to create a profile", "User", acceptanceCriteria, 1);
         UserStoryCreationDto other = null;
         boolean expected = false;
@@ -86,7 +86,7 @@ class UserStoryCreationDtoTest {
     void ensureUserStoryCreationDtoIsNotEqualToDifferentTypeOfObject() {
         // Arrange
         List<String> acceptanceCriteria = new ArrayList<>();
-        UserStoryCreationDto reference = new UserStoryCreationDto("US001",
+        UserStoryCreationDto reference = new UserStoryCreationDto("P001","US001",
                 "As a user, I want to create a profile", "User", acceptanceCriteria, 1);
         String other = "Not a UserStoryCreationDto object";
         boolean expected = false;
@@ -106,7 +106,7 @@ class UserStoryCreationDtoTest {
     void ensureGetPriorityMethodReturnsCorrectValue() {
         // Arrange
         List<String> acceptanceCriteria = new ArrayList<>();
-        UserStoryCreationDto reference = new UserStoryCreationDto("US001",
+        UserStoryCreationDto reference = new UserStoryCreationDto("P001","US001",
                 "As a user, I want to create a profile", "User", acceptanceCriteria, 1);
         int expected = 1;
 
@@ -125,7 +125,7 @@ class UserStoryCreationDtoTest {
     void ensureGetPriorityMethodReturnsIncorrectValue() {
         // Arrange
         List<String> acceptanceCriteria = new ArrayList<>();
-        UserStoryCreationDto reference = new UserStoryCreationDto("US001",
+        UserStoryCreationDto reference = new UserStoryCreationDto("P001","US001",
                 "As a user, I want to create a profile", "User", acceptanceCriteria, 0);
         int expected = 1;
 
