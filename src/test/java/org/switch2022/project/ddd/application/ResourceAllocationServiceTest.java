@@ -15,6 +15,7 @@ import org.switch2022.project.ddd.domain.model.project_resource.IProjectResource
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceRepository;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.AllocationDto;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -22,17 +23,16 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.switch2022.project.ddd.domain.value_object.Role.PRODUCT_OWNER;
-import static org.switch2022.project.ddd.domain.value_object.Role.SCRUM_MASTER;
+import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = ResourceAllocationServiceTest.class
 )
-
 class ResourceAllocationServiceTest {
 
     @InjectMocks
@@ -49,6 +49,70 @@ class ResourceAllocationServiceTest {
 
     @MockBean
     IProjectResourceFactory resourceFactory;
+
+    /**
+     * Method addUserToProject().
+     * Scenario 01: the user has been successfully added to the allocation.
+     * Expected return: true.
+     */
+    @Test
+    void ensureAddUserToProjectSuccessfully() {
+        //Arrange
+        AllocationDto allocationDto = new AllocationDto(2, "test@project.com", TEAM_MEMBER.toString(),
+                8f, 50f, LocalDate.now(), LocalDate.now().plusWeeks(2));
+
+        Account accountDouble = mock(Account.class);
+        Project projectDouble = mock(Project.class);
+
+        Optional<Project> projectOptional = Optional.ofNullable(projectDouble);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
+
+        when(projectDouble.hasStatus(any())).thenReturn(false);
+        when(projectDouble.contains(any())).thenReturn(true);
+
+        List<Account> accounts = new ArrayList<>();
+        accounts.add(accountDouble);
+        when(accountRepository.findAll()).thenReturn(accounts);
+        when(accountDouble.hasEmail(anyString())).thenReturn(true);
+        when(accountDouble.isAccountActive()).thenReturn(true);
+
+        ProjectResource projectResourceDouble = mock(ProjectResource.class);
+        List<ProjectResource> projectResources = new ArrayList<>();
+        projectResources.add(projectResourceDouble);
+        when(resourceRepository.findAll()).thenReturn(projectResources);
+        when(resourceRepository.save(any())).thenReturn(true);
+
+        //Act
+        boolean result = service.addUserToProject(allocationDto);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 02: the user was not successfully added to the allocation due to the project status being
+     * different from expected.
+     * Expected return: true.
+     */
+    @Test
+    void ensureAddUserToProjectInsuccessfully() {
+        //Arrange
+        AllocationDto allocationDto = new AllocationDto(2, "test@project.com", TEAM_MEMBER.toString(),
+                8f, 50f, LocalDate.now(), LocalDate.now().plusWeeks(2));
+
+        Account accountDouble = mock(Account.class);
+        Project projectDouble = mock(Project.class);
+
+        Optional<Project> projectOptional = Optional.ofNullable(projectDouble);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
+
+        when(projectDouble.hasStatus(any())).thenReturn(true);
+
+        //Act
+        boolean result = service.addUserToProject(allocationDto);
+        //Assert
+        assertFalse(result);
+    }
+
 
     /**
      * METHOD isProjectValidForAllocation()
@@ -173,7 +237,7 @@ class ResourceAllocationServiceTest {
     @Test
     void ensureThatTheRoleOfResourceIsProjectManager() {
         //Arrange
-        Role projectManager = Role.PROJECT_MANAGER;
+        Role projectManager = PROJECT_MANAGER;
 
         //Act
         boolean result = service.isNotProjectManager(projectManager);
@@ -416,6 +480,7 @@ class ResourceAllocationServiceTest {
         // Assert
         assertTrue(result);
     }
+
     /**
      * Method IsAValidAccount().
      * Scenario 01: Make sure the account is valid and active.
@@ -425,18 +490,17 @@ class ResourceAllocationServiceTest {
     void ensureThatAccountIsValid() {
         // Arrange
         Email accountEmailDouble = mock(Email.class);
-        AccountStatus accountStatus = mock(AccountStatus.class);
         Account accountDouble = mock(Account.class);
         List<Account> accounts = new ArrayList<>();
         accounts.add(accountDouble);
 
         when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(true);
-        when(accountDouble.isAccountActive(accountStatus.getAccountStatus())).thenReturn(true);
+        when(accountDouble.isAccountActive()).thenReturn(true);
 
         when(accountRepository.findAll()).thenReturn(accounts);
 
         // Act
-        boolean result = service.isAccountValidForAllocation(accountEmailDouble, accountStatus);
+        boolean result = service.isAccountValidForAllocation(accountEmailDouble);
 
         // Assert
         assertTrue(result);
@@ -450,8 +514,7 @@ class ResourceAllocationServiceTest {
     void ensureTheAccointExistisButIsInactivate() {
         //Arrange
         Email accountEmailDouble = mock(Email.class);
-        AccountStatus accountStatus = mock(AccountStatus.class);
-        boolean result = service.isAccountValidForAllocation(accountEmailDouble, accountStatus);
+        boolean result = service.isAccountValidForAllocation(accountEmailDouble);
         //Assert
         assertFalse(result);
     }
@@ -523,6 +586,98 @@ class ResourceAllocationServiceTest {
         boolean result = service.isResourceOverlapping(codeDouble, emailDouble, periodDouble);
 
         // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    void ensureThatPercentageOfAllocationIsValid() {
+        //Arrange
+        //1
+        Email emailDouble = mock(Email.class);
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceTwoDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceThreeDouble = mock(ProjectResource.class);
+        List<ProjectResource> resources = new ArrayList<>();
+        resources.add(projectResourceOneDouble);
+        resources.add(projectResourceTwoDouble);
+        resources.add(projectResourceThreeDouble);
+        when(resourceRepository.findResourcesByAccountEmail(emailDouble)).thenReturn(resources);
+        //2
+        Period periodDouble = mock(Period.class);
+        when(resources.get(0).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
+        when(resources.get(1).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
+        when(resources.get(2).isPeriodNotOverlapping(periodDouble)).thenReturn(true);
+        //3
+        when(periodDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //4
+        when(periodDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 1).toString());
+        //5
+        when(projectResourceOneDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        when(projectResourceTwoDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //6
+        Period periodOneDouble = mock(Period.class);
+        Period periodTwoDouble = mock(Period.class);
+        when(projectResourceOneDouble.getPeriod()).thenReturn(periodOneDouble);
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(periodTwoDouble);
+        when(periodOneDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 9).toString());
+        when(periodTwoDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 10).toString());
+        //7
+        when(projectResourceOneDouble.getPercentageOfAllocation()).thenReturn(40f);
+        when(projectResourceTwoDouble.getPercentageOfAllocation()).thenReturn(10f);
+        //8
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        when(percentageOfAllocationDouble.getValue()).thenReturn(50f);
+
+        //Act
+        boolean result = service.isPercentageOfAllocationValid(periodDouble, emailDouble, percentageOfAllocationDouble);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    @Test
+    void ensureThatPercentageOfAllocationIsInvalid_LastDayHas101percent() {
+        //Arrange
+        //1
+        Email emailDouble = mock(Email.class);
+        ProjectResource projectResourceOneDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceTwoDouble = mock(ProjectResource.class);
+        ProjectResource projectResourceThreeDouble = mock(ProjectResource.class);
+        List<ProjectResource> resources = new ArrayList<>();
+        resources.add(projectResourceOneDouble);
+        resources.add(projectResourceTwoDouble);
+        resources.add(projectResourceThreeDouble);
+        when(resourceRepository.findResourcesByAccountEmail(emailDouble)).thenReturn(resources);
+        //2
+        Period periodDouble = mock(Period.class);
+        when(resources.get(0).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
+        when(resources.get(1).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
+        when(resources.get(2).isPeriodNotOverlapping(periodDouble)).thenReturn(true);
+        //3
+        when(periodDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //4
+        when(periodDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 1).toString());
+        //5
+        when(projectResourceOneDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        when(projectResourceTwoDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //6
+        Period periodOneDouble = mock(Period.class);
+        Period periodTwoDouble = mock(Period.class);
+        when(projectResourceOneDouble.getPeriod()).thenReturn(periodOneDouble);
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(periodTwoDouble);
+        when(periodOneDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 9).toString());
+        when(periodTwoDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 10).toString());
+        //7
+        when(projectResourceOneDouble.getPercentageOfAllocation()).thenReturn(40f);
+        when(projectResourceTwoDouble.getPercentageOfAllocation()).thenReturn(11f);
+        //8
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        when(percentageOfAllocationDouble.getValue()).thenReturn(50f);
+
+        //Act
+        boolean result = service.isPercentageOfAllocationValid(periodDouble, emailDouble, percentageOfAllocationDouble);
+
+        //Assert
         assertFalse(result);
     }
 }

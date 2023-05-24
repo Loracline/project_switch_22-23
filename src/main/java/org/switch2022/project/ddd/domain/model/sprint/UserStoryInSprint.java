@@ -100,7 +100,7 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
      *
      * @return the effort associated to the userStory.
      */
-    protected int getEffort() {
+    public int getEffort() {
         return effort.getEffortValue();
     }
 

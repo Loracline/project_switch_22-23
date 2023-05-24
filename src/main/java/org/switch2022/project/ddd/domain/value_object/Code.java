@@ -12,9 +12,9 @@ public class Code implements ValueObject<Code> {
      *
      * @param projectNumber number to attribute to project code.
      */
-    public Code(final Number projectNumber) {
-        Validate.notNull(projectNumber, "The project number must not be null");
+    public Code(final int projectNumber) {
         Validate.notNegative(projectNumber, "project number");
+        Validate.notZero(projectNumber, "project number");
 
         this.id = String.format("P%03d", projectNumber).toLowerCase();
     }

@@ -173,6 +173,38 @@ public class Sprint implements Entity<Sprint> {
     }
 
     /**
+     * Getter method that returns the sprintId
+     * @return a String representing the sprintId.
+     */
+    public String getSprintId() {
+        return this.sprintId.getSprintId();
+    }
+
+    /**
+     * Getter method that returns the Sprint projectCode.
+     * @return a String representing the projectCode.
+     */
+    public String getProjectCode() {
+        return this.projectCode.getCode();
+    }
+
+    /**
+     * Getter method that returns the Sprint startDate.
+     * @return a String representing the startDate.
+     */
+    public String getStartDate() {
+        return this.period.getStartDate();
+    }
+
+    /**
+     * Getter method that returns the Sprint endDate.
+     * @return a String representing the endDate.
+     */
+    public String getEndDate() {
+        return this.period.getEndDate();
+    }
+
+    /**
      * Returns the sprint number of the current object.
      * This method splits the sprint number string using "S" as a delimiter and returns
      * the second element of the resulting array
@@ -183,6 +215,14 @@ public class Sprint implements Entity<Sprint> {
     public int getSprintNumber() {
         String[] array = this.sprintNumber.getSprintNumber().split("s", -2);
         return parseInt(array[1]);
+    }
+
+    /**
+     * This method returns the full sprint number (format: S00d).
+     * @return a String with that represents the sprintNUmber.
+     */
+    public String getFullSprintNumber() {
+        return this.sprintNumber.getSprintNumber();
     }
 
     /**
@@ -235,7 +275,7 @@ public class Sprint implements Entity<Sprint> {
     /**
      * This method checks if the sprint start date is after or equal the date
      *
-     * @param date
+     * @param date to be compared in the period.
      * @return true if the sprint start date is after or equal the date
      */
 
@@ -247,7 +287,7 @@ public class Sprint implements Entity<Sprint> {
     /**
      * This method checks if the sprint end date is before or equal the date
      *
-     * @param date
+     * @param date to be compared in the period.
      * @return true if the sprint end date is before or equal the  date
      */
     public boolean isEndDateBeforeOrGreaterThanDate(LocalDate date) {

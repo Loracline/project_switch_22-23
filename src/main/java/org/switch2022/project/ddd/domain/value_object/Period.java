@@ -6,6 +6,8 @@ import org.switch2022.project.ddd.utils.Validate;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class Period implements ValueObject<Period> {
 
     private final LocalDate startDate;
@@ -226,5 +228,14 @@ public class Period implements ValueObject<Period> {
             result = this.startDate.isBefore(LocalDate.now()) && this.endDate.isAfter(LocalDate.now());
         }
         return result;
+    }
+
+    /**
+     * This method counts the number of days included in a time period including the first day, and the last day.
+     *
+     * @return the number of days contained in period.
+     */
+    public int numberOfDaysContainedInPeriod() {
+        return (int) DAYS.between(this.startDate, this.endDate) + 1;
     }
 }
