@@ -34,7 +34,6 @@ class UserStoryInSprintServiceTest {
     /**
      * Method: estimateEffortUserStory(usId, effort, sprintId)
      * Scenario 1: Estimates the effort of a US.
-     *
      * Expected result: user story effort is estimated.
      */
 
@@ -59,7 +58,6 @@ class UserStoryInSprintServiceTest {
 
     /**
      * Scenario 2: does not estimate the effort of a US due to effort value not corresponding to fibonacci sequence.
-     *
      * Expected result: user story effort is not estimated.
      */
 
@@ -84,7 +82,6 @@ class UserStoryInSprintServiceTest {
 
     /**
      * Scenario 3: does not estimate the effort of a US despite the spring having started.
-     *
      * Expected result: user story effort is not estimated.
      */
 

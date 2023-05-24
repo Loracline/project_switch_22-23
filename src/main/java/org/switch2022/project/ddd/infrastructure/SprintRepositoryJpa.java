@@ -87,7 +87,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
      *
      * @param usId     of the user story to estimate the effort.
      * @param effort   given to the user story.
-     * @param sprintId
+     * @param sprintId the id of the sprint.
      * @return TRUE if the effort was set and false otherwise.
      */
     @Override

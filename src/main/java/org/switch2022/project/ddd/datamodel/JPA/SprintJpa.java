@@ -2,7 +2,6 @@ package org.switch2022.project.ddd.datamodel.JPA;
 
 import lombok.Data;
 import lombok.Getter;
-import org.switch2022.project.ddd.domain.value_object.Code;
 
 import javax.persistence.*;
 import java.util.ArrayList;

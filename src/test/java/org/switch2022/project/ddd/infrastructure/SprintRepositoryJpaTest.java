@@ -129,7 +129,6 @@ class SprintRepositoryJpaTest {
 
     /**
      * Method : Save.
-     *
      * Scenario 1 : ensure that Sprint is saved.
      */
     @Test
@@ -153,7 +152,6 @@ class SprintRepositoryJpaTest {
 
     /**
      * Method : Save.
-     *
      * Scenario 2 : ensure Sprint is not saved.
      */
     @Test
