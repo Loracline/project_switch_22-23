@@ -207,6 +207,31 @@ public class ProjectResource implements Entity<ProjectResource> {
     public Period getPeriod() {
         return allocationPeriod;
     }
+    /**
+     * This method returns a String representation of the Project Resource ID.
+     *
+     * @return the ID of the project resource.
+     */
+    public String getProjectResourceId() {
+        return projectResourceId.getProjectResourceId();
+    }
+    /**
+     * This method returns a String representation of the role.
+     *
+     * @return the role of the project resource.
+     */
+    public String getRoleInProject() {
+        return roleInProject.toString();
+    }
+
+    /**
+     * This method returns the cost per hour.
+     *
+     * @return the role of the project resource.
+     */
+    public float getCostPerHour() {
+        return costPerHour.getCost();
+    }
 }
 
 

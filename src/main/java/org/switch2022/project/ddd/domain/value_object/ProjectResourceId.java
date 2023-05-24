@@ -56,4 +56,13 @@ public class ProjectResourceId implements ValueObject<ProjectResourceId> {
     public int hashCode() {
         return Objects.hash(projectResourceId);
     }
+
+    /**
+     * This method returns the String representation of the projectResource ID.
+     *
+     * @return the String representation of the projectResource ID.
+     */
+    public String getProjectResourceId() {
+        return projectResourceId;
+    }
 }

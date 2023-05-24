@@ -56,6 +56,15 @@ public class CostPerHour implements ValueObject<CostPerHour> {
     public int hashCode() {
         return Objects.hash(cost);
     }
+
+    /**
+     * This method returns the String cost.
+     *
+     * @return the cost of the value object.
+     */
+    public float getCost() {
+        return cost;
+    }
 }
 
 
