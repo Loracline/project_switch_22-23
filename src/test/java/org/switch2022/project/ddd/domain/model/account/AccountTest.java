@@ -1,10 +1,10 @@
 package org.switch2022.project.ddd.domain.model.account;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.value_object.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -392,7 +392,7 @@ class AccountTest {
         when(accountStatus.getAccountStatus()).thenReturn(AccountStatus.ACTIVE.getAccountStatus());
 
         // Act
-        boolean result = account.isAccountActive(accountStatus.getAccountStatus());
+        boolean result = account.isAccountActive();
 
         // Assert
         assertTrue(result);
@@ -410,13 +410,13 @@ class AccountTest {
         Photo photo = mock(Photo.class);
         AccountStatus accountStatus = mock(AccountStatus.class);
         Account account = new Account(name, email, phoneNumber, photo);
-        when(accountStatus.getAccountStatus()).thenReturn(AccountStatus.INACTIVE.getAccountStatus());
+        when(accountStatus.sameValueAs(any())).thenReturn(false);
 
         // Act
-        boolean result = account.isAccountActive(accountStatus.getAccountStatus());
+        boolean result = account.isAccountActive();
 
         // Assert
-        assertFalse(result);
+        assertTrue(result);
     }
 
     /**

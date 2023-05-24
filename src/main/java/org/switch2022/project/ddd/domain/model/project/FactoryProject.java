@@ -17,7 +17,7 @@ public class FactoryProject implements IFactoryProject {
      * @return the newly created Project object.
      */
     @Override
-    public Project createProject(final Number projectNumber, Name projectName, Description description,
+    public Project createProject(final int projectNumber, Name projectName, Description description,
                                  BusinessSectorId businessSectorId, TaxId customerTaxId,
                                  ProjectTypologyId projectTypologyId) {
         return new Project(projectNumber, projectName, description, businessSectorId, customerTaxId,

@@ -127,8 +127,28 @@ public class ProjectResource implements Entity<ProjectResource> {
      * @param period to check.
      * @return <code>true</code> if the period is overlapping and <code>false</code> otherwise.
      */
+
     public boolean isPeriodOverlapping(Period period) {
-        return !this.allocationPeriod.isPeriodNotOverlapping(period);
+        return !isPeriodNotOverlapping(period);
+    }
+
+    /**
+     * This method checks if an instance of ProjectResource has a period that overlaps with another period.
+     *
+     * @param period to check.
+     * @return <code>true</code> if the period is not overlapping and <code>false</code> otherwise.
+     */
+    public boolean isPeriodNotOverlapping(Period period) {
+        return this.allocationPeriod.isPeriodNotOverlapping(period);
+    }
+
+    /**
+     * This method counts the number of days included in a time period including the first day, and the last day.
+     *
+     * @return the number of days contained in period.
+     */
+    public int numberOfDaysContainedInPeriod() {
+    return this.allocationPeriod.numberOfDaysContainedInPeriod();
     }
 
     /**

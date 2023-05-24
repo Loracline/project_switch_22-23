@@ -224,7 +224,7 @@ class TaxIdTest {
     void ensureTaxIdDoesNotEqualOtherTypeOfObject() {
         // Arrange
         String numberOne = "514024054";
-        Number numberTwo = 514024054;
+        int numberTwo = 514024054;
 
         TaxId reference = new TaxId(numberOne);
         Code other = new Code(numberTwo);

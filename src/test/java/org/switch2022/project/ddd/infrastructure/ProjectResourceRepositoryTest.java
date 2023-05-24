@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Email;
-import org.switch2022.project.ddd.domain.value_object.Period;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import java.util.ArrayList;
@@ -169,7 +168,7 @@ class ProjectResourceRepositoryTest {
 
         Code codeOne = new Code(1);
         Code codeTwo = new Code(3);
-        List<Code> expected = Arrays.asList(codeOne,codeTwo);
+        List<Code> expected = Arrays.asList(codeOne, codeTwo);
 
         // Act
         List<Code> result = repository.findProjectCodesByAccountEmail(emailDouble);
@@ -224,6 +223,25 @@ class ProjectResourceRepositoryTest {
         List<ProjectResource> result = repository.findResourcesByAccountEmail(email);
 
         // Arrange
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsAllResources() {
+        // Arrange
+        ProjectResource projectResourceOne = mock(ProjectResource.class);
+        ProjectResource projectResourceTwo = mock(ProjectResource.class);
+        ProjectResource projectResourceThree = mock(ProjectResource.class);
+        List<ProjectResource> expected = Arrays.asList(projectResourceOne, projectResourceTwo, projectResourceThree);
+        ProjectResourceRepository repository = new ProjectResourceRepository();
+        repository.save(projectResourceOne);
+        repository.save(projectResourceTwo);
+        repository.save(projectResourceThree);
+
+        // Act
+        List<ProjectResource> result = repository.findAll();
+
+        // Assert
         assertEquals(expected, result);
     }
 }

@@ -1159,4 +1159,32 @@ class PeriodTest {
         //Assert
         assertTrue(result);
     }
+
+    @Test
+    void numberOfDaysContainedInPeriod() {
+        //Arrange
+        Period period = new Period(LocalDate.now(), LocalDate.now().plusDays(5));
+        int expected = 6;
+
+        //Act
+        int result = period.numberOfDaysContainedInPeriod();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void numberOfDaysContainedInYear2023() {
+        //Arrange
+        Period period = new Period(LocalDate.of(2023, 1, 1), LocalDate.of(2023,12,31));
+        int expected = 365;
+
+        //Act
+        int result = period.numberOfDaysContainedInPeriod();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
 }

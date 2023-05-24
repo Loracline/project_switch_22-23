@@ -747,6 +747,28 @@ class ProjectResourceTest {
         assertFalse(result);
     }
 
+    @Test
+    void ensureThatTwoPeriodsAreNotOverlapped() {
+        //Arrange
+        Period periodOne = new Period(LocalDate.of(2023, 5, 10), LocalDate.of(2023, 5, 30));
+        Period periodTwo = new Period(LocalDate.of(2023, 5, 31), LocalDate.of(2023,6,30));
+        ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ProjectResource projectResource = projectResourceFactory.createProjectResource(projectResourceId, codeDouble,
+                emailDouble, roleDouble, periodOne, costDouble, percentageOfAllocationDouble);
+
+        //Act
+        boolean result = projectResource.isPeriodNotOverlapping(periodTwo);
+
+        //Assert
+        assertTrue(result);
+    }
+
     /**
      * METHOD allocationPeriodIncludesDate
      */
@@ -792,10 +814,10 @@ class ProjectResourceTest {
         CostPerHour costPerHour = mock(CostPerHour.class);
         PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
 
-        LocalDate startDate = LocalDate.of(2023,1,1);
-        LocalDate endDate = LocalDate.of(2023,12,31);
+        LocalDate startDate = LocalDate.of(2023, 1, 1);
+        LocalDate endDate = LocalDate.of(2023, 12, 31);
         Period period = new Period(startDate, endDate);
-        LocalDate date = LocalDate.of(2023,1,1);
+        LocalDate date = LocalDate.of(2023, 1, 1);
 
         ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
                 period, costPerHour, allocation);
@@ -820,10 +842,10 @@ class ProjectResourceTest {
         CostPerHour costPerHour = mock(CostPerHour.class);
         PercentageOfAllocation allocation = mock(PercentageOfAllocation.class);
 
-        LocalDate startDate = LocalDate.of(2023,1,1);
-        LocalDate endDate = LocalDate.of(2023,12,31);
+        LocalDate startDate = LocalDate.of(2023, 1, 1);
+        LocalDate endDate = LocalDate.of(2023, 12, 31);
         Period period = new Period(startDate, endDate);
-        LocalDate date = LocalDate.of(2023,12,31);
+        LocalDate date = LocalDate.of(2023, 12, 31);
 
         ProjectResource resource = new ProjectResource(id, projectCode, accountEmail, role,
                 period, costPerHour, allocation);
@@ -1005,7 +1027,7 @@ class ProjectResourceTest {
      * Scenario 01: The string corresponding to the project resource email is returned.
      */
     @Test
-    public void ensureThatTheEmailIsReturnedSuccessfully(){
+    public void ensureThatTheEmailIsReturnedSuccessfully() {
         //Arrange
         ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
@@ -1057,6 +1079,7 @@ class ProjectResourceTest {
         //Assert
         assertEquals(expected, result);
     }
+
     /**
      * Method: getPeriod()
      * Scenario 01: Return the period to the project resource is returned.
@@ -1087,6 +1110,49 @@ class ProjectResourceTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void numberOfDaysContainedInPeriod() {
+        //Arrange
+        Period period = new Period(LocalDate.now(), LocalDate.now().plusDays(5));
+        ProjectResourceFactory factory = new ProjectResourceFactory();
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResource projectResource = factory.createProjectResource(resourceIdDouble, codeDouble, emailDouble,
+                roleDouble, period, costDouble, percentageOfAllocationDouble);
+        int expected = 6;
+
+        //Act
+        int result = projectResource.numberOfDaysContainedInPeriod();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void numberOfDaysContainedInYear2023() {
+        //Arrange
+        Period period = new Period(LocalDate.of(2023, 1, 1), LocalDate.of(2023, 12, 31));
+        ProjectResourceFactory factory = new ProjectResourceFactory();
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        ProjectResource projectResource = factory.createProjectResource(resourceIdDouble, codeDouble, emailDouble,
+                roleDouble, period, costDouble, percentageOfAllocationDouble);
+        int expected = 365;
+
+        //Act
+        int result = projectResource.numberOfDaysContainedInPeriod();
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }
 
 

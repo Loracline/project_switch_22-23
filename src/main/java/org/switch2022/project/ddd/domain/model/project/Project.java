@@ -33,7 +33,7 @@ public class Project implements Entity<Project> {
     /**
      * Constructor: the constructor with relevant attributes for a project to be in a valid state.
      */
-    protected Project(Number projectNumber, Name projectName, Description description,
+    protected Project(int projectNumber, Name projectName, Description description,
                       BusinessSectorId businessSectorId, TaxId customerTaxId, ProjectTypologyId projectTypologyId) {
         this.projectCode = new Code(projectNumber);
         this.projectStatus = ProjectStatus.PLANNED;

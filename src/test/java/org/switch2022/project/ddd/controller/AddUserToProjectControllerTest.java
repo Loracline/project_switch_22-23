@@ -7,8 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.ResourceAllocationService;
-
-import java.time.LocalDate;
+import org.switch2022.project.ddd.dto.AllocationDto;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -27,13 +26,11 @@ class AddUserToProjectControllerTest {
     @Test
     void ensureThatUserIsAllocatedToProjectSuccessfully() {
         //Arrange
-        LocalDate startDateDouble = mock(LocalDate.class);
-        LocalDate endaDateDouble = mock(LocalDate.class);
-        when(service.addUserToProject(anyInt(), anyString(), anyString(), anyFloat(), anyFloat(), any(), any())).thenReturn(true);
+        AllocationDto allocationDtoDouble = mock(AllocationDto.class);
+        when(service.addUserToProject(any())).thenReturn(true);
 
         //Act
-        boolean result = controller.addUserToProject(1, "Email", "Role", 10, 100
-                , startDateDouble, endaDateDouble);
+        boolean result = controller.addUserToProject(allocationDtoDouble);
 
         //Assert
         assertTrue(result);
@@ -42,13 +39,11 @@ class AddUserToProjectControllerTest {
     @Test
     void ensureThatUserIsNotAllocatedToProject() {
         //Arrange
-        LocalDate startDateDouble = mock(LocalDate.class);
-        LocalDate endaDateDouble = mock(LocalDate.class);
-        when(service.addUserToProject(anyInt(), anyString(), anyString(), anyFloat(), anyFloat(), any(), any())).thenReturn(false);
+        AllocationDto allocationDtoDouble = mock(AllocationDto.class);
+        when(service.addUserToProject(any())).thenReturn(false);
 
         //Act
-        boolean result = controller.addUserToProject(1, "Email", "Role", 10, 100
-                , startDateDouble, endaDateDouble);
+        boolean result = controller.addUserToProject(allocationDtoDouble);
 
         //Assert
         assertFalse(result);

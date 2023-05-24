@@ -47,7 +47,7 @@ public class SprintDataAssembler {
         ISprintFactory iSprintFactory = new SprintFactory();
 
         String[] projectParts = sprintJpa.getProjectCode().split("P", -2);
-        Number projectNumber = Integer.parseInt(projectParts[0]);
+        int projectNumber = Integer.parseInt(projectParts[0]);
         Code projectCode = new Code(projectNumber);
 
         String[] sprintIdParts = sprintJpa.getSprintId().split("_", -2);
