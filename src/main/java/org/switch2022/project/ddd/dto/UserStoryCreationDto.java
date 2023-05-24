@@ -14,6 +14,7 @@ public class UserStoryCreationDto {
     /**
      * Attributes
      */
+    public final String projectCode;
     public final String userStoryNumber;
     public final String userStoryText;
     public final String actor;
@@ -24,14 +25,17 @@ public class UserStoryCreationDto {
      * Constructs a new UserStoryCreationDto object with the specified user story number,
      * user story text, actor and priority.
      *
+     * @param projectCode the identifier of the project where the user story should be created.
      * @param userStoryNumber the identifier of the user story
      * @param userStoryText   the description of the user story
      * @param actor           the actor who will use or benefit from the user story
      * @param acceptanceCriteria the list of acceptance criteria.
      * @param priority        the priority of the user story
      */
-    public UserStoryCreationDto(String userStoryNumber, String userStoryText, String actor,
+    public UserStoryCreationDto(String projectCode, String userStoryNumber, String userStoryText,
+                                String actor,
                                 List<String> acceptanceCriteria, int priority) {
+        this.projectCode = projectCode;
         this.userStoryNumber = userStoryNumber;
         this.userStoryText = userStoryText;
         this.actor = actor;
