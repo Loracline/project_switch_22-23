@@ -8,11 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +47,7 @@ class UserStoryInSprintServiceTest {
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
 
-        when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.hasUserStory(any())).thenReturn(true);
         when(sprintRepository.estimateEffortUserStory(any(), anyInt(), any())).thenReturn(true);
 
@@ -76,7 +72,7 @@ class UserStoryInSprintServiceTest {
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
 
-        when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.hasUserStory(any())).thenReturn(true);
         when(sprintRepository.estimateEffortUserStory(any(), anyInt(), any())).thenReturn(false);
 
@@ -101,7 +97,7 @@ class UserStoryInSprintServiceTest {
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
 
-        when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.hasUserStory(any())).thenReturn(true);
         when(sprintRepository.estimateEffortUserStory(any(), anyInt(), any())).thenReturn(false);
 

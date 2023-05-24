@@ -61,7 +61,7 @@ class SprintRepositoryTest {
         // Arrange
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprint = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprint);
+        sprintRepository.save(sprint);
         SprintRepository sprintRepositoryOne = new SprintRepository();
 
         boolean expected = false;
@@ -80,9 +80,9 @@ class SprintRepositoryTest {
         // Arrange
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprint = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprint);
+        sprintRepository.save(sprint);
         SprintRepository sprintRepositoryOne = new SprintRepository();
-        sprintRepositoryOne.addSprintToSprintRepository(sprint);
+        sprintRepositoryOne.save(sprint);
 
         boolean expected = true;
         //Act
@@ -117,9 +117,9 @@ class SprintRepositoryTest {
     void ensureTwoSprintsIdInstancesHashcodeAreTheSame() {
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprint = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprint);
+        sprintRepository.save(sprint);
         SprintRepository sprintRepositoryOne = new SprintRepository();
-        sprintRepositoryOne.addSprintToSprintRepository(sprint);
+        sprintRepositoryOne.save(sprint);
         //Assert
         assertEquals(sprintRepository.hashCode(), sprintRepositoryOne.hashCode());
     }
@@ -133,10 +133,10 @@ class SprintRepositoryTest {
         //Arrange
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprint = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprint);
+        sprintRepository.save(sprint);
         SprintRepository sprintRepositoryOne = new SprintRepository();
         Sprint sprintOne = mock(Sprint.class);
-        sprintRepositoryOne.addSprintToSprintRepository(sprintOne);
+        sprintRepositoryOne.save(sprintOne);
 
         //Assert
         assertNotEquals(sprintRepositoryOne.hashCode(), sprintRepository.hashCode());
@@ -154,7 +154,7 @@ class SprintRepositoryTest {
 
         Optional<Sprint> expected = Optional.empty();
         //Act
-        Optional<Sprint> result = sprintRepository.getSprintById(sprintId);
+        Optional<Sprint> result = sprintRepository.findById(sprintId);
         //Assert
         assertEquals(expected, result);
     }
@@ -167,12 +167,12 @@ class SprintRepositoryTest {
         //Arrange
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprintDouble = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
+        sprintRepository.save(sprintDouble);
         SprintId sprintId = new SprintId("P001", "S001");
 
         Optional<Sprint> expected = Optional.empty();
         //Act
-        Optional<Sprint> result = sprintRepository.getSprintById(sprintId);
+        Optional<Sprint> result = sprintRepository.findById(sprintId);
         //Assert
         assertEquals(expected, result);
     }
@@ -185,12 +185,12 @@ class SprintRepositoryTest {
         //Arrange
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprintDouble = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
+        sprintRepository.save(sprintDouble);
         SprintId sprintId = new SprintId("P001", "S001");
         when(sprintDouble.hasSprintId(sprintId)).thenReturn(true);
         Optional<Sprint> expected = Optional.of(sprintDouble);
         //Act
-        Optional<Sprint> result = sprintRepository.getSprintById(sprintId);
+        Optional<Sprint> result = sprintRepository.findById(sprintId);
         //Assert
         assertEquals(expected, result);
     }
@@ -203,10 +203,10 @@ class SprintRepositoryTest {
         //Arrange
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprintDouble = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
-        int expected = 1;
+        sprintRepository.save(sprintDouble);
+        long expected = 1L;
         //Act
-        int result = sprintRepository.getSprintNumber();
+        long result = sprintRepository.count();
         //Assert
         assertEquals(expected, result);
     }
@@ -221,7 +221,7 @@ class SprintRepositoryTest {
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprintDouble = mock(Sprint.class);
         //Act
-        boolean result = sprintRepository.addSprintToSprintRepository(sprintDouble);
+        boolean result = sprintRepository.save(sprintDouble);
         //Assert
         assertTrue(result);
     }
@@ -235,9 +235,9 @@ class SprintRepositoryTest {
         //Arrange
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprintDouble = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
+        sprintRepository.save(sprintDouble);
         //Act
-        boolean result = sprintRepository.addSprintToSprintRepository(sprintDouble);
+        boolean result = sprintRepository.save(sprintDouble);
         //Assert
         assertFalse(result);
     }
@@ -253,7 +253,7 @@ class SprintRepositoryTest {
         List<Sprint> expected = new ArrayList<>();
         Code projectCode = new Code(1);
         //Act
-        List<Sprint> result = sprintRepository.findAllByProject(projectCode);
+        List<Sprint> result = sprintRepository.findByProjectCode(projectCode);
         //Assert
         assertEquals(expected, result);
     }
@@ -265,12 +265,12 @@ class SprintRepositoryTest {
         //Arrange
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprintDouble = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
+        sprintRepository.save(sprintDouble);
         List<Sprint> expected = new ArrayList<>();
         Code projectCode = new Code(1);
         when(sprintDouble.hasProjectCode(projectCode)).thenReturn(false);
         //Act
-        List<Sprint> result = sprintRepository.findAllByProject(projectCode);
+        List<Sprint> result = sprintRepository.findByProjectCode(projectCode);
         //Assert
         assertEquals(expected, result);
     }
@@ -284,14 +284,14 @@ class SprintRepositoryTest {
         SprintRepository sprintRepository = new SprintRepository();
         Sprint sprintDouble = mock(Sprint.class);
         Sprint sprintDoubleTwo = mock(Sprint.class);
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
-        sprintRepository.addSprintToSprintRepository(sprintDoubleTwo);
+        sprintRepository.save(sprintDouble);
+        sprintRepository.save(sprintDoubleTwo);
         List<Sprint> expected = new ArrayList<>();
         expected.add(sprintDouble);
         Code projectCode = new Code(1);
         when(sprintDouble.hasProjectCode(projectCode)).thenReturn(true);
         //Act
-        List<Sprint> result = sprintRepository.findAllByProject(projectCode);
+        List<Sprint> result = sprintRepository.findByProjectCode(projectCode);
         //Assert
         assertEquals(expected, result);
     }
@@ -306,7 +306,7 @@ class SprintRepositoryTest {
         Sprint sprintDouble = mock(Sprint.class);
 
         // Act
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
+        sprintRepository.save(sprintDouble);
         when(sprintDouble.hasSprintId(sprintId)).thenReturn(true);
         when(sprintDouble.estimateEffortUserStory(usId,effort)).thenReturn(true);
 
@@ -326,7 +326,7 @@ class SprintRepositoryTest {
         Sprint sprintDouble = mock(Sprint.class);
 
         // Act
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
+        sprintRepository.save(sprintDouble);
         when(sprintDouble.hasSprintId(sprintId)).thenReturn(true);
         when(sprintDouble.estimateEffortUserStory(usId,effort)).thenReturn(false);
 
@@ -346,7 +346,7 @@ class SprintRepositoryTest {
         Sprint sprintDouble = mock(Sprint.class);
 
         // Act
-        sprintRepository.addSprintToSprintRepository(sprintDouble);
+        sprintRepository.save(sprintDouble);
         when(sprintDouble.hasSprintId(sprintId)).thenReturn(false);
         when(sprintDouble.estimateEffortUserStory(usId,effort)).thenReturn(true);
 

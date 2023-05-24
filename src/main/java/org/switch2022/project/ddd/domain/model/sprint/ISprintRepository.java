@@ -10,13 +10,34 @@ import java.util.Optional;
 
 public interface ISprintRepository {
 
-    Optional<Sprint> getSprintById (SprintId sprintId);
+    /**
+     * Retrieves a Sprint object by its SprintId.
+     *
+     * @param sprintId The identifier of the Sprint.
+     * @return An Optional object containing the found Sprint, or an empty Optional if no Sprint is found.
+     */
+    Optional<Sprint> findById(SprintId sprintId);
 
-    int getSprintNumber();
+    /**
+     * Counts the number of Sprint objects.
+     * @return The total count of Sprint objects.
+     */
+    long count();
 
-    boolean addSprintToSprintRepository(Sprint sprint);
-
-    List<Sprint> findAllByProject(Code projectCode);
+    /**
+     * Saves a Sprint object.
+     *
+     * @param sprint The Sprint object to be saved.
+     * @return True if the save operation is successful, false otherwise.
+     */
+    boolean save(Sprint sprint);
+    /**
+     * Retrieves a list of Sprint objects associated with a specific project code.
+     *
+     * @param projectCode The code of the project.
+     * @return A list of Sprint objects associated with the project code.
+     */
+    List<Sprint> findByProjectCode(Code projectCode);
 
     /**
      * This method estimates the effort of a user story.

@@ -64,7 +64,7 @@ public class UserStoryInSprintService {
 
     private Sprint getSprintById(SprintId sprintId) {
         Sprint sprint;
-        Optional<Sprint> sprintOptional = sprintRepository.getSprintById(sprintId);
+        Optional<Sprint> sprintOptional = sprintRepository.findById(sprintId);
         if (sprintOptional.isPresent()) {
             sprint = sprintOptional.get();
         } else {

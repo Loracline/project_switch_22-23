@@ -67,7 +67,7 @@ public class UserStoriesInSprintServiceTest {
         List<Sprint> sprintsOfProject = new ArrayList<>();
         sprintsOfProject.add(sprint);
 
-        when(sprintRepository.findAllByProject(code)).thenReturn(sprintsOfProject);
+        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
 
         List<UsId> usIds = new ArrayList<>();
         usIds.add(usId);
@@ -115,7 +115,7 @@ public class UserStoriesInSprintServiceTest {
         List<Sprint> sprintsOfProject = new ArrayList<>();
         sprintsOfProject.add(sprint);
 
-        when(sprintRepository.findAllByProject(code)).thenReturn(sprintsOfProject);
+        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
 
         List<UserStoryDto> expectedList = new ArrayList<>();
 
@@ -140,7 +140,7 @@ public class UserStoriesInSprintServiceTest {
         LocalDate date = LocalDate.now();
         Code code = new Code(123);
 
-        when(sprintRepository.findAllByProject(code)).thenReturn(new ArrayList<>());
+        when(sprintRepository.findByProjectCode(code)).thenReturn(new ArrayList<>());
 
         List<UserStoryDto> expectedList = new ArrayList<>();
 
@@ -171,7 +171,7 @@ public class UserStoriesInSprintServiceTest {
         List<Sprint> sprintsOfProject = new ArrayList<>();
         sprintsOfProject.add(sprint);
 
-        when(sprintRepository.findAllByProject(code)).thenReturn(sprintsOfProject);
+        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
 
         List<UserStoryDto> expectedList = new ArrayList<>();
 
