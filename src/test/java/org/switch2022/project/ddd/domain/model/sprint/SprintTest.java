@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -201,6 +202,34 @@ class SprintTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Scenario 2: Check if two instances of Sprint are not equal if the value of their
+     * sprintID are different.
+     */
+
+    @Test
+    void ensureThatTwoSprintsAreNotTheSame() {
+        //Arrange
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+        Sprint reference = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        SprintNumber sprintNumberOther = new SprintNumber(1);
+        SprintId sprintIdOther = new SprintId(projectCode.toString(),
+                sprintNumberOther.getSprintNumber());
+        Sprint other = new Sprint(projectCode, sprintIdOther, sprintNumber, period);
+
+        boolean expected = false;
+
+        //Act
+        boolean result = reference.sameIdentityAs(other);
+
+        //Assert
+        assertEquals(expected, result);
+    }
 
     /**
      * METHOD hasSprintId(sprintID)
@@ -852,6 +881,155 @@ class SprintTest {
         List<UserStoryInSprint> result = sprint.getUserStoriesInSprint();
 
         //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: getSprintId()
+     *
+     * Scenario 1: verify that a sprintId is retrieved as a string.
+     */
+    @Test
+    void ensureThatSprintIdIsRetrievedSuccessfully() {
+        // Arrange
+        String expected = "P001_S001";
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        when(sprintId.getSprintId()).thenReturn(expected);
+
+        // Act
+        String result = sprint.getSprintId();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: getProjectCode()
+     *
+     * Scenario 1: verify that a projectCode is retrieved as a string.
+     */
+    @Test
+    void ensureThatProjectCodeIsRetrievedSuccessfully() {
+        // Arrange
+        String expected = "P001";
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        when(projectCode.getCode()).thenReturn(expected);
+
+        // Act
+        String result = sprint.getProjectCode();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: getStartDate()
+     *
+     * Scenario 1: verify that a startDate is retrieved as a string.
+     */
+    @Test
+    void ensureThatStartDateIsRetrievedSuccessfully() {
+        // Arrange
+        String expected = "2023-07-23";
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        when(period.getStartDate()).thenReturn(expected);
+
+        // Act
+        String result = sprint.getStartDate();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: getEndDate()
+     *
+     * Scenario 1: verify that a endDate is retrieved as a string.
+     */
+    @Test
+    void ensureThatEndDateIsRetrievedSuccessfully() {
+        // Arrange
+        String expected = "2023-08-06";
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        when(period.getEndDate()).thenReturn(expected);
+
+        // Act
+        String result = sprint.getEndDate();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+    /**
+     * Method: getFullSprintNumber()
+     *
+     * Scenario 1: verify that a full sprintNumber is retrieved as a string.
+     */
+    @Test
+    void ensureFullSprintNumberIsRetrievedSuccessfully() {
+        // Arrange
+        String expected = "S001";
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        when(sprintNumber.getSprintNumber()).thenReturn(expected);
+
+        // Act
+        String result = sprint.getFullSprintNumber();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: getUSerStoriesInSprint()
+     *
+     * Scenario 1: verify that a list of userStoryInSprint is retrieved.
+     */
+    @Test
+    void ensureThatUserStoriesInSprintIsRetrievedSuccessfully() {
+        // Arrange
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        UsId usId1 = mock(UsId.class);
+        UsId usId2 = mock(UsId.class);
+        sprint.addUserStory(usId1, 1);
+        sprint.addUserStory(usId2, 2);
+
+        UserStoryInSprint userStoryInSprint1 = new UserStoryInSprint(usId1, Effort.ONE);
+        UserStoryInSprint userStoryInSprint2 = new UserStoryInSprint(usId2, Effort.TWO);
+        List<UserStoryInSprint> expected = Arrays.asList(userStoryInSprint1, userStoryInSprint2);
+
+        // Act
+        List<UserStoryInSprint> result = sprint.getUserStoriesInSprint();
+
+        // Assert
         assertEquals(expected, result);
     }
 }
