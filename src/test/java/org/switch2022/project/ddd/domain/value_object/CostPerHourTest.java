@@ -159,4 +159,17 @@ class CostPerHourTest {
         // Assert
         assertFalse(other);
     }
+
+    @Test
+    void ensureThatReturnsCost() {
+        //Arrange
+        CostPerHour cost = new CostPerHour (5f);
+        float expected = 5f;
+
+        //Act
+        float result = cost.getCost();
+
+        //Assert
+        assertEquals (expected, result);
+    }
 }

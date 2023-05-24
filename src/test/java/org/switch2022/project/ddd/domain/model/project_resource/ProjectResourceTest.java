@@ -239,6 +239,7 @@ class ProjectResourceTest {
      * Method: equals()
      * Scenario 01: Test to ensure the object equals itself.
      */
+    @SuppressWarnings("all")
     @Test
     void ensureThatProjectResourceEqualsItself() {
         // Arrange
@@ -751,7 +752,7 @@ class ProjectResourceTest {
     void ensureThatTwoPeriodsAreNotOverlapped() {
         //Arrange
         Period periodOne = new Period(LocalDate.of(2023, 5, 10), LocalDate.of(2023, 5, 30));
-        Period periodTwo = new Period(LocalDate.of(2023, 5, 31), LocalDate.of(2023,6,30));
+        Period periodTwo = new Period(LocalDate.of(2023, 5, 31), LocalDate.of(2023, 6, 30));
         ProjectResourceId projectResourceId = mock(ProjectResourceId.class);
         Code codeDouble = mock(Code.class);
         Email emailDouble = mock(Email.class);
@@ -1084,6 +1085,7 @@ class ProjectResourceTest {
      * Method: getPeriod()
      * Scenario 01: Return the period to the project resource is returned.
      */
+    @SuppressWarnings("all")
     @Test
     void ensureThatThePeriodIsReturnedSuccessfully() {
         //Arrange
@@ -1149,6 +1151,73 @@ class ProjectResourceTest {
 
         //Act
         int result = projectResource.numberOfDaysContainedInPeriod();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsCostPerHour() {
+        //Arrange
+        ProjectResourceFactory factory = new ProjectResourceFactory();
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        CostPerHour cost = new CostPerHour(5f);
+        ProjectResource projectResource = factory.createProjectResource(resourceIdDouble, codeDouble, emailDouble,
+                roleDouble, periodDouble, cost, percentageOfAllocationDouble);
+        float expected = 5f;
+
+        //Act
+        float result = projectResource.getCostPerHour();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
+    @Test
+    void ensureThatReturnsRole() {
+        //Arrange
+        ProjectResourceFactory factory = new ProjectResourceFactory();
+        ProjectResourceId resourceIdDouble = mock(ProjectResourceId.class);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = Role.TEAM_MEMBER;
+        Period periodDouble = mock(Period.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        ProjectResource projectResource = factory.createProjectResource(resourceIdDouble, codeDouble, emailDouble,
+                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
+        String expected = "TEAM_MEMBER";
+
+        //Act
+        String result = projectResource.getRoleInProject();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureThatReturnsID() {
+        //Arrange
+        ProjectResourceFactory factory = new ProjectResourceFactory();
+        ProjectResourceId resourceIdDouble = new ProjectResourceId(1);
+        Code codeDouble = mock(Code.class);
+        Email emailDouble = mock(Email.class);
+        Role roleDouble = mock(Role.class);
+        Period periodDouble = mock(Period.class);
+        PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
+        CostPerHour costDouble = mock(CostPerHour.class);
+        ProjectResource projectResource = factory.createProjectResource(resourceIdDouble, codeDouble, emailDouble,
+                roleDouble, periodDouble, costDouble, percentageOfAllocationDouble);
+        String expected = "PR1";
+
+        //Act
+        String result = projectResource.getProjectResourceId();
 
         //Assert
         assertEquals(expected, result);

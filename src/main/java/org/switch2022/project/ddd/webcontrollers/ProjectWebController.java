@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.ddd.application.ProjectCreationService;
 import org.switch2022.project.ddd.application.ProjectListService;
 import org.switch2022.project.ddd.application.ProjectService;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
@@ -43,10 +42,14 @@ public class ProjectWebController {
      */
     @PostMapping
     public ResponseEntity<Object> createProject(@RequestBody ProjectCreationDto projectCreationDto) {
-
-        String projectCode = projectCreationService.createProject(projectCreationDto);
-        return new ResponseEntity<>(projectCode, HttpStatus.CREATED);
+        try {
+            String projectCode = projectCreationService.createProject(projectCreationDto);
+            return new ResponseEntity<>(projectCode, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
+
 
     /**
      * Handles a GET request to retrieve a list of all projects.
@@ -55,7 +58,7 @@ public class ProjectWebController {
      */
     @GetMapping("")
     @ResponseBody
-    public ResponseEntity<List<ProjectDto>> ListProjects() {
+    public ResponseEntity<List<ProjectDto>> listAllProjects() {
         List<ProjectDto> projects = projectListService.requestAllProjects();
         return new ResponseEntity<>(projects, HttpStatus.OK);
     }

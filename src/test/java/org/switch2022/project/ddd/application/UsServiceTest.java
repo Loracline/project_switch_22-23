@@ -57,7 +57,7 @@ class UsServiceTest {
     //UNIT TESTS
 
     /**
-     * Method: createUs(userStoryCreationDto, projectCode).
+     * Method: createUs(userStoryCreationDto).
      * Creates a userStory and return the userStoryId.
      * <br>
      * Scenario 01: verify if a userStory is created and its ID returned.
@@ -81,12 +81,12 @@ class UsServiceTest {
         List<String> acceptanceCriteria = new ArrayList<>();
 
         UserStoryCreationDto userStoryCreationDto =
-                new UserStoryCreationDto("001", "text", "manager", acceptanceCriteria, 1);
+                new UserStoryCreationDto("P001","US001", "text", "manager", acceptanceCriteria, 1);
 
         String projectCode = "P001";
 
         // Act
-        UsId result = usService.createUs(projectCode, userStoryCreationDto);
+        UsId result = usService.createUs(userStoryCreationDto);
 
         // Assert
         assertNotNull(result);
@@ -110,7 +110,7 @@ class UsServiceTest {
         List<String> acceptanceCriteria = new ArrayList<>();
 
         UserStoryCreationDto userStoryCreationDto =
-                new UserStoryCreationDto("001", "text", "manager", acceptanceCriteria, 1);
+                new UserStoryCreationDto("P001", "US001", "text", "manager", acceptanceCriteria, 1);
 
         String projectCode = "P001";
 
@@ -124,7 +124,7 @@ class UsServiceTest {
                 add(userStoryDouble);
 
         // Assert
-        assertThrows(IllegalStateException.class, () -> usService.createUs(projectCode,
+        assertThrows(IllegalStateException.class, () -> usService.createUs(
                 userStoryCreationDto));
 
     }
