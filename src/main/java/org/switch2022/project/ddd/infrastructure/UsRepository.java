@@ -60,8 +60,8 @@ public class UsRepository implements IUsRepository {
      * @return true if the user story is added and an UserStoryAlreadyExistException otherwise.
      */
 
-
-    public boolean add(UserStory userStory){
+    @Override
+    public boolean save(UserStory userStory){
         if (!userStories.contains(userStory)) {
             userStories.add(userStory);
             return true;

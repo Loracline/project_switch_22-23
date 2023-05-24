@@ -55,7 +55,7 @@ public class UsService {
         Code projectCode = new Code(codeNumber);
 
         UserStory userStory = createUserStory(userStoryCreationDto, projectCode);
-        usRepository.add(userStory);
+        usRepository.save(userStory);
 
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
 
