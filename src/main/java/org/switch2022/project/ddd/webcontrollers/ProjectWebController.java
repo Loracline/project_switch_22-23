@@ -58,7 +58,7 @@ public class ProjectWebController {
      */
     @GetMapping("")
     @ResponseBody
-    public ResponseEntity<List<ProjectDto>> ListAllProjects() {
+    public ResponseEntity<List<ProjectDto>> listAllProjects() {
         List<ProjectDto> projects = projectListService.requestAllProjects();
         return new ResponseEntity<>(projects, HttpStatus.OK);
     }
