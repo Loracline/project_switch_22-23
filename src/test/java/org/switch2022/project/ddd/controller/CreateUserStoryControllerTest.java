@@ -41,33 +41,6 @@ class CreateUserStoryControllerTest {
     /**
      * Method: createUs()
      * Scenario 1: Tests the behavior of the createUs method in the CreateUserStoryController class
-     * when a null projectCodeOfInterest string is passed as input.
-     * The method should throw an IllegalArgumentException with a message indicating that the
-     * input parameters cannot be null.
-     * The test first arranges the input by initializing the expected error message. Then it acts
-     * by invoking the method with a null projectCodeOfInterest string and verifying that an
-     * IllegalArgumentException with the expected message is thrown. Finally, it asserts that the
-     * exception message matches the expected message.
-     *
-     * @throws IllegalArgumentException if the input parameters are null.
-     */
-
-    @Test
-    void ensureCreateUsCopyThrowsExceptionWithNullProjectDto() {
-        // Arrange
-        String expectedMessage = "The Project Code Of Interest must not be null";
-
-        // Act
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                controller.createUs(null, userStoryCreationDto));
-
-        // Assert
-        assertEquals(expectedMessage, exception.getMessage());
-
-    }
-
-    /**
-     * Scenario 2: Tests the behavior of the createUs method in the CreateUserStoryController class
      * when a null UserStoryCreationDto object is passed as input. The method should throw an
      * IllegalArgumentException with a message indicating that the input parameters cannot be null.
      *
@@ -77,18 +50,17 @@ class CreateUserStoryControllerTest {
     void ensureCreateUsThrowsExceptionWithNullUserStoryCreationDto() {
         // Arrange
         CreateUserStoryController controller = new CreateUserStoryController();
-        String projectCodeOfInterest = "P001";
 
         // Act
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                controller.createUs(projectCodeOfInterest, null));
+                controller.createUs( null));
 
         // Assert
         assertEquals("User Story Creation Dto", exception.getMessage());
     }
 
     /**
-     * Scenario 3: This test verifies the behavior of the createUs method in the
+     * Scenario 2: This test verifies the behavior of the createUs method in the
      * CreateUserStoryController class when a valid UserStoryCreationDto object is passed as input.
      * The method should successfully create a User Story and return a User Story Id. It verifies
      * that a User Story is created successfully by mocking the necessary dependencies,
@@ -100,14 +72,14 @@ class CreateUserStoryControllerTest {
         UsId usId = mock(UsId.class);
         String projectCode = "P001";
         String acceptanceCriteria = "E-mail must have an @ and a dot";
-        userStoryCreationDto = new UserStoryCreationDto("US001",
+        userStoryCreationDto = new UserStoryCreationDto("P001","US001",
                 "As a user, I want to be able to log in to the system.", "User",
                 singletonList(acceptanceCriteria), 1);
 
-        when(usService.createUs(projectCode, userStoryCreationDto)).thenReturn(usId);
+        when(usService.createUs(userStoryCreationDto)).thenReturn(usId);
 
         // Act
-        UsId result = controller.createUs(projectCode, userStoryCreationDto);
+        UsId result = controller.createUs( userStoryCreationDto);
 
         // Assert
         assertNotNull(result);
