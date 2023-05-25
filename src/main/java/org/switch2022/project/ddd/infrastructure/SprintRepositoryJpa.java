@@ -31,10 +31,10 @@ public class SprintRepositoryJpa implements ISprintRepository {
     @Override
     public Optional<Sprint> findById(SprintId sprintId) {
         Sprint sprint = null;
-        for (SprintJpa sprintJpa : iSprintJpaRepository.findAll()) {
-            if(iSprintJpaRepository.existsById(sprintId.getSprintId())) {
-                sprint = sprintDomainDataAssembler.toDomain(sprintJpa);
-            }
+        Optional<SprintJpa> sprintJpaOptional =
+                iSprintJpaRepository.findById(sprintId.getSprintId());
+        if (sprintJpaOptional.isPresent()) {
+            sprint = sprintDomainDataAssembler.toDomain(sprintJpaOptional.get());
         }
         return Optional.ofNullable(sprint);
     }
