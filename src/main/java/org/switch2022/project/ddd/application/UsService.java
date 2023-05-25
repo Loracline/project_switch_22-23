@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @Service
 public class UsService {
     @Autowired
+    @Qualifier("usRepositoryJpa")
     private IUsRepository usRepository;
     @Autowired
     private IProjectRepository projectRepository;

@@ -46,7 +46,7 @@ public class ProjectJpa {
      */
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "productBacklog_id", referencedColumnName = "id")
+    @JoinColumn(name = "productBacklog_id", referencedColumnName = "productBacklogId")
     private ProductBacklogJpa productBacklog;
 
     /**

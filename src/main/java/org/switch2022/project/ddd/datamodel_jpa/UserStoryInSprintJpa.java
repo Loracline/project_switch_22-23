@@ -2,9 +2,8 @@ package org.switch2022.project.ddd.datamodel_jpa;
 
 import lombok.Data;
 import lombok.Getter;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -18,6 +17,9 @@ public class UserStoryInSprintJpa {
     @Getter
     private String usId;
     private int effort;
+    @ManyToOne
+    @JoinColumn(name = "sprint", nullable = false)
+    private SprintJpa sprint;
 
     /**
      * Constructor
