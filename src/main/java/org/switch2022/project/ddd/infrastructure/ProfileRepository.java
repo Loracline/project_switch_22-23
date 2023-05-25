@@ -1,6 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.value_object.Name;
@@ -14,7 +14,7 @@ import java.util.Objects;
 /**
  * Class ProfileRepository allows to manage profiles records.
  */
-@Component
+@Repository("profile_memory")
 public class ProfileRepository implements IProfileRepository {
     /**
      * Attributes
@@ -61,7 +61,7 @@ public class ProfileRepository implements IProfileRepository {
      */
 
 
-    public boolean add(Profile profile) {
+    public boolean save(Profile profile) {
         if (profiles.contains(profile)) {
             throw new AlreadyExistsInRepoException("The profile already exists in the repository.");
         } else {
@@ -71,25 +71,24 @@ public class ProfileRepository implements IProfileRepository {
     }
 
     /**
-     * This method gets the size of the repository list
+     * This method gets the size of the repository list.
      *
-     * @return the integer equivalent to the size of the list of business sectors.
+     * @return the integer equivalent to the size of the list of profiles.
      */
     @Override
-    public int getSize() {
+    public int count() {
         return profiles.size();
     }
 
     /**
-     *
      * This method returns the profile in this repository with the given name.
      * If the profile is not found, it throws a NotFoundInRepoException.
+     *
      * @param profileName the name of the profile to be found
      * @return the profile with the given name.
-     *
      */
     @Override
-    public Profile getProfileByName(Name profileName) {
+    public Profile findByProfileName(Name profileName) {
         Profile profileRequested = null;
         int i = 0;
         while (i < this.profiles.size() && profileRequested == null) {
@@ -99,8 +98,7 @@ public class ProfileRepository implements IProfileRepository {
             i++;
         }
         if (profileRequested == null) {
-            throw new NotFoundInRepoException("This profile " +
-                    "doesn't exist");
+            throw new NotFoundInRepoException("There is no profile with the given name in the repository.");
         }
         return profileRequested;
 

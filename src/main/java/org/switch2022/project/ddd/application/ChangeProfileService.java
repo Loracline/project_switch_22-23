@@ -39,7 +39,7 @@ public class ChangeProfileService {
             throw new InvalidInputException("Email and profile name cannot be null");
         }
         Account account = accountRepository.findAccountByEmail(email);
-        Profile profile = profileRepository.getProfileByName(new Name(profileName));
+        Profile profile = profileRepository.findByProfileName(new Name(profileName));
 
         String[] parts = profile.getProfileId().split("prf");
         int profileNumber = Integer.parseInt(parts[1]);

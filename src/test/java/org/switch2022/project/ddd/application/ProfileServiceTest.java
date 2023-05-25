@@ -37,7 +37,7 @@ class ProfileServiceTest {
     void ensureThatProfileWasSuccessfullyCreated() {
         //Arrange
 
-        when(repository.add(any())).thenReturn(true);
+        when(repository.save(any())).thenReturn(true);
         //Act
         boolean result = service.createProfile("John");
 
@@ -55,7 +55,7 @@ class ProfileServiceTest {
         //Arrange
         String expected = "This profile already exists.";
 
-        when(repository.add(any())).thenThrow(new AlreadyExistsInRepoException(expected));
+        when(repository.save(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         //Act
         AlreadyExistsInRepoException result =
