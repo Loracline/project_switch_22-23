@@ -34,7 +34,11 @@ public class SprintWebController {
     @PostMapping
     public ResponseEntity<Object> createSprint(@RequestBody String projectCode,
                                                String startDate) throws Exception {
-        String sprintCode = createSprintService.createSprint(projectCode, startDate);
-        return new ResponseEntity<>(sprintCode, HttpStatus.CREATED);
+        try {
+            String sprintCode = createSprintService.createSprint(projectCode, startDate);
+            return new ResponseEntity<>(sprintCode, HttpStatus.CREATED);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

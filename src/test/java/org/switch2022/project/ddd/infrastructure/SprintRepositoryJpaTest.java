@@ -7,7 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.datamodel.JPA.SprintJpa;
-import org.switch2022.project.ddd.datamodel.JPA.assemblers.SprintDataAssembler;
+import org.switch2022.project.ddd.datamodel.JPA.assemblers.SprintDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
@@ -37,7 +37,7 @@ class SprintRepositoryJpaTest {
     @MockBean
     ISprintJpaRepository ISprintJpaRepository;
     @MockBean
-    SprintDataAssembler sprintDataAssembler;
+    SprintDomainDataAssembler sprintDomainDataAssembler;
 
 
     /**
@@ -72,7 +72,7 @@ class SprintRepositoryJpaTest {
         SprintId sprintId = new SprintId("P001", "S001");
         when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(false);
 
-        when(sprintDataAssembler.toDomain(sprintJpa)).thenReturn(null);
+        when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(null);
 
         Optional<Sprint> expected = Optional.empty();
         //Act
@@ -97,7 +97,7 @@ class SprintRepositoryJpaTest {
         when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(true);
 
         Sprint sprintDouble = mock(Sprint.class);
-        when(sprintDataAssembler.toDomain(sprintJpa)).thenReturn(sprintDouble);
+        when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(sprintDouble);
 
         Optional<Sprint> expected = Optional.of(sprintDouble);
         //Act
@@ -136,7 +136,7 @@ class SprintRepositoryJpaTest {
         //Arrange
         Sprint sprintDouble = mock(Sprint.class);
         SprintJpa sprintJpa = mock(SprintJpa.class);
-        when(sprintDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
+        when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
         String sprintIdString = "p001_s001";
         when(sprintJpa.getSprintId()).thenReturn(sprintIdString);
         when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(false);
@@ -159,7 +159,7 @@ class SprintRepositoryJpaTest {
         //Arrange
         Sprint sprintDouble = mock(Sprint.class);
         SprintJpa sprintJpa = mock(SprintJpa.class);
-        when(sprintDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
+        when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
         String sprintIdString = "p001_s001";
         when(sprintJpa.getSprintId()).thenReturn(sprintIdString);
         when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(true);
@@ -189,8 +189,8 @@ class SprintRepositoryJpaTest {
         when( ISprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
 
         Code projectCode = mock(Code.class);
-        when(sprintDataAssembler.toDomain(sprintJpa)).thenReturn(sprint);
-        when(sprintDataAssembler.toDomain(sprintJpaDouble)).thenReturn(sprintDouble);
+        when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(sprint);
+        when(sprintDomainDataAssembler.toDomain(sprintJpaDouble)).thenReturn(sprintDouble);
 
 
         //Act

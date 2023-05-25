@@ -19,7 +19,7 @@ import java.util.Locale;
  * and vice versa.
  */
 @Service
-public class SprintDataAssembler {
+public class SprintDomainDataAssembler {
     /**
      * Converts a Sprint instance to a SprintJpa instance.
      *

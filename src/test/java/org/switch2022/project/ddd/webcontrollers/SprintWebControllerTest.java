@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.switch2022.project.ddd.application.CreateSprintService;
 
@@ -44,16 +45,13 @@ class SprintWebControllerTest {
 
         String projectCode = "P001";
         String startDate = "23/03/2024";
-        String sprintCode = "SP003";
 
-        when(createSprintService.createSprint(projectCode, startDate)).thenReturn
-                (sprintCode);
+        when(createSprintService.createSprint(projectCode, startDate)).thenThrow(new Exception("Failed to create sprint"));
 
         ResponseEntity<Object> responseEntity =
                 sprintWebController.createSprint(projectCode, startDate);
 
-        assertEquals(responseEntity.getStatusCodeValue(),201);
-        Object res = responseEntity.getBody();
-        assertEquals(res, sprintCode);
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertEquals("Failed to create sprint", responseEntity.getBody());
     }
 }

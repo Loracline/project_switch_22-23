@@ -3,7 +3,7 @@ package org.switch2022.project.ddd.infrastructure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.datamodel.JPA.SprintJpa;
-import org.switch2022.project.ddd.datamodel.JPA.assemblers.SprintDataAssembler;
+import org.switch2022.project.ddd.datamodel.JPA.assemblers.SprintDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
@@ -20,7 +20,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
     @Autowired
     ISprintJpaRepository iSprintJpaRepository;
     @Autowired
-    SprintDataAssembler sprintDataAssembler;
+    SprintDomainDataAssembler sprintDomainDataAssembler;
 
     /**
      * Retrieves a Sprint object by its SprintId.
@@ -33,7 +33,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
         Sprint sprint = null;
         for (SprintJpa sprintJpa : iSprintJpaRepository.findAll()) {
             if(iSprintJpaRepository.existsById(sprintId.getSprintId())) {
-                sprint = sprintDataAssembler.toDomain(sprintJpa);
+                sprint = sprintDomainDataAssembler.toDomain(sprintJpa);
             }
         }
         return Optional.ofNullable(sprint);
@@ -58,7 +58,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
     @Override
     public boolean save(Sprint sprint) {
         boolean result = false;
-        SprintJpa sprintJpa = sprintDataAssembler.toData(sprint);
+        SprintJpa sprintJpa = sprintDomainDataAssembler.toData(sprint);
         if (!iSprintJpaRepository.existsById(sprintJpa.getSprintId())) {
             iSprintJpaRepository.save(sprintJpa);
             result = true;
@@ -76,7 +76,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
         List<Sprint> sprintsByProject = new ArrayList<>();
         List<SprintJpa> sprintJpas = iSprintJpaRepository.findByProjectCode(projectCode.getCode());
         for ( SprintJpa sprintJpa : sprintJpas) {
-            sprintsByProject.add(sprintDataAssembler.toDomain(sprintJpa));
+            sprintsByProject.add(sprintDomainDataAssembler.toDomain(sprintJpa));
         }
         return sprintsByProject;
     }
