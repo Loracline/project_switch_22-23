@@ -47,7 +47,7 @@ public class UserStoriesInSprintService {
 
         int codeNumber = Utils.getIntFromAlphanumericString(projectCode, "P");
         Code code = new Code(codeNumber);
-        List<Sprint> sprints = this.sprintRepository.findAllByProject(code);
+        List<Sprint> sprints = this.sprintRepository.findByProjectCode(code);
 
         Optional<Sprint> currentSprint = getCurrentSprint(sprints, date);
 

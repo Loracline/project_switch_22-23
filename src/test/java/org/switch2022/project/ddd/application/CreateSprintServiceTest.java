@@ -63,7 +63,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
-        when(sprintRepository.getSprintNumber()).thenReturn(0);
+        when(sprintRepository.count()).thenReturn(0L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -74,8 +74,8 @@ class CreateSprintServiceTest {
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(true);
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         //Act
         String result = createSprintService.createSprint(projectCode, startDate);
         //Assert
@@ -99,7 +99,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -111,9 +111,9 @@ class CreateSprintServiceTest {
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(true);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         //Act
         String result = createSprintService.createSprint(projectCode, startDate);
         //Assert
@@ -137,7 +137,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -149,9 +149,9 @@ class CreateSprintServiceTest {
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(false);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 createSprintService.createSprint(projectCode, startDate));
 
@@ -179,7 +179,7 @@ class CreateSprintServiceTest {
         Project projectDouble = mock(Project.class);
         Optional<Project> projectOptional = Optional.of(projectDouble);
         Optional<SprintDuration> sprintDurationOptional = Optional.empty();
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -191,9 +191,9 @@ class CreateSprintServiceTest {
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(false);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 createSprintService.createSprint(projectCode, startDate));
 
@@ -222,7 +222,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -234,9 +234,9 @@ class CreateSprintServiceTest {
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(false);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(true);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 createSprintService.createSprint(projectCode, startDate));
 
@@ -265,7 +265,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -277,9 +277,9 @@ class CreateSprintServiceTest {
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(true);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 createSprintService.createSprint(projectCode, startDate));
 
@@ -308,7 +308,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(ProjectStatus.PLANNED)).thenReturn(false);
         when(projectDouble.hasStatus(ProjectStatus.CLOSED)).thenReturn(true);
@@ -321,9 +321,9 @@ class CreateSprintServiceTest {
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(true);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 createSprintService.createSprint(projectCode, startDate));
 
@@ -352,7 +352,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(ProjectStatus.PLANNED)).thenReturn(true);
         when(projectDouble.hasStatus(ProjectStatus.CLOSED)).thenReturn(false);
@@ -365,9 +365,9 @@ class CreateSprintServiceTest {
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(true);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 createSprintService.createSprint(projectCode, startDate));
 
@@ -389,16 +389,16 @@ class CreateSprintServiceTest {
         Sprint sprintDouble = mock(Sprint.class);
         Sprint sprintDoubleTwo = mock(Sprint.class);
         Optional<Project> projectOptional = Optional.empty();
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(sprintFactory.createSprint(any(), any(), any(), any())).thenReturn(sprintDouble);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(true);
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(true);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(true);
+        when(sprintRepository.save(sprintDouble)).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 createSprintService.createSprint(projectCode, startDate));
 
@@ -427,7 +427,7 @@ class CreateSprintServiceTest {
         Optional<Project> projectOptional = Optional.of(projectDouble);
         SprintDuration sprintDuration = new SprintDuration(2);
         Optional<SprintDuration> sprintDurationOptional = Optional.of(sprintDuration);
-        when(sprintRepository.getSprintNumber()).thenReturn(1);
+        when(sprintRepository.count()).thenReturn(1L);
         when(projectRepository.findByCode(any())).thenReturn(projectOptional);
         when(projectDouble.hasStatus(any())).thenReturn(false);
         when(projectDouble.getSprintDuration()).thenReturn(sprintDurationOptional);
@@ -439,9 +439,9 @@ class CreateSprintServiceTest {
         when(sprintDouble.isEndDateBeforeOrGreaterThanDate(any())).thenReturn(true);
         List<Sprint> sprints = new ArrayList<>();
         sprints.add(sprintDoubleTwo);
-        when(sprintRepository.findAllByProject(any())).thenReturn(sprints);
+        when(sprintRepository.findByProjectCode(any())).thenReturn(sprints);
         when(sprintDoubleTwo.isPeriodNotOverlapping(sprintDouble)).thenReturn(true);
-        when(sprintRepository.addSprintToSprintRepository(sprintDouble)).thenReturn(false);
+        when(sprintRepository.save(sprintDouble)).thenReturn(false);
         Exception exception = assertThrows(Exception.class, () ->
                 createSprintService.createSprint(projectCode, startDate));
 

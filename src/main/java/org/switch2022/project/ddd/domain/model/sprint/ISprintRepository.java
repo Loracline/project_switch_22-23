@@ -3,28 +3,38 @@ package org.switch2022.project.ddd.domain.model.sprint;
 
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ISprintRepository {
 
-    Optional<Sprint> getSprintById (SprintId sprintId);
-
-    int getSprintNumber();
-
-    boolean addSprintToSprintRepository(Sprint sprint);
-
-    List<Sprint> findAllByProject(Code projectCode);
+    /**
+     * Retrieves a Sprint object by its SprintId.
+     *
+     * @param sprintId The identifier of the Sprint.
+     * @return An Optional object containing the found Sprint, or an empty Optional if no Sprint is found.
+     */
+    Optional<Sprint> findById(SprintId sprintId);
 
     /**
-     * This method estimates the effort of a user story.
-     *
-     * @param usId of the user story to estimate the effort.
-     * @param effort given to the user story.
-     * @return TRUE if the effort was set and false otherwise.
+     * Counts the number of Sprint objects.
+     * @return The total count of Sprint objects.
      */
+    long count();
 
-    boolean estimateEffortUserStory(UsId usId, int effort, SprintId sprintId);
+    /**
+     * Saves a Sprint object.
+     *
+     * @param sprint The Sprint object to be saved.
+     * @return True if the save operation is successful, false otherwise.
+     */
+    boolean save(Sprint sprint);
+    /**
+     * Retrieves a list of Sprint objects associated with a specific project code.
+     *
+     * @param projectCode The code of the project.
+     * @return A list of Sprint objects associated with the project code.
+     */
+    List<Sprint> findByProjectCode(Code projectCode);
 }

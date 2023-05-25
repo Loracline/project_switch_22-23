@@ -33,28 +33,29 @@ public class UsService {
 
     /**
      * This method creates a userStory and adds it to the product backlog or throws an exception
-     * if userStory is not created. This method creates a User Story by converting the project
+     * if userStory is not created. This method receives a UserStoryCreationDto and  creates a User
+     * Story by converting the
+     * project
      * code of interest into a numeric value, creating a project code. The created User Story is
      * then added to the User Story repository, and its ID is generated. The User Story is also
      * added to the product backlog with the specified priority, and if it already exists it
      * should be deleted and the exception is rethrown.
      *
-     * @param projectCodeOfInterest the code string that represents the project in which the user
-     *                              story will be created
      * @param userStoryCreationDto  the UserStoryCreationDto that represents the data for
      *                              creating the user story
-     * @return the created User Story ID.
+     *
+     * @return the created User Story ID
      * @throws AlreadyExistsInRepoException if an error occurs during the User Story creation
-     * process or if the User
-     *                                      Story
+     * process or if the User Story
      */
 
-    public UsId createUs(String projectCodeOfInterest, UserStoryCreationDto userStoryCreationDto) throws Exception {
+    public UsId createUs(UserStoryCreationDto userStoryCreationDto) throws Exception {
+        String projectCodeOfInterest = userStoryCreationDto.projectCode;
         int codeNumber = Utils.getIntFromAlphanumericString(projectCodeOfInterest, "P");
         Code projectCode = new Code(codeNumber);
 
         UserStory userStory = createUserStory(userStoryCreationDto, projectCode);
-        usRepository.add(userStory);
+        usRepository.save(userStory);
 
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
 

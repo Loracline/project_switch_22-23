@@ -27,11 +27,11 @@ public class UserStoryInSprintService {
     /**
      * This method estimates the effort of a user story.
      *
-     * @param usId of the user story which effort we want to estimate.
-     * @param effort to use for user story estimation.
+     * @param usId     of the user story which effort we want to estimate.
+     * @param effort   to use for user story estimation.
      * @param sprintId of where the user story is allocated.
      * @return true if user story effort is estimated.
-     * @throws Exception
+     * @throws Exception when sprint is not valid.
      */
 
 
@@ -50,7 +50,7 @@ public class UserStoryInSprintService {
 
         Sprint sprint = getSprintById(sprintIdVO);
         if (isSprintInValidPeriod(sprint, LocalDate.now()) == 1 && sprint.hasUserStory(usIdVO)) {
-            effortEstimation = sprintRepository.estimateEffortUserStory(usIdVO, effort, sprintIdVO);
+            effortEstimation = sprint.estimateEffortUserStory(usIdVO, effort);
         }
         return effortEstimation;
     }
@@ -64,7 +64,7 @@ public class UserStoryInSprintService {
 
     private Sprint getSprintById(SprintId sprintId) {
         Sprint sprint;
-        Optional<Sprint> sprintOptional = sprintRepository.getSprintById(sprintId);
+        Optional<Sprint> sprintOptional = sprintRepository.findById(sprintId);
         if (sprintOptional.isPresent()) {
             sprint = sprintOptional.get();
         } else {
@@ -74,7 +74,8 @@ public class UserStoryInSprintService {
     }
 
     /**
-     * This method checks if the sprint period still allows to add userStories (has not started and is not finished).
+     * This method checks if the sprint period still allows to add userStories (has not
+     * started and is not finished).
      *
      * @param sprint to add the userStory
      * @param date   date to verify

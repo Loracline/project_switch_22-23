@@ -54,7 +54,7 @@ public class CreateSprintService {
         Validate.notNullOrEmptyOrBlank(startDate, "sprint Start Date");
         Validate.notNullOrEmptyOrBlank(projectCode, "project code");
         Code code = new Code(Utils.getIntFromAlphanumericString(projectCode, "p"));
-        SprintNumber sprintNumber = new SprintNumber(sprintRepository.getSprintNumber() + 1);
+        SprintNumber sprintNumber = new SprintNumber(sprintRepository.count() + 1);
         SprintId sprintId = new SprintId(projectCode, sprintNumber.getSprintNumber());
         String sprintIdToBeReturned = "";
         Project project = getProjectByCode(projectCode);
@@ -62,7 +62,7 @@ public class CreateSprintService {
             Period period = new Period(LocalDate.parse(startDate), getSprintDuration(project).getSprintDuration());
             Sprint sprint = sprintFactory.createSprint(code, sprintId, sprintNumber, period);
             if (verifyIfPeriodIsValid(project, sprint) == 1 &&
-                    sprintRepository.addSprintToSprintRepository(sprint)) {
+                    sprintRepository.save(sprint)) {
                 sprintIdToBeReturned = sprintId.getSprintId();
             } else {
                 throw new AlreadyExistsInRepoException("The sprint already exists");
@@ -169,7 +169,7 @@ public class CreateSprintService {
                 (Utils.getIntFromAlphanumericString(project.getProjectCode(), "P"));
         if (isSprintPeriodAfterProjectStartDate(project, sprint)) {
             if (isSprintEndDateBeforeProjectEndDate(project, sprint)) {
-                if (isSprintPeriodValid(sprintRepository.findAllByProject(projectCode), sprint)) {
+                if (isSprintPeriodValid(sprintRepository.findByProjectCode(projectCode), sprint)) {
                     result = 1;
                 } else {
                     throw new Exception("The sprint period is overlapping with other sprint");

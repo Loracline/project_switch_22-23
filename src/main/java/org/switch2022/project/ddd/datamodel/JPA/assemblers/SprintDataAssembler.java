@@ -42,7 +42,12 @@ public class SprintDataAssembler {
         }
         return sprintJpa;
     }
-
+    /**
+     * Converts a SprintJpa instance to a Sprint instance.
+     *
+     * @param sprintJpa The SprintJpa instance to be converted.
+     * @return The converted Sprint instance.
+     */
     public Sprint toDomain (SprintJpa sprintJpa) {
         ISprintFactory iSprintFactory = new SprintFactory();
 
