@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerFactory;
@@ -20,9 +21,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = CustomerService.class
+        classes = CustomerServiceTest.class
 )
-
 class CustomerServiceTest {
 
     @InjectMocks
@@ -32,6 +32,7 @@ class CustomerServiceTest {
     ICustomerFactory factory;
 
     @MockBean
+    @Qualifier("customer_jpa")
     ICustomerRepository repository;
 
     @DisplayName("Customer is created successfully")
@@ -41,7 +42,7 @@ class CustomerServiceTest {
         String customerName = "Partilha Cortesia, Lda.";
         String customerTaxId = "514024054";
 
-        when(repository.add(any())).thenReturn(true);
+        when(repository.save(any())).thenReturn(true);
 
         boolean expected = true;
 
@@ -60,7 +61,7 @@ class CustomerServiceTest {
         String customerTaxId = "514 024 054";
 
         String expected = "Customer's tax ID already exists!";
-        when(repository.add(any())).thenThrow(new AlreadyExistsInRepoException(expected));
+        when(repository.save(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         // Act
         AlreadyExistsInRepoException result =

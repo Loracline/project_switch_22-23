@@ -74,7 +74,7 @@ class ProfileRepositoryTest {
         //Arrange
         ProfileRepository reference = new ProfileRepository();
         Profile profileDouble = mock(Profile.class);
-        reference.add(profileDouble);
+        reference.save(profileDouble);
         ProfileRepository other = new ProfileRepository();
         boolean expected = false;
 
@@ -131,9 +131,9 @@ class ProfileRepositoryTest {
         Profile profileOneDouble = mock(Profile.class);
         Profile profileTwoDouble = mock(Profile.class);
         ProfileRepository profileOne = new ProfileRepository();
-        profileOne.add(profileOneDouble);
+        profileOne.save(profileOneDouble);
         ProfileRepository profileTwo = new ProfileRepository();
-        profileTwo.add(profileTwoDouble);
+        profileTwo.save(profileTwoDouble);
 
         //Assert
         assertNotEquals(profileOne.hashCode(), profileTwo.hashCode());
@@ -152,7 +152,7 @@ class ProfileRepositoryTest {
         ProfileRepository repository = new ProfileRepository();
 
         //Act
-        boolean result = repository.add(profileDouble);
+        boolean result = repository.save(profileDouble);
 
         //Assert
         assertTrue(result);
@@ -171,19 +171,19 @@ class ProfileRepositoryTest {
         Profile profileDouble = mock(Profile.class);
         ProfileRepository repository = new ProfileRepository();
 
-        repository.add(profileDouble);
+        repository.save(profileDouble);
         String expected = "The profile already exists in the repository.";
 
         //Act
         AlreadyExistsInRepoException exception = assertThrows(AlreadyExistsInRepoException.class, () ->
-                repository.add(profileDouble));
+                repository.save(profileDouble));
 
         //Assert
         assertEquals(expected, exception.getMessage());
     }
 
     /**
-     * Method: getSize().
+     * Method: count().
      * <p>
      * Scenario 01: return the number of profiles from a list
      * Expected result: the number of Profile instances in the list.
@@ -195,11 +195,11 @@ class ProfileRepositoryTest {
         Profile profileTwoDouble = mock(Profile.class);
 
         ProfileRepository repository = new ProfileRepository();
-        repository.add(profileOneDouble);
-        repository.add(profileTwoDouble);
+        repository.save(profileOneDouble);
+        repository.save(profileTwoDouble);
 
         int expected = 2;
-        int result = repository.getSize();
+        int result = repository.count();
 
         assertEquals(expected, result);
     }
@@ -217,14 +217,14 @@ class ProfileRepositoryTest {
         Profile profileTwo = mock(Profile.class);
 
         ProfileRepository repository = new ProfileRepository();
-        repository.add(profileOne);
-        repository.add(profileTwo);
+        repository.save(profileOne);
+        repository.save(profileTwo);
 
         Name profileName = mock(Name.class);
         when(profileOne.hasName(profileName)).thenReturn(true);
 
         // Act
-        Profile result = repository.getProfileByName(profileName);
+        Profile result = repository.findByProfileName(profileName);
 
         // Assert
         assertEquals(profileOne, result);
@@ -240,12 +240,12 @@ class ProfileRepositoryTest {
         //Arrange
         ProfileRepository repository = new ProfileRepository();
         Name profileName = new Name("manager");
-        String message = "This profile doesn't exist";
+        String message = "There is no profile with the given name in the repository.";
 
         //Act
         NotFoundInRepoException result =
                 assertThrows(NotFoundInRepoException.class,
-                        () -> repository.getProfileByName(profileName));
+                        () -> repository.findByProfileName(profileName));
 
         //Assert
         assertEquals(message, result.getMessage());
@@ -265,11 +265,11 @@ class ProfileRepositoryTest {
         ProfileRepository repository = new ProfileRepository();
         Name profileName = new Name("manager");
         when(profileOne.hasName(profileName)).thenReturn(false);
-        String message = "This profile doesn't exist";
+        String message = "There is no profile with the given name in the repository.";
 
         //Act
         NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
-                () -> repository.getProfileByName(profileName));
+                () -> repository.findByProfileName(profileName));
 
         //Assert
         assertEquals(message, result.getMessage());

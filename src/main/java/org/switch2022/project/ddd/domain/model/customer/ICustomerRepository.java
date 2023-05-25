@@ -1,39 +1,34 @@
 package org.switch2022.project.ddd.domain.model.customer;
 
 import org.switch2022.project.ddd.domain.value_object.TaxId;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 /**
- * An interface representing a repository for managing customers.
+ * Interface representing a repository for managing {@link Customer} entities.
+ * Provides methods for saving and retrieving customer data.
  */
 public interface ICustomerRepository {
 
     /**
-     * Retrieves the customer name with the specified tax ID from the repository, if it exists.
+     * Saves a {@link Customer} object in the repository.
      *
-     * @param taxId the tax ID of the customer to retrieve.
-     * @return an Optional containing the customer with the specified tax ID, or an empty Optional if no such customer
-     * exists.
+     * @param customer The customer to be saved.
+     * @return {@code true} if the customer was successfully saved, {@code false} otherwise.
+     */
+    boolean save(Customer customer);
+
+    /**
+     * Finds the customer name associated with the given tax ID in the repository.
+     *
+     * @param taxId The tax ID of the customer.
+     * @return The name of the customer.
      */
     String findCustomerNameByTaxId(TaxId taxId);
 
     /**
-     * Adds the specified customer to the repository.
+     * Finds the customer tax ID associated with the given customer name in the repository.
      *
-     * @param customer the customer to add to the repository.
-     * @return TRUE if the customer was added successfully.
-     * @throws org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException if the repository already contains
-     *                                                                            a customer with the same tax ID as
-     *                                                                            the specified customer.
+     * @param customerName The name of the customer.
+     * @return The tax ID of the customer.
      */
-    boolean add(Customer customer);
-
-    /**
-     * Retrieves the ID of a customer with the given name from the repository.
-     *
-     * @param customerName the name of the customer whose ID is being requested.
-     * @return the ID of the customer with the given name.
-     * @throws NotFoundInRepoException if a customer with the given name is not found in the repository.
-     */
-    String getCustomerTaxIdByName(String customerName);
+    String findCustomerTaxIdByName(String customerName);
 }

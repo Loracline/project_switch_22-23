@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountFactory;
@@ -31,9 +32,11 @@ public class ResourceAllocationService {
 
     @SuppressWarnings("all")
     @Autowired
+    @Qualifier("jpa")
     private IProjectResourceRepository resourceRepository;
     @SuppressWarnings("all")
     @Autowired
+    @Qualifier("repositoryJpa")
     private IProjectRepository projectRepository;
     @SuppressWarnings("all")
     @Autowired

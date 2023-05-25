@@ -30,7 +30,7 @@ public class ProfileService {
         Name name = new Name(profileName);
         int idProfileNumber = calculateNextProfileNumber();
         Profile profile = profileFactory.createProfile(name,idProfileNumber);
-        return profileRepository.add(profile);
+        return profileRepository.save(profile);
     }
 
     /**
@@ -40,6 +40,6 @@ public class ProfileService {
      * size of the list) plus one, which logically equals the next number.
      */
     private int calculateNextProfileNumber() {
-        return profileRepository.getSize() + 1;
+        return profileRepository.count() + 1;
     }
 }
