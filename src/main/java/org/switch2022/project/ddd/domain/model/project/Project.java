@@ -24,7 +24,6 @@ public class Project implements Entity<Project> {
     private NumberOfPlannedSprints numberOfPlannedSprints;
     private Period period;
     private SprintDuration sprintDuration;
-    private List<SprintId> sprints;
     private final BusinessSectorId businessSectorId;
     private final TaxId customerTaxId;
     private final ProjectTypologyId projectTypologyId;
@@ -102,7 +101,7 @@ public class Project implements Entity<Project> {
      *
      * @param projectStatus of the project.
      */
-    protected void setProjectStatus(ProjectStatus projectStatus) {
+    public void setProjectStatus(ProjectStatus projectStatus) {
         this.projectStatus = projectStatus;
     }
 
@@ -120,7 +119,7 @@ public class Project implements Entity<Project> {
      *
      * @return a String with the description of the project.
      */
-    protected String getDescription() {
+    public String getDescription() {
         return description.getDescription();
     }
 
@@ -129,7 +128,7 @@ public class Project implements Entity<Project> {
      *
      * @return a String with the business sector ID of the project.
      */
-    protected String getBusinessSectorId() {
+    public String getBusinessSectorId() {
         return businessSectorId.getBusinessSectorId();
     }
 
@@ -137,10 +136,20 @@ public class Project implements Entity<Project> {
     /**
      * Getter method for the attribute: customerTaxId.
      *
-     * @return a String with the customer ID of the project.
+     * @return a TaxID with the customer ID of the project.
      */
     public TaxId getCustomerTaxId() {
         return customerTaxId;
+    }
+
+    /**
+     * Getter method for the attribute: customerTaxId.
+     *
+     * @return a String with the customer ID of the project.
+     */
+
+    public String getCustomerTaxID() {
+        return customerTaxId.getNumber();
     }
 
     /**
@@ -148,7 +157,7 @@ public class Project implements Entity<Project> {
      *
      * @return a String with the project typology ID of the project.
      */
-    protected String getProjectTypologyId() {
+    public String getProjectTypologyId() {
         return projectTypologyId.getProjectTypologyId();
     }
 
@@ -157,7 +166,7 @@ public class Project implements Entity<Project> {
      *
      * @param sprintDuration the sprint duration object to set for this project.
      */
-    protected void setSprintDuration(int sprintDuration) {
+    public void setSprintDuration(int sprintDuration) {
         Utils.hasStatus(this.projectStatus, ProjectStatus.INCEPTION);
         this.sprintDuration = new SprintDuration(sprintDuration);
     }
@@ -167,7 +176,7 @@ public class Project implements Entity<Project> {
      *
      * @param period the period object
      */
-    protected boolean isPeriodAssigned(Period period) {
+    public boolean isPeriodAssigned(Period period) {
         boolean isAssignedPeriod = false;
         if (projectStatus == ProjectStatus.INCEPTION) {
             this.period = period;
@@ -181,7 +190,7 @@ public class Project implements Entity<Project> {
      *
      * @param budget the budget object
      */
-    protected boolean isBudgetAssigned(Budget budget) {
+    public boolean isBudgetAssigned(Budget budget) {
         boolean isBudgetAssigned = false;
         if (projectStatus == ProjectStatus.INCEPTION) {
             this.budget = budget;
@@ -195,7 +204,7 @@ public class Project implements Entity<Project> {
      *
      * @param numberOfPlannedSprints of the project.
      */
-    protected boolean isNumberOfPlannedSprintsDefined(NumberOfPlannedSprints numberOfPlannedSprints) {
+    public boolean isNumberOfPlannedSprintsDefined(NumberOfPlannedSprints numberOfPlannedSprints) {
         boolean isNumberOfPlannedSprintsDefined = false;
         if (projectStatus == ProjectStatus.INCEPTION) {
             this.numberOfPlannedSprints = numberOfPlannedSprints;
@@ -291,6 +300,42 @@ public class Project implements Entity<Project> {
     }
 
     /**
+     * Retrieves the budget of the project.
+     *
+     * @return The budget of the project as a double value.
+     */
+    public double getBudget() {
+        double result = 0;
+        if (this.budget != null) {
+            result = this.budget.getBudget().doubleValue();
+        }
+        return result;
+    }
+
+    /**
+     * Retrieves the number of planned sprints for the project.
+     *
+     * @return The number of planned sprints as an integer. If the number of planned sprints is null, it returns 0.
+     */
+    public int getPlannedSprints() {
+        int result = 0;
+        if (this.numberOfPlannedSprints != null) {
+            result = this.numberOfPlannedSprints.getNumberOfPlannedSprints();
+        }
+        return result;
+    }
+
+    /**
+     * Retrieves the identifier of the product backlog associated with the project.
+     *
+     * @return The identifier of the product backlog as a string.
+     */
+
+    public String getProductBacklogId() {
+        return this.productBacklog.getProductBacklogId();
+    }
+
+    /**
      * Checks if this period contains the specified period.
      *
      * @param otherPeriod The period to check for containment.
@@ -305,9 +350,11 @@ public class Project implements Entity<Project> {
      *
      * @return true if the current date is contained in Project period, and false otherwise.
      */
-    public boolean containsCurrentDate(){
+    public boolean containsCurrentDate() {
         return this.period.containsCurrentDate();
     }
+
+
 }
 
 

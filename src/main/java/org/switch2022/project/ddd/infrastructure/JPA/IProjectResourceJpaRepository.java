@@ -1,7 +1,7 @@
 package org.switch2022.project.ddd.infrastructure.JPA;
 
 import org.springframework.data.repository.CrudRepository;
-import org.switch2022.project.ddd.datamodel.JPA.ProjectResourceJpa;
+import org.switch2022.project.ddd.datamodel_jpa.ProjectResourceJpa;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Email;
 

@@ -5,9 +5,7 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 
-import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -61,7 +59,7 @@ public class SprintRepository implements ISprintRepository {
      * @return the sprint with given code.
      */
     @Override
-    public Optional<Sprint> getSprintById(SprintId sprintId) {
+    public Optional<Sprint> findById(SprintId sprintId) {
         Sprint sprintRequested = null;
         int i = 0;
         while (i < this.sprints.size() && sprintRequested == null) {
@@ -80,7 +78,7 @@ public class SprintRepository implements ISprintRepository {
      */
 
     @Override
-    public int getSprintNumber() {
+    public long count() {
         return sprints.size();
     }
 
@@ -92,13 +90,13 @@ public class SprintRepository implements ISprintRepository {
      */
 
     @Override
-    public boolean addSprintToSprintRepository(Sprint sprint) {
-        boolean sprintRegistered = false;
+    public boolean save(Sprint sprint) {
+        boolean result = false;
         if (!sprints.contains(sprint)) {
             sprints.add(sprint);
-            sprintRegistered = true;
+            result = true;
         }
-        return sprintRegistered;
+        return result;
     }
 
     /**
@@ -108,7 +106,7 @@ public class SprintRepository implements ISprintRepository {
      */
 
     @Override
-    public List<Sprint> findAllByProject(Code projectCode) {
+    public List<Sprint> findByProjectCode(Code projectCode) {
         List<Sprint> sprintsByProject = new ArrayList<>();
         for (Sprint sprint : sprints) {
             if (sprint.hasProjectCode(projectCode)) {
@@ -117,28 +115,4 @@ public class SprintRepository implements ISprintRepository {
         }
         return Collections.unmodifiableList(sprintsByProject);
     }
-
-    /**
-     * This method estimates the effort of a user story.
-     *
-     * @param usId   of the user story to estimate the effort.
-     * @param effort given to the user story.
-     * @return TRUE if the effort was set and false otherwise.
-     */
-
-    @Override
-    public boolean estimateEffortUserStory(UsId usId, int effort, SprintId sprintId) {
-        boolean effortEstimation = false;
-        Optional<Sprint> optionalSprint = getSprintById(sprintId);
-        if (optionalSprint.isPresent()) {
-            Sprint sprintRequested = optionalSprint.get();
-            for (Sprint sprint : sprints) {
-                if (sprint.equals(sprintRequested)) {
-                    effortEstimation = sprint.estimateEffortUserStory(usId, effort);
-                }
-            }
-        }
-        return effortEstimation;
-    }
-
 }

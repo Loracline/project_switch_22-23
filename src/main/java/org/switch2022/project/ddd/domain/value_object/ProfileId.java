@@ -3,7 +3,7 @@ package org.switch2022.project.ddd.domain.value_object;
 import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
-public class ProfileId implements ValueObject <ProfileId> {
+public class ProfileId implements ValueObject<ProfileId> {
 
     private final String id;
 
@@ -13,11 +13,11 @@ public class ProfileId implements ValueObject <ProfileId> {
      * @param idNumber the id number of the profile.
      */
 
-    public ProfileId (final Number idNumber) {
+    public ProfileId(final Number idNumber) {
         Validate.notNull(idNumber, "The profile number must not be null");
         Validate.notNegative(idNumber, "profile number");
 
-        this.id = String.format("PR%03d", idNumber). toLowerCase();
+        this.id = String.format("PR%03d", idNumber).toLowerCase();
     }
 
     /**
@@ -26,7 +26,9 @@ public class ProfileId implements ValueObject <ProfileId> {
      * @return String representation of the profile ID.
      */
 
-    public String getProfileId () { return id; }
+    public String getProfileId() {
+        return id;
+    }
 
     /**
      * This method checks if two instances of ProfileId are equal by comparing
@@ -38,8 +40,9 @@ public class ProfileId implements ValueObject <ProfileId> {
      */
 
     @Override
-    public boolean sameValueAs(ProfileId other)
-    {return other != null && this.id.equals(other.id);}
+    public boolean sameValueAs(ProfileId other) {
+        return other != null && this.id.equals(other.id);
+    }
 
     /**
      * This method checks if an instance of ProfileId is equal to another object.

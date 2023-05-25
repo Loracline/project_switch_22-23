@@ -1,10 +1,8 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,7 @@ class UsRepositoryTest {
         UsRepository emptyUsRepositoryDouble = new UsRepository();
 
         // Act
-        usRepositoryDouble.add(userStoryDouble);
+        usRepositoryDouble.save(userStoryDouble);
         boolean result = usRepositoryDouble.equals(emptyUsRepositoryDouble);
 
         // Assert
@@ -51,11 +49,11 @@ class UsRepositoryTest {
         // Arrange
         UserStory userStoryDouble = mock(UserStory.class);
         UsRepository usRepositoryDouble = new UsRepository();
-        usRepositoryDouble.add(userStoryDouble);
+        usRepositoryDouble.save(userStoryDouble);
 
         // Act
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            usRepositoryDouble.add(userStoryDouble);
+            usRepositoryDouble.save(userStoryDouble);
         });
 
         // Assert
@@ -79,7 +77,7 @@ class UsRepositoryTest {
         UserStory userStoryDouble = mock(UserStory.class);
         UsRepository usRepositoryDouble = new UsRepository();
         UsRepository emptyUsRepositoryDouble = new UsRepository();
-        usRepositoryDouble.add(userStoryDouble);
+        usRepositoryDouble.save(userStoryDouble);
 
         // Act
         when(userStoryDouble.getUsId()).thenReturn("usIdDouble");
@@ -104,7 +102,7 @@ class UsRepositoryTest {
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
         UsRepository usRepositoryDouble = new UsRepository();
-        usRepositoryDouble.add(userStoryDouble);
+        usRepositoryDouble.save(userStoryDouble);
 
 
         when(userStoryDouble.getUsId()).thenReturn("ID");
@@ -132,7 +130,7 @@ class UsRepositoryTest {
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
         UsRepository usRepositoryDouble = new UsRepository();
-        usRepositoryDouble.add(userStoryDouble);
+        usRepositoryDouble.save(userStoryDouble);
 
         List<UsId> userStoryIds = new ArrayList<>();
         userStoryIds.add(usIdDouble);
@@ -203,7 +201,7 @@ class UsRepositoryTest {
         UsRepository usRepositoryOne = new UsRepository();
         UsRepository usRepositoryThree = new UsRepository();
         UserStory userStoryDouble = mock(UserStory.class);
-        usRepositoryThree.add(userStoryDouble);
+        usRepositoryThree.save(userStoryDouble);
 
         // Act
         int repositoryOneHashCode = usRepositoryOne.hashCode();

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.switch2022.project.ddd.application.CreateSprintService;
+import org.switch2022.project.ddd.dto.SprintCreationDto;
 
 /**
  * The SprintWebController class is a REST controller for handling requests related to
@@ -26,15 +27,18 @@ public class SprintWebController {
     /**
      * Handles a POST request to create a new sprint.
      *
-     * @param projectCode to add the sprint to.
-     * @param startDate of the sprint to be created.
+     * @param sprintCreationDto to create the sprint
      * @return A ResponseEntity containing the sprint code and a status code of 201
      * (CREATED).
      */
     @PostMapping
-    public ResponseEntity<Object> createSprint(@RequestBody String projectCode,
-                                               String startDate) throws Exception {
-        String sprintCode = createSprintService.createSprint(projectCode, startDate);
-        return new ResponseEntity<>(sprintCode, HttpStatus.CREATED);
+    public ResponseEntity<Object> createSprint(@RequestBody SprintCreationDto sprintCreationDto) throws Exception {
+        try {
+            String sprintCode =
+                    createSprintService.createSprint(sprintCreationDto.projectCode, sprintCreationDto.startDate);
+            return new ResponseEntity<>(sprintCode, HttpStatus.CREATED);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 }

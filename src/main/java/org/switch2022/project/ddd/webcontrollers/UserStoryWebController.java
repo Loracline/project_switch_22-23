@@ -24,7 +24,7 @@ public class UserStoryWebController {
     /**
      * Handles the HTTP POST request to create a User Story.
      *
-     * @param userStoryCreationDto  The DTO containing the data for creating the User Story.
+     * @param userStoryCreationDto The DTO containing the data for creating the User Story.
      * @return A ResponseEntity with the created User Story ID and the HTTP status code 201
      * (CREATED).
      * @throws Exception If an error occurs during the creation process.
@@ -32,10 +32,11 @@ public class UserStoryWebController {
     @PostMapping
     public ResponseEntity<Object> createUs(@RequestBody UserStoryCreationDto userStoryCreationDto) throws Exception {
         try {
-        UsId usId = usService.createUs(userStoryCreationDto);
-        return new ResponseEntity<>(usId, HttpStatus.CREATED);
+            UsId usId = usService.createUs(userStoryCreationDto);
+            return new ResponseEntity<>(usId, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT); }
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 }
 

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -36,6 +37,7 @@ class UsServiceTest {
     @MockBean
     IFactoryUserStory factoryUserStory;
     @MockBean
+    @Qualifier("usRepositoryJpa")
     IUsRepository usRepository;
     @MockBean
     IProjectRepository projectRepository;
@@ -118,10 +120,10 @@ class UsServiceTest {
         when(factoryUserStory.createUserStory(any(), any(), any(), any(), any()))
                 .thenReturn(userStoryDouble);
 
-        usRepository.add(userStoryDouble);
+        usRepository.save(userStoryDouble);
 
         doThrow(new IllegalStateException("User Story ID already exists")).when(usRepository).
-                add(userStoryDouble);
+                save(userStoryDouble);
 
         // Assert
         assertThrows(IllegalStateException.class, () -> usService.createUs(

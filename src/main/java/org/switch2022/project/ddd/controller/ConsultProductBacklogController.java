@@ -3,9 +3,7 @@ package org.switch2022.project.ddd.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.ProjectService;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.dto.UserStoryDto;
-import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.List;

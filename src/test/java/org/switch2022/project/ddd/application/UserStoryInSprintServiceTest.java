@@ -8,11 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
-import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +34,6 @@ class UserStoryInSprintServiceTest {
     /**
      * Method: estimateEffortUserStory(usId, effort, sprintId)
      * Scenario 1: Estimates the effort of a US.
-     *
      * Expected result: user story effort is estimated.
      */
 
@@ -47,13 +42,14 @@ class UserStoryInSprintServiceTest {
         //Arrange
         String usId = "p001_us001";
         String sprintId = "p001_s001";
-        int effort = 1;
+        int effort = 3;
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
 
-        when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
+        when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
         when(sprintDouble.hasUserStory(any())).thenReturn(true);
-        when(sprintRepository.estimateEffortUserStory(any(), anyInt(), any())).thenReturn(true);
+        when(sprintDouble.estimateEffortUserStory(any(),anyInt())).thenReturn(true);
 
         //Act
         boolean result = service.estimateEffortUserStory(usId, effort, sprintId);
@@ -63,7 +59,6 @@ class UserStoryInSprintServiceTest {
 
     /**
      * Scenario 2: does not estimate the effort of a US due to effort value not corresponding to fibonacci sequence.
-     *
      * Expected result: user story effort is not estimated.
      */
 
@@ -72,13 +67,14 @@ class UserStoryInSprintServiceTest {
         //Arrange
         String usId = "p001_us001";
         String sprintId = "p001_s001";
-        int effort = 2;
+        int effort = 4;
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
 
-        when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
+        when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
         when(sprintDouble.hasUserStory(any())).thenReturn(true);
-        when(sprintRepository.estimateEffortUserStory(any(), anyInt(), any())).thenReturn(false);
+        when(sprintDouble.estimateEffortUserStory(any(),anyInt())).thenReturn(false);
 
         //Act
         boolean result = service.estimateEffortUserStory(usId, effort, sprintId);
@@ -88,26 +84,26 @@ class UserStoryInSprintServiceTest {
 
     /**
      * Scenario 3: does not estimate the effort of a US despite the spring having started.
-     *
      * Expected result: user story effort is not estimated.
      */
-
     @Test
-    void ensureEffortIsNotEstimatedInAStartedSprint() throws Exception {
+    void ensureEffortIsNotEstimatedInAStartedSprint(){
         //Arrange
+        String message = "The Sprint is not valid";
         String usId = "p001_us001";
         String sprintId = "p001_s001";
         int effort = 1;
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
 
-        when(sprintRepository.getSprintById(any())).thenReturn(sprintOptional);
-        when(sprintDouble.hasUserStory(any())).thenReturn(true);
-        when(sprintRepository.estimateEffortUserStory(any(), anyInt(), any())).thenReturn(false);
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
+        when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(true);
 
         //Act
-        boolean result = service.estimateEffortUserStory(usId, effort, sprintId);
+        Exception exception = assertThrows(Exception.class,
+                () -> service.estimateEffortUserStory(usId, effort, sprintId));
+
         //Assert
-        assertFalse(result);
+        assertEquals(message, exception.getMessage());
     }
 }

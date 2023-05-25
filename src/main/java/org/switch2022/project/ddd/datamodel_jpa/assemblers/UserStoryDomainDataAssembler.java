@@ -1,8 +1,8 @@
-package org.switch2022.project.ddd.datamodel.JPA.assemblers;
+package org.switch2022.project.ddd.datamodel_jpa.assemblers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.switch2022.project.ddd.datamodel.JPA.UserStoryJpa;
-import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
+import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
@@ -15,7 +15,10 @@ import java.util.List;
  */
 
 @Service
-public class UserStoryDataAssembler {
+public class UserStoryDomainDataAssembler {
+
+    @Autowired
+    IFactoryUserStory factory;
 
     /**
      * Converts a UserStory instance to a UserStoryJpa instance.
@@ -39,7 +42,6 @@ public class UserStoryDataAssembler {
      */
 
     public UserStory toDomain (UserStoryJpa userStoryJpa){
-        IFactoryUserStory iFactoryUserStory = new FactoryUserStory();
 
         String usNumber = userStoryJpa.getUsNumber();
         String[] usNumberPart = usNumber.split("_");
@@ -58,7 +60,7 @@ public class UserStoryDataAssembler {
         int project = Integer.parseInt(projectPart[1]);
         Code projectCode = new Code(project);
 
-        UserStory userStory = iFactoryUserStory.createUserStory(userStoryNumber,
+        UserStory userStory = factory.createUserStory(userStoryNumber,
                 userStoryText, actor, acceptanceCriteria, projectCode);
 
         return userStory;
