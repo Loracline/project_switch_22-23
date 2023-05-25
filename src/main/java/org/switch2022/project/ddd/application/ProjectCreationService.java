@@ -49,7 +49,7 @@ public class ProjectCreationService {
         Name projectName = new Name(projectCreationDto.projectName);
         Description projectDescription = new Description(projectCreationDto.projectDescription);
 
-        TaxId customerTaxId = new TaxId(customerRepository.getCustomerTaxIdByName(projectCreationDto.customerName));
+        TaxId customerTaxId = new TaxId(customerRepository.findCustomerTaxIdByName(projectCreationDto.customerName));
 
         BusinessSectorId businessSectorId = new BusinessSectorId(parseInt(businessSectorRepository.
                 getBusinessSectorIdByName(projectCreationDto.businessSectorName)));

@@ -135,7 +135,7 @@ class ProjectCreationServiceTest {
                 5);
 
         when(projectRepository.getProjectNumber()).thenReturn(1);
-        when(customerRepository.getCustomerTaxIdByName(any())).thenReturn("001");
+        when(customerRepository.findCustomerTaxIdByName(any())).thenReturn("001");
         when(typologyRepository.getTypologyIdByName(any())).thenReturn("001");
         when(businessSectorRepository.getBusinessSectorIdByName(any())).thenReturn("001");
 

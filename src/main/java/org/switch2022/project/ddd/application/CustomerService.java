@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerFactory;
@@ -19,6 +20,7 @@ public class CustomerService {
      * The customer repository used to store and retrieve customers.
      */
     @SuppressWarnings("all")
+    @Qualifier("jpa")
     @Autowired
     private ICustomerRepository repository;
 
@@ -45,7 +47,7 @@ public class CustomerService {
 
         if (customerTaxId.isValid()) {
             Customer customer = factory.createCustomer(customerTaxId, customerName);
-            return repository.add(customer);
+            return repository.save(customer);
         } else {
             throw new InvalidInputException("Invalid or unsupported country for tax ID validation.");
         }
