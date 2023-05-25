@@ -148,7 +148,7 @@ public class ProjectResource implements Entity<ProjectResource> {
      * @return the number of days contained in period.
      */
     public int numberOfDaysContainedInPeriod() {
-    return this.allocationPeriod.numberOfDaysContainedInPeriod();
+        return this.allocationPeriod.numberOfDaysContainedInPeriod();
     }
 
     /**
