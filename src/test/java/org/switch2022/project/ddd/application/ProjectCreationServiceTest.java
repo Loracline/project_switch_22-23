@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = ProjectCreationService.class
+        classes = ProjectCreationServiceTest.class
 )
 class ProjectCreationServiceTest {
 

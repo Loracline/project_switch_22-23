@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
@@ -36,6 +37,7 @@ public class ProjectCreationService {
     @Autowired
     private IBusinessSectorRepository businessSectorRepository;
     @Autowired
+    @Qualifier("jpa")
     private ICustomerRepository customerRepository;
 
     /**
