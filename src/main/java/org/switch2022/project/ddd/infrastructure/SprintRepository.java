@@ -5,7 +5,6 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.*;
 
@@ -116,28 +115,4 @@ public class SprintRepository implements ISprintRepository {
         }
         return Collections.unmodifiableList(sprintsByProject);
     }
-
-    /**
-     * This method estimates the effort of a user story.
-     *
-     * @param usId   of the user story to estimate the effort.
-     * @param effort given to the user story.
-     * @return TRUE if the effort was set and false otherwise.
-     */
-
-    @Override
-    public boolean estimateEffortUserStory(UsId usId, int effort, SprintId sprintId) {
-        boolean effortEstimation = false;
-        Optional<Sprint> optionalSprint = findById(sprintId);
-        if (optionalSprint.isPresent()) {
-            Sprint sprintRequested = optionalSprint.get();
-            for (Sprint sprint : sprints) {
-                if (sprint.equals(sprintRequested)) {
-                    effortEstimation = sprint.estimateEffortUserStory(usId, effort);
-                }
-            }
-        }
-        return effortEstimation;
-    }
-
 }

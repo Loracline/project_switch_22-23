@@ -8,7 +8,6 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.infrastructure.JPA.ISprintJpaRepository;
 
 import java.util.ArrayList;
@@ -80,18 +79,5 @@ public class SprintRepositoryJpa implements ISprintRepository {
             sprintsByProject.add(sprintDataAssembler.toDomain(sprintJpa));
         }
         return sprintsByProject;
-    }
-
-    /**
-     * This method estimates the effort of a user story.
-     *
-     * @param usId     of the user story to estimate the effort.
-     * @param effort   given to the user story.
-     * @param sprintId the id of the sprint.
-     * @return TRUE if the effort was set and false otherwise.
-     */
-    @Override
-    public boolean estimateEffortUserStory(UsId usId, int effort, SprintId sprintId) {
-        return false;
     }
 }

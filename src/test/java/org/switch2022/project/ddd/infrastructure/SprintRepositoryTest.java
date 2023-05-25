@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -293,65 +292,5 @@ class SprintRepositoryTest {
         List<Sprint> result = sprintRepository.findByProjectCode(projectCode);
         //Assert
         assertEquals(expected, result);
-    }
-
-    @Test
-    void ensureEffortOfUserStoryIsEstimated() {
-        // Arrange
-        SprintRepository sprintRepository = new SprintRepository();
-        UsId usId = new UsId("p001", "us001");
-        int effort = 5;
-        SprintId sprintId = new SprintId("p001","s001");
-        Sprint sprintDouble = mock(Sprint.class);
-
-        // Act
-        sprintRepository.save(sprintDouble);
-        when(sprintDouble.hasSprintId(sprintId)).thenReturn(true);
-        when(sprintDouble.estimateEffortUserStory(usId,effort)).thenReturn(true);
-
-        boolean result = sprintRepository.estimateEffortUserStory(usId,effort,sprintId);
-
-        // Assert
-        assertTrue(result);
-    }
-
-    @Test
-    void ensureEffortOfUserStoryIsNotEstimated() {
-        // Arrange
-        SprintRepository sprintRepository = new SprintRepository();
-        UsId usId = new UsId("p001", "us001");
-        int effort = 5;
-        SprintId sprintId = new SprintId("p001","s001");
-        Sprint sprintDouble = mock(Sprint.class);
-
-        // Act
-        sprintRepository.save(sprintDouble);
-        when(sprintDouble.hasSprintId(sprintId)).thenReturn(true);
-        when(sprintDouble.estimateEffortUserStory(usId,effort)).thenReturn(false);
-
-        boolean result = sprintRepository.estimateEffortUserStory(usId,effort,sprintId);
-
-        // Assert
-        assertFalse(result);
-    }
-
-    @Test
-    void ensureEffortOfUserStoryIsNotEstimated_sprintIdDoesNotExist() {
-        // Arrange
-        SprintRepository sprintRepository = new SprintRepository();
-        UsId usId = new UsId("p001", "us001");
-        int effort = 5;
-        SprintId sprintId = new SprintId("p001","s001");
-        Sprint sprintDouble = mock(Sprint.class);
-
-        // Act
-        sprintRepository.save(sprintDouble);
-        when(sprintDouble.hasSprintId(sprintId)).thenReturn(false);
-        when(sprintDouble.estimateEffortUserStory(usId,effort)).thenReturn(true);
-
-        boolean result = sprintRepository.estimateEffortUserStory(usId,effort,sprintId);
-
-        // Assert
-        assertFalse(result);
     }
 }
