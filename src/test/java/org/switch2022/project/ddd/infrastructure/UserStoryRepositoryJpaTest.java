@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
+import org.h2.engine.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -175,39 +177,72 @@ class UserStoryRepositoryJpaTest {
     @Test
     void ensureListOfUsWithMatchingIdsIsRetrieved() {
         // Arrange
-        UserStoryJpa userStoryJpaDouble = mock(UserStoryJpa.class);
-        UserStory userStoryDouble = mock(UserStory.class);
+        UsId usIdOne = new UsId("p001","us001");
+        UsId usIdTwo = new UsId("p001","us002");
+        List<UsId> usId = new ArrayList<>();
+        usId.add(usIdOne);
+        usId.add(usIdTwo);
+
+        UserStory userStoryDoubleOne = mock(UserStory.class);
+        UserStory userStoryDoubleTwo = mock(UserStory.class);
+
         List<UserStory> expected = new ArrayList<>();
-        expected.add(userStoryDouble);
+        expected.add(userStoryDoubleOne);
+        expected.add(userStoryDoubleTwo);
+
+        List<String> userStoryIds = new ArrayList<>();
+        userStoryIds.add("p001_us001");
+        userStoryIds.add("p001_us002");
+
+        List<UserStoryJpa> userStoryJpas = new ArrayList<>();
+        UserStoryJpa userStoryJpaDouble = mock(UserStoryJpa.class);
+        UserStoryJpa userStoryJpaDoubleTwo = mock(UserStoryJpa.class);
+        userStoryJpas.add(userStoryJpaDouble);
+        userStoryJpas.add(userStoryJpaDoubleTwo);
+
+        when(repositoryJpa.findAllByUsIdIn(userStoryIds)).thenReturn(userStoryJpas);
+        when(assembler.toDomain(userStoryJpaDouble)).thenReturn(userStoryDoubleOne);
+        when(assembler.toDomain(userStoryJpaDoubleTwo)).thenReturn(userStoryDoubleTwo);
+
 
         // Act
-        when(repositoryJpa.findAllByUsId(any())).thenReturn(Collections.singletonList(userStoryJpaDouble));
-        when(repositoryJpa.save(userStoryJpaDouble)).thenReturn(userStoryJpaDouble);
-        when(assembler.toDomain(userStoryJpaDouble)).thenReturn(userStoryDouble);
-
-        List<UserStory> result = new ArrayList<>();
-        result.add(userStoryDouble);
+        List<UserStory> result = repository.getListOfUsWithMatchingIds(usId);
 
         // Assert
         assertEquals(expected, result);
     }
 
     /**
-     * Scenario 2: Test to ensure that a list of user stories with matching IDs is not
-     * retrieved.
+     * Scenario 2: Test to ensure that a list of user stories with no matching IDs is
+     * retrieved empty.
      */
 
     @Test
     void ensureListOfUsWithMatchingIdsIsRetrievedEmpty() {
         // Arrange
-        UserStory userStoryDouble = mock(UserStory.class);
-        List<UserStoryJpa> expected = new ArrayList<>();
+        List<UsId> usId = new ArrayList<>();
+
+        UserStory userStoryDoubleOne = mock(UserStory.class);
+        UserStory userStoryDoubleTwo = mock(UserStory.class);
+
+        List<String> userStoryIds = new ArrayList<>();
+        userStoryIds.add("p001_us001");
+        userStoryIds.add("p001_us002");
+
+        List<UserStoryJpa> userStoryJpas = new ArrayList<>();
+        UserStoryJpa userStoryJpaDouble = mock(UserStoryJpa.class);
+        UserStoryJpa userStoryJpaDoubleTwo = mock(UserStoryJpa.class);
+        userStoryJpas.add(userStoryJpaDouble);
+        userStoryJpas.add(userStoryJpaDoubleTwo);
+
+        when(repositoryJpa.findAllByUsIdIn(userStoryIds)).thenReturn(userStoryJpas);
+        when(assembler.toDomain(userStoryJpaDouble)).thenReturn(userStoryDoubleOne);
+        when(assembler.toDomain(userStoryJpaDoubleTwo)).thenReturn(userStoryDoubleTwo);
+
+        List<UserStory> expected = new ArrayList<>();
 
         // Act
-        when(repositoryJpa.findAllByUsId(any())).thenReturn(Collections.emptyList());
-
-        Iterable<UserStoryJpa> result =
-                repositoryJpa.findAllByUsId(userStoryDouble.getUsId());
+        List<UserStory> result = repository.getListOfUsWithMatchingIds(usId);
 
         // Assert
         assertEquals(expected, result);

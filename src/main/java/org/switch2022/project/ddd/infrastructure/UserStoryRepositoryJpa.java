@@ -70,7 +70,13 @@ public class UserStoryRepositoryJpa implements IUsRepository {
 
     @Override
     public List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId) {
-        Iterable<UserStoryJpa> userStoriesWithMatchingIds = repository.findAllByUsId(usId.toString());
+        List<String> userStoryId = new ArrayList<>();
+        for (UsId id : usId) {
+            String usIdToString = id.getUserStoryId();
+            userStoryId.add(usIdToString);
+        }
+
+        Iterable<UserStoryJpa> userStoriesWithMatchingIds = repository.findAllByUsIdIn(userStoryId);
         List<UserStory> userStoryList = new ArrayList<>();
         for (UserStoryJpa userStoryJpa : userStoriesWithMatchingIds) {
             userStoryList.add(assembler.toDomain(userStoryJpa));
