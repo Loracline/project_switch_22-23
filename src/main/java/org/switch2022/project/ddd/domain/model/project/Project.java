@@ -101,7 +101,7 @@ public class Project implements Entity<Project> {
      *
      * @param projectStatus of the project.
      */
-    protected void setProjectStatus(ProjectStatus projectStatus) {
+    public void setProjectStatus(ProjectStatus projectStatus) {
         this.projectStatus = projectStatus;
     }
 
@@ -166,7 +166,7 @@ public class Project implements Entity<Project> {
      *
      * @param sprintDuration the sprint duration object to set for this project.
      */
-    protected void setSprintDuration(int sprintDuration) {
+    public void setSprintDuration(int sprintDuration) {
         Utils.hasStatus(this.projectStatus, ProjectStatus.INCEPTION);
         this.sprintDuration = new SprintDuration(sprintDuration);
     }
@@ -176,7 +176,7 @@ public class Project implements Entity<Project> {
      *
      * @param period the period object
      */
-    protected boolean isPeriodAssigned(Period period) {
+    public boolean isPeriodAssigned(Period period) {
         boolean isAssignedPeriod = false;
         if (projectStatus == ProjectStatus.INCEPTION) {
             this.period = period;
@@ -190,7 +190,7 @@ public class Project implements Entity<Project> {
      *
      * @param budget the budget object
      */
-    protected boolean isBudgetAssigned(Budget budget) {
+    public boolean isBudgetAssigned(Budget budget) {
         boolean isBudgetAssigned = false;
         if (projectStatus == ProjectStatus.INCEPTION) {
             this.budget = budget;
@@ -204,7 +204,7 @@ public class Project implements Entity<Project> {
      *
      * @param numberOfPlannedSprints of the project.
      */
-    protected boolean isNumberOfPlannedSprintsDefined(NumberOfPlannedSprints numberOfPlannedSprints) {
+    public boolean isNumberOfPlannedSprintsDefined(NumberOfPlannedSprints numberOfPlannedSprints) {
         boolean isNumberOfPlannedSprintsDefined = false;
         if (projectStatus == ProjectStatus.INCEPTION) {
             this.numberOfPlannedSprints = numberOfPlannedSprints;
@@ -353,6 +353,8 @@ public class Project implements Entity<Project> {
     public boolean containsCurrentDate() {
         return this.period.containsCurrentDate();
     }
+
+
 }
 
 
