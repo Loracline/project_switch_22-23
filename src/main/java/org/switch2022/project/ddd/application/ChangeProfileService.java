@@ -41,7 +41,7 @@ public class ChangeProfileService {
         Account account = accountRepository.findAccountByEmail(email);
         Profile profile = profileRepository.getProfileByName(new Name(profileName));
 
-        String[] parts = profile.getProfileId().split("pr");
+        String[] parts = profile.getProfileId().split("prf");
         int profileNumber = Integer.parseInt(parts[1]);
 
         ProfileId profileId = new ProfileId(profileNumber);

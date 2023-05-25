@@ -62,17 +62,13 @@ class SprintRepositoryJpaTest {
     @Test
     void ensureSprintIsEmptyBecauseRepositoryDoesntHaveSprintId() {
         //Arrange
-        SprintJpa sprintJpa = mock(SprintJpa.class);
-        List<SprintJpa> sprintJpas = new ArrayList<>();
-        sprintJpas.add(sprintJpa);
-        when(ISprintJpaRepository.findAll()).thenReturn(sprintJpas);
-
+        Optional<SprintJpa> sprintJpaOptional = Optional.ofNullable(null);
 
         String sprintIdString = "P001_S002";
         SprintId sprintId = new SprintId("P001", "S001");
-        when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(false);
 
-        when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(null);
+        when(ISprintJpaRepository.findById(sprintIdString)).thenReturn(sprintJpaOptional);
+        when(sprintDomainDataAssembler.toDomain(any())).thenReturn(null);
 
         Optional<Sprint> expected = Optional.empty();
         //Act
@@ -88,14 +84,11 @@ class SprintRepositoryJpaTest {
     void ensureReturnsSprintSuccessfully() {
         //Arrange
         SprintJpa sprintJpa = mock(SprintJpa.class);
+        Optional<SprintJpa> sprintJpaOptional = Optional.of(sprintJpa);
         String sprintIdString = "p001_s001";
         SprintId sprintId = new SprintId("P001", "S001");
-        List<SprintJpa> sprintJpas = new ArrayList<>();
-        sprintJpas.add(sprintJpa);
 
-        when(ISprintJpaRepository.findAll()).thenReturn(sprintJpas);
-        when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(true);
-
+        when(ISprintJpaRepository.findById(sprintIdString)).thenReturn(sprintJpaOptional);
         Sprint sprintDouble = mock(Sprint.class);
         when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(sprintDouble);
 
