@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-class ProductBacklogTest {
+class  ProductBacklogTest {
 
     /**
      * Constructor
@@ -407,5 +407,20 @@ class ProductBacklogTest {
 
         //Assert
         assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Method:getProductBacklogId
+     */
+    @Test
+    void ensureProductBacklogIdIsRetrieved() {
+        //Arrange
+        String code = "P001";
+        ProductBacklog productBacklog = new ProductBacklog(code);
+        String expected = "p001_pb";
+        //Act
+        String result = productBacklog.getProductBacklogId();
+        //Assert
+        assertEquals(expected,result);
     }
 }
