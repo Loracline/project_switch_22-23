@@ -14,9 +14,9 @@ public interface IProjectRepository {
      */
     Optional<Project> findByCode(Code code);
 
-    int getProjectNumber();
+    int count();
 
-    boolean addProjectToProjectRepository(Project project);
+    boolean save(Project project);
 
     List<Project> findAll();
 

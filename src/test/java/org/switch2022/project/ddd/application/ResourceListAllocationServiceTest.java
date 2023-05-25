@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.account.Account;
@@ -29,13 +30,13 @@ import static org.mockito.Mockito.when;
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = ResourceListAllocationService.class
 )
-
 class ResourceListAllocationServiceTest {
 
     @InjectMocks
     ResourceListAllocationService service;
 
     @MockBean
+    @Qualifier("jpa")
     IProjectResourceRepository resourceRepository;
 
     @MockBean

@@ -31,6 +31,7 @@ public class ProjectCreationService {
     @Autowired
     private IFactoryProject factoryProject;
     @Autowired
+    @Qualifier ("repositoryJpa")
     private IProjectRepository projectRepository;
     @Autowired
     private ITypologyRepository typologyRepository;
@@ -62,7 +63,7 @@ public class ProjectCreationService {
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription,
                 businessSectorId, customerTaxId, projectTypologyId);
 
-        projectRepository.addProjectToProjectRepository(project);
+        projectRepository.save(project);
 
         return project.getProjectCode();
     }
@@ -71,7 +72,7 @@ public class ProjectCreationService {
      * This method calculates the number of project to include in the project code using the repository size.
      */
     public int calculateNextProjectNumber() {
-        return projectRepository.getProjectNumber() + 1;
+        return projectRepository.count() + 1;
     }
 
     /**
@@ -93,6 +94,6 @@ public class ProjectCreationService {
      */
 
     public boolean addProject(Project project) {
-        return projectRepository.addProjectToProjectRepository(project);
+        return projectRepository.save(project);
     }
 }

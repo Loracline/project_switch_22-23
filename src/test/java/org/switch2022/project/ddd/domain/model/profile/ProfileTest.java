@@ -240,7 +240,7 @@ public class ProfileTest {
         //ARRANGE
         Name nameDouble = mock(Name.class);
         Profile profile = new Profile(nameDouble, 1);
-        String expected = "pr001";
+        String expected = "prf001";
 
         //ACT
         String result = profile.getProfileId();

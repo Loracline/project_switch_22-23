@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
@@ -33,6 +34,7 @@ class ProjectCreationServiceTest {
     @MockBean
     IFactoryProject factoryProject;
     @MockBean
+    @Qualifier("repositoryJpa")
     IProjectRepository projectRepository;
     @MockBean
     ITypologyRepository typologyRepository;
@@ -54,7 +56,7 @@ class ProjectCreationServiceTest {
     void ensureProjectIsAdded() {
         //Arrange
         Project projectDouble = mock(Project.class);
-        when(projectRepository.addProjectToProjectRepository(any())).thenReturn(true);
+        when(projectRepository.save(any())).thenReturn(true);
         boolean expected = true;
         //Act
         boolean result = projectCreationService.addProject(projectDouble);
@@ -69,7 +71,7 @@ class ProjectCreationServiceTest {
     void ensureProjectIsNotAdded() {
         //Arrange
         Project projectDouble = mock(Project.class);
-        when(projectRepository.addProjectToProjectRepository(any())).thenReturn(false);
+        when(projectRepository.save(any())).thenReturn(false);
         boolean expected = false;
         //Act
         boolean result = projectCreationService.addProject(projectDouble);
@@ -84,7 +86,7 @@ class ProjectCreationServiceTest {
     @Test
     void ensureProjectCodeIsCreatedWithEmptyRepository() {
         //Arrange
-        when(projectRepository.getProjectNumber()).thenReturn(0);
+        when(projectRepository.count()).thenReturn(0);
         int expected = 1;
         //Act
         int result = projectCreationService.calculateNextProjectNumber();
@@ -98,7 +100,7 @@ class ProjectCreationServiceTest {
     @Test
     void ensureProjectCodeIsCreatedWithRepositoryWithOneProject() {
         //Arrange
-        when(projectRepository.getProjectNumber()).thenReturn(1);
+        when(projectRepository.count()).thenReturn(1);
         int expected = 2;
         //Act
         int result = projectCreationService.calculateNextProjectNumber();
@@ -134,13 +136,13 @@ class ProjectCreationServiceTest {
                 "panic total","isep","isep","isep",
                 5);
 
-        when(projectRepository.getProjectNumber()).thenReturn(1);
+        when(projectRepository.count()).thenReturn(1);
         when(customerRepository.findCustomerTaxIdByName(any())).thenReturn("001");
         when(typologyRepository.getTypologyIdByName(any())).thenReturn("001");
         when(businessSectorRepository.getBusinessSectorIdByName(any())).thenReturn("001");
 
         when(factoryProject.createProject(anyInt(),any(),any(),any(),any(),any())).thenReturn(projectDouble);
-        when(projectRepository.addProjectToProjectRepository(projectDouble)).thenReturn(true);
+        when(projectRepository.save(projectDouble)).thenReturn(true);
         when(projectDouble.getProjectCode()).thenReturn("P001");
 
         String expected = "P001";
