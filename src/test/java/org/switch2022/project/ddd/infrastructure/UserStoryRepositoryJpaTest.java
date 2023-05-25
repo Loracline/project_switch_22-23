@@ -7,11 +7,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.datamodel.JPA.UserStoryJpa;
-import org.switch2022.project.ddd.datamodel.JPA.assemblers.UserStoryDomainDataAssembler;
+import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
+import org.switch2022.project.ddd.datamodel_jpa.assemblers.UserStoryDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
-import org.switch2022.project.ddd.infrastructure.JPA.IUserStoryJpaRepository;
+import org.switch2022.project.ddd.infrastructure.jpa.IUserStoryJpaRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +28,8 @@ import static org.mockito.Mockito.when;
         classes = UserStoryRepositoryJpa.class
 )
 /**
- * This class is responsible for testing the UserStoryRepositoryJpa. It contains test methods to ensure that the
+ * This class is responsible for testing the UserStoryRepositoryJpa. It contains test
+ * methods to ensure that the
  * repository operations such as save, delete, and find are working as expected.
  */
 
@@ -141,7 +142,8 @@ class UserStoryRepositoryJpaTest {
     }
 
     /**
-     * Scenario 3: Test to ensure that a user story is not deleted and an exception is thrown.
+     * Scenario 3: Test to ensure that a user story is not deleted and an exception is
+     * thrown.
      */
 
     @Test
@@ -160,12 +162,14 @@ class UserStoryRepositoryJpaTest {
                 "The User Story is already in the Product Backlog"
         );
 
-        assertEquals("The User Story is already in the Product Backlog", exception.getMessage());
+        assertEquals("The User Story is already in the Product Backlog",
+                exception.getMessage());
     }
 
     /**
      * Method: getListOfUsWithMatchingIds()
-     * Scenario 1: Test to ensure that a list of user stories with matching IDs is retrieved successfully.
+     * Scenario 1: Test to ensure that a list of user stories with matching IDs is
+     * retrieved successfully.
      */
 
     @Test
@@ -189,7 +193,8 @@ class UserStoryRepositoryJpaTest {
     }
 
     /**
-     * Scenario 2: Test to ensure that a list of user stories with matching IDs is not retrieved.
+     * Scenario 2: Test to ensure that a list of user stories with matching IDs is not
+     * retrieved.
      */
 
     @Test
@@ -201,7 +206,8 @@ class UserStoryRepositoryJpaTest {
         // Act
         when(repositoryJpa.findAllByUsId(any())).thenReturn(Collections.emptyList());
 
-        Iterable<UserStoryJpa> result = repositoryJpa.findAllByUsId(userStoryDouble.getUsId());
+        Iterable<UserStoryJpa> result =
+                repositoryJpa.findAllByUsId(userStoryDouble.getUsId());
 
         // Assert
         assertEquals(expected, result);

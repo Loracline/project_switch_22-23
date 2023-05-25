@@ -1,4 +1,4 @@
-package org.switch2022.project.ddd.datamodel.JPA.assemblers;
+package org.switch2022.project.ddd.datamodel_jpa.assemblers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -6,8 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.datamodel.JPA.ProductBacklogJpa;
-import org.switch2022.project.ddd.datamodel.JPA.ProjectJpa;
+import org.switch2022.project.ddd.datamodel_jpa.ProductBacklogJpa;
+import org.switch2022.project.ddd.datamodel_jpa.ProjectJpa;
 import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.*;

@@ -2,13 +2,13 @@ package org.switch2022.project.ddd.infrastructure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.switch2022.project.ddd.datamodel.JPA.UserStoryJpa;
-import org.switch2022.project.ddd.datamodel.JPA.assemblers.UserStoryDomainDataAssembler;
+import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
+import org.switch2022.project.ddd.datamodel_jpa.assemblers.UserStoryDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
-import org.switch2022.project.ddd.infrastructure.JPA.IUserStoryJpaRepository;
+import org.switch2022.project.ddd.infrastructure.jpa.IUserStoryJpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,12 +6,12 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.datamodel.JPA.SprintJpa;
-import org.switch2022.project.ddd.datamodel.JPA.assemblers.SprintDomainDataAssembler;
+import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
+import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.infrastructure.JPA.ISprintJpaRepository;
+import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;

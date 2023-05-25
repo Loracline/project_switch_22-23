@@ -2,13 +2,13 @@ package org.switch2022.project.ddd.infrastructure;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.switch2022.project.ddd.datamodel.JPA.SprintJpa;
-import org.switch2022.project.ddd.datamodel.JPA.assemblers.SprintDomainDataAssembler;
+import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
+import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.infrastructure.JPA.ISprintJpaRepository;
+import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
