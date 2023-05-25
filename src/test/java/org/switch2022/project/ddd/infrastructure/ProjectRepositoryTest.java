@@ -62,7 +62,7 @@ class ProjectRepositoryTest {
         // Arrange
         ProjectRepository projectRepositoryOne = new ProjectRepository();
         Project projectOne = mock(Project.class);
-        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        projectRepositoryOne.save(projectOne);
         ProjectRepository projectRepositoryTwo = new ProjectRepository();
 
         boolean expected = false;
@@ -81,9 +81,9 @@ class ProjectRepositoryTest {
         // Arrange
         ProjectRepository projectRepositoryOne = new ProjectRepository();
         Project projectOne = mock(Project.class);
-        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        projectRepositoryOne.save(projectOne);
         ProjectRepository projectRepositoryTwo = new ProjectRepository();
-        projectRepositoryTwo.addProjectToProjectRepository(projectOne);
+        projectRepositoryTwo.save(projectOne);
 
         boolean expected = true;
         //Act
@@ -117,9 +117,9 @@ class ProjectRepositoryTest {
     void ensureTwoUsIdInstancesHashcodeAreTheSame() {
         Project projectOne = mock(Project.class);
         ProjectRepository projectRepositoryOne = new ProjectRepository();
-        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        projectRepositoryOne.save(projectOne);
         ProjectRepository projectRepositoryTwo = new ProjectRepository();
-        projectRepositoryTwo.addProjectToProjectRepository(projectOne);
+        projectRepositoryTwo.save(projectOne);
 
         //Assert
         assertEquals(projectRepositoryOne.hashCode(), projectRepositoryTwo.hashCode());
@@ -135,9 +135,9 @@ class ProjectRepositoryTest {
         Project projectOne = mock(Project.class);
         Project projectTwo = mock(Project.class);
         ProjectRepository projectRepositoryOne = new ProjectRepository();
-        projectRepositoryOne.addProjectToProjectRepository(projectOne);
+        projectRepositoryOne.save(projectOne);
         ProjectRepository projectRepositoryTwo = new ProjectRepository();
-        projectRepositoryTwo.addProjectToProjectRepository(projectTwo);
+        projectRepositoryTwo.save(projectTwo);
 
         //Assert
         assertNotEquals(projectRepositoryOne.hashCode(), projectRepositoryTwo.hashCode());
@@ -157,10 +157,10 @@ class ProjectRepositoryTest {
         ProjectRepository projectRepository = new ProjectRepository();
 
         Project projectDoubleTest = mock(Project.class);
-        projectRepository.addProjectToProjectRepository(projectDoubleTest);
+        projectRepository.save(projectDoubleTest);
 
         //Act
-        boolean result = projectRepository.addProjectToProjectRepository(projectDouble);
+        boolean result = projectRepository.save(projectDouble);
 
         //Assert
         assertTrue(result);
@@ -180,7 +180,7 @@ class ProjectRepositoryTest {
         ProjectRepository projectRepository = new ProjectRepository();
 
         //Act
-        boolean result = projectRepository.addProjectToProjectRepository(projectDouble);
+        boolean result = projectRepository.save(projectDouble);
 
         //Assert
         assertTrue(result);
@@ -200,10 +200,10 @@ class ProjectRepositoryTest {
         Project projectDouble = mock(Project.class);
         ProjectRepository projectRepository = new ProjectRepository();
 
-        projectRepository.addProjectToProjectRepository(projectDouble);
+        projectRepository.save(projectDouble);
 
         //Act
-        boolean result = projectRepository.addProjectToProjectRepository(projectDouble);
+        boolean result = projectRepository.save(projectDouble);
 
         //Assert
         assertFalse(result);
@@ -222,8 +222,8 @@ class ProjectRepositoryTest {
         Project projectTwo = mock(Project.class);
 
         ProjectRepository projectRepositoryOne = new ProjectRepository();
-        projectRepositoryOne.addProjectToProjectRepository(projectOne);
-        projectRepositoryOne.addProjectToProjectRepository(projectTwo);
+        projectRepositoryOne.save(projectOne);
+        projectRepositoryOne.save(projectTwo);
 
         Code codeOne = mock(Code.class);
         when(projectOne.hasProjectCode(any())).thenReturn(true);
@@ -270,11 +270,11 @@ class ProjectRepositoryTest {
         Project projectTwo = mock(Project.class);
 
         ProjectRepository projectRepositoryOne = new ProjectRepository();
-        projectRepositoryOne.addProjectToProjectRepository(projectOne);
-        projectRepositoryOne.addProjectToProjectRepository(projectTwo);
+        projectRepositoryOne.save(projectOne);
+        projectRepositoryOne.save(projectTwo);
 
         int expected = 2;
-        int result = projectRepositoryOne.getProjectNumber();
+        int result = projectRepositoryOne.count();
 
         assertEquals(expected, result);
 
@@ -306,8 +306,8 @@ class ProjectRepositoryTest {
         Project projectTwo = mock(Project.class);
 
         ProjectRepository projectRepositoryOne = new ProjectRepository();
-        projectRepositoryOne.addProjectToProjectRepository(projectOne);
-        projectRepositoryOne.addProjectToProjectRepository(projectTwo);
+        projectRepositoryOne.save(projectOne);
+        projectRepositoryOne.save(projectTwo);
 
         List<Project> expected = new ArrayList<>();
         expected.add(projectOne);
@@ -365,9 +365,9 @@ class ProjectRepositoryTest {
         Project projectTwo = mock(Project.class);
         Project projectThree = mock(Project.class);
 
-        repository.addProjectToProjectRepository(projectOne);
-        repository.addProjectToProjectRepository(projectTwo);
-        repository.addProjectToProjectRepository(projectThree);
+        repository.save(projectOne);
+        repository.save(projectTwo);
+        repository.save(projectThree);
 
 
         when(projectOne.hasProjectCode(codeOne)).thenReturn(true);
