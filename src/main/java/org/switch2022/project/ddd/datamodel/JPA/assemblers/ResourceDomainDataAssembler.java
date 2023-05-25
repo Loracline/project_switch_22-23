@@ -30,6 +30,12 @@ public class ResourceDomainDataAssembler {
                 projectResource.getCostPerHour(), projectResource.getPercentageOfAllocation());
     }
 
+    /**
+     * Converts a ProjectResourceJpa instance to a ProjectResource domain model instance.
+     *
+     * @param projectResourceJpa The ProjectResourceJpa instance to be converted.
+     * @return The converted ProjectResource instance.
+     */
     public ProjectResource toDomain(ProjectResourceJpa projectResourceJpa) {
         ProjectResourceId projectResourceId =
                 new ProjectResourceId(Utils.getIntFromAlphanumericString(projectResourceJpa.getId(), "PR"));
