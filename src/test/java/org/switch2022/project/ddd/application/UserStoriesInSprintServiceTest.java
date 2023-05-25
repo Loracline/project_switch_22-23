@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
@@ -37,6 +38,7 @@ public class UserStoriesInSprintServiceTest {
     ISprintRepository sprintRepository;
 
     @MockBean
+    @Qualifier("usRepositoryJpa")
     IUsRepository userStoryRepository;
 
     /**

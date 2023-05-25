@@ -18,7 +18,7 @@ import java.util.List;
  * It performs operations such as save, delete, and find on user stories. The implementation uses
  * UserStoryDomainDataAssembler to convert between UserStory domain objects and UserStoryJpa data objects.
  */
-@Repository
+@Repository("usRepositoryJpa")
 public class UserStoryRepositoryJpa implements IUsRepository {
 
     @Autowired
@@ -41,7 +41,8 @@ public class UserStoryRepositoryJpa implements IUsRepository {
         if (repository.existsByUsId(userStory.getUsId())) {
             throw new AlreadyExistsInRepoException("User story ID already exists");
         }
-        return repository.add(userStoryJpa);
+        repository.save(userStoryJpa);
+        return true;
     }
 
     /**

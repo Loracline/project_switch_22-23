@@ -27,7 +27,8 @@ public interface IProjectResourceRepository {
      * to.
      *
      * @param email the value object email that represents the desired account.
-     * @return a list of string representations of the project codes, or an empty list if no resource with the given account email was found.
+     * @return a list of string representations of the project codes, or an empty list if no resource with the given
+     * account email was found.
      */
     List<Code> findProjectCodesByAccountEmail(Email email);
 

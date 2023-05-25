@@ -143,10 +143,10 @@ public class Sprint implements Entity<Sprint> {
     public boolean estimateEffortUserStory(UsId usId, int effort) {
         boolean hasEffortChanged = false;
         for (UserStoryInSprint userStory : userStoriesInSprint) {
-                if (userStory.getUsId().equals(usId)) {
-                    hasEffortChanged = userStory.changeEffort(effort);
-                }
+            if (userStory.getUsId().equals(usId)) {
+                hasEffortChanged = userStory.changeEffort(effort);
             }
+        }
         return hasEffortChanged;
     }
 

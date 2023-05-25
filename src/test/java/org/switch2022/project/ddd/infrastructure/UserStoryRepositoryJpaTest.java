@@ -68,7 +68,7 @@ class UserStoryRepositoryJpaTest {
         // Act
         when(assembler.toData(userStoryDouble)).thenReturn(userStoryJpaDouble);
         when(repositoryJpa.existsByUsId(userStoryDouble.getUsId())).thenReturn(false);
-        when(repositoryJpa.add(userStoryJpaDouble)).thenReturn(true);
+        when(repositoryJpa.save(userStoryJpaDouble)).thenReturn(userStoryJpaDouble);
 
         boolean result = repository.save(userStoryDouble);
 
@@ -90,7 +90,7 @@ class UserStoryRepositoryJpaTest {
         // Act
         when(assembler.toData(userStoryDouble)).thenReturn(userStoryJpaDouble);
         when(repositoryJpa.existsByUsId(userStoryDouble.getUsId())).thenReturn(true);
-        when(repositoryJpa.add(userStoryJpaDouble)).thenReturn(true);
+        when(repositoryJpa.save(userStoryJpaDouble)).thenReturn(userStoryJpaDouble);
 
         // Assert
         Exception exception = assertThrows(
@@ -182,7 +182,7 @@ class UserStoryRepositoryJpaTest {
 
         // Act
         when(repositoryJpa.findAllByUsId(any())).thenReturn(Collections.singletonList(userStoryJpaDouble));
-        when(repositoryJpa.add(userStoryJpaDouble)).thenReturn(true);
+        when(repositoryJpa.save(userStoryJpaDouble)).thenReturn(userStoryJpaDouble);
         when(assembler.toDomain(userStoryJpaDouble)).thenReturn(userStoryDouble);
 
         List<UserStory> result = new ArrayList<>();

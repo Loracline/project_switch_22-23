@@ -17,9 +17,8 @@ public class UserStoryInSprintJpa {
     @Getter
     private String usId;
     private int effort;
-
-    @ManyToOne()
-    @JoinColumn(name = "sprint", nullable=false)
+    @ManyToOne
+    @JoinColumn(name = "sprint", nullable = false)
     private SprintJpa sprint;
 
     /**
