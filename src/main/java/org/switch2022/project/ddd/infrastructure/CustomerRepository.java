@@ -14,7 +14,7 @@ import java.util.List;
  * Implementation of the {@link ICustomerRepository} interface that stores customer data in memory.
  * This class manages the persistence and retrieval of {@link Customer} objects.
  */
-@Repository("memory")
+@Repository("customer_memory")
 public class CustomerRepository implements ICustomerRepository {
 
     private final List<Customer> customers = new ArrayList<>();

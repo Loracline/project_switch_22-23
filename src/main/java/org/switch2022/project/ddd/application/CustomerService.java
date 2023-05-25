@@ -20,7 +20,7 @@ public class CustomerService {
      * The customer repository used to store and retrieve customers.
      */
     @SuppressWarnings("all")
-    @Qualifier("jpa")
+    @Qualifier("customer_jpa")
     @Autowired
     private ICustomerRepository repository;
 

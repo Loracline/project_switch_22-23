@@ -17,7 +17,7 @@ import java.util.Optional;
  * Implementation of the {@link ICustomerRepository} interface that uses JPA to persist and retrieve customer data.
  * This class interacts with the {@link ICustomerJpaRepository} for performing CRUD operations on {@link CustomerJpa} entities.
  */
-@Repository("jpa")
+@Repository("customer_jpa")
 public class CustomerJpaRepository implements ICustomerRepository {
 
     @SuppressWarnings("all")

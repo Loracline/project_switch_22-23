@@ -34,13 +34,14 @@ class ProjectCreationServiceTest {
     @MockBean
     IFactoryProject factoryProject;
     @MockBean
-    @Qualifier("repositoryJpa")
+    @Qualifier("project_jpa")
     IProjectRepository projectRepository;
     @MockBean
     ITypologyRepository typologyRepository;
     @MockBean
     IBusinessSectorRepository businessSectorRepository;
     @MockBean
+    @Qualifier("customer_jpa")
     ICustomerRepository customerRepository;
 
     @BeforeEach
@@ -133,7 +134,7 @@ class ProjectCreationServiceTest {
     void ensureProjectIsCreated() {
         Project projectDouble = mock(Project.class);
         ProjectCreationDto projectCreationDto = new ProjectCreationDto("panic",
-                "panic total","isep","isep","isep",
+                "panic total", "isep", "isep", "isep",
                 5);
 
         when(projectRepository.count()).thenReturn(1);
@@ -141,7 +142,7 @@ class ProjectCreationServiceTest {
         when(typologyRepository.getTypologyIdByName(any())).thenReturn("001");
         when(businessSectorRepository.getBusinessSectorIdByName(any())).thenReturn("001");
 
-        when(factoryProject.createProject(anyInt(),any(),any(),any(),any(),any())).thenReturn(projectDouble);
+        when(factoryProject.createProject(anyInt(), any(), any(), any(), any(), any())).thenReturn(projectDouble);
         when(projectRepository.save(projectDouble)).thenReturn(true);
         when(projectDouble.getProjectCode()).thenReturn("P001");
 

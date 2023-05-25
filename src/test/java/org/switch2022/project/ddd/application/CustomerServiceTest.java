@@ -32,7 +32,7 @@ class CustomerServiceTest {
     ICustomerFactory factory;
 
     @MockBean
-    @Qualifier("memory")
+    @Qualifier("customer_jpa")
     ICustomerRepository repository;
 
     @DisplayName("Customer is created successfully")

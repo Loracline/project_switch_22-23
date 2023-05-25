@@ -31,14 +31,14 @@ public class ProjectCreationService {
     @Autowired
     private IFactoryProject factoryProject;
     @Autowired
-    @Qualifier ("repositoryJpa")
+    @Qualifier ("project_jpa")
     private IProjectRepository projectRepository;
     @Autowired
     private ITypologyRepository typologyRepository;
     @Autowired
     private IBusinessSectorRepository businessSectorRepository;
     @Autowired
-    @Qualifier("jpa")
+    @Qualifier("customer_jpa")
     private ICustomerRepository customerRepository;
 
     /**

@@ -11,7 +11,7 @@ import java.util.*;
  * Class ProjectRepository is built to access and manipulate the set of projects
  * of this company.
  */
-@Component
+@Component("project_memory")
 public class ProjectRepository implements IProjectRepository {
 
     /**
