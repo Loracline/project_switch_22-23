@@ -1,4 +1,4 @@
-package org.switch2022.project.ddd.datamodel.JPA;
+package org.switch2022.project.ddd.datamodel_jpa;
 
 import lombok.Data;
 import lombok.Getter;

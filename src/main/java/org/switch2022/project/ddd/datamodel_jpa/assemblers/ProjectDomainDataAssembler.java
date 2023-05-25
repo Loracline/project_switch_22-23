@@ -1,9 +1,9 @@
-package org.switch2022.project.ddd.datamodel.JPA.assemblers;
+package org.switch2022.project.ddd.datamodel_jpa.assemblers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.switch2022.project.ddd.datamodel.JPA.ProductBacklogJpa;
-import org.switch2022.project.ddd.datamodel.JPA.ProjectJpa;
+import org.switch2022.project.ddd.datamodel_jpa.ProductBacklogJpa;
+import org.switch2022.project.ddd.datamodel_jpa.ProjectJpa;
 import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.*;
@@ -17,15 +17,15 @@ import java.util.List;
 import java.util.Optional;
 @Component
 public class ProjectDomainDataAssembler {
+    @Autowired
+    private IFactoryProject factoryProject;
+
     /**
      * Converts a Project object to a ProjectJpa object for persistence.
      *
      * @param project The Project object to be converted.
      * @return The converted ProjectJpa object.
      */
-    @Autowired
-    private IFactoryProject factoryProject;
-
     public ProjectJpa toData(Project project) {
 
         Optional<SprintDuration> sprintDurationOptional = project.getSprintDuration();

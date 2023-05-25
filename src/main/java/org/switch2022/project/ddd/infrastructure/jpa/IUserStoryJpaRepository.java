@@ -1,7 +1,7 @@
-package org.switch2022.project.ddd.infrastructure.JPA;
+package org.switch2022.project.ddd.infrastructure.jpa;
 
 import org.springframework.data.repository.CrudRepository;
-import org.switch2022.project.ddd.datamodel.JPA.UserStoryJpa;
+import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 
@@ -17,7 +17,7 @@ public interface IUserStoryJpaRepository extends CrudRepository<UserStoryJpa, Us
     * @param userStoryJpa The UserStoryJpa entity to be added.
     * @return true if the operation is successful, false otherwise.
     */
-   public boolean add(UserStoryJpa userStoryJpa);
+   boolean add(UserStoryJpa userStoryJpa);
 
    /**
     * Deletes a UserStoryJpa entity by its unique identifier (usId) from the repository.
@@ -25,7 +25,7 @@ public interface IUserStoryJpaRepository extends CrudRepository<UserStoryJpa, Us
     * @param usId The unique identifier of the UserStoryJpa entity to be deleted.
     * @return true if the operation is successful, false otherwise.
     */
-   public boolean deleteByUsId(String usId);
+   boolean deleteByUsId(String usId);
 
    /**
     * Checks if a UserStoryJpa entity exists in the repository by its unique identifier (usId).
@@ -34,7 +34,7 @@ public interface IUserStoryJpaRepository extends CrudRepository<UserStoryJpa, Us
     * @return true if the entity exists, false otherwise.
     */
 
-   public boolean existsByUsId(String usId);
+   boolean existsByUsId(String usId);
 
    /**
     * Finds all UserStoryJpa entities in the repository that match the provided usId.

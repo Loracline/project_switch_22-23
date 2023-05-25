@@ -1,7 +1,7 @@
-package org.switch2022.project.ddd.infrastructure.JPA;
+package org.switch2022.project.ddd.infrastructure.jpa;
 
 import org.springframework.data.repository.CrudRepository;
-import org.switch2022.project.ddd.datamodel.JPA.SprintJpa;
+import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 
 import java.util.List;
@@ -14,14 +14,14 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
      * @param id The unique identifier of the SprintJpa entity to be found.
      * @return An Optional containing the found SprintJpa entity, or empty if not found.
      */
-    public Optional<SprintJpa> findById(String id);
+    Optional<SprintJpa> findById(String id);
 
     /**
      * This method returns the number of sprints contained in the list.
      *
      * @return int equivalent to the number of elements  in the list.
      */
-    public long count();
+    long count();
 
     /**
      * Saves a Sprint entity to the repository.
@@ -29,7 +29,7 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
      * @param sprint The Sprint entity to be saved.
      * @return The saved Sprint entity.
      */
-    public boolean save(Sprint sprint);
+    boolean save(Sprint sprint);
 
     /**
      * Finds all SprintJpa entities with the specified identifiers (sprintId).

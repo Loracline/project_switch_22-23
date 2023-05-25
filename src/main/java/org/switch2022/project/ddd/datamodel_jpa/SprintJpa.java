@@ -1,4 +1,4 @@
-package org.switch2022.project.ddd.datamodel.JPA;
+package org.switch2022.project.ddd.datamodel_jpa;
 
 import lombok.Data;
 import lombok.Getter;
@@ -42,7 +42,7 @@ public class SprintJpa {
         this.projectCode = projectCode;
         this.startDate = startDate;
         this.endDate = endDate;
-        userStoriesInSprint = new ArrayList<UserStoryInSprintJpa>();
+        userStoriesInSprint = new ArrayList<>();
     }
 
     protected SprintJpa(){
