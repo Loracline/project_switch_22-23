@@ -10,10 +10,8 @@ import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
-import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.utils.Validate;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
