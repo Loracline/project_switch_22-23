@@ -1,4 +1,4 @@
-package org.switch2022.project.ddd.infrastructure.JPA;
+package org.switch2022.project.ddd.infrastructure.jpa;
 
 import org.springframework.data.repository.CrudRepository;
 import org.switch2022.project.ddd.datamodel_jpa.ProjectJpa;

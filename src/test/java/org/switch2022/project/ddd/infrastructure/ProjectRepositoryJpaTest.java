@@ -10,7 +10,7 @@ import org.switch2022.project.ddd.datamodel_jpa.ProjectJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.ProjectDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.infrastructure.JPA.IProjectJpaRepository;
+import org.switch2022.project.ddd.infrastructure.jpa.IProjectJpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
