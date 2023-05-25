@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.infrastructure.jpa;
 
 import org.springframework.data.repository.CrudRepository;
 import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 
@@ -14,10 +15,10 @@ public interface IUserStoryJpaRepository extends CrudRepository<UserStoryJpa, Us
    /**
     * Adds a new UserStoryJpa entity to the repository.
     *
-    * @param userStoryJpa The UserStoryJpa entity to be added.
+    * @param userStory The UserStoryJpa entity to be added.
     * @return true if the operation is successful, false otherwise.
     */
-   boolean add(UserStoryJpa userStoryJpa);
+   boolean save(UserStory userStory);
 
    /**
     * Deletes a UserStoryJpa entity by its unique identifier (usId) from the repository.
