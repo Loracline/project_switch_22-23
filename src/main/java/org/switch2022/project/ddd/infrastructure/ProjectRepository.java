@@ -73,7 +73,7 @@ public class ProjectRepository implements IProjectRepository {
      *
      * @return int equivalent to the number of elements in the list
      */
-    public int getProjectNumber() {
+    public int count() {
         return projects.size();
     }
 
@@ -83,7 +83,7 @@ public class ProjectRepository implements IProjectRepository {
      * @param project to be added.
      * @return TRUE if the Project was added to the Project Repository and false otherwise.
      */
-    public boolean addProjectToProjectRepository(Project project) {
+    public boolean save(Project project) {
         boolean projectRegistered = false;
         if (!projects.contains(project)) {
             projects.add(project);
