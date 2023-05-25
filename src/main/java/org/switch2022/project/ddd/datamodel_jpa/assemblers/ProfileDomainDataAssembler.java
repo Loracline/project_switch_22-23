@@ -1,13 +1,14 @@
 package org.switch2022.project.ddd.datamodel_jpa.assemblers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.datamodel_jpa.ProfileJpa;
 import org.switch2022.project.ddd.domain.model.profile.IProfileFactory;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.value_object.Name;
-import org.switch2022.project.ddd.domain.value_object.ProfileId;
 import org.switch2022.project.ddd.utils.Utils;
 
+@Component
 public class ProfileDomainDataAssembler {
 
     @Autowired
