@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Component
+@Component("memory")
 public class ProjectResourceRepository implements IProjectResourceRepository {
 
     /**
