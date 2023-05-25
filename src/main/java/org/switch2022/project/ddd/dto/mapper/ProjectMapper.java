@@ -14,7 +14,7 @@ public class ProjectMapper {
      */
 
     public ProjectDto projectToDto(Project project, String customerName) {
-        return new ProjectDto(project.getProjectCode(),project.getProjectName(),customerName, project.getProjectStatus(),
-                project.getStartDate(), project.getEndDate());
+        return new ProjectDto(project.getProjectCode(), project.getProjectName(), customerName,
+                project.getProjectStatus(), project.getStartDate(), project.getEndDate());
     }
 }

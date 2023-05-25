@@ -47,7 +47,8 @@ public class AccountRepository implements IAccountRepository {
      */
     @Override
     public List<Account> findAll() {
-        return Collections.unmodifiableList(accounts);}
+        return Collections.unmodifiableList(accounts);
+    }
 
 
 
@@ -84,8 +85,10 @@ public class AccountRepository implements IAccountRepository {
                 accountRequested = accounts.get(i);
             }
         }
-        if (accountRequested == null) throw new NotFoundInRepoException("This account " +
-                "doesn't exist");
+        if (accountRequested == null) {
+            throw new NotFoundInRepoException("This account " +
+                    "doesn't exist");
+        }
         return accountRequested;
     }
 

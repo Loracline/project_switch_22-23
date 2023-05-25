@@ -28,7 +28,8 @@ public class PercentageOfAllocation implements ValueObject<PercentageOfAllocatio
      * This method validates the percentage of allocation of an Account Allocated To a
      * Project.
      *
-     * @return <code>true</code> if the percentage of allocation of an Account to a Project is valid, and <code>false</code> otherwise.
+     * @return <code>true</code> if the percentage of allocation of an Account to a Project is valid,
+     * and <code>false</code> otherwise.
      */
     private static boolean isPercentageOfAllocationValid(float percentageOfAllocation) {
         final float MAXIMUM_PERCENTAGE = 100;
