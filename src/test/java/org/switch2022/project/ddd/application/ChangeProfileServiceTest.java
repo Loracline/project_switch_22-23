@@ -55,15 +55,15 @@ class ChangeProfileServiceTest {
 
         when(accountRepository.findAccountByEmail(email)).thenReturn(accountTest);
         when(profileRepository.getProfileByName(any())).thenReturn(assignedProfile);
-        when(assignedProfile.getProfileId()).thenReturn("pr001");
-        when(accountTest.getProfileId()).thenReturn("pr001");
+        when(assignedProfile.getProfileId()).thenReturn("prf001");
+        when(accountTest.getProfileId()).thenReturn("prf001");
 
         // Act
         boolean result = changeProfileService.changeProfile(email, profileName);
 
         // Assert
         assertTrue(result);
-        assertEquals("pr001", accountTest.getProfileId());
+        assertEquals("prf001", accountTest.getProfileId());
     }
 
 
@@ -126,15 +126,15 @@ class ChangeProfileServiceTest {
         when(accountRepository.findAccountByEmail(email)).thenReturn(accountTest);
         Profile assignedProfile = mock(Profile.class);
         when(profileRepository.getProfileByName(any())).thenReturn(assignedProfile);
-        when(assignedProfile.getProfileId()).thenReturn("pr001");
-        when(accountTest.getProfileId()).thenReturn("pr001");
+        when(assignedProfile.getProfileId()).thenReturn("prf001");
+        when(accountTest.getProfileId()).thenReturn("prf001");
 
         // Act
         boolean result = changeProfileService.changeProfile(email, profileName);
 
         // Assert
         assertTrue(result);
-        assertEquals("pr001", accountTest.getProfileId());
+        assertEquals("prf001", accountTest.getProfileId());
     }
 
     /**
@@ -163,7 +163,7 @@ class ChangeProfileServiceTest {
 
         // Assert
         assertTrue(result);
-        assertEquals("pr003", accountTest.getProfileId());
+        assertEquals("prf003", accountTest.getProfileId());
     }
 }
 
