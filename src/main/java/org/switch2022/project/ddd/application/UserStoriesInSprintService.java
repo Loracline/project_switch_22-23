@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
@@ -31,6 +32,7 @@ public class UserStoriesInSprintService {
     private ISprintRepository sprintRepository;
 
     @Autowired
+    @Qualifier("usRepositoryJpa")
     private IUsRepository userStoryRepository;
 
     /**
@@ -47,7 +49,7 @@ public class UserStoriesInSprintService {
 
         int codeNumber = Utils.getIntFromAlphanumericString(projectCode, "P");
         Code code = new Code(codeNumber);
-        List<Sprint> sprints = this.sprintRepository.findAllByProject(code);
+        List<Sprint> sprints = this.sprintRepository.findByProjectCode(code);
 
         Optional<Sprint> currentSprint = getCurrentSprint(sprints, date);
 

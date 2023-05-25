@@ -1,8 +1,8 @@
-package org.switch2022.project.ddd.datamodel.JPA.assemblers;
+package org.switch2022.project.ddd.datamodel_jpa.assemblers;
 
 import org.springframework.stereotype.Service;
-import org.switch2022.project.ddd.datamodel.JPA.SprintJpa;
-import org.switch2022.project.ddd.datamodel.JPA.UserStoryInSprintJpa;
+import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
+import org.switch2022.project.ddd.datamodel_jpa.UserStoryInSprintJpa;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintFactory;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
@@ -19,7 +19,7 @@ import java.util.Locale;
  * and vice versa.
  */
 @Service
-public class SprintDataAssembler {
+public class SprintDomainDataAssembler {
     /**
      * Converts a Sprint instance to a SprintJpa instance.
      *
@@ -37,12 +37,17 @@ public class SprintDataAssembler {
         for (UserStoryInSprint userStory: userStoriesInSprint) {
             UserStoryInSprintJpa userStoryInSprintJpa =
                     new UserStoryInSprintJpa(userStory.getUsId().toString(),
-                    userStory.getEffort());
+                    userStory.getEffort(), sprintJpa);
             userStoriesInSprintJpa.add(userStoryInSprintJpa);
         }
         return sprintJpa;
     }
-
+    /**
+     * Converts a SprintJpa instance to a Sprint instance.
+     *
+     * @param sprintJpa The SprintJpa instance to be converted.
+     * @return The converted Sprint instance.
+     */
     public Sprint toDomain (SprintJpa sprintJpa) {
         ISprintFactory iSprintFactory = new SprintFactory();
 

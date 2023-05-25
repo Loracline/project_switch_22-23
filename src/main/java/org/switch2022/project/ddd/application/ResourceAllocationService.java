@@ -60,13 +60,15 @@ public class ResourceAllocationService {
         Email email = new Email(allocationDto.accountEmail);
         Role role = Role.valueOf(allocationDto.accountRole);
         CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);
-        PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
+        PercentageOfAllocation percentageOfAllocation =
+                new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
         Period allocationPeriod = new Period(allocationDto.startDate, allocationDto.endDate);
         int id = Math.addExact(resourceRepository.findAll().size(), 1);
         ProjectResourceId projectResourceId = new ProjectResourceId(id);
         boolean addedUser = false;
         if (isResourceValid(role, code, allocationPeriod, email, percentageOfAllocation)) {
-            ProjectResource projectResource = resourceFactory.createProjectResource(projectResourceId, code, email, role, allocationPeriod, costPerHour, percentageOfAllocation);
+            ProjectResource projectResource = resourceFactory.createProjectResource(projectResourceId, code, email,
+                    role, allocationPeriod, costPerHour, percentageOfAllocation);
             addedUser = resourceRepository.save(projectResource);
         }
         return addedUser;
@@ -90,7 +92,8 @@ public class ResourceAllocationService {
                                     PercentageOfAllocation percentage) {
         return isProjectValidForAllocation(code, period) && isAccountValidForAllocation(email) &&
                 isNotProjectManager(role) && projectDoesNotHaveScrumMasterOrProductOwnerInThatPeriod(role, code, period)
-                && resourceDoesNotExist(code, email, period) && isPercentageOfAllocationValid(period, email, percentage);
+                && resourceDoesNotExist(code, email, period) &&
+                isPercentageOfAllocationValid(period, email, percentage);
     }
 
 

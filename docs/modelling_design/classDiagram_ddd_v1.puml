@@ -19,10 +19,9 @@ ICustomerRepository "1" ..> "1" ProjectCreationService: is injected
 ITypologyRepository "1" ..> "1" ProjectCreationService: is injected
 IBusinessSectorRepository "1" ..> "1" ProjectCreationService: is injected
 
-class "CreateUsController" {
+class "CreateUserStoryController" {
 - usService
-+ createUs(projectCodeOfInterest, userStoryCreationDto)
--convertListOfStringsToAnAcceptanceCriteriaList(userStoryCreationDto)
++ createUs(userStoryCreationDto)
 }
 
 class "EstimateUserStoryEffortController" {
@@ -78,6 +77,7 @@ class "ProjectListService"{
 }
 
 class "UserStoryCreationDto"{
++projectCode
 +userStoryNumber
 +userStoryText
 +actor
@@ -93,12 +93,12 @@ class "UserStoryInSprintService" {
 }
 
 class "UsService" {
-- usRepository
-- projectRepository
-- factoryUserStory
-+ createUs(userStoryNumber, userStoryText, actor,\n priority, acceptanceCriteria, projectCode)
-+ deleteUs(usId)
-+ addUsToProductBacklog(usId, projectCode, priority)
+-usRepository
+-projectRepository
+-factoryUserStory
++createUs(userStoryCreationDto)
++deleteUs(usId)
++addUsToProductBacklog(usId, projectCode, priority)
 }
 
 interface "IFactoryUserStory" {
@@ -238,6 +238,7 @@ class "UserStory"{
 - actor
 - usText
 - status
+- projectCode
 + getUsNumber()
 +getUsText()
 +getStatus()
@@ -267,8 +268,8 @@ class "ProjectDto"{
 +endDate
 }
 
-"CreateUsController" .> "UserStoryCreationDto": accesses
-"CreateUsController" "1"<.."1" "UsService": is injected
+"CreateUserStoryController" .> "UserStoryCreationDto": accesses
+"CreateUserStoryController" "1"<.."1" "UsService": is injected
 
 "UsService" "1" <.. "1" "IFactoryUserStory": is injected
 "IFactoryUserStory" <|.. "FactoryUserStory": implements
@@ -367,10 +368,10 @@ BusinessSectorRepository --> BusinessSector: has
 "UsService" ..> "UserStory": uses
 "UsService" ..> "Project": uses
 
-"GetProductBacklogController" "1"<.."1" "ProjectService":  is injected
+"ConsultProductBacklogController" "1"<.."1" "ProjectService":  is injected
 "Project" "1"-->"1" "ProductBacklog": has
 "ProductBacklog" "1"-->"*" "UserStory": has
-"GetProductBacklogController" "1"-->"1" "UserStoryMapper" : has
+"ConsultProductBacklogController" "1"-->"1" "UserStoryMapper" : has
 "UserStoryMapper" "1 "..> "*" "UserStoryDto" : creates
 "UserStoryMapper" ..> "UserStory" : knows
 

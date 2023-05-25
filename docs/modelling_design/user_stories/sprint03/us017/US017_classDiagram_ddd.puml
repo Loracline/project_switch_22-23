@@ -1,0 +1,100 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+legend top
+US017 - As Product Owner, I want to create User Story and add it to Product Backlog
+end legend
+skinparam sequenceMessageAlign center
+title To create User Story and add it to Product Backlog
+
+
+class "CreateUserStoryController" {
+-usService
++createUs(userStoryCreationDto)
+}
+
+class "UserStoryCreationDto"{
++projectCode
++userStoryNumber
++userStoryText
++actor
++acceptanceCriteria
++priority
+}
+
+class "UsService" {
+-usRepository
+-projectRepository
+-factoryUserStory
++createUs(userStoryCreationDto)
++deleteUs(usId)
++addUsToProductBacklog(usId, projectCode, priority)
+}
+
+interface "IFactoryUserStory" {
++createUserStory(userStoryNumber, userStoryText, actor,\nacceptanceCriteria, projectCode)
+}
+
+class "FactoryUserStory"{
++createUserStory(usNumber, usText, actor,\nacceptanceCriteria, projectCode)
+}
+
+interface "IProjectRepository"{
++findByCode(code)
+}
+
+class "ProjectRepository"{
+-projects
++findByCode(code)
+}
+
+interface "IUsRepository"{
++save(userStory)
++delete(usId)
++getListOfUsWithMatchingIds(usId)
+}
+
+class "UsRepository"{
++save(userStory)
++delete(usId)
++getListOfUsWithMatchingIds(usId)
+}
+
+class "Project"{
+-projectCode
+-productBacklog
++addUserStory(priority, usId)
++getProjectCode()
+}
+
+class "UserStory"{
+- usId
+- acceptanceCriteria
+- usNumber
+- actor
+- usText
+- status
+- projectCode
++ getUsNumber()
+}
+
+
+"CreateUserStoryController" .> "UserStoryCreationDto": accesses
+"CreateUserStoryController" "1"<.."1" "UsService": is injected
+
+"UsService" "1" <.. "1" "IFactoryUserStory": is injected
+"IFactoryUserStory" <|.. "FactoryUserStory": implements
+"FactoryUserStory" "1"..>"*" "UserStory": creates
+
+
+"UsService" "1" <.. "1" "IProjectRepository": is injected
+"IProjectRepository" <|.. "ProjectRepository": implements
+"ProjectRepository" "1"-->"*" "Project": has
+
+"UsService" "1" <.. "1" "IUsRepository": is injected
+"IUsRepository" <|.. "UsRepository": implements
+"UsRepository" "1"-->"*" "UserStory": has
+
+"UsService" ..> "UserStory": uses
+"UsService" ..> "Project": uses
+
+@enduml

@@ -98,8 +98,10 @@ public class ProfileRepository implements IProfileRepository {
             }
             i++;
         }
-        if (profileRequested == null) throw new NotFoundInRepoException("This profile " +
-                "doesn't exist");
+        if (profileRequested == null) {
+            throw new NotFoundInRepoException("This profile " +
+                    "doesn't exist");
+        }
         return profileRequested;
 
     }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
@@ -37,6 +38,7 @@ public class UserStoriesInSprintServiceTest {
     ISprintRepository sprintRepository;
 
     @MockBean
+    @Qualifier("usRepositoryJpa")
     IUsRepository userStoryRepository;
 
     /**
@@ -67,7 +69,7 @@ public class UserStoriesInSprintServiceTest {
         List<Sprint> sprintsOfProject = new ArrayList<>();
         sprintsOfProject.add(sprint);
 
-        when(sprintRepository.findAllByProject(code)).thenReturn(sprintsOfProject);
+        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
 
         List<UsId> usIds = new ArrayList<>();
         usIds.add(usId);
@@ -115,7 +117,7 @@ public class UserStoriesInSprintServiceTest {
         List<Sprint> sprintsOfProject = new ArrayList<>();
         sprintsOfProject.add(sprint);
 
-        when(sprintRepository.findAllByProject(code)).thenReturn(sprintsOfProject);
+        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
 
         List<UserStoryDto> expectedList = new ArrayList<>();
 
@@ -140,7 +142,7 @@ public class UserStoriesInSprintServiceTest {
         LocalDate date = LocalDate.now();
         Code code = new Code(123);
 
-        when(sprintRepository.findAllByProject(code)).thenReturn(new ArrayList<>());
+        when(sprintRepository.findByProjectCode(code)).thenReturn(new ArrayList<>());
 
         List<UserStoryDto> expectedList = new ArrayList<>();
 
@@ -171,7 +173,7 @@ public class UserStoriesInSprintServiceTest {
         List<Sprint> sprintsOfProject = new ArrayList<>();
         sprintsOfProject.add(sprint);
 
-        when(sprintRepository.findAllByProject(code)).thenReturn(sprintsOfProject);
+        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
 
         List<UserStoryDto> expectedList = new ArrayList<>();
 

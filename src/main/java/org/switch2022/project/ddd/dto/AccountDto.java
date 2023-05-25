@@ -43,7 +43,8 @@ public class AccountDto {
             return false;
         }
         AccountDto that = (AccountDto) o;
-        return Objects.equals(status, that.status) && Objects.equals(name, that.name) && Objects.equals(email, that.email);
+        return Objects.equals(status, that.status) && Objects.equals(name, that.name) &&
+                Objects.equals(email, that.email);
     }
 
     /**
