@@ -41,12 +41,11 @@ public class UsService {
      * added to the product backlog with the specified priority, and if it already exists it
      * should be deleted and the exception is rethrown.
      *
-     * @param userStoryCreationDto  the UserStoryCreationDto that represents the data for
-     *                              creating the user story
-     *
+     * @param userStoryCreationDto the UserStoryCreationDto that represents the data for
+     *                             creating the user story
      * @return the created User Story ID
      * @throws AlreadyExistsInRepoException if an error occurs during the User Story creation
-     * process or if the User Story
+     *                                      process or if the User Story
      */
 
     public UsId createUs(UserStoryCreationDto userStoryCreationDto) throws Exception {
@@ -115,8 +114,8 @@ public class UsService {
      * Project code.
      *
      * @param userStoryCreationDto represents the data for creating the User Story
-     * @param projectCode          list of Acceptance Criteria as a String
-     * @return a list of objects of type AcceptanceCriteria.
+     * @param projectCode          of the project where the user ID will be created
+     * @return a User Story.
      */
     private UserStory createUserStory(UserStoryCreationDto userStoryCreationDto, Code projectCode) {
         UsNumber userStoryNumber = new UsNumber(userStoryCreationDto.userStoryNumber);
