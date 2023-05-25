@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
@@ -29,6 +30,7 @@ public class ProjectService {
     @Autowired
     private IFactoryProject factoryProject;
     @Autowired
+    @Qualifier("repositoryJpa")
     private IProjectRepository projectRepository;
     @Autowired
     private IUsRepository usRepository;
@@ -52,7 +54,7 @@ public class ProjectService {
      *
      * @param code of the Project requested
      * @return a list of userStories ID
-     * @throws Exception if the projectCode doesn't match any Project in the repository.
+     * if the projectCode doesn't match any Project in the repository.
      */
 
     public List<UserStoryDto> getProductBacklog(String code) {

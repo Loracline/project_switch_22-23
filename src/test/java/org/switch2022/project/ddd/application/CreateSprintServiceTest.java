@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
@@ -34,6 +35,7 @@ class CreateSprintServiceTest {
     @InjectMocks
     CreateSprintService createSprintService;
     @MockBean
+    @Qualifier("repositoryJpa")
     IProjectRepository projectRepository;
     @MockBean
     ISprintRepository sprintRepository;

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
@@ -31,6 +32,7 @@ class ProjectListServiceTest {
     @InjectMocks
     ProjectListService projectListService;
     @MockBean
+    @Qualifier("repositoryJpa")
     IProjectRepository projectRepository;
     @MockBean
     ProjectMapper projectMapper;
