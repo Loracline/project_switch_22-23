@@ -148,7 +148,7 @@ public class Project implements Entity<Project> {
      * @return a String with the customer ID of the project.
      */
 
-    public String getCustomerTaxID() {
+    public String getCustomerTaxIDAsString() {
         return customerTaxId.getNumber();
     }
 

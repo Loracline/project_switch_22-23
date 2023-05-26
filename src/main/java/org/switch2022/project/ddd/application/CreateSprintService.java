@@ -32,7 +32,7 @@ public class CreateSprintService {
     @Autowired
     private ISprintFactory sprintFactory;
     @Autowired
-    @Qualifier ("repositoryJpa")
+    @Qualifier ("project_jpa")
     private IProjectRepository projectRepository;
 
     /**

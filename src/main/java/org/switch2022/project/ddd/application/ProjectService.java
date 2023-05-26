@@ -30,7 +30,7 @@ public class ProjectService {
     @Autowired
     private IFactoryProject factoryProject;
     @Autowired
-    @Qualifier("repositoryJpa")
+    @Qualifier("project_jpa")
     private IProjectRepository projectRepository;
     @Autowired
     private IUsRepository usRepository;

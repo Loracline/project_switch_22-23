@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerFactory;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
+import org.switch2022.project.ddd.dto.CustomerCreationDto;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
@@ -39,15 +40,16 @@ class CustomerServiceTest {
     @Test
     void ensureCustomerIsCreatedSuccessfully() {
         // Arrange
-        String customerName = "Partilha Cortesia, Lda.";
-        String customerTaxId = "514024054";
+        CustomerCreationDto dtoDouble = new CustomerCreationDto(
+                "514 024 054",
+                "Partilha Cortesia Lda.");
 
         when(repository.save(any())).thenReturn(true);
 
         boolean expected = true;
 
         // Act
-        boolean result = service.addCustomer(customerTaxId, customerName);
+        boolean result = service.addCustomer(dtoDouble);
 
         // Assert
         assertEquals(expected, result);
@@ -57,15 +59,16 @@ class CustomerServiceTest {
     @Test
     void ensureCustomerIsNotCreatedBecauseAlreadyExists() {
         // Arrange
-        String customerName = "Partilha Cortesia, Lda.";
-        String customerTaxId = "514 024 054";
+        CustomerCreationDto dtoDouble = new CustomerCreationDto(
+                "514 024 054",
+                "Partilha Cortesia Lda.");
 
         String expected = "Customer's tax ID already exists!";
         when(repository.save(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         // Act
         AlreadyExistsInRepoException result =
-                assertThrows(AlreadyExistsInRepoException.class, () -> service.addCustomer(customerTaxId, customerName));
+                assertThrows(AlreadyExistsInRepoException.class, () -> service.addCustomer(dtoDouble));
 
         // Assert
         assertEquals(expected, result.getMessage());
@@ -75,15 +78,16 @@ class CustomerServiceTest {
     @Test
     void ensureCustomerIsNotCreatedBecauseTaxIdIsInvalid() {
         // Arrange
-        String customerName = "Partilha Cortesia, Lda.";
-        String customerTaxId = "514 024 0O4";
+        CustomerCreationDto dtoDouble = new CustomerCreationDto(
+                "514 024 054",
+                "Partilha Cortesia Lda.");
 
         String expected = "Invalid or unsupported country for tax ID validation.";
         when(factory.createCustomer(any(), any())).thenThrow(new InvalidInputException(expected));
 
         // Act
         InvalidInputException result =
-                assertThrows(InvalidInputException.class, () -> service.addCustomer(customerTaxId, customerName));
+                assertThrows(InvalidInputException.class, () -> service.addCustomer(dtoDouble));
 
 
         // Assert

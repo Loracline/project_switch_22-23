@@ -96,8 +96,10 @@ class ProfileJpaRepositoryTest {
     void ensureProfileIsSuccessfullyReturned() {
         //Arrange
         Name profileName = mock(Name.class);
+        ProfileJpa profileJpaDouble = mock(ProfileJpa.class);
         Profile expected = mock(Profile.class);
-        when(jpaRepository.findByProfileName(profileName)).thenReturn(expected);
+        when(jpaRepository.findByProfileName(profileName.getName())).thenReturn(profileJpaDouble);
+        when(assembler.toDomain(profileJpaDouble)).thenReturn(expected);
 
         //Act
         Profile result = profileJpaRepository.findByProfileName(profileName);

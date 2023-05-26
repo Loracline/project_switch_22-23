@@ -71,7 +71,7 @@ class ProjectDataAssemblerTest {
         Optional<SprintDuration> optionalSprintDuration = Optional.of(new SprintDuration(2));
         when(projectDouble.getSprintDuration()).thenReturn(optionalSprintDuration);
         when(projectDouble.getBusinessSectorId()).thenReturn("bs001");
-        when(projectDouble.getCustomerTaxID()).thenReturn("2576542324");
+        when(projectDouble.getCustomerTaxIDAsString()).thenReturn("2576542324");
         when(projectDouble.getProjectTypologyId()).thenReturn("pt001");
         when(projectDouble.getProductBacklog()).thenReturn(userStoriesId);
         when(projectDouble.getProductBacklogId()).thenReturn("p001_pb001");
@@ -118,7 +118,7 @@ class ProjectDataAssemblerTest {
         Optional<SprintDuration> optionalSprintDuration = Optional.empty();
         when(projectDouble.getSprintDuration()).thenReturn(optionalSprintDuration);
         when(projectDouble.getBusinessSectorId()).thenReturn("bs001");
-        when(projectDouble.getCustomerTaxID()).thenReturn("2576542324");
+        when(projectDouble.getCustomerTaxIDAsString()).thenReturn("2576542324");
         when(projectDouble.getProjectTypologyId()).thenReturn("pt001");
         when(projectDouble.getProductBacklog()).thenReturn(userStoriesId);
         when(projectDouble.getProductBacklogId()).thenReturn("p001_pb001");
@@ -134,7 +134,7 @@ class ProjectDataAssemblerTest {
      */
     @Test
     void ensureThatProjectIsCreatedSuccessfully() {
-        //Arrang
+        //Arrange
         Project expected = mock(Project.class);
         Name nameDouble = new Name("ISEP");
         Description descriptionDouble = new Description("Project");
@@ -150,11 +150,13 @@ class ProjectDataAssemblerTest {
         expected.isPeriodAssigned(new Period(LocalDate.parse("2021-02-10"), LocalDate.parse("2030-03-09")));
         expected.addUserStory(0, new UsId("P001", "us001"));
         expected.addUserStory(0, new UsId("P001", "us002"));
+
         List<String> userStories = new ArrayList<>();
         userStories.add("p001_us001");
         userStories.add("p001_us002");
         ProductBacklogJpa productBacklogJpa = mock(ProductBacklogJpa.class);
         ProjectJpa projectJpa = mock(ProjectJpa.class);
+        when(expected.hasStatus(ProjectStatus.INCEPTION)).thenReturn(true);
         when(projectJpa.getProjectName()).thenReturn("ISEP");
         when(projectJpa.getDescription()).thenReturn("Project");
         when(projectJpa.getProjectCode()).thenReturn("P001");

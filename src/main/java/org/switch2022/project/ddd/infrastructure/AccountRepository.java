@@ -62,12 +62,12 @@ public class AccountRepository implements IAccountRepository {
     @Override
     public List<Account> findAccountsByEmails(List<Email> emails) {
         Validate.notNull(emails, "E-mail's list can't be null.");
-        List<Account> accounts = new ArrayList<>();
+        List<Account> accountsWithMatchingEmails = new ArrayList<>();
         for (int i = 0; i < emails.size(); i++) {
             Account account = findAccountByEmail(emails.get(i).getEmail());
-            accounts.add(account);
+            accountsWithMatchingEmails.add(account);
         }
-        return accounts;
+        return accountsWithMatchingEmails;
     }
 
     /**

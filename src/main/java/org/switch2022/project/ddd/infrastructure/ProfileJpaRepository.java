@@ -57,7 +57,8 @@ public class ProfileJpaRepository implements IProfileRepository {
      *
      */
     public Profile findByProfileName(Name profileName){
-        Optional<Profile> profile = Optional.ofNullable(jpaRepository.findByProfileName(profileName));
+        Optional<Profile> profile =
+                Optional.ofNullable(assembler.toDomain(jpaRepository.findByProfileName(profileName.getName())));
 
         if(profile.isPresent()){
             return profile.get();

@@ -25,8 +25,9 @@ import java.util.Optional;
 @Service
 public class UsService {
     @Autowired
-    @Qualifier("usRepositoryJpa")
+    @Qualifier("us_jpa")
     private IUsRepository usRepository;
+    @Qualifier("project_jpa")
     @Autowired
     private IProjectRepository projectRepository;
     @Autowired
