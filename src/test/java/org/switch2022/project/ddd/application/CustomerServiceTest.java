@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerFactory;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
 import org.switch2022.project.ddd.dto.CustomerCreationDto;
@@ -17,6 +18,7 @@ import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,10 +42,12 @@ class CustomerServiceTest {
     @Test
     void ensureCustomerIsCreatedSuccessfully() {
         // Arrange
-        CustomerCreationDto dtoDouble = new CustomerCreationDto(
-                "514 024 054",
-                "Partilha Cortesia Lda.");
+        CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
+        Customer customerDouble = mock(Customer.class);
 
+        when(dtoDouble.getCustomerName()).thenReturn("Partilha Cortesia Lda.");
+        when(dtoDouble.getCustomerTaxId()).thenReturn("514024054");
+        when(factory.createCustomer(any(), any())).thenReturn(customerDouble);
         when(repository.save(any())).thenReturn(true);
 
         boolean expected = true;
@@ -59,11 +63,14 @@ class CustomerServiceTest {
     @Test
     void ensureCustomerIsNotCreatedBecauseAlreadyExists() {
         // Arrange
-        CustomerCreationDto dtoDouble = new CustomerCreationDto(
-                "514 024 054",
-                "Partilha Cortesia Lda.");
+        CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
+        Customer customerDouble = mock(Customer.class);
 
         String expected = "Customer's tax ID already exists!";
+
+        when(dtoDouble.getCustomerName()).thenReturn("Partilha Cortesia Lda.");
+        when(dtoDouble.getCustomerTaxId()).thenReturn("514024054");
+        when(factory.createCustomer(any(), any())).thenReturn(customerDouble);
         when(repository.save(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         // Act
@@ -78,12 +85,12 @@ class CustomerServiceTest {
     @Test
     void ensureCustomerIsNotCreatedBecauseTaxIdIsInvalid() {
         // Arrange
-        CustomerCreationDto dtoDouble = new CustomerCreationDto(
-                "514 024 054",
-                "Partilha Cortesia Lda.");
+        CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
 
         String expected = "Invalid or unsupported country for tax ID validation.";
-        when(factory.createCustomer(any(), any())).thenThrow(new InvalidInputException(expected));
+
+        when(dtoDouble.getCustomerName()).thenReturn("Partilha Cortesia Lda.");
+        when(dtoDouble.getCustomerTaxId()).thenReturn("51402X054");
 
         // Act
         InvalidInputException result =
