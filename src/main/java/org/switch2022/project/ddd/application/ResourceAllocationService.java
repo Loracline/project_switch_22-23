@@ -186,9 +186,12 @@ public class ResourceAllocationService {
      * This method checks if one specific Project already has the role of Scrum Master or Product Owner in a specific
      * period.
      *
-     * @param role, code, period to check.
-     * @return <code>true</code> if the project already has a Scrum Master or Product Owner in a specific Period and
-     * <code>false</code> otherwise.
+     * @param role to check.
+     * @param code to check.
+     * @param period to check.
+     * @return <code>true</code> if the project have a Scrum Master or Product Owner in a specific Period and
+     * <code>false</code> if the project does not have a Resource with the role of Scrum Master or
+     * Product Owner in a given period of time or if the role to be checked is neither Scrum Master nor Product Owner.
      */
     protected boolean projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
         return projectAlreadyHasScrumMasterInThatPeriod(role, code, period) ||
@@ -198,21 +201,28 @@ public class ResourceAllocationService {
     /**
      * This method checks if one specific Project does not have a Scrum Master or Product Owner in a specific period.
      *
-     * @param role, code, period to check.
-     * @return <code>true</code> if the project does not have a Scrum Master or Product Owner in a specific Period and
-     * <code>false</code> otherwise.
+     * @param role to check.
+     * @param code to check.
+     * @param period to check.
+     * @return <code>true</code> if the project does not have a Resource with the role of Scrum Master or Product Owner
+     * in a specific Period and
+     * <code>false</code> if the project does already have a Resource with the role of Scrum Master or
+     * Product Owner in a given period of time or if the role to be checked is neither Scrum Master nor Product Owner.
      */
     private boolean projectDoesNotHaveScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
         return !projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(role, code, period);
     }
 
     /**
-     * This method checks if one specific Project already has the role of Scrum Master in a specific
-     * period.
+     * This method checks if one specific Project already has a resource with the role of Scrum Master in a specific
+     * period when trying to create a new resource with that same role.
      *
-     * @param code, role, period to check.
-     * @return <code>true</code> if the project already has a Scrum Master in a specific Period and
-     * <code>false</code> otherwise.
+     * @param role to check.
+     * @param code to check.
+     * @param period to check.
+     * @return <code>true</code> if the project already has a Scrum Master in a given period of time and
+     * <code>false</code> if the project does not have a Scrum Master in a given period of time or if the
+     * role to be checked is not Scrum Master.
      */
     private boolean projectAlreadyHasScrumMasterInThatPeriod(Role role, Code code, Period period) {
         return role.sameValueAs(Role.SCRUM_MASTER) && projectHasRoleInThatPeriod(role, code, period);
@@ -223,7 +233,8 @@ public class ResourceAllocationService {
      *
      * @param code, role, period to check.
      * @return <code>true</code> if the project already has a Product Owner in a specific Period and
-     * <code>false</code> otherwise.
+     * <code>false</code> if the project does not have a Product Owner in a given period of time or if the
+     * role to be checked is not Product Owner.
      */
     private boolean projectAlreadyHasProductOwnerInThatPeriod(Role role, Code code, Period period) {
         return role.sameValueAs(PRODUCT_OWNER) && projectHasRoleInThatPeriod(role, code, period);
@@ -413,12 +424,13 @@ public class ResourceAllocationService {
      */
     public boolean isPercentageOfAllocationValid(Period period, Email email,
                                                  PercentageOfAllocation percentageOfAllocationToAdd) {
+        int MAX_PERCENTAGE_OF_ALLOCATION = 100;
         float[] totalPercentageOfAllocation = percentageOfAllocationDuringAPeriod(period, email);
         boolean result = true;
         int i = 0;
         while (i < totalPercentageOfAllocation.length && result) {
             totalPercentageOfAllocation[i] += percentageOfAllocationToAdd.getValue();
-            if (totalPercentageOfAllocation[i] > 100) {
+            if (totalPercentageOfAllocation[i] > MAX_PERCENTAGE_OF_ALLOCATION) {
                 result = false;
             }
             i++;
