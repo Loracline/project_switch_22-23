@@ -26,9 +26,9 @@ class UserStoryTest {
         // Arrange
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
 
@@ -41,6 +41,7 @@ class UserStoryTest {
         // Assert
         assertEquals(expected, result.getMessage());
     }
+
     /**
      * Constructor
      * <br>
@@ -52,9 +53,9 @@ class UserStoryTest {
         // Arrange
         Code projectCodeDouble = mock(Code.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
 
@@ -67,6 +68,7 @@ class UserStoryTest {
         // Assert
         assertEquals(expected, result.getMessage());
     }
+
     /**
      * Constructor
      * <br>
@@ -77,9 +79,9 @@ class UserStoryTest {
         // Arrange
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
 
@@ -92,6 +94,7 @@ class UserStoryTest {
         // Assert
         assertEquals(expected, result.getMessage());
     }
+
     /**
      * Constructor
      * <br>
@@ -104,7 +107,7 @@ class UserStoryTest {
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
 
@@ -117,6 +120,7 @@ class UserStoryTest {
         // Assert
         assertEquals(expected, result.getMessage());
     }
+
     /**
      * Constructor
      * <br>
@@ -128,7 +132,7 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
 
         String expected = "User Story's Acceptance Criteria can't be null.";
@@ -152,9 +156,9 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -181,9 +185,9 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -211,9 +215,9 @@ class UserStoryTest {
 
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -242,9 +246,9 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -271,9 +275,9 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
+        UsText usTextDouble = mock(UsText.class);
 
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -302,8 +306,8 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -320,7 +324,7 @@ class UserStoryTest {
 
         UserStory reference = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        UserStory other = new UserStory(projectCodeDoubleOther, usNumberDoubleOther, actorDoubleOther,usTextDoubleOther,
+        UserStory other = new UserStory(projectCodeDoubleOther, usNumberDoubleOther, actorDoubleOther, usTextDoubleOther,
                 acceptanceCriteriaDoubleOther);
 
         int expected = reference.hashCode();
@@ -342,8 +346,8 @@ class UserStoryTest {
         Code projectCodeDoubleOne = mock(Code.class);
         UsNumber usNumberDoubleOne = mock(UsNumber.class);
         Actor actorDoubleOne = mock(Actor.class);
-        UsText usTextDoubleOne = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDoubleOne = mock (AcceptanceCriteria.class);
+        UsText usTextDoubleOne = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDoubleOne = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDoubleOne = new ArrayList<>();
         acceptanceCriteriaDoubleOne.add(acceptanceCriteriaElementDoubleOne);
         when(projectCodeDoubleOne.getCode()).thenReturn("p001");
@@ -353,8 +357,8 @@ class UserStoryTest {
         Code projectCodeDoubleTwo = mock(Code.class);
         UsNumber usNumberDoubleTwo = mock(UsNumber.class);
         Actor actorDoubleTwo = mock(Actor.class);
-        UsText usTextDoubleTwo = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDoubleTwo = mock (AcceptanceCriteria.class);
+        UsText usTextDoubleTwo = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDoubleTwo = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDoubleTwo = new ArrayList<>();
         acceptanceCriteriaDoubleTwo.add(acceptanceCriteriaElementDoubleTwo);
         when(projectCodeDoubleTwo.getCode()).thenReturn("p002");
@@ -362,7 +366,7 @@ class UserStoryTest {
 
         UserStory reference = new UserStory(projectCodeDoubleOne, usNumberDoubleOne, actorDoubleOne, usTextDoubleOne,
                 acceptanceCriteriaDoubleOne);
-        UserStory other = new UserStory(projectCodeDoubleTwo, usNumberDoubleTwo,actorDoubleTwo, usTextDoubleTwo,
+        UserStory other = new UserStory(projectCodeDoubleTwo, usNumberDoubleTwo, actorDoubleTwo, usTextDoubleTwo,
                 acceptanceCriteriaDoubleTwo);
         int expected = reference.hashCode();
 
@@ -385,22 +389,22 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
         when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
         //US Other
         Actor actorDoubleTwo = mock(Actor.class);
-        UsText usTextDoubleTwo = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDoubleTwo = mock (AcceptanceCriteria.class);
+        UsText usTextDoubleTwo = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDoubleTwo = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDoubleTwo = new ArrayList<>();
         acceptanceCriteriaDoubleTwo.add(acceptanceCriteriaElementDoubleTwo);
 
         UserStory reference = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        UserStory other = new UserStory(projectCodeDouble, usNumberDouble,actorDoubleTwo, usTextDoubleTwo,
+        UserStory other = new UserStory(projectCodeDouble, usNumberDouble, actorDoubleTwo, usTextDoubleTwo,
                 acceptanceCriteriaDoubleTwo);
 
         // Act
@@ -420,8 +424,8 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -435,7 +439,7 @@ class UserStoryTest {
 
         UserStory reference = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        UserStory other = new UserStory(projectCodeDoubleTwo, usNumberDoubleTwo,actorDouble, usTextDouble,
+        UserStory other = new UserStory(projectCodeDoubleTwo, usNumberDoubleTwo, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
 
         boolean expected = false;
@@ -459,8 +463,8 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -493,13 +497,13 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
         when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
-        UsText usTextDoubleTwo = mock (UsText.class);
+        UsText usTextDoubleTwo = mock(UsText.class);
         when(usTextDoubleTwo.getUserStoryText()).thenReturn("jogar 24/7");
 
         UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
@@ -526,8 +530,8 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -560,8 +564,8 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -587,13 +591,13 @@ class UserStoryTest {
      * Scenario 01: this method returns the list of user story acceptance criteria.
      */
     @Test
-    void ensureTheListOfAcceptanceCriteriaIsRetrievedSuccessfully(){
+    void ensureTheListOfAcceptanceCriteriaIsRetrievedSuccessfully() {
         // Arrange
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -601,7 +605,7 @@ class UserStoryTest {
 
         UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        List<String> expected= new ArrayList<>();
+        List<String> expected = new ArrayList<>();
         expected.add(acceptanceCriteriaElementDouble.getAcceptanceCriteria());
         //Act
         List<String> result = userStory.getAcceptanceCriteria();
@@ -623,8 +627,8 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -634,10 +638,10 @@ class UserStoryTest {
                 acceptanceCriteriaDouble);
 
         UsNumber usNumberDoubleTwo = mock(UsNumber.class);
-        userStory.setUsNumber( usNumberDoubleTwo);
+        userStory.setUsNumber(usNumberDoubleTwo);
 
         // Act
-        boolean result = userStory.has( usNumberDoubleTwo);
+        boolean result = userStory.has(usNumberDoubleTwo);
 
         // Assert
         assertTrue(result);
@@ -652,8 +656,8 @@ class UserStoryTest {
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -669,6 +673,7 @@ class UserStoryTest {
         // Assert
         assertFalse(result);
     }
+
     /**
      * METHOD hasStatus.
      * <br>
@@ -676,13 +681,13 @@ class UserStoryTest {
      * Return: TRUE.
      */
     @Test
-    void ensureThatUserStoryHasTheGivenStatus(){
+    void ensureThatUserStoryHasTheGivenStatus() {
         // Arrange
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -690,7 +695,7 @@ class UserStoryTest {
 
         UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        Status usStatusToVerify= mock (Status.class);
+        Status usStatusToVerify = mock(Status.class);
         when(usStatusToVerify.getStatus()).thenReturn("Running");
         userStory.setStatus(usStatusToVerify);
 
@@ -700,18 +705,19 @@ class UserStoryTest {
         // Assert
         assertTrue(result);
     }
+
     /**
      * Scenario 2: User Story doesn't have the given Status.
      * Return: FALSE.
      */
     @Test
-    void ensureThatUserStoryDoesNotHaveTheGivenStatus(){
+    void ensureThatUserStoryDoesNotHaveTheGivenStatus() {
         // Arrange
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -719,7 +725,7 @@ class UserStoryTest {
 
         UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        Status usStatusToVerify= mock (Status.class);
+        Status usStatusToVerify = mock(Status.class);
         when(usStatusToVerify.getStatus()).thenReturn("Running");
 
         //Act
@@ -734,13 +740,13 @@ class UserStoryTest {
      * Scenario 01: verify if the UserStory has the given usId.
      */
     @Test
-    void ensureThatUserStoryHasTheGivenUsId(){
+    void ensureThatUserStoryHasTheGivenUsId() {
         // Arrange
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -748,25 +754,26 @@ class UserStoryTest {
 
         UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        UsId usIdToVerify = new UsId(projectCodeDouble.getCode(), usNumberDouble.getUserStoryNumber() );
+        UsId usIdToVerify = new UsId(projectCodeDouble.getCode(), usNumberDouble.getUserStoryNumber());
 
         //Ac
-        boolean result= userStory.hasUsId(usIdToVerify);
+        boolean result = userStory.hasUsId(usIdToVerify);
 
         //Assert
         assertTrue(result);
     }
+
     /**
      * Scenario 02: check that the User Story does not have the given Id.
-     * */
+     */
     @Test
-    void ensureThatUserStoryDoesNotHaveTheGivenUsId(){
+    void ensureThatUserStoryDoesNotHaveTheGivenUsId() {
         // Arrange
         Code projectCodeDouble = mock(Code.class);
         UsNumber usNumberDouble = mock(UsNumber.class);
         Actor actorDouble = mock(Actor.class);
-        UsText usTextDouble = mock (UsText.class);
-        AcceptanceCriteria acceptanceCriteriaElementDouble = mock (AcceptanceCriteria.class);
+        UsText usTextDouble = mock(UsText.class);
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
         acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
         when(projectCodeDouble.getCode()).thenReturn("p001");
@@ -774,15 +781,70 @@ class UserStoryTest {
 
         UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
                 acceptanceCriteriaDouble);
-        UsId usIdToVerify = mock (UsId.class);
+        UsId usIdToVerify = mock(UsId.class);
 
         //Ac
-        boolean result= userStory.hasUsId(usIdToVerify);
+        boolean result = userStory.hasUsId(usIdToVerify);
 
         //Assert
         assertFalse(result);
     }
 
+    /**
+     * Method getActor()
+     * Scenario 01: verify if the actor of the user story is retrieved.
+     */
+    @Test
+    void ensureActorFromUserStoryIsRetrieved() {
+        // Arrange
+        Code projectCodeDouble = mock(Code.class);
+        UsNumber usNumberDouble = mock(UsNumber.class);
+        Actor actorDouble = mock(Actor.class);
+        UsText usTextDouble = mock(UsText.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+
+        when(projectCodeDouble.getCode()).thenReturn("p001");
+        when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
+
+        UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
+                acceptanceCriteriaDouble);
+
+        when(actorDouble.getActor()).thenReturn("John");
+
+        // Act
+        String result = userStory.getActor();
+
+        // Assert
+        assertEquals("John", result);
+    }
+
+    /**
+     * Method getProjectCode()
+     * Scenario 01: verify if the project code of the user story is retrieved.
+     */
+    @Test
+    void ensureProjectCodeFromUserStoryIsRetrieved() {
+        // Arrange
+        Code projectCodeDouble = mock(Code.class);
+        UsNumber usNumberDouble = mock(UsNumber.class);
+        Actor actorDouble = mock(Actor.class);
+        UsText usTextDouble = mock(UsText.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+
+        when(projectCodeDouble.getCode()).thenReturn("p001");
+        when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
+
+        UserStory userStory = new UserStory(projectCodeDouble, usNumberDouble, actorDouble, usTextDouble,
+                acceptanceCriteriaDouble);
+
+        when(projectCodeDouble.getCode()).thenReturn("p001");
+
+        // Act
+        String result = userStory.getProjectCode();
+
+        // Assert
+        assertEquals("p001", result);
+    }
 
     /*
     /**
