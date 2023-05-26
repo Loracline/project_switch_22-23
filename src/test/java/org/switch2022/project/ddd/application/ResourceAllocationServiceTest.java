@@ -30,25 +30,18 @@ import static org.mockito.Mockito.when;
 import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = ResourceAllocationServiceTest.class
-)
+@SpringBootTest(classes = ResourceAllocationServiceTest.class)
 class ResourceAllocationServiceTest {
 
     @InjectMocks
     ResourceAllocationService service;
-
     @MockBean
     IProjectRepository projectRepository;
-
     @MockBean
     IAccountRepository accountRepository;
-
     @MockBean
     @Qualifier("memory")
     IProjectResourceRepository resourceRepository;
-
     @MockBean
     IProjectResourceFactory resourceFactory;
 
@@ -60,8 +53,7 @@ class ResourceAllocationServiceTest {
     @Test
     void ensureAddUserToProjectSuccessfully() {
         //Arrange
-        AllocationDto allocationDto = new AllocationDto(2, "test@project.com", TEAM_MEMBER.toString(),
-                8f, 50f, LocalDate.now(), LocalDate.now().plusWeeks(2));
+        AllocationDto allocationDto = new AllocationDto(2, "test@project.com", TEAM_MEMBER.toString(), 8f, 50f, LocalDate.now(), LocalDate.now().plusWeeks(2));
 
         Account accountDouble = mock(Account.class);
         Project projectDouble = mock(Project.class);
@@ -98,8 +90,7 @@ class ResourceAllocationServiceTest {
     @Test
     void ensureAddUserToProjectInsuccessfully() {
         //Arrange
-        AllocationDto allocationDto = new AllocationDto(2, "test@project.com", TEAM_MEMBER.toString(),
-                8f, 50f, LocalDate.now(), LocalDate.now().plusWeeks(2));
+        AllocationDto allocationDto = new AllocationDto(2, "test@project.com", TEAM_MEMBER.toString(), 8f, 50f, LocalDate.now(), LocalDate.now().plusWeeks(2));
 
         Account accountDouble = mock(Account.class);
         Project projectDouble = mock(Project.class);
@@ -236,10 +227,17 @@ class ResourceAllocationServiceTest {
         assertFalse(result);
     }
 
+    /**
+     * Method isNotProjectManager().
+     * <p>
+     * Scenario 01: Verify if the role is not Project Manager.
+     * Expected return: false.
+     */
+    @SuppressWarnings("all")
     @Test
     void ensureThatTheRoleOfResourceIsProjectManager() {
         //Arrange
-        Role projectManager = PROJECT_MANAGER;
+        Role projectManager = Role.PROJECT_MANAGER;
 
         //Act
         boolean result = service.isNotProjectManager(projectManager);
@@ -248,6 +246,10 @@ class ResourceAllocationServiceTest {
         assertFalse(result);
     }
 
+    /**
+     * Scenario 02: Verify if the role is not Project Manager when is Team Member.
+     */
+    @SuppressWarnings("all")
     @Test
     void ensureThatTheRoleOfResourceIsNotProjectManager() {
         //Arrange
@@ -260,23 +262,34 @@ class ResourceAllocationServiceTest {
         assertTrue(result);
     }
 
+    /**
+     * Method projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod().
+     * <p>
+     * Scenario 01: Verify if the database has a Resource with the role of SCRUM_MASTER or PRODUCT_OWNER during a given
+     * period of time, when there is no Resource added to database.
+     * Expected return: false.
+     */
     @Test
-    void ensureThatReturnsFalseWhenRepositoryIsEmpty() {
+    void ensureThatReturnsFalseWhenResourceRepositoryIsEmpty() {
         //Arrange
         Role roleDouble = mock(Role.class);
         Code codeDouble = mock(Code.class);
         Period periodDouble = mock(Period.class);
 
         //Act
-        boolean result = service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble
-                , codeDouble, periodDouble);
+        boolean result = service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble, periodDouble);
 
         //Assert
         assertFalse(result);
     }
 
+    /**
+     * Scenario 02: Verify if the database has a Resource with the role of SCRUM_MASTER or PRODUCT_OWNER during a given
+     * period of time, when there is a Resource in database with the role of PRODUCT_OWNER during that period.
+     * Expected return: true.
+     */
     @Test
-    void ensureThatReturnTrueWhenRepositoryAlreadyHasProductOwner() {
+    void ensureThatReturnsTrueWhenRepositoryAlreadyHasProductOwner() {
         //Arrange
         Role roleDouble = mock(Role.class);
         Code codeDouble = mock(Code.class);
@@ -290,21 +303,24 @@ class ResourceAllocationServiceTest {
         projectResourceList.add(projectResource);
 
         when(resourceRepository.findAll()).thenReturn(projectResourceList);
-        when(projectResource.hasProjectCode(any())).thenReturn(true);
-        when(projectResource.isPeriodOverlapping(any())).thenReturn(true);
-        when(projectResource.hasRole(any())).thenReturn(true);
+        when(projectResource.hasProjectCode(codeDouble)).thenReturn(true);
+        when(projectResource.isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(projectResource.hasRole(roleDouble)).thenReturn(true);
 
         //Act
-        boolean result =
-                service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble,
-                        periodDouble);
+        boolean result = service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble, periodDouble);
 
         //Assert
         assertTrue(result);
     }
 
+    /**
+     * Scenario 03: Verify if the database has a Resource with the role of SCRUM_MASTER or PRODUCT_OWNER during a given
+     * period of time, when there is a Resource in database with the role of SCRUM_MASTER during that period.
+     * Expected return: true.
+     */
     @Test
-    void ensureThatReturnTrueWhenRepositoryAlreadyHasScrumMaster() {
+    void ensureThatReturnsTrueWhenRepositoryAlreadyHasScrumMaster() {
         //Arrange
         Role roleDouble = mock(Role.class);
         Code codeDouble = mock(Code.class);
@@ -312,36 +328,40 @@ class ResourceAllocationServiceTest {
         ProjectResource projectResource = mock(ProjectResource.class);
         when(resourceFactory.createProjectResource(any(), any(), any(), any(), any(), any(), any())).thenReturn(projectResource);
         when(roleDouble.sameValueAs(SCRUM_MASTER)).thenReturn(true);
+
         List<ProjectResource> projectResourceList = new ArrayList<>();
         projectResourceList.add(projectResource);
+
         when(resourceRepository.findAll()).thenReturn(projectResourceList);
-        when(projectResource.hasProjectCode(any())).thenReturn(true);
-        when(projectResource.isPeriodOverlapping(any())).thenReturn(true);
-        when(projectResource.hasRole(any())).thenReturn(true);
+        when(projectResource.hasProjectCode(codeDouble)).thenReturn(true);
+        when(projectResource.isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(projectResource.hasRole(roleDouble)).thenReturn(true);
 
         //Act
-        boolean result =
-                service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble,
-                        periodDouble);
+        boolean result = service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble, periodDouble);
 
         //Assert
         assertTrue(result);
     }
 
+    /**
+     * Scenario 04: Verify if the validation that cheks if the database has a Resource with the role of SCRUM_MASTER
+     * or PRODUCT_OWNER returns false when the resource to be created is neither Scrum Master nor Product Owner.
+     * Expected return: false.
+     */
     @Test
-    void ensureThatReturnFalseWhenRoleToCheckIsNotProductOwnerOrScrumMaster() {
+    void ensureThatReturnFalseWhenRoleToBeCheckedIsNeitherProductOwnerNOrScrumMaster() {
         //Arrange
         Role roleDouble = mock(Role.class);
         Code codeDouble = mock(Code.class);
         Period periodDouble = mock(Period.class);
         ProjectResource projectResource = mock(ProjectResource.class);
         when(resourceFactory.createProjectResource(any(), any(), any(), any(), any(), any(), any())).thenReturn(projectResource);
-        when(roleDouble.sameValueAs(any())).thenReturn(false);
+        when(roleDouble.sameValueAs(SCRUM_MASTER)).thenReturn(false);
+        when(roleDouble.sameValueAs(PRODUCT_OWNER)).thenReturn(false);
 
         //Act
-        boolean result =
-                service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble,
-                        periodDouble);
+        boolean result = service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble, periodDouble);
 
         //Assert
         assertFalse(result);
@@ -590,6 +610,12 @@ class ResourceAllocationServiceTest {
         assertFalse(result);
     }
 
+    /**
+     * Method isPercentageOfAllocationValid().
+     * Scenario 01: Checks whether it is possible to allocate a user to a project if the allocation percentage of that
+     * user during a given period of time is not greater than 100%.
+     * Expected return: true.
+     */
     @Test
     void ensureThatPercentageOfAllocationIsValid() {
         //Arrange
@@ -635,6 +661,12 @@ class ResourceAllocationServiceTest {
         //Assert
         assertTrue(result);
     }
+
+    /**
+     * Scenario 02: Checks whether it is possible to allocate a user to a project if the allocation percentage of that
+     * user during a given period of time is greater than 100%.
+     * Expected return: false.
+     */
 
     @Test
     void ensureThatPercentageOfAllocationIsInvalid_LastDayHas101percent() {

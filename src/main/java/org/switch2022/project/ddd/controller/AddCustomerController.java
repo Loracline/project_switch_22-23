@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.CustomerService;
+import org.switch2022.project.ddd.dto.CustomerCreationDto;
 
 /**
  * Controller responsible for creating a new customer.
@@ -18,14 +19,12 @@ public class AddCustomerController {
     private CustomerService service;
 
     /**
-     * Creates a new customer with the given tax ID number and name, using the customer service.
+     * Adds a new customer based on the provided CustomerCreationDto by delegating the operation to the CustomerService.
      *
-     * @param taxIdNumber the tax ID number of the customer, which must be valid, according to the TaxId validation
-     *                    rules.
-     * @param name        the name of the customer.
-     * @return TRUE if the customer was successfully created, or FALSE otherwise.
+     * @param dto The CustomerCreationDto object containing customer information.
+     * @return true if the customer was successfully added, false otherwise.
      */
-    public boolean addCustomer(String taxIdNumber, String name) {
-        return service.addCustomer(taxIdNumber, name);
+    public boolean addCustomer(CustomerCreationDto dto) {
+        return service.addCustomer(dto);
     }
 }

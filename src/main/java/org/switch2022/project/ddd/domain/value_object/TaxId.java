@@ -9,6 +9,19 @@ import org.switch2022.project.ddd.utils.Validate;
  */
 public class TaxId implements ValueObject<TaxId> {
 
+    public static final int MIN_INDEX = 0;
+    public static final int MAX_INDEX = 8;
+    public static final int MAX_LENGTH = 9;
+    public static final int CHECK_DIGIT_ZERO = 0;
+    public static final int CHECK_DIGIT_TEN = 10;
+    public static final int CHECK_DIGIT_ELEVEN = 11;
+    public static final int FIRST_DIGIT_ONE = 1;
+    public static final int FIRST_DIGIT_TWO = 2;
+    public static final int FIRST_DIGIT_FIVE = 5;
+    public static final int FIRST_DIGIT_SIX = 6;
+    public static final int FIRST_DIGIT_EIGHT = 8;
+    public static final int FIRST_DIGIT_NINE = 9;
+
     private final String number;
 
     /**
@@ -81,14 +94,13 @@ public class TaxId implements ValueObject<TaxId> {
     }
 
     /**
-     * Validates whether the tax ID is a valid ID for Portugal or Spain.
+     * Checks if the tax ID is valid by performing validation specific to Portugal.
      *
-     * @return {@code TRUE} if the tax ID is valid for Portugal or Spain.
-     * @throws InvalidInputException if the tax ID is not valid for either Portugal or Spain, or if the
-     *                               country is not supported for tax ID validation.
+     * @return TRUE if the tax ID is valid, FALSE otherwise.
+     * @throws InvalidInputException if the tax ID is invalid or the country is unsupported for tax ID validation.
      */
     public boolean isValid() throws InvalidInputException {
-        if (isValidPortugalTaxId(this.number) || isValidSpainTaxId(this.number)) {
+        if (isValidPortugalTaxId(this.number)) {
             return true;
         } else {
             throw new InvalidInputException("Invalid or unsupported country for tax ID validation.");
@@ -101,7 +113,7 @@ public class TaxId implements ValueObject<TaxId> {
      * @return TRUE if the length of the tax ID number is not 9, FALSE otherwise.
      */
     private boolean isLengthInvalid() {
-        return number.length() != 9;
+        return number.length() != MAX_LENGTH;
     }
 
     /**
@@ -117,64 +129,27 @@ public class TaxId implements ValueObject<TaxId> {
         }
 
         // Extracting the first digit of the number and checking if it's a valid first digit for PT
-        int firstDigit = Character.getNumericValue(number.charAt(0));
-        if (firstDigit != 1 && firstDigit != 2 && firstDigit != 5 &&
-                firstDigit != 6 && firstDigit != 8 && firstDigit != 9) {
+        int firstDigit = Character.getNumericValue(number.charAt(MIN_INDEX));
+        if (firstDigit != FIRST_DIGIT_ONE && firstDigit != FIRST_DIGIT_TWO && firstDigit != FIRST_DIGIT_FIVE &&
+                firstDigit != FIRST_DIGIT_SIX && firstDigit != FIRST_DIGIT_EIGHT && firstDigit != FIRST_DIGIT_NINE) {
             return false;
         }
 
         // Calculating the sum of the first 8 digits of the number, using a weighting factor of (9 - i) for the i-th
         // digit. The sum is used to calculate the check digit.
         int sum = 0;
-        for (int i = 0; i < 8; i++) {
-            sum += Character.getNumericValue(number.charAt(i)) * (9 - i);
+        for (int i = MIN_INDEX; i < MAX_INDEX; i++) {
+            sum += Character.getNumericValue(number.charAt(i)) * (MAX_LENGTH - i);
         }
 
         // Calculating the check digit. If it's 10 or 11, it's set to 0.
-        int checkDigit = 11 - (sum % 11);
-        if (checkDigit == 10 || checkDigit == 11) {
-            checkDigit = 0;
+        int checkDigit = CHECK_DIGIT_ELEVEN - (sum % CHECK_DIGIT_ELEVEN);
+        if (checkDigit == CHECK_DIGIT_TEN || checkDigit == CHECK_DIGIT_ELEVEN) {
+            checkDigit = CHECK_DIGIT_ZERO;
         }
 
         // Extracting the last digit of the number and comparing it to the calculated check digit. They must be equal.
-        int lastDigit = Character.getNumericValue(number.charAt(8));
+        int lastDigit = Character.getNumericValue(number.charAt(MAX_INDEX));
         return checkDigit == lastDigit;
-    }
-
-    /**
-     * Checks whether the given NIF (Número de Identificación Fiscal) is valid for an individual in Spain.
-     * The format of the NIF is 8 digits, followed by a letter, which can be "TRWAGMYFPDXBNJZSQVHLCKE".
-     *
-     * @param nif the NIF to be validated.
-     * @return TRUE if the NIF is valid for an individual in Spain, FALSE otherwise.
-     * @throws NumberFormatException if the first 8 characters of the NIF cannot be parsed as an integer.
-     * @see <a href="https://en.wikipedia.org/wiki/National_identification_number#Spain">https://en.wikipedia.org/wiki/National_identification_number#Spain</a>
-     */
-    private boolean isValidSpainTaxId(String nif) {
-        // Checking if NIF has 9 characters.
-        if (isLengthInvalid()) {
-            return false;
-        }
-
-        // Checking if the first 8 characters are digits.
-        String firstEightCharacters = nif.substring(0, 8);
-        if (!firstEightCharacters.matches("[0-9]+")) {
-            return false;
-        }
-
-        // Checking if the last character is a letter.
-        String lastCharacter = nif.substring(8).toUpperCase();
-        if (!lastCharacter.matches("[A-Z]")) {
-            return false;
-        }
-
-        // Calculating the letter that corresponds to the first 8 digits.
-        String letters = "TRWAGMYFPDXBNJZSQVHLCKE";
-        int number = Integer.parseInt(firstEightCharacters);
-        int index = number % 23;
-        char expectedLetter = letters.charAt(index);
-
-        // Comparing the expected letter with the actual last character of the NIF.
-        return expectedLetter == lastCharacter.charAt(0);
     }
 }

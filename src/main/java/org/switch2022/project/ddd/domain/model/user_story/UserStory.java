@@ -200,6 +200,10 @@ public class UserStory implements Entity<UserStory> {
         return actor.getActor();
     }
 
+    /**
+     * This getter method returns a String with the project code.
+     */
+
     public String getProjectCode() {
         return projectCode.getCode();
     }
