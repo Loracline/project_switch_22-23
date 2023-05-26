@@ -135,7 +135,9 @@ const AppProvider = ({children}) => {
         headersProjects,
         projects,
         usHeaders,
-        detailedProject
+        detailedProject/*,
+        messageSuccess: '',
+        messageFailure: ''*/
     }
     const [state, dispatch] = useReducer(reducer, initialState);
     return (<Provider value={{state, dispatch}}> {children} </Provider>);
