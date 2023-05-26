@@ -19,10 +19,11 @@ public class ProjectListService {
      * Attributes
      */
     @Autowired
-    @Qualifier("repositoryJpa")
+    @Qualifier("project_jpa")
     private IProjectRepository projectRepository;
     @Autowired
     private ProjectMapper projectMapper;
+    @Qualifier("customer_jpa")
     @Autowired
     private ICustomerRepository customerRepository;
 

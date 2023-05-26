@@ -33,7 +33,7 @@ class ProfileWebControllerTest {
         //Act
         ResponseEntity<Object> responseEntity = controller.createProfile(dtoDouble);
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 201);
+        assertEquals(201, responseEntity.getStatusCodeValue());
     }
 
     @Test
@@ -46,7 +46,7 @@ class ProfileWebControllerTest {
         //Act
         ResponseEntity<Object> responseEntity = controller.createProfile(dtoDouble);
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 409);
+        assertEquals(409, responseEntity.getStatusCodeValue());
         assertEquals(expected, responseEntity.getBody());
     }
 }

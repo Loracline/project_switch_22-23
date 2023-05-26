@@ -36,7 +36,7 @@ class ResourceListAllocationServiceTest {
     ResourceListAllocationService service;
 
     @MockBean
-    @Qualifier("jpa")
+    @Qualifier("resource_jpa")
     IProjectResourceRepository resourceRepository;
 
     @MockBean

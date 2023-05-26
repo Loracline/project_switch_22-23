@@ -22,7 +22,7 @@ public class ResourceListAllocationService {
 
     @SuppressWarnings("all")
     @Autowired
-    @Qualifier("jpa")
+    @Qualifier("resource_jpa")
     private IProjectResourceRepository resourceRepository;
 
     @SuppressWarnings("all")

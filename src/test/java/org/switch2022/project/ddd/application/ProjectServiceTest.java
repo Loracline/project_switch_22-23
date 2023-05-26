@@ -40,7 +40,7 @@ class ProjectServiceTest {
     @MockBean
     IFactoryProject factoryProject;
     @MockBean
-    @Qualifier("repositoryJpa")
+    @Qualifier("project_jpa")
     IProjectRepository projectRepository;
     @MockBean
     IUsRepository usRepository;

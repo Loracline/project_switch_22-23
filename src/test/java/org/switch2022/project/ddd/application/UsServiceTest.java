@@ -30,14 +30,14 @@ import static org.mockito.Mockito.*;
 @AutoConfigureMockMvc
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = UsService.class
+        classes = UsServiceTest.class
 )
 class UsServiceTest {
 
     @MockBean
     IFactoryUserStory factoryUserStory;
     @MockBean
-    @Qualifier("usRepositoryJpa")
+    @Qualifier("us_jpa")
     IUsRepository usRepository;
     @MockBean
     IProjectRepository projectRepository;

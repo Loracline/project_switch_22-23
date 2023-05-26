@@ -22,11 +22,12 @@ public class ProjectListAllocationService {
      * Attributes
      */
     @Autowired
-    @Qualifier("jpa")
+    @Qualifier("resource_jpa")
     private IProjectResourceRepository iProjectResourceRepository;
     @Autowired
-    @Qualifier("repositoryJpa")
+    @Qualifier("project_jpa")
     private IProjectRepository iProjectRepository;
+    @Qualifier("customer_jpa")
     @Autowired
     private ICustomerRepository iCustomerRepository;
     @Autowired

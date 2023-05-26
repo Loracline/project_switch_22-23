@@ -38,7 +38,7 @@ public class UserStoriesInSprintServiceTest {
     ISprintRepository sprintRepository;
 
     @MockBean
-    @Qualifier("usRepositoryJpa")
+    @Qualifier("us_jpa")
     IUsRepository userStoryRepository;
 
     /**

@@ -18,7 +18,7 @@ public class Profile implements Entity<Profile> {
      * Attributes
      */
     private final ProfileId profileId;
-    private Name profileName;
+    private final Name profileName;
 
     /**
      * Constructor
