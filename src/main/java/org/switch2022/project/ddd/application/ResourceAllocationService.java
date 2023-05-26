@@ -32,11 +32,11 @@ public class ResourceAllocationService {
 
     @SuppressWarnings("all")
     @Autowired
-    @Qualifier("jpa")
+    @Qualifier("resource_jpa")
     private IProjectResourceRepository resourceRepository;
     @SuppressWarnings("all")
     @Autowired
-    @Qualifier("repositoryJpa")
+    @Qualifier("project_jpa")
     private IProjectRepository projectRepository;
     @SuppressWarnings("all")
     @Autowired

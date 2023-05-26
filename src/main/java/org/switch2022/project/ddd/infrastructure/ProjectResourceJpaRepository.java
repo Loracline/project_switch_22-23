@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Repository("jpa")
+@Repository("resource_jpa")
 public class ProjectResourceJpaRepository implements IProjectResourceRepository {
     /**
      * Attributes

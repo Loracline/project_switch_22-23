@@ -40,7 +40,7 @@ class ResourceAllocationServiceTest {
     @MockBean
     IAccountRepository accountRepository;
     @MockBean
-    @Qualifier("memory")
+    @Qualifier("resource_memory")
     IProjectResourceRepository resourceRepository;
     @MockBean
     IProjectResourceFactory resourceFactory;

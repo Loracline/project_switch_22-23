@@ -35,7 +35,7 @@ class CreateSprintServiceTest {
     @InjectMocks
     CreateSprintService createSprintService;
     @MockBean
-    @Qualifier("repositoryJpa")
+    @Qualifier("project_jpa")
     IProjectRepository projectRepository;
     @MockBean
     ISprintRepository sprintRepository;

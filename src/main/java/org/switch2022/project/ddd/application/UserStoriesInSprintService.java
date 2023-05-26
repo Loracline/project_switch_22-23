@@ -32,7 +32,7 @@ public class UserStoriesInSprintService {
     private ISprintRepository sprintRepository;
 
     @Autowired
-    @Qualifier("usRepositoryJpa")
+    @Qualifier("us_jpa")
     private IUsRepository userStoryRepository;
 
     /**

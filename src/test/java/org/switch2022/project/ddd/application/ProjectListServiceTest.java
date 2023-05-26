@@ -22,7 +22,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(
-        classes = org.switch2022.project.ddd.application.ProjectListService.class
+        classes = org.switch2022.project.ddd.application.ProjectListServiceTest.class
 )
 class ProjectListServiceTest {
     /**
@@ -32,7 +32,7 @@ class ProjectListServiceTest {
     @InjectMocks
     ProjectListService projectListService;
     @MockBean
-    @Qualifier("repositoryJpa")
+    @Qualifier("project_jpa")
     IProjectRepository projectRepository;
     @MockBean
     ProjectMapper projectMapper;
