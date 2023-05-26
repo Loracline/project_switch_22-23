@@ -12,14 +12,14 @@ public interface IBusinessSectorRepository {
      * @param businessSector to be added to the repository.
      * @return true if the business sector is added, and throws an AlreadyExistInRepoException otherwise.
      */
-    boolean add(BusinessSector businessSector);
+    boolean save(BusinessSector businessSector);
 
     /**
      * This method gets the size of the repository list.
      *
      * @return the integer equivalent to the size of the list of business sectors.
      */
-    int getSize();
+    int count();
 
     /**
      * Retrieves the ID of a customer with the given name from the repository.

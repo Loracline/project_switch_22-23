@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
@@ -24,6 +25,7 @@ class BusinessSectorServiceTest {
     @InjectMocks
     BusinessSectorService service;
     @MockBean
+    @Qualifier ("businessSector_jpa")
     IBusinessSectorRepository repository;
     @MockBean
     IBusinessSectorFactory factory;
@@ -38,7 +40,7 @@ class BusinessSectorServiceTest {
     void ensureThatReturnsTrueIfBusinessSectorIsCreatedSuccessfully() {
         //Arrange
 
-        when(repository.add(any())).thenReturn(true);
+        when(repository.save(any())).thenReturn(true);
         //Act
         boolean result = service.createBusinessSector("test");
 
@@ -57,7 +59,7 @@ class BusinessSectorServiceTest {
         //Arrange
         String expected = "The business sector already exists in the repository.";
 
-        when(repository.add(any())).thenThrow(new AlreadyExistsInRepoException(expected));
+        when(repository.save(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         //Act
         AlreadyExistsInRepoException result =
