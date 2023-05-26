@@ -2,8 +2,6 @@ package org.switch2022.project.ddd.infrastructure.jpa;
 
 import org.springframework.data.repository.CrudRepository;
 import org.switch2022.project.ddd.datamodel_jpa.ProfileJpa;
-import org.switch2022.project.ddd.domain.model.profile.Profile;
-import org.switch2022.project.ddd.domain.value_object.Name;
 
 
 public interface IProfileJpaRepository extends CrudRepository<ProfileJpa, String> {
@@ -15,7 +13,7 @@ public interface IProfileJpaRepository extends CrudRepository<ProfileJpa, String
      * @return the profile with the given name, and throw an NotFoundInRepoException otherwise.
      *
      */
-    Profile findByProfileName(Name profileName);
+    ProfileJpa findByProfileName(String profileName);
 
 }
 
