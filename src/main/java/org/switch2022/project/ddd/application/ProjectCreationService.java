@@ -29,17 +29,17 @@ public class ProjectCreationService {
      */
 
     @Autowired
-    private IFactoryProject factoryProject;
+    IFactoryProject factoryProject;
     @Autowired
     @Qualifier ("project_jpa")
-    private IProjectRepository projectRepository;
+    IProjectRepository projectRepository;
     @Autowired
-    private ITypologyRepository typologyRepository;
+    ITypologyRepository typologyRepository;
     @Autowired
-    private IBusinessSectorRepository businessSectorRepository;
+    IBusinessSectorRepository businessSectorRepository;
     @Autowired
     @Qualifier("customer_jpa")
-    private ICustomerRepository customerRepository;
+    ICustomerRepository customerRepository;
 
     /**
      * This method creates a new Project with the next project code available and adds it to the repository.
@@ -58,7 +58,7 @@ public class ProjectCreationService {
                 getBusinessSectorIdByName(projectCreationDto.businessSectorName)));
 
         ProjectTypologyId projectTypologyId = new ProjectTypologyId(parseInt(typologyRepository.
-                getTypologyIdByName(projectCreationDto.typologyName)));
+                findTypologyIdByTypologyName(projectCreationDto.typologyName)));
 
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription,
                 businessSectorId, customerTaxId, projectTypologyId);

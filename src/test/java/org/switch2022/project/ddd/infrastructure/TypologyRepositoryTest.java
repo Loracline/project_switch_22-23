@@ -1,7 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
-import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
@@ -57,7 +56,7 @@ class TypologyRepositoryTest {
         // Arrange
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
         Typology typologyDouble = mock(Typology.class);
-        typologyRepositoryOne.add(typologyDouble);
+        typologyRepositoryOne.save(typologyDouble);
         TypologyRepository typologyRepositoryTwo = new TypologyRepository();
 
         boolean expected = false;
@@ -76,9 +75,9 @@ class TypologyRepositoryTest {
         // Arrange
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
         Typology typologyDouble = mock(Typology.class);
-        typologyRepositoryOne.add(typologyDouble);
+        typologyRepositoryOne.save(typologyDouble);
         TypologyRepository typologyRepositoryTwo = new TypologyRepository();
-        typologyRepositoryTwo.add(typologyDouble);
+        typologyRepositoryTwo.save(typologyDouble);
 
         boolean expected = true;
         //Act
@@ -113,9 +112,9 @@ class TypologyRepositoryTest {
     void ensureTwoUsIdInstancesHashcodeAreTheSame() {
         Typology typologyDouble = mock(Typology.class);
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
-        typologyRepositoryOne.add(typologyDouble);
+        typologyRepositoryOne.save(typologyDouble);
         TypologyRepository typologyRepositoryTwo = new TypologyRepository();
-        typologyRepositoryTwo.add(typologyDouble);
+        typologyRepositoryTwo.save(typologyDouble);
 
         //Assert
         assertEquals(typologyRepositoryOne.hashCode(), typologyRepositoryTwo.hashCode());
@@ -132,9 +131,9 @@ class TypologyRepositoryTest {
         Typology typologyOneDouble = mock(Typology.class);
         Typology typologyTwoDouble = mock(Typology.class);
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
-        typologyRepositoryOne.add(typologyOneDouble);
+        typologyRepositoryOne.save(typologyOneDouble);
         TypologyRepository typologyRepositoryTwo = new TypologyRepository();
-        typologyRepositoryTwo.add(typologyTwoDouble);
+        typologyRepositoryTwo.save(typologyTwoDouble);
 
         //Assert
         assertNotEquals(typologyRepositoryOne.hashCode(), typologyRepositoryTwo.hashCode());
@@ -153,7 +152,7 @@ class TypologyRepositoryTest {
         TypologyRepository typologyRepository = new TypologyRepository();
 
         //Act
-        boolean result = typologyRepository.add(typologyDouble);
+        boolean result = typologyRepository.save(typologyDouble);
 
         //Assert
         assertTrue(result);
@@ -171,12 +170,12 @@ class TypologyRepositoryTest {
         Typology typologyDouble = mock(Typology.class);
         TypologyRepository typologyRepository = new TypologyRepository();
 
-        typologyRepository.add(typologyDouble);
+        typologyRepository.save(typologyDouble);
         String expected = "The typology already exists in the repository.";
 
         //Act
         AlreadyExistsInRepoException exception = assertThrows(AlreadyExistsInRepoException.class, () ->
-                typologyRepository.add(typologyDouble));
+                typologyRepository.save(typologyDouble));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -195,11 +194,11 @@ class TypologyRepositoryTest {
         Typology typologyTwoDouble = mock(Typology.class);
 
         TypologyRepository typologyRepository = new TypologyRepository();
-        typologyRepository.add(typologyOneDouble);
-        typologyRepository.add(typologyTwoDouble);
+        typologyRepository.save(typologyOneDouble);
+        typologyRepository.save(typologyTwoDouble);
 
         int expected = 2;
-        int result = typologyRepository.getSize();
+        int result = typologyRepository.count();
 
         assertEquals(expected, result);
 
@@ -218,13 +217,13 @@ class TypologyRepositoryTest {
         Typology typologyDoubleOne = mock(Typology.class);
 
         TypologyRepository repository = new TypologyRepository();
-        repository.add(typologyDoubleOne);
+        repository.save(typologyDoubleOne);
 
         when(typologyDoubleOne.getTypologyName()).thenReturn(typologyOne);
         when(typologyDoubleOne.getTypologyId()).thenReturn(typologyId);
 
         // Act
-        String result = repository.getTypologyIdByName(typologyOne);
+        String result = repository.findTypologyIdByTypologyName(typologyOne);
 
         // Assert
         assertEquals(typologyId, result);
@@ -242,14 +241,14 @@ class TypologyRepositoryTest {
         Typology typologyDoubleOne = mock(Typology.class);
 
         TypologyRepository repository = new TypologyRepository();
-        repository.add(typologyDoubleOne);
+        repository.save(typologyDoubleOne);
 
         when(typologyDoubleOne.getTypologyName()).thenReturn(typologyOne);
         when(typologyDoubleOne.getTypologyId()).thenReturn(typologyId);
 
         // Act
         NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class,
-                () -> repository.getTypologyIdByName(typologyTwo));
+                () -> repository.findTypologyIdByTypologyName(typologyTwo));
 
         String expected = "Typology with this name does not exist in the Repository.";
 

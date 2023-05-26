@@ -12,14 +12,14 @@ public interface ITypologyRepository {
      * @param typology to be added to the repository.
      * @return true if the typology is added and throw exception otherwise.
      */
-    boolean add(Typology typology);
+    boolean save(Typology typology);
 
     /**
      * This method gets the size of the repository list
      *
      * @return the integer equivalent to the size of the list typologies
      */
-    int getSize();
+    int count();
 
     /**
      * Retrieves the ID of a typology with the given name from the repository.
@@ -29,5 +29,5 @@ public interface ITypologyRepository {
      * @throws NotFoundInRepoException if a business sector with the given name is not found in the repository.
      */
 
-    String getTypologyIdByName(String typologyName);
+    String findTypologyIdByTypologyName(String typologyName);
 }

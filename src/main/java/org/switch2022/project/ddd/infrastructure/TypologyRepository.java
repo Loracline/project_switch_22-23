@@ -55,7 +55,7 @@ public class TypologyRepository implements ITypologyRepository {
      * @param typology to be added to the repository.
      * @return true if the typology was added to typology repository and throw exception otherwise.
      */
-    public boolean add(Typology typology) {
+    public boolean save(Typology typology) {
         if (typologies.contains(typology)) {
             throw new AlreadyExistsInRepoException("The typology already exists in the repository.");
         } else {
@@ -69,7 +69,7 @@ public class TypologyRepository implements ITypologyRepository {
      *
      * @return the integer equivalent to the size of the list typologies
      */
-    public int getSize() {
+    public int count() {
         return typologies.size();
     }
 
@@ -82,7 +82,7 @@ public class TypologyRepository implements ITypologyRepository {
      */
 
     @Override
-    public String getTypologyIdByName(String typologyName) {
+    public String findTypologyIdByTypologyName(String typologyName) {
         String requestedProjectTypologyId = null;
         int i = 0;
         while (i < this.typologies.size()) {
