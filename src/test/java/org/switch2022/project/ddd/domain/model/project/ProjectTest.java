@@ -1176,7 +1176,7 @@ class ProjectTest {
         when(customerTaxId.getNumber()).thenReturn("272829202");
         String expected = "272829202";
         //Act
-        String result = project.getCustomerTaxID();
+        String result = project.getCustomerTaxIDAsString();
         //Assert
         assertEquals(expected, result);
     }

@@ -71,7 +71,7 @@ class ProjectDataAssemblerTest {
         Optional<SprintDuration> optionalSprintDuration = Optional.of(new SprintDuration(2));
         when(projectDouble.getSprintDuration()).thenReturn(optionalSprintDuration);
         when(projectDouble.getBusinessSectorId()).thenReturn("bs001");
-        when(projectDouble.getCustomerTaxID()).thenReturn("2576542324");
+        when(projectDouble.getCustomerTaxIDAsString()).thenReturn("2576542324");
         when(projectDouble.getProjectTypologyId()).thenReturn("pt001");
         when(projectDouble.getProductBacklog()).thenReturn(userStoriesId);
         when(projectDouble.getProductBacklogId()).thenReturn("p001_pb001");
@@ -118,7 +118,7 @@ class ProjectDataAssemblerTest {
         Optional<SprintDuration> optionalSprintDuration = Optional.empty();
         when(projectDouble.getSprintDuration()).thenReturn(optionalSprintDuration);
         when(projectDouble.getBusinessSectorId()).thenReturn("bs001");
-        when(projectDouble.getCustomerTaxID()).thenReturn("2576542324");
+        when(projectDouble.getCustomerTaxIDAsString()).thenReturn("2576542324");
         when(projectDouble.getProjectTypologyId()).thenReturn("pt001");
         when(projectDouble.getProductBacklog()).thenReturn(userStoriesId);
         when(projectDouble.getProductBacklogId()).thenReturn("p001_pb001");
