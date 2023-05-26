@@ -9,10 +9,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.ProfileService;
+import org.switch2022.project.ddd.dto.ProfileCreationDto;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -37,10 +39,11 @@ class CreateProfileControllerTest {
     @Test
     void ensureItReturnsTrueIfProfileIsCreatedSuccessfully() {
         //Arrange
+        ProfileCreationDto dtoDouble = mock(ProfileCreationDto.class);
         when(service.createProfile(any())).thenReturn(true);
 
         //Act
-        boolean result = controller.createProfile("user");
+        boolean result = controller.createProfile(dtoDouble);
 
         //Assert
         assertTrue(result);
@@ -55,12 +58,13 @@ class CreateProfileControllerTest {
     @Test
     void ensureThatThrowsAnExceptionWhenProfileIsNotCreatedBecauseItAlreadyExistsInTheRepository() {
         //Arrange
+        ProfileCreationDto dtoDouble = mock(ProfileCreationDto.class);
         String expected = "The profile already exists in the repository.";
         when(service.createProfile(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         //Act
         AlreadyExistsInRepoException result =
-                assertThrows(AlreadyExistsInRepoException.class, () -> controller.createProfile("user"));
+                assertThrows(AlreadyExistsInRepoException.class, () -> controller.createProfile(dtoDouble));
 
         //Assert
         assertEquals(expected, result.getMessage());

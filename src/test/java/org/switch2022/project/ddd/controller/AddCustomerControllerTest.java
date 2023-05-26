@@ -9,12 +9,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.CustomerService;
+import org.switch2022.project.ddd.dto.CustomerCreationDto;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class) // JUnit 5 extension that provides support for Mockito's mocking framework.
@@ -36,15 +38,14 @@ class AddCustomerControllerTest {
     @Test
     void ensureCustomerIsCreatedSuccessfully() {
         // Arrange
-        String name = "Partilha Cortesia, Lda.";
-        String taxIdNumber = "514 024 054";
+        CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
 
-        when(service.addCustomer(any(), any())).thenReturn(true);
+        when(service.addCustomer(any())).thenReturn(true);
 
         boolean expected = true;
 
         // Act
-        boolean result = controller.addCustomer(taxIdNumber, name);
+        boolean result = controller.addCustomer(dtoDouble);
 
         // Assert
         assertEquals(expected, result);
@@ -54,15 +55,14 @@ class AddCustomerControllerTest {
     @Test
     void ensureCustomerIsNotCreatedBecauseAlreadyExists() {
         //Arrange
-        String name = "Partilha Cortesia, Lda.";
-        String taxIdNumber = "514 024 054";
+        CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
 
         String expected = "Customer's tax ID already exists!";
-        when(service.addCustomer(any(), any())).thenThrow(new AlreadyExistsInRepoException(expected));
+        when(service.addCustomer(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
         //Act
         AlreadyExistsInRepoException result =
-                assertThrows(AlreadyExistsInRepoException.class, () -> controller.addCustomer(taxIdNumber, name));
+                assertThrows(AlreadyExistsInRepoException.class, () -> controller.addCustomer(dtoDouble));
 
         //Assert
         assertEquals(expected, result.getMessage());
@@ -72,15 +72,14 @@ class AddCustomerControllerTest {
     @Test
     void ensureCustomerIsNotCreatedBecauseTaxIdIsInvalid() {
         //Arrange
-        String name = "Partilha Cortesia, Lda.";
-        String taxIdNumber = "514 024 0X4";
+        CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
 
         String expected = "Invalid or unsupported country for tax ID validation.";
-        when(service.addCustomer(any(), any())).thenThrow(new InvalidInputException(expected));
+        when(service.addCustomer(any())).thenThrow(new InvalidInputException(expected));
 
         //Act
         InvalidInputException result =
-                assertThrows(InvalidInputException.class, () -> controller.addCustomer(taxIdNumber, name));
+                assertThrows(InvalidInputException.class, () -> controller.addCustomer(dtoDouble));
 
         //Assert
         assertEquals(expected, result.getMessage());

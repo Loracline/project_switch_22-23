@@ -17,7 +17,7 @@ public class ProfileId implements ValueObject<ProfileId> {
         Validate.notNull(idNumber, "The profile number must not be null");
         Validate.notNegative(idNumber, "profile number");
 
-        this.id = String.format("PR%03d", idNumber).toLowerCase();
+        this.id = String.format("PRF%03d", idNumber).toLowerCase();
     }
 
     /**

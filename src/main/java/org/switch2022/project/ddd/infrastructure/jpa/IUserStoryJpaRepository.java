@@ -5,6 +5,8 @@ import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
+import java.util.Collection;
+
 
 /**
  * Repository interface for managing UserStoryJpa entities.
@@ -44,6 +46,6 @@ public interface IUserStoryJpaRepository extends CrudRepository<UserStoryJpa, Us
     * @return An Iterable of UserStoryJpa entities with matching usId.
     */
 
-   Iterable<UserStoryJpa> findAllByUsId(String usId);
+   Iterable<UserStoryJpa> findAllByUsIdIn(Collection<String> usId);
 }
 

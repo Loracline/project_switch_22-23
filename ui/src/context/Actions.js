@@ -1,3 +1,5 @@
+import {postSprint} from "../services/Service";
+
 /**
  Action types.
  */
@@ -79,3 +81,33 @@ export function setCurrentProject(project) {
         }
     }
 }
+
+/*
+export const CREATE_SPRINT_2 = 'CREATE_SPRINT_2';
+export const POST_SPRINT_SUCCESS = 'POST_SPRINT_SUCCESS';
+export const POST_SPRINT_FAILURE = "POST_SPRINT_FAILURE";
+
+export function createSprint2(dispatch, sprintToSubmit) {
+    postSprint((res) => dispatch(postSprintSuccess(res.text())),
+        (err) =>dispatch(postSprintFailure(err.message)),
+        sprintToSubmit
+    );
+}
+
+function postSprintSuccess(message) {
+    return {
+        type: POST_SPRINT_SUCCESS,
+        payload: {
+            message
+        }
+    }
+}
+
+function postSprintFailure(message) {
+    return {
+        type: POST_SPRINT_FAILURE,
+        payload: {
+            error: message
+        }
+    }
+}*/

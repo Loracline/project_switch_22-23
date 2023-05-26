@@ -38,7 +38,7 @@ public class ProjectDomainDataAssembler {
         return new ProjectJpa(project.getProjectCode(), project.getBudget(), project.getProjectName(),
                 project.getDescription(), project.getProjectStatus(), project.getPlannedSprints(),
                 project.getStartDate(), project.getEndDate(), sprintDuration,
-                project.getBusinessSectorId(), project.getCustomerTaxID(), project.getProjectTypologyId(),
+                project.getBusinessSectorId(), project.getCustomerTaxIDAsString(), project.getProjectTypologyId(),
                 productBacklogJpa);
     }
 

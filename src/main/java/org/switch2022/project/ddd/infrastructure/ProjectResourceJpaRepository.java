@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.datamodel_jpa.ProjectResourceJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.ResourceDomainDataAssembler;
@@ -9,7 +10,7 @@ import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
-import org.switch2022.project.ddd.infrastructure.JPA.IProjectResourceJpaRepository;
+import org.switch2022.project.ddd.infrastructure.jpa.IProjectResourceJpaRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;

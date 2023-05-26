@@ -55,7 +55,7 @@ class ProfileIdTest {
     void ensureProfileIdIsRetrievedSuccessfully() {
         // Arrange
         ProfileId testProfile = new ProfileId( 1);
-        String expected = "pr001";
+        String expected = "prf001";
 
         // Act
         String result = testProfile.getProfileId();

@@ -54,16 +54,16 @@ class ChangeProfileServiceTest {
         Profile assignedProfile = mock(Profile.class);
 
         when(accountRepository.findAccountByEmail(email)).thenReturn(accountTest);
-        when(profileRepository.getProfileByName(any())).thenReturn(assignedProfile);
-        when(assignedProfile.getProfileId()).thenReturn("pr001");
-        when(accountTest.getProfileId()).thenReturn("pr001");
+        when(profileRepository.findByProfileName(any())).thenReturn(assignedProfile);
+        when(assignedProfile.getProfileId()).thenReturn("prf001");
+        when(accountTest.getProfileId()).thenReturn("prf001");
 
         // Act
         boolean result = changeProfileService.changeProfile(email, profileName);
 
         // Assert
         assertTrue(result);
-        assertEquals("pr001", accountTest.getProfileId());
+        assertEquals("prf001", accountTest.getProfileId());
     }
 
 
@@ -81,7 +81,7 @@ class ChangeProfileServiceTest {
         Account accountTest = mock(Account.class);
 
         when(accountRepository.findAccountByEmail((email))).thenReturn(accountTest);
-        when(profileRepository.getProfileByName(null)).thenReturn(null);
+        when(profileRepository.findByProfileName(null)).thenReturn(null);
 
         // Act & Assert
         assertThrows(InvalidInputException.class, () -> {
@@ -125,16 +125,16 @@ class ChangeProfileServiceTest {
 
         when(accountRepository.findAccountByEmail(email)).thenReturn(accountTest);
         Profile assignedProfile = mock(Profile.class);
-        when(profileRepository.getProfileByName(any())).thenReturn(assignedProfile);
-        when(assignedProfile.getProfileId()).thenReturn("pr001");
-        when(accountTest.getProfileId()).thenReturn("pr001");
+        when(profileRepository.findByProfileName(any())).thenReturn(assignedProfile);
+        when(assignedProfile.getProfileId()).thenReturn("prf001");
+        when(accountTest.getProfileId()).thenReturn("prf001");
 
         // Act
         boolean result = changeProfileService.changeProfile(email, profileName);
 
         // Assert
         assertTrue(result);
-        assertEquals("pr001", accountTest.getProfileId());
+        assertEquals("prf001", accountTest.getProfileId());
     }
 
     /**
@@ -156,14 +156,14 @@ class ChangeProfileServiceTest {
         when(accountRepository.findAccountByEmail(any())).thenReturn(accountTest);
         ProfileFactory profileFactory = new ProfileFactory();
         Profile profile = profileFactory.createProfile(name, 3);
-        when(profileRepository.getProfileByName(any())).thenReturn(profile);
+        when(profileRepository.findByProfileName(any())).thenReturn(profile);
 
         // Act
         boolean result = changeProfileService.changeProfile(String.valueOf(email), profileName);
 
         // Assert
         assertTrue(result);
-        assertEquals("pr003", accountTest.getProfileId());
+        assertEquals("prf003", accountTest.getProfileId());
     }
 }
 

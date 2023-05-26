@@ -125,5 +125,28 @@ class ProjectDtoTest {
         // Assert
         assertNotEquals(projectDtoOneHashCode, projectDtoTwoHashCode);
     }
+    /**
+     * Scenario 3: Test the return equals.
+     */
+    @Test
+    public void testReturnEquals() {
+        ProjectDto project1 = new ProjectDto("code1", "Project 1", "Customer 1", "Status 1", "2022-01-01", "2022-12-31");
+        ProjectDto project2 = new ProjectDto("code1", "Project 1", "Customer 1", "Status 1", "2022-01-01", "2022-12-31");
+        ProjectDto project3 = new ProjectDto("code2", "Project 2", "Customer 2", "Status 2", "2022-01-01", "2022-12-31");
 
+        // Test equal objects
+        assertEquals(project1, project2);
+        assertEquals(project2, project1);
+
+        // Test not equal objects
+        assertNotEquals(project1, project3);
+        assertNotEquals(project3, project1);
+
+        // Test with null
+        assertNotEquals(project1, null);
+        assertNotEquals(null, project1);
+
+        // Test with different types
+        assertNotEquals(project1, "Not a ProjectDto");
+    }
 }

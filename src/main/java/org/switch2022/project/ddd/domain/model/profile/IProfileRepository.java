@@ -14,21 +14,21 @@ public interface IProfileRepository {
      * @return true if the profile is added and an exception otherwise.
      */
 
-    boolean add(Profile profile);
+    boolean save(Profile profile);
 
     /**
      * This method gets the size of the repository list.
      *
      * @return the integer equivalent to the size of the list of profiles.
      */
-    int getSize();
+    int count();
 
     /**
      * This method returns a profile with the given.
      * @param profileName to search for the profile.
      * @return a profile with the given name.
      */
-    Profile getProfileByName(Name profileName);
+    Profile findByProfileName(Name profileName);
 }
 
 

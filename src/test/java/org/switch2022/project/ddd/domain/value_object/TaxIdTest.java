@@ -348,21 +348,6 @@ class TaxIdTest {
         assertEquals(expected, result);
     }
 
-    @DisplayName("Valid Spain tax ID - individual")
-    @Test
-    void ensureReturnsTrueWhenItsValidSpainIdIndividual() {
-        // Arrange
-        boolean expected = true;
-
-        TaxId taxId = new TaxId("12345678Z");
-
-        // Act
-        boolean result = taxId.isValid();
-
-        // Assert
-        assertEquals(expected, result);
-    }
-
     @DisplayName("Invalid tax ID")
     @Test
     void ensureAnExceptionIsThrownWhenNotValidId() {

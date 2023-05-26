@@ -36,6 +36,7 @@ public class ResourceAllocationService {
     private IProjectResourceRepository resourceRepository;
     @SuppressWarnings("all")
     @Autowired
+    @Qualifier("repositoryJpa")
     private IProjectRepository projectRepository;
     @SuppressWarnings("all")
     @Autowired

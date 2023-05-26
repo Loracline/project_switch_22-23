@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
@@ -30,12 +31,14 @@ public class ProjectCreationService {
     @Autowired
     private IFactoryProject factoryProject;
     @Autowired
+    @Qualifier ("project_jpa")
     private IProjectRepository projectRepository;
     @Autowired
     private ITypologyRepository typologyRepository;
     @Autowired
     private IBusinessSectorRepository businessSectorRepository;
     @Autowired
+    @Qualifier("customer_jpa")
     private ICustomerRepository customerRepository;
 
     /**
@@ -49,7 +52,7 @@ public class ProjectCreationService {
         Name projectName = new Name(projectCreationDto.projectName);
         Description projectDescription = new Description(projectCreationDto.projectDescription);
 
-        TaxId customerTaxId = new TaxId(customerRepository.getCustomerTaxIdByName(projectCreationDto.customerName));
+        TaxId customerTaxId = new TaxId(customerRepository.findCustomerTaxIdByName(projectCreationDto.customerName));
 
         BusinessSectorId businessSectorId = new BusinessSectorId(parseInt(businessSectorRepository.
                 getBusinessSectorIdByName(projectCreationDto.businessSectorName)));
@@ -60,7 +63,7 @@ public class ProjectCreationService {
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription,
                 businessSectorId, customerTaxId, projectTypologyId);
 
-        projectRepository.addProjectToProjectRepository(project);
+        projectRepository.save(project);
 
         return project.getProjectCode();
     }
@@ -69,7 +72,7 @@ public class ProjectCreationService {
      * This method calculates the number of project to include in the project code using the repository size.
      */
     public int calculateNextProjectNumber() {
-        return projectRepository.getProjectNumber() + 1;
+        return projectRepository.count() + 1;
     }
 
     /**
@@ -91,6 +94,6 @@ public class ProjectCreationService {
      */
 
     public boolean addProject(Project project) {
-        return projectRepository.addProjectToProjectRepository(project);
+        return projectRepository.save(project);
     }
 }
