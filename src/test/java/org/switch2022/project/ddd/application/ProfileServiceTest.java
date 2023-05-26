@@ -4,14 +4,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.profile.IProfileFactory;
 import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
+import org.switch2022.project.ddd.dto.ProfileCreationDto;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -22,6 +25,7 @@ import static org.mockito.Mockito.when;
 class ProfileServiceTest {
     @InjectMocks
     ProfileService service;
+    @Qualifier("profile_jpa")
     @MockBean
     IProfileRepository repository;
     @MockBean
@@ -36,10 +40,10 @@ class ProfileServiceTest {
     @Test
     void ensureThatProfileWasSuccessfullyCreated() {
         //Arrange
-
+        ProfileCreationDto dto = new ProfileCreationDto("Test profile");
         when(repository.save(any())).thenReturn(true);
         //Act
-        boolean result = service.createProfile("John");
+        boolean result = service.createProfile(dto);
 
         //Assert
         assertTrue(result);
@@ -53,6 +57,7 @@ class ProfileServiceTest {
     @Test
     void ensureThanAnExceptionIsThrownWhenTheProfileIsNotCreatedBecauseItAlreadyExists() {
         //Arrange
+        ProfileCreationDto dto = new ProfileCreationDto("Test profile");
         String expected = "This profile already exists.";
 
         when(repository.save(any())).thenThrow(new AlreadyExistsInRepoException(expected));
@@ -60,7 +65,7 @@ class ProfileServiceTest {
         //Act
         AlreadyExistsInRepoException result =
                 assertThrows(AlreadyExistsInRepoException.class, () -> service.createProfile(
-                        "John"));
+                        dto));
 
         //Assert
         assertEquals(expected, result.getMessage());

@@ -1,11 +1,13 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.profile.IProfileFactory;
 import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.value_object.Name;
+import org.switch2022.project.ddd.dto.ProfileCreationDto;
 
 /**
  * Class ProfileService allows to create and manipulate the Profile aggregate.
@@ -14,20 +16,21 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 public class ProfileService {
     @Autowired
     private IProfileFactory profileFactory;
+    @Qualifier("profile_jpa")
     @Autowired
     private IProfileRepository profileRepository;
 
     /**
      * This method receives a name, creates a profile and adds it to the repository.
      *
-     * @param profileName
+     * @param profileCreationDto the ProfileCreationDto containing the information needed to create a new instance of Profile.
      * @return TRUE if the Profile is created and added to the profile repository
      * successfully, and throws an
      * AlreadyExistsInRepoException otherwise.
      */
 
-    public boolean createProfile(String profileName) {
-        Name name = new Name(profileName);
+    public boolean createProfile(ProfileCreationDto profileCreationDto) {
+        Name name = new Name(profileCreationDto.profileName);
         int idProfileNumber = calculateNextProfileNumber();
         Profile profile = profileFactory.createProfile(name,idProfileNumber);
         return profileRepository.save(profile);
