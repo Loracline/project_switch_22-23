@@ -109,15 +109,15 @@ public class ProjectRepository implements IProjectRepository {
      * no project with the given codes were found.
      */
     public List<Project> findAllByProjectCodes(List<Code> projectCodes){
-        List<Project> projects = new ArrayList<>();
+        List<Project> projectsWithMatchingCodes = new ArrayList<>();
 
         for (int i = 0; i < this.projects.size(); i++) {
             for (int j = 0; j < projectCodes.size(); j++) {
                 if(this.projects.get(i).hasProjectCode(projectCodes.get(j))){
-                    projects.add(this.projects.get(i));
+                    projectsWithMatchingCodes.add(this.projects.get(i));
                 }
             }
         }
-        return Collections.unmodifiableList(projects);
+        return Collections.unmodifiableList(projectsWithMatchingCodes);
     }
 }

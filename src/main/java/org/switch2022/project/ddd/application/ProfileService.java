@@ -23,7 +23,8 @@ public class ProfileService {
     /**
      * This method receives a name, creates a profile and adds it to the repository.
      *
-     * @param profileCreationDto the ProfileCreationDto containing the information needed to create a new instance of Profile.
+     * @param profileCreationDto the ProfileCreationDto containing the information needed to create a new instance of
+     *                          Profile.
      * @return TRUE if the Profile is created and added to the profile repository
      * successfully, and throws an
      * AlreadyExistsInRepoException otherwise.

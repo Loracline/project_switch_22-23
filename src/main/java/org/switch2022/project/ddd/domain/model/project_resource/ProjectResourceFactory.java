@@ -13,8 +13,7 @@ public class ProjectResourceFactory implements IProjectResourceFactory {
     public ProjectResource createProjectResource(ProjectResourceId resourceId, Code code, Email email,
                                                  Role role, Period period, CostPerHour cost,
                                                  PercentageOfAllocation percentageOfAllocation) {
-        ProjectResource projectResource = new ProjectResource(resourceId, code, email, role, period, cost,
+        return new ProjectResource(resourceId, code, email, role, period, cost,
                 percentageOfAllocation);
-        return projectResource;
     }
 }
