@@ -23,6 +23,12 @@ class AddUserToProjectControllerTest {
     @MockBean
     ResourceAllocationService service;
 
+
+    /**
+     * Method addUserToProject().
+     * Scenario 01: Checks if the user was allocated to a project successfully.
+     * Expected return: true.
+     */
     @Test
     void ensureThatUserIsAllocatedToProjectSuccessfully() {
         //Arrange
@@ -36,6 +42,10 @@ class AddUserToProjectControllerTest {
         assertTrue(result);
     }
 
+    /**
+     * Scenario 02: Checks if the user was allocated to a project.
+     * Expected return: false.
+     */
     @Test
     void ensureThatUserIsNotAllocatedToProject() {
         //Arrange
