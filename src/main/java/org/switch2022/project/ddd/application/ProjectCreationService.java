@@ -36,6 +36,7 @@ public class ProjectCreationService {
     @Autowired
     private ITypologyRepository typologyRepository;
     @Autowired
+    @Qualifier("businessSector_jpa")
     private IBusinessSectorRepository businessSectorRepository;
     @Autowired
     @Qualifier("customer_jpa")

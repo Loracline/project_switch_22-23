@@ -59,7 +59,7 @@ class BusinessSectorRepositoryTest {
         // Arrange
         BusinessSectorRepository repositoryOne = new BusinessSectorRepository();
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
-        repositoryOne.add(businessSectorDouble);
+        repositoryOne.save(businessSectorDouble);
         BusinessSectorRepository repositoryTwo = new BusinessSectorRepository();
 
         boolean expected = false;
@@ -78,9 +78,9 @@ class BusinessSectorRepositoryTest {
         // Arrange
         BusinessSectorRepository repositoryOne = new BusinessSectorRepository();
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
-        repositoryOne.add(businessSectorDouble);
+        repositoryOne.save(businessSectorDouble);
         BusinessSectorRepository repositoryTwo = new BusinessSectorRepository();
-        repositoryTwo.add(businessSectorDouble);
+        repositoryTwo.save(businessSectorDouble);
 
         boolean expected = true;
         //Act
@@ -114,9 +114,9 @@ class BusinessSectorRepositoryTest {
     void ensureTwoUsIdInstancesHashcodeAreTheSame() {
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         BusinessSectorRepository repositoryOne = new BusinessSectorRepository();
-        repositoryOne.add(businessSectorDouble);
+        repositoryOne.save(businessSectorDouble);
         BusinessSectorRepository repositoryTwo = new BusinessSectorRepository();
-        repositoryTwo.add(businessSectorDouble);
+        repositoryTwo.save(businessSectorDouble);
 
         //Assert
         assertEquals(repositoryOne.hashCode(), repositoryTwo.hashCode());
@@ -133,9 +133,9 @@ class BusinessSectorRepositoryTest {
         BusinessSector businessSectorOneDouble = mock(BusinessSector.class);
         BusinessSector businessSectorTwoDouble = mock(BusinessSector.class);
         BusinessSectorRepository repositoryOne = new BusinessSectorRepository();
-        repositoryOne.add(businessSectorOneDouble);
+        repositoryOne.save(businessSectorOneDouble);
         BusinessSectorRepository repositoryTwo = new BusinessSectorRepository();
-        repositoryTwo.add(businessSectorTwoDouble);
+        repositoryTwo.save(businessSectorTwoDouble);
 
         //Assert
         assertNotEquals(repositoryOne.hashCode(), repositoryTwo.hashCode());
@@ -154,7 +154,7 @@ class BusinessSectorRepositoryTest {
         BusinessSectorRepository repository = new BusinessSectorRepository();
 
         //Act
-        boolean result = repository.add(businessSectorDouble);
+        boolean result = repository.save(businessSectorDouble);
 
         //Assert
         assertTrue(result);
@@ -173,12 +173,12 @@ class BusinessSectorRepositoryTest {
         BusinessSector businessSectorDouble = mock(BusinessSector.class);
         BusinessSectorRepository repository = new BusinessSectorRepository();
 
-        repository.add(businessSectorDouble);
+        repository.save(businessSectorDouble);
         String expected = "The business sector already exists in the repository.";
 
         //Act
         AlreadyExistsInRepoException exception = assertThrows(AlreadyExistsInRepoException.class, () ->
-                repository.add(businessSectorDouble));
+                repository.save(businessSectorDouble));
 
         //Assert
         assertEquals(expected, exception.getMessage());
@@ -197,11 +197,11 @@ class BusinessSectorRepositoryTest {
         BusinessSector businessSectorTwoDouble = mock(BusinessSector.class);
 
         BusinessSectorRepository repository = new BusinessSectorRepository();
-        repository.add(businessSectorOneDouble);
-        repository.add(businessSectorTwoDouble);
+        repository.save(businessSectorOneDouble);
+        repository.save(businessSectorTwoDouble);
 
         int expected = 2;
-        int result = repository.getSize();
+        int result = repository.count();
 
         assertEquals(expected, result);
     }
@@ -219,7 +219,7 @@ class BusinessSectorRepositoryTest {
         BusinessSector businessSectorOne = mock(BusinessSector.class);
 
         BusinessSectorRepository repository = new BusinessSectorRepository();
-        repository.add(businessSectorOne);
+        repository.save(businessSectorOne);
 
         when(businessSectorOne.getBusinessSectorName()).thenReturn(businessSectorName);
         when(businessSectorOne.getBusinessSectorId()).thenReturn(businessSectorId);
@@ -245,7 +245,7 @@ class BusinessSectorRepositoryTest {
 
 
         BusinessSectorRepository repository = new BusinessSectorRepository();
-        repository.add(businessSectorOne);
+        repository.save(businessSectorOne);
 
         when(businessSectorOne.getBusinessSectorName()).thenReturn(businessSectorNameOne);
         when(businessSectorOne.getBusinessSectorId()).thenReturn(businessSectorId);
