@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -1087,7 +1088,7 @@ class ProjectTest {
      * returns 0 when budget is null
      */
     @Test
-    void ensureBudgetIsRetrieved() {
+    void ensureBudgetIsRetrievedAsZero() {
         //Arrange
         Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
@@ -1095,22 +1096,58 @@ class ProjectTest {
         //Act
         double result = project.getBudget();
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
+
+    /**
+     * scenario 2: returns a budget
+     */
+    @Test
+    void ensureBudgetIsRetrieved() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+        project.setProjectStatus(ProjectStatus.INCEPTION);
+        project.isBudgetAssigned(new Budget(new BigDecimal(300.0)));
+        double expected = 300.0;
+        //Act
+        double result = project.getBudget();
+        //Assert
+        assertEquals(expected, result);
+    }
+
     /**
      * Method:getPlannedSprints
-     * returns 0 when budget is null
+     * * returns 0 when budget is null
+     */
+    @Test
+    void ensurePlannedSprintsIsRetrievedAsZero() {
+        //Arrange
+        Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
+                projectTypologyId);
+
+        int expected = 0;
+        //Act
+        int result = project.getPlannedSprints();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 2: returns a number of planned Sprints
      */
     @Test
     void ensurePlannedSprintsIsRetrieved() {
         //Arrange
         Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
-        int expected = 0;
+        project.setProjectStatus(ProjectStatus.INCEPTION);
+        project.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(2));
+        int expected = 2;
         //Act
         int result = project.getPlannedSprints();
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -1125,7 +1162,7 @@ class ProjectTest {
         //Act
         String result = project.getProductBacklogId();
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -1141,7 +1178,7 @@ class ProjectTest {
         //Act
         String result = project.getCustomerTaxID();
         //Assert
-        assertEquals(expected,result);
+        assertEquals(expected, result);
     }
 
 }
