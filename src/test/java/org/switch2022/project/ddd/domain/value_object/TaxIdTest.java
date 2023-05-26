@@ -318,13 +318,13 @@ class TaxIdTest {
     /**
      * METHOD isValid()
      */
-    @DisplayName("Valid Portugal tax ID - legal entity")
+    @DisplayName("Valid Portugal tax ID - collective person")
     @Test
-    void ensureReturnsTrueWhenItsValidPortugalIdEntity() {
+    void ensureReturnsTrueWhenItsValidPortugalIdEntity_collectivePerson() {
         // Arrange
         boolean expected = true;
 
-        TaxId taxId = new TaxId("514 024 054");
+        TaxId taxId = new TaxId("597664447");
 
         // Act
         boolean result = taxId.isValid();
@@ -333,13 +333,13 @@ class TaxIdTest {
         assertEquals(expected, result);
     }
 
-    @DisplayName("Valid Portugal tax ID - individual")
+    @DisplayName("Valid Portugal tax ID - collective public person")
     @Test
-    void ensureReturnsTrueWhenItsValidPortugalIdIndividual() {
+    void ensureReturnsTrueWhenItsValidPortugalIdEntity_collectivePublicPerson() {
         // Arrange
         boolean expected = true;
 
-        TaxId taxId = new TaxId("228-019-885");
+        TaxId taxId = new TaxId("621252158");
 
         // Act
         boolean result = taxId.isValid();
@@ -348,9 +348,84 @@ class TaxIdTest {
         assertEquals(expected, result);
     }
 
-    @DisplayName("Invalid tax ID")
+    @DisplayName("Valid Portugal tax ID - sole proprietorship")
     @Test
-    void ensureAnExceptionIsThrownWhenNotValidId() {
+    void ensureReturnsTrueWhenItsValidPortugalIdEntity_soleProprietorship() {
+        // Arrange
+        boolean expected = true;
+
+        TaxId taxId = new TaxId("885999134");
+
+        // Act
+        boolean result = taxId.isValid();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Valid Portugal tax ID - irregular legal person or provisional number")
+    @Test
+    void ensureReturnsTrueWhenItsValidPortugalIdEntity_irregularOrProvisional() {
+        // Arrange
+        boolean expected = true;
+
+        TaxId taxId = new TaxId("922359199");
+
+        // Act
+        boolean result = taxId.isValid();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Valid Portugal tax ID - singular person (1)")
+    @Test
+    void ensureReturnsTrueWhenItsValidPortugalId_singularPerson_One() {
+        // Arrange
+        boolean expected = true;
+
+        TaxId taxId = new TaxId("156948800");
+
+        // Act
+        boolean result = taxId.isValid();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Valid Portugal tax ID - singular person (2)")
+    @Test
+    void ensureReturnsTrueWhenItsValidPortugalId_singularPerson_Two() {
+        // Arrange
+        boolean expected = true;
+
+        TaxId taxId = new TaxId("241582326");
+
+        // Act
+        boolean result = taxId.isValid();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Valid Portugal tax ID - singular person (3)")
+    @Test
+    void ensureReturnsTrueWhenItsValidPortugalId_singularPerson_Three() {
+        // Arrange
+        boolean expected = true;
+
+        TaxId taxId = new TaxId("313874646");
+
+        // Act
+        boolean result = taxId.isValid();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Invalid tax ID (0)")
+    @Test
+    void ensureAnExceptionIsThrownWhenIdStartsWithZero() {
         // Arrange
         String expected = "Invalid or unsupported country for tax ID validation.";
 
@@ -364,13 +439,61 @@ class TaxIdTest {
         assertEquals(expected, result.getMessage());
     }
 
-    @DisplayName("Tax id has incorrect length")
+    @DisplayName("Invalid tax ID (4)")
     @Test
-    void ensureAnExceptionIsThrownWhenTaxIdLengthIsIncorrect() {
+    void ensureAnExceptionIsThrownWhenIdStartsWithFour() {
+        // Arrange
+        String expected = "Invalid or unsupported country for tax ID validation.";
+
+        TaxId taxId = new TaxId("428014885");
+
+        // Act
+        InvalidInputException result = Assertions.assertThrows(InvalidInputException.class,
+                taxId::isValid);
+
+        // Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    @DisplayName("Invalid tax ID (7)")
+    @Test
+    void ensureAnExceptionIsThrownWhenIdStartsWithSeven() {
+        // Arrange
+        String expected = "Invalid or unsupported country for tax ID validation.";
+
+        TaxId taxId = new TaxId("728014885");
+
+        // Act
+        InvalidInputException result = Assertions.assertThrows(InvalidInputException.class,
+                taxId::isValid);
+
+        // Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    @DisplayName("Tax id has incorrect length - less")
+    @Test
+    void ensureAnExceptionIsThrownWhenTaxIdLengthIsIncorrect_less() {
         // Arrange
         String expected = "Invalid or unsupported country for tax ID validation.";
 
         TaxId taxId = new TaxId("228-01-885");
+
+        // Act
+        InvalidInputException result = Assertions.assertThrows(InvalidInputException.class,
+                taxId::isValid);
+
+        // Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    @DisplayName("Tax id has incorrect length - more")
+    @Test
+    void ensureAnExceptionIsThrownWhenTaxIdLengthIsIncorrect_more() {
+        // Arrange
+        String expected = "Invalid or unsupported country for tax ID validation.";
+
+        TaxId taxId = new TaxId("228-0185-885");
 
         // Act
         InvalidInputException result = Assertions.assertThrows(InvalidInputException.class,
@@ -386,7 +509,7 @@ class TaxIdTest {
         // Arrange
         String expected = "Invalid or unsupported country for tax ID validation.";
 
-        TaxId taxId = new TaxId("228-01X-885");
+        TaxId taxId = new TaxId("228-01I-885");
 
         // Act
         InvalidInputException result = Assertions.assertThrows(InvalidInputException.class,

@@ -17,6 +17,7 @@ public class TaxId implements ValueObject<TaxId> {
     public static final int CHECK_DIGIT_ELEVEN = 11;
     public static final int FIRST_DIGIT_ONE = 1;
     public static final int FIRST_DIGIT_TWO = 2;
+    public static final int FIRST_DIGIT_THREE = 3;
     public static final int FIRST_DIGIT_FIVE = 5;
     public static final int FIRST_DIGIT_SIX = 6;
     public static final int FIRST_DIGIT_EIGHT = 8;
@@ -99,7 +100,7 @@ public class TaxId implements ValueObject<TaxId> {
      * @return TRUE if the tax ID is valid, FALSE otherwise.
      * @throws InvalidInputException if the tax ID is invalid or the country is unsupported for tax ID validation.
      */
-    public boolean isValid() throws InvalidInputException {
+    public boolean isValid() {
         if (isValidPortugalTaxId(this.number)) {
             return true;
         } else {
@@ -130,8 +131,9 @@ public class TaxId implements ValueObject<TaxId> {
 
         // Extracting the first digit of the number and checking if it's a valid first digit for PT
         int firstDigit = Character.getNumericValue(number.charAt(MIN_INDEX));
-        if (firstDigit != FIRST_DIGIT_ONE && firstDigit != FIRST_DIGIT_TWO && firstDigit != FIRST_DIGIT_FIVE &&
-                firstDigit != FIRST_DIGIT_SIX && firstDigit != FIRST_DIGIT_EIGHT && firstDigit != FIRST_DIGIT_NINE) {
+        if (firstDigit != FIRST_DIGIT_ONE && firstDigit != FIRST_DIGIT_TWO && firstDigit != FIRST_DIGIT_THREE &&
+                firstDigit != FIRST_DIGIT_FIVE && firstDigit != FIRST_DIGIT_SIX && firstDigit != FIRST_DIGIT_EIGHT &&
+                firstDigit != FIRST_DIGIT_NINE) {
             return false;
         }
 

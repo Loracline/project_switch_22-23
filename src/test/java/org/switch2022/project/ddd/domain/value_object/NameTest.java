@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.value_object;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
@@ -113,11 +114,27 @@ class NameTest {
         assertFalse(result);
     }
 
+    @SuppressWarnings("all")
+    @DisplayName("Name instance is different from null")
+    @Test
+    void ensureThatReturnsFalseWhenNameInstanceIsDifferentFromNull() {
+        // Arrange
+        Name name = new Name("Project");
+        Name otherName = null;
+
+        // Act
+        boolean result = name.sameValueAs(otherName);
+
+        // Assert
+        assertFalse(result);
+    }
+
     /**
      * METHOD equals()
      * <br>
      * Scenario 1: Verify if the same object equals itself.
      */
+    @SuppressWarnings("all")
     @Test
     void ensureSameNameEqualsItself() {
         // Arrange
@@ -185,6 +202,7 @@ class NameTest {
     /**
      * Scenario 5: Verify if a Name and a null object are not the same.
      */
+    @SuppressWarnings("all")
     @Test
     void ensureNameInstanceDoesNotEqualNull() {
         // Arrange

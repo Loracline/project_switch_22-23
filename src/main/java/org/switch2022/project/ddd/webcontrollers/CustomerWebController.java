@@ -33,7 +33,7 @@ public class CustomerWebController {
         try {
             service.addCustomer(dto);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
