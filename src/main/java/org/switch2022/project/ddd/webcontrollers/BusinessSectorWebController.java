@@ -15,11 +15,12 @@ import org.switch2022.project.ddd.dto.BusinessSectorCreationDto;
  */
 
 @RestController
-@RequestMapping ("/business-sectors")
+@RequestMapping("/business-sectors")
 public class BusinessSectorWebController {
     /**
      * The BusinessSectorService used to creat a new business sector.
      */
+    @SuppressWarnings("all")
     @Autowired
     private BusinessSectorService service;
 
@@ -32,12 +33,11 @@ public class BusinessSectorWebController {
 
     @PostMapping
     public ResponseEntity<Object> createBusinessSector(@RequestBody BusinessSectorCreationDto
-                                                                   businessSectorCreationDto) throws Exception {
+                                                               businessSectorCreationDto) {
         try {
-            boolean isCreated =
-                    service.createBusinessSector(businessSectorCreationDto.name);
+            service.createBusinessSector(businessSectorCreationDto.name);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

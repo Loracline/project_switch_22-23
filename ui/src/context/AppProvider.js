@@ -7,22 +7,17 @@ import reducer from './Reducer';
  * @param children - The child components that will have access to AppContext.
  * @returns The provider component that wraps the child components.
  */
-const menu = [{
-    key: 'home',
-    label: 'home',
-    hidden: true
-}, {key: 'createProject', label: "create project", hidden: true}, {
-    key: 'projects',
-    label: "projects"
-}, {key: 'createUserStory', label: "create user story", hidden: true}, {
-    key: 'productBacklog',
-    label: "product backlog",
-    hidden: true
-}, {key: 'createSprint', label: "create sprint", hidden: true}, {
-    key: 'project',
-    label: "project",
-    hidden: true
-}, {key: 'about', label: "about"}]
+const menu = [
+    {key: 'home', label: 'home', hidden: true},
+    {key: 'createProject', label: "create project", hidden: true},
+    {key: 'projects', label: "projects"},
+    {key: 'createUserStory', label: "create user story", hidden: true},
+    {key: 'productBacklog', label: "product backlog", hidden: true},
+    {key: 'createSprint', label: "create sprint", hidden: true},
+    {key: 'project', label: "project", hidden: true},
+    {key: 'about', label: "about"},
+    {key: 'allocateResource', label: "allocate resource", hidden: true}
+]
 const nav = {selectedMenu: menu[0], menu: menu,}
 const detailedProject = null;
 const AppProvider = ({children}) => {
@@ -118,7 +113,7 @@ const AppProvider = ({children}) => {
             status: "inception",
             startDate: "2010-02-21",
             endDate: "2022-12-30",
-                    },
+        },
         additionalInfo:
             {
                 businessSector: "",
