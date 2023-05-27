@@ -70,7 +70,7 @@ public class BusinessSectorJpaRepository implements IBusinessSectorRepository {
      */
     @Override
     public String getBusinessSectorIdByName(String businessSectorName) {
-        Optional<BusinessSectorJpa> businessSector = crudRepository.findByBusinessSectorName(businessSectorName);
+        Optional<BusinessSectorJpa> businessSector = crudRepository.findByName(businessSectorName);
 
         if (businessSector.isPresent()) {
             return businessSector.get().getName();

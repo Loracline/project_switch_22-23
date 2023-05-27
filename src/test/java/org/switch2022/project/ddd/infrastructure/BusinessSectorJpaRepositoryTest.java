@@ -36,7 +36,7 @@ class BusinessSectorJpaRepositoryTest {
     BusinessSectorDomainDataAssembler assembler;
 
     /**
-     * METHOD add()
+     * METHOD save()
      * Scenario 1: ensure that a business sector is added successfully.
      * The repository should add the business sector and return true.
      */
@@ -133,7 +133,7 @@ class BusinessSectorJpaRepositoryTest {
         BusinessSectorJpa businessSectorJpaDouble = mock(BusinessSectorJpa.class);
         Optional<BusinessSectorJpa> optionalDouble = Optional.of(businessSectorJpaDouble);
 
-        when(crudRepository.findByBusinessSectorName(businessSectorName)).thenReturn(optionalDouble);
+        when(crudRepository.findByName(businessSectorName)).thenReturn(optionalDouble);
         when(optionalDouble.get().getName()).thenReturn(expected);
 
         // Act
@@ -155,7 +155,7 @@ class BusinessSectorJpaRepositoryTest {
 
         Optional<BusinessSectorJpa> businessSector = Optional.empty();
 
-        when(crudRepository.findByBusinessSectorName(businessSectorName)).thenReturn(businessSector);
+        when(crudRepository.findByName(businessSectorName)).thenReturn(businessSector);
 
         // Act
         NotFoundInRepoException result = assertThrows(

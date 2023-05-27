@@ -2,9 +2,7 @@ package org.switch2022.project.ddd.infrastructure.jpa;
 
 import org.springframework.data.repository.CrudRepository;
 import org.switch2022.project.ddd.datamodel_jpa.BusinessSectorJpa;
-import org.switch2022.project.ddd.datamodel_jpa.CustomerJpa;
-import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
-import org.switch2022.project.ddd.domain.value_object.Name;
+
 
 import java.util.Optional;
 
@@ -20,6 +18,6 @@ public interface IBusinessSectorJpaRepository extends CrudRepository<BusinessSec
      * @return the business sector with the given name, and throw an NotFoundInRepoException otherwise.
      */
 
-    Optional<BusinessSectorJpa> findByBusinessSectorName(String businessSectorName);
+    Optional<BusinessSectorJpa> findByName(String businessSectorName);
 }
 
