@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
@@ -10,10 +11,15 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 
 @Service
 public class BusinessSectorService {
-    @Autowired
-    private IBusinessSectorFactory businessSectorFactory;
+    @SuppressWarnings("all")
+    @Qualifier("businessSector_jpa")
     @Autowired
     private IBusinessSectorRepository businessSectorRepository;
+    @SuppressWarnings("all")
+    @Autowired
+    private IBusinessSectorFactory businessSectorFactory;
+
+
     
     /**
      * This method receives a name as a String and creates a new business sector with that name.
@@ -27,7 +33,7 @@ public class BusinessSectorService {
         int businessSectorNumber = calculateNextBusinessSectorNumber();
         BusinessSector businessSector = businessSectorFactory.createBusinessSector(businessSectorNumber,
                 businessSectorName);
-        return businessSectorRepository.add(businessSector);
+        return businessSectorRepository.save(businessSector);
     }
 
     /**
@@ -38,6 +44,6 @@ public class BusinessSectorService {
      * one, which logically equals the next number.
      */
     private int calculateNextBusinessSectorNumber() {
-        return businessSectorRepository.getSize() + 1;
+        return businessSectorRepository.count() + 1;
     }
 }

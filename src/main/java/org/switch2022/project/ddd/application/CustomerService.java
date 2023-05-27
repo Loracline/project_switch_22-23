@@ -40,14 +40,13 @@ public class CustomerService {
      * @throws InvalidInputException if the tax ID is invalid or the country is unsupported for tax ID validation.
      */
     public boolean addCustomer(CustomerCreationDto dto) {
+        boolean add = false;
         Name customerName = new Name(dto.getCustomerName());
         TaxId customerTaxId = new TaxId(dto.getCustomerTaxId());
-
         if (customerTaxId.isValid()) {
             Customer customer = factory.createCustomer(customerTaxId, customerName);
-            return repository.save(customer);
-        } else {
-            throw new InvalidInputException("Invalid or unsupported country for tax ID validation.");
+            add =  repository.save(customer);
         }
+        return add;
     }
 }

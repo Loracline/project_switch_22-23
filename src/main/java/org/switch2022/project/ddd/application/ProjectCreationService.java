@@ -36,6 +36,7 @@ public class ProjectCreationService {
     @Autowired
     private ITypologyRepository typologyRepository;
     @Autowired
+    @Qualifier("businessSector_jpa")
     private IBusinessSectorRepository businessSectorRepository;
     @Autowired
     @Qualifier("customer_jpa")
@@ -58,7 +59,7 @@ public class ProjectCreationService {
                 getBusinessSectorIdByName(projectCreationDto.businessSectorName)));
 
         ProjectTypologyId projectTypologyId = new ProjectTypologyId(parseInt(typologyRepository.
-                getTypologyIdByName(projectCreationDto.typologyName)));
+                findTypologyIdByTypologyName(projectCreationDto.typologyName)));
 
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription,
                 businessSectorId, customerTaxId, projectTypologyId);

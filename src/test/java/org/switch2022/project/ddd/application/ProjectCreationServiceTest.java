@@ -139,7 +139,7 @@ class ProjectCreationServiceTest {
 
         when(projectRepository.count()).thenReturn(1);
         when(customerRepository.findCustomerTaxIdByName(any())).thenReturn("001");
-        when(typologyRepository.getTypologyIdByName(any())).thenReturn("001");
+        when(typologyRepository.findTypologyIdByTypologyName(any())).thenReturn("001");
         when(businessSectorRepository.getBusinessSectorIdByName(any())).thenReturn("001");
 
         when(factoryProject.createProject(anyInt(), any(), any(), any(), any(), any())).thenReturn(projectDouble);

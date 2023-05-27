@@ -12,9 +12,9 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 @Service
 public class TypologyService {
     @Autowired
-    private ITypologyRepository typologyRepository;
+    ITypologyRepository typologyRepository;
     @Autowired
-    private IFactoryTypology factoryTypology;
+    IFactoryTypology factoryTypology;
 
 
     /**
@@ -25,18 +25,8 @@ public class TypologyService {
      */
     public boolean createTypology(String name) {
         Name typologyName = new Name(name);
-        int typologyNumber = calculateNextTypologyNumber();
+        int typologyNumber = Math.addExact(typologyRepository.count(), 1);
         Typology typology = factoryTypology.createTypology(typologyNumber, typologyName);
-        return typologyRepository.add(typology);
-    }
-
-    /**
-     * This method calculates the next typology number
-     *
-     * @return the number of typologies already contained in the list (equivalent to the size of the list) plus one.
-     * Which logically equals the next number.
-     */
-    private int calculateNextTypologyNumber() {
-        return typologyRepository.getSize() + 1;
+        return typologyRepository.save(typology);
     }
 }

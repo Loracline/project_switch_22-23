@@ -1,6 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Component
+@Repository("businessSector_memory")
 public class BusinessSectorRepository implements IBusinessSectorRepository {
     /**
      * Attributes
@@ -57,7 +57,7 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
      * @return true if the business sector was added to the business sector repository, and throws an
      * AlreadyExistInRepoException otherwise.
      */
-    public boolean add(BusinessSector businessSector) {
+    public boolean save(BusinessSector businessSector) {
         if (businessSectors.contains(businessSector)) {
             throw new AlreadyExistsInRepoException("The business sector already exists in the repository.");
         } else {
@@ -71,7 +71,7 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
      *
      * @return the integer equivalent to the size of the list of business sectors.
      */
-    public int getSize() {
+    public int count() {
         return businessSectors.size();
     }
 
