@@ -1,0 +1,27 @@
+2023-05-26 16:20:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE IF EXISTS BUSINESS-[*]SECTORS CASCADE "; SQL statement:
+drop table if exists business-sectors CASCADE  [42000-200]
+2023-05-26 16:20:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE BUSINESS-[*]SECTORS (ID_NUMBER VARCHAR(255) NOT NULL, NAME VARCHAR(255), PRIMARY KEY (ID_NUMBER))"; SQL statement:
+create table business-sectors (id_number varchar(255) not null, name varchar(255), primary key (id_number)) [42000-200]
+2023-05-26 16:21:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE IF EXISTS BUSINESS-[*]SECTORS CASCADE "; SQL statement:
+drop table if exists business-sectors CASCADE  [42000-200]
+2023-05-27 00:45:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE IF EXISTS BUSINESS-[*]SECTORS CASCADE "; SQL statement:
+drop table if exists business-sectors CASCADE  [42000-200]
+2023-05-27 00:45:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE BUSINESS-[*]SECTORS (ID_NUMBER VARCHAR(255) NOT NULL, NAME VARCHAR(255), PRIMARY KEY (ID_NUMBER))"; SQL statement:
+create table business-sectors (id_number varchar(255) not null, name varchar(255), primary key (id_number)) [42000-200]
+2023-05-27 00:45:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE IF EXISTS BUSINESS-[*]SECTORS CASCADE "; SQL statement:
+drop table if exists business-sectors CASCADE  [42000-200]
+2023-05-27 01:44:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE IF EXISTS BUSINESS-[*]SECTORS CASCADE "; SQL statement:
+drop table if exists business-sectors CASCADE  [42000-200]
+2023-05-27 01:44:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE BUSINESS-[*]SECTORS (ID_NUMBER VARCHAR(255) NOT NULL, NAME VARCHAR(255), PRIMARY KEY (ID_NUMBER))"; SQL statement:
+create table business-sectors (id_number varchar(255) not null, name varchar(255), primary key (id_number)) [42000-200]
+2023-05-27 01:44:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DROP TABLE IF EXISTS BUSINESS-[*]SECTORS CASCADE "; SQL statement:
+drop table if exists business-sectors CASCADE  [42000-200]
