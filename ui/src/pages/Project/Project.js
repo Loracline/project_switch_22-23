@@ -23,6 +23,7 @@ const Project = () => {
                         <Button onClick={() => dispatch(selectMenu('createUserStory'))} text="Create user story"/>
                         <Button onClick={() => dispatch(selectMenu('createSprint'))} text="Create sprint"/>
                         <Button onClick={() => dispatch(selectMenu('productBacklog'))} text="Consult product backlog"/>
+                        <Button onClick={() => dispatch(selectMenu('allocateResource'))} text="Allocate Resource"/>
                     </div>
                 </div>
                 <Button isSecundary={true} onClick={() => dispatch(selectMenu('projects'))} text="Return to projects"/>
