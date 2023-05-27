@@ -59,7 +59,7 @@ public class ProjectCreationService {
                 getBusinessSectorIdByName(projectCreationDto.businessSectorName)));
 
         ProjectTypologyId projectTypologyId = new ProjectTypologyId(parseInt(typologyRepository.
-                getTypologyIdByName(projectCreationDto.typologyName)));
+                findTypologyIdByTypologyName(projectCreationDto.typologyName)));
 
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription,
                 businessSectorId, customerTaxId, projectTypologyId);
