@@ -1,9 +1,10 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import org.switch2022.project.ddd.domain.model.typology.IFactoryTypology;
+import org.switch2022.project.ddd.domain.model.typology.ITypologyFactory;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
 import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.domain.value_object.Name;
@@ -13,9 +14,9 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 public class TypologyService {
     @Autowired
     ITypologyRepository typologyRepository;
+    @Qualifier("typology_jpa")
     @Autowired
-    IFactoryTypology factoryTypology;
-
+    ITypologyFactory factoryTypology;
 
     /**
      * This method receives a String name and to convert in of objects of type Name.

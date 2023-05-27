@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.domain.model.typology.IFactoryTypology;
+import org.switch2022.project.ddd.domain.model.typology.ITypologyFactory;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
@@ -26,7 +26,7 @@ class TypologyServiceTest {
     @MockBean
     ITypologyRepository typologyRepository;
     @MockBean
-    IFactoryTypology factoryTypology;
+    ITypologyFactory factoryTypology;
 
     /**
      * Method: createTypology().

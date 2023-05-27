@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,8 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ITypologyJpaRepository;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -22,10 +25,10 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = {TypologyJpaRepositoryTest.class})
 class TypologyJpaRepositoryTest {
     @InjectMocks
-    TypologyJpaRepository typologyJpaRepository;
+    TypologyJpaRepository repository;
 
     @MockBean
-    ITypologyJpaRepository jpaRepository;
+    ITypologyJpaRepository crudRepository;
 
     @MockBean
     TypologyDomainDataAssembler assembler;
@@ -35,15 +38,16 @@ class TypologyJpaRepositoryTest {
      * Scenario 01: make sure an instance of tupology is successfully added to the repository.
      * Expected return: true.
      */
+    @DisplayName("Typology is saved")
     @Test
     void ensureThatTypologyIsAddedToRepositorySuccessfully() {
         //Arrange
         TypologyJpa typologyJpa = mock(TypologyJpa.class);
         Typology typology = mock(Typology.class);
         when(assembler.toData(any())).thenReturn(typologyJpa);
-        when(jpaRepository.existsById(any())).thenReturn(false);
+        when(crudRepository.existsById(any())).thenReturn(false);
         //Act
-        boolean result = typologyJpaRepository.save(typology);
+        boolean result = repository.save(typology);
         //Assert
         assertTrue(result);
     }
@@ -53,18 +57,19 @@ class TypologyJpaRepositoryTest {
      * if it already exists in the repository.
      * Expected return: AlreadyExistsInRepoException.
      */
+    @DisplayName("Typology already exists")
     @Test
     void ensureThatAnExceptionIsThrownWhenProfileAlreadyExistsInRepo() {
         //Arrange
         TypologyJpa typologyJpa = mock(TypologyJpa.class);
         Typology typology = mock(Typology.class);
         when(assembler.toData(any())).thenReturn(typologyJpa);
-        when(jpaRepository.existsById(any())).thenReturn(true);
+        when(crudRepository.existsById(any())).thenReturn(true);
 
         String expected = "The typology already exists in the repository.";
         //Act
         AlreadyExistsInRepoException result = assertThrows(AlreadyExistsInRepoException.class,
-                () -> typologyJpaRepository.save(typology));
+                () -> repository.save(typology));
         //Assert
         assertEquals(expected, result.getMessage());
     }
@@ -78,9 +83,9 @@ class TypologyJpaRepositoryTest {
     void ensureThatTheNumberOfTypologiesInTheRepoIsReturned() {
         //Arrange
         int expected = 2;
-        when(jpaRepository.count()).thenReturn(2L);
+        when(crudRepository.count()).thenReturn(2L);
         //Act
-        int result = typologyJpaRepository.count();
+        int result = repository.count();
         //Assert
         assertEquals(expected, result);
     }
@@ -90,16 +95,20 @@ class TypologyJpaRepositoryTest {
      * Scenario 02: return the typologyId of the typology related to the given TypologyName.
      * Expected result: the typologyId of the typology.
      */
+    @DisplayName("Typology ID is retrieved")
     @Test
     void ensurefindTypologyIdByTypologyName() {
         //Arrange
         String typologyName = "new typology";
-        String expected = "T001";
+        String expected = "001";
 
-        when(jpaRepository.findTypologyIdByTypologyName(typologyName))
-                .thenReturn(expected);
+        TypologyJpa typologyJpaDouble = mock(TypologyJpa.class);
+        Optional<TypologyJpa> optionalDouble = Optional.of(typologyJpaDouble);
+
+        when(crudRepository.findByTypologyName(typologyName)).thenReturn(optionalDouble);
+        when(optionalDouble.get().getTypologyId()).thenReturn(expected);
         //Act
-        String result = typologyJpaRepository.findTypologyIdByTypologyName(typologyName);
+        String result = repository.findTypologyIdByTypologyName(typologyName);
 
         //Assert
         assertEquals(expected, result);
@@ -110,6 +119,7 @@ class TypologyJpaRepositoryTest {
      * Scenario 02: tests getting a profile by name and there is no profile in the repository with the given name.
      * Expected return: NotFoundInRepoException.
      */
+    @DisplayName("Typology ID not found")
     @Test
     void ensureAnExceptionIsThrownIfNoProfileIsFoundWithGivenName() {
         //Arrange
@@ -118,7 +128,7 @@ class TypologyJpaRepositoryTest {
 
         //Act
         NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
-                () -> typologyJpaRepository.findTypologyIdByTypologyName(typologyName));
+                () -> repository.findTypologyIdByTypologyName(typologyName));
 
         //Assert
         assertEquals(expected, result.getMessage());

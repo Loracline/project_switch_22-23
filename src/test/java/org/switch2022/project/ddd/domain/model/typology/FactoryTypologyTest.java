@@ -20,7 +20,7 @@ class FactoryTypologyTest {
     void createProjectTypology() {
         // Arrange
         Name typologyNameDouble = mock(Name.class);
-        IFactoryTypology factoryTypologyI = new FactoryTypology();
+        ITypologyFactory factoryTypologyI = new TypologyFactory();
 
         // Act
         Typology typology = factoryTypologyI.createTypology(8, typologyNameDouble);

@@ -20,26 +20,24 @@ public class TypologyWebController {
     /**
      * The TypologyService used to create a new typology.
      */
+    @SuppressWarnings("all")
     @Autowired
-    TypologyService service;
+    private TypologyService service;
 
     /**
      * Handles a POST request to create a new typology.
      *
-     * @param typologyCreationDto object containing the information needed to create a new typology.
+     * @param dto object containing the information needed to create a new typology.
      * @return a ResponseEntity containing the typology name and a status code of 201 (CREATED)or a status code of 409
      * (CONFLICT), or a status code of 409 (CONFLICT) plus an exception message in case an exception is caught.
      */
     @PostMapping()
-    public ResponseEntity<Object> createTypology(@RequestBody TypologyCreationDto typologyCreationDto)
-            {
-        {
-            try {
-                service.createTypology(typologyCreationDto.typologyName);
-                return new ResponseEntity<>(HttpStatus.CREATED);
-            } catch (Exception e) {
-                return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-            }
+    public ResponseEntity<Object> createTypology(@RequestBody TypologyCreationDto dto) {
+        try {
+            service.createTypology(dto.typologyName);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }
