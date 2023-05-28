@@ -90,9 +90,11 @@ function AllocateResource() {
                             name="accountCostPerHour"
                             value={resource.accountCostPerHour}
                             label="Cost"
+                            type="number"
+                            helperText={'Total paid for each hour of work'}
                             InputProps={{endAdornment: (<InputAdornment position="end">€/Hour</InputAdornment>)}}
                             onChange={handleChange}
-                            helperText={'Total paid for each hour of work'} required
+                            required
                         />
                         <br/>
                         <br/>
