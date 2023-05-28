@@ -27,12 +27,6 @@ public class RegisterAccountController {
 
     public boolean registerAccount(AccountCreationDto accountCreationDto) {
         Validate.notNull(accountCreationDto, "The account Dto can't be null");
-
-        String name = accountCreationDto.name;
-        String email = accountCreationDto.email;
-        int phoneNumber = accountCreationDto.phoneNumber;
-        BufferedImage photo = accountCreationDto.photo;
-
-        return accountService.registerAccount(name, email, phoneNumber, photo);
+        return accountService.registerAccount(accountCreationDto);
     }
 }
