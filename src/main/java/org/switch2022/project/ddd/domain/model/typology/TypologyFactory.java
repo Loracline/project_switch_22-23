@@ -8,17 +8,17 @@ import org.switch2022.project.ddd.domain.value_object.Name;
  * a Typology object.
  */
 @Component
-public class FactoryTypology implements IFactoryTypology {
+public class TypologyFactory implements ITypologyFactory {
 
     /**
      * This method creates a projectTypology object.
      *
      * @param typologyNumber is an attribute of Typology.
-     * @param typologyName is an attribute of Typology.
+     * @param typologyName   is an attribute of Typology.
      * @return a new object Typology.
      */
     @Override
     public Typology createTypology(int typologyNumber, Name typologyName) {
-        return  new Typology(typologyNumber, typologyName);
+        return new Typology(typologyNumber, typologyName);
     }
 }
