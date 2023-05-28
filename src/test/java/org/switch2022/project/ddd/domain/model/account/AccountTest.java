@@ -3,6 +3,8 @@ package org.switch2022.project.ddd.domain.model.account;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 
+import java.awt.image.BufferedImage;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -48,7 +50,8 @@ class AccountTest {
         Photo photoDoubleTwo = mock(Photo.class);
 
         Account reference = new Account(nameDouble, emailDouble, phoneNumberDouble, photoDouble);
-        Account other = new Account(nameDoubleTwo, emailDouble, phoneNumberDoubleTwo, photoDoubleTwo);
+        Account other = new Account(nameDoubleTwo, emailDouble, phoneNumberDoubleTwo,
+                photoDoubleTwo);
 
         // Act
         boolean result = reference.equals(other);
@@ -73,7 +76,8 @@ class AccountTest {
         Photo photoDoubleTwo = mock(Photo.class);
 
         Account reference = new Account(nameDouble, emailDouble, phoneNumberDouble, photoDouble);
-        Account other = new Account(nameDoubleTwo, emailDoubleTwo, phoneNumberDoubleTwo, photoDoubleTwo);
+        Account other = new Account(nameDoubleTwo, emailDoubleTwo, phoneNumberDoubleTwo,
+                photoDoubleTwo);
 
         // Act
         boolean result = reference.equals(other);
@@ -159,8 +163,10 @@ class AccountTest {
         Email emailDoubleTwo = mock(Email.class);
         PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
         Photo photoDouble = mock(Photo.class);
-        Account accountOne = new Account(nameDouble, emailDoubleOne, phoneNumberDouble, photoDouble);
-        Account accountTwo = new Account(nameDouble, emailDoubleTwo, phoneNumberDouble, photoDouble);
+        Account accountOne = new Account(nameDouble, emailDoubleOne, phoneNumberDouble,
+                photoDouble);
+        Account accountTwo = new Account(nameDouble, emailDoubleTwo, phoneNumberDouble,
+                photoDouble);
 
         // Act
         int accountOneHashCode = accountOne.hashCode();
@@ -448,7 +454,8 @@ class AccountTest {
     }
 
     /**
-     * Scenario 2: This test ensures that the account's profile is not changed when the same profile is added.
+     * Scenario 2: This test ensures that the account's profile is not changed when the same
+     * profile is added.
      * The method should return false to indicate that the profile was not changed.
      * The expected behavior is that the account's profile remains unchanged.
      */
@@ -476,7 +483,8 @@ class AccountTest {
     }
 
     /**
-     * Scenario 3: Ensure that an account can have a profile added when it does not have an existing profile.
+     * Scenario 3: Ensure that an account can have a profile added when it does not have an
+     * existing profile.
      * The method should return true to indicate that the profile was successfully added.
      */
     @Test
@@ -574,6 +582,51 @@ class AccountTest {
 
         // Assert
         assertEquals(expectedProfileIdString, actualProfileIdString);
+    }
+
+    /**
+     * METHOD getPhoneNumber()
+     * Scenario 1: should return the correct phone number of the Account.
+     */
+    @Test
+    void getPhoneNumberReturnsCorrectNumber() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        Photo photo = mock(Photo.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        when(phoneNumber.getPhoneNumber()).thenReturn(921036438);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        // Act
+        int phoneNumberInt = account.getPhoneNumber();
+
+        // Assert
+        assertEquals(921036438, phoneNumberInt);
+    }
+
+    /**
+     * METHOD getPhoto()
+     * Scenario 1: should return the correct photo of the Account.
+     */
+    @Test
+    void getPhotoReturnsCorrectPhoto() {
+        // Arrange
+        Name name = mock(Name.class);
+        Email email = mock(Email.class);
+        PhoneNumber phoneNumber = mock(PhoneNumber.class);
+        Photo photo = mock(Photo.class);
+        BufferedImage bufferedImage = mock(BufferedImage.class);
+        when(photo.getPhoto()).thenReturn(bufferedImage);
+
+        Account account = new Account(name, email, phoneNumber, photo);
+
+        // Act
+        BufferedImage bufferedImageResult = account.getPhoto();
+
+        // Assert
+        assertEquals(bufferedImage, bufferedImageResult);
     }
 }
 
