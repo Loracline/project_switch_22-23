@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "business-sectors")
+@Table(name = "business_sectors")
 public class BusinessSectorJpa {
     /**
      * Attributes

@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
@@ -11,6 +12,7 @@ import org.switch2022.project.ddd.domain.value_object.*;
  */
 @Service
 public class AccountChangeStatusService {
+    @Qualifier("account_jpa")
     @Autowired
     private IAccountRepository accountRepository;
 
