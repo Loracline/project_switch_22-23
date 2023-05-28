@@ -22,7 +22,7 @@ function AllocateResource() {
 
     const {dispatch} = useContext(AppContext);
     const [resource, setResource] = useState(initialResource);
-
+    const [inputError, setInputError] = useState('');
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -30,6 +30,26 @@ function AllocateResource() {
         newResource[name] = value;
         setResource(newResource);
     }
+
+    const handleChangeForPercentageOfAllocationInput = (event) => {
+        const {value} = event.target;
+        const newValue = value.replace(/[^0-9.]/g, '');
+        const floatValue = parseFloat(newValue);
+        let inputError = '';
+
+        if (newValue !== '') {
+            if (floatValue < 0 || floatValue > 100) {
+                inputError = 'Only numbers between 0 and 100 are allowed.';
+            }
+        }
+        const newResource = {...resource};
+        if (inputError === '') {
+            newResource["accountPercentageOfAllocation"] = newValue;
+        }
+        setInputError(inputError);
+        setResource(newResource);
+    }
+
     const handleStartDate = (date) => {
         const newResource = {...resource};
         newResource["startDate"] = date;
@@ -57,8 +77,7 @@ function AllocateResource() {
                                 <MenuItem value={"TEAM_MEMBER"}>Team Member</MenuItem>
                                 <MenuItem value={"PRODUCT_OWNER"}>Product Owner</MenuItem>
                                 <MenuItem value={"SCRUM_MASTER"}>Scrum Master</MenuItem>
-                                <MenuItem value={"PROJECT_MANAGER"} disabled>Project
-                                    Manager</MenuItem>
+                                <MenuItem value={"PROJECT_MANAGER"} disabled>Project Manager</MenuItem>
                             </Select>
                         </FormControl>
                         <br/>
@@ -68,20 +87,35 @@ function AllocateResource() {
 
                     <div className="resource-form-row">
                         <TextField
-                            required
+                            name="accountCostPerHour"
+                            value={resource.accountCostPerHour}
                             label="Cost"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">€</InputAdornment>)
-                            }}/>
-                        <FormHelperText>total paid for each hour worked</FormHelperText>
+                            InputProps={{endAdornment: (<InputAdornment position="end">€/Hour</InputAdornment>)}}
+                            onChange={handleChange}
+                            helperText={'Total paid for each hour of work'} required
+                        />
+                        <br/>
+                        <br/>
+                    </div>
+
+                    <div className="resource-form-row">
+                        <TextField
+                            value={resource.accountPercentageOfAllocation}
+                            label="Percentage Of Allocation"
+                            type="number"
+                            error={Boolean(inputError)}
+                            helperText={inputError ||'Between 0 - 100%'}
+                            InputProps={{endAdornment: (<InputAdornment position="end">%</InputAdornment>)}}
+                            onChange={handleChangeForPercentageOfAllocationInput}
+                            required
+                        />
                         <br/>
                         <br/>
                     </div>
 
 
                     <div className="resource-form-row">
-                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DatePicker']}>
                                 <DatePicker
                                     label="Start Date"
