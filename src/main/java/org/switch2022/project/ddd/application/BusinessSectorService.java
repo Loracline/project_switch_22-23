@@ -7,6 +7,12 @@ import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
 import org.switch2022.project.ddd.domain.value_object.Name;
+import org.switch2022.project.ddd.dto.BusinessSectorDto;
+import org.switch2022.project.ddd.dto.mapper.BusinessSectorMapper;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -15,6 +21,9 @@ public class BusinessSectorService {
     @Qualifier("businessSector_jpa")
     @Autowired
     private IBusinessSectorRepository businessSectorRepository;
+    @SuppressWarnings("all")
+    @Autowired
+    private BusinessSectorMapper businessSectorMapper;
     @SuppressWarnings("all")
     @Autowired
     private IBusinessSectorFactory businessSectorFactory;
@@ -45,5 +54,18 @@ public class BusinessSectorService {
      */
     private int calculateNextBusinessSectorNumber() {
         return businessSectorRepository.count() + 1;
+    }
+
+    /**
+     * Requests a list of all business sectors.
+     * @return a list of all projectsDto.
+     */
+    public List<BusinessSectorDto> requestAllBusinessSectors() {
+        List<BusinessSectorDto> businessSectorsDto = new ArrayList<>();
+        List<BusinessSector> businessSectors = businessSectorRepository.findAll();
+        for (BusinessSector businessSector : businessSectors) {
+            businessSectorsDto.add(businessSectorMapper.businessSectorToDto(businessSector));
+        }
+        return businessSectorsDto;
     }
 }

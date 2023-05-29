@@ -30,13 +30,9 @@ public class UserStoryWebController {
      * @throws Exception If an error occurs during the creation process.
      */
     @PostMapping
-    public ResponseEntity<Object> createUs(@RequestBody UserStoryCreationDto userStoryCreationDto) throws Exception {
-        try {
-            UsId usId = usService.createUs(userStoryCreationDto);
-            return new ResponseEntity<>(usId, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-        }
+    public ResponseEntity<Object> createUs(@RequestBody UserStoryCreationDto userStoryCreationDto) {
+        UsId usId = usService.createUs(userStoryCreationDto);
+        return new ResponseEntity<>(usId, HttpStatus.CREATED);
     }
 }
 

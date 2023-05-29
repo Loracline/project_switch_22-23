@@ -2,6 +2,8 @@ package org.switch2022.project.ddd.domain.model.customer;
 
 import org.switch2022.project.ddd.domain.value_object.TaxId;
 
+import java.util.List;
+
 /**
  * Interface representing a repository for managing {@link Customer} entities.
  * Provides methods for saving and retrieving customer data.
@@ -31,4 +33,11 @@ public interface ICustomerRepository {
      * @return The tax ID of the customer.
      */
     String findCustomerTaxIdByName(String customerName);
+
+    /**
+     * Retrieves all customers from the database.
+     *
+     * @return A list of Customer objects representing all customers.
+     */
+    List<Customer> findAll();
 }

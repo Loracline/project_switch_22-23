@@ -14,6 +14,8 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ITypologyJpaRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -79,6 +81,7 @@ class TypologyJpaRepositoryTest {
      * Scenario 01: return the number of typologies from a list
      * Expected result: the number of typology instances in the list.
      */
+    @DisplayName("Number of typology in the list")
     @Test
     void ensureThatTheNumberOfTypologiesInTheRepoIsReturned() {
         //Arrange
@@ -133,4 +136,53 @@ class TypologyJpaRepositoryTest {
         //Assert
         assertEquals(expected, result.getMessage());
     }
+    /**
+     * Method: findAll().
+     * Scenario 01: returns the list of all typologies
+     * Expected result: return the list of all repository typologies.
+     */
+    @DisplayName("List of all typologies")
+    @Test
+    void ensureListIsRetrievedSuccessfully() {
+        //Arrange
+        Typology typologyDouble = mock(Typology.class);
+        Typology typologyDoubleTwo = mock(Typology.class);
+        List<Typology> expected = new ArrayList<>();
+        expected.add(typologyDouble);
+        expected.add(typologyDoubleTwo);
+
+        TypologyJpa typologyJpaDouble = mock(TypologyJpa.class);
+        TypologyJpa typologyJpaDoubleTwo = mock(TypologyJpa.class);
+        List<TypologyJpa> typologiesJpa = new ArrayList<>();
+        typologiesJpa.add(typologyJpaDouble);
+        typologiesJpa.add(typologyJpaDoubleTwo);
+
+        when(crudRepository.findAll()).thenReturn(typologiesJpa);
+        when(assembler.toDomain(typologyJpaDouble)).thenReturn(typologyDouble);
+        when(assembler.toDomain(typologyJpaDoubleTwo)).thenReturn(typologyDoubleTwo);
+        //Act
+        List<Typology> result = repository.findAll();
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 02: empty list is retrieved successfully.
+     * Expected result: an empty list.
+     */
+    @DisplayName("Empty typology list")
+    @Test
+    void ensureEmptyListIsRetrievedSuccessfully() {
+        //Arrange
+        List<Typology> expected = new ArrayList<>();
+        List<TypologyJpa> projectsJpa = new ArrayList<>();
+
+        when(crudRepository.findAll()).thenReturn(projectsJpa);
+
+        //Act
+        List<Typology> result = repository.findAll();
+        //Assert
+        assertEquals(expected, result);
+    }
+
 }

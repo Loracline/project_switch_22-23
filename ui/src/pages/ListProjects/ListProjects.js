@@ -1,9 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableBody from "../../components/TableBody/TableBody";
 import AppContext from "../../context/AppContext";
 import Alert from "@mui/material/Alert";
-import {selectMenu, setCurrentProject} from "../../context/Actions";
+import {getProject, getProjects, selectMenu, setCurrentProject} from "../../context/Actions";
 import Button from "../../components/Button/Button";
 import './ListProjects.css';
 
@@ -16,13 +16,17 @@ const ListProjects = () => {
     const {state, dispatch} = useContext(AppContext);
     const headers = state.headersProjects;
     const data = state.projects.map(project => project.basicInfo);
+    //useEffect(()=> {const data2 = getProjects(dispatch)}, []);
 
     const tableData = () => {
         let tableData;
+        //if (data2.length > 0)
         if (data.length > 0) {
             const onClickTableBody = (index) => {
                 if (state.projects.length > index) {
                     const selectedProject = state.projects[index];
+                    //const completeProject = getProject(dispatch, selectedProject.code);
+                    //dispatch(setCurrentProject(completeProject));
                     dispatch(setCurrentProject(selectedProject));
                 }
                 dispatch(selectMenu('project'));

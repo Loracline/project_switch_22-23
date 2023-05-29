@@ -15,8 +15,6 @@ import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.Optional;
 
-import static java.lang.Integer.parseInt;
-
 /**
  * Class ProjectCreationService allows to interact with Sprint aggregate.
  */
@@ -31,7 +29,7 @@ public class ProjectCreationService {
     @Autowired
     private IFactoryProject factoryProject;
     @Autowired
-    @Qualifier ("project_jpa")
+    @Qualifier("project_jpa")
     private IProjectRepository projectRepository;
     @Autowired
     private ITypologyRepository typologyRepository;
@@ -53,13 +51,13 @@ public class ProjectCreationService {
         Name projectName = new Name(projectCreationDto.projectName);
         Description projectDescription = new Description(projectCreationDto.projectDescription);
 
-        TaxId customerTaxId = new TaxId(customerRepository.findCustomerTaxIdByName(projectCreationDto.customerName));
+        TaxId customerTaxId = new TaxId(projectCreationDto.customerId);
 
-        BusinessSectorId businessSectorId = new BusinessSectorId(parseInt(businessSectorRepository.
-                getBusinessSectorIdByName(projectCreationDto.businessSectorName)));
+        BusinessSectorId businessSectorId = new BusinessSectorId(Utils.getIntFromAlphanumericString(
+                projectCreationDto.businessSectorId, "BS"));
 
-        ProjectTypologyId projectTypologyId = new ProjectTypologyId(parseInt(typologyRepository.
-                findTypologyIdByTypologyName(projectCreationDto.typologyName)));
+        ProjectTypologyId projectTypologyId = new ProjectTypologyId(Utils.getIntFromAlphanumericString(
+                projectCreationDto.typologyId, "PT"));
 
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription,
                 businessSectorId, customerTaxId, projectTypologyId);

@@ -3,12 +3,12 @@ package org.switch2022.project.ddd.webcontrollers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.ddd.application.TypologyService;
 import org.switch2022.project.ddd.dto.TypologyCreationDto;
+import org.switch2022.project.ddd.dto.TypologyDto;
+
+import java.util.List;
 
 
 /**
@@ -39,5 +39,16 @@ public class TypologyWebController {
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+    /**
+     * Handles a GET request to retrieve a list of all typologies.
+     *
+     * @return A ResponseEntity containing a list of TypologyDto objects and a status code of 200 (OK).
+     */
+    @GetMapping("")
+    @ResponseBody
+    public ResponseEntity<List<TypologyDto>> listAllTypologies() {
+        List<TypologyDto> typologies = service.requestAllTypologies();
+        return new ResponseEntity<>(typologies, HttpStatus.OK);
     }
 }
