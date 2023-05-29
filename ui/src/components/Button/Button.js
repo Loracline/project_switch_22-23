@@ -12,7 +12,8 @@ import "./Button.css";
 function Button(props) {
     let isSecondary = props.isSecundary;
     return (
-        <button  className={isSecondary? 'secondaryButton' : 'button'} onClick={props.onClick} type={props.type || "submit"} >
+        <button className={isSecondary ? 'secondaryButton' : 'button'} onClick={props.onClick}
+                type={props.type || "submit"} disabled={props.isDisabled}>
             {props.text}
         </button>
     );
