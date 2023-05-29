@@ -134,7 +134,7 @@ class ProjectCreationServiceTest {
     void ensureProjectIsCreated() {
         Project projectDouble = mock(Project.class);
         ProjectCreationDto projectCreationDto = new ProjectCreationDto("panic",
-                "panic total", "BS001", "242526272", "TP001");
+                "panic total", "BS001", "242526272", "PT001");
 
         when(projectRepository.count()).thenReturn(1);
 
