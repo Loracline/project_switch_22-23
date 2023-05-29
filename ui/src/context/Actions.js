@@ -83,13 +83,39 @@ export function setCurrentProject(project) {
 }
 
 /*
+export const SEARCH_PROJECT = 'SEARCH_PROJECT';
+export const FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
+export const FETCH_PROJECT_FAILURE = 'FETCH_PROJECT_FAILURE';
+
+export function searchProject(project) {
+    return {
+        type: SEARCH_PROJECT ,
+    }
+    dispatch(action);
+    fetchProject((res) => dispatch(fetchProjectSuccess(res), (err) => fetchFailure(err.message)), id)
+}
+
+export function fetchProjectSuccess(project) {
+    return {
+        type: FETCH_PROJECT_SUCCESS,
+        payload: project
+    }
+}
+
+export function fetchFailure(message) {
+    return {
+        type: FETCH_PROJECT_FAILURE,
+        payload: message
+    }
+}
+
 export const CREATE_SPRINT_2 = 'CREATE_SPRINT_2';
 export const POST_SPRINT_SUCCESS = 'POST_SPRINT_SUCCESS';
 export const POST_SPRINT_FAILURE = "POST_SPRINT_FAILURE";
 
 export function createSprint2(dispatch, sprintToSubmit) {
     postSprint((res) => dispatch(postSprintSuccess(res.text())),
-        (err) =>dispatch(postSprintFailure(err.message)),
+        (err) =>dispatch(fetchFailure(err.message)),
         sprintToSubmit
     );
 }
@@ -102,12 +128,4 @@ function postSprintSuccess(message) {
         }
     }
 }
-
-function postSprintFailure(message) {
-    return {
-        type: POST_SPRINT_FAILURE,
-        payload: {
-            error: message
-        }
-    }
-}*/
+*/

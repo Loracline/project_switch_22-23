@@ -1,6 +1,10 @@
 import {
-    CHECK_PROJECT_SPRINT, CREATE_SPRINT, CREATE_USER_STORY, SELECT_MENU, SELECT_PROJECT,
-    CREATE_PROJECT, CREATE_SPRINT_2, POST_SPRINT_SUCCESS, POST_SPRINT_FAILURE
+    CHECK_PROJECT_SPRINT,
+    CREATE_SPRINT,
+    CREATE_USER_STORY,
+    SELECT_MENU,
+    SELECT_PROJECT,
+    CREATE_PROJECT
 } from "./Actions";
 
 /** Reducer function that updates the app state based on the dispatched actions.
@@ -66,6 +70,16 @@ const reducer = (state, action) => {
         }
 
         /*
+        case FETCH_PROJECT_SUCCESS: {
+            const project = action.payload.project;
+            return {...state, detailedProject: project};
+        }
+
+        case FETCH_PROJECT_FAILURE: {
+            return {...state, messageFailure: action.payload.message};
+        }
+
+
         case POST_SPRINT_SUCCESS: {
             return {...state, messageSuccess: action.payload.message};
         }
