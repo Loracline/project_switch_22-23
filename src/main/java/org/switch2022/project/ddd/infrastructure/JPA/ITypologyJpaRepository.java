@@ -13,4 +13,10 @@ public interface ITypologyJpaRepository extends CrudRepository<TypologyJpa, Stri
      * @return the typology id with the given name.
      */
     Optional<TypologyJpa> findByTypologyName(String typologyName);
+
+    /**
+     * This method returns a list of all typologies in the repository.
+     * @return an unmodifiable view of the typologies.
+     */
+    Iterable<TypologyJpa> findAll();
 }
