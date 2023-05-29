@@ -11,6 +11,8 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ICustomerJpaRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -82,5 +84,17 @@ public class CustomerJpaRepository implements ICustomerRepository {
             throw new NotFoundInRepoException("Customer with this name does not exist in the repository.");
         }
         return customerTaxId;
+    }
+
+    /**
+     * Retrieves all customers from the database.
+     *
+     * @return A list of Customer objects representing all customers.
+     */
+    public List<Customer> findAll() {
+        Iterable<CustomerJpa> customersJpa = crudRepository.findAll();
+        List<Customer> customers = new ArrayList<>();
+        customersJpa.forEach(customerJpa -> customers.add(assembler.toDomain(customerJpa)));
+        return customers;
     }
 }

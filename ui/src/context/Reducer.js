@@ -4,10 +4,12 @@ import {
     CREATE_USER_STORY,
     SELECT_MENU,
     SELECT_PROJECT,
-    CREATE_PROJECT,
-    CREATE_SPRINT_2,
+    GET_PROJECTS_SUCCESS,
+    FETCH_FAILURE,
     POST_SPRINT_SUCCESS,
-    POST_SPRINT_FAILURE,
+    CLOSE_BUTTON,
+    GET_PROJECT_SUCCESS,
+    CREATE_PROJECT,
     GET_CUSTOMERS,
     GET_CUSTOMERS_SUCCESS,
     GET_CUSTOMERS_FAILURE,
@@ -127,22 +129,28 @@ const reducer = (state, action) => {
 
         /*
         case FETCH_PROJECT_SUCCESS: {
+        case CLOSE_BUTTON: {
+            return {...state, messageSuccess: '', messageFailure: ''}
+        }
+
+        case GET_PROJECTS_SUCCESS: {
+            const projectsBE = action.payload.project;
+            return {...state, projects: projectsBE};
+        }
+
+        case GET_PROJECT_SUCCESS: {
             const project = action.payload.project;
             return {...state, detailedProject: project};
         }
 
-        case FETCH_PROJECT_FAILURE: {
+        case FETCH_FAILURE: {
             return {...state, messageFailure: action.payload.message};
         }
-
 
         case POST_SPRINT_SUCCESS: {
             return {...state, messageSuccess: action.payload.message};
         }
 
-        case POST_SPRINT_FAILURE: {
-            return {...state, messageFailure: action.payload.message};
-        }*/
         default:
             return state;
     }

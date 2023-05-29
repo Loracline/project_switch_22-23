@@ -68,7 +68,7 @@ class UsServiceTest {
      */
 
     @Test
-    void ensureUsIsCreated() throws Exception {
+    void ensureUsIsCreated() {
         // Arrange
         int priority = 1;
         UserStory userStoryDouble = mock(UserStory.class);
@@ -83,9 +83,7 @@ class UsServiceTest {
         List<String> acceptanceCriteria = new ArrayList<>();
 
         UserStoryCreationDto userStoryCreationDto =
-                new UserStoryCreationDto("P001","US001", "text", "manager", acceptanceCriteria, 1);
-
-        String projectCode = "P001";
+                new UserStoryCreationDto("P001", "US001", "text", "manager", acceptanceCriteria, 1);
 
         // Act
         UsId result = usService.createUs(userStoryCreationDto);
@@ -101,7 +99,7 @@ class UsServiceTest {
      * Expected result: exception is thrown.
      */
     @Test
-    void ensureUsIsNotCreated() throws Exception {
+    void ensureUsIsNotCreated() {
         // Arrange
         AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
         List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
@@ -113,8 +111,6 @@ class UsServiceTest {
 
         UserStoryCreationDto userStoryCreationDto =
                 new UserStoryCreationDto("P001", "US001", "text", "manager", acceptanceCriteria, 1);
-
-        String projectCode = "P001";
 
         // Act
         when(factoryUserStory.createUserStory(any(), any(), any(), any(), any()))
@@ -142,7 +138,7 @@ class UsServiceTest {
      */
 
     @Test
-    void ensureUsIsNotDeleted() throws Exception {
+    void ensureUsIsNotDeleted() {
         // Arrange
         UsService usServiceDouble = mock(UsService.class);
         UsId usIdDouble = mock(UsId.class);
@@ -163,7 +159,7 @@ class UsServiceTest {
      */
 
     @Test
-    void ensureUsIsDeleted() throws Exception {
+    void ensureUsIsDeleted() {
         // Arrange
         UsId usIdDouble = mock(UsId.class);
 
@@ -180,7 +176,7 @@ class UsServiceTest {
      * scenario 1: it adds an usId to the ProductBacklog
      */
     @Test
-    void ensureUsIdIsAddedSuccessfullyToProductBacklog() throws Exception {
+    void ensureUsIdIsAddedSuccessfullyToProductBacklog() {
         //Arrange
         boolean expected = true;
         UsId usIdDouble = mock(UsId.class);

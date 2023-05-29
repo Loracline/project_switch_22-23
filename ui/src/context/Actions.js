@@ -257,36 +257,37 @@ export function setCurrentProject(project) {
     }
 }
 
-/*
-export const SEARCH_PROJECT = 'SEARCH_PROJECT';
-export const FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
-export const FETCH_PROJECT_FAILURE = 'FETCH_PROJECT_FAILURE';
+export const CLOSE_BUTTON = 'CLOSE_BUTTON';
 
-export function searchProject(project) {
+export function closeButton() {
     return {
-        type: SEARCH_PROJECT ,
-    }
-    dispatch(action);
-    fetchProject((res) => dispatch(fetchProjectSuccess(res), (err) => fetchFailure(err.message)), id)
-}
-
-export function fetchProjectSuccess(project) {
-    return {
-        type: FETCH_PROJECT_SUCCESS,
-        payload: project
+        type: CLOSE_BUTTON
     }
 }
+
+export const FETCH_FAILURE = 'FETCH_FAILURE';
 
 export function fetchFailure(message) {
     return {
-        type: FETCH_PROJECT_FAILURE,
+        type: FETCH_FAILURE,
         payload: message
     }
 }
 
-export const CREATE_SPRINT_2 = 'CREATE_SPRINT_2';
+export const GET_PROJECT_SUCCESS = 'GET_PROJECT_SUCCESS';
+
+export function getProject(dispatch, projectCode) {
+    fetchProject((res) => dispatch(getProjectSuccess(res), (err) => fetchFailure(err.message)), projectCode)
+}
+
+export function getProjectSuccess(project) {
+    return {
+        type: GET_PROJECT_SUCCESS,
+        payload: project
+    }
+}
+
 export const POST_SPRINT_SUCCESS = 'POST_SPRINT_SUCCESS';
-export const POST_SPRINT_FAILURE = "POST_SPRINT_FAILURE";
 
 export function createSprint2(dispatch, sprintToSubmit) {
     postSprint((res) => dispatch(postSprintSuccess(res.text())),
@@ -303,4 +304,19 @@ function postSprintSuccess(message) {
         }
     }
 }
-*/
+
+export const GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
+
+export function getProjects(dispatch) {
+    fetchProjects((res) => dispatch(getProjectsSuccess(res), (err) => fetchFailure(err.message)))
+}
+
+function getProjectsSuccess(projects) {
+    return {
+        type: GET_PROJECTS_SUCCESS,
+        payload: {
+            data:
+                [...projects]
+        }
+    }
+}

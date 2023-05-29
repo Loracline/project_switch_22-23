@@ -135,6 +135,8 @@ const AppProvider = ({children}) => {
         headersProjects,
         projects,
         usHeaders,
+        detailedProject/*,
+        projects: [],
         detailedProject,
         customers,
         businessSectors,
