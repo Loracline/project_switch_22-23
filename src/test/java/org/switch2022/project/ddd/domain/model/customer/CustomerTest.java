@@ -9,6 +9,7 @@ import org.switch2022.project.ddd.domain.model.account.Account;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CustomerTest {
 
@@ -55,15 +56,20 @@ class CustomerTest {
     @Test
     void ensureACustomerIsCreated() {
         // ARRANGE
+        String stringOf_customerName = "Partilha Cortesia, Lda.";
+        String stringOf_customerTaxId = "514024054";
         TaxId customerTaxId = mock(TaxId.class);
         Name customerName = mock(Name.class);
+
+        when(customerName.getName()).thenReturn(stringOf_customerName);
+        when(customerTaxId.getNumber()).thenReturn(stringOf_customerTaxId);
 
         // ACT
         Customer customer = new Customer(customerTaxId, customerName);
 
         // ASSERT
-        assertNotNull(customer.getName());
-        assertNotNull(customer.getTaxId());
+        assertEquals(stringOf_customerName, customer.getName());
+        assertEquals(stringOf_customerTaxId, customer.getTaxId());
     }
 
     /**
@@ -319,15 +325,18 @@ class CustomerTest {
     @Test
     void ensureNameIsRetrievedSuccessfully() {
         // ARRANGE
+        String expected = "Partilha Cortesia, Lda.";
         TaxId customerTaxId = mock(TaxId.class);
         Name customerName = mock(Name.class);
         Customer customer = new Customer(customerTaxId, customerName);
+
+        when(customerName.getName()).thenReturn(expected);
 
         // ACT
         String result = customer.getName();
 
         // ASSERT
-        assertNotNull(result);
+        assertEquals(expected, result);
     }
 
     /**
@@ -337,14 +346,17 @@ class CustomerTest {
     @Test
     void ensureTaxIdRetrievedSuccessfully() {
         // ARRANGE
+        String expected = "514024054";
         TaxId customerTaxId = mock(TaxId.class);
         Name customerName = mock(Name.class);
         Customer customer = new Customer(customerTaxId, customerName);
+
+        when(customerTaxId.getNumber()).thenReturn(expected);
 
         // ACT
         String result = customer.getTaxId();
 
         // ASSERT
-        assertNotNull(result);
+        assertEquals(expected, result);
     }
 }

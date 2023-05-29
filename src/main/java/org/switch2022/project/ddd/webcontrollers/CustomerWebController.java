@@ -3,12 +3,13 @@ package org.switch2022.project.ddd.webcontrollers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.switch2022.project.ddd.application.CustomerListService;
 import org.switch2022.project.ddd.application.CustomerService;
 import org.switch2022.project.ddd.dto.CustomerCreationDto;
+import org.switch2022.project.ddd.dto.CustomerDto;
+
+import java.util.List;
 
 /**
  * Controller class that handles HTTP requests related to customers.
@@ -19,7 +20,11 @@ public class CustomerWebController {
 
     @SuppressWarnings("all")
     @Autowired
-    private CustomerService service;
+    private CustomerService createService;
+
+    @SuppressWarnings("all")
+    @Autowired
+    private CustomerListService listService;
 
     /**
      * Handles the HTTP POST request to add a new customer.
@@ -30,11 +35,27 @@ public class CustomerWebController {
      */
     @PostMapping()
     public ResponseEntity<Object> addCustomer(@RequestBody CustomerCreationDto dto) {
-        try {
-            service.addCustomer(dto);
+        boolean isCreated = createService.addCustomer(dto);
+        if (isCreated) {
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+    }
+
+    /**
+     * Retrieves a list of all customers.
+     * This method is mapped to an HTTP GET request without any specific endpoint path.
+     * It fetches the list of customers using the CustomerListService's listAllCustomers method,
+     * and returns a ResponseEntity containing the list of CustomerDto objects as the response body.
+     * The HTTP status code of the response is set to HttpStatus.OK.
+     *
+     * @return A ResponseEntity object containing a list of CustomerDto objects representing the customers,
+     * with the HTTP status code set to HttpStatus.OK.
+     */
+    @GetMapping()
+    public ResponseEntity<List<CustomerDto>> listAllCustomers() {
+        List<CustomerDto> customerDtos = listService.listAllCustomers();
+        return new ResponseEntity<>(customerDtos, HttpStatus.OK);
     }
 }

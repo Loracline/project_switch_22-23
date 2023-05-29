@@ -90,7 +90,7 @@ public class Customer implements Entity<Customer> {
      * @return the name of the Customer.
      */
     public String getName() {
-        return customerName.toString();
+        return customerName.getName();
     }
 
     /**
@@ -99,6 +99,6 @@ public class Customer implements Entity<Customer> {
      * @return the tax ID of the Customer.
      */
     public String getTaxId() {
-        return customerTaxId.toString();
+        return customerTaxId.getNumber();
     }
 }
