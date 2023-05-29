@@ -49,8 +49,7 @@ class ProjectWebControllerTest {
         // Arrange
         String projectCode = "P001";
         ProjectCreationDto projectCreationDto = new ProjectCreationDto("panic",
-                "panic total", "isep", "isep", "isep",
-                5);
+                "panic total", "BS001", "242526272", "TP001");
 
         when(projectCreationService.createProject(any())).thenReturn("P001");
 
@@ -59,7 +58,7 @@ class ProjectWebControllerTest {
                 projectWebController.createProject(projectCreationDto);
 
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 201);
+        assertEquals(201,responseEntity.getStatusCodeValue());
         Object res = responseEntity.getBody();
         assertEquals(res, projectCode);
         assertEquals("P001", projectCreationService.createProject(projectCreationDto));
@@ -73,8 +72,7 @@ class ProjectWebControllerTest {
     void ensureThatProjectIsNotCreated() {
         // Arrange
         ProjectCreationDto projectCreationDto = new ProjectCreationDto("panic",
-                "panic total", "isep", "isep", "isep",
-                5);
+                "panic total", "BS001", "242526272", "TP001");
         when(projectCreationService.createProject(any())).thenThrow(new RuntimeException("Failed to create project"));
 
         // Act

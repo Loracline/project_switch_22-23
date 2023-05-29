@@ -7,7 +7,11 @@ import org.switch2022.project.ddd.domain.value_object.TaxId;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -170,5 +174,48 @@ class CustomerRepositoryTest {
 
         // Assert
         assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * METHOD findAll()
+     */
+    @DisplayName("Empty repository")
+    @Test
+    void ensureReturnsEmptyListWhenEmptyRepository() {
+        // Arrange
+        CustomerRepository repository = new CustomerRepository();
+        List<Customer> expected = new ArrayList<>();
+
+        // Act
+        List<Customer> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("List of all customers in repository")
+    @Test
+    void ensureAllCustomersInRepositoryAreReturnedInList() {
+        // Arrange
+        CustomerRepository repository = new CustomerRepository();
+        List<Customer> expected = new ArrayList<>();
+
+        Customer customerOne = mock(Customer.class);
+        Customer customerTwo = mock(Customer.class);
+        Customer customerThree = mock(Customer.class);
+
+        expected.add(customerOne);
+        expected.add(customerTwo);
+        expected.add(customerThree);
+
+        repository.save(customerOne);
+        repository.save(customerTwo);
+        repository.save(customerThree);
+
+        // Act
+        List<Customer> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
     }
 }

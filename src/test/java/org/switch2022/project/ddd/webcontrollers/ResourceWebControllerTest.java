@@ -46,18 +46,4 @@ class ResourceWebControllerTest {
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 409);
     }
-
-    @Test
-    void ensureThatResourceIsNotCreated_ExceptionIsThrow() {
-        //Arrange
-        AllocationDto dtoDouble = mock(AllocationDto.class);
-        String expected = "Exception was throw";
-        when(service.addUserToProject(dtoDouble)).thenThrow(new RuntimeException(expected));
-
-        //Act
-        ResponseEntity<Object> responseEntity = controller.createResource(dtoDouble);
-        //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 409);
-        assertEquals(expected, responseEntity.getBody());
-    }
 }

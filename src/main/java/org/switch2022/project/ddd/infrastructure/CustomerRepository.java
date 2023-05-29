@@ -8,6 +8,7 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -83,5 +84,14 @@ public class CustomerRepository implements ICustomerRepository {
             throw new NotFoundInRepoException("Customer with this name does not exist in the Repository.");
         }
         return requestedTaxId;
+    }
+
+    /**
+     * Retrieves all customers.
+     *
+     * @return An unmodifiable list of Customer objects representing all customers.
+     */
+    public List<Customer> findAll() {
+        return Collections.unmodifiableList(customers);
     }
 }

@@ -18,3 +18,33 @@
     display: flex;
     gap: 6rem;
 }
+
+.failure-dialog button {
+    width: fit-content;
+    align-self: center;
+    margin: 2rem;
+}
+
+.failure-dialog h3 {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    text-align: center;
+}
+
+.success-dialog button {
+    width: fit-content;
+    align-self: center;
+    margin: 2rem;
+}
+
+.success-dialog h3 {
+    margin-top: 2rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+    text-align: center;
+}
+
+.success-dialog h4 {
+    text-align: center;
+    margin-bottom: 2rem;
+}

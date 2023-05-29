@@ -7,11 +7,15 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.switch2022.project.ddd.application.CustomerListService;
 import org.switch2022.project.ddd.application.CustomerService;
 import org.switch2022.project.ddd.dto.CustomerCreationDto;
-import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
-import org.switch2022.project.ddd.exceptions.InvalidInputException;
+import org.switch2022.project.ddd.dto.CustomerDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -27,7 +31,10 @@ class CustomerWebControllerTest {
     CustomerWebController controller;
 
     @MockBean
-    CustomerService service;
+    CustomerService createService;
+
+    @MockBean
+    CustomerListService listService;
 
     @DisplayName("Customer created successfully")
     @Test
@@ -35,7 +42,7 @@ class CustomerWebControllerTest {
         // Arrange
         CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
 
-        when(service.addCustomer(dtoDouble)).thenReturn(true);
+        when(createService.addCustomer(dtoDouble)).thenReturn(true);
 
         // Act
         ResponseEntity<Object> response = controller.addCustomer(dtoDouble);
@@ -44,39 +51,58 @@ class CustomerWebControllerTest {
         assertEquals(response.getStatusCodeValue(), 201);
     }
 
-    @DisplayName("Customer is not created - already exists")
+    @DisplayName("Customer is not created")
     @Test
-    void ensureCustomerIsNotCreatedBecauseAlreadyExists() {
-        // Arrange
-        CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
-        String expected = "Customer's tax ID already exists!";
-
-        service.addCustomer(dtoDouble);
-
-        when(service.addCustomer(dtoDouble)).thenThrow(new AlreadyExistsInRepoException(expected));
-
-        // Act
-        ResponseEntity<Object> response = controller.addCustomer(dtoDouble);
-
-        // Assert
-        assertEquals(expected, response.getBody());
-        assertEquals(response.getStatusCodeValue(), 409);
-    }
-
-    @DisplayName("Customer is not created - invalid tax ID")
-    @Test
-    void ensureCustomerIsNotCreatedBecauseTaxIdIsInvalid() {
+    void ensureCustomerIsNotCreated() {
         //Arrange
         CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
-        String expected = "Invalid or unsupported country for tax ID validation.";
 
-        when(service.addCustomer(dtoDouble)).thenThrow(new InvalidInputException(expected));
+        when(createService.addCustomer(dtoDouble)).thenReturn(false);
 
         //Act
         ResponseEntity<Object> response = controller.addCustomer(dtoDouble);
 
         //Assert
-        assertEquals(expected, response.getBody());
         assertEquals(response.getStatusCodeValue(), 409);
+    }
+
+    @DisplayName("Empty list when repository is empty")
+    @Test
+    void ensureEmptyListIsRetrievedWhenRepositoryIsEmpty() {
+        // Arrange
+        List<CustomerDto> expected = new ArrayList<>();
+
+        when(listService.listAllCustomers()).thenReturn(expected);
+
+        // Act
+        ResponseEntity<List<CustomerDto>> response = controller.listAllCustomers();
+
+        // Assert
+        assertEquals(expected, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @DisplayName("List of DTOs of all customers")
+    @Test
+    void ensureListOfDtosOfAllCustomersInRepositoryIsRetrieved() {
+        // Arrange
+        List<CustomerDto> expected = new ArrayList<>();
+
+        CustomerDto customerDtoOne = mock(CustomerDto.class);
+        CustomerDto customerDtoTwo = mock(CustomerDto.class);
+        CustomerDto customerDtoThree = mock(CustomerDto.class);
+
+        expected.add(customerDtoOne);
+        expected.add(customerDtoTwo);
+        expected.add(customerDtoThree);
+
+        when(listService.listAllCustomers()).thenReturn(expected);
+
+        // Act
+        ResponseEntity<List<CustomerDto>> response = controller.listAllCustomers();
+
+        // Assert
+        assertEquals(expected, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }

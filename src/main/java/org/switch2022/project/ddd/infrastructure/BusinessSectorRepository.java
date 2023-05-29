@@ -7,6 +7,7 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -100,5 +101,13 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
         }
 
         return requestedBusinessSectorId;
+    }
+    /**
+     * This method returns an unmodifiable view of the businessSectors.
+     *
+     * @return an unmodifiable view of the business sectors.
+     */
+    public List<BusinessSector> findAll() {
+        return Collections.unmodifiableList(businessSectors);
     }
 }

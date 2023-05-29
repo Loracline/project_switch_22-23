@@ -8,12 +8,19 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
+import org.switch2022.project.ddd.dto.BusinessSectorDto;
+import org.switch2022.project.ddd.dto.mapper.BusinessSectorMapper;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,6 +34,8 @@ class BusinessSectorServiceTest {
     @MockBean
     @Qualifier ("businessSector_jpa")
     IBusinessSectorRepository repository;
+    @MockBean
+    BusinessSectorMapper businessSectorMapper;
     @MockBean
     IBusinessSectorFactory factory;
 
@@ -67,6 +76,49 @@ class BusinessSectorServiceTest {
 
         //Assert
         assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * Method requestAllBusinessSectors().
+     * Test case to ensure that all business sectors are returned in a DTO list.
+     */
+    @Test
+    void ensureAllBusinessSectorsAreReturnedInDtoList() {
+        // Arrange
+        BusinessSector businessSectorOne = mock(BusinessSector.class);
+        BusinessSector businessSectorTwo = mock(BusinessSector.class);
+        List<BusinessSector> businessSectors = new ArrayList<>();
+        businessSectors.add(businessSectorOne);
+        businessSectors.add(businessSectorTwo);
+        when(repository.findAll()).thenReturn(businessSectors);
+        BusinessSectorDto businessSectorDtoOne = mock(BusinessSectorDto.class);
+        BusinessSectorDto businessSectorDtoTwo = mock(BusinessSectorDto.class);
+        when(businessSectorMapper.businessSectorToDto(businessSectorOne)).thenReturn(businessSectorDtoOne);
+        when(businessSectorMapper.businessSectorToDto(businessSectorTwo)).thenReturn(businessSectorDtoTwo);
+        List<BusinessSectorDto> expected = new ArrayList<>();
+        expected.add(businessSectorDtoOne);
+        expected.add(businessSectorDtoTwo);
+
+        // Act
+        List<BusinessSectorDto> result = service.requestAllBusinessSectors();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: ensure that an empty list is returned when no business sectors are found.
+     */
+    @Test
+    void ensureEmptyListIsReturnedWhenNoBusinessSectorsAreFound() {
+        // Arrange
+        when(repository.findAll()).thenReturn(new ArrayList<>());
+
+        // Act
+        List<BusinessSectorDto> result = service.requestAllBusinessSectors();
+
+        // Assert
+        assertTrue(result.isEmpty());
     }
 
 

@@ -15,6 +15,8 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ICustomerJpaRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -165,5 +167,61 @@ class CustomerJpaRepositoryTest {
 
         // Assert
         assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * METHOD findAll()
+     */
+    @DisplayName("Empty repository")
+    @Test
+    void ensureReturnsEmptyListWhenEmptyRepository() {
+        // Arrange
+        List<Customer> expected = new ArrayList<>();
+
+        List<CustomerJpa> customersJpa = new ArrayList<>();
+
+        when(crudRepository.findAll()).thenReturn(customersJpa);
+
+        // Act
+        List<Customer> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("List of all customers in repository")
+    @Test
+    void ensureAllCustomersInRepositoryAreReturnedInList() {
+        // Arrange
+        List<Customer> expected = new ArrayList<>();
+
+        Customer customerOne = mock(Customer.class);
+        Customer customerTwo = mock(Customer.class);
+        Customer customerThree = mock(Customer.class);
+
+        expected.add(customerOne);
+        expected.add(customerTwo);
+        expected.add(customerThree);
+
+        List<CustomerJpa> customersJpa = new ArrayList<>();
+
+        CustomerJpa customerJpaOne = mock(CustomerJpa.class);
+        CustomerJpa customerJpaTwo = mock(CustomerJpa.class);
+        CustomerJpa customerJpaThree = mock(CustomerJpa.class);
+
+        customersJpa.add(customerJpaOne);
+        customersJpa.add(customerJpaTwo);
+        customersJpa.add(customerJpaThree);
+
+        when(crudRepository.findAll()).thenReturn(customersJpa);
+        when(assembler.toDomain(customerJpaOne)).thenReturn(customerOne);
+        when(assembler.toDomain(customerJpaTwo)).thenReturn(customerTwo);
+        when(assembler.toDomain(customerJpaThree)).thenReturn(customerThree);
+
+        // Act
+        List<Customer> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
     }
 }

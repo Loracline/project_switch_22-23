@@ -134,13 +134,9 @@ class ProjectCreationServiceTest {
     void ensureProjectIsCreated() {
         Project projectDouble = mock(Project.class);
         ProjectCreationDto projectCreationDto = new ProjectCreationDto("panic",
-                "panic total", "isep", "isep", "isep",
-                5);
+                "panic total", "BS001", "242526272", "TP001");
 
         when(projectRepository.count()).thenReturn(1);
-        when(customerRepository.findCustomerTaxIdByName(any())).thenReturn("001");
-        when(typologyRepository.findTypologyIdByTypologyName(any())).thenReturn("001");
-        when(businessSectorRepository.getBusinessSectorIdByName(any())).thenReturn("001");
 
         when(factoryProject.createProject(anyInt(), any(), any(), any(), any(), any())).thenReturn(projectDouble);
         when(projectRepository.save(projectDouble)).thenReturn(true);
