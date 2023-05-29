@@ -149,7 +149,7 @@ const reducer = (state, action) => {
 
         case POST_SPRINT_SUCCESS: {
             return {...state, messageSuccess: action.payload.message};
-        }
+        }*/
 
         default:
             return state;
