@@ -1,7 +1,7 @@
 import React, {useReducer} from 'react';
 import PropTypes from 'prop-types';
 import {Provider} from './AppContext.js';
-import reducer from './Reducer';
+import reducer from "./Reducer";
 
 /** Component that provides the AppContext to its child components using useReducer hook.
  * @param children - The child components that will have access to AppContext.
@@ -133,9 +133,7 @@ const AppProvider = ({children}) => {
     const initialState = {
         nav,
         headersProjects,
-        projects,
         usHeaders,
-        detailedProject/*,
         projects: [],
         detailedProject,
         customers,
@@ -146,7 +144,26 @@ const AppProvider = ({children}) => {
         messageSuccess: '',
     }
     const [state, dispatch] = useReducer(reducer, initialState);
-    return (<Provider value={{state, dispatch}}> {children} </Provider>);
+
+    return (
+        <Provider value={{
+            state,
+            dispatch
+        }}>
+            {children}
+        </Provider>
+    );
 };
-/** Defines the prop types for the AppProvider component. @memberof AppProvider @property {Object} propTypes - The prop types that are passed to the component. @property {ReactNode} propTypes.children - The child components that will have access to AppContext. */AppProvider.propTypes = {children: PropTypes.node,};
+
+/**
+ Defines the prop types for the AppProvider component.
+
+ @memberof AppProvider
+ @property {Object} propTypes - The prop types that are passed to the component.
+ @property {ReactNode} propTypes.children - The child components that will have access to AppContext.
+ */
+AppProvider.propTypes = {
+    children: PropTypes.node,
+};
+
 export default AppProvider;
