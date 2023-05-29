@@ -1,8 +1,11 @@
 package org.switch2022.project.ddd.exceptions;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,26 +18,32 @@ public class RestResponseEntityExceptionHandlerTest {
     public void handleProjectNotFoundExceptionTest() {
         // Arrange
         ProjectNotFoundException exception = new ProjectNotFoundException("Project Not Found");
+        ErrorMessage expected = new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), "Project Not Found");
 
         // Act
         ResponseEntity<Object> result = exceptionHandler.handleProjectNotFound(exception);
+        ErrorMessage resultErrorMessage = (ErrorMessage) result.getBody();
 
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        assertEquals("Project Not Found", result.getBody());
+        assertEquals(HttpStatus.NOT_FOUND.value(), resultErrorMessage.getStatusCodeValue());
+        assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
     }
 
     @Test
     public void handleNotFoundInRepoTest() {
         // Arrange
         NotFoundInRepoException exception = new NotFoundInRepoException("Not Found in Repo");
+        ErrorMessage expected = new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), "Not Found in Repo");
 
         // Act
         ResponseEntity<Object> result = exceptionHandler.handleNotFoundInRepo(exception);
+        ErrorMessage resultErrorMessage = (ErrorMessage) result.getBody();
 
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        assertEquals("Not Found in Repo", result.getBody());
+        assertEquals(HttpStatus.NOT_FOUND.value(), resultErrorMessage.getStatusCodeValue());
+        assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
     }
 
     @Test
@@ -42,25 +51,31 @@ public class RestResponseEntityExceptionHandlerTest {
         // Arrange
         AlreadyExistsInRepoException exception = new AlreadyExistsInRepoException("Already exists " +
                 "in repo");
+        ErrorMessage expected = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(), "Already exists in repo");
 
         // Act
         ResponseEntity<Object> result = exceptionHandler.handleAlreadyExistsInRepo(exception);
+        ErrorMessage resultErrorMessage = (ErrorMessage) result.getBody();
 
         // Assert
         assertEquals(HttpStatus.CONFLICT, result.getStatusCode());
-        assertEquals("Already exists in repo", result.getBody());
+        assertEquals(HttpStatus.CONFLICT.value(), resultErrorMessage.getStatusCodeValue());
+        assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
     }
 
     @Test
     public void handleInvalidInputExceptionTest() {
         // Arrange
         InvalidInputException exception = new InvalidInputException("Invalid input");
+        ErrorMessage expected = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), new Date(), "Invalid input");
 
         // Act
         ResponseEntity<Object> result = exceptionHandler.handleInvalidInputException(exception);
+        ErrorMessage resultErrorMessage = (ErrorMessage) result.getBody();
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-        assertEquals("Invalid input", result.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), resultErrorMessage.getStatusCodeValue());
+        assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
     }
 }
