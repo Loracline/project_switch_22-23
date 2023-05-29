@@ -26,6 +26,7 @@ public class ResourceListAllocationService {
     private IProjectResourceRepository resourceRepository;
 
     @SuppressWarnings("all")
+    @Qualifier("account_jpa")
     @Autowired
     private IAccountRepository accountRepository;
 

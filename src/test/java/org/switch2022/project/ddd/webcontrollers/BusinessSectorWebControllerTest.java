@@ -30,11 +30,9 @@ class BusinessSectorWebControllerTest {
      * Scenario 01: Test case to ensure that a business sector is created successfully.
      * The returned ResponseEntity status code is checked to
      * ensure it is equal to 201 (HttpStatus.CREATED).
-     *
-     * @throws Exception if an error occurs during the test.
      */
     @Test
-    void ensureThatBusinessSectorIsCreated() throws Exception {
+    void ensureThatBusinessSectorIsCreated() {
         //Arrange
         BusinessSectorCreationDto dtoDouble = mock(BusinessSectorCreationDto.class);
         when(service.createBusinessSector(any())).thenReturn(true);
@@ -42,19 +40,16 @@ class BusinessSectorWebControllerTest {
         //Act
         ResponseEntity<Object> responseEntity = controller.createBusinessSector(dtoDouble);
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 201);
-
+        assertEquals(201, responseEntity.getStatusCodeValue());
     }
 
     /**
      * Scenario 2: Test case to ensure that a business sector is not created when the DTO is null.
      * The returned ResponseEntity status code is checked to
      * ensure it is equal to 400 (HttpStatus.BAD_REQUEST).
-     *
-     * @throws Exception if an error occurs during the test.
      */
     @Test
-    void ensureThatBusinessSectorIsNotCreatedWhenDtoIsNull() throws Exception {
+    void ensureThatBusinessSectorIsNotCreatedWhenDtoIsNull() {
         //Arrange
         BusinessSectorCreationDto dtoNull = null;
         when(service.createBusinessSector(any())).thenReturn(false);
@@ -62,12 +57,15 @@ class BusinessSectorWebControllerTest {
         //Act
         ResponseEntity<Object> responseEntity = controller.createBusinessSector(dtoNull);
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 400);
+        assertEquals(400,responseEntity.getStatusCodeValue());
     }
 
-
+    /**
+     * Scenario 3: Test case to ensure that a business sector is not created when the service throws an exception.
+     * The returned ResponseEntity status code is checked to ensure it is equal to 400 (HttpStatus.BAD_REQUEST).
+     */
     @Test
-    void ensureThatBusinessSectorIsNotCreatedWhenServiceThrowsException() throws Exception {
+    void ensureThatBusinessSectorIsNotCreatedWhenServiceThrowsException() {
         //Arrange
         BusinessSectorCreationDto dto = mock(BusinessSectorCreationDto.class);
         when(service.createBusinessSector(any())).thenThrow(new RuntimeException());
@@ -75,7 +73,7 @@ class BusinessSectorWebControllerTest {
         //Act
         ResponseEntity<Object> responseEntity = controller.createBusinessSector(dto);
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 400);
+        assertEquals(400,responseEntity.getStatusCodeValue());
     }
 }
 

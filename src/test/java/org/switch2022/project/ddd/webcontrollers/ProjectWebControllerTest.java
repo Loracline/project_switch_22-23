@@ -59,7 +59,7 @@ class ProjectWebControllerTest {
                 projectWebController.createProject(projectCreationDto);
 
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 201);
+        assertEquals(201,responseEntity.getStatusCodeValue());
         Object res = responseEntity.getBody();
         assertEquals(res, projectCode);
         assertEquals("P001", projectCreationService.createProject(projectCreationDto));

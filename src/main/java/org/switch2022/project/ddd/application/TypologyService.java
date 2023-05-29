@@ -13,8 +13,8 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 @Service
 public class TypologyService {
     @Autowired
-    ITypologyRepository typologyRepository;
     @Qualifier("typology_jpa")
+    ITypologyRepository typologyRepository;
     @Autowired
     ITypologyFactory factoryTypology;
 
