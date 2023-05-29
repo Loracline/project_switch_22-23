@@ -125,14 +125,23 @@ const AppProvider = ({children}) => {
     }]
 
     const usHeaders = ["US ID", "US Description", "US Status"]
+
+    const customers = [];
+    const businessSectors = [];
+    const typologies = [];
+
     const initialState = {
         nav,
         headersProjects,
         projects,
         usHeaders,
-        detailedProject/*,
+        detailedProject,
+        customers,
+        businessSectors,
+        typologies,
+        loading: false,
+        messageFailure: '',
         messageSuccess: '',
-        messageFailure: ''*/
     }
     const [state, dispatch] = useReducer(reducer, initialState);
     return (<Provider value={{state, dispatch}}> {children} </Provider>);
