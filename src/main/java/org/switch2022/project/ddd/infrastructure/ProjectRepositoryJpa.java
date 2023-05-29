@@ -60,7 +60,7 @@ public class ProjectRepositoryJpa implements IProjectRepository {
     public boolean save(Project project) {
         boolean result = false;
         if (!projectJpaRepository.existsById(project.getProjectCode())) {
-            projectJpaRepository.save(project);
+            projectJpaRepository.save(assembler.toData(project));
             result = true;
         }
         return result;
