@@ -3,12 +3,10 @@ package org.switch2022.project.ddd.dto;
 import java.util.Objects;
 
 /**
- * Represents a sprint creation data transfer object.
- * This class contains information about the business sector such as the business sector
- * name.
+ * Represents a business sector data transfer object.
+ * This class contains information about the business sector such as its name.
  */
-public class BusinessSectorCreationDto {
-
+public class BusinessSectorDto {
     /**
      * Attributes
      */
@@ -17,10 +15,9 @@ public class BusinessSectorCreationDto {
     /**
      * Constructor to instantiate a new business sector dto.
      *
-     * @param name the name of the
+     * @param name the name of the business sector
      */
-
-    public BusinessSectorCreationDto(String name) {
+    public BusinessSectorDto(String name) {
         this.name = name;
     }
 
@@ -45,7 +42,7 @@ public class BusinessSectorCreationDto {
         if (o.getClass() != this.getClass()) {
             return false;
         }
-        BusinessSectorCreationDto that = (BusinessSectorCreationDto) o;
+        BusinessSectorDto that = (BusinessSectorDto) o;
         return Objects.equals(name, that.name);
     }
 
@@ -61,4 +58,3 @@ public class BusinessSectorCreationDto {
         return Objects.hash(name);
     }
 }
-

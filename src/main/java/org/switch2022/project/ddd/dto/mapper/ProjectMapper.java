@@ -7,7 +7,7 @@ import org.switch2022.project.ddd.dto.ProjectDto;
 @Component
 public class ProjectMapper {
     /**
-     * This method converts a user story into a Dto.
+     * This method converts a project into a Dto.
      *
      * @param project one must convert.
      * @return Dto carrying data.
