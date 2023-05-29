@@ -51,7 +51,7 @@ public class UsService {
      *                                      process or if the User Story
      */
 
-    public UsId createUs(UserStoryCreationDto userStoryCreationDto) throws Exception {
+    public UsId createUs(UserStoryCreationDto userStoryCreationDto) {
         String projectCodeOfInterest = userStoryCreationDto.projectCode;
         int codeNumber = Utils.getIntFromAlphanumericString(projectCodeOfInterest, "P");
         Code projectCode = new Code(codeNumber);
