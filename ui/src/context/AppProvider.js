@@ -131,6 +131,7 @@ const AppProvider = ({children}) => {
         projects,
         usHeaders,
         detailedProject/*,
+        projects: [],
         messageSuccess: '',
         messageFailure: ''*/
     }
