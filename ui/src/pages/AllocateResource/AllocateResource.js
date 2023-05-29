@@ -3,18 +3,16 @@ import React, {useContext, useState} from "react";
 import {selectMenu} from "../../context/Actions";
 import {
     FormControl,
-    FormHelperText,
     InputAdornment,
     InputLabel,
     Select,
     MenuItem,
-    TextField, Autocomplete,
+    TextField,
+    Autocomplete,
+    Box,
 } from "@mui/material";
 import AppContext from "../../context/AppContext";
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
-import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
-import {DatePicker} from "@mui/x-date-pickers";
+import DatePickerInput from "../../components/DatePickerInput/DatePickerInput";
 
 function AllocateResource() {
 
@@ -24,8 +22,8 @@ function AllocateResource() {
         accountRole: "",
         accountCostPerHour: "",
         accountPercentageOfAllocation: "",
-        startDate: "",
-        endDate: ""
+        startDate: null,
+        endDate: null
     }
 
     const {dispatch} = useContext(AppContext);
@@ -38,8 +36,7 @@ function AllocateResource() {
         newResource[name] = value;
         setResource(newResource);
     }
-
-    const handleChangeForPercentageOfAllocationInput = (event) => {
+    const handleChangeForPercentageOfAllocation = (event) => {
         const {value} = event.target;
         const newValue = value.replace(/[^0-9.]/g, '');
         const floatValue = parseFloat(newValue);
@@ -57,70 +54,81 @@ function AllocateResource() {
         setInputError(inputError);
         setResource(newResource);
     }
-
-    const handleStartDate = (date) => {
+    const handleChangeForStartDate = (date) => {
         const newResource = {...resource};
         newResource["startDate"] = date;
         setResource(newResource);
     }
-    const handleEndDate = (date) => {
+    const handleChangeForEndDate = (date) => {
         const newResource = {...resource};
         newResource["endDate"] = date;
         setResource(newResource);
     }
 
-    // Mock user account data for dropdown search
     const userAccounts = [
-        { email: "john@example.com", name: "John Doe", status: "ACTIVE" },
-        { email: "jane@example.com", name: "Jane Smith", status: "INACTIVE" },
-        { email: "rui@example.com", name: "Rui", status: "ACTIVE" },
-        // Add more user accounts as needed
+        {email: "john@example.com", name: "John Doe", status: "ACTIVE"},
+        {email: "jane@example.com", name: "Jane Smith", status: "INACTIVE"},
+        {email: "rui@example.com", name: "Rui", status: "ACTIVE"},
     ];
-
 
 
     return (
         <div className="page">
             <section className="formCard">
                 <h2>Allocate Resource</h2>
-                <form className="resource-form" /*onSubmit={handleSubmit}*/>
 
-                    <Autocomplete
-                        sx={{ width: 500 }}
-                        options={userAccounts}
-                        getOptionLabel={(option) => option.email }
-                        getOptionDisabled={(option) => option.status === "INACTIVE"}
-                        renderOption={(props, option) => (
-                            <li {...props}>
-                                <div>
-                                    {option.name} - {option.email} ({option.status.toLowerCase()})
-                                </div>
-                            </li>
-                        )}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="User"
-                                name="accountEmail"
-                                value={resource.accountEmail}
-                                onChange={handleChange}
-                                required
-                            />
-                        )}
-                        filterOptions={(options, state) =>
-                            options.filter(
-                                (option) =>
-                                    option.name.toLowerCase().includes(state.inputValue.toLowerCase()) ||
-                                    option.email.toLowerCase().includes(state.inputValue.toLowerCase())
-                            )
-                        }
-                    />
+                <form  /*onSubmit={handleSubmit}*/>
+                    <div className="user+role">
+                        <Autocomplete
+                            sx={{width: 450}}
+                            options={userAccounts}
+                            getOptionLabel={(option) => option.email}
+                            getOptionDisabled={(option) => option.status === "INACTIVE"}
+                            renderOption={(props, option) => (
+                                /*<li {...props}>
+                                    <div>
+                                        {option.name} - {option.email} ({option.status.toLowerCase()})
+                                    </div>
+                                </li>*/
+                                <Box component="li"
+                                     sx={{'& > img': {mr: 2, flexShrink: 0}}} {...props}>
+                                    <img loading="lazy" width="35" src={"/user.png"} alt=""/>
+                                    <Box sx={{flex: 1}}>
+                                        <span>{option.name} - {option.email}
+                                            <br/>
+                                            <span style={{color: option.status === 'ACTIVE' ? 'green' : 'red'}}>{ option.status.toLowerCase()}</span>
+                                        </span>
+                                    </Box>
+                                    <Box
+                                        sx={{marginLeft: `calc(250px - ${option.name.length + option.email.length}ch)`}}>
 
-                    <br/>
-                    <br/>
+                                        <img loading="lazy" width="50" alt=""
+                                             src={option.status === "ACTIVE" ? "/active.png" : "/inactive.png"}/>
+                                    </Box>
+                                </Box>
+                            )}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="User"
+                                    name="accountEmail"
+                                    value={resource.accountEmail}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            )}
+                            filterOptions={(options, state) =>
+                                options.filter(
+                                    (option) =>
+                                        option.name.toLowerCase().includes(state.inputValue.toLowerCase()) ||
+                                        option.email.toLowerCase().includes(state.inputValue.toLowerCase())
+                                )
+                            }
+                        />
 
-                    <div className="resource-form-row">
-                        <FormControl required sx={{ width: 250 }}>
+                        <br/>
+
+                        <FormControl required sx={{width: 300}}>
                             <InputLabel>Role</InputLabel>
                             <Select
                                 name="accountRole"
@@ -130,83 +138,80 @@ function AllocateResource() {
                                 <MenuItem value={"TEAM_MEMBER"}>Team Member</MenuItem>
                                 <MenuItem value={"PRODUCT_OWNER"}>Product Owner</MenuItem>
                                 <MenuItem value={"SCRUM_MASTER"}>Scrum Master</MenuItem>
-                                <MenuItem value={"PROJECT_MANAGER"} disabled>Project Manager</MenuItem>
+                                <MenuItem value={"PROJECT_MANAGER"} disabled>Project
+                                    Manager</MenuItem>
                             </Select>
                         </FormControl>
-                        <br/>
-                        <br/>
                     </div>
 
+                    <br/>
 
-                    <div className="resource-form-row">
+                    <div className="cost+percentage">
                         <TextField
-                            sx={{ width: 250 }}
+                            sx={{width: 300}}
                             name="accountCostPerHour"
-                            value={resource.accountCostPerHour}
                             label="Cost"
                             type="number"
                             helperText={'Total paid for each hour of work'}
-                            InputProps={{endAdornment: (<InputAdornment position="end">€/Hour</InputAdornment>)}}
+                            value={resource.accountCostPerHour}
                             onChange={handleChange}
                             required
+                            InputProps={{
+                                endAdornment: (<InputAdornment
+                                    position="end">€/Hour</InputAdornment>)
+                            }}
                         />
-                        <br/>
-                        <br/>
-                    </div>
 
-                    <div className="resource-form-row">
+                        <br/>
+                        <br/>
+
                         <TextField
-                            value={resource.accountPercentageOfAllocation}
+                            sx={{width: 300}}
                             label="Percentage Of Allocation"
                             type="number"
+                            unit={5}
+
                             error={Boolean(inputError)}
-                            helperText={inputError ||'Between 0 - 100%'}
-                            InputProps={{endAdornment: (<InputAdornment position="end">%</InputAdornment>)}}
-                            onChange={handleChangeForPercentageOfAllocationInput}
+                            helperText={inputError || 'Between 0 - 100%'}
+                            value={resource.accountPercentageOfAllocation}
+                            onChange={handleChangeForPercentageOfAllocation}
                             required
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">%</InputAdornment>)
+                            }}
                         />
-                        <br/>
-                        <br/>
                     </div>
 
-
-                    <div className="resource-form-row">
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DatePicker']}>
-                                <DatePicker
-                                    sx={{ width: 250 }}
-                                    label="Start Date"
-                                    disablePast
-                                    maxDate={resource.endDate}
-                                    value={resource.startDate}
-                                    onChange={handleStartDate}
-                                    required
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                        <FormHelperText>DD/MM/YYYY</FormHelperText>
-                        <br/>
-                        <br/>
-                    </div>
+                    <br/>
 
 
-                    <div>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DatePicker']}>
-                                <DatePicker
-                                    sx={{ width: 250 }}
-                                    label="End Date"
-                                    disablePast
-                                    minDate={resource.startDate}
-                                    value={resource.endDate}
-                                    onChange={handleEndDate}
-                                    required
-                                />
-                            </DemoContainer>
-                        </LocalizationProvider>
-                        <FormHelperText>DD/MM/YYYY</FormHelperText>
+                    <div className="date pickers">
+                        <DatePickerInput
+                            width={300}
+                            label="Start Date"
+                            disablePast={true}
+                            maxDate={resource.endDate}
+                            value={resource.startDate}
+                            onChange={handleChangeForStartDate}
+                            format="DD/MM/YYYY"
+                            required={true}
+                            helperText="DD/MM/YYYY"
+                        />
+
                         <br/>
-                        <br/>
+
+                        <DatePickerInput
+                            width={300}
+                            label="End Date"
+                            disablePast={true}
+                            minDate={resource.startDate}
+                            value={resource.endDate}
+                            onChange={handleChangeForEndDate}
+                            format="DD/MM/YYYY"
+                            required={true}
+                            helperText="DD/MM/YYYY"
+                        />
                     </div>
 
                     <Button text="Submit "/>
@@ -216,8 +221,6 @@ function AllocateResource() {
                         text="Return"
                     />
                 </form>
-
-
             </section>
         </div>
     )
