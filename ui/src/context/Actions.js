@@ -1,4 +1,11 @@
-import {getBusinessSectors, getCustomers, getProjectTypologies, postProject, postSprint} from "../services/Service";
+import {
+    fetchProject, fetchProjects,
+    getBusinessSectors,
+    getCustomers,
+    getProjectTypologies,
+    postProject,
+    postSprint
+} from "../services/Service";
 import {strings} from "../strings";
 
 /**
@@ -156,7 +163,7 @@ function fetchCustomersFailure() {
  */
 export function createProject(dispatch, projectToSubmit) {
     setTimeout(() => {
-        dispatch(postProjectSuccess('123SHUYW--@JM&H)_12'));
+        dispatch(postProjectSuccess('SERRA A PRESIDENTE'));
     }, 1000);
     // setTimeout(() => {
     //     dispatch(postProjectFailure('error message'));
