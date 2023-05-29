@@ -10,6 +10,8 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.IBusinessSectorJpaRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -55,6 +57,7 @@ public class BusinessSectorJpaRepository implements IBusinessSectorRepository {
 
     /**
      * Retrieves the size of the repository list.
+     *
      * @return The number of elements in the repository.
      */
     @Override
@@ -64,6 +67,7 @@ public class BusinessSectorJpaRepository implements IBusinessSectorRepository {
 
     /**
      * Retrieves the ID of a business sector by its name from the repository.
+     *
      * @param businessSectorName The name of the business sector.
      * @return The ID of the business sector with the given name.
      * @throws NotFoundInRepoException If a business sector with the given name is not found in the repository.
@@ -79,6 +83,14 @@ public class BusinessSectorJpaRepository implements IBusinessSectorRepository {
         }
     }
 
+    @Override
+    public List<BusinessSector> findAll() {
+        Iterable<BusinessSectorJpa> businessSectorsJpa = crudRepository.findAll();
+        List<BusinessSector> businessSectors = new ArrayList<>();
+        businessSectorsJpa.forEach(businessSectorJpa -> businessSectors.add(assembler.toDomain(businessSectorJpa)));
+        return businessSectors;
+
+    }
 }
 
 

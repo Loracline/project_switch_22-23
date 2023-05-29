@@ -12,10 +12,9 @@ public class ProjectCreationDto {
      */
     public final String projectName;
     public final String projectDescription;
-    public final String businessSectorName;
-    public final String customerName;
-    public final String typologyName;
-    public final int sprintDuration;
+    public final String businessSectorId;
+    public final String customerId;
+    public final String typologyId;
 
     /**
      * Constructor.
@@ -23,18 +22,16 @@ public class ProjectCreationDto {
      *
      * @param projectName        the name of the project.
      * @param projectDescription a brief description of the project.
-     * @param businessSectorName the name of the business sector to which the project belongs.
-     * @param customerName       the name of the customer for whom the project is being created.
-     * @param typologyName       the name of the project typology.
-     * @param sprintDuration     the duration of each sprint in the project.
+     * @param businessSectorId   the name of the business sector to which the project belongs.
+     * @param customerId         the name of the customer for whom the project is being created.
+     * @param typologyId         the name of the project typology.
      */
     public ProjectCreationDto(String projectName, String projectDescription,
-                              String businessSectorName, String customerName, String typologyName, int sprintDuration) {
+                              String businessSectorId, String customerId, String typologyId) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
-        this.businessSectorName = businessSectorName;
-        this.customerName = customerName;
-        this.typologyName = typologyName;
-        this.sprintDuration = sprintDuration;
+        this.businessSectorId = businessSectorId;
+        this.customerId = customerId;
+        this.typologyId = typologyId;
     }
 }

@@ -1,12 +1,14 @@
 package org.switch2022.project.ddd.infrastructure;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
-import org.switch2022.project.ddd.domain.model.customer.Customer;
-import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -21,11 +23,11 @@ class BusinessSectorRepositoryTest {
     void ensureSameObjectEqualsItself() {
         // Arrange
         BusinessSectorRepository repositoryOne = new BusinessSectorRepository();
-        BusinessSectorRepository repositoryReference = repositoryOne;
+        BusinessSectorRepository repositoryTwo = repositoryOne;
         boolean expected = true;
 
         //Act
-        boolean result = repositoryOne.equals(repositoryReference);
+        boolean result = repositoryOne.equals(repositoryTwo);
 
         //Assert
         assertEquals(expected, result);
@@ -258,5 +260,50 @@ class BusinessSectorRepositoryTest {
 
         // Assert
         assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * METHOD findAll()
+     */
+    @DisplayName("Empty repository")
+    @Test
+    void ensureReturnsEmptyListWhenEmptyRepository() {
+        // Arrange
+        BusinessSectorRepository repository = new BusinessSectorRepository();
+        List<BusinessSector> expected = new ArrayList<>();
+
+        // Act
+        List<BusinessSector> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: ensure that an empty list is returned when the repository is empty.
+     */
+    @Test
+    void ensureAllBusinessSectorsInRepositoryAreReturnedInList() {
+        // Arrange
+        BusinessSectorRepository repository = new BusinessSectorRepository();
+        List<BusinessSector> expected = new ArrayList<>();
+
+        BusinessSector businessSectorOne = mock(BusinessSector.class);
+        BusinessSector businessSectorTwo = mock(BusinessSector.class);
+        BusinessSector businessSectorThree = mock(BusinessSector.class);
+
+        expected.add(businessSectorOne);
+        expected.add(businessSectorTwo);
+        expected.add(businessSectorThree);
+
+        repository.save(businessSectorOne);
+        repository.save(businessSectorTwo);
+        repository.save(businessSectorThree);
+
+        // Act
+        List<BusinessSector> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
     }
 }
