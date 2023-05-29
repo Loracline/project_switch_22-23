@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
 
+import java.awt.image.BufferedImage;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UtilsTest {
@@ -90,5 +92,78 @@ class UtilsTest {
         // ACT & ASSERT
         assertThrows(IllegalArgumentException.class, () ->
                 Utils.hasStatus(actualProjectStatus, desiredProjectStatus));
+    }
+
+    /**
+     * METHOD convertBufferedImageToByteArray()
+     * Scenario 1: this test verifies that the conversion between a BufferedImage and a Byte
+     * Array representation of the image produces the expected results.
+     * It uses the Utils class to perform the conversions.
+     * <p>
+     * Should return an assertion error if the converters don't work as pretended.
+     */
+    @Test
+    void ensureBufferedImageAndByteArrayConvertersAreWorkingCorrectly() {
+        //ARRANGE
+        BufferedImage defaultImage = new BufferedImage(5, 5, BufferedImage.TYPE_3BYTE_BGR);
+
+        //ACT
+        byte[] bytes = Utils.convertBufferedImageToByteArray(defaultImage);
+
+        //ASSERT
+        BufferedImage resultImage = Utils.convertByteArrayToBufferedImage(bytes);
+        assertImagesAreEqual(defaultImage, resultImage);
+    }
+
+    /**
+     * Scenario 2: this test verifies the behavior of the Utils.convertBufferedImageToByteArray
+     * method when it is called with a null BufferedImage.
+     * The method is expected to throw an exception in this case. The test asserts that the
+     * returned byte array is null.
+     * <p>
+     * If the byte array is not null, an assertion error should be thrown.
+     */
+    @Test
+    void ensureConvertBufferedImageToByteArrayReturnsNullWhenThrowsException() {
+        //ACT
+        byte[] bytes = Utils.convertBufferedImageToByteArray(null);
+
+        //ASSERT
+        assertNull(bytes);
+    }
+
+    /**
+     * Scenario 3: this test verifies the behavior of the Utils.convertByteArrayToBufferedImage
+     * method when it is called with a null Byte Array.
+     * The method is expected to throw an exception in this case. The test asserts that the
+     * returned BufferedImage is null.
+     * <p>
+     * If the BufferedImage is not null, an assertion error should be thrown.
+     */
+    @Test
+    void ensureConvertByteArrayToBufferedImageReturnsNullWhenThrowsException() {
+        //ACT
+        BufferedImage bufferedImage = Utils.convertByteArrayToBufferedImage(null);
+
+        //ASSERT
+        assertNull(bufferedImage);
+    }
+
+    /**
+     * Asserts that two BufferedImages are equal, pixel by pixel.
+     *
+     * @param expected the expected BufferedImage
+     * @param actual   the actual BufferedImage
+     * @throws AssertionError if the BufferedImages are not equal
+     */
+    private void assertImagesAreEqual(BufferedImage expected, BufferedImage actual) {
+        assertEquals(expected.getWidth(), actual.getWidth());
+        assertEquals(expected.getHeight(), actual.getHeight());
+
+        for (int x = 0; x < actual.getWidth(); x++) {
+            for (int y = 0; y < actual.getHeight(); y++) {
+                assertEquals(expected.getRGB(x, y), actual.getRGB(x, y));
+            }
+        }
     }
 }

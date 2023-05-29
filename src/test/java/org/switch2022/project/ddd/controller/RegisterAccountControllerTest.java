@@ -40,8 +40,7 @@ class RegisterAccountControllerTest {
         // Arrange
         AccountCreationDto accountCreationDto = new AccountCreationDto("Ana", "ana@isep" +
                 ".pt", 123456789, null);
-        when(accountService.registerAccount("Ana", "ana@isep" +
-                ".pt", 123456789, null)).thenReturn(true);
+        when(accountService.registerAccount(accountCreationDto)).thenReturn(true);
 
         // Act
         boolean result = controller.registerAccount(accountCreationDto);
@@ -80,8 +79,7 @@ class RegisterAccountControllerTest {
         String expected = "The account already exists in the repository.";
         AccountCreationDto accountCreationDto = new AccountCreationDto("Ana", "ana@isep" +
                 ".pt", 123456789, null);
-        when(accountService.registerAccount("Ana", "ana@isep" +
-                ".pt", 123456789, null)).thenThrow(new AlreadyExistsInRepoException(expected));
+        when(accountService.registerAccount(accountCreationDto)).thenThrow(new AlreadyExistsInRepoException(expected));
 
         // Act
         AlreadyExistsInRepoException result =

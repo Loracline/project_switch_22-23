@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.account;
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 
+import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 /**
@@ -112,6 +113,33 @@ public class Account implements Entity<Account> {
     }
 
     /**
+     * Getter method that returns a String with the profileId
+     *
+     * @return profileId.
+     */
+    public String getProfileId() {
+        return profileId.getProfileId();
+    }
+
+    /**
+     * Getter method that returns an int with the phoneNumber
+     *
+     * @return phoneNumber.
+     */
+    public int getPhoneNumber() {
+        return phoneNumber.getPhoneNumber();
+    }
+
+    /**
+     * Getter method that returns a BufferedImage with the photo
+     *
+     * @return photo.
+     */
+    public BufferedImage getPhoto() {
+        return photo.getPhoto();
+    }
+
+    /**
      * Method change the status of the account.
      *
      * @param status to be used to change.
@@ -155,16 +183,4 @@ public class Account implements Entity<Account> {
             return false;
         }
     }
-
-    /**
-     * Getter method that returns a String with the profileId
-     *
-     * @return profileId.
-     */
-    public String getProfileId() {
-        return profileId.getProfileId();
-    }
 }
-
-
-

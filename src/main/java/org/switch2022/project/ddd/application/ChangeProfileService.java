@@ -25,6 +25,7 @@ public class ChangeProfileService {
     @Autowired
     private IProfileRepository profileRepository;
     @Autowired
+    @Qualifier("account_jpa")
     private IAccountRepository accountRepository;
 
     /**

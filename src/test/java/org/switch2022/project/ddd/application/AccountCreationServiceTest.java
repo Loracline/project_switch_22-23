@@ -5,16 +5,19 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountFactory;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
+import org.switch2022.project.ddd.dto.AccountCreationDto;
 
 import java.awt.image.BufferedImage;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -30,6 +33,7 @@ class AccountCreationServiceTest {
     AccountCreationService service;
     @MockBean
     IAccountFactory accountFactory;
+    @Qualifier("account_jpa")
     @MockBean
     IAccountRepository accountRepository;
 
@@ -48,12 +52,14 @@ class AccountCreationServiceTest {
         int phoneNumber = 923456789;
         BufferedImage photo = mock(BufferedImage.class);
         Account account = mock(Account.class);
+        AccountCreationDto accountCreationDto = new AccountCreationDto(name, email, phoneNumber,
+                photo);
 
         when(accountFactory.create(any(), any(), any(), any())).thenReturn(account);
         when(accountRepository.save(account)).thenReturn(true);
 
         // Act
-        boolean result = service.registerAccount(name, email, phoneNumber, photo);
+        boolean result = service.registerAccount(accountCreationDto);
 
         // Assert
         assertTrue(result);
@@ -73,12 +79,14 @@ class AccountCreationServiceTest {
         int phoneNumber = 923456789;
         BufferedImage photo = mock(BufferedImage.class);
         Account account = mock(Account.class);
+        AccountCreationDto accountCreationDto = new AccountCreationDto(name, email, phoneNumber,
+                photo);
 
         when(accountFactory.create(any(), any(), any(), any())).thenReturn(account);
         when(accountRepository.save(account)).thenReturn(false);
 
         // Act
-        boolean result = service.registerAccount(name, email, phoneNumber, photo);
+        boolean result = service.registerAccount(accountCreationDto);
 
         // Assert
         assertFalse(result);

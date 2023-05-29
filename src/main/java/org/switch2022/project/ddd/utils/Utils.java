@@ -3,6 +3,11 @@ package org.switch2022.project.ddd.utils;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+
 import static java.lang.Integer.parseInt;
 @Component
 public final class Utils {
@@ -38,5 +43,41 @@ public final class Utils {
             throw new IllegalArgumentException(String.format("The project must be in %s phase.",
                     desiredProjectStatus));
         }
+    }
+
+    /**
+     * This method converts a byte[] to a BufferedImage.
+     *
+     * @param bytes Array of bytes representing the binary content of the image
+     * @return BufferedImage object converted from the array of bytes
+     */
+    public static BufferedImage convertByteArrayToBufferedImage(byte[] bytes) {
+        BufferedImage image;
+        try {
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+            image = ImageIO.read(byteArrayInputStream);
+        } catch (Exception e) {
+            image = null;
+        }
+        return image;
+    }
+
+    /**
+     * This method converts a BufferedImage to a byte[], which is commonly used to
+     * store images in databases.
+     *
+     * @param image BufferedImage object to be converted
+     * @return Array of bytes representing the binary content of the image
+     */
+    public static byte[] convertBufferedImageToByteArray(BufferedImage image) {
+        byte[] bytes;
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", byteArrayOutputStream);
+            bytes = byteArrayOutputStream.toByteArray();
+        } catch (Exception e) {
+            bytes = null;
+        }
+        return bytes;
     }
 }

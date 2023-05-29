@@ -1,6 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
 import org.switch2022.project.ddd.domain.value_object.Email;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Component
+@Repository("account_memory")
 public class AccountRepository implements IAccountRepository {
 
     /**
@@ -49,7 +49,6 @@ public class AccountRepository implements IAccountRepository {
     public List<Account> findAll() {
         return Collections.unmodifiableList(accounts);
     }
-
 
 
     /**
