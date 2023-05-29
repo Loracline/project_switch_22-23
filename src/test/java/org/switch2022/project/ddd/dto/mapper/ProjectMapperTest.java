@@ -12,7 +12,7 @@ class ProjectMapperTest {
 
 
     /**
-     * Method userStoryToDto(userStory).
+     * Method projectToDto(project).
      * Scenario 1: it should return a dto from the UserStory given
      */
 

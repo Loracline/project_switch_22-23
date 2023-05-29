@@ -2,16 +2,15 @@ package org.switch2022.project.ddd.dto;
 
 import java.util.Objects;
 
-public class TypologyCreationDto {
+public class TypologyDto {
     /**
      * Attributes
      */
     public String typologyName;
     /**
-     * Constructor to instatiate a new typology dto.
-     * @param typologyName the name of the
+     * Constructor
      */
-    public TypologyCreationDto(String typologyName) {
+    public TypologyDto(String typologyName) {
         this.typologyName = typologyName;
     }
 
@@ -22,7 +21,7 @@ public class TypologyCreationDto {
      * addresses of the two objects, which means that two objects are considered
      * equal only if they are the same object in memory.
      *
-     * @param o typologyCreationDto to compare to.
+     * @param o typologyDto to compare to.
      * @return TRUE if equal, and FALSE otherwise.
      */
     @Override
@@ -30,22 +29,14 @@ public class TypologyCreationDto {
         if (this == o) {
             return true;
         }
+
         if (o == null) {
             return false;
         }
         if (o.getClass() != this.getClass()) {
             return false;
         }
-        TypologyCreationDto that = (TypologyCreationDto) o;
+        TypologyDto that = (TypologyDto) o;
         return Objects.equals(typologyName, that.typologyName);
-    }
-
-    /**
-     * Retrieves the name of the typology.
-     *
-     * @return The name of the typology as a String.
-     */
-    public String getTypologyName() {
-        return typologyName;
     }
 }
