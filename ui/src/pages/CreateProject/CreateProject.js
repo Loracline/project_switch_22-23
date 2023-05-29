@@ -1,9 +1,19 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Button from "../../components/Button/Button";
-import {createProject, selectMenu} from "../../context/Actions";
+import {
+    createProject,
+    fetchBusinessSectors,
+    fetchCustomers,
+    fetchTypologies,
+    resetCreateProject,
+    selectMenu
+} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
-import {TextField} from "@mui/material";
+import {CircularProgress, Dialog, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import './CreateProject.css';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+import {strings} from "../../strings";
 
 /**
  * Form component in React.
@@ -13,53 +23,72 @@ import './CreateProject.css';
 function CreateProject() {
 
     const initialProject = {
-        basicInfo: {
-            code: undefined,
-            name: undefined,
-            customer: undefined,
-            status: "planned",
-            startDate: "-",
-            endDate: "-"
-        },
-        additionalInfo: {
-            businessSector: undefined,
-            typology: undefined,
-            description: undefined,
-        }
+        name: '',
+        customer: '',
+        businessSector: '',
+        typology: '',
+        description: ''
     };
 
-    const {dispatch} = useContext(AppContext);
-    const [basicInfo, setBasicInfo] = useState(initialProject.basicInfo);
-    const [additionalInfo, setAdditionalInfo] = useState(initialProject.additionalInfo);
+    const {state, dispatch} = useContext(AppContext);
+    const customers = state.customers;
+    const typologies = state.typologies;
+    const businessSectors = state.businessSectors;
+    const loading = state.loading;
+    const messageSuccess = state.messageSuccess;
+    const messageFailure = state.messageFailure;
+    const [project, setProject] = useState(initialProject);
 
-    const handleChangeBasic = (event) => {
+    useEffect(() => {
+        fetchCustomers(dispatch);
+        fetchTypologies(dispatch);
+        fetchBusinessSectors(dispatch);
+    }, [dispatch]);
+
+    const handleChangeProjectInfo = (event) => {
         const {name, value} = event.target;
-        const newBasicInfo = {...basicInfo};
-        newBasicInfo[name] = value;
-        setBasicInfo(newBasicInfo);
+        const newInfo = {...project};
+        newInfo[name] = value;
+        setProject(newInfo);
     }
 
-    const handleChangeAdditional = (event) => {
-        const {name, value} = event.target;
-        const newAdditionalInfo = {...additionalInfo};
-        newAdditionalInfo[name] = value;
-        setAdditionalInfo(newAdditionalInfo);
+    const handleChangeCustomer = (event) => {
+        setProject({
+            ...project, ...{
+                customer: event.target.value
+            }
+        });
+    }
+
+    const handleChangeBusinessSector = (event) => {
+        setProject({
+            ...project, ...{
+                businessSector: event.target.value
+            }
+        });
+    }
+
+    const handleChangeTypology = (event) => {
+        setProject({
+            ...project, ...{
+                typology: event.target.value
+            }
+        });
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const projectToAdd = {
-            basicInfo,
-            additionalInfo,
-            userStories: [],
-            sprints: []
-        }
+        createProject(dispatch, project);
+    }
 
-        dispatch(createProject({...projectToAdd}));
-        window.alert(`The project "${basicInfo.name}" was successfully created.`);
-        setBasicInfo(initialProject.basicInfo);
-        setAdditionalInfo(initialProject.additionalInfo);
+    const handleReturnToProjects = (_) => {
+        dispatch(selectMenu('projects'));
+    }
+
+    const handleClearProject = (_) => {
+        setProject(initialProject);
+        dispatch(resetCreateProject());
     }
 
     return (
@@ -67,60 +96,63 @@ function CreateProject() {
             <section className="formCard">
                 <h2>Create Project</h2>
                 <form className="project-form" onSubmit={handleSubmit}>
-                    <div className="project-form-row">
-                        <TextField
-                            name="code"
-                            label="Project Code"
-                            value={basicInfo.code}
-                            onChange={handleChangeBasic}
-                            variant="outlined"
-                            required
-                            className="textField"
-                        />
+                    <FormControl fullWidth>
                         <TextField
                             name="name"
                             label="Project Name"
-                            value={basicInfo.name}
-                            onChange={handleChangeBasic}
+                            value={project.name}
+                            onChange={handleChangeProjectInfo}
                             variant="outlined"
                             required
                             className="textField"
                         />
-                    </div>
-                    <div className="project-form-row">
-                        <TextField
-                            name="customer"
-                            label="Customer"
-                            value={basicInfo.customer}
-                            onChange={handleChangeBasic}
-                            variant="outlined"
-                            required
-                            className="textField"
-                        />
-                        <TextField
-                            name="businessSector"
-                            label="Business Sector"
-                            value={additionalInfo.businessSector}
-                            onChange={handleChangeAdditional}
-                            variant="outlined"
-                            required
-                            className="textField"
-                        />
-                    </div>
-                    <TextField
-                        name="typology"
-                        label="Typology"
-                        value={additionalInfo.typology}
-                        onChange={handleChangeAdditional}
-                        variant="outlined"
-                        required
-                        className="textField"
-                    />
+                    </FormControl>
+
+                    <FormControl fullWidth>
+                        <InputLabel id={'projectCustomerInputLabel'}>Customer</InputLabel>
+                        <Select
+                            labelId={'projectCustomerInputLabel'}
+                            id={'projectCustomerSelect'}
+                            autoWidth
+                            value={project.customer}
+                            label={"Customer"}
+                            onChange={handleChangeCustomer}>
+                            {customers && customers.map(({id, name}, index) => (
+                                <MenuItem key={index} value={id}>{name}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <InputLabel id={'projectBusinessSectorInputLabel'}>Business Sector</InputLabel>
+                        <Select
+                            labelId={'projectBusinessSectorInputLabel'}
+                            id={'projectBusinessSectorSelect'}
+                            value={project.businessSector}
+                            label={"Business Sector"}
+                            onChange={handleChangeBusinessSector}>
+                            {businessSectors && businessSectors.map(({id, name}, index) => (
+                                <MenuItem key={index} value={id}>{name}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth>
+                        <InputLabel id={'projectTypologyInputLabel'}>Typology</InputLabel>
+                        <Select
+                            labelId={'projectTypologyInputLabel'}
+                            id={'projectTypologySelect'}
+                            value={project.typology}
+                            label={"Typology"}
+                            onChange={handleChangeTypology}>
+                            {typologies && typologies.map(({id, name}, index) => (
+                                <MenuItem key={index} value={id}>{name}</MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <TextField
                         name="description"
                         label="Description"
-                        value={additionalInfo.description}
-                        onChange={handleChangeAdditional}
+                        value={project.description}
+                        onChange={handleChangeProjectInfo}
                         variant="outlined"
                         required
                         multiline
@@ -129,14 +161,38 @@ function CreateProject() {
                     />
                     <Button
                         text="Create Project"
+                        onClick={handleSubmit}
+                        isDisabled={project.name.length === 0 ||
+                            project.customer.length === 0 ||
+                            project.businessSector.length === 0 ||
+                            project.typology.length === 0 ||
+                            project.description.length === 0}
                     />
                 </form>
                 <Button
                     isSecundary={true}
-                    onClick={() => dispatch(selectMenu('projects'))}
+                    onClick={handleReturnToProjects}
                     text="Return to projects"
                 />
             </section>
+
+            <Dialog open={loading}>
+                <CircularProgress style={{color: "#6145AF"}} sx={{m: 5}}/>
+            </Dialog>
+
+            <Dialog className="success-dialog" open={messageSuccess}>
+                <CheckCircleIcon style={{color: "green", alignSelf: "center", width: 80, height: 80, margin: 10}} />
+                <h3>{strings.projectCreatedSuccessMessage}</h3>
+                <h4>{messageSuccess}</h4>
+                <Button text="Close" onClick={handleClearProject} />
+            </Dialog>
+
+            <Dialog className="failure-dialog" open={messageFailure}>
+                <ErrorIcon style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}} />
+                <h3>{strings.genericServerError}</h3>
+                <Button text="Close" onClick={handleClearProject} />
+            </Dialog>
+
         </div>
     );
 }

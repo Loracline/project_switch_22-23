@@ -38,8 +38,7 @@ class CreateProjectControllerTest {
     void ensureProjectIsCreatedSuccessfully() {
         //Arrange
         ProjectCreationDto projectCreationDto = new ProjectCreationDto("panic",
-                "panic total", "isep", "isep", "isep",
-                5);
+                "panic total", "BS001", "242526272", "TP001");
 
         when(createProjectService.createProject(any())).thenReturn("P001");
 
