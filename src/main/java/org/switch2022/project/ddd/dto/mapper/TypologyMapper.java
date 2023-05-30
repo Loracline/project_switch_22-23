@@ -15,6 +15,6 @@ public class TypologyMapper {
      */
 
     public TypologyDto typologyToDto(Typology typology) {
-        return new TypologyDto(typology.getTypologyName());
+        return new TypologyDto(typology.getTypologyId(), typology.getTypologyName());
     }
 }

@@ -12,7 +12,7 @@ class TypologyDtoTest {
     @Test
     void ensureSameTypologyDtoEqualsItself() {
         // Arrange
-        TypologyDto reference = new TypologyDto("typologyOne");
+        TypologyDto reference = new TypologyDto("PT001","typologyOne");
         TypologyDto other = reference;
 
         // Act
@@ -29,8 +29,8 @@ class TypologyDtoTest {
     @Test
     void ensureTwoTypologyDtosAreNotTheSame() {
         // Arrange
-        TypologyDto reference = new TypologyDto("typologyOne");
-        TypologyDto other = new TypologyDto("typologyTwo");
+        TypologyDto reference = new TypologyDto("PT001","typologyOne");
+        TypologyDto other = new TypologyDto("PT002","typologyTwo");
 
         // Act
         boolean result = reference.equals(other);
@@ -46,7 +46,7 @@ class TypologyDtoTest {
     @Test
     void ensureTypologyDtoDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        TypologyDto reference = new TypologyDto("typologyOne");
+        TypologyDto reference = new TypologyDto("PT001","typologyOne");
         String other = "User";
 
         // Act
@@ -62,7 +62,7 @@ class TypologyDtoTest {
     @Test
     void ensureTypologyDtoDoesNotEqualNull() {
         // Arrange
-        TypologyDto reference = new TypologyDto("typologyOne");
+        TypologyDto reference = new TypologyDto("PT001", "typologyOne");
         TypologyDto other = null;
 
         // Act
@@ -77,9 +77,10 @@ class TypologyDtoTest {
     @Test
     public void ensureHashCode_ShouldReturnConsistentValue() {
         // Arrange
+        String typologyId= "PT001";
         String typologyName = "Typology 1";
-        TypologyDto typology1 = new TypologyDto(typologyName);
-        TypologyDto typology2 = new TypologyDto(typologyName);
+        TypologyDto typology1 = new TypologyDto(typologyId, typologyName);
+        TypologyDto typology2 = new TypologyDto(typologyId, typologyName);
 
         // Act
         int hashCode1 = typology1.hashCode();

@@ -21,11 +21,13 @@ class TypologyMapperTest {
         //Arrange
         TypologyMapper typologyMapper = new TypologyMapper();
         Typology typology = mock(Typology.class);
+        String typologyId = "PT001";
         String typologyName = "typology one";
 
+        when(typology.getTypologyId()).thenReturn(typologyId);
         when(typology.getTypologyName()).thenReturn(typologyName);
 
-        TypologyDto expected = new TypologyDto(typologyName);
+        TypologyDto expected = new TypologyDto(typologyId, typologyName);
         //Act
         TypologyDto  result = typologyMapper.typologyToDto(typology);
         //Assert
