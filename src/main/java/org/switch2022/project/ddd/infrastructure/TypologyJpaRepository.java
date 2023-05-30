@@ -10,6 +10,8 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ITypologyJpaRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -73,5 +75,18 @@ public class TypologyJpaRepository implements ITypologyRepository {
             throw new NotFoundInRepoException("Typology with this name does not exist in the Repository.");
         }
         return typologyId;
+    }
+    /**
+     * Returns a list of all typologies in the repository.
+     *
+     * @return a list of all typologies in the repository
+     */
+
+    @Override
+    public List<Typology> findAll() {
+        Iterable<TypologyJpa> typologiesJpa = crudRepository.findAll();
+        List<Typology> typologies = new ArrayList<>();
+        typologiesJpa.forEach(jpa -> typologies.add(assembler.toDomain(jpa)));
+        return typologies;
     }
 }

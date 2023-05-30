@@ -7,6 +7,7 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -99,5 +100,14 @@ public class TypologyRepository implements ITypologyRepository {
         }
 
         return requestedProjectTypologyId;
+    }
+
+    /**
+     * This method returns a list of all typologies in the repository.
+     *
+     * @return an unmodifiable view of the typologies.
+     */
+    public List<Typology> findAll() {
+        return Collections.unmodifiableList(typologies);
     }
 }

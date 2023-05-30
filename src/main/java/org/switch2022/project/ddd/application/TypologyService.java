@@ -8,6 +8,11 @@ import org.switch2022.project.ddd.domain.model.typology.ITypologyFactory;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
 import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.domain.value_object.Name;
+import org.switch2022.project.ddd.dto.TypologyDto;
+import org.switch2022.project.ddd.dto.mapper.TypologyMapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -17,6 +22,9 @@ public class TypologyService {
     ITypologyRepository typologyRepository;
     @Autowired
     ITypologyFactory factoryTypology;
+
+    @Autowired
+    TypologyMapper typologyMapper;
 
     /**
      * This method receives a String name and to convert in of objects of type Name.
@@ -30,4 +38,18 @@ public class TypologyService {
         Typology typology = factoryTypology.createTypology(typologyNumber, typologyName);
         return typologyRepository.save(typology);
     }
+    /**
+     * Requests a list of all projects
+     *
+     * @return a list of all projectsDto.
+     */
+    public List<TypologyDto> requestAllTypologies() {
+        List<TypologyDto> typologiesDto = new ArrayList<>();
+        List<Typology> typologies = typologyRepository.findAll();
+        for (Typology typology : typologies) {
+            typologiesDto.add(typologyMapper.typologyToDto(typology));
+        }
+        return typologiesDto;
+    }
+
 }

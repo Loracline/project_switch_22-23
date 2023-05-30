@@ -2,6 +2,8 @@ package org.switch2022.project.ddd.domain.model.typology;
 
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
+import java.util.List;
+
 /**
  * Interface for a repository of typologies.
  */
@@ -30,4 +32,6 @@ public interface ITypologyRepository {
      */
 
     String findTypologyIdByTypologyName(String typologyName);
+
+    List<Typology> findAll();
 }

@@ -330,4 +330,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# G4DB H2
+g4db.h2.mv.db
+g4db.h2.trace.db
+
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,eclipse,netbeans,intellij,visualstudiocode,macos,windows,linux

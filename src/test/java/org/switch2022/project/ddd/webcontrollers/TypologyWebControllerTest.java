@@ -6,12 +6,17 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.switch2022.project.ddd.application.TypologyService;
 import org.switch2022.project.ddd.dto.TypologyCreationDto;
-import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.dto.TypologyDto;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -45,20 +50,62 @@ class TypologyWebControllerTest {
         assertEquals(responseEntity.getStatusCodeValue(), 201);
     }
     /**
-     * Scenario 01: typology created successfully.
+     * Scenario 02: typology is not created.
      * Expected return: ResponseEntity status code is checked to
      * ensure it is equal to 400 (HttpStatus.BAD_REQUEST).
      */
     @Test
-    void ensureThatResourceIsNotCreated_ExceptionIsThrow() {
+    void ensureThatResourceIsNotCreated() {
         //Arrange
-        TypologyCreationDto dtoDouble = null;
-        String expected = "The typology already exists in the repository.";
-        when(service.createTypology(any())).thenThrow(new AlreadyExistsInRepoException(expected));
+        TypologyCreationDto dtoDouble = mock(TypologyCreationDto.class);
+
+        when(service.createTypology(any())).thenReturn(false);
 
         //Act
         ResponseEntity<Object> responseEntity = controller.createTypology(dtoDouble);
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 400);
+        assertEquals(HttpStatus.CONFLICT,responseEntity.getStatusCode());
+    }
+    /**
+     * Method: listAllProjects()
+     * Scenario 1: returns a list of TypologiesDto successfully.
+     */
+
+    @Test
+    void ensureThatAListOfProjectsDtoIsReturned() {
+        // Arrange
+        List<TypologyDto> expected = new ArrayList<>();
+        TypologyDto typologyDtoDouble = mock(TypologyDto.class);
+        expected.add(typologyDtoDouble);
+        when(service.requestAllTypologies()).thenReturn(expected);
+
+        // Act
+        ResponseEntity<List<TypologyDto>> responseEntity =
+                controller.listAllTypologies();
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<TypologyDto> actual = responseEntity.getBody();
+        assertNotNull(actual);
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Scenario 2: returns an empty list when there are no typologies.
+     */
+    @Test
+    void ensureThatAnEmptyListIsReturnedWhenThereAreNoProjects() {
+        // Arrange
+        when(service.requestAllTypologies()).thenReturn(Collections.emptyList());
+
+        // Act
+        ResponseEntity<List<TypologyDto>> responseEntity =
+                controller.listAllTypologies();
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<TypologyDto> actual = responseEntity.getBody();
+        assertNotNull(actual);
+        assertTrue(actual.isEmpty());
     }
 }

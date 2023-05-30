@@ -5,6 +5,9 @@ import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -18,14 +21,13 @@ class TypologyRepositoryTest {
     void ensureSameObjectEqualsItself() {
         // Arrange
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
-        TypologyRepository typologyRepositoryReference = typologyRepositoryOne;
-        boolean expected = true;
+        TypologyRepository reference = typologyRepositoryOne;
 
         //Act
-        boolean result = typologyRepositoryOne.equals(typologyRepositoryReference);
+        boolean result = typologyRepositoryOne.equals(reference);
 
         //Assert
-        assertEquals(expected, result);
+        assertTrue(result);
     }
 
     /**
@@ -96,11 +98,10 @@ class TypologyRepositoryTest {
         TypologyRepository typologyRepositoryOne = new TypologyRepository();
         TypologyRepository typologyRepositoryTwo = null;
 
-        boolean expected = false;
         //Act
         boolean result = typologyRepositoryOne.equals(typologyRepositoryTwo);
         //Assert
-        assertEquals(expected, result);
+        assertFalse(result);
     }
 
 
@@ -162,8 +163,6 @@ class TypologyRepositoryTest {
      * Scenario 02: check that the typology has not been added to the repository.
      * Expected return: FALSE.
      */
-
-
     @Test
     void ensureThatAnExceptionIsThrownWhenTypologyAlreadyExistsInRepo() {
         //Arrange
@@ -254,5 +253,47 @@ class TypologyRepositoryTest {
 
         // Assert
         assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Method: findAll().
+     * Scenario 01: returns the list of all typologies
+     * Expected result: return the list of all repository typologies.
+     */
+    @Test
+    void ensureListIsRetrievedSuccessfully() {
+        //Arrange
+        Typology typologyOne = mock(Typology.class);
+        Typology typologyTwo = mock(Typology.class);
+
+        TypologyRepository typologyRepositoryOne = new TypologyRepository();
+        typologyRepositoryOne.save(typologyOne);
+        typologyRepositoryOne.save(typologyTwo);
+
+        List<Typology> expected = new ArrayList<>();
+        expected.add(typologyOne);
+        expected.add(typologyTwo);
+
+
+        //Act
+        List<Typology> result = typologyRepositoryOne.findAll();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 02: empty list is retrieved successfully.
+     * Expected result: an empty list.
+     */
+    @Test
+    void ensureEmptyListIsRetrievedSuccessfully() {
+        //Arrange
+        TypologyRepository typologyRepositoryOne = new TypologyRepository();
+        List<Typology> expected = new ArrayList<>();
+        //Act
+        List<Typology> result = typologyRepositoryOne.findAll();
+        //Assert
+        assertEquals(expected, result);
     }
 }

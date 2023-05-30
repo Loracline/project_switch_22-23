@@ -57,7 +57,7 @@ public class ProjectCreationService {
                 projectCreationDto.businessSectorId, "BS"));
 
         ProjectTypologyId projectTypologyId = new ProjectTypologyId(Utils.getIntFromAlphanumericString(
-                projectCreationDto.typologyId, "TP"));
+                projectCreationDto.typologyId, "PT"));
 
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription,
                 businessSectorId, customerTaxId, projectTypologyId);
