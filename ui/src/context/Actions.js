@@ -130,19 +130,6 @@ function fetchCustomersFailure() {
 /**
  Action for creating a new project.
  */
-// export function createProject(dispatch, projectToSubmit) {
-//     postProject((res) => dispatch(postProjectSuccess(res)),
-//         (err) => dispatch(postProjectFailure(err.message)),
-//         {
-//             projectName: projectToSubmit.name,
-//             projectDescription: projectToSubmit.description,
-//             businessSectorId: projectToSubmit.businessSector.id,
-//             customerId: projectToSubmit.customer.taxIdNumber,
-//             typologyId: projectToSubmit.typology.typologyId
-//         }
-//     );
-// }
-
 export function createProject(dispatch, projectToSubmit) {
     postProject((res) => {
             dispatch(postProjectSuccess(res));
