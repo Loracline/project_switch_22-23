@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.switch2022.project.ddd.application.TypologyService;
 import org.switch2022.project.ddd.dto.TypologyCreationDto;
 import org.switch2022.project.ddd.dto.TypologyDto;
-import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,21 +50,21 @@ class TypologyWebControllerTest {
         assertEquals(responseEntity.getStatusCodeValue(), 201);
     }
     /**
-     * Scenario 01: typology created successfully.
+     * Scenario 02: typology is not created.
      * Expected return: ResponseEntity status code is checked to
      * ensure it is equal to 400 (HttpStatus.BAD_REQUEST).
      */
     @Test
-    void ensureThatResourceIsNotCreated_ExceptionIsThrow() {
+    void ensureThatResourceIsNotCreated() {
         //Arrange
-        TypologyCreationDto dtoDouble = null;
-        String expected = "The typology already exists in the repository.";
-        when(service.createTypology(any())).thenThrow(new AlreadyExistsInRepoException(expected));
+        TypologyCreationDto dtoDouble = mock(TypologyCreationDto.class);
+
+        when(service.createTypology(any())).thenReturn(false);
 
         //Act
         ResponseEntity<Object> responseEntity = controller.createTypology(dtoDouble);
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 400);
+        assertEquals(HttpStatus.CONFLICT,responseEntity.getStatusCode());
     }
     /**
      * Method: listAllProjects()

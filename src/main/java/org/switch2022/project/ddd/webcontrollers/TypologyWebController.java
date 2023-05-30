@@ -33,12 +33,10 @@ public class TypologyWebController {
      */
     @PostMapping()
     public ResponseEntity<Object> createTypology(@RequestBody TypologyCreationDto dto) {
-        try {
-            service.createTypology(dto.typologyName);
+        if (service.createTypology(dto.typologyName)){
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
     /**
      * Handles a GET request to retrieve a list of all typologies.
