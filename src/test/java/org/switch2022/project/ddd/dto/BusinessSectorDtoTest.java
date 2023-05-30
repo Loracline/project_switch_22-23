@@ -6,20 +6,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BusinessSectorDtoTest {
 
-    /**
-     * Ensure that a BusinessSectorDto object can be instantiated with
-     * the specified name and that its name attribute is set correctly.
-     */
+
     @Test
-    public void ensureBusinessSectorDto() {
+    void ensureDtoIsCreatedSuccessfully() {
         // Arrange
-        String name = "AAA";
+        String name = "Finance";
+        String id = "BS001";
 
         // Act
-        BusinessSectorDto dto = new BusinessSectorDto(name);
+        BusinessSectorDto dto = new BusinessSectorDto(name, id);
 
         // Assert
-        assertEquals(name, dto.name);
+        assertEquals(name.toLowerCase(), dto.name);
+        assertEquals(id.toLowerCase(), dto.id);
     }
 
     /**
@@ -29,9 +28,8 @@ class BusinessSectorDtoTest {
     @Test
     void ensureSameBusinessSectorDtoEqualsItself() {
         // ARRANGE
-        BusinessSectorDto reference = new BusinessSectorDto("Technology");
+        BusinessSectorDto reference = new BusinessSectorDto("Technology", "BS001");
         BusinessSectorDto other = reference;
-
         boolean expected = true;
 
         // ACT
@@ -47,8 +45,8 @@ class BusinessSectorDtoTest {
     @Test
     void ensureTwoBusinessSectorDtoAreNotEqual() {
         // ARRANGE
-        BusinessSectorDto reference = new BusinessSectorDto("Technology");
-        BusinessSectorDto other = new BusinessSectorDto("Finance");
+        BusinessSectorDto reference = new BusinessSectorDto("Technology", "BS001");
+        BusinessSectorDto other = new BusinessSectorDto("Finance", "BS001");
 
         boolean expected = false;
 
@@ -65,7 +63,7 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoNotEqualsOtherTypeObject() {
         // ARRANGE
-        BusinessSectorDto reference = new BusinessSectorDto("Technology");
+        BusinessSectorDto reference = new BusinessSectorDto("Technology", "BS001");
         String other = "User";
 
         boolean expected = false;
@@ -83,7 +81,7 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoNotEqualsDifferentObjectType() {
         // ARRANGE
-        BusinessSectorDto businessSectorDto = new BusinessSectorDto("Technology");
+        BusinessSectorDto businessSectorDto = new BusinessSectorDto("Technology", "BS001");
         BusinessSectorDto differentObject = null;
 
         boolean expected = false;
@@ -101,7 +99,7 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoNotEqualsNull() {
         // ARRANGE
-        BusinessSectorDto dto = new BusinessSectorDto("Technology");
+        BusinessSectorDto dto = new BusinessSectorDto("Technology", "BS001");
 
         // ACT
         boolean result = dto.equals(null);
@@ -113,13 +111,13 @@ class BusinessSectorDtoTest {
 
 
     /**
-     * Scenario 6: ensure that two BusinessSectorDto instances with the same name are equal.
+     * Scenario 6: ensure that two BusinessSectorDto instances with the same name and Id are equal.
      */
     @Test
     void ensureBusinessSectorDtoWithSameNameAreEqual() {
         // ARRANGE
-        BusinessSectorDto dto1 = new BusinessSectorDto("Technology");
-        BusinessSectorDto dto2 = new BusinessSectorDto("Technology");
+        BusinessSectorDto dto1 = new BusinessSectorDto("Technology", "BS001");
+        BusinessSectorDto dto2 = new BusinessSectorDto("Technology", "BS001");
 
         // ACT
         boolean result = dto1.equals(dto2);
@@ -134,8 +132,8 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoWithDifferentNamesAreNotEqual() {
         // ARRANGE
-        BusinessSectorDto dto1 = new BusinessSectorDto("Technology");
-        BusinessSectorDto dto2 = new BusinessSectorDto("Finance");
+        BusinessSectorDto dto1 = new BusinessSectorDto("Technology", "BS001");
+        BusinessSectorDto dto2 = new BusinessSectorDto("Finance", "BS002");
 
         // ACT
         boolean result = dto1.equals(dto2);
@@ -150,8 +148,8 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoWithEmptyValuesAreEqual() {
         // ARRANGE
-        BusinessSectorDto dto1 = new BusinessSectorDto("");
-        BusinessSectorDto dto2 = new BusinessSectorDto("");
+        BusinessSectorDto dto1 = new BusinessSectorDto("", "");
+        BusinessSectorDto dto2 = new BusinessSectorDto("", "");
 
         // ACT
         boolean result = dto1.equals(dto2);
@@ -166,7 +164,7 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoNotEqualsDifferentClassObject() {
         // ARRANGE
-        BusinessSectorDto dto = new BusinessSectorDto("Technology");
+        BusinessSectorDto dto = new BusinessSectorDto("Technology", "BS001");
         Object other = new Object();
 
         // ACT
@@ -182,7 +180,7 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoEqualsItself() {
         // ARRANGE
-        BusinessSectorDto dto = new BusinessSectorDto("Technology");
+        BusinessSectorDto dto = new BusinessSectorDto("Technology", "BS001");
 
         // ACT
         boolean result = dto.equals(dto);
@@ -199,8 +197,8 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoHaveSameHashCode() {
         // ARRANGE
-        BusinessSectorDto reference = new BusinessSectorDto("Technology");
-        BusinessSectorDto other = new BusinessSectorDto("Technology");
+        BusinessSectorDto reference = new BusinessSectorDto("Technology", "BS001");
+        BusinessSectorDto other = new BusinessSectorDto("Technology", "BS001");
 
         // ACT
         int hashCodeReference = reference.hashCode();
@@ -216,8 +214,8 @@ class BusinessSectorDtoTest {
     @Test
     void ensureBusinessSectorDtoHaveDifferentHashCode() {
         // ARRANGE
-        BusinessSectorDto reference = new BusinessSectorDto("Technology");
-        BusinessSectorDto other = new BusinessSectorDto("Finance");
+        BusinessSectorDto reference = new BusinessSectorDto("Technology", "BS001");
+        BusinessSectorDto other = new BusinessSectorDto("Finance", "BS001");
 
         // ACT
         int hashCodeReference = reference.hashCode();

@@ -23,8 +23,10 @@ class BusinessSectorMapperTest {
         BusinessSectorMapper mapper = new BusinessSectorMapper();
         BusinessSector businessSector = mock(BusinessSector.class);
         String businessSectorName = "Finance";
+        String businessSectorId = "BS001";
         when(businessSector.getBusinessSectorName()).thenReturn(businessSectorName);
-        BusinessSectorDto expected = new BusinessSectorDto(businessSectorName);
+        when(businessSector.getBusinessSectorId()).thenReturn("BS001");
+        BusinessSectorDto expected = new BusinessSectorDto(businessSectorName, businessSectorId);
 
         //Act
         BusinessSectorDto result = mapper.businessSectorToDto(businessSector);
@@ -59,13 +61,15 @@ class BusinessSectorMapperTest {
         List<BusinessSector> businessSectors = new ArrayList<>();
         BusinessSector businessSector1 = mock(BusinessSector.class);
         when(businessSector1.getBusinessSectorName()).thenReturn("Finance");
+        when(businessSector1.getBusinessSectorId()).thenReturn("BS001");
         businessSectors.add(businessSector1);
         BusinessSector businessSector2 = mock(BusinessSector.class);
         when(businessSector2.getBusinessSectorName()).thenReturn("Technology");
+        when(businessSector2.getBusinessSectorId()).thenReturn("BS002");
         businessSectors.add(businessSector2);
         List<BusinessSectorDto> expected = new ArrayList<>();
-        expected.add(new BusinessSectorDto("Finance"));
-        expected.add(new BusinessSectorDto("Technology"));
+        expected.add(new BusinessSectorDto("Finance", "BS001"));
+        expected.add(new BusinessSectorDto("Technology", "BS002"));
 
         // Act
         List<BusinessSectorDto> result = mapper.listBusinessSectorsToDto(businessSectors);
