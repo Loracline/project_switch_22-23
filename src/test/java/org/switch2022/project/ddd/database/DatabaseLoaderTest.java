@@ -1,4 +1,3 @@
-/*
 package org.switch2022.project.ddd.database;
 
 import org.junit.jupiter.api.Test;
@@ -6,60 +5,63 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
+import org.switch2022.project.ddd.domain.model.account.AccountFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFactory;
+import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
+import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.model.project.FactoryProject;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResourceFactory;
 import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.model.typology.TypologyFactory;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.infrastructure.*;
+import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
-*/
 /**
  * JUnit test class for the {@link DatabaseLoader} component.
  * Uses Mockito for mocking dependencies and verifying that the correct data
  * is loaded into the database when the {@link DatabaseLoader} is executed.
- *//*
+ */
 
 
 @ExtendWith(MockitoExtension.class)
 public class DatabaseLoaderTest {
 
     @Mock
-    private ProjectRepositoryJpa projects;
+    private IProjectJpaRepository projects;
     @Mock
-    private BusinessSectorJpaRepository businessSectors;
+    private IBusinessSectorJpaRepository businessSectors;
     @Mock
-    private TypologyJpaRepository typologies;
+    private ITypologyJpaRepository typologies;
     @Mock
-    private CustomerJpaRepository customers;
+    private ICustomerJpaRepository customers;
     @Mock
-    private UserStoryRepositoryJpa userStories;
+    private IUserStoryJpaRepository userStories;
     @Mock
-    private SprintRepositoryJpa sprints;
+    private ISprintJpaRepository sprints;
     @Mock
-    private ProfileJpaRepository profiles;
+    private IProfileJpaRepository profiles;
     @Mock
-    private AccountJpaRepository accounts;
+    private IAccountJpaRepository accounts;
     @Mock
-    private ProjectResourceJpaRepository resources;
+    private IProjectResourceJpaRepository resources;
     @InjectMocks
     private DatabaseLoader databaseLoader;
 
-    */
 /**
      * Verifies that the correct data is loaded into the database when the
      * {@link DatabaseLoader} is executed.
      *
      * @throws Exception If there is an error loading the data.
-     *//*
+     */
 
 
     @Test
@@ -68,30 +70,57 @@ public class DatabaseLoaderTest {
         databaseLoader.run();
 
         // Verify that the data was loaded into the database
-        verify(businessSectors).save(new BusinessSectorFactory().createBusinessSector(1, new Name("farming")));
-        verify(businessSectors).save(new BusinessSectorFactory().createBusinessSector(2, new Name("sports")));
-        verify(businessSectors).save(new BusinessSectorFactory().createBusinessSector(3, new Name("fishing")));
-        verify(typologies).save(new TypologyFactory().createTypology(1, new Name("fixed cost")));
-        verify(typologies).save(new TypologyFactory().createTypology(2, new Name("fixed materials")));
-        verify(customers).save(new CustomerFactory().createCustomer(new TaxId("1111222234"), new Name("Eufemia")));
-        verify(customers).save(new CustomerFactory().createCustomer(new TaxId("1111222237"), new Name("Jussara")));
-        verify(customers).save(new CustomerFactory().createCustomer(new TaxId("1111222235"), new Name("Caroline")));
-        verify(projects).save(new FactoryProject().createProject(1, new Name("Project 1"),
+        // Business sectors
+        BusinessSectorDomainDataAssembler businessSectorDomainDataAssembler = new BusinessSectorDomainDataAssembler();
+        BusinessSectorFactory businessSectorFactory = new BusinessSectorFactory();
+        verify(businessSectors).save(businessSectorDomainDataAssembler.toData(businessSectorFactory.createBusinessSector(1, new Name("farming"))));
+
+        // Project typologies
+        TypologyFactory typologyFactory = new TypologyFactory();
+        TypologyDomainDataAssembler typologyDomainDataAssembler = new TypologyDomainDataAssembler();
+        verify(typologies).save(typologyDomainDataAssembler.toData(typologyFactory.createTypology(1, new Name("fixed cost"))));
+
+        // Customers
+        CustomerFactory customerFactory = new CustomerFactory();
+        CustomerDomainDataAssembler customerDomainDataAssembler = new CustomerDomainDataAssembler();
+        //verify(customers).save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("217746691"), new Name("Catarina"))));
+
+        // Projects
+        FactoryProject factoryProject = new FactoryProject();
+        ProjectDomainDataAssembler projectDomainDataAssembler = new ProjectDomainDataAssembler();
+        verify(projects).save(projectDomainDataAssembler.toData(factoryProject.createProject(1, new Name("Project 1"),
                 new Description("potato planting"), new BusinessSectorId(1),
-                new TaxId("1111222234"), new ProjectTypologyId(1)));
-        verify(userStories).save(new FactoryUserStory().createUserStory(new UsNumber("1"), new UsText("I want to have a farm"),
-                new Actor("Farmer"), new ArrayList<>(), new Code(1)));
-        verify(sprints).save(new SprintFactory().createSprint(new Code(1),
+                new TaxId("1111222234"), new ProjectTypologyId(1))));
+
+        // User Stories
+        FactoryUserStory factoryUserStory = new FactoryUserStory();
+        UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
+        verify(userStories).save(userStoryDomainDataAssembler.toData(factoryUserStory.createUserStory(new UsNumber("1"), new UsText("I want to have a farm"),
+                new Actor("Farmer"), new ArrayList<>(), new Code(1))));
+
+         // Sprints
+        SprintFactory sprintFactory = new SprintFactory();
+        SprintDomainDataAssembler sprintDomainDataAssembler = new SprintDomainDataAssembler();
+        verify(sprints).save(sprintDomainDataAssembler.toData(sprintFactory.createSprint(new Code(1),
                 new SprintId("1", "1"), new SprintNumber(1),
-                new Period(LocalDate.now(), 2)));
-        verify(resources).save(new ProjectResourceFactory().createProjectResource(new ProjectResourceId(1),
-                new Code(3), new Email("oliveira@gmail.com"), Role.SCRUM_MASTER,
-                new Period(LocalDate.now(), 2), new CostPerHour(19), new PercentageOfAllocation(25)));
-        verify(resources).save(new ProjectResourceFactory().createProjectResource(new ProjectResourceId(2),
-                new Code(2), new Email("oliveira@gmail.com"), Role.PRODUCT_OWNER,
-                new Period(LocalDate.now(), 2), new CostPerHour(18), new PercentageOfAllocation(35)));
-        verify(resources).save(new ProjectResourceFactory().createProjectResource(new ProjectResourceId(3),
-                new Code(3), new Email("oliveira@gmail.com"), Role.SCRUM_MASTER,
-                new Period(LocalDate.now(), 2), new CostPerHour(19), new PercentageOfAllocation(25)));
+                new Period(LocalDate.now(), 2))));
+
+        // Profiles
+        ProfileFactory profileFactory = new ProfileFactory();
+        ProfileDomainDataAssembler profileDomainDataAssembler = new ProfileDomainDataAssembler();
+        verify(profiles).save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Administrator"), 3)));
+
+        // Accounts
+        AccountFactory accountFactory = new AccountFactory();
+        AccountDomainDataAssembler accountDomainDataAssembler = new AccountDomainDataAssembler();
+        this.accounts.save(accountDomainDataAssembler.toData(accountFactory.create(new Name("Miguel"), new Email("oliveira@gmail.com"),
+                new PhoneNumber(964454321), null)));
+
+        // Project resources
+        ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
+        ResourceDomainDataAssembler resourceDomainDataAssembler = new ResourceDomainDataAssembler();
+        verify(resources).save(resourceDomainDataAssembler.toData(projectResourceFactory.createProjectResource(new ProjectResourceId(1),
+                new Code(1), new Email("oliveira@gmail.com"), Role.TEAM_MEMBER,
+                new Period(LocalDate.now(), 2), new CostPerHour(15), new PercentageOfAllocation(75))));
     }
-}*/
+}

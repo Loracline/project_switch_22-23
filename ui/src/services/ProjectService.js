@@ -8,14 +8,14 @@ export function postProject(success, failure, projectToSubmit) {
             'Content-type': 'application/json; charset=UTF-8',
         },
     })
-        .then(res => res.json())
+        .then(res => res.text())
         .then(res => success(res))
         .catch(err => failure(err.message))
     ;
 }
 
 export function getBusinessSectors(success, failure) {
-    fetch(`${URL}/business-sectors`, {
+    fetch(`${URL}/business_sectors`, {
         method: 'GET',
     })
         .then(res => res.json())

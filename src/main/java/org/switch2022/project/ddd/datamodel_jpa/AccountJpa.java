@@ -59,4 +59,17 @@ public class AccountJpa {
 
     protected AccountJpa() {
     }
+
+    /**
+     * Getter method that returns a BufferedImage with the photo
+     *
+     * @return photo.
+     */
+    public byte[] getPhoto() {
+        byte[] bufferedImage = null;
+        if (photo != null) {
+            bufferedImage = this.photo;
+        }
+        return bufferedImage;
+    }
 }
