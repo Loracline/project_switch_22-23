@@ -32,6 +32,7 @@ public class Account implements Entity<Account> {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.accountStatus = AccountStatus.ACTIVE;
+        this.profileId = new ProfileId(1);
 
         if (photo != null) {
             this.photo = photo;
