@@ -1,25 +1,34 @@
 import Button from "../../components/Button/Button";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {selectMenu} from "../../context/Actions";
 import {
+    Autocomplete,
     FormControl,
     FormHelperText,
     InputAdornment,
     InputLabel,
-    Select,
     MenuItem,
-    TextField, Autocomplete,
+    Select,
+    Snackbar,
+    TextField,
 } from "@mui/material";
 import AppContext from "../../context/AppContext";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {DatePicker} from "@mui/x-date-pickers";
+import {postResource} from "../../services/ResourceService";
+
+import Alert from "@mui/material/Alert";
+import {useGetAccounts} from "./useGetAccounts";
+//import {API_ROUTES, API_URL, API_HEADERS as headers} from "../../services/api";
 
 function AllocateResource() {
 
+    const {state, dispatch} = useContext(AppContext);
+    //const {detailedProject} = state;
+
     const initialResource = {
-        projectCode: "",
+        projectCode: 1,
         accountEmail: "",
         accountRole: "",
         accountCostPerHour: "",
@@ -28,14 +37,23 @@ function AllocateResource() {
         endDate: ""
     }
 
-    const {dispatch} = useContext(AppContext);
     const [resource, setResource] = useState(initialResource);
-    const [inputError, setInputError] = useState('');
+    const [percentageError, setPercentageError] = useState('');
+    const [backendError, setBackendError] = useState({message: '', show: false});
+
+    const [userAccounts] = useGetAccounts();
+
 
     const handleChange = (event) => {
         const {name, value} = event.target;
         const newResource = {...resource};
         newResource[name] = value;
+        setResource(newResource);
+    }
+
+    const handleAccountChange = (event, value) => {
+        const newResource = {...resource};
+        newResource["accountEmail"] = value.email;
         setResource(newResource);
     }
 
@@ -54,7 +72,7 @@ function AllocateResource() {
         if (inputError === '') {
             newResource["accountPercentageOfAllocation"] = newValue;
         }
-        setInputError(inputError);
+        setPercentageError(inputError);
         setResource(newResource);
     }
 
@@ -69,26 +87,39 @@ function AllocateResource() {
         setResource(newResource);
     }
 
-    // Mock user account data for dropdown search
-    const userAccounts = [
-        { email: "john@example.com", name: "John Doe", status: "ACTIVE" },
-        { email: "jane@example.com", name: "Jane Smith", status: "INACTIVE" },
-        { email: "rui@example.com", name: "Rui", status: "ACTIVE" },
-        // Add more user accounts as needed
-    ];
+    const handleBannerClose = () => {
+        setBackendError(false);
+    }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        //Open modal with summary
+        //if confirms, proceed
+        //Call service to create resource
+        //If succeeds showcase success message, clean form etc
+        //If fails showcase inform the user
+        //example:
+        postResource(resource)
+            .then((res) => console.log("sucesso yeah!"))
+            .catch((err) => setBackendError({message: err.message, show: true}))
+    }
 
 
     return (
         <div className="page">
+            <Snackbar open={backendError.show} autoHideDuration={6000}>
+                <Alert severity="error" onClose={handleBannerClose} sx={{width: '100%'}}>
+                    {backendError.message}
+                </Alert>
+            </Snackbar>
             <section className="formCard">
                 <h2>Allocate Resource</h2>
-                <form className="resource-form" /*onSubmit={handleSubmit}*/>
+                <form className="resource-form" onSubmit={handleSubmit}>
 
                     <Autocomplete
-                        sx={{ width: 500 }}
+                        sx={{width: 500}}
                         options={userAccounts}
-                        getOptionLabel={(option) => option.email }
+                        getOptionLabel={(option) => option.email}
                         getOptionDisabled={(option) => option.status === "INACTIVE"}
                         renderOption={(props, option) => (
                             <li {...props}>
@@ -97,13 +128,13 @@ function AllocateResource() {
                                 </div>
                             </li>
                         )}
+                        onChange={handleAccountChange}
                         renderInput={(params) => (
                             <TextField
                                 {...params}
                                 label="User"
                                 name="accountEmail"
                                 value={resource.accountEmail}
-                                onChange={handleChange}
                                 required
                             />
                         )}
@@ -120,7 +151,7 @@ function AllocateResource() {
                     <br/>
 
                     <div className="resource-form-row">
-                        <FormControl required sx={{ width: 250 }}>
+                        <FormControl required sx={{width: 250}}>
                             <InputLabel>Role</InputLabel>
                             <Select
                                 name="accountRole"
@@ -140,13 +171,16 @@ function AllocateResource() {
 
                     <div className="resource-form-row">
                         <TextField
-                            sx={{ width: 250 }}
+                            sx={{width: 250}}
                             name="accountCostPerHour"
                             value={resource.accountCostPerHour}
                             label="Cost"
                             type="number"
                             helperText={'Total paid for each hour of work'}
-                            InputProps={{endAdornment: (<InputAdornment position="end">€/Hour</InputAdornment>)}}
+                            InputProps={{
+                                endAdornment: (<InputAdornment position="end">€/Hour</InputAdornment>),
+                                inputProps: {min: 0}
+                            }}
                             onChange={handleChange}
                             required
                         />
@@ -159,8 +193,8 @@ function AllocateResource() {
                             value={resource.accountPercentageOfAllocation}
                             label="Percentage Of Allocation"
                             type="number"
-                            error={Boolean(inputError)}
-                            helperText={inputError ||'Between 0 - 100%'}
+                            error={Boolean(percentageError)}
+                            helperText={percentageError || 'Between 0 - 100%'}
                             InputProps={{endAdornment: (<InputAdornment position="end">%</InputAdornment>)}}
                             onChange={handleChangeForPercentageOfAllocationInput}
                             required
@@ -172,17 +206,15 @@ function AllocateResource() {
 
                     <div className="resource-form-row">
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DatePicker']}>
-                                <DatePicker
-                                    sx={{ width: 250 }}
-                                    label="Start Date"
-                                    disablePast
-                                    maxDate={resource.endDate}
-                                    value={resource.startDate}
-                                    onChange={handleStartDate}
-                                    required
-                                />
-                            </DemoContainer>
+                            <DatePicker
+                                sx={{width: 250}}
+                                label="Start Date"
+                                disablePast
+                                maxDate={resource.endDate}
+                                value={resource.startDate}
+                                onChange={handleStartDate}
+                                required
+                            />
                         </LocalizationProvider>
                         <FormHelperText>DD/MM/YYYY</FormHelperText>
                         <br/>
@@ -192,17 +224,15 @@ function AllocateResource() {
 
                     <div>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DemoContainer components={['DatePicker']}>
-                                <DatePicker
-                                    sx={{ width: 250 }}
-                                    label="End Date"
-                                    disablePast
-                                    minDate={resource.startDate}
-                                    value={resource.endDate}
-                                    onChange={handleEndDate}
-                                    required
-                                />
-                            </DemoContainer>
+                            <DatePicker
+                                sx={{width: 250}}
+                                label="End Date"
+                                disablePast
+                                minDate={resource.startDate}
+                                value={resource.endDate}
+                                onChange={handleEndDate}
+                                required
+                            />
                         </LocalizationProvider>
                         <FormHelperText>DD/MM/YYYY</FormHelperText>
                         <br/>
@@ -216,7 +246,6 @@ function AllocateResource() {
                         text="Return"
                     />
                 </form>
-
 
             </section>
         </div>
