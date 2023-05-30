@@ -82,9 +82,9 @@ public class DatabaseLoader implements CommandLineRunner {
         // Customers
         CustomerFactory customerFactory = new CustomerFactory();
         CustomerDomainDataAssembler customerDomainDataAssembler = new CustomerDomainDataAssembler();
-        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("1111222234"), new Name("Catarina"))));
-        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("1111222237"), new Name("Jussara"))));
-        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("1111222235"), new Name("Caroline"))));
+        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("217746691"), new Name("Catarina"))));
+        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("257578994"), new Name("Jussara"))));
+        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("238419096"), new Name("Caroline"))));
         // Projects
         FactoryProject factoryProject = new FactoryProject();
         ProjectDomainDataAssembler projectDomainDataAssembler = new ProjectDomainDataAssembler();
@@ -121,19 +121,19 @@ public class DatabaseLoader implements CommandLineRunner {
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
         ProfileDomainDataAssembler profileDomainDataAssembler = new ProfileDomainDataAssembler();
-        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Administrator"), 1)));
+        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("User"), 1)));
         this.profiles.save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Manager"), 2)));
-        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("User"), 3)));
+        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Administrator"), 3)));
         // Accounts
-  /*      AccountFactory accountFactory = new AccountFactory();
+        AccountFactory accountFactory = new AccountFactory();
         AccountDomainDataAssembler accountDomainDataAssembler = new AccountDomainDataAssembler();
         BufferedImage defaultImage = new BufferedImage(5, 5, BufferedImage.TYPE_3BYTE_BGR);
         this.accounts.save(accountDomainDataAssembler.toData(accountFactory.create(new Name("Miguel"), new Email("oliveira@gmail.com"),
-                new PhoneNumber(964454321), new Photo(defaultImage))));
+                new PhoneNumber(964454321), null)));
         this.accounts.save(accountDomainDataAssembler.toData(accountFactory.create(new Name("Joana"), new Email("marques@gmail.com"),
-                new PhoneNumber(964454322), new Photo(defaultImage))));
+                new PhoneNumber(964454322), null)));
         this.accounts.save(accountDomainDataAssembler.toData(accountFactory.create(new Name("Paulo"), new Email("ribeiro@gmail.com"),
-                new PhoneNumber(964454323), new Photo(defaultImage))));*/
+                new PhoneNumber(964454323), null)));
         // Project resources
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
         ResourceDomainDataAssembler resourceDomainDataAssembler = new ResourceDomainDataAssembler();
