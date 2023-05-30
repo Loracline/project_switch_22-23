@@ -7,6 +7,7 @@ import {
 } from "../services/ProjectService";
 import  {postSprint} from "../services/SprintService";
 import {strings} from "../strings";
+import {postUserStory} from "../services/UserStoryService";
 
 /**
  Action types.
@@ -30,6 +31,8 @@ export const GET_TYPOLOGIES_FAILURE = 'GET_TYPOLOGIES_FAILURE';
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const GET_CUSTOMERS_SUCCESS = 'GET_CUSTOMERS_SUCCESS';
 export const GET_CUSTOMERS_FAILURE = 'GET_CUSTOMERS_FAILURE';
+export const POST_USER_STORY_SUCCESS = 'POST_USER_STORY_SUCCESS';
+export const POST_USER_STORY_FAILURE = 'POST_USER_STORY_FAILURE';
 
 /**
  * Action to fetch business sectors
@@ -40,27 +43,15 @@ export function fetchBusinessSectors(dispatch) {
         type: GET_BUSINESS_SECTORS
     };
     dispatch(action);
-    setTimeout(() => {
-        dispatch(fetchBusinessSectorsSuccess([]));
-    }, 1000);
-    // getBusinessSectors((res) => dispatch(fetchBusinessSectorsSuccess(res)), (_) =>
-    //     dispatch(fetchBusinessSectorsFailure()));
+    getBusinessSectors((res) => dispatch(fetchBusinessSectorsSuccess(res)), (_) =>
+        dispatch(fetchBusinessSectorsFailure()));
 }
 
 function fetchBusinessSectorsSuccess(businessSectors) {
     return {
         type: GET_BUSINESS_SECTORS_SUCCESS,
         payload: {
-            data: [{
-                id: 'BS001',
-                name: 'IT'
-            }, {
-
-                id: 'BS002',
-                name: 'Technologies'
-            }
-            ]
-            // data: [...businessSectors]
+            data: [...businessSectors]
         }
 
     }
@@ -84,25 +75,15 @@ export function fetchTypologies(dispatch) {
         type: GET_TYPOLOGIES
     };
     dispatch(action);
-    setTimeout(() => {
-        dispatch(fetchTypologiesSuccess([]))
-    }, 1000);
-    // getProjectTypologies((res) => dispatch(fetchTypologiesSuccess(res)), (_) =>
-    //     dispatch(fetchTypologiesFailure()));
+    getProjectTypologies((res) => dispatch(fetchTypologiesSuccess(res)), (_) =>
+        dispatch(fetchTypologiesFailure()));
 }
 
 export function fetchTypologiesSuccess(typologies) {
     return {
         type: GET_TYPOLOGIES_SUCCESS,
         payload: {
-            data: [{
-                id: '1',
-                name: 'Typology 1'
-            }, {
-                id: '2',
-                name: 'Typology 2'
-            }]
-            // data: [...typologies]
+            data: [...typologies]
         }
     }
 }
@@ -125,25 +106,17 @@ export function fetchCustomers(dispatch) {
         type: GET_CUSTOMERS
     };
     dispatch(action);
-    setTimeout(() => {
-        dispatch(fetchCustomersSuccess([]));
-    }, 1000);
-    // getCustomers((res) => dispatch(fetchCustomersSuccess(res)), (_) =>
-    //     dispatch(fetchCustomersFailure()));
+    getCustomers((res) => {
+        dispatch(fetchCustomersSuccess(res));
+    }, (_) =>
+        dispatch(fetchCustomersFailure()));
 }
 
 export function fetchCustomersSuccess(customers) {
     return {
         type: GET_CUSTOMERS_SUCCESS,
         payload: {
-            data: [{
-                id: '1',
-                name: 'Customer 1'
-            }, {
-                id: '2',
-                name: 'Customer 2'
-            }]
-            // data: [...customers]
+            data: [...customers]
         }
     }
 }
@@ -161,22 +134,18 @@ function fetchCustomersFailure() {
  Action for creating a new project.
  */
 export function createProject(dispatch, projectToSubmit) {
-    setTimeout(() => {
-        dispatch(postProjectSuccess('SERRA A PRESIDENTE'));
-    }, 1000);
-    // setTimeout(() => {
-    //     dispatch(postProjectFailure('error message'));
-    // }, 1000);
-    // postProject((res) => dispatch(postProjectSuccess(res)),
-    //     (err) => dispatch(postProjectFailure(err.message)),
-    //     {
-    //         projectName: projectToSubmit.name,
-    //         projectDescription: projectToSubmit.description,
-    //         businessSectorId: projectToSubmit.businessSector.id,
-    //         customerId: projectToSubmit.customer.id,
-    //         typologyId: projectToSubmit.typology.id
-    //     }
-    // );
+    postProject((res) => {
+            dispatch(postProjectSuccess(res));
+        },
+        (err) => dispatch(postProjectFailure(err.message)),
+        {
+            projectName: projectToSubmit.name,
+            projectDescription: projectToSubmit.description,
+            businessSectorId: projectToSubmit.businessSector.id,
+            customerId: projectToSubmit.customer.taxIdNumber,
+            typologyId: projectToSubmit.typology.typologyId
+        }
+    );
 }
 
 function postProjectSuccess(projectId) {
@@ -206,11 +175,32 @@ function postProjectFailure(message) {
 /**
  Action for creating a new user story.
  */
-export const createUserStory = (userStory) => {
+export function createUserStory(dispatch, userStoryToSubmit) {
+    postUserStory((response) => dispatch(postUserStorySuccess(response)),
+        (error) => dispatch(postUserStoryFailure(error.message)), userStoryToSubmit
+    );
+}
+
+/**
+ Function for dealing with a POST User Story with success.
+ */
+function postUserStorySuccess(userStoryId) {
     return {
-        type: CREATE_USER_STORY,
+        type: POST_USER_STORY_SUCCESS,
         payload: {
-            userStory
+            data: userStoryId
+        }
+    }
+}
+
+/**
+ Function for dealing with a POST User Story with failure.
+ */
+function postUserStoryFailure(message) {
+    return {
+        type: POST_USER_STORY_FAILURE,
+        payload: {
+            error: message
         }
     }
 }
@@ -285,13 +275,13 @@ export function fetchFailure(message) {
 export const GET_PROJECT_SUCCESS = 'GET_PROJECT_SUCCESS';
 
 export function getProject(dispatch, projectCode) {
-    fetchProject((res) => dispatch(getProjectSuccess(res), (err) => fetchFailure(err.message)), projectCode)
+    fetchProject((res) => dispatch(getProjectSuccess(res)), (err) => dispatch(fetchFailure(err.message)), projectCode);
 }
 
 export function getProjectSuccess(project) {
     return {
         type: GET_PROJECT_SUCCESS,
-        payload: project
+        payload: project?.[0],
     }
 }
 
@@ -302,7 +292,7 @@ export const POST_SPRINT_SUCCESS = 'POST_SPRINT_SUCCESS';
 
 export function createSprint2(dispatch, sprintToSubmit) {
     postSprint((res) => dispatch(postSprintSuccess(res.text())),
-        (err) =>dispatch(fetchFailure(err.message)),
+        (err) => dispatch(fetchFailure(err.message)),
         sprintToSubmit
     );
 }
@@ -322,7 +312,7 @@ function postSprintSuccess(message) {
 export const GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
 
 export function getProjects(dispatch) {
-    fetchProjects((res) => dispatch(getProjectsSuccess(res), (err) => fetchFailure(err.message)))
+    fetchProjects((res) => dispatch(getProjectsSuccess(res)), (err) => fetchFailure(err.message));
 }
 
 function getProjectsSuccess(projects) {

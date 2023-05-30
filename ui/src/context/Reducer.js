@@ -127,29 +127,28 @@ const reducer = (state, action) => {
         case GET_TYPOLOGIES_FAILURE:
             return {...state, loading: false, messageFailure: action.payload.error};
 
-        /*
-        case FETCH_PROJECT_SUCCESS: {
+        case GET_PROJECTS_SUCCESS: {
+            const projectsBE = action.payload.data;
+            return {...state, projects: projectsBE};
+        }
+
+        case FETCH_FAILURE: {
+            return {...state, messageFailure: action.payload?.message};
+        }
+
         case CLOSE_BUTTON: {
             return {...state, messageSuccess: '', messageFailure: ''}
         }
 
-        case GET_PROJECTS_SUCCESS: {
-            const projectsBE = action.payload.project;
-            return {...state, projects: projectsBE};
-        }
-
         case GET_PROJECT_SUCCESS: {
-            const project = action.payload.project;
+            const project = action.payload;
+            console.log(project);
             return {...state, detailedProject: project};
-        }
-
-        case FETCH_FAILURE: {
-            return {...state, messageFailure: action.payload.message};
         }
 
         case POST_SPRINT_SUCCESS: {
             return {...state, messageSuccess: action.payload.message};
-        }*/
+        }
 
         default:
             return state;

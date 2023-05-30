@@ -16,12 +16,12 @@ function CreateUserStory() {
     const {detailedProject} = state;
 
     const initialUsState = {
-        projectCode: detailedProject.basicInfo.code,
+        // Hard-coded for validation purposes while
+        projectCode: "p001",
         userStoryNumber: "",
         userStoryText: "",
         actor: "",
         acceptanceCriteria: [],
-        status: "Planned",
         priority: "",
     };
 
@@ -31,7 +31,7 @@ function CreateUserStory() {
     const handleChange = (event) => {
         const {name, value} = event.target;
         const newUserStory = {...userStory}
-        if(name === "priority"){
+        if (name === "priority") {
             newUserStory[name] = Number(value)
         } else {
             newUserStory[name] = value
@@ -58,8 +58,7 @@ function CreateUserStory() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(createUserStory({...userStory, priority: userStory.priority || -1}));
-        window.alert(`The user story "${userStory.userStoryNumber}: ${userStory.userStoryText}" was successfully added to project ${userStory.projectCode}.`);
+        createUserStory(dispatch, {...userStory, priority: userStory.priority || -1});
         setUserStory(initialUsState);
     }
 
@@ -115,13 +114,15 @@ function CreateUserStory() {
                                               <DeleteIcon/>
                                           </IconButton>
                                       }>
-                                <ListItemText primary={`${index + 1}. ${acceptanceCriteria}`}> </ListItemText>
+                                <ListItemText
+                                    primary={`${index + 1}. ${acceptanceCriteria}`}> </ListItemText>
                             </ListItem>
                         ))}
                     </List>
                     <TextField
                         name="priority"
                         label="Priority"
+                        helperText={'Default priority is the lowest one'}
                         value={userStory.priority}
                         onChange={handleChange}
                         type="number"
@@ -138,8 +139,9 @@ function CreateUserStory() {
                         <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))}
                                 text="Return to project"/>
                     </div>
-                    <Button isSecundary={true} onClick={() => dispatch(selectMenu('productBacklog'))}
-                            text="Go to Product Backlog" />
+                    <Button isSecundary={true}
+                            onClick={() => dispatch(selectMenu('productBacklog'))}
+                            text="Go to Product Backlog"/>
                 </form>
             </section>
         </div>)

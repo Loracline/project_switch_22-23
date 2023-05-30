@@ -11,7 +11,7 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
-import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.utils.Utils;
 import org.switch2022.project.ddd.utils.Validate;
 
@@ -32,65 +32,8 @@ public class CreateSprintService {
     @Autowired
     private ISprintFactory sprintFactory;
     @Autowired
-    @Qualifier ("project_jpa")
+    @Qualifier("project_jpa")
     private IProjectRepository projectRepository;
-
-    /**
-     * This method will create a sprint
-     * First it creates all the value objects needed for the creation fo the sprint.
-     * After checks if the project exists in the repository and if it has a status
-     * different of Planned or closed.
-     * Therefore, it gets the project duration and creates a sprint.
-     * The sprint is verified if it period is valid: checks if the startDate is after or equal the project start date,
-     * if the end date is before or equal the project end date and check if the period is not overlapping with other
-     * sprints period.
-     * After it adds the sprint to the sprint repository
-     *
-     * @param projectCode of the project
-     * @param startDate   of the sprint
-     * @return a String of the stringID
-     * @throws Exception if the sprint is already in the repository
-     */
-
-    public String createSprint(String projectCode, String startDate) throws Exception {
-        Validate.notNullOrEmptyOrBlank(startDate, "sprint Start Date");
-        Validate.notNullOrEmptyOrBlank(projectCode, "project code");
-        Code code = new Code(Utils.getIntFromAlphanumericString(projectCode, "p"));
-        SprintNumber sprintNumber = new SprintNumber(sprintRepository.count() + 1);
-        SprintId sprintId = new SprintId(projectCode, sprintNumber.getSprintNumber());
-        String sprintIdToBeReturned = "";
-        Project project = getProjectByCode(projectCode);
-        if (isProjectInStatus(project) == 1) {
-            Period period = new Period(LocalDate.parse(startDate), getSprintDuration(project).getSprintDuration());
-            Sprint sprint = sprintFactory.createSprint(code, sprintId, sprintNumber, period);
-            if (verifyIfPeriodIsValid(project, sprint) == 1 &&
-                    sprintRepository.save(sprint)) {
-                sprintIdToBeReturned = sprintId.getSprintId();
-            } else {
-                throw new AlreadyExistsInRepoException("The sprint already exists");
-            }
-        }
-        return sprintIdToBeReturned;
-    }
-
-    /**
-     * This method will return an Optional Project from the repository.
-     *
-     * @param code of the project to be retrieved.
-     * @return a project from the repository.
-     */
-    private Project getProjectByCode(String code) {
-        Project project;
-        int codeNumber = Utils.getIntFromAlphanumericString(code, "p");
-        Code projectCode = new Code(codeNumber);
-        Optional<Project> projectOptional = projectRepository.findByCode(projectCode);
-        if (projectOptional.isPresent()) {
-            project = projectOptional.get();
-        } else {
-            throw new ProjectNotFoundException("No project with that code");
-        }
-        return project;
-    }
 
     /**
      * This method checks if the sprint start date is after or equal the project start date
@@ -133,7 +76,8 @@ public class CreateSprintService {
     }
 
     /**
-     * This method verifies if the sprint period does not overlap with other sprints periods of the same project
+     * This method verifies if the sprint period does not overlap with other sprints periods of
+     * the same project
      *
      * @param sprints list of sprints in the same Project
      * @param sprint  to be added to project
@@ -154,7 +98,87 @@ public class CreateSprintService {
     }
 
     /**
-     * This method verifies if the Period of the Sprint is valid by checking the period with the project Period
+     * This method gets the SprintDuration from the project
+     *
+     * @param project to be checked
+     * @return sprintDuration
+     * @throws Exception that the Project doesn't have a sprint duration
+     */
+
+    private static SprintDuration getSprintDuration(Project project) throws Exception {
+        SprintDuration sprintDuration;
+        Optional<SprintDuration> optionalSprintDuration = project.getSprintDuration();
+        if (optionalSprintDuration.isPresent()) {
+            sprintDuration = optionalSprintDuration.get();
+        } else {
+            throw (new Exception("No Sprint Duration in this Project"));
+        }
+        return sprintDuration;
+    }
+
+    /**
+     * This method will create a sprint
+     * First it creates all the value objects needed for the creation fo the sprint.
+     * After checks if the project exists in the repository and if it has a status
+     * different of Planned or closed.
+     * Therefore, it gets the project duration and creates a sprint.
+     * The sprint is verified if it period is valid: checks if the startDate is after or equal
+     * the project start date,
+     * if the end date is before or equal the project end date and check if the period is not
+     * overlapping with other
+     * sprints period.
+     * After it adds the sprint to the sprint repository
+     *
+     * @param projectCode of the project
+     * @param startDate   of the sprint
+     * @return a String of the stringID
+     * @throws Exception if the sprint is already in the repository
+     */
+
+    public String createSprint(String projectCode, String startDate) throws Exception {
+        Validate.notNullOrEmptyOrBlank(startDate, "sprint Start Date");
+        Validate.notNullOrEmptyOrBlank(projectCode, "project code");
+        Code code = new Code(Utils.getIntFromAlphanumericString(projectCode, "p"));
+        SprintNumber sprintNumber = new SprintNumber(sprintRepository.count() + 1);
+        SprintId sprintId = new SprintId(projectCode, sprintNumber.getSprintNumber());
+        String sprintIdToBeReturned = "";
+        Project project = getProjectByCode(projectCode);
+        if (isProjectInStatus(project) == 1) {
+            Period period = new Period(LocalDate.parse(startDate),
+                    getSprintDuration(project).getSprintDuration());
+            Sprint sprint = sprintFactory.createSprint(code, sprintId, sprintNumber, period);
+            if (verifyIfPeriodIsValid(project, sprint) == 1 &&
+                    sprintRepository.save(sprint)) {
+                sprintIdToBeReturned = sprintId.getSprintId();
+            } else {
+                throw new AlreadyExistsInRepoException("The sprint already exists");
+            }
+        }
+        return sprintIdToBeReturned;
+    }
+
+    /**
+     * This method will return an Optional Project from the repository.
+     *
+     * @param code of the project to be retrieved.
+     * @return a project from the repository.
+     */
+    private Project getProjectByCode(String code) {
+        Project project;
+        int codeNumber = Utils.getIntFromAlphanumericString(code, "p");
+        Code projectCode = new Code(codeNumber);
+        Optional<Project> projectOptional = projectRepository.findByCode(projectCode);
+        if (projectOptional.isPresent()) {
+            project = projectOptional.get();
+        } else {
+            throw new NotFoundInRepoException("No project with that code");
+        }
+        return project;
+    }
+
+    /**
+     * This method verifies if the Period of the Sprint is valid by checking the period with the
+     * project Period
      * and with the other sprints
      *
      * @param project to be checked
@@ -183,25 +207,6 @@ public class CreateSprintService {
             throw new Exception("The sprint start date is before the project start date");
         }
         return result;
-    }
-
-    /**
-     * This method gets the SprintDuration from the project
-     *
-     * @param project to be checked
-     * @return sprintDuration
-     * @throws Exception that the Project doesn't have a sprint duration
-     */
-
-    private static SprintDuration getSprintDuration(Project project) throws Exception {
-        SprintDuration sprintDuration;
-        Optional<SprintDuration> optionalSprintDuration = project.getSprintDuration();
-        if (optionalSprintDuration.isPresent()) {
-            sprintDuration = optionalSprintDuration.get();
-        } else {
-            throw (new Exception("No Sprint Duration in this Project"));
-        }
-        return sprintDuration;
     }
 
 }

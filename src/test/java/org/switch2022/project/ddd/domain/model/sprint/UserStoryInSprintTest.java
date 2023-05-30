@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.sprint;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Effort;
 import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -38,14 +39,33 @@ public class UserStoryInSprintTest {
     }
 
     /**
-     * Scenario 2 : creates
+     * Scenario 2 : create US with only id.
      */
 
     @Test
     void createsUserStoryInSprintWithOnlyId() {
-        //ACT & ASSERT
+        //Arrange
         UsId usId = mock(UsId.class);
+        //Act
         UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId);
+        //Assert
+        assertNotNull(userStoryInSprint);
+    }
+
+    /**
+     * Scenario 3 :verifies if an instance of UsId is not created because the string corresponding to the user story
+     * number passed as argument is null.
+     */
+
+    @Test
+    void ensureThatAnExceptionIsThrownWhenUsIdISNull() {
+        //Arrange
+        String expected = "UsId cannot be null";
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                new UserStoryInSprint(null));
+        //Assert
+        assertEquals(expected, exception.getMessage());
     }
 
     /**

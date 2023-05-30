@@ -11,12 +11,12 @@ const menu = [
     {key: 'home', label: 'home', hidden: true},
     {key: 'createProject', label: "create project", hidden: true},
     {key: 'projects', label: "projects"},
-    {key: 'createUserStory', label: "create user story", hidden: true},
+    {key: 'createUserStory', label: "create user story", hidden: false},
     {key: 'productBacklog', label: "product backlog", hidden: true},
     {key: 'createSprint', label: "create sprint", hidden: true},
     {key: 'project', label: "project", hidden: true},
     {key: 'about', label: "about"},
-    {key: 'allocateResource', label: "allocate resource", hidden: true}
+    {key: 'allocateResource', label: "allocate resource"}
 ]
 const nav = {selectedMenu: menu[0], menu: menu,}
 const detailedProject = null;

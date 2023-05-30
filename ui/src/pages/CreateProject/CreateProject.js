@@ -24,9 +24,18 @@ function CreateProject() {
 
     const initialProject = {
         name: '',
-        customer: '',
-        businessSector: '',
-        typology: '',
+        customer: {
+            name: '',
+            taxIdNumber: ''
+        },
+        businessSector: {
+            name: '',
+            id: ''
+        },
+        typology: {
+            typologyName: '',
+            typologyId: ''
+        },
         description: ''
     };
 
@@ -53,25 +62,28 @@ function CreateProject() {
     }
 
     const handleChangeCustomer = (event) => {
+        const selectedCustomer = customers.find((customer) => customer.taxIdNumber === event.target.value);
         setProject({
             ...project, ...{
-                customer: event.target.value
+                customer: selectedCustomer
             }
         });
     }
 
     const handleChangeBusinessSector = (event) => {
+        const selectedBusinessSector = businessSectors.find((businessSector) => businessSector.id === event.target.value);
         setProject({
             ...project, ...{
-                businessSector: event.target.value
+                businessSector: selectedBusinessSector
             }
         });
     }
 
     const handleChangeTypology = (event) => {
+        const selectedTypology = typologies.find((typology) => typology.typologyId === event.target.value);
         setProject({
             ...project, ...{
-                typology: event.target.value
+                typology: selectedTypology
             }
         });
     }
@@ -113,12 +125,11 @@ function CreateProject() {
                         <Select
                             labelId={'projectCustomerInputLabel'}
                             id={'projectCustomerSelect'}
-                            autoWidth
-                            value={project.customer}
+                            value={project.customer.taxIdNumber}
                             label={"Customer"}
                             onChange={handleChangeCustomer}>
-                            {customers && customers.map(({id, name}, index) => (
-                                <MenuItem key={index} value={id}>{name}</MenuItem>
+                            {customers && customers.map(({taxIdNumber, name}, index) => (
+                                <MenuItem key={index} value={taxIdNumber}>{name}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -127,7 +138,7 @@ function CreateProject() {
                         <Select
                             labelId={'projectBusinessSectorInputLabel'}
                             id={'projectBusinessSectorSelect'}
-                            value={project.businessSector}
+                            value={project.businessSector.id}
                             label={"Business Sector"}
                             onChange={handleChangeBusinessSector}>
                             {businessSectors && businessSectors.map(({id, name}, index) => (
@@ -140,11 +151,11 @@ function CreateProject() {
                         <Select
                             labelId={'projectTypologyInputLabel'}
                             id={'projectTypologySelect'}
-                            value={project.typology}
+                            value={project.typology.typologyId}
                             label={"Typology"}
                             onChange={handleChangeTypology}>
-                            {typologies && typologies.map(({id, name}, index) => (
-                                <MenuItem key={index} value={id}>{name}</MenuItem>
+                            {typologies && typologies.map(({typologyId, typologyName}, index) => (
+                                <MenuItem key={index} value={typologyId}>{typologyName}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -180,17 +191,17 @@ function CreateProject() {
                 <CircularProgress style={{color: "#6145AF"}} sx={{m: 5}}/>
             </Dialog>
 
-            <Dialog className="success-dialog" open={messageSuccess}>
-                <CheckCircleIcon style={{color: "green", alignSelf: "center", width: 80, height: 80, margin: 10}} />
+            <Dialog className="success-dialog"  open={messageSuccess.length > 0}>
+                <CheckCircleIcon style={{color: "green", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
                 <h3>{strings.projectCreatedSuccessMessage}</h3>
                 <h4>{messageSuccess}</h4>
-                <Button text="Close" onClick={handleClearProject} />
+                <Button text="Close" onClick={handleClearProject}/>
             </Dialog>
 
-            <Dialog className="failure-dialog" open={messageFailure}>
-                <ErrorIcon style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}} />
+            <Dialog className="failure-dialog" open={messageFailure.length > 0}>
+                <ErrorIcon style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
                 <h3>{strings.genericServerError}</h3>
-                <Button text="Close" onClick={handleClearProject} />
+                <Button text="Close" onClick={handleClearProject}/>
             </Dialog>
 
         </div>
