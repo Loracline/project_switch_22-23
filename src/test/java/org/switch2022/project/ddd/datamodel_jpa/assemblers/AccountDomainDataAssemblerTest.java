@@ -43,7 +43,7 @@ class AccountDomainDataAssemblerTest {
         when(account.getAccountEmail()).thenReturn("josh@email.pt");
         when(account.getPhoneNumber()).thenReturn(921036438);
         when(account.getAccountStatus()).thenReturn("active");
-        when(account.getProfileId()).thenReturn("1");
+        when(account.getProfileId()).thenReturn("prf001");
         when(account.getPhoto()).thenReturn(defaultImage);
 
         //ACT
@@ -73,7 +73,7 @@ class AccountDomainDataAssemblerTest {
         when(accountJpa.getEmail()).thenReturn("josh@email.pt");
         when(accountJpa.getPhoneNumber()).thenReturn("921036438");
         when(accountJpa.getAccountStatus()).thenReturn("active");
-        when(accountJpa.getProfileId()).thenReturn("1");
+        when(accountJpa.getProfileId()).thenReturn("prf001");
         when(accountJpa.getPhoto()).thenReturn(bytes);
 
         Account accountToBeCreated = mock(Account.class);
@@ -81,7 +81,7 @@ class AccountDomainDataAssemblerTest {
         when(accountToBeCreated.getAccountEmail()).thenReturn("josh@email.pt");
         when(accountToBeCreated.getPhoneNumber()).thenReturn(921036438);
         when(accountToBeCreated.getAccountStatus()).thenReturn("active");
-        when(accountToBeCreated.getProfileId()).thenReturn("1");
+        when(accountToBeCreated.getProfileId()).thenReturn("prf001");
         when(accountToBeCreated.getPhoto()).thenReturn(defaultImage);
 
         when(accountFactory.create(any(), any(), any(), any())).thenReturn(accountToBeCreated);
