@@ -6,6 +6,7 @@ import org.switch2022.project.ddd.datamodel_jpa.BusinessSectorJpa;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
 import org.switch2022.project.ddd.domain.value_object.Name;
+import org.switch2022.project.ddd.utils.Utils;
 
 
 /**
@@ -38,7 +39,8 @@ public class BusinessSectorDomainDataAssembler {
      */
 
     public BusinessSector toDomain(BusinessSectorJpa businessSectorJpa) {
-        Number businessSectorId = Integer.parseInt(businessSectorJpa.getIdNumber());
+        Number businessSectorId = Utils.getIntFromAlphanumericString(businessSectorJpa.getIdNumber()
+                , "bs");
         Name businessSectorName = new Name(businessSectorJpa.getName());
         return factory.createBusinessSector(businessSectorId, businessSectorName);
     }
