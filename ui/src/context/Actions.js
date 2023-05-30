@@ -11,7 +11,6 @@ import {strings} from "../strings";
 /**
  Action types.
  */
-//the following is just a dummy action, needs to be updated with proper implementation
 export const CREATE_USER_STORY = 'CREATE_USER_STORY';
 export const CREATE_SPRINT = 'CREATE_SPRINT';
 export const CHECK_PROJECT = 'CHECK_PROJECT';
