@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.dto;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.image.BufferedImage;
