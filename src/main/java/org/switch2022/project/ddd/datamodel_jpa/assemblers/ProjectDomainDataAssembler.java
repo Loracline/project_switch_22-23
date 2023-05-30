@@ -11,10 +11,8 @@ import org.switch2022.project.ddd.utils.Utils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 @Component
 public class ProjectDomainDataAssembler {
     @Autowired
@@ -77,12 +75,10 @@ public class ProjectDomainDataAssembler {
         ProjectTypologyId projectTypology = new ProjectTypologyId(Utils.getIntFromAlphanumericString
                 (projectJpa.getProjectTypologyId(), "pt"));
         Budget budget = new Budget(BigDecimal.valueOf(projectJpa.getBudget()));
-        ProjectStatus projectstatus = ProjectStatus.valueOf(projectJpa.getProjectStatus());
+        ProjectStatus projectstatus =
+                ProjectStatus.valueOf(projectJpa.getProjectStatus().toUpperCase());
         NumberOfPlannedSprints numberOfPlannedSprints = new NumberOfPlannedSprints
                 (projectJpa.getNumberOfPlannedSprints());
-        LocalDate startDate = LocalDate.parse(projectJpa.getStartDate());
-        LocalDate endDate = LocalDate.parse(projectJpa.getEndDate());
-        Period projectPeriod = new Period(startDate, endDate);
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription, businessSectorId,
                 taxId, projectTypology);
         project.setProjectStatus(projectstatus);
@@ -93,8 +89,12 @@ public class ProjectDomainDataAssembler {
         if (project.hasStatus(ProjectStatus.INCEPTION)) {
             project.setSprintDuration(projectJpa.getSprintDuration());
         }
-
-        project.isPeriodAssigned(projectPeriod);
+        if(!Objects.equals(projectJpa.getStartDate(), "") && !Objects.equals(projectJpa.getEndDate(), "")) {
+            LocalDate startDate = LocalDate.parse(projectJpa.getStartDate());
+            LocalDate endDate = LocalDate.parse(projectJpa.getEndDate());
+            Period projectPeriod = new Period(startDate, endDate);
+            project.isPeriodAssigned(projectPeriod);
+        }
 
         Iterator<String> userStoriesIterator = projectJpa.getProductBacklog().getUserStories().iterator();
         int i = 0;

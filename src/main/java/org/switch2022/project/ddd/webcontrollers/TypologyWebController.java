@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * The TypologyWebController class is a REST controller for handling requests related to typologies.
  */
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/typologies")
 public class TypologyWebController {
@@ -28,8 +29,10 @@ public class TypologyWebController {
      * Handles a POST request to create a new typology.
      *
      * @param dto object containing the information needed to create a new typology.
-     * @return a ResponseEntity containing the typology name and a status code of 201 (CREATED)or a status code of 409
-     * (CONFLICT), or a status code of 409 (CONFLICT) plus an exception message in case an exception is caught.
+     * @return a ResponseEntity containing the typology name and a status code of 201 (CREATED)or
+     * a status code of 409
+     * (CONFLICT), or a status code of 409 (CONFLICT) plus an exception message in case an
+     * exception is caught.
      */
     @PostMapping()
     public ResponseEntity<Object> createTypology(@RequestBody TypologyCreationDto dto) {
@@ -42,7 +45,8 @@ public class TypologyWebController {
     /**
      * Handles a GET request to retrieve a list of all typologies.
      *
-     * @return A ResponseEntity containing a list of TypologyDto objects and a status code of 200 (OK).
+     * @return A ResponseEntity containing a list of TypologyDto objects and a status code of 200
+     * (OK).
      */
     @GetMapping("")
     @ResponseBody
