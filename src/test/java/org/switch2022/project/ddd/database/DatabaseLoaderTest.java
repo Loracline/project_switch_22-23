@@ -6,7 +6,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
+import org.switch2022.project.ddd.domain.model.account.AccountFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFactory;
+import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
 import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.model.project.FactoryProject;
@@ -21,6 +23,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.verify;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 /**
  * JUnit test class for the {@link DatabaseLoader} component.
@@ -80,7 +83,7 @@ public class DatabaseLoaderTest {
         // Customers
         CustomerFactory customerFactory = new CustomerFactory();
         CustomerDomainDataAssembler customerDomainDataAssembler = new CustomerDomainDataAssembler();
-        //verify(customers).save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("1111222234"), new Name("Catarina"))));
+        //verify(customers).save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("217746691"), new Name("Catarina"))));
 
         // Projects
         FactoryProject factoryProject = new FactoryProject();
@@ -105,14 +108,13 @@ public class DatabaseLoaderTest {
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
         ProfileDomainDataAssembler profileDomainDataAssembler = new ProfileDomainDataAssembler();
-        verify(profiles).save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Administrator"), 1)));
+        verify(profiles).save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Administrator"), 3)));
 
-      /*  // Accounts
+        // Accounts
         AccountFactory accountFactory = new AccountFactory();
         AccountDomainDataAssembler accountDomainDataAssembler = new AccountDomainDataAssembler();
-        BufferedImage defaultImage = new BufferedImage(5, 5, BufferedImage.TYPE_3BYTE_BGR);
         this.accounts.save(accountDomainDataAssembler.toData(accountFactory.create(new Name("Miguel"), new Email("oliveira@gmail.com"),
-                new PhoneNumber(964454321), new Photo(defaultImage))));*/
+                new PhoneNumber(964454321), null)));
 
         // Project resources
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();

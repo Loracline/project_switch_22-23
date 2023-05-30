@@ -137,7 +137,11 @@ public class Account implements Entity<Account> {
      * @return photo.
      */
     public BufferedImage getPhoto() {
-        return photo.getPhoto();
+        BufferedImage bufferedImage = null;
+        if (photo != null) {
+            bufferedImage = photo.getPhoto();
+        }
+        return bufferedImage;
     }
 
     /**
