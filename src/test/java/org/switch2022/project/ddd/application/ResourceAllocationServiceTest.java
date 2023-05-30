@@ -53,7 +53,8 @@ class ResourceAllocationServiceTest {
     @Test
     void ensureAddUserToProjectSuccessfully() {
         //Arrange
-        AllocationDto allocationDto = new AllocationDto(2, "test@project.com", TEAM_MEMBER.toString(), 8f, 50f, LocalDate.now(), LocalDate.now().plusWeeks(2));
+        AllocationDto allocationDto = new AllocationDto("P02", "test@project.com", TEAM_MEMBER.toString(), 8f, 50f,
+                LocalDate.now(), LocalDate.now().plusWeeks(2));
 
         Account accountDouble = mock(Account.class);
         Project projectDouble = mock(Project.class);
@@ -90,7 +91,8 @@ class ResourceAllocationServiceTest {
     @Test
     void ensureAddUserToProjectInsuccessfully() {
         //Arrange
-        AllocationDto allocationDto = new AllocationDto(2, "test@project.com", TEAM_MEMBER.toString(), 8f, 50f, LocalDate.now(), LocalDate.now().plusWeeks(2));
+        AllocationDto allocationDto = new AllocationDto("P02", "test@project.com", TEAM_MEMBER.toString(), 8f, 50f,
+                LocalDate.now(), LocalDate.now().plusWeeks(2));
 
         Account accountDouble = mock(Account.class);
         Project projectDouble = mock(Project.class);
