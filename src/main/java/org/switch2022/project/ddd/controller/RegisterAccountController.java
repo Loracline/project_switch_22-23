@@ -6,8 +6,6 @@ import org.switch2022.project.ddd.application.AccountCreationService;
 import org.switch2022.project.ddd.dto.AccountCreationDto;
 import org.switch2022.project.ddd.utils.Validate;
 
-import java.awt.image.BufferedImage;
-
 /**
  * Class RegisterAccountController is built to create business sectors.
  */

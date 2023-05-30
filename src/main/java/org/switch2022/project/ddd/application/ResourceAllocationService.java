@@ -346,7 +346,7 @@ public class ResourceAllocationService {
      * @return return true if the resource already exist and false otherwise.
      */
     private boolean resourceDoesNotExist(Code projectCode, Email email, Period period) {
-    return !isResourceOverlapping(projectCode, email, period);
+        return !isResourceOverlapping(projectCode, email, period);
     }
 
     /**

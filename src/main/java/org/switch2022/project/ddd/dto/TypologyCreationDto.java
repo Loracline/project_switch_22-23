@@ -6,9 +6,11 @@ public class TypologyCreationDto {
     /**
      * Attributes
      */
-    public String typologyName;
+    public final String typologyName;
+
     /**
      * Constructor to instatiate a new typology dto.
+     *
      * @param typologyName the name of the
      */
     public TypologyCreationDto(String typologyName) {

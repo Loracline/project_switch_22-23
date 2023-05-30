@@ -27,11 +27,11 @@ public class ResourceWebController {
      */
     @PostMapping()
     public ResponseEntity<Object> createResource(@RequestBody AllocationDto allocationDto) {
-            boolean isCreated = service.addUserToProject(allocationDto);
-            if (isCreated) {
-                return new ResponseEntity<>(HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
+        boolean isCreated = service.addUserToProject(allocationDto);
+        if (isCreated) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 }

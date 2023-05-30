@@ -4,9 +4,9 @@ public class ProfileCreationDto {
     /**
      * Attributes
      */
-    public String profileName;
+    public final String profileName;
 
-    public ProfileCreationDto(String profileName){
+    public ProfileCreationDto(String profileName) {
         this.profileName = profileName;
     }
 }
