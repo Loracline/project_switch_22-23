@@ -285,13 +285,13 @@ export function fetchFailure(message) {
 export const GET_PROJECT_SUCCESS = 'GET_PROJECT_SUCCESS';
 
 export function getProject(dispatch, projectCode) {
-    fetchProject((res) => dispatch(getProjectSuccess(res), (err) => fetchFailure(err.message)), projectCode)
+    fetchProject((res) => dispatch(getProjectSuccess(res)), (err) => dispatch(fetchFailure(err.message)), projectCode);
 }
 
 export function getProjectSuccess(project) {
     return {
         type: GET_PROJECT_SUCCESS,
-        payload: project
+        payload: project?.[0],
     }
 }
 
@@ -322,7 +322,7 @@ function postSprintSuccess(message) {
 export const GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
 
 export function getProjects(dispatch) {
-    fetchProjects((res) => dispatch(getProjectsSuccess(res), (err) => fetchFailure(err.message)))
+    fetchProjects((res) => dispatch(getProjectsSuccess(res)), (err) => fetchFailure(err.message));
 }
 
 function getProjectsSuccess(projects) {

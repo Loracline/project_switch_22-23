@@ -1,4 +1,4 @@
-export const URL = 'localhost:3000';
+export const URL = 'http://localhost:8080';
 
 export function postProject(success, failure, projectToSubmit) {
     fetch(`${URL}/projects`, {
@@ -42,7 +42,9 @@ export function getCustomers(success, failure) {
 }
 
 export function fetchProjects(success, failure) {
-    fetch(`${URL}/sprints`)
+    fetch(`${URL}/projects`, {
+        method: 'GET',
+    })
         .then(res => res.json())
         .then(res => success(res))
         .catch(err => failure(err.message))
