@@ -7,6 +7,7 @@ import {
 } from "../services/ProjectService";
 import  {postSprint} from "../services/SprintService";
 import {strings} from "../strings";
+import {postUserStory} from "../services/UserStoryService";
 
 /**
  Action types.
@@ -30,6 +31,8 @@ export const GET_TYPOLOGIES_FAILURE = 'GET_TYPOLOGIES_FAILURE';
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const GET_CUSTOMERS_SUCCESS = 'GET_CUSTOMERS_SUCCESS';
 export const GET_CUSTOMERS_FAILURE = 'GET_CUSTOMERS_FAILURE';
+export const POST_USER_STORY_SUCCESS = 'POST_USER_STORY_SUCCESS';
+export const POST_USER_STORY_FAILURE = 'POST_USER_STORY_FAILURE';
 
 /**
  * Action to fetch business sectors
@@ -172,11 +175,32 @@ function postProjectFailure(message) {
 /**
  Action for creating a new user story.
  */
-export const createUserStory = (userStory) => {
+export function createUserStory(dispatch, userStoryToSubmit) {
+    postUserStory((response) => dispatch(postUserStorySuccess(response)),
+        (error) => dispatch(postUserStoryFailure(error.message)), userStoryToSubmit
+    );
+}
+
+/**
+ Function for dealing with a POST User Story with success.
+ */
+function postUserStorySuccess(userStoryId) {
     return {
-        type: CREATE_USER_STORY,
+        type: POST_USER_STORY_SUCCESS,
         payload: {
-            userStory
+            data: userStoryId
+        }
+    }
+}
+
+/**
+ Function for dealing with a POST User Story with failure.
+ */
+function postUserStoryFailure(message) {
+    return {
+        type: POST_USER_STORY_FAILURE,
+        payload: {
+            error: message
         }
     }
 }
