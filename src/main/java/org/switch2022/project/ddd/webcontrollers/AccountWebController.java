@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/accounts/")
+@RequestMapping("/accounts")
 public class AccountWebController {
     /**
      * The AccountCreationService used to create a new account.

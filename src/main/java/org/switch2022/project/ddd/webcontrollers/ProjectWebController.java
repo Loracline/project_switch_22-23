@@ -37,7 +37,8 @@ public class ProjectWebController {
     /**
      * Handles a POST request to create a new project.
      *
-     * @param projectCreationDto The ProjectCreationDto object containing the information needed to create a new project.
+     * @param projectCreationDto The ProjectCreationDto object containing the information needed
+     *        to create a new project.
      * @return A ResponseEntity containing the project code and a status code of 201 (CREATED).
      */
     @PostMapping
