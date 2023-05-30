@@ -84,7 +84,7 @@ function AllocateResource() {
     }
 
     const handleBannerClose = () => {
-        setBackendError(false);
+        setBackendError({message: '', show: false});
     }
 
     const handleSubmit = (e) => {
@@ -198,8 +198,6 @@ function AllocateResource() {
                             sx={{width: 300}}
                             label="Percentage Of Allocation"
                             type="number"
-                            unit={5}
-
                             error={Boolean(percentageError)}
                             helperText={percentageError || 'Between 0 - 100%'}
                             value={resource.accountPercentageOfAllocation}
