@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * The ProjectWebController class is a REST controller for handling requests related to projects.
  */
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/projects")
 public class ProjectWebController {
