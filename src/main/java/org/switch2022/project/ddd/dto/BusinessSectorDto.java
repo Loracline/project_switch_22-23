@@ -11,14 +11,17 @@ public class BusinessSectorDto {
      * Attributes
      */
     public final String name;
+    public final String id;
 
     /**
      * Constructor to instantiate a new business sector dto.
      *
      * @param name the name of the business sector
+     * @param id
      */
-    public BusinessSectorDto(String name) {
-        this.name = name;
+    public BusinessSectorDto(String name, String id) {
+        this.name = name.toLowerCase().trim();
+        this.id = id.toLowerCase().trim();
     }
 
     /**
@@ -43,7 +46,7 @@ public class BusinessSectorDto {
             return false;
         }
         BusinessSectorDto that = (BusinessSectorDto) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(name, that.name) && Objects.equals(id, that.id);
     }
 
     /**
@@ -55,6 +58,6 @@ public class BusinessSectorDto {
     @Override
     public int hashCode() {
 
-        return Objects.hash(name);
+        return Objects.hash(name, id);
     }
 }

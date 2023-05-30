@@ -6,13 +6,15 @@ public class TypologyDto {
     /**
      * Attributes
      */
+    public final String typologyId;
     public final String typologyName;
 
     /**
      * Constructor
      */
-    public TypologyDto(String typologyName) {
-        this.typologyName = typologyName;
+    public TypologyDto(String typologyId, String typologyName) {
+        this.typologyId = typologyId;
+        this.typologyName = typologyName.toLowerCase().trim();
     }
 
     /**
@@ -38,6 +40,11 @@ public class TypologyDto {
             return false;
         }
         TypologyDto that = (TypologyDto) o;
-        return Objects.equals(typologyName, that.typologyName);
+        return Objects.equals(typologyName, that.typologyName) && Objects.equals(typologyId, that.typologyId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(typologyName);
     }
 }
