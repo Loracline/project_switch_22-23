@@ -74,5 +74,13 @@ public class ProjectWebController {
         List<UserStoryDto> userStories = projectService.getProductBacklog(code);
         return new ResponseEntity<>(userStories, HttpStatus.OK);
     }
+
+    @GetMapping("/{code}")
+    @ResponseBody
+    public ResponseEntity<ProjectDto> getProject(@PathVariable String code) {
+        ProjectDto projectDto = projectService.getProjectDto(code);
+        return new ResponseEntity<>(projectDto, HttpStatus.OK);
+
+    }
 }
 
