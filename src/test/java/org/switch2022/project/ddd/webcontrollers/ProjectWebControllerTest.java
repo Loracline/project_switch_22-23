@@ -171,6 +171,26 @@ class ProjectWebControllerTest {
         assertNotNull(actualUserStories);
         assertTrue(actualUserStories.isEmpty());
     }
-    
+
+    /**
+     * Method getProject(code)
+     *
+     * Scenario: project is retrieved
+     */
+
+    @Test
+    void ensureThatProjectIsRetrievedSuccessfully() {
+        // Arrange
+        ProjectDto projectDto = mock(ProjectDto.class);
+        when(projectService.getProjectDto("P001")).thenReturn(projectDto);
+
+        // Act
+        ResponseEntity<ProjectDto> responseEntity = projectWebController.getProject("P001");
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        ProjectDto realProjectDto = responseEntity.getBody();
+        assertEquals(projectDto, realProjectDto);
+    }
 }
 

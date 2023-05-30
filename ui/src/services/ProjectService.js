@@ -1,34 +1,5 @@
 export const URL = 'localhost:3000';
 
-export function fetchProjects(success, failure) {
-    fetch(`${URL}/sprints`)
-        .then(res => res.json())
-        .then(res => success(res))
-        .catch(err => failure(err.message))
-}
-
-export function fetchProject(success, failure, id) {
-    fetch(`${URL}/projects?projectCode=${id}`)
-        .then(res => res.json())
-        .then(res => success(res))
-        .catch(err => failure(err.message))
-}
-
-
-export function postSprint(success, failure, sprintToSubmit) {
-    fetch(`${URL}/sprints`, {
-        method: 'POST',
-        body: JSON.stringify({sprintToSubmit}),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-    })
-        .then(res => res.text()) // Read response as text)
-        .then(res => success(res))
-        .catch(err => failure(err.message))
-    ;
-}
-
 export function postProject(success, failure, projectToSubmit) {
     fetch(`${URL}/projects`, {
         method: 'POST',
@@ -68,4 +39,18 @@ export function getCustomers(success, failure) {
         .then(res => res.json())
         .then(res => success(res))
         .catch(err => failure(err.message));
+}
+
+export function fetchProjects(success, failure) {
+    fetch(`${URL}/sprints`)
+        .then(res => res.json())
+        .then(res => success(res))
+        .catch(err => failure(err.message))
+}
+
+export function fetchProject(success, failure, id) {
+    fetch(`${URL}/projects?projectCode=${id}`)
+        .then(res => res.json())
+        .then(res => success(res))
+        .catch(err => failure(err.message))
 }

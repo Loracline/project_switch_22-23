@@ -1,7 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.datamodel_jpa.ProjectResourceJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.ResourceDomainDataAssembler;

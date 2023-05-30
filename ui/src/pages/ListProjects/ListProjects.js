@@ -16,17 +16,17 @@ const ListProjects = () => {
     const {state, dispatch} = useContext(AppContext);
     const headers = state.headersProjects;
     const data = state.projects.map(project => project.basicInfo);
-    //useEffect(()=> {const data2 = getProjects(dispatch)}, []);
+    //const data = state.projects;
+    //useEffect(()=> {getProjects(dispatch)}, [dispatch]);
 
     const tableData = () => {
         let tableData;
-        //if (data2.length > 0)
         if (data.length > 0) {
             const onClickTableBody = (index) => {
                 if (state.projects.length > index) {
                     const selectedProject = state.projects[index];
-                    //const completeProject = getProject(dispatch, selectedProject.code);
-                    //dispatch(setCurrentProject(completeProject));
+                    //const updatedProject = getProject(dispatch, selectedProject.code);
+                    //dispatch(setCurrentProject(updatedProject));
                     dispatch(setCurrentProject(selectedProject));
                 }
                 dispatch(selectMenu('project'));

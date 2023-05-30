@@ -6,7 +6,8 @@ public class TypologyDto {
     /**
      * Attributes
      */
-    public String typologyName;
+    public final String typologyName;
+
     /**
      * Constructor
      */

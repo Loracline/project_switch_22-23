@@ -14,9 +14,11 @@ import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 
 import java.util.*;
@@ -47,6 +49,7 @@ class ProjectServiceTest {
     @MockBean
     ProjectMapper projectMapper;
     @MockBean
+    @Qualifier("customer_jpa")
     ICustomerRepository customerRepository;
     @MockBean
     UserStoryMapper userStoryMapper;
@@ -253,6 +256,46 @@ class ProjectServiceTest {
         //Assert
         assertEquals(expected, result);
 
+    }
+
+    /**
+     * Method getProjectDto(code)
+     *
+     * Scenario 1: Project dto is retrieved.
+     */
+    @Test
+    void ensureThatProjectDtoISRetrievedSuccessfully() {
+        // Arrange
+        Project project = mock(Project.class);
+        ProjectDto projectDto = mock(ProjectDto.class);
+        Optional<Project> projectOptional = Optional.ofNullable(project);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
+        when(customerRepository.findCustomerNameByTaxId(any())).thenReturn("Isep");
+        when(projectMapper.projectToDto(project, "Isep")).thenReturn(projectDto);
+
+        // Act
+        ProjectDto result = projectService.getProjectDto("P001");
+
+        // Assert
+        assertEquals(projectDto, result);
+    }
+
+    /**
+     * Scenario 2: an exception is thrown because the project doesn't exist.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownBecauseProjectDoesNotEXist() {
+        // Arrange
+        String message = "This project doesn't exist";
+        Optional<Project> projectOptional = Optional.ofNullable(null);
+        when(projectRepository.findByCode(any())).thenReturn(projectOptional);
+
+        // Act
+        NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class, () ->
+                projectService.getProjectDto("P001"));
+
+        // Assert
+        assertEquals(message, exception.getMessage());
     }
 
     // Integration testes: ProjectService + Project + ProjectRepository

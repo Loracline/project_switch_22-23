@@ -12,7 +12,7 @@ import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
 @RestController
-@RequestMapping("/userStories/")
+@RequestMapping("/userStories")
 public class UserStoryWebController {
 
     /**

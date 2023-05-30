@@ -6,13 +6,13 @@ public class AllocationDto {
     /**
      * Attributes
      */
-    public int projectCode;
-    public String accountEmail;
-    public String accountRole;
-    public float accountCostPerHour;
-    public float accountPercentageOfAllocation;
-    public LocalDate startDate;
-    public LocalDate endDate;
+    public final int projectCode;
+    public final String accountEmail;
+    public final String accountRole;
+    public final float accountCostPerHour;
+    public final float accountPercentageOfAllocation;
+    public final LocalDate startDate;
+    public final LocalDate endDate;
 
     /**
      * Constructor

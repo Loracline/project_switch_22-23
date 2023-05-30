@@ -37,7 +37,8 @@ public class ProjectWebController {
     /**
      * Handles a POST request to create a new project.
      *
-     * @param projectCreationDto The ProjectCreationDto object containing the information needed to create a new project.
+     * @param projectCreationDto The ProjectCreationDto object containing the information needed
+     *        to create a new project.
      * @return A ResponseEntity containing the project code and a status code of 201 (CREATED).
      */
     @PostMapping
@@ -73,6 +74,14 @@ public class ProjectWebController {
     public ResponseEntity<List<UserStoryDto>> getProductBacklog(@PathVariable String code) {
         List<UserStoryDto> userStories = projectService.getProductBacklog(code);
         return new ResponseEntity<>(userStories, HttpStatus.OK);
+    }
+
+    @GetMapping("/{code}")
+    @ResponseBody
+    public ResponseEntity<ProjectDto> getProject(@PathVariable String code) {
+        ProjectDto projectDto = projectService.getProjectDto(code);
+        return new ResponseEntity<>(projectDto, HttpStatus.OK);
+
     }
 }
 

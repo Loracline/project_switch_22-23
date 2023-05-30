@@ -3,15 +3,14 @@ import {
     getBusinessSectors,
     getCustomers,
     getProjectTypologies,
-    postProject,
-    postSprint
-} from "../services/Service";
+    postProject
+} from "../services/ProjectService";
+import  {postSprint} from "../services/SprintService";
 import {strings} from "../strings";
 
 /**
  Action types.
  */
-//the following is just a dummy action, needs to be updated with proper implementation
 export const CREATE_USER_STORY = 'CREATE_USER_STORY';
 export const CREATE_SPRINT = 'CREATE_SPRINT';
 export const CHECK_PROJECT = 'CHECK_PROJECT';
@@ -219,6 +218,7 @@ export const createUserStory = (userStory) => {
 /**
  Action for creating a new sprint.
  */
+//old action:
 export const createSprint = (sprint) => {
     return {
         type: CREATE_SPRINT,
@@ -228,24 +228,11 @@ export const createSprint = (sprint) => {
     };
 };
 
-export const checkProject = (code) => {
-    return {
-        type: CHECK_PROJECT,
-        payload: {
-            projectToCheck: code,
-        }
-    }
-}
-
-export const checkProjectSprint = (projectCode) => {
-    return {
-        type: CHECK_PROJECT_SPRINT,
-        payload: {
-            projectToCheck: projectCode,
-        }
-    }
-}
-
+/**
+ * Action to set the current selected menu.
+ * @param name of the menu item
+ * @returns {{payload: {key}, type: string}}
+ */
 export function selectMenu(name) {
     return {
         type: SELECT_MENU,
@@ -255,6 +242,11 @@ export function selectMenu(name) {
     }
 }
 
+/**
+ * Action to set the current selected project.
+ * @param project to be used.
+ * @returns {{payload: {project}, type: string}}
+ */
 export function setCurrentProject(project) {
     return {
         type: SELECT_PROJECT,
@@ -264,6 +256,9 @@ export function setCurrentProject(project) {
     }
 }
 
+/**
+ * Action to close messages
+ */
 export const CLOSE_BUTTON = 'CLOSE_BUTTON';
 
 export function closeButton() {
@@ -272,6 +267,9 @@ export function closeButton() {
     }
 }
 
+/**
+ * Generic action for fetch failure.
+ */
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 
 export function fetchFailure(message) {
@@ -281,6 +279,9 @@ export function fetchFailure(message) {
     }
 }
 
+/**
+ * Actions to get a specific project.
+ */
 export const GET_PROJECT_SUCCESS = 'GET_PROJECT_SUCCESS';
 
 export function getProject(dispatch, projectCode) {
@@ -294,6 +295,9 @@ export function getProjectSuccess(project) {
     }
 }
 
+/**
+ * Actions to create a sprint.
+ */
 export const POST_SPRINT_SUCCESS = 'POST_SPRINT_SUCCESS';
 
 export function createSprint2(dispatch, sprintToSubmit) {
@@ -312,6 +316,9 @@ function postSprintSuccess(message) {
     }
 }
 
+/**
+ * Actions to get all projects.
+ */
 export const GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
 
 export function getProjects(dispatch) {
@@ -324,6 +331,25 @@ function getProjectsSuccess(projects) {
         payload: {
             data:
                 [...projects]
+        }
+    }
+}
+
+
+export const checkProject = (code) => {
+    return {
+        type: CHECK_PROJECT,
+        payload: {
+            projectToCheck: code,
+        }
+    }
+}
+
+export const checkProjectSprint = (projectCode) => {
+    return {
+        type: CHECK_PROJECT_SPRINT,
+        payload: {
+            projectToCheck: projectCode,
         }
     }
 }
