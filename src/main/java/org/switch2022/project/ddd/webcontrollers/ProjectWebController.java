@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * The ProjectWebController class is a REST controller for handling requests related to projects.
  */
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/projects")
 public class ProjectWebController {
@@ -38,7 +39,7 @@ public class ProjectWebController {
      * Handles a POST request to create a new project.
      *
      * @param projectCreationDto The ProjectCreationDto object containing the information needed
-     *        to create a new project.
+     *                           to create a new project.
      * @return A ResponseEntity containing the project code and a status code of 201 (CREATED).
      */
     @PostMapping
@@ -55,7 +56,8 @@ public class ProjectWebController {
     /**
      * Handles a GET request to retrieve a list of all projects.
      *
-     * @return A ResponseEntity containing a list of ProjectDto objects and a status code of 200 (OK).
+     * @return A ResponseEntity containing a list of ProjectDto objects and a status code of 200
+     * (OK).
      */
     @GetMapping("")
     @ResponseBody
@@ -67,7 +69,8 @@ public class ProjectWebController {
     /**
      * Handles a GET request to retrieve a list of all user stories.
      *
-     * @return A ResponseEntity containing a list of User stories objects and a status code of 200 (OK).
+     * @return A ResponseEntity containing a list of User stories objects and a status code of
+     * 200 (OK).
      */
     @GetMapping("/{code}/productBacklog")
     @ResponseBody

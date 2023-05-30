@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.datamodel_jpa.AccountJpa;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountFactory;
-import org.switch2022.project.ddd.domain.value_object.Email;
-import org.switch2022.project.ddd.domain.value_object.Name;
-import org.switch2022.project.ddd.domain.value_object.PhoneNumber;
-import org.switch2022.project.ddd.domain.value_object.Photo;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.utils.Utils;
 
 import java.awt.image.BufferedImage;
@@ -44,6 +41,13 @@ public class AccountDomainDataAssembler {
         PhoneNumber phoneNumber = new PhoneNumber(Integer.parseInt(accountJpa.getPhoneNumber()));
         BufferedImage bufferedImage = Utils.convertByteArrayToBufferedImage(accountJpa.getPhoto());
         Photo photo = new Photo(bufferedImage);
-        return accountFactory.create(accountName, email, phoneNumber, photo);
+        AccountStatus accountStatus =
+                AccountStatus.valueOf(accountJpa.getAccountStatus().toUpperCase());
+        ProfileId profileId =
+                new ProfileId(Utils.getIntFromAlphanumericString(accountJpa.getProfileId(), "prf"));
+        Account account = accountFactory.create(accountName, email, phoneNumber, photo);
+        account.changeStatus(accountStatus);
+        account.changeProfile(profileId);
+        return account;
     }
 }

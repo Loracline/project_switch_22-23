@@ -10,6 +10,7 @@ import org.switch2022.project.ddd.dto.AllocationDto;
 /**
  * The ResourceWebController class is a REST controller for handling requests related to resources.
  */
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/resources")
 public class ResourceWebController {
@@ -22,7 +23,8 @@ public class ResourceWebController {
     /**
      * Handles a POST request to create a new resource.
      *
-     * @param allocationDto The AllocationDto object containing the information needed to create a new resource.
+     * @param allocationDto The AllocationDto object containing the information needed to create
+     *                      a new resource.
      * @return A ResponseEntity containing the project code and a status code of 201 (CREATED).
      */
     @PostMapping()

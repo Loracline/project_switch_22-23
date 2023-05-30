@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Controller class that handles HTTP requests related to customers.
  */
+@CrossOrigin(maxAge = 3600)
 @RestController
 @RequestMapping("/customers")
 public class CustomerWebController {
