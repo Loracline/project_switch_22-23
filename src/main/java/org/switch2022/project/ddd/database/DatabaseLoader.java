@@ -1,4 +1,4 @@
-package org.switch2022.project.ddd.datamodel_jpa;
+package org.switch2022.project.ddd.database;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

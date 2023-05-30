@@ -5,8 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.switch2022.project.ddd.application.BusinessSectorService;
-import org.switch2022.project.ddd.datamodel_jpa.DatabaseLoader;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
@@ -17,7 +15,6 @@ import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.model.typology.TypologyFactory;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.infrastructure.*;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import java.time.LocalDate;
