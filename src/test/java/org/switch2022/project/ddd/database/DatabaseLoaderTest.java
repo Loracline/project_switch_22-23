@@ -8,7 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFactory;
-import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
 import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.model.project.FactoryProject;
@@ -23,7 +22,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 /**
  * JUnit test class for the {@link DatabaseLoader} component.
@@ -90,7 +88,7 @@ public class DatabaseLoaderTest {
         ProjectDomainDataAssembler projectDomainDataAssembler = new ProjectDomainDataAssembler();
         verify(projects).save(projectDomainDataAssembler.toData(factoryProject.createProject(1, new Name("Project 1"),
                 new Description("potato planting"), new BusinessSectorId(1),
-                new TaxId("1111222234"), new ProjectTypologyId(1))));
+                new TaxId("217746691"), new ProjectTypologyId(1))));
 
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
