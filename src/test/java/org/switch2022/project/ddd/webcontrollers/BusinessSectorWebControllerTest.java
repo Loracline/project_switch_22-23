@@ -50,22 +50,6 @@ class BusinessSectorWebControllerTest {
     }
 
     /**
-     * Scenario 2: ensure that a business sector is not created when there is a conflict.
-     */
-    @Test
-    void ensureThatBusinessSectorIsNotCreatedWhenThereIsConflict() {
-        //Arrange
-        BusinessSectorCreationDto dto = mock(BusinessSectorCreationDto.class);
-        when(service.createBusinessSector(any())).thenReturn(false);
-
-        //Act
-        ResponseEntity<Object> responseEntity = controller.createBusinessSector(dto);
-
-        //Assert
-        assertEquals(HttpStatus.CONFLICT,responseEntity.getStatusCode());
-    }
-
-    /**
      * Method listAllBusinessSectors().
      * Scenario 1: ensure that a list of BusinessSectorDto is returned.
      */

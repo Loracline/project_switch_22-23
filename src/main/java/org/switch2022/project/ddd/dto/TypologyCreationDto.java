@@ -42,6 +42,11 @@ public class TypologyCreationDto {
         return Objects.equals(typologyName, that.typologyName);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(typologyName);
+    }
+
     /**
      * Retrieves the name of the typology.
      *

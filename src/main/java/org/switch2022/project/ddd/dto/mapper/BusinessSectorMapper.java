@@ -17,7 +17,7 @@ public class BusinessSectorMapper {
      */
 
     public BusinessSectorDto businessSectorToDto(BusinessSector businessSector) {
-        return new BusinessSectorDto(businessSector.getBusinessSectorName());
+        return new BusinessSectorDto(businessSector.getBusinessSectorName(), businessSector.getBusinessSectorId());
     }
 
     /**
