@@ -109,4 +109,22 @@ class TypologyCreationDtoTest {
         //Assert
         assertEquals(reference, result);
     }
+
+    /**
+     * Method: hashCode().
+     */
+    @Test
+    public void ensureHashCode_ShouldReturnConsistentValue() {
+        // Arrange
+        String typologyName = "Typology 1";
+        TypologyCreationDto typology1 = new TypologyCreationDto(typologyName);
+        TypologyCreationDto typology2 = new TypologyCreationDto(typologyName);
+
+        // Act
+        int hashCode1 = typology1.hashCode();
+        int hashCode2 = typology2.hashCode();
+
+        // Assert
+        assertEquals(hashCode1, hashCode2);
+    }
 }

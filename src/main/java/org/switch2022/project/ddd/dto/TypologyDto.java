@@ -40,4 +40,9 @@ public class TypologyDto {
         TypologyDto that = (TypologyDto) o;
         return Objects.equals(typologyName, that.typologyName);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(typologyName);
+    }
 }
