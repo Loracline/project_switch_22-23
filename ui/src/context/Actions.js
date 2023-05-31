@@ -7,6 +7,7 @@ import {
 } from "../services/ProjectService";
 import  {postSprint} from "../services/SprintService";
 import {strings} from "../strings";
+import {postUserStory} from "../services/UserStoryService";
 
 /**
  Action types.
@@ -30,6 +31,8 @@ export const GET_TYPOLOGIES_FAILURE = 'GET_TYPOLOGIES_FAILURE';
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const GET_CUSTOMERS_SUCCESS = 'GET_CUSTOMERS_SUCCESS';
 export const GET_CUSTOMERS_FAILURE = 'GET_CUSTOMERS_FAILURE';
+export const POST_USER_STORY_SUCCESS = 'POST_USER_STORY_SUCCESS';
+export const POST_USER_STORY_FAILURE = 'POST_USER_STORY_FAILURE';
 
 /**
  * Action to fetch business sectors
@@ -172,27 +175,35 @@ function postProjectFailure(message) {
 /**
  Action for creating a new user story.
  */
-export const createUserStory = (userStory) => {
+export function createUserStory(dispatch, userStoryToSubmit) {
+    postUserStory((response) => dispatch(postUserStorySuccess(response)),
+        (error) => dispatch(postUserStoryFailure(error.message)), userStoryToSubmit
+    );
+}
+
+/**
+ Function for dealing with a POST User Story with success.
+ */
+function postUserStorySuccess(userStoryId) {
     return {
-        type: CREATE_USER_STORY,
+        type: POST_USER_STORY_SUCCESS,
         payload: {
-            userStory
+            data: userStoryId
         }
     }
 }
 
 /**
- Action for creating a new sprint.
+ Function for dealing with a POST User Story with failure.
  */
-//old action:
-export const createSprint = (sprint) => {
+function postUserStoryFailure(message) {
     return {
-        type: CREATE_SPRINT,
+        type: POST_USER_STORY_FAILURE,
         payload: {
-            sprintToAdd: sprint,
-        },
-    };
-};
+            error: message
+        }
+    }
+}
 
 /**
  * Action to set the current selected menu.
@@ -251,13 +262,13 @@ export function fetchFailure(message) {
 export const GET_PROJECT_SUCCESS = 'GET_PROJECT_SUCCESS';
 
 export function getProject(dispatch, projectCode) {
-    fetchProject((res) => dispatch(getProjectSuccess(res), (err) => fetchFailure(err.message)), projectCode)
+    fetchProject((res) => dispatch(getProjectSuccess(res)), (err) => dispatch(fetchFailure(err.message)), projectCode);
 }
 
 export function getProjectSuccess(project) {
     return {
         type: GET_PROJECT_SUCCESS,
-        payload: project
+        payload: project?.[0],
     }
 }
 
@@ -266,19 +277,16 @@ export function getProjectSuccess(project) {
  */
 export const POST_SPRINT_SUCCESS = 'POST_SPRINT_SUCCESS';
 
-export function createSprint2(dispatch, sprintToSubmit) {
-    postSprint((res) => dispatch(postSprintSuccess(res.text())),
+export function createSprint(dispatch, sprintToSubmit) {
+    postSprint((res) => dispatch(postSprintSuccess(res)),
         (err) => dispatch(fetchFailure(err.message)),
-        sprintToSubmit
-    );
+        sprintToSubmit);
 }
 
 function postSprintSuccess(message) {
     return {
         type: POST_SPRINT_SUCCESS,
-        payload: {
-            message
-        }
+        payload: message
     }
 }
 
@@ -288,7 +296,7 @@ function postSprintSuccess(message) {
 export const GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
 
 export function getProjects(dispatch) {
-    fetchProjects((res) => dispatch(getProjectsSuccess(res), (err) => fetchFailure(err.message)))
+    fetchProjects((res) => dispatch(getProjectsSuccess(res)), (err) => fetchFailure(err.message));
 }
 
 function getProjectsSuccess(projects) {
@@ -301,7 +309,7 @@ function getProjectsSuccess(projects) {
     }
 }
 
-
+/*
 export const checkProject = (code) => {
     return {
         type: CHECK_PROJECT,
@@ -318,4 +326,4 @@ export const checkProjectSprint = (projectCode) => {
             projectToCheck: projectCode,
         }
     }
-}
+}*/

@@ -6,18 +6,18 @@ import './Project.css';
 
 const Project = () => {
     const {state, dispatch} = useContext(AppContext);
-    const data = state.detailedProject.basicInfo;
+    const data = state.detailedProject;
     return (
         <div className='page'>
             <section className='projectCard'>
                 <div className='projectInfo'>
                     <div className='projectContent'>
-                        <h2>{data['name']}</h2>
-                        <p>Code: {data['code']}</p>
-                        <p>Customer: {data['customer']}</p>
-                        <p>Status: {data['status']}</p>
-                        <p>Start date: {data['startDate']}</p>
-                        <p>End date: {data['endDate']}</p>
+                        <h2>{data?.['projectName']}</h2>
+                        <p>Code: {data?.['code']}</p>
+                        <p>Customer: {data?.['customerName']}</p>
+                        <p>Status: {data?.['status']}</p>
+                        <p>Start date: {data?.['startDate']}</p>
+                        <p>End date: {data?.['endDate']}</p>
                     </div>
                     <div className='buttons-project'>
                         <Button onClick={() => dispatch(selectMenu('createUserStory'))} text="Create user story"/>

@@ -17,8 +17,7 @@ function CreateSprint() {
     const {detailedProject, messageSuccess, messageFailure} = state;
     const [selectedDate, setSelectedDate] = useState(new Date());
     const initialSprintState = {
-        projectCode: detailedProject.basicInfo.code,
-        //projectCode: detailedProject.code,
+        projectCode: detailedProject.code,
         sprintNumber: '',
         startDate: '',
         endDate: '',
@@ -43,15 +42,9 @@ function CreateSprint() {
             alert('Please select a future date for the start date.');
             setSprintToSubmit(initialSprintState);
         } else {
-            dispatch(createSprint({
-                ...sprintToSubmit
-            }));
-            window.alert('The sprint was successfully created.');
+            createSprint(dispatch, sprintToSubmit);
             setSprintToSubmit(initialSprintState);
             setSelectedDate(new Date());
-            //createSprint2(dispatch, sprintToSubmit);
-            //setSprintToSubmit(initialSprintState);
-            //setSelectedDate(new Date());
         }
     };
 

@@ -13,13 +13,12 @@ import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
-import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 
 import java.util.*;
 
@@ -90,7 +89,8 @@ class ProjectServiceTest {
         customerIdDouble = mock(CustomerId.class);
         projectTypologyIdDouble = mock(ProjectTypologyId.class);
         productBacklogDouble = mock(ProductBacklog.class);
-        when(factoryProductBacklogDouble.createProductBacklog(any())).thenReturn(productBacklogDouble);
+        when(factoryProductBacklogDouble.createProductBacklog(any())).thenReturn
+        (productBacklogDouble);
         projectOne = factoryProject.createProject(code, projectCreationDto,
                 businessSectorIdDouble, customerIdDouble, projectTypologyIdDouble,
                 factoryProductBacklogDouble);
@@ -175,7 +175,7 @@ class ProjectServiceTest {
         //Arrange
         Optional<Project> optionalProject = Optional.empty();
         when(projectRepository.findByCode(any())).thenReturn(optionalProject);
-        ProjectNotFoundException exception = assertThrows(ProjectNotFoundException.class, () ->
+        NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class, () ->
                 projectService.getProductBacklog("P001"));
         String expected = "No project with that code";
         //Act
@@ -235,7 +235,8 @@ class ProjectServiceTest {
     }
 
     /**
-     * Scenario 03: check if returns an empty list when there are no UserStories with planned status.
+     * Scenario 03: check if returns an empty list when there are no UserStories with planned
+     * status.
      */
     @Test
     void ensureThatReturnsAnEmptyListBecauseThereAreNoUserStoriesWithPlannedStatus() {
@@ -260,7 +261,7 @@ class ProjectServiceTest {
 
     /**
      * Method getProjectDto(code)
-     *
+     * <p>
      * Scenario 1: Project dto is retrieved.
      */
     @Test
@@ -386,11 +387,13 @@ class ProjectServiceTest {
     }
 
     *//**
-     * METHOD getProductBacklog(String code) returns a list of UsID from the ProductBacklog of a Project.
+     * METHOD getProductBacklog(String code) returns a list of UsID from the ProductBacklog of a
+     * Project.
      * <p>
      * Scenario 1: Returns a list of UsID.
      *
-     * @throws Exception if there is no project in the product backlog with corresponding to the specified code.
+     * @throws Exception if there is no project in the product backlog with corresponding to the
+     * specified code.
      *                   Should return a list of UsId.
      *//*
     @Test
@@ -412,7 +415,8 @@ class ProjectServiceTest {
     *//**
      * Scenario 2: Returns an empty list of UsID .
      *
-     * @throws Exception if there is no project in the product backlog with corresponding to the specified code.
+     * @throws Exception if there is no project in the product backlog with corresponding to the
+     * specified code.
      * Should return an empty list of UsId.
      *//*
     @Test

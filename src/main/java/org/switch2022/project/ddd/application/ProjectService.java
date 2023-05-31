@@ -9,13 +9,14 @@ import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.Status;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.mapper.ProjectMapper;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
-import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
 import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class ProjectService {
     /**
      * This method will return a ProjectDto from the repository or an exception if the
      * project doesn't exist.
+     *
      * @param code from the project one searches for.
      * @return a projectDto or an exception.
      */
@@ -68,7 +70,8 @@ public class ProjectService {
         Optional<Project> projectOptional = getProjectByCode(code);
         if (projectOptional.isPresent()) {
             Project project = projectOptional.get();
-            String customerName = customerRepository.findCustomerNameByTaxId(project.getCustomerTaxId());
+            String customerName =
+                    customerRepository.findCustomerNameByTaxId(project.getCustomerTaxId());
             return projectMapper.projectToDto(project, customerName);
         } else {
             throw new NotFoundInRepoException("This project doesn't exist");
@@ -94,7 +97,7 @@ public class ProjectService {
 
             return userStoryMapper.userStoryToDtoList(userStories);
         } else {
-            throw new ProjectNotFoundException("No project with that code");
+            throw new NotFoundInRepoException("No project with that code");
         }
     }
 

@@ -6,7 +6,7 @@ public class AllocationDto {
     /**
      * Attributes
      */
-    public final int projectCode;
+    public final String projectCode;
     public final String accountEmail;
     public final String accountRole;
     public final float accountCostPerHour;
@@ -17,7 +17,7 @@ public class AllocationDto {
     /**
      * Constructor
      */
-    public AllocationDto(int projectCode, String accountEmail, String accountRole, float accountCostPerHour,
+    public AllocationDto(String projectCode, String accountEmail, String accountRole, float accountCostPerHour,
                          float accountPercentageOfAllocation, LocalDate startDate, LocalDate endDate) {
         this.projectCode = projectCode;
         this.accountEmail = accountEmail;
