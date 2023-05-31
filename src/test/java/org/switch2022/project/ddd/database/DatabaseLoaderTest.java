@@ -105,7 +105,7 @@ public class DatabaseLoaderTest {
         SprintFactory sprintFactory = new SprintFactory();
         SprintDomainDataAssembler sprintDomainDataAssembler = new SprintDomainDataAssembler();
         verify(sprints).save(sprintDomainDataAssembler.toData(sprintFactory.createSprint(new Code(1),
-                new SprintId("1", "1"), new SprintNumber(1),
+                new SprintId("p001", "s001"), new SprintNumber(1),
                 new Period(LocalDate.now(), 2))));
 
         // Profiles

@@ -28,6 +28,7 @@ public class CreateSprintService {
      */
 
     @Autowired
+    @Qualifier("sprint_jpa")
     private ISprintRepository sprintRepository;
     @Autowired
     private ISprintFactory sprintFactory;
