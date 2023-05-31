@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import TableBody from "../../components/TableBody/TableBody";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import AppContext from "../../context/AppContext";
@@ -6,13 +6,32 @@ import Alert from "@mui/material/Alert";
 import Button from "../../components/Button/Button";
 import {selectMenu} from "../../context/Actions";
 import './ConsultProductBacklog.css';
+import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
 
 /**
  * A functional component that displays the product backlog.
  * * @returns {JSX.Element} A div element containing a h1 element, an input text component, a table header and * a table body element. */function ConsultProductBacklog() {
     const {state, dispatch} = useContext(AppContext);
     const {usHeaders, detailedProject} = state;
-    const data = detailedProject.userStories.map(userStory => {
+
+    const [backlog, setBacklog] = useState([]);
+    const projectCode = detailedProject.code;
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/projects/${projectCode}/productBacklog`, { //`http://localhost:8080/projects?projectCode=${detailedProject.code}/productBacklog`, {
+            method: 'GET',
+            headers,
+        })
+            .then(res => res.json())
+            .then(res => {
+                console.log(res);
+                setBacklog(res);
+            })
+
+    },[])
+
+
+    const data = backlog.map(userStory => {
         return {
             userStoryNumber: userStory.userStoryNumber,
             userStoryText: userStory.userStoryText,

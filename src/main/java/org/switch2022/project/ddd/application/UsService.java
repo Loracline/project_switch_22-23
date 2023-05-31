@@ -57,9 +57,10 @@ public class UsService {
         Code projectCode = new Code(codeNumber);
 
         UserStory userStory = createUserStory(userStoryCreationDto, projectCode);
-        usRepository.save(userStory);
-
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
+        if (!usRepository.existsByUsId(usId)){
+            usRepository.save(userStory);
+        } else throw new AlreadyExistsInRepoException("User story ID already exists");
 
         try {
             addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
@@ -109,6 +110,7 @@ public class UsService {
             throw new NotFoundInRepoException("No project with that code");
         }
         project.addUserStory(priority, usId);
+        projectRepository.save (project);
         return true;
     }
 

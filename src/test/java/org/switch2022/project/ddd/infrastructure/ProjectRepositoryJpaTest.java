@@ -105,21 +105,7 @@ class ProjectRepositoryJpaTest {
         assertTrue(result);
     }
 
-    /**
-     * Method: save
-     * scenario 2: returns false
-     */
-    @Test
-    void ensureProjectIsNotSavedSuccessfully() {
-        //Arrange
-        Project project = mock(Project.class);
-        when(project.getProjectCode()).thenReturn("p001");
-        when(repository.existsById("p001")).thenReturn(true);
-        //Act
-        boolean result = repositoryJpa.save(project);
-        //Assert
-        assertFalse(result);
-    }
+
 
     /**
      * Method: findAll
@@ -233,4 +219,39 @@ class ProjectRepositoryJpaTest {
         //Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * Method: existByProjectCode()
+     * scenario 1: returns false
+     */
+    @Test
+    void ensureProjectIsNotExists() {
+        //Arrange
+        Project project = mock(Project.class);
+        Code code = new Code(1);
+        when(project.getProjectCode()).thenReturn("p001");
+        when(repository.existsById("p001")).thenReturn(false);
+        //Act
+        boolean result = repositoryJpa.existByProjectCode(code);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method: existByProjectCode()
+     * scenario 2: returns true
+     */
+    @Test
+    void ensureProjectIsExists() {
+        //Arrange
+        Project project = mock(Project.class);
+        Code code = new Code(1);
+        when(project.getProjectCode()).thenReturn("p001");
+        when(repository.existsById("p001")).thenReturn(true);
+        //Act
+        boolean result = repositoryJpa.existByProjectCode(code);
+        //Assert
+        assertTrue(result);
+    }
 }
+

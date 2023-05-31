@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.value_object.Code;
-
 import java.util.*;
 
 /**
@@ -119,5 +118,15 @@ public class ProjectRepository implements IProjectRepository {
             }
         }
         return Collections.unmodifiableList(projectsWithMatchingCodes);
+    }
+
+    public boolean existByProjectCode(Code code) {
+        boolean projectFound = false;
+        for (Project project : projects) {
+            if (project.getProjectCode().equals(code.getCode()) && !projectFound) {
+                projectFound = true;
+            }
+        }
+        return projectFound;
     }
 }

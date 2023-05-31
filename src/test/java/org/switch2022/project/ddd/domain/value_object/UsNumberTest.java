@@ -68,7 +68,7 @@ class UsNumberTest {
     @Test
     void ensureUserStoryNumberIsRetrievedSuccessfully() {
         // Arrange
-        UsNumber usNumber = new UsNumber("US001");
+        UsNumber usNumber = new UsNumber("1");
         String expected = "US001".toLowerCase();
 
         // Act
@@ -87,8 +87,8 @@ class UsNumberTest {
     @Test
     void ensureThatReturnsTrueIfTwoUsNumberInstancesHaveTheSameNumberValue() {
         //Arrange
-        UsNumber usNumber = new UsNumber("US001");
-        UsNumber otherUsNumber = new UsNumber("US001");
+        UsNumber usNumber = new UsNumber("1");
+        UsNumber otherUsNumber = new UsNumber("1");
         //Act
         boolean result = usNumber.sameValueAs(otherUsNumber);
         //Assert
@@ -102,8 +102,8 @@ class UsNumberTest {
     @Test
     void ensureThatReturnsFalseIfTwoUsNumberInstancesHaveDifferentNumberValues() {
         //Arrange
-        UsNumber usNumber = new UsNumber("US001");
-        UsNumber otherUsNumber = new UsNumber("US002");
+        UsNumber usNumber = new UsNumber("1");
+        UsNumber otherUsNumber = new UsNumber("2");
         //Act
         boolean result = usNumber.sameValueAs(otherUsNumber);
         //Assert
@@ -118,7 +118,7 @@ class UsNumberTest {
     @Test
     void ensureSameUsNumberEqualsItself() {
         // Arrange
-        UsNumber reference = new UsNumber("US001");
+        UsNumber reference = new UsNumber("1");
         UsNumber other = reference;
 
         // Act
@@ -134,8 +134,8 @@ class UsNumberTest {
     @Test
     void ensureTwoInstancesWithSameIdAreEqual() {
         // Arrange
-        UsNumber reference = new UsNumber("US001");
-        UsNumber other = new UsNumber("US001");
+        UsNumber reference = new UsNumber("1");
+        UsNumber other = new UsNumber("1");
 
         // Act
         boolean result = reference.equals(other);
@@ -151,8 +151,8 @@ class UsNumberTest {
     @Test
     void ensureTwoDifferentUsNumberInstancesAreNotTheSame() {
         // Arrange
-        UsNumber reference = new UsNumber("US001");
-        UsNumber other = new UsNumber("US002");
+        UsNumber reference = new UsNumber("1");
+        UsNumber other = new UsNumber("2");
 
         // Act
         boolean result = reference.equals(other);
@@ -169,7 +169,7 @@ class UsNumberTest {
     @Test
     void ensureUsNumberDoesNotEqualOtherTypeOfObject() {
         // Arrange
-        UsNumber reference = new UsNumber("US001");
+        UsNumber reference = new UsNumber("1");
         String other = "User";
 
         // Act
@@ -185,7 +185,7 @@ class UsNumberTest {
     @Test
     void ensureUsNumberInstanceDoesNotEqualNull() {
         // Arrange
-        UsNumber reference = new UsNumber("US001");
+        UsNumber reference = new UsNumber("1");
         UsNumber other = null;
 
         // Act
@@ -203,8 +203,8 @@ class UsNumberTest {
     @Test
     public void ensureTwoUsNumberInstancesHashcodeAreTheSame() {
         // Arrange
-        UsNumber usNumberOne = new UsNumber("US001");
-        UsNumber usNumberTwo = new UsNumber("US001");
+        UsNumber usNumberOne = new UsNumber("1");
+        UsNumber usNumberTwo = new UsNumber("1");
 
         // Act
         int usNumberOneHashCode = usNumberOne.hashCode();
@@ -220,8 +220,8 @@ class UsNumberTest {
     @Test
     public void ensureTwoUsNumberInstancesHashcodeAreNotTheSame() {
         // Arrange
-        UsNumber usNumberOne = new UsNumber("US001");
-        UsNumber usNumberThree = new UsNumber("US003");
+        UsNumber usNumberOne = new UsNumber("1");
+        UsNumber usNumberThree = new UsNumber("3");
 
         // Act
         int usNumberOneHashCode = usNumberOne.hashCode();

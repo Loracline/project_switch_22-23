@@ -356,7 +356,7 @@ class ProjectRepositoryTest {
         // Arrange
         ProjectRepository repository = new ProjectRepository();
         Code codeOne = mock(Code.class);
-        Code codeTwo= mock(Code.class);
+        Code codeTwo = mock(Code.class);
         Code codeThree = mock(Code.class);
 
         List<Code> projectCodes = Arrays.asList(codeOne, codeTwo, codeThree);
@@ -373,12 +373,47 @@ class ProjectRepositoryTest {
         when(projectOne.hasProjectCode(codeOne)).thenReturn(true);
         when(projectTwo.hasProjectCode(codeTwo)).thenReturn(true);
 
-        List<Project> expected = Arrays.asList(projectOne,projectTwo);
+        List<Project> expected = Arrays.asList(projectOne, projectTwo);
 
         // Act
         List<Project> result = repository.findAllByProjectCodes(projectCodes);
 
         // Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * Method: existByProjectCode()
+     * scenario 1: returns false
+     */
+    @Test
+    void ensureProjectIsNotExists() {
+        //Arrange
+        Code code = new Code(1);
+        ProjectRepository projectRepository = new ProjectRepository();
+
+        //Act
+        boolean result = projectRepository.existByProjectCode(code);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Method: existByProjectCode()
+     * scenario 2: returns true
+     */
+    @Test
+    void ensureProjectIsExists() {
+        //Arrange
+        Project project = mock(Project.class);
+        ProjectRepository projectRepository = new ProjectRepository();
+        Code code = new Code(1);
+        projectRepository.save(project);
+        when(project.getProjectCode()).thenReturn("p001");
+
+        //Act
+        boolean result = projectRepository.existByProjectCode(code);
+        //Assert
+        assertTrue(result);
     }
 }

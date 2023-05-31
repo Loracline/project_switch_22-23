@@ -119,13 +119,13 @@ public class DatabaseLoader implements CommandLineRunner {
         SprintFactory sprintFactory = new SprintFactory();
         SprintDomainDataAssembler sprintDomainDataAssembler = new SprintDomainDataAssembler();
         this.sprints.save(sprintDomainDataAssembler.toData(sprintFactory.createSprint(new Code(1),
-                new SprintId("1", "1"), new SprintNumber(1),
+                new SprintId("p001", "s001"), new SprintNumber(1),
                 new Period(LocalDate.now(), 2))));
         this.sprints.save(sprintDomainDataAssembler.toData(sprintFactory.createSprint(new Code(2),
-                new SprintId("2", "1"), new SprintNumber(1),
+                new SprintId("p002", "s001"), new SprintNumber(1),
                 new Period(LocalDate.now(), 2))));
         this.sprints.save(sprintDomainDataAssembler.toData(sprintFactory.createSprint(new Code(3),
-                new SprintId("3", "1"), new SprintNumber(1),
+                new SprintId("p003", "s001"), new SprintNumber(1),
                 new Period(LocalDate.now(), 2))));
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();

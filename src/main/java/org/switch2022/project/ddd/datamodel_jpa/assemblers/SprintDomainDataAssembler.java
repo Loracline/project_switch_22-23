@@ -8,6 +8,7 @@ import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -51,18 +52,15 @@ public class SprintDomainDataAssembler {
     public Sprint toDomain (SprintJpa sprintJpa) {
         ISprintFactory iSprintFactory = new SprintFactory();
 
-        String[] projectParts = sprintJpa.getProjectCode().split("P", -2);
-        int projectNumber = Integer.parseInt(projectParts[0]);
+        int projectNumber = Utils.getIntFromAlphanumericString
+                (sprintJpa.getProjectCode(), "p");
         Code projectCode = new Code(projectNumber);
 
-        String[] sprintIdParts = sprintJpa.getSprintId().split("_", -2);
-        String projectCodeId = sprintIdParts[0];
-        String sprintNumberId = sprintIdParts[1];
-        SprintId sprintId = new SprintId(projectCodeId, sprintNumberId);
-
-        String[] sprintNumberParts = sprintJpa.getSprintNumber().split("S",-2);
-        Integer sprintNumberInt = Integer.parseInt(sprintNumberParts[0]);
+        int sprintNumberInt = Utils.getIntFromAlphanumericString
+                (sprintJpa.getSprintNumber(), "s");
         SprintNumber sprintNumber = new SprintNumber(sprintNumberInt);
+
+        SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         formatter = formatter.withLocale( Locale.UK );

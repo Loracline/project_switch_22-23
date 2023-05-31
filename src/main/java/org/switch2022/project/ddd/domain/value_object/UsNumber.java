@@ -13,8 +13,7 @@ public class UsNumber implements ValueObject<UsNumber> {
      */
     public UsNumber(final String usNumber) {
         Validate.notNullOrEmptyOrBlank(usNumber, "user story number");
-
-        this.userStoryNumber = usNumber.toLowerCase();
+        this.userStoryNumber = String.format("us%03d", Integer.parseInt(usNumber));
     }
 
     /**

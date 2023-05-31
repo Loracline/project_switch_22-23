@@ -61,7 +61,7 @@ public class UsRepository implements IUsRepository {
      */
 
     @Override
-    public boolean save(UserStory userStory){
+    public boolean save(UserStory userStory) {
         if (!userStories.contains(userStory)) {
             userStories.add(userStory);
             return true;
@@ -106,5 +106,16 @@ public class UsRepository implements IUsRepository {
             }
         }
         return userStoriesWithMatchingIds;
+    }
+
+    @Override
+    public boolean existsByUsId(UsId usId) {
+        boolean usFound = false;
+        for (UserStory userStory : userStories) {
+            if (userStory.getUsId().equals(usId.getUserStoryId()) && !usFound) {
+                usFound = true;
+            }
+    }
+        return usFound;
     }
 }
