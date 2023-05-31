@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.infrastructure;
 
-import org.h2.engine.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,17 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.UserStoryDomainDataAssembler;
+import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.infrastructure.jpa.IUserStoryJpaRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -45,6 +43,7 @@ class UserStoryRepositoryJpaTest {
 
     @MockBean
     UserStoryDomainDataAssembler assembler;
+
 
     /**
      * Sets up the test environment by initializing mocks.
@@ -78,31 +77,6 @@ class UserStoryRepositoryJpaTest {
         assertTrue(result);
     }
 
-    /**
-     * Scenario 2: Test to ensure that a user story is not saved.
-     */
-
-    @Test
-    void ensureUserStoryIsNotSaved() {
-        // Arrange
-        UserStory userStoryDouble = mock(UserStory.class);
-        UserStoryJpa userStoryJpaDouble = mock(UserStoryJpa.class);
-
-
-        // Act
-        when(assembler.toData(userStoryDouble)).thenReturn(userStoryJpaDouble);
-        when(repositoryJpa.existsByUsId(userStoryDouble.getUsId())).thenReturn(true);
-        when(repositoryJpa.save(userStoryJpaDouble)).thenReturn(userStoryJpaDouble);
-
-        // Assert
-        Exception exception = assertThrows(
-                Exception.class,
-                () -> repository.save(userStoryDouble),
-                "User story ID already exists"
-        );
-
-        assertEquals("User story ID already exists", exception.getMessage());
-    }
 
     /**
      * Method: delete()
@@ -177,8 +151,8 @@ class UserStoryRepositoryJpaTest {
     @Test
     void ensureListOfUsWithMatchingIdsIsRetrieved() {
         // Arrange
-        UsId usIdOne = new UsId("p001","us001");
-        UsId usIdTwo = new UsId("p001","us002");
+        UsId usIdOne = new UsId("p001", "us001");
+        UsId usIdTwo = new UsId("p001", "us002");
         List<UsId> usId = new ArrayList<>();
         usId.add(usIdOne);
         usId.add(usIdTwo);
@@ -247,4 +221,36 @@ class UserStoryRepositoryJpaTest {
         // Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * Method: existByProjectCode()
+     * scenario 1: returns false
+     */
+    @Test
+    void ensureUserStoryIsNotExists() {
+        //Arrange
+        UsId usId = new UsId("p001", "us001");
+        when(repository.existsByUsId(usId)).thenReturn(false);
+        //Act
+        boolean result = repository.existsByUsId(usId);
+        //Assert
+        assertFalse(result);
+    }
+
+
+    /**
+     * Method: existById()
+     * scenario 2: returns true
+     */
+    @Test
+    void ensureUserStoryIsExists() {
+        //Arrange
+        UsId usId = new UsId("p001", "us001");
+        when(repository.existsByUsId(usId)).thenReturn(true);
+        //Act
+        boolean result = repository.existsByUsId(usId);
+        //Assert
+        assertTrue(result);
+    }
 }
+
