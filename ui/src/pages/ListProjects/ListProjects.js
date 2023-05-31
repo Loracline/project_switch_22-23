@@ -3,7 +3,7 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import TableBody from "../../components/TableBody/TableBody";
 import AppContext from "../../context/AppContext";
 import Alert from "@mui/material/Alert";
-import {getProject, getProjects, selectMenu} from "../../context/Actions";
+import {getProjects, selectMenu, setCurrentProject} from "../../context/Actions";
 import Button from "../../components/Button/Button";
 import './ListProjects.css';
 
@@ -24,9 +24,9 @@ const ListProjects = () => {
             const onClickTableBody = (index) => {
                 if (state.projects.length > index) {
                     const selectedProject = state.projects[index];
-                    getProject(dispatch, selectedProject.code);
+                    //getProject(dispatch, selectedProject.code);
                     //dispatch(setCurrentProject(updatedProject));
-                    //dispatch(setCurrentProject(selectedProject));
+                    dispatch(setCurrentProject(selectedProject));
                 }
                 dispatch(selectMenu('project'));
             };

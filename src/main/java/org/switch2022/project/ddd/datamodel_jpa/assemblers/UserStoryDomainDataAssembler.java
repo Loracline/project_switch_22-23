@@ -6,6 +6,7 @@ import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
 import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +45,8 @@ public class UserStoryDomainDataAssembler {
     public UserStory toDomain (UserStoryJpa userStoryJpa){
 
         String usNumber = userStoryJpa.getUsNumber();
-        String[] usNumberPart = usNumber.split("_");
-        String sprintNumber = usNumberPart[1];
-        UsNumber userStoryNumber = new UsNumber(sprintNumber);
+
+        UsNumber userStoryNumber = new UsNumber(Integer.toString(Utils.getIntFromAlphanumericString (usNumber,"us")));
 
         UsText userStoryText = new UsText(userStoryJpa.getUsText());
         Actor actor = new Actor(userStoryJpa.getActor());
@@ -56,9 +56,8 @@ public class UserStoryDomainDataAssembler {
         }
 
         String projectNumber = userStoryJpa.getProjectCode();
-        String[] projectPart = projectNumber.split("_");
-        int project = Integer.parseInt(projectPart[1]);
-        Code projectCode = new Code(project);
+
+        Code projectCode = new Code(Utils.getIntFromAlphanumericString(projectNumber, "p"));
 
         UserStory userStory = factory.createUserStory(userStoryNumber,
                 userStoryText, actor, acceptanceCriteria, projectCode);

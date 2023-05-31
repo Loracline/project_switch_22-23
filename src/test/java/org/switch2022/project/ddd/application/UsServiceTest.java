@@ -18,6 +18,7 @@ import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
+import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,7 +84,7 @@ class UsServiceTest {
         List<String> acceptanceCriteria = new ArrayList<>();
 
         UserStoryCreationDto userStoryCreationDto =
-                new UserStoryCreationDto("P001", "US001", "text", "manager", acceptanceCriteria, 1);
+                new UserStoryCreationDto("P001", "1", "text", "manager", acceptanceCriteria, 1);
 
         // Act
         UsId result = usService.createUs(userStoryCreationDto);
@@ -110,19 +111,18 @@ class UsServiceTest {
         List<String> acceptanceCriteria = new ArrayList<>();
 
         UserStoryCreationDto userStoryCreationDto =
-                new UserStoryCreationDto("P001", "US001", "text", "manager", acceptanceCriteria, 1);
+                new UserStoryCreationDto("P001", "1", "text", "manager", acceptanceCriteria, 1);
 
         // Act
         when(factoryUserStory.createUserStory(any(), any(), any(), any(), any()))
                 .thenReturn(userStoryDouble);
+        when(userStoryDouble.getUsNumber()).thenReturn("us001");
 
         usRepository.save(userStoryDouble);
-
-        doThrow(new IllegalStateException("User Story ID already exists")).when(usRepository).
-                save(userStoryDouble);
+        when(usRepository.existsByUsId(any())).thenReturn (true);
 
         // Assert
-        assertThrows(IllegalStateException.class, () -> usService.createUs(
+        assertThrows(AlreadyExistsInRepoException.class, () -> usService.createUs(
                 userStoryCreationDto));
 
     }
