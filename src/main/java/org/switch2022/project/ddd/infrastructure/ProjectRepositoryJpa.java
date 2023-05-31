@@ -58,12 +58,8 @@ public class ProjectRepositoryJpa implements IProjectRepository {
      */
     @Override
     public boolean save(Project project) {
-        boolean result = false;
-        if (!projectJpaRepository.existsById(project.getProjectCode())) {
-            projectJpaRepository.save(assembler.toData(project));
-            result = true;
-        }
-        return result;
+        projectJpaRepository.save(assembler.toData(project));
+        return true;
     }
 
     /**
@@ -101,5 +97,9 @@ public class ProjectRepositoryJpa implements IProjectRepository {
             projects.add(project);
         }
         return projects;
+    }
+
+    public boolean existByProjectCode(Code code) {
+        return projectJpaRepository.existsById(code.getCode());
     }
 }

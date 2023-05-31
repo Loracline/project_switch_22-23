@@ -101,9 +101,10 @@ public class ProjectDomainDataAssembler {
         while (userStoriesIterator.hasNext()) {
             String userStoryId = userStoriesIterator.next();
             String tobeRemoved = projectCode + "_" + "us";
+            UsNumber usNumber = new UsNumber((Integer.toString(
+                    Utils.getIntFromAlphanumericString(userStoryId, tobeRemoved))));
 
-            UsId usid = new UsId(projectCode, Integer.toString(
-                    Utils.getIntFromAlphanumericString(userStoryId, tobeRemoved)));
+            UsId usid = new UsId(projectCode,usNumber.getUserStoryNumber());
             project.addUserStory(i, usid);
             i++;
         }

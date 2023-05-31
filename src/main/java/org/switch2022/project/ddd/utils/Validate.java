@@ -99,7 +99,7 @@ public final class Validate {
      * @throws InvalidInputException if the string is null or empty or blank or email invalid.
      */
     public static void isPhoneNumberValid(String phoneNumber) {
-        if (!phoneNumber.matches("^\\+3519\\d{8}|9\\d{8}|\\+346\\d{8}|\\+347\\d{8}|6\\d{8}|7\\d{8}$")) {
+        if (!phoneNumber.matches("^\\+3519\\d{8}|9\\d{8}|2\\d{8}|\\+346\\d{8}|\\+347\\d{8}|6\\d{8}|7\\d{8}$")) {
             throw new InvalidInputException("The phone number is invalid");
         }
     }

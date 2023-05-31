@@ -7,6 +7,9 @@ import './Project.css';
 const Project = () => {
     const {state, dispatch} = useContext(AppContext);
     const data = state.detailedProject;
+
+    const isEndDatePassed = new Date(data?.endDate) < new Date();
+
     return (
         <div className='page'>
             <section className='projectCard'>
@@ -20,10 +23,13 @@ const Project = () => {
                         <p>End date: {data?.['endDate']}</p>
                     </div>
                     <div className='buttons-project'>
-                        <Button onClick={() => dispatch(selectMenu('createUserStory'))} text="Create user story"/>
-                        <Button onClick={() => dispatch(selectMenu('createSprint'))} text="Create sprint"/>
+                        <Button onClick={() => dispatch(selectMenu('createUserStory'))}
+                                text="Create user story" isDisabled={isEndDatePassed}/>
+                        <Button onClick={() => dispatch(selectMenu('createSprint'))}
+                                text="Create sprint" isDisabled={!data?.startDate || !data?.endDate || isEndDatePassed}/>
                         <Button onClick={() => dispatch(selectMenu('productBacklog'))} text="Consult product backlog"/>
-                        <Button onClick={() => dispatch(selectMenu('allocateResource'))} text="Add User"/>
+                        <Button onClick={() => dispatch(selectMenu('allocateResource'))}
+                                text="Add User" isDisabled={!data?.startDate || !data?.endDate || isEndDatePassed}/>
                     </div>
                 </div>
                 <Button isSecundary={true} onClick={() => dispatch(selectMenu('projects'))} text="Return to projects"/>

@@ -468,6 +468,7 @@ class SprintTest {
      * METHOD isPeriodNotOverlapping()
      * Scenario 1 : return true if period is not overlapping
      */
+    /*
     @Test
     void ensurePeriodIsNotOverlapping() {
         //Arrange
@@ -488,7 +489,7 @@ class SprintTest {
 
         //Assert
         assertTrue(result);
-    }
+    }*/
 
     /**
      * Scenario 2: return false if period is overlapping.

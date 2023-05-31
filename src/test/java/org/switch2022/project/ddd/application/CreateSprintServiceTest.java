@@ -38,6 +38,7 @@ class CreateSprintServiceTest {
     @Qualifier("project_jpa")
     IProjectRepository projectRepository;
     @MockBean
+    @Qualifier("sprint_jpa")
     ISprintRepository sprintRepository;
     @MockBean
     ISprintFactory sprintFactory;

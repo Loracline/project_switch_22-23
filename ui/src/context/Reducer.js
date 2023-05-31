@@ -142,12 +142,11 @@ const reducer = (state, action) => {
 
         case GET_PROJECT_SUCCESS: {
             const project = action.payload;
-            console.log(project);
             return {...state, detailedProject: project};
         }
 
         case POST_SPRINT_SUCCESS: {
-            return {...state, messageSuccess: action.payload.message};
+            return {...state, messageSuccess: action.payload};
         }
 
         default:

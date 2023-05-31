@@ -12,16 +12,12 @@ import org.switch2022.project.ddd.domain.model.project_resource.IProjectResource
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceRepository;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.AllocationDto;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.Email;
-import org.switch2022.project.ddd.domain.value_object.Period;
-import org.switch2022.project.ddd.dto.AllocationDto;
-import org.switch2022.project.ddd.utils.Utils;
 
 import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
@@ -62,7 +58,7 @@ public class ResourceAllocationService {
         int projectNumber = Utils.getIntFromAlphanumericString(allocationDto.projectCode, "P");
         Code code = new Code(projectNumber);
         Email email = new Email(allocationDto.accountEmail);
-        Role role = Role.valueOf(allocationDto.accountRole);
+        Role role = generateRole(allocationDto.accountRole);
         CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);
         PercentageOfAllocation percentageOfAllocation =
                 new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
@@ -321,7 +317,7 @@ public class ResourceAllocationService {
      * @param projectCode being checked.
      * @param email       being checked.
      * @param period      being checked.
-     * @return return true if the projectResource is overllaping, false otherwise.
+     * @return return true if the projectResource is overlapping, false otherwise.
      */
     protected boolean isResourceOverlapping(Code projectCode, Email email, Period period) {
         boolean resourceIsOverlapping = false;
@@ -339,7 +335,7 @@ public class ResourceAllocationService {
     }
 
     /**
-     * This method checks if there are any resource in the repository that have the same project, account and a
+     * This method checks if there are any resource in the repository that have the same project, account and an
      * overlapping period.
      *
      * @param projectCode being checked.
