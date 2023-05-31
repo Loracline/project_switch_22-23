@@ -17,6 +17,7 @@ import DatePickerInput from "../../components/DatePickerInput/DatePickerInput";
 import {postResource} from "../../services/ResourceService";
 import Alert from "@mui/material/Alert";
 import {useGetAccounts} from "./useGetAccounts";
+import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 
 
 function AllocateResource() {
@@ -37,9 +38,16 @@ function AllocateResource() {
     const [resource, setResource] = useState(initialResource);
     const [percentageError, setPercentageError] = useState('');
     const [backendError, setBackendError] = useState({message: '', show: false});
-
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const [userAccounts] = useGetAccounts();
 
+    const handleConfirmation = () => {
+        setShowConfirmation(true);
+    }
+
+    const handleCancel = () => {
+        setShowConfirmation(false);
+    };
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -87,19 +95,55 @@ function AllocateResource() {
         setBackendError({message: '', show: false});
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        //Open modal with summary
-        //if confirms, proceed
-        //Call service to create resource
-        //If succeeds showcase success message, clean form etc
-        //If fails showcase inform the user
-        //example:
+    const handleSubmit = () => {
         postResource(resource)
-            .then((res) => console.log("sucesso yeah!"))
+            .then((res) => {
+                console.log("sucesso yeah!");
+            })
             .catch((err) => setBackendError({message: err.message, show: true}))
+        setShowConfirmation(false);
     }
 
+    const dialogContent = () => {
+        return (
+            <div>
+                <h2 style={{marginBottom: '1rem'}}>Please confirm:</h2>
+                <table style={{width: '100%'}}>
+                    <tbody>
+                    <tr>
+                        <td><strong>Project Code:</strong></td>
+                        <td>{resource.projectCode}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email:</strong></td>
+                        <td>{resource.accountEmail}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Role:</strong></td>
+                        <td>{resource.accountRole}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost Per Hour:</strong></td>
+                        <td>{resource.accountCostPerHour}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Percentage of Allocation:</strong></td>
+                        <td>{resource.accountPercentageOfAllocation}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Start Date:</strong></td>
+                        <td>{new Date(resource.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End Date:</strong></td>
+                        <td>{new Date(resource.endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        )
+    }
 
     return (
         <div className="page">
@@ -110,7 +154,7 @@ function AllocateResource() {
             </Snackbar>
             <section className="formCard">
                 <h2>Allocate Resource</h2>
-                <form className="resource-form" onSubmit={handleSubmit}>
+                <form className="resource-form">
                     <div className={"user-role"}>
                         <Autocomplete
                             sx={{width: 500}}
@@ -164,10 +208,10 @@ function AllocateResource() {
                                 value={resource.accountRole}
                                 label="Role"
                                 onChange={handleChange}>
-                                <MenuItem value={"TEAM_MEMBER"}>Team Member</MenuItem>
-                                <MenuItem value={"PRODUCT_OWNER"}>Product Owner</MenuItem>
-                                <MenuItem value={"SCRUM_MASTER"}>Scrum Master</MenuItem>
-                                <MenuItem value={"PROJECT_MANAGER"} disabled>Project
+                                <MenuItem value={"Team Member"}>Team Member</MenuItem>
+                                <MenuItem value={"Product Owner"}>Product Owner</MenuItem>
+                                <MenuItem value={"Scrum Master"}>Scrum Master</MenuItem>
+                                <MenuItem value={"Project Manager"} disabled>Project
                                     Manager</MenuItem>
                             </Select>
                         </FormControl>
@@ -248,18 +292,27 @@ function AllocateResource() {
                         text="Return"
                     />
 
-                    <Button text="Submit " isDisabled = {
-                        !resource.accountEmail ||
-                        !resource.accountRole ||
-                        !resource.accountCostPerHour ||
-                        !resource.accountPercentageOfAllocation ||
-                        !resource.startDate ||
-                        !resource.endDate
-                    }
+                    <Button text="Submit "
+                            type="button"
+                            isDisabled={
+                                !resource.accountEmail ||
+                                !resource.accountRole ||
+                                !resource.accountCostPerHour ||
+                                !resource.accountPercentageOfAllocation ||
+                                !resource.startDate ||
+                                !resource.endDate
+                            }
+                            onClick={handleConfirmation}
                     />
-
                 </form>
             </section>
+                <ConfirmationPage
+                    handleOpen={showConfirmation}
+                    dialogContent={dialogContent()}
+                    handleCancel={handleCancel}
+                    handleConfirm={handleSubmit}
+                />
+
         </div>
     )
 }

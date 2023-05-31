@@ -62,7 +62,7 @@ public class ResourceAllocationService {
         int projectNumber = Utils.getIntFromAlphanumericString(allocationDto.projectCode, "P");
         Code code = new Code(projectNumber);
         Email email = new Email(allocationDto.accountEmail);
-        Role role = Role.valueOf(allocationDto.accountRole);
+        Role role = generateRole(allocationDto.accountRole);
         CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);
         PercentageOfAllocation percentageOfAllocation =
                 new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
