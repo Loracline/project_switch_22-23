@@ -139,7 +139,7 @@ public class Period implements ValueObject<Period> {
      */
     public boolean isPeriodNotOverlapping(Period period) {
         // check if this period ends before the start of the given period
-        return this.endDate.isBefore(period.startDate) || period.endDate.isBefore(this.startDate);
+        return this.endDate.isBefore(period.startDate) && period.endDate.isAfter(this.startDate);
     }
 
     /**
