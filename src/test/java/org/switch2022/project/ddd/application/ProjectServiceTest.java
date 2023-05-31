@@ -44,6 +44,7 @@ class ProjectServiceTest {
     @Qualifier("project_jpa")
     IProjectRepository projectRepository;
     @MockBean
+    @Qualifier("us_jpa")
     IUsRepository usRepository;
     @MockBean
     ProjectMapper projectMapper;
