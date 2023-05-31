@@ -1,0 +1,954 @@
+@startuml
+
+/'CONTROLLERS'/
+
+class AddCustomerController{
+- service
++ addCustomer(dto)
+}
+
+AddCustomerController <.. CustomerService: is injected
+CustomerService <.. ICustomerRepository: is injected
+ICustomerRepository <|.. CustomerRepository: implements
+CustomerRepository "1" --> "*" Customer: has
+CustomerService <.. ICustomerFactory: is injected
+ICustomerFactory <.. CustomerFactory: implements
+CustomerFactory ..> Customer: creates
+
+class AddUserStoryToSprintBacklogController{
+- service
++ addUserStoryToSprintBacklog(usId, sprintId)
+}
+
+AddUserStoryToSprintBacklogController <.. AddUserStoryToSprintBacklogService: is injected
+AddUserStoryToSprintBacklogService <.. ISprintRepository: is injected
+ISprintRepository <|.. SprintRepository: implements
+SprintRepository "1" --> "*" Sprint: has
+Sprint "1" --> "*" UserStoryInSprint: has
+AddUserStoryToSprintBacklogService <.. IUsRepository: is injected
+IUsRepository <|.. UsRepository: implements
+UsRepository "1" --> "*" UserStory: has
+
+class AddUserToProjectController {
+- service
++ addUserToProject(allocationDto)
+}
+
+AddUserToProjectController <.. ResourceAllocationService: is injected
+ResourceAllocationService <.. IProjectResourceRepository: is injected
+ResourceAllocationService <.. IProjectRepository: is injected
+ResourceAllocationService <.. IAccountRepository: is injected
+ResourceAllocationService <.. IProjectResourceFactory: is injected
+IProjectResourceFactory <|.. ProjectResourceFactory: implements
+ProjectResourceFactory ..> ProjectResource: creates
+ResourceAllocationService <.. IAccountFactory: is injected
+
+class ChangeAccountStatusController {
+- accountService
++ changeStatus(email, status)
+}
+
+ChangeAccountStatusController <.. AccountChangeStatusService: is injected
+AccountChangeStatusService <.. IAccountRepository: is injected
+IAccountRepository <|.. AccountRepository: implements
+AccountRepository "1"--> "*"Account: has
+
+class ChangeProfileController{
+- changeProfileService
++ changeProfile(email, profileName)
+}
+
+ChangeProfileController <.. ChangeProfileService: is injected
+ChangeProfileService <.. IProfileRepository: is injected
+IProfileRepository <|.. ProfileRepository: implements
+ProfileRepository "1" --> "*" Profile: has
+
+ChangeProfileService <.. IAccountRepository: is injected
+
+class ConsultProductBacklogController{
+- projectService
++ getProductBacklog(projectCode)
+}
+
+ConsultProductBacklogController <.. ProjectService: is injected
+ProjectService <.. IFactoryProject: is injected
+ProjectService <.. IProjectRepository: is injected
+ProjectService <.. IUsRepository: is injected
+ProjectService <.. UserStoryMapper: is injected
+UserStoryMapper ..> UserStoryDto: creates
+UserStoryDto ..> UserStory: uses
+ProjectService <.. ProjectMapper: is injected
+ProjectService <.. ICustomerRepository: is injected
+
+
+class CreateBusinessSectorController{
+- businessSectorService
++ createBusinessSector(name)
+}
+
+CreateBusinessSectorController <.. BusinessSectorService: is injected
+BusinessSectorService <.. IBusinessSectorRepository: is injected
+IBusinessSectorRepository <|.. BusinessSectorRepository: implements
+BusinessSectorRepository "1" --> "*" BusinessSector: has
+BusinessSectorService <.. BusinessSectorMapper: is injected
+BusinessSectorMapper ..> BusinessSectorDto: creates
+BusinessSectorDto ..> BusinessSector: uses
+BusinessSectorService <.. IBusinessSectorFactory: is injected
+IBusinessSectorFactory <|.. BusinessSectorFactory: implements
+BusinessSectorFactory ..> BusinessSector: creates
+
+class CreateProfileController {
+- profileService
++ createProfile(profileCreationDto)
+}
+
+CreateProfileController <.. ProfileService: is injected
+CreateProfileController <.. ProfileCreationDto: uses
+ProfileService <.. IProfileFactory: is injected
+IProfileFactory <|.. ProfileFactory: implements
+ProfileFactory ..> Profile: creates
+ProfileService <.. IProfileRepository: is injected
+
+class CreateProjectController {
+- projectCreationService
++  createProject(projectCreationDto)
+}
+
+CreateProjectController <.. ProjectCreationService: is injected
+CreateProjectController <.. ProjectCreationDto: uses
+ProjectCreationService <.. IFactoryProject: is injected
+IFactoryProject <|.. FactoryProject: implements
+FactoryProject ..> Project: creates
+ProjectCreationService <.. IProjectRepository: is injected
+IProjectRepository <|.. ProjectRepository: implements
+ProjectCreationService <.. ITypologyRepository: is injected
+ITypologyRepository <|.. TypologyRepository: implements
+TypologyRepository --> Typology: has
+ProjectCreationService <.. IBusinessSectorRepository: is injected
+ProjectCreationService <.. ICustomerRepository: is injected
+
+class CreateSprintController {
+- createSprintService
++ createSprint(projectCode, startDate)
+}
+
+CreateSprintController <.. CreateSprintService: is injected
+CreateSprintService <.. ISprintRepository: is injected
+CreateSprintService <.. ISprintFactory: is injected
+ISprintFactory <|.. SprintFactory: implements
+SprintFactory ..> Sprint: creates
+CreateSprintService <.. IProjectRepository: is injected
+ProjectRepository "1" --> "*" Project: has
+
+class CreateTypologyController {
+- typologyService
++ createTypology(name)
+}
+
+CreateTypologyController <.. TypologyService: is injected
+TypologyService <.. ITypologyRepository: is injected
+TypologyService <.. ITypologyFactory: is injected
+ITypologyFactory <|.. TypologyFactory: implements
+TypologyFactory ..> Typology: creates
+TypologyService <.. TypologyMapper: is injected
+TypologyMapper ..> TypologyDto: creates
+TypologyDto ..> Typology: uses
+
+class CreateUserStoryController{
+- usService
++ createUs(userStoryCreationDto)
+}
+
+CreateUserStoryController <.. UsService: is injected
+CreateUserStoryController <.. UserStoryCreationDto: uses
+UsService <.. IUsRepository: is injected
+UsService <.. IProjectRepository: is injected
+UsService <.. IFactoryUserStory: is injected
+IFactoryUserStory <|.. FactoryUserStory: implements
+FactoryUserStory ..> UserStory: creates
+
+class ListAccountsInProjectController{
+- service
++ listAccountsByProject(stringOf_projectCode)
+}
+
+ListAccountsInProjectController <.. ResourceListAllocationService: is injected
+ResourceListAllocationService <.. IProjectResourceRepository: is injected
+ResourceListAllocationService <.. IAccountRepository: is injected
+ResourceListAllocationService <.. AccountMapper: is injected
+
+
+class ListAllAccountsController {
+- accountService
++ listAllAccounts()
+}
+
+ListAllAccountsController <.. AccountListService: is injected
+AccountListService <.. IAccountRepository: is injected
+AccountListService <.. AccountMapper: is injected
+AccountMapper ..> AccountDto: creates
+AccountDto ..> Account: uses
+
+
+class ListProjectsOfAccountController {
+- projectListAllocationService
++ listProjectsByAccount(email)
+}
+
+ListProjectsOfAccountController <.. ProjectListAllocationService: is injected
+ProjectListAllocationService <.. IProjectResourceRepository: is injected
+IProjectResourceRepository <|.. ProjectResourceRepository: implements
+ProjectResourceRepository "1"..> "*" ProjectResource: has
+ProjectListAllocationService <.. IProjectRepository: is injected
+ProjectListAllocationService <.. ICustomerRepository: is injected
+ProjectListAllocationService <.. ProjectMapper: is injected
+ProjectMapper ..> ProjectDto: creates
+ProjectDto ..> Project: uses
+
+class ProjectListController {
+- projectListService
++ listAllProjects()
+}
+
+ProjectListController <.. ProjectListService: is injected
+ProjectListService <.. IProjectRepository: is injected
+ProjectListService <.. ProjectMapper: is injected
+ProjectListService <.. ICustomerRepository: is injected
+
+class RegisterAccountController {
+- accountService
++ registerAccount(accountCreationDto)
+}
+
+RegisterAccountController <.. AccountCreationService: is injected
+AccountCreationService <.. IAccountRepository: is injected
+AccountCreationService <.. IAccountFactory: is injected
+IAccountFactory <|.. AccountFactory: implements
+AccountFactory ..> Account: creates
+RegisterAccountController <.. AccountCreationDto: uses
+
+class UserStoriesInSprintController {
+- userStoriesInSprintService
++ getScrumBoard(projectCode, date)
+}
+
+UserStoriesInSprintController <.. UserStoriesInSprintService: is injected
+UserStoriesInSprintService <.. ISprintRepository: is injected
+UserStoriesInSprintService <.. IUsRepository: is injected
+
+class UserStoryEffortEstimationController {
+- service
++ estimateEffortUserStory(usId, effort, sprintId)
+}
+
+UserStoryEffortEstimationController <.. UserStoryInSprintService: is injected
+UserStoryInSprintService <.. ISprintRepository
+
+/'SERVICES'/
+
+class AccountChangeStatusService {
+- accountRepository
++ changeStatus(email, status)
+}
+
+class AccountCreationService {
+- accountFactory
+- accountRepository
+}
+
+class AccountListService {
+- accountRepository
+- accountMapper
++ listAllAccounts()
+}
+
+class AddUserStoryToSprintBacklogService {
+- sprintRepository
+- usRepository
++ addUserStoryToSprintBacklog(usId, sprintId)
+- getSprintById(sprintId)
+- isSprintInValidPeriod(sprint, date)
+- hasUserStoryStatus(usId)
+- getUserStory(usId)
+}
+
+class BusinessSectorService {
+- businessSectorRepository
+- businessSectorMapper
+- businessSectorFactory
+}
+
+class ChangeProfileService {
+- profileRepository
+- accountRepository
++ changeProfile(email, profileName)
+}
+
+class CreateSprintService{
+- sprintRepository
+- sprintFactory
+- projectRepository
+}
+
+class CustomerService{
+- repository
+- factory
++ addCustomer(customerCreationDto)
+}
+
+class ProfileService{
+- profileFactory
+- profileRepository
++ createProfile(profileCreationDto)
+- calculateNextProfileNumber()
+}
+
+class ProjectCreationService{
+- factoryProject
+- projectRepository
+- typologyRepository
+- businessSectorRepository
+- customerRepository
++ createProject(projectCreationDto)
++ calculateNextProjectNumber()
++ getProjectByCode(code)
++ addProject(project)
+}
+
+class ProjectListAllocationService {
+- iProjectResourceRepository
+- iProjectRepository
+- iCustomerRepository
+- projectMapper
+}
+
+class ProjectListService{
+- projectRepository
+- projectMapper
+- customerRepository
++ requestAllProjects()
+}
+
+class ProjectService {
+- factoryProject
+- projectRepository
+- usRepository
+- userStoryMapper
+- projectMapper
+- customerRepository
+}
+
+class ResourceAllocationService {
+- resourceRepository
+- projectRepository
+- accountRepository
+- resourceFactory
+- accountFactory
++ addUserToProject(allocationDto)
+- isResourceValid(role, code, period, email, percentage)
+- hasStatus(projectCode, status)
+- doesNotHaveStatus(projectCode, status)
+- containsPeriod(projectCode, allocationPeriod)
+# isProjectValidForAllocation(projectCode, allocationPeriod)
+- isProjectManager(role)
+- isNotProjectManager(role)
+# projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(role, code, period)
+- projectDoesNotHaveScrumMasterOrProductOwnerInThatPeriod(role, code, period)
+- projectAlreadyHasScrumMasterInThatPeriod(role, code, period)
+- projectAlreadyHasProductOwnerInThatPeriod(role, code, period)
+- projectHasRoleInThatPeriod(role, code, period)
+- currentPercentageOfAllocation(accountEmail, date)
+- totalPercentageOfAllocation(accountEmail, date, toAdd)
+# validatePercentageOfAllocation(accountEmail, date, toAdd)
+# isResourceOverlapping(projectCode, email, period)
+- resourceDoesNotExist(projectCode, email, period)
+# isAccountValidForAllocation(accountEmail)
+- findResourcesByEmailWithPeriodOverlapping(period, email)
+- percentageOfAllocationDuringAPeriod(period, email)
++ isPercentageOfAllocationValid(period, email, percentageOfAllocationToAdd)
+}
+
+class ResourceListAllocationService{
+- resourceRepository
+- accountRepository
+- mapper
++ listAccountsInProject(stringOf_projectCode)
+}
+
+class TypologyService {
+- typologyRepository
+- factoryTypology
+- typologyMapper
++ createTypology(name)
++ requestAllTypologies()
+}
+
+class UserStoriesInSprintService{
+- sprintRepository
+- userStoryRepository
++ getScrumBoard(projectCode, date)
+- getCurrentSprint(sprints, date)
+- extractUsIds(userStoryInSprints)
+}
+
+class UserStoryInSprintService {
+- sprintRepository
++ estimateEffortUserStory(usId, effort, sprintId)
+- getSprintById(sprintId)
+- isSprintInValidPeriod(sprint, date)
+}
+
+class UsService {
+- usRepository
+- projectRepository
+- factoryUserStory
++ createUs(userStoryCreationDto)
++ deleteUs(UsId)
++ addUsToProductBacklog(usId, projectCode, priority)
+- createUserStory(userStoryCreationDto, projectCode)
+- convertToAcceptanceCriteria(acceptanceCriteria)
+}
+
+/'REPOSITORIES'/
+
+interface IAccountRepository {
++ save(account)
++ findAll()
++ findAccountsByEmails(emails)
++ findAccountByEmail(email)
+}
+
+class AccountRepository{
+- accounts
++ findAll()
++ findAccountsByEmails(emails)
++ findAccountByEmail(email)
+}
+
+interface ISprintRepository{
++ findById(sprintId)
++ count()
++ save(sprint)
++ findByProjectCode(projectCode)
+}
+
+class SprintRepository{
+- sprints
++ findById(sprintId)
++ count()
++ save(sprint)
++ findByProjectCode(projectCode)
+}
+
+interface IUsRepository{
++ save(userStory)
++ delete(usId)
++ getListOfUsWithMatchingIds(usId)
+}
+
+class UsRepository{
+- userStories
++ save(userStory)
++ delete(usId)
++ getListOfUsWithMatchingIds(usId)
+}
+
+interface IBusinessSectorRepository{
++ save(businessSector))
++ count()
++ getBusinessSectorIdByName(businessSectorName)
++ findAll()
+}
+
+class BusinessSectorRepository{
+- businessSectors
++ save(businessSector))
++ count()
++ getBusinessSectorIdByName(businessSectorName)
++ findAll()
+}
+
+interface IProfileRepository{
++ save(profile)
++ count()
++ findByProfileName(profileName)
+}
+
+class ProfileRepository{
+- profiles
++ save(profile)
++ count()
++ findByProfileName(profileName)
+}
+
+interface IProjectRepository{
++ findByCode(code)
++ count()
++ save(project)
++ findAll()
++ findAllByProjectCodes(projectCodes)
+}
+
+class ProjectRepository{
+-projects
++ findByCode(code)
++ count()
++ save(project)
++ findAll()
++ findAllByProjectCodes(projectCodes)
+}
+
+interface ICustomerRepository{
++ save(customer)
++ findCustomerNameByTaxId(taxId)
++ findCustomerTaxIdByName(customerName)
++ findAll()
+}
+
+class CustomerRepository{
+- customers
++ save(customer)
++ findCustomerNameByTaxId(taxId)
++ findCustomerTaxIdByName(customerName)
++ findAll()
+}
+
+interface ITypologyRepository{
++ save(typology)
++ count()
++ findTypologyIdByTypologyName(typologyName)
++ findAll()
+}
+
+class TypologyRepository{
+- typologies
++ save(typology)
++ count()
++ findTypologyIdByTypologyName(typologyName)
++ findAll()
+}
+
+interface IProjectResourceRepository{
++ save(projectResource)
++ findAll()
++ findProjectCodesByAccountEmail(email)
++ findAccountEmailsByProjectCode(email)
++ findResourcesByAccountEmail(email)
+}
+
+class ProjectResourceRepository{
+- projectResources
++ findAll()
++ save(projectResource)
++ findAccountEmailsByProjectCode(email)
+- exists(projectResource)
++ findProjectCodesByAccountEmail(email)
++ findResourcesByAccountEmail(email)
+}
+
+/'FACTORIES'/
+
+interface IAccountFactory {
++ create(name, email, phoneNumber, photo)
+}
+
+class AccountFactory{
++ create(name, email, phoneNumber, photo)
+}
+
+interface IBusinessSectorFactory {
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+class BusinessSectorFactory{
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+interface ISprintFactory {
++ createSprint(projectCode, sprintId, sprintNumber, period)
+}
+
+class SprintFactory{
++ createSprint(projectCode, sprintId, sprintNumber, period)
+}
+
+interface ICustomerFactory {
++ createCustomer(customerTaxId, customerName)
+}
+
+class CustomerFactory{
++ createCustomer(customerTaxId, customerName)
+}
+
+interface IProfileFactory {
++ createProfile(profileName, idProfileNumber)
+}
+
+class ProfileFactory{
++ createProfile(profileName, idProfileNumber)
+}
+
+interface IFactoryProject {
++ createProject(projectNumber, projectName, description,\n businessSectorId, customerTaxId, projectTypologyId)
+}
+
+class FactoryProject{
++ createProject(projectNumber, projectName, description,\n businessSectorId, customerTaxId, projectTypologyId)
+}
+
+interface IProjectResourceFactory {
++ createProjectResource(resourceId, code, email, role, period, cost, percentageOfAllocation)
+}
+
+class ProjectResourceFactory{
++ createProjectResource(resourceId, code, email, role, period, cost, percentageOfAllocation)
+}
+
+interface ITypologyFactory {
++ createTypology(typologyNumber, typologyName)
+}
+
+class TypologyFactory{
++ createTypology(typologyNumber, typologyName)
+}
+
+interface IFactoryUserStory {
++ createUserStory(userStoryNumber,userStoryText, actor, acceptanceCriteria, projectCode)
+}
+
+class FactoryUserStory{
++ createUserStory(userStoryNumber,userStoryText, actor, acceptanceCriteria, projectCode)
+}
+
+/'MAPPERS'/
+
+class AccountMapper {
++ accountToDto(account)
++ listAccountsToDto(accounts)
+}
+
+class BusinessSectorMapper {
++ businessSectorToDto(businessSector)
+}
+
+class ProjectMapper {
++ projectToDto(project, customerName)
+}
+
+class UserStoryMapper {
++ userStoryToDto(userStory)
++ userStoryToDtoList(userStories)
+}
+
+class TypologyMapper {
++ typologyToDto(typology)
+}
+
+
+/'DTOS'/
+
+class AccountDto{
++ name
++ email
++ status
++ AccountDto(name, email, status)
+}
+
+class AccountCreationDto {
++ name
++ email
++ phoneNumber
++ photo
++ AccountCreationDto(name, email, phoneNumber, photo)
+}
+
+class BusinessSectorDto {
++ name
++ id
++ BusinessSectorDto(name, id)
+}
+
+class CustomerCreationDto {
+- customerTaxId
+- customerName
++ CustomerCreationDto(customerTaxId, customerName)
++ getCustomerTaxId()
++ getCustomerName()
+}
+
+class ProfileCreationDto {
++ profileName
++ ProfileCreationDto(profileName)
+}
+
+class ProjectCreationDto {
++ projectName
++ projectDescription
++ businessSectorId
++ customerId
++ typologyId
++ ProfileCreationDto(projectName, projectDescription,\n businessSectorId, customerId, typologyId)
+}
+
+class ProjectDto{
++ code
++ projectName
++ customerName
++ status
++ startDate
++ endDate
++ ProjectDto(code, projectName, customerName, status, startDate, endDate)
+}
+
+class UserStoryDto {
++ userStoryNumber
++ userStoryText
++ status
++ UserStoryDto(userStoryNumber, userStoryText, status)
+}
+
+class TypologyDto {
++ typologyId
++ typologyName
++ TypologyDto(typologyId, typologyName)
+}
+
+class UserStoryCreationDto {
++ projectCode
++ userStoryNumber
++ userStoryText
++ actor
++ acceptanceCriteria
++ priority
++ UserStoryCreationDto(projectCode, userStoryNumber, userStoryText, actor, acceptanceCriteria, priority)
++ getPriority()
+}
+
+/'ENTITIES'/
+
+class Account{
+- name
+- email
+- phoneNumber
+- accountStatus
+- photo
+- profileId
+# Account(name, email, phoneNumber, photo)
++ getAccountName()
++ getAccountEmail()
++ getAccountStatus()
++ getProfileId()
++ getPhoneNumber()
++ getPhoto()
++ changeStatus(status)
++ hasEmail(email)
++ isAccountActive()
++ changeProfile(profileId)
+}
+
+class Sprint {
+- sprintId
+- sprintNumber
+- projectCode
+- period
+- userStoriesInSprint
+}
+
+class UserStory{
+- usId
+- acceptanceCriteria
+- usNumber
+- actor
+- usText
+- status
+- projectCode
+# UserStory(projectCode, usNumber, actor, usText, acceptanceCriteria)
++ getUsId()
++ getStatus()
++ setStatus(status)
++ getUsText()
+# setUsText()
++ getUsNumber()
+# setUsNumber()
++ getAcceptanceCriteria()
++ has(usNumber)
++ hasStatus(status)
++ hasUsId(usId)
++ getActor()
++ getProjectCode()
+}
+
+class UserStoryInSprint {
+- usId
+- effort
+# UserStoryInSprint(usId, effort)
+# UserStoryInSprint(usId)
++ getUsId()
++ getEffort()
++ changeEffort(effortEstimate)
+}
+
+class BusinessSector{
+- id
+- name
+# BusinessSector(idNumber, name)
++ getBusinessSectorId()
++ getBusinessSectorName()
+}
+
+class Profile{
+- profileId
+- profileName
+# Profile(profileName, idProfileNumber)
++ getProfileName()
++ getProfileId()
++ hasName(profileName)
+}
+
+class Project {
+- projectCode
+- budget
+- projectName
+- description
+- projectStatus
+- numberOfPlannedSprints
+- period
+- sprintDuration
+- getBusinessSectorId
+- customerTaxId
+- projectTypologyId
+- productBacklog
+# Project(projectNumber, projectName, description, businessSectorId, customerTaxId, projectTypologyId)
++ getProjectCode()
++ setProjectStatus(projectStatus)
++ getProjectName()
++ getDescription()
++ getBusinessSectorId()
++ getCustomerId()
++ getProjectTypologyId()
++ setSprintDuration(sprintDuration)
++ isPeriodAssigned(period)
++ isBudgetAssigned(budget)
++ isNumberOfPlannedSprintsDefined(numberOfPlannedSprints
++ hasProjectCode(code)
++ addUserStory(priority, usId)
++ getProductBacklog()
++ getProjectStatus()
++ hasStatus(projectStatus)
++ getStartDate()
++ getEndDate()
++ getSprintDuration()
++ getBudget()
++ getPlannedSprints()
++ getProductBacklogId()
++ contains(period)
++ containsCurrentDate()
+}
+
+class Customer {
+- customerTaxId
+- customerName
+# Customer(customerTaxId, customerName)
++ hasTaxId(taxId)
++ getName()
++ getTaxId()
+}
+
+class Typology {
+- typologyId
+- name
+# Typology(typologyNumber, typologyName)
++ getTypologyName()
++ getTypologyId()
+}
+
+class ProjectResource {
+- projectResourceId
+- projectCode
+- accountEmail
+- roleInProject
+- allocationPeriod
+- costPerHour
+- percentageOfAllocation
+# ProjectResource(projectResourceId, code, email,\n roleInProject, allocationPeriod, costPerHour, percentageOfAllocation)
++ hasProjectCode(projectCode)
++ hasSameAllocationInfo(otherResource)
++ hasRole(role)
++ isPeriodOverlapping(period)
++ isPeriodNotOverlapping(period)
++ numberOfDaysContainedInPeriod()
++ allocationPeriodIncludesDate(date)
++ hasAccount(account)
++ getPercentageOfAllocation()
++ getEmail()
++ getCode()
++ getPeriod()
++ getProjectResourceId()
++ getRoleInProject()
++ getCostPerHour()
+}
+
+class UserStory {
+- usId
+- acceptanceCriteria
+- usNumber
+- actor
+- usText
+- status
+- projectCode
+# UserStory(projectCode, usNumber, actor, usText, acceptanceCriteria)
++ getUsId()
++ getStatus()
++ setStatus(status)
++ getUsText()
++ getUsNumber()
+# setUsNumber(usNumber)
++ getAcceptanceCriteria()
++ hasStatus(status)
++ hasUsId(usId)
++ getActor()
++ getProjectCode()
+}
+
+/'enum Effort {
++ effortValue
++ Effort(effortValue)
++ getEffortValue()
+}'/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@enduml
