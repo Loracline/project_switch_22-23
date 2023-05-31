@@ -60,7 +60,7 @@ public class ResourceAllocationService {
     public boolean addUserToProject(AllocationDto allocationDto) {
         Code code = new Code(allocationDto.projectCode);
         Email email = new Email(allocationDto.accountEmail);
-        Role role = Role.valueOf(allocationDto.accountRole);
+        Role role = generateRole(allocationDto.accountRole);
         CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);
         PercentageOfAllocation percentageOfAllocation =
                 new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
