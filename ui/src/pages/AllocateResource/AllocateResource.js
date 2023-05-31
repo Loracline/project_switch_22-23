@@ -1,6 +1,6 @@
 import Button from "../../components/Button/Button";
 import React, {useContext, useState} from "react";
-import {selectMenu} from "../../context/Actions";
+import {closeButton, selectMenu} from "../../context/Actions";
 import {
     Autocomplete,
     Box,
@@ -19,14 +19,13 @@ import Alert from "@mui/material/Alert";
 import {useGetAccounts} from "./useGetAccounts";
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 
-
 function AllocateResource() {
 
     const {state, dispatch} = useContext(AppContext);
     const {detailedProject} = state;
 
     const initialResource = {
-        projectCode: 1, //detailedProject.projectCode,
+        projectCode: detailedProject.code,
         accountEmail: "",
         accountRole: "",
         accountCostPerHour: "",
@@ -40,6 +39,8 @@ function AllocateResource() {
     const [backendError, setBackendError] = useState({message: '', show: false});
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [userAccounts] = useGetAccounts();
+    const messageSuccess = state.messageSuccess;
+    const messageFailure = state.messageFailure;
 
     const handleConfirmation = () => {
         setShowConfirmation(true);
@@ -132,11 +133,19 @@ function AllocateResource() {
                     </tr>
                     <tr>
                         <td><strong>Start Date:</strong></td>
-                        <td>{new Date(resource.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                        <td>{new Date(resource.startDate).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                        })}</td>
                     </tr>
                     <tr>
                         <td><strong>End Date:</strong></td>
-                        <td>{new Date(resource.endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                        <td>{new Date(resource.endDate).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                        })}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -262,8 +271,8 @@ function AllocateResource() {
                             width={300}
                             label="Start Date"
                             disablePast={true}
-                            //minDate={detailedProject.startDate >= new Date() ? detailedProject.startDate : new Date()}
-                            //maxDate={detailedProject.endDate}
+                            //minDate={detailedProject.startDate}
+                            //maxDate={detailedProject.endDate || resource.endDate}
                             value={resource.startDate}
                             onChange={handleChangeForStartDate}
                             format="DD/MM/YYYY"
@@ -277,7 +286,7 @@ function AllocateResource() {
                             width={300}
                             label="End Date"
                             disablePast={true}
-                            //minDate={resource.startDate}
+                            //minDate={resource.startDate/* || detailedProject.startDate*/}
                             //maxDate={detailedProject.endDate}
                             value={resource.endDate}
                             onChange={handleChangeForEndDate}
@@ -304,14 +313,17 @@ function AllocateResource() {
                             }
                             onClick={handleConfirmation}
                     />
+
+                    {messageSuccess && (<div><p>Resource created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
+                    {messageFailure && (<div><p>Resource not created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
                 </form>
             </section>
-                <ConfirmationPage
-                    handleOpen={showConfirmation}
-                    dialogContent={dialogContent()}
-                    handleCancel={handleCancel}
-                    handleConfirm={handleSubmit}
-                />
+            <ConfirmationPage
+                handleOpen={showConfirmation}
+                dialogContent={dialogContent()}
+                handleCancel={handleCancel}
+                handleConfirm={handleSubmit}
+            />
 
         </div>
     )
