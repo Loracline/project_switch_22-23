@@ -1,0 +1,1166 @@
+@startuml
+
+/'WEB CONTROLLERS'/
+
+class AccountWebController {
+- accountCreationService
+- accountListService
++ registerAccount(accountCreationDto)
++ listAllAccounts()
++ changeStatus(email, status)
+}
+
+class BusinessSectorWebController {
+- service
++ createBusinessSector(businessSectorCreationDto)
++ listAllBusinessSectors()
+}
+
+class CustomerWebController {
+- createService
+- listService
++ addCustomer(dto)
+}
+
+class ProfileWebController {
+- service
++ createProfile(profileCreationDto)
+}
+
+class ProjectWebController {
+- projectCreationService
+- projectService
+- projectListService
++ createProject(projectCreationDto)
++ listAllProjects()
++ getProductBacklog(code)
++ getProject(code)
+}
+
+class ResourceWebController {
+- service
++ createResource(allocationDto)
+}
+
+class SprintWebController {
++ createSprintService
++ createSprint(sprintCreationDto)
+}
+
+class TypologyWebController {
++ service
++ createTypology(dto)
++ listAllTypologies()
+}
+
+class UserStoryWebController {
++ usService
++ createUs(userStoryCreationDto)
+}
+
+/'SERVICES'/
+
+class AccountChangeStatusService {
+- accountRepository
++ changeStatus(email, status)
+}
+
+class AccountCreationService {
+- accountFactory
+- accountRepository
+}
+
+class AccountListService {
+- accountRepository
+- accountMapper
++ listAllAccounts()
+}
+
+class BusinessSectorService {
+- businessSectorRepository
+- businessSectorMapper
+- businessSectorFactory
+}
+
+
+class CreateSprintService{
+- sprintRepository
+- sprintFactory
+- projectRepository
+}
+
+class CustomerService{
+- repository
+- factory
++ addCustomer(customerCreationDto)
+}
+
+class ProfileService{
+- profileFactory
+- profileRepository
++ createProfile(profileCreationDto)
+- calculateNextProfileNumber()
+}
+
+class ProjectCreationService{
+- factoryProject
+- projectRepository
+- typologyRepository
+- businessSectorRepository
+- customerRepository
++ createProject(projectCreationDto)
++ calculateNextProjectNumber()
++ getProjectByCode(code)
++ addProject(project)
+}
+
+
+class ProjectListService{
+- projectRepository
+- projectMapper
+- customerRepository
++ requestAllProjects()
+}
+
+class ProjectService {
+- factoryProject
+- projectRepository
+- usRepository
+- userStoryMapper
+- projectMapper
+- customerRepository
+}
+
+class ResourceAllocationService {
+- resourceRepository
+- projectRepository
+- accountRepository
+- resourceFactory
+- accountFactory
++ addUserToProject(allocationDto)
+- isResourceValid(role, code, period, email, percentage)
+- hasStatus(projectCode, status)
+- doesNotHaveStatus(projectCode, status)
+- containsPeriod(projectCode, allocationPeriod)
+# isProjectValidForAllocation(projectCode, allocationPeriod)
+- isProjectManager(role)
+- isNotProjectManager(role)
+# projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(role, code, period)
+- projectDoesNotHaveScrumMasterOrProductOwnerInThatPeriod(role, code, period)
+- projectAlreadyHasScrumMasterInThatPeriod(role, code, period)
+- projectAlreadyHasProductOwnerInThatPeriod(role, code, period)
+- projectHasRoleInThatPeriod(role, code, period)
+- currentPercentageOfAllocation(accountEmail, date)
+- totalPercentageOfAllocation(accountEmail, date, toAdd)
+# validatePercentageOfAllocation(accountEmail, date, toAdd)
+# isResourceOverlapping(projectCode, email, period)
+- resourceDoesNotExist(projectCode, email, period)
+# isAccountValidForAllocation(accountEmail)
+- findResourcesByEmailWithPeriodOverlapping(period, email)
+- percentageOfAllocationDuringAPeriod(period, email)
++ isPercentageOfAllocationValid(period, email, percentageOfAllocationToAdd)
+}
+
+
+class TypologyService {
+- typologyRepository
+- factoryTypology
+- typologyMapper
++ createTypology(name)
++ requestAllTypologies()
+}
+
+class UsService {
+- usRepository
+- projectRepository
+- factoryUserStory
++ createUs(userStoryCreationDto)
++ deleteUs(UsId)
++ addUsToProductBacklog(usId, projectCode, priority)
+- createUserStory(userStoryCreationDto, projectCode)
+- convertToAcceptanceCriteria(acceptanceCriteria)
+}
+
+class CustomerListService{
+- repository
+- mapper
+}
+
+/'REPOSITORIES'/
+interface CrudRepository {
++ save()
++ saveAll(entities)
++ findById(id)
++ existsById(id)
++ findAll()
++ findAllById(ids)
++ count()
++ deleteById(id)
++ delete(entity)
++  deleteAllById(ids)
++ deleteAll(entities)
++ deleteAll()
+}
+
+interface IAccountJpaRepository {
+
+}
+
+interface IAccountRepository {
++ save(account)
++ findAll()
++ findAccountsByEmails(emails)
++ findAccountByEmail(email)
+}
+
+class AccountJpaRepository{
+- crudRepository
+- assembler
++ save(account)
++ findAll()
++ findAccountsByEmails(emails)
++ findAccountByEmail(email)
+- convertAccountJpasToAccounts(accountJpas)
+}
+
+interface ISprintJpaRepository{
++ findById(id)
++ count()
++ save(sprint)
++ findByProjectCode(projectCode)
++ existsById(id)
+}
+
+interface ISprintRepository{
++ findById(sprintId)
++ count()
++ save(sprint)
++ findByProjectCode(projectCode)
+}
+
+class SprintRepositoryJpa{
+- iSprintJpaRepository
+- sprintDomainDataAssembler
++ findById(sprintId)
++ count()
++ save(sprint)
++ findByProjectCode(projectCode)
+}
+
+interface IUserStoryJpaRepository{
++ save(userStory)
++ deleteByUsId(usId)
++ existsByUsId(usId)
++ findAllByUsIdIn(usId)
+}
+
+interface IUsRepository{
++ save(userStory)
++ delete(usId)
++ getListOfUsWithMatchingIds(usId)
+}
+
+class UserStoryRepositoryJpa{
+- repository
+- assembler
++ save(userStory)
++ delete(usId)
++ getListOfUsWithMatchingIds(usId)
+}
+
+interface IBusinessSectorJpaRepository {
++ findByName(businessSectorName)
++ count()
++ save(businessSector)
++ findAll()
+}
+
+interface IBusinessSectorRepository{
++ save(businessSector))
++ count()
++ getBusinessSectorIdByName(businessSectorName)
++ findAll()
+}
+
+class BusinessSectorJpaRepository{
+- crudRepository
+- assembler
++ save(businessSector)
++ count()
++ getBusinessSectorIdByName(businessSectorName)
++ findAll()
+}
+
+interface IProfileJpaRepository {
++ findByProfileName(profileName)
+}
+
+interface IProfileRepository{
++ save(profile)
++ count()
++ findByProfileName(profileName)
+}
+
+class ProfileJpaRepository{
+- assembler
+- jpaRepository
++ save(profile)
++ count()
++ findByProfileName(profileName)
+}
+
+interface IProjectJpaRepository {
++ findByProjectCode(projectCode)
++ count()
++ findAll()
++ findAllByProjectCodeIn(projectCode)
+}
+
+interface IProjectRepository{
++ findByCode(code)
++ count()
++ save(project)
++ findAll()
++ findAllByProjectCodes(projectCodes)
+}
+
+class ProjectRepositoryJpa{
+- projectJpaRepository
+- assembler
++ findByCode(code)
++ count()
++ save(project)
++ findAll()
++ findAllByProjectCodes(projectCodes)
+}
+
+interface ICustomerJpaRepository {
++ existsByCustomerId(taxId)
++ findByCustomerId(taxId)
++ findByCustomerName(name)
+}
+
+interface ICustomerRepository{
++ save(customer)
++ findCustomerNameByTaxId(taxId)
++ findCustomerTaxIdByName(customerName)
++ findAll()
+}
+
+class CustomerJpaRepository{
+- crudRepository
+- assembler
++ save(customer)
++ findCustomerNameByTaxId(taxId)
++ findCustomerTaxIdByName(customerName)
++ findAll()
+}
+
+interface ITypologyJpaRepository{
++ findByTypologyName(typologyName)
++ findAll()
+}
+
+interface ITypologyRepository{
++ save(typology)
++ count()
++ findTypologyIdByTypologyName(typologyName)
++ findAll()
+}
+
+class TypologyJpaRepository{
+- crudRepository
+- assembler
++ save(typology)
++ count()
++ findTypologyIdByTypologyName(typologyName)
++ findAll()
+}
+
+interface IProjectResourceJpaRepository{
++ findAllByAccountEmail(email)
++ findAllByProjectCode(code)
+}
+
+interface IProjectResourceRepository{
++ save(projectResource)
++ findAll()
++ findProjectCodesByAccountEmail(email)
++ findAccountEmailsByProjectCode(email)
++ findResourcesByAccountEmail(email)
+}
+
+class ProjectResourceJpaRepository{
+- assembler
+- jpaRepository
++ save(projectResource)
++ findAll()
++ findResourcesByAccountEmail(email)
++ findProjectCodesByAccountEmail(email)
+findResourcesByProjectCode(Code code)
++ findAccountEmailsByProjectCode(email)
+}
+
+/'FACTORIES'/
+
+interface IAccountFactory {
++ create(name, email, phoneNumber, photo)
+}
+
+class AccountFactory{
++ create(name, email, phoneNumber, photo)
+}
+
+interface IBusinessSectorFactory {
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+class BusinessSectorFactory{
++ createBusinessSector(businessSectorNumber, businessSectorName)
+}
+
+interface ISprintFactory {
++ createSprint(projectCode, sprintId, sprintNumber, period)
+}
+
+class SprintFactory{
++ createSprint(projectCode, sprintId, sprintNumber, period)
+}
+
+interface ICustomerFactory {
++ createCustomer(customerTaxId, customerName)
+}
+
+class CustomerFactory{
++ createCustomer(customerTaxId, customerName)
+}
+
+interface IProfileFactory {
++ createProfile(profileName, idProfileNumber)
+}
+
+class ProfileFactory{
++ createProfile(profileName, idProfileNumber)
+}
+
+interface IFactoryProject {
++ createProject(projectNumber, projectName, description,\n businessSectorId, customerTaxId, projectTypologyId)
+}
+
+class FactoryProject{
++ createProject(projectNumber, projectName, description,\n businessSectorId, customerTaxId, projectTypologyId)
+}
+
+interface IProjectResourceFactory {
++ createProjectResource(resourceId, code, email, role, period, cost, percentageOfAllocation)
+}
+
+class ProjectResourceFactory{
++ createProjectResource(resourceId, code, email, role, period, cost, percentageOfAllocation)
+}
+
+interface ITypologyFactory {
++ createTypology(typologyNumber, typologyName)
+}
+
+class TypologyFactory{
++ createTypology(typologyNumber, typologyName)
+}
+
+interface IFactoryUserStory {
++ createUserStory(userStoryNumber,userStoryText, actor, acceptanceCriteria, projectCode)
+}
+
+class FactoryUserStory{
++ createUserStory(userStoryNumber,userStoryText, actor, acceptanceCriteria, projectCode)
+}
+
+/'MAPPERS'/
+
+class AccountMapper {
++ accountToDto(account)
++ listAccountsToDto(accounts)
+}
+
+class BusinessSectorMapper {
++ businessSectorToDto(businessSector)
+}
+
+class ProjectMapper {
++ projectToDto(project, customerName)
+}
+
+class UserStoryMapper {
++ userStoryToDto(userStory)
++ userStoryToDtoList(userStories)
+}
+
+class TypologyMapper {
++ typologyToDto(typology)
+}
+
+class CustomerMapper {
++ customerToDto(customer)
+}
+
+
+/'DTOS'/
+
+class AccountDto{
++ name
++ email
++ status
++ AccountDto(name, email, status)
+}
+
+class AccountCreationDto {
++ name
++ email
++ phoneNumber
++ photo
++ AccountCreationDto(name, email, phoneNumber, photo)
+}
+
+class BusinessSectorDto {
++ name
++ id
++ BusinessSectorDto(name, id)
+}
+
+class CustomerCreationDto {
+- customerTaxId
+- customerName
++ CustomerCreationDto(customerTaxId, customerName)
++ getCustomerTaxId()
++ getCustomerName()
+}
+
+class ProfileCreationDto {
++ profileName
++ ProfileCreationDto(profileName)
+}
+
+class ProjectCreationDto {
++ projectName
++ projectDescription
++ businessSectorId
++ customerId
++ typologyId
++ ProfileCreationDto(projectName, projectDescription,\n businessSectorId, customerId, typologyId)
+}
+
+class ProjectDto{
++ code
++ projectName
++ customerName
++ status
++ startDate
++ endDate
++ ProjectDto(code, projectName, customerName, status, startDate, endDate)
+}
+
+class UserStoryDto {
++ userStoryNumber
++ userStoryText
++ status
++ UserStoryDto(userStoryNumber, userStoryText, status)
+}
+
+class TypologyDto {
++ typologyId
++ typologyName
++ TypologyDto(typologyId, typologyName)
+}
+
+class UserStoryCreationDto {
++ projectCode
++ userStoryNumber
++ userStoryText
++ actor
++ acceptanceCriteria
++ priority
++ UserStoryCreationDto(projectCode, userStoryNumber, userStoryText, actor, acceptanceCriteria, priority)
++ getPriority()
+}
+
+class BusinessSectorCreationDto {
++ name
++ BusinessSectorCreationDto(name)
+}
+
+class AllocationDto{
++ projectCode
++ accountEmail
++ accountRole
++ accountCostPerHour
++ accountPercentageOfAllocation
++ startDate
++ endDate
++ AllocationDto(projectCode, accountEmail, accountRole, accountCostPerHour, accountPercentageOfAllocation, startDate, endDate)
+}
+
+class SprintCreationDto{
++ projectCode
++ startDate
++ SprintCreationDto(projectCode, startDate)
+}
+
+class TypologyCreationDto{
++ typologyName
++ TypologyCreationDto(typologyName)
++ getTypologyName()
+}
+
+class CustomerDto {
++ name
++ taxIdNumber
+}
+
+/'ENTITIES'/
+
+class Account{
+- name
+- email
+- phoneNumber
+- accountStatus
+- photo
+- profileId
+# Account(name, email, phoneNumber, photo)
++ getAccountName()
++ getAccountEmail()
++ getAccountStatus()
++ getProfileId()
++ getPhoneNumber()
++ getPhoto()
++ changeStatus(status)
++ hasEmail(email)
++ isAccountActive()
++ changeProfile(profileId)
+}
+
+class Sprint {
+- sprintId
+- sprintNumber
+- projectCode
+- period
+- userStoriesInSprint
+}
+
+class UserStory{
+- usId
+- acceptanceCriteria
+- usNumber
+- actor
+- usText
+- status
+- projectCode
+# UserStory(projectCode, usNumber, actor, usText, acceptanceCriteria)
++ getUsId()
++ getStatus()
++ setStatus(status)
++ getUsText()
+# setUsText()
++ getUsNumber()
+# setUsNumber()
++ getAcceptanceCriteria()
++ has(usNumber)
++ hasStatus(status)
++ hasUsId(usId)
++ getActor()
++ getProjectCode()
+}
+
+class BusinessSector{
+- id
+- name
+# BusinessSector(idNumber, name)
++ getBusinessSectorId()
++ getBusinessSectorName()
+}
+
+class Profile{
+- profileId
+- profileName
+# Profile(profileName, idProfileNumber)
++ getProfileName()
++ getProfileId()
++ hasName(profileName)
+}
+
+class Project {
+- projectCode
+- budget
+- projectName
+- description
+- projectStatus
+- numberOfPlannedSprints
+- period
+- sprintDuration
+- getBusinessSectorId
+- customerTaxId
+- projectTypologyId
+- productBacklog
+# Project(projectNumber, projectName, description, businessSectorId, customerTaxId, projectTypologyId)
++ getProjectCode()
++ setProjectStatus(projectStatus)
++ getProjectName()
++ getDescription()
++ getBusinessSectorId()
++ getCustomerId()
++ getProjectTypologyId()
++ setSprintDuration(sprintDuration)
++ isPeriodAssigned(period)
++ isBudgetAssigned(budget)
++ isNumberOfPlannedSprintsDefined(numberOfPlannedSprints
++ hasProjectCode(code)
++ addUserStory(priority, usId)
++ getProductBacklog()
++ getProjectStatus()
++ hasStatus(projectStatus)
++ getStartDate()
++ getEndDate()
++ getSprintDuration()
++ getBudget()
++ getPlannedSprints()
++ getProductBacklogId()
++ contains(period)
++ containsCurrentDate()
+}
+
+class Customer {
+- customerTaxId
+- customerName
+# Customer(customerTaxId, customerName)
++ hasTaxId(taxId)
++ getName()
++ getTaxId()
+}
+
+class Typology {
+- typologyId
+- name
+# Typology(typologyNumber, typologyName)
++ getTypologyName()
++ getTypologyId()
+}
+
+class ProjectResource {
+- projectResourceId
+- projectCode
+- accountEmail
+- roleInProject
+- allocationPeriod
+- costPerHour
+- percentageOfAllocation
+# ProjectResource(projectResourceId, code, email,\n roleInProject, allocationPeriod, costPerHour, percentageOfAllocation)
++ hasProjectCode(projectCode)
++ hasSameAllocationInfo(otherResource)
++ hasRole(role)
++ isPeriodOverlapping(period)
++ isPeriodNotOverlapping(period)
++ numberOfDaysContainedInPeriod()
++ allocationPeriodIncludesDate(date)
++ hasAccount(account)
++ getPercentageOfAllocation()
++ getEmail()
++ getCode()
++ getPeriod()
++ getProjectResourceId()
++ getRoleInProject()
++ getCostPerHour()
+}
+
+class UserStory {
+- usId
+- acceptanceCriteria
+- usNumber
+- actor
+- usText
+- status
+- projectCode
+# UserStory(projectCode, usNumber, actor, usText, acceptanceCriteria)
++ getUsId()
++ getStatus()
++ setStatus(status)
++ getUsText()
++ getUsNumber()
+# setUsNumber(usNumber)
++ getAcceptanceCriteria()
++ hasStatus(status)
++ hasUsId(usId)
++ getActor()
++ getProjectCode()
+}
+
+/'ENTITIES JPA'/
+class AccountJpa{
+- email
+- name
+- phoneNumber
+- accountStatus
+- photo
+- profileId
++ AccountJpa(email, name, phoneNumber, accountStatus, profileId, photo)
++ getPhoto ()
+}
+
+class BusinessSectorJpa{
+- idNumber
+- name
++ BusinessSectorJpa(idNumber, name)
+}
+
+class CustomerJpa{
+- customerTaxId
+- customerName
++ CustomerJpa(customerTaxId, customerName)
++ getCustomerTaxId()
++ getCustomerName()
+}
+
+class ProfileJpa{
+- profileId
+- profileName
++ ProfileJpa(profileId, profileName)
+}
+
+class ProjectJpa{
+- projectCode
+- budget
+- projectName
+- description
+- projectStatus
+- numberOfPlannedSprints
+- startDate
+- endDate
+- sprintDuration
+- businessSectorId
+- customerTaxId
+- projectTypologyId
+- productBacklog
++ ProjectJpa(projectCode,budget, projectName, description, projectStatus,\n numberOfPlannedSprints, startDate, endDate, sprintDuration,\n businessSectorId, customerTaxId, projectTypologyId, productBacklog)
+}
+
+class ProjectResourceJpa{
+- id
+- projectCode
+- accountEmail
+- role
+- startDate
+- endDate
+- costPerHour
+- percentageOfAllocation
++ ProjectResourceJpa( id, projectCode, accountEmail, role, startDate, endDate, costPerHour, percentageOfAllocation)
+}
+
+class SprintJpa{
+- sprintId
+- sprintNumber
+- projectCode
+- startDate
+- endDate
++ SprintJpa(sprintId, sprintNumber, projectCode, startDate, endDate)
+}
+
+class TypologyJpa{
+- typologyId
+- typologyName
++ TypologyJpa(typologyId, typologyName)
+}
+
+class UserStoryJpa{
+- usId
+- acceptanceCriteria
+- usNumber
+- actor
+- usText
+- status
+- projectCode
++ UserStoryJpa( usId, acceptanceCriteria, usNumber, actor, usText, status, projectCode)
+}
+
+/'ASSEMBLERS JPA'/
+class AccountDomainDataAssembler{
+- accountFactory
++ toData(account)
++ toDomain(accountJpa)
+}
+
+class BusinessSectorDomainDataAssembler{
+- factory
++ toData(businessSector)
++ toDomain(businessSectorJpa)
+}
+
+class CustomerDomainDataAssembler{
+- factory
++ toData(customer)
++ toDomain(customerJpa)
+}
+
+class ProfileDomainDataAssembler{
+- profileFactory
++ toData(profile)
++ toDomain(profileJpa)
+}
+
+class ProjectDomainDataAssembler{
+- factoryProject
++ toData(project)
+- createProductBacklogJpa(project)
++ toDomain(projectJpa)
+}
+
+class ResourceDomainDataAssembler{
+- faCtory
++ toData(projectResource)
++ toDomain(projectResourceJpa)
+}
+
+class SprintDomainDataAssembler{
++ toData(sprint)
++ toDomain(sprintJpa)
+}
+
+class TypologyDomainDataAssembler{
+- factory
++ toData(typology)
++ toDomain(typologyJpa)
+}
+
+class UserStoryDomainDataAssembler{
+- factory
++ toData(userStory)
++ toDomain (userStoryJpa)
+}
+
+/'Account'/
+AccountWebController ..> AccountCreationDto: uses
+
+AccountWebController <.. AccountCreationService: is injected
+AccountCreationService <.. IAccountRepository: is injected
+AccountCreationService <.. IAccountFactory: is injected
+
+AccountWebController <.. AccountListService: is injected
+AccountListService <.. IAccountRepository: is injected
+AccountListService <.. AccountMapper: is injected
+
+AccountWebController <.. AccountChangeStatusService: is injected
+AccountChangeStatusService <.. IAccountRepository: is injected
+
+IAccountRepository <|.. AccountJpaRepository: implements
+AccountJpaRepository <.. IAccountJpaRepository: is injected
+IAccountJpaRepository <|-- CrudRepository: extends
+AccountJpaRepository <.. AccountDomainDataAssembler: is injected
+AccountDomainDataAssembler ..> AccountJpa: creates
+AccountDomainDataAssembler <.. IAccountFactory
+IAccountFactory ..> Account: creates
+AccountJpaRepository "1"--> "*"AccountJpa: has
+
+IAccountFactory <|.. AccountFactory: implements
+AccountFactory ..> Account: creates
+
+AccountMapper ..> AccountDto: creates
+AccountDto ..> Account: uses
+
+
+/'Business Sector'/
+BusinessSectorWebController ..> BusinessSectorCreationDto: uses
+
+BusinessSectorWebController <.. BusinessSectorService: is injected
+BusinessSectorService <.. IBusinessSectorRepository: is injected
+BusinessSectorService <.. BusinessSectorMapper: is injected
+BusinessSectorService <.. IBusinessSectorFactory: is injected
+
+IBusinessSectorRepository <|.. BusinessSectorJpaRepository: implements
+BusinessSectorJpaRepository <.. IBusinessSectorJpaRepository: is injected
+IBusinessSectorJpaRepository <|-- CrudRepository: extends
+BusinessSectorJpaRepository <.. BusinessSectorDomainDataAssembler: is injected
+BusinessSectorDomainDataAssembler ..> BusinessSectorJpa: creates
+BusinessSectorDomainDataAssembler <.. IBusinessSectorFactory
+IBusinessSectorFactory ..> BusinessSector: creates
+BusinessSectorJpaRepository "1"--> "*"BusinessSectorJpa: has
+
+BusinessSectorMapper ..> BusinessSectorDto: creates
+BusinessSectorDto ..> BusinessSector: uses
+
+IBusinessSectorFactory <|.. BusinessSectorFactory: implements
+BusinessSectorFactory ..> BusinessSector: creates
+
+
+/'Customer'/
+CustomerWebController ..> CustomerCreationDto: uses
+
+CustomerWebController <.. CustomerService: is injected
+CustomerService <.. ICustomerRepository: is injected
+CustomerService <.. ICustomerFactory: is injected
+
+CustomerWebController <.. CustomerListService: is injected
+CustomerListService <.. ICustomerRepository: is injected
+CustomerListService <.. CustomerMapper: is injected
+
+ICustomerFactory <.. CustomerFactory: implements
+CustomerFactory ..> Customer: creates
+
+ICustomerRepository <|.. CustomerJpaRepository: implements
+CustomerJpaRepository <.. ICustomerJpaRepository: is injected
+ICustomerJpaRepository <|-- CrudRepository: extends
+CustomerJpaRepository <.. CustomerDomainDataAssembler: is injected
+CustomerDomainDataAssembler ..> CustomerJpa: creates
+CustomerDomainDataAssembler <.. ICustomerFactory
+ICustomerFactory ..> Customer: creates
+CustomerJpaRepository "1" --> "*" CustomerJpa: has
+
+CustomerMapper ..> CustomerDto: creates
+CustomerDto ..> Customer: uses
+
+
+/'Profile'/
+ProfileWebController ..> ProfileCreationDto: uses
+
+ProfileWebController <.. ProfileService: is injected
+ProfileService <.. IProfileFactory: is injected
+ProfileService <.. IProfileRepository: is injected
+
+IProfileFactory <|.. ProfileFactory: implements
+ProfileFactory ..> Profile: creates
+
+IProfileRepository <|.. ProfileJpaRepository: implements
+ProfileJpaRepository <.. IProfileJpaRepository: is injected
+IProfileJpaRepository <|-- CrudRepository: extends
+ProfileJpaRepository <.. ProfileDomainDataAssembler: is injected
+ProfileDomainDataAssembler ..> ProfileJpa: creates
+ProfileDomainDataAssembler <.. IProfileFactory
+IProfileFactory ..> Profile: creates
+ProfileJpaRepository "1" --> "*" ProfileJpa: has
+
+/'Project'/
+ProjectWebController ..> ProjectCreationDto: uses
+
+ProjectWebController <.. ProjectCreationService: is injected
+ProjectCreationService <.. IFactoryProject: is injected
+ProjectCreationService <.. IProjectRepository: is injected
+ProjectCreationService <.. ITypologyRepository: is injected
+ProjectCreationService <.. IBusinessSectorRepository: is injected
+ProjectCreationService <.. ICustomerRepository: is injected
+
+ProjectWebController <.. ProjectService: is injected
+ProjectService <.. IFactoryProject: is injected
+ProjectService <.. IProjectRepository: is injected
+ProjectService <.. IUsRepository: is injected
+ProjectService <.. UserStoryMapper: is injected
+ProjectService <.. ProjectMapper: is injected
+ProjectService <.. ICustomerRepository: is injected
+
+ProjectWebController <.. ProjectListService: is injected
+ProjectListService <.. IProjectRepository: is injected
+ProjectListService <.. ProjectMapper: is injected
+ProjectListService <.. ICustomerRepository: is injected
+
+IFactoryProject <|.. FactoryProject: implements
+FactoryProject ..> Project: creates
+
+IProjectRepository <|.. ProjectRepositoryJpa: implements
+ProjectRepositoryJpa <.. IProjectJpaRepository: is injected
+IProjectJpaRepository <|-- CrudRepository: extends
+ProjectRepositoryJpa <.. ProjectDomainDataAssembler: is injected
+ProjectDomainDataAssembler ..> ProjectJpa: creates
+ProjectDomainDataAssembler <.. IProjectFactory
+IProjectFactory ..> Project: creates
+ProjectRepositoryJpa "1" --> "*" ProjectJpa: has
+
+ProjectMapper ..> ProjectDto: creates
+ProjectDto ..> Project: uses
+
+/'Resource'/
+ResourceWebController ..> AllocationDto: uses
+
+ResourceWebController <.. ResourceAllocationService: is injected
+ResourceAllocationService <.. IProjectResourceRepository: is injected
+ResourceAllocationService <.. IProjectRepository: is injected
+ResourceAllocationService <.. IAccountRepository: is injected
+ResourceAllocationService <.. IProjectResourceFactory: is injected
+ResourceAllocationService <.. IAccountFactory: is injected
+
+IProjectResourceRepository <|.. ProjectResourceJpaRepository: implements
+ProjectResourceJpaRepository <.. IProjectResourceJpaRepository: is injected
+IProjectResourceJpaRepository <|-- CrudRepository: extends
+ProjectResourceJpaRepository <.. ResourceDomainDataAssembler: is injected
+ResourceDomainDataAssembler ..> ProjectResourceJpa: creates
+ResourceDomainDataAssembler <.. IProjectResourceFactory
+IProjectResourceFactory ..> ProjectResource: creates
+ProjectResourceJpaRepository "1" --> "*" ProjectResourceJpa: has
+
+IProjectResourceFactory <|.. ProjectResourceFactory: implements
+ProjectResourceFactory ..> ProjectResource: creates
+
+
+/'Sprint'/
+SprintWebController ..> SprintCreationDto: uses
+
+SprintWebController <.. CreateSprintService: is injected
+CreateSprintService <.. ISprintRepository: is injected
+CreateSprintService <.. ISprintFactory: is injected
+CreateSprintService <.. IProjectRepository: is injected
+
+ISprintFactory <|.. SprintFactory: implements
+SprintFactory ..> Sprint: creates
+
+ISprintRepository <|.. SprintRepositoryJpa: implements
+SprintRepositoryJpa <.. ISprintJpaRepository: is injected
+ISprintJpaRepository <|-- CrudRepository: extends
+SprintJpaRepository <.. SprintDomainDataAssembler: is injected
+SprintDomainDataAssembler ..> SprintJpa: creates
+SprintDomainDataAssembler <.. ISprintFactory
+ISprintFactory ..> Sprint: creates
+SprintRepositoryJpa "1" --> "*" SprintJpa: has
+
+/'Typology'/
+TypologyWebController ..> TypologyCreationDto: uses
+
+TypologyWebController <.. TypologyService: is injected
+TypologyService <.. ITypologyRepository: is injected
+TypologyService <.. ITypologyFactory: is injected
+TypologyService <.. TypologyMapper: is injected
+
+ITypologyRepository <|.. TypologyJpaRepository: implements
+TypologyJpaRepository <.. ITypologyJpaRepository: is injected
+ITypologyJpaRepository <|-- CrudRepository: extends
+TypologyJpaRepository <.. TypologyDomainDataAssembler: is injected
+TypologyDomainDataAssembler ..> TypologyJpa: creates
+TypologyDomainDataAssembler <.. ITypologyFactory
+ITypologyFactory ..> Typology: creates
+TypologyJpaRepository "1" --> "*" TypologyJpa: has
+
+ITypologyFactory <|.. TypologyFactory: implements
+TypologyFactory ..> Typology: creates
+
+TypologyMapper ..> TypologyDto: creates
+TypologyDto ..> Typology: uses
+
+
+/'User Story'/
+UserStoryWebController ..> UserStoryCreationDto: uses
+
+UserStoryWebController <.. UsService: is injected
+UsService <.. IUsRepository: is injected
+UsService <.. IProjectRepository: is injected
+UsService <.. IFactoryUserStory: is injected
+
+IUsRepository <|.. UserStoryRepositoryJpa: implements
+UserStoryRepositoryJpa <.. IUserStoryJpaRepository: is injected
+IUserStoryJpaRepository <|-- CrudRepository: extends
+UserStoryRepositoryJpa <.. UserStoryDomainDataAssembler: is injected
+UserStoryDomainDataAssembler ..> UserStoryJpa: creates
+UserStoryDomainDataAssembler <.. IFactoryUserStory
+IFactoryUserStory ..> Typology: creates
+UserStoryRepositoryJpa "1" --> "*" Typology: has
+
+IFactoryUserStory <|.. FactoryUserStory: implements
+FactoryUserStory ..> UserStory: creates
+
+UserStoryMapper ..> UserStoryDto: creates
+UserStoryDto ..> UserStory: uses
+
+
+@enduml
