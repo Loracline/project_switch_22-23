@@ -36,4 +36,13 @@ public interface IUsRepository {
 
     List<UserStory> getListOfUsWithMatchingIds(List<UsId> usId);
 
+    /**
+     * Checks if a User Story with the specified ID exists.
+     *
+     * @param usId The ID of the User Story to check.
+     * @return true if a User Story with the specified ID exists, false otherwise.
+     */
+    boolean existsByUsId (UsId usId);
+
 }
+
