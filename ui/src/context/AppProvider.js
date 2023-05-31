@@ -16,7 +16,7 @@ const menu = [
     {key: 'createSprint', label: "create sprint", hidden: true},
     {key: 'project', label: "project", hidden: true},
     {key: 'about', label: "about"},
-    {key: 'allocateResource', label: "allocate resource"}
+    {key: 'allocateResource', label: "allocate resource", hidden: true}
 ]
 const nav = {selectedMenu: menu[0], menu: menu,}
 const detailedProject = null;
@@ -72,7 +72,6 @@ const AppProvider = ({children}) => {
             startDate: "2010-02-23",
             endDate: "2022-12-31",
         },
-
         additionalInfo:
             {
                 businessSector: "",
