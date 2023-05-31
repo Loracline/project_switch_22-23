@@ -62,7 +62,7 @@ public class ProjectResourceJpaRepository implements IProjectResourceRepository 
      */
     @Override
     public List<ProjectResource> findResourcesByAccountEmail(Email email) {
-        List <ProjectResourceJpa> list = jpaRepository.findAllByAccountEmail(email);
+        List <ProjectResourceJpa> list = jpaRepository.findByAccountEmail(email.getEmail());
         List<ProjectResource> projectResourceList = new ArrayList<>();
         list.forEach(jpa -> projectResourceList.add(assembler.toDomain(jpa)));
         return Collections.unmodifiableList(projectResourceList);
@@ -96,7 +96,7 @@ public class ProjectResourceJpaRepository implements IProjectResourceRepository 
      */
 
     private List<ProjectResource> findResourcesByProjectCode(Code code) {
-        List <ProjectResourceJpa> list = jpaRepository.findAllByProjectCode(code);
+        List <ProjectResourceJpa> list = jpaRepository.findByProjectCode(code.getCode());
         List<ProjectResource> projectResourceList = new ArrayList<>();
         list.forEach(jpa -> projectResourceList.add(assembler.toDomain(jpa)));
         return Collections.unmodifiableList(projectResourceList);

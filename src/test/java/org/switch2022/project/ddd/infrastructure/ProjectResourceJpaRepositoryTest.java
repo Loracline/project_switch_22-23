@@ -111,7 +111,7 @@ class ProjectResourceJpaRepositoryTest {
     @Test
     void ensureThatReturnsAListWhenSearchingForAGivenEmail() {
         //Arrange
-        Email email = mock(Email.class);
+        Email email = new Email("joaquina@isep.ipp.pt");
         ProjectResource projectResource = mock(ProjectResource.class);
         List<ProjectResource> expected = new ArrayList<>();
         expected.add(projectResource);
@@ -120,7 +120,7 @@ class ProjectResourceJpaRepositoryTest {
         List<ProjectResourceJpa> list = new ArrayList<>();
         list.add(projectResourceJpa);
 
-        when(jpaRepository.findAllByAccountEmail(email)).thenReturn(list);
+        when(jpaRepository.findByAccountEmail("joaquina@isep.ipp.pt")).thenReturn(list);
         when(assembler.toDomain(projectResourceJpa)).thenReturn(projectResource);
 
         //Act
@@ -144,14 +144,14 @@ class ProjectResourceJpaRepositoryTest {
     @Test
     void ensureThatReturnsAListWithAValueObjectEmail() {
         //Arrange
-        Email email = mock(Email.class);
+        Email email = new Email("joaquim@isep.ipp.pt");
         Code code = new Code(1);
         List<Code> expected = new ArrayList<>();
         expected.add(code);
         ProjectResourceJpa projectResourceJpa = mock(ProjectResourceJpa.class);
         List<ProjectResourceJpa> list = new ArrayList<>();
         list.add(projectResourceJpa);
-        when(jpaRepository.findAllByAccountEmail(email)).thenReturn(list);
+        when(jpaRepository.findByAccountEmail("joaquim@isep.ipp.pt")).thenReturn(list);
         ProjectResource projectResource = mock(ProjectResource.class);
         when(assembler.toDomain(projectResourceJpa)).thenReturn(projectResource);
         when(projectResource.getCode()).thenReturn("p1");
@@ -177,14 +177,14 @@ class ProjectResourceJpaRepositoryTest {
     @Test
     void ensureThatReturnsAListWithAValueObjectCode() {
         //Arrange
-        Code code = mock(Code.class);
+        Code code = new Code(1);
         Email email = new Email("email@hotmail.com");
         List<Email> expected = new ArrayList<>();
         expected.add(email);
         ProjectResourceJpa projectResourceJpa = mock(ProjectResourceJpa.class);
         List<ProjectResourceJpa> list = new ArrayList<>();
         list.add(projectResourceJpa);
-        when(jpaRepository.findAllByProjectCode(code)).thenReturn(list);
+        when(jpaRepository.findByProjectCode("p001")).thenReturn(list);
         ProjectResource projectResource = mock(ProjectResource.class);
         when(assembler.toDomain(projectResourceJpa)).thenReturn(projectResource);
         when(projectResource.getEmail()).thenReturn("email@hotmail.com");
