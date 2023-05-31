@@ -4,6 +4,7 @@ import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.utils.Utils;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -355,6 +356,9 @@ public class Project implements Entity<Project> {
     }
 
 
+    public void setPeriod(LocalDate startDate, LocalDate endDate) {
+        this.period = new Period(startDate, endDate);
+    }
 }
 
 

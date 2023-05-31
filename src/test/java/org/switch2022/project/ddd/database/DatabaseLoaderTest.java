@@ -11,6 +11,7 @@ import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFac
 import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
 import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.model.project.FactoryProject;
+import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResourceFactory;
 import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.model.typology.TypologyFactory;
@@ -86,9 +87,13 @@ public class DatabaseLoaderTest {
         // Projects
         FactoryProject factoryProject = new FactoryProject();
         ProjectDomainDataAssembler projectDomainDataAssembler = new ProjectDomainDataAssembler();
-        verify(projects).save(projectDomainDataAssembler.toData(factoryProject.createProject(1, new Name("Project 1"),
+        Project project1 = factoryProject.createProject(1, new Name("Project 1"),
                 new Description("potato planting"), new BusinessSectorId(1),
-                new TaxId("217746691"), new ProjectTypologyId(1))));
+                new TaxId("217746691"), new ProjectTypologyId(1));
+        project1.setProjectStatus(ProjectStatus.INCEPTION);
+        project1.setPeriod(LocalDate.of(2022,4,12), LocalDate.of(2024, 4, 12));
+        project1.setSprintDuration(2);
+        verify(projects).save(projectDomainDataAssembler.toData(project1));
 
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();

@@ -182,19 +182,6 @@ export const createUserStory = (userStory) => {
 }
 
 /**
- Action for creating a new sprint.
- */
-//old action:
-export const createSprint = (sprint) => {
-    return {
-        type: CREATE_SPRINT,
-        payload: {
-            sprintToAdd: sprint,
-        },
-    };
-};
-
-/**
  * Action to set the current selected menu.
  * @param name of the menu item
  * @returns {{payload: {key}, type: string}}
@@ -266,19 +253,16 @@ export function getProjectSuccess(project) {
  */
 export const POST_SPRINT_SUCCESS = 'POST_SPRINT_SUCCESS';
 
-export function createSprint2(dispatch, sprintToSubmit) {
-    postSprint((res) => dispatch(postSprintSuccess(res.text())),
+export function createSprint(dispatch, sprintToSubmit) {
+    postSprint((res) => dispatch(postSprintSuccess(res)),
         (err) => dispatch(fetchFailure(err.message)),
-        sprintToSubmit
-    );
+        sprintToSubmit);
 }
 
 function postSprintSuccess(message) {
     return {
         type: POST_SPRINT_SUCCESS,
-        payload: {
-            message
-        }
+        payload: message
     }
 }
 
@@ -301,7 +285,7 @@ function getProjectsSuccess(projects) {
     }
 }
 
-
+/*
 export const checkProject = (code) => {
     return {
         type: CHECK_PROJECT,
@@ -318,4 +302,4 @@ export const checkProjectSprint = (projectCode) => {
             projectToCheck: projectCode,
         }
     }
-}
+}*/
