@@ -21,6 +21,7 @@ import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.domain.value_object.Period;
 import org.switch2022.project.ddd.dto.AllocationDto;
+import org.switch2022.project.ddd.utils.Utils;
 
 import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
@@ -58,7 +59,8 @@ public class ResourceAllocationService {
      * list, false otherwise.
      */
     public boolean addUserToProject(AllocationDto allocationDto) {
-        Code code = new Code(allocationDto.projectCode);
+        int projectNumber = Utils.getIntFromAlphanumericString(allocationDto.projectCode, "P");
+        Code code = new Code(projectNumber);
         Email email = new Email(allocationDto.accountEmail);
         Role role = Role.valueOf(allocationDto.accountRole);
         CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);

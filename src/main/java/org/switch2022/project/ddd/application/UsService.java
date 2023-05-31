@@ -11,7 +11,7 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
-import org.switch2022.project.ddd.exceptions.ProjectNotFoundException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.ArrayList;
@@ -88,7 +88,7 @@ public class UsService {
      * @param projectCode of the project where the user ID will be added.
      * @param priority    that the ID will have in the ProductBacklog.
      * @return true if the ID is successfully added. otherwise it will return false.
-     * @throws ProjectNotFoundException     if the projectCode doesn't match any Project in the
+     * @throws NotFoundInRepoException      if the projectCode doesn't match any Project in the
      *                                      repository.
      * @throws AlreadyExistsInRepoException if the User Story is already in the Product Backlog.
      */
@@ -106,7 +106,7 @@ public class UsService {
                         "Backlog");
             }
         } else {
-            throw new ProjectNotFoundException("No project with that code");
+            throw new NotFoundInRepoException("No project with that code");
         }
         project.addUserStory(priority, usId);
         return true;

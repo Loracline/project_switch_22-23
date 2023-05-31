@@ -12,7 +12,7 @@ public class AllocationDtoTest {
     @Test
     public void constructor_ShouldSetAttributes() {
         // Arrange
-        int expectedProjectCode = 123;
+        String expectedProjectCode = "P123";
         String expectedAccountEmail = "johndoe@example.com";
         String expectedAccountRole = "Developer";
         float expectedAccountCostPerHour = 50.0f;
