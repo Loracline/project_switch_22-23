@@ -102,7 +102,7 @@ public class DatabaseLoaderTest {
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
         UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
-        verify(userStories).save(userStoryDomainDataAssembler.toData(factoryUserStory.createUserStory(new UsNumber("us001"), new UsText("I want to have a farm"),
+        verify(userStories).save(userStoryDomainDataAssembler.toData(factoryUserStory.createUserStory(new UsNumber("1"), new UsText("I want to have a farm"),
                 new Actor("Farmer"), new ArrayList<>(), new Code(1))));
 
          // Sprints

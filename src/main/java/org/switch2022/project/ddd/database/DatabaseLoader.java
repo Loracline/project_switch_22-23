@@ -141,25 +141,25 @@ public class DatabaseLoader implements CommandLineRunner {
         FactoryUserStory factoryUserStory = new FactoryUserStory();
         UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
 
-        UserStory userStoryOne = factoryUserStory.createUserStory(new UsNumber("us001"), new UsText("I want to have a farm"),
+        UserStory userStoryOne = factoryUserStory.createUserStory(new UsNumber("1"), new UsText("I want to have a farm"),
                 new Actor("Farmer"), new ArrayList<>(), new Code(1));
-        UserStory userStoryTwo = factoryUserStory.createUserStory(new UsNumber("us002"), new UsText("I want to have a car"),
+        UserStory userStoryTwo = factoryUserStory.createUserStory(new UsNumber("2"), new UsText("I want to have a car"),
                 new Actor("Manuela"), new ArrayList<>(), new Code(1));
-        UserStory userStoryThree = factoryUserStory.createUserStory(new UsNumber("us003"), new UsText("I want to ride a horse"),
+        UserStory userStoryThree = factoryUserStory.createUserStory(new UsNumber("3"), new UsText("I want to ride a horse"),
                 new Actor("Gaiato"), new ArrayList<>(), new Code(1));
-        UserStory userStoryFour = factoryUserStory.createUserStory(new UsNumber("us004"), new UsText("I want to plant tomatoes"),
+        UserStory userStoryFour = factoryUserStory.createUserStory(new UsNumber("4"), new UsText("I want to plant tomatoes"),
                 new Actor("Gervásio"), new ArrayList<>(), new Code(1));
-        UserStory userStoryFive = factoryUserStory.createUserStory(new UsNumber("us005"), new UsText("I want to buy a bycicle"),
+        UserStory userStoryFive = factoryUserStory.createUserStory(new UsNumber("5"), new UsText("I want to buy a bycicle"),
                 new Actor("Anacleto"), new ArrayList<>(), new Code(1));
-        UserStory userStorySix = factoryUserStory.createUserStory(new UsNumber("us006"), new UsText("I want to be like Ronaldo"),
+        UserStory userStorySix = factoryUserStory.createUserStory(new UsNumber("6"), new UsText("I want to be like Ronaldo"),
                 new Actor("Josefina"), new ArrayList<>(), new Code(1));
-        UserStory userStorySeven = factoryUserStory.createUserStory(new UsNumber("us007"), new UsText("I want to have a gameboy"),
+        UserStory userStorySeven = factoryUserStory.createUserStory(new UsNumber("7"), new UsText("I want to have a gameboy"),
                 new Actor("Bina"), new ArrayList<>(), new Code(1));
-        UserStory userStoryEight = factoryUserStory.createUserStory(new UsNumber("us008"), new UsText("I want to drink wine"),
+        UserStory userStoryEight = factoryUserStory.createUserStory(new UsNumber("8"), new UsText("I want to drink wine"),
                 new Actor("Ben"), new ArrayList<>(), new Code(1));
-        UserStory userStoryNine = factoryUserStory.createUserStory(new UsNumber("us009"), new UsText("I want to smoke"),
+        UserStory userStoryNine = factoryUserStory.createUserStory(new UsNumber("9"), new UsText("I want to smoke"),
                 new Actor("John"), new ArrayList<>(), new Code(1));
-        UserStory userStoryTen = factoryUserStory.createUserStory(new UsNumber("us010"), new UsText("I want to buy a jet"),
+        UserStory userStoryTen = factoryUserStory.createUserStory(new UsNumber("10"), new UsText("I want to buy a jet"),
                 new Actor("Pilot"), new ArrayList<>(), new Code(1));
 
         this.userStories.save(userStoryDomainDataAssembler.toData(userStoryOne));
