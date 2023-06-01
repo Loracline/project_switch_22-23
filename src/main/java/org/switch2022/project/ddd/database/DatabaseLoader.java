@@ -38,8 +38,8 @@ import java.util.List;
  */
 
 @Component
+@Transactional
 public class DatabaseLoader implements CommandLineRunner {
-
 
     private final IProjectJpaRepository projects;
     private final IBusinessSectorJpaRepository businessSectors;
@@ -86,23 +86,30 @@ public class DatabaseLoader implements CommandLineRunner {
         BusinessSectorFactory businessSectorFactory = new BusinessSectorFactory();
         BusinessSectorDomainDataAssembler businessSectorDomainDataAssembler = new BusinessSectorDomainDataAssembler();
 
-        this.businessSectors.save(businessSectorDomainDataAssembler.toData(businessSectorFactory.createBusinessSector(1, new Name("it doesn't matter"))));
-        this.businessSectors.save(businessSectorDomainDataAssembler.toData(businessSectorFactory.createBusinessSector(2, new Name("Hospitality industry"))));
+        this.businessSectors.save(businessSectorDomainDataAssembler.toData(businessSectorFactory.
+                createBusinessSector(1, new Name("it doesn't matter"))));
+        this.businessSectors.save(businessSectorDomainDataAssembler.toData(businessSectorFactory.
+                createBusinessSector(2, new Name("Hospitality industry"))));
 
         // Project typologies
         TypologyFactory typologyFactory = new TypologyFactory();
         TypologyDomainDataAssembler typologyDomainDataAssembler = new TypologyDomainDataAssembler();
 
-        this.typologies.save(typologyDomainDataAssembler.toData(typologyFactory.createTypology(1, new Name("fixed cost"))));
-        this.typologies.save(typologyDomainDataAssembler.toData(typologyFactory.createTypology(2, new Name("Time and materials"))));
+        this.typologies.save(typologyDomainDataAssembler.toData(typologyFactory.
+                createTypology(1, new Name("fixed cost"))));
+        this.typologies.save(typologyDomainDataAssembler.toData(typologyFactory.
+                createTypology(2, new Name("Time and materials"))));
 
         // Customers
         CustomerFactory customerFactory = new CustomerFactory();
         CustomerDomainDataAssembler customerDomainDataAssembler = new CustomerDomainDataAssembler();
 
-        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("217746691"), new Name("XPTO, SA"))));
-        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("257578994"), new Name("XYZ, Lda"))));
-        this.customers.save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("238419096"), new Name("Hell, LLC"))));
+        this.customers.save(customerDomainDataAssembler.toData(customerFactory.
+                createCustomer(new TaxId("217746691"), new Name("XPTO, SA"))));
+        this.customers.save(customerDomainDataAssembler.toData(customerFactory.
+                createCustomer(new TaxId("257578994"), new Name("XYZ, Lda"))));
+        this.customers.save(customerDomainDataAssembler.toData(customerFactory.
+                createCustomer(new TaxId("238419096"), new Name("Hell, LLC"))));
 
         // Projects
         FactoryProject factoryProject = new FactoryProject();
@@ -112,7 +119,8 @@ public class DatabaseLoader implements CommandLineRunner {
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId("217746691"), new ProjectTypologyId(1));
         projectOne.setProjectStatus(ProjectStatus.INCEPTION);
-        projectOne.setPeriod(LocalDate.of(2022, 1, 3), LocalDate.of(2022, 7, 31));
+        projectOne.setPeriod(LocalDate.of(2022, 1, 3),
+                LocalDate.of(2022, 7, 31));
         projectOne.setSprintDuration(2);
         projectOne.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(8));
         projectOne.isBudgetAssigned(new Budget(new BigDecimal(150000)));
@@ -121,7 +129,8 @@ public class DatabaseLoader implements CommandLineRunner {
                 new Description("Just another dummy project"), new BusinessSectorId(1),
                 new TaxId("217746691"), new ProjectTypologyId(1));
         projectTwo.setProjectStatus(ProjectStatus.INCEPTION);
-        projectTwo.setPeriod(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 7, 31));
+        projectTwo.setPeriod(LocalDate.of(2022, 5, 31),
+                LocalDate.of(2022, 7, 31));
         projectTwo.setSprintDuration(4);
         projectTwo.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(12));
         projectTwo.isBudgetAssigned(new Budget(new BigDecimal(350000)));
@@ -130,45 +139,64 @@ public class DatabaseLoader implements CommandLineRunner {
                 new Description("Doomed from the start"), new BusinessSectorId(2),
                 new TaxId("217746691"), new ProjectTypologyId(2));
         projectThree.setProjectStatus(ProjectStatus.INCEPTION);
-        projectThree.setPeriod(LocalDate.of(2023, 3, 10), LocalDate.of(2023, 9, 20));
+        projectThree.setPeriod(LocalDate.of(2023, 3, 10),
+                LocalDate.of(2023, 9, 20));
         projectThree.setSprintDuration(3);
         projectThree.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(15));
         projectThree.isBudgetAssigned(new Budget(new BigDecimal(750000)));
 
-
         this.projects.save(projectDomainDataAssembler.toData(projectOne));
-
-        List<String> acceptanceCriteria = new ArrayList<>();
-        usService.createUs(new UserStoryCreationDto("P001", "1", "text",
-                "manager", acceptanceCriteria, 0));
-
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
         this.projects.save(projectDomainDataAssembler.toData(projectThree));
+
+        List<String> acceptanceCriteria = new ArrayList<>();
+        usService.createUs(new UserStoryCreationDto("P001", "1",
+                "I want to be a iguana", "Farmer", acceptanceCriteria, 0));
+        usService.createUs(new UserStoryCreationDto("P001", "2",
+                "I want to be like a hippo", "Manuela", acceptanceCriteria, 0));
+        usService.createUs(new UserStoryCreationDto("P002", "1",
+                "I want to marry with Cristiana", "Gaiato", acceptanceCriteria, 0));
+        usService.createUs(new UserStoryCreationDto("P002", "2",
+                "I want to break free", "Gervásio", acceptanceCriteria, 0));
+        usService.createUs(new UserStoryCreationDto("P003", "1",
+                "I want to live forever", "Anacleto", acceptanceCriteria, 0));
+        usService.createUs(new UserStoryCreationDto("P003", "2",
+                "I want pantallones", "Josefina", acceptanceCriteria, 0));
 
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
         UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
-
-        UserStory userStoryOne = factoryUserStory.createUserStory(new UsNumber("1"), new UsText("I want to have a farm"),
+        UserStory userStoryOne = factoryUserStory.createUserStory(new UsNumber("1"),
+                new UsText("I want to be a iguana"),
                 new Actor("Farmer"), new ArrayList<>(), new Code(1));
-        UserStory userStoryTwo = factoryUserStory.createUserStory(new UsNumber("2"), new UsText("I want to have a car"),
+        userStoryOne.setStatus(Status.RUNNING);
+        UserStory userStoryTwo = factoryUserStory.createUserStory(new UsNumber("2"),
+                new UsText("I want to be like a hippo"),
                 new Actor("Manuela"), new ArrayList<>(), new Code(1));
-        UserStory userStoryThree = factoryUserStory.createUserStory(new UsNumber("3"), new UsText("I want to ride a horse"),
-                new Actor("Gaiato"), new ArrayList<>(), new Code(1));
-        UserStory userStoryFour = factoryUserStory.createUserStory(new UsNumber("4"), new UsText("I want to plant tomatoes"),
-                new Actor("Gervásio"), new ArrayList<>(), new Code(1));
-        UserStory userStoryFive = factoryUserStory.createUserStory(new UsNumber("5"), new UsText("I want to buy a bycicle"),
-                new Actor("Anacleto"), new ArrayList<>(), new Code(1));
-        UserStory userStorySix = factoryUserStory.createUserStory(new UsNumber("6"), new UsText("I want to be like Ronaldo"),
+        userStoryTwo.setStatus(Status.RUNNING);
+        UserStory userStoryThree = factoryUserStory.createUserStory(new UsNumber("1"),
+                new UsText("I want to marry with Cristiana"),
+                new Actor("Gaiato"), new ArrayList<>(), new Code(2));
+        userStoryThree.setStatus(Status.RUNNING);
+        UserStory userStoryFour = factoryUserStory.createUserStory(new UsNumber("2"),
+                new UsText("I want to break free"),
+                new Actor("Gervásio"), new ArrayList<>(), new Code(2));
+        userStoryFour.setStatus(Status.RUNNING);
+        UserStory userStoryFive = factoryUserStory.createUserStory(new UsNumber("1"),
+                new UsText("I want to live forever"),
+                new Actor("Anacleto"), new ArrayList<>(), new Code(3));
+        UserStory userStorySix = factoryUserStory.createUserStory(new UsNumber("3"),
+                new UsText("I want pantallones"),
                 new Actor("Josefina"), new ArrayList<>(), new Code(1));
-        UserStory userStorySeven = factoryUserStory.createUserStory(new UsNumber("7"), new UsText("I want to have a gameboy"),
-                new Actor("Bina"), new ArrayList<>(), new Code(1));
-        UserStory userStoryEight = factoryUserStory.createUserStory(new UsNumber("8"), new UsText("I want to drink wine"),
+        UserStory userStorySeven = factoryUserStory.createUserStory(new UsNumber("7"),
+                new UsText("I want to have a gameboy"),
+                new Actor("Bina"), new ArrayList<>(), new Code(2));
+        UserStory userStoryEight = factoryUserStory.createUserStory(new UsNumber("3"),
+                new UsText("I want to drink wine"),
                 new Actor("Ben"), new ArrayList<>(), new Code(1));
-        UserStory userStoryNine = factoryUserStory.createUserStory(new UsNumber("9"), new UsText("I want to smoke"),
-                new Actor("John"), new ArrayList<>(), new Code(1));
-        UserStory userStoryTen = factoryUserStory.createUserStory(new UsNumber("10"), new UsText("I want to buy a jet"),
-                new Actor("Pilot"), new ArrayList<>(), new Code(1));
+        UserStory userStoryNine = factoryUserStory.createUserStory(new UsNumber("3"),
+                new UsText("I want to smoke"),
+                new Actor("John"), new ArrayList<>(), new Code(3));
 
         this.userStories.save(userStoryDomainDataAssembler.toData(userStoryOne));
         this.userStories.save(userStoryDomainDataAssembler.toData(userStoryTwo));
@@ -179,7 +207,6 @@ public class DatabaseLoader implements CommandLineRunner {
         this.userStories.save(userStoryDomainDataAssembler.toData(userStorySeven));
         this.userStories.save(userStoryDomainDataAssembler.toData(userStoryEight));
         this.userStories.save(userStoryDomainDataAssembler.toData(userStoryNine));
-        this.userStories.save(userStoryDomainDataAssembler.toData(userStoryTen));
 
         // Sprints
         SprintFactory sprintFactory = new SprintFactory();
@@ -271,9 +298,12 @@ public class DatabaseLoader implements CommandLineRunner {
         ProfileFactory profileFactory = new ProfileFactory();
         ProfileDomainDataAssembler profileDomainDataAssembler = new ProfileDomainDataAssembler();
 
-        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("User"), 1)));
-        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Manager"), 2)));
-        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Administrator"), 3)));
+        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.
+                createProfile(new Name("User"), 1)));
+        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.
+                createProfile(new Name("Manager"), 2)));
+        this.profiles.save(profileDomainDataAssembler.toData(profileFactory.
+                createProfile(new Name("Administrator"), 3)));
 
         // Accounts
         AccountFactory accountFactory = new AccountFactory();
@@ -335,40 +365,52 @@ public class DatabaseLoader implements CommandLineRunner {
 
         ProjectResource projectResourceOne = projectResourceFactory.createProjectResource(new ProjectResourceId(1),
                 new Code(1), new Email("tc@gmail.com"), Role.PROJECT_MANAGER,
-                new Period(LocalDate.of(2022, 1, 2), LocalDate.of(2022, 7, 31)), new CostPerHour(35), new PercentageOfAllocation(20));
+                new Period(LocalDate.of(2022, 1, 2), LocalDate.of
+                        (2022, 7, 31)), new CostPerHour(35), new PercentageOfAllocation(20));
         ProjectResource projectResourceTwo = projectResourceFactory.createProjectResource(new ProjectResourceId(2),
                 new Code(1), new Email("js@gmail.com"), Role.PRODUCT_OWNER,
-                new Period(LocalDate.of(2022, 1, 3), LocalDate.of(2022, 7, 31)), new CostPerHour(25), new PercentageOfAllocation(20));
+                new Period(LocalDate.of(2022, 1, 3), LocalDate.of
+                        (2022, 7, 31)), new CostPerHour(25), new PercentageOfAllocation(20));
         ProjectResource projectResourceThree = projectResourceFactory.createProjectResource(new ProjectResourceId(3),
                 new Code(1), new Email("ms@gmail.com"), Role.SCRUM_MASTER,
-                new Period(LocalDate.of(2022, 1, 4), LocalDate.of(2022, 7, 31)), new CostPerHour(25), new PercentageOfAllocation(30));
+                new Period(LocalDate.of(2022, 1, 4), LocalDate.of
+                        (2022, 7, 31)), new CostPerHour(25), new PercentageOfAllocation(30));
         ProjectResource projectResourceFour = projectResourceFactory.createProjectResource(new ProjectResourceId(4),
                 new Code(1), new Email("xf@gmail.com"), Role.TEAM_MEMBER,
-                new Period(LocalDate.of(2022, 1, 5), LocalDate.of(2022, 7, 31)), new CostPerHour(20), new PercentageOfAllocation(100));
+                new Period(LocalDate.of(2022, 1, 5), LocalDate.of
+                        (2022, 7, 31)), new CostPerHour(20), new PercentageOfAllocation(100));
         ProjectResource projectResourceFive = projectResourceFactory.createProjectResource(new ProjectResourceId(5),
                 new Code(1), new Email("nel.m@gmail.com"), Role.TEAM_MEMBER,
-                new Period(LocalDate.of(2022, 1, 7), LocalDate.of(2022, 7, 31)), new CostPerHour(20), new PercentageOfAllocation(100));
+                new Period(LocalDate.of(2022, 1, 7), LocalDate.of
+                        (2022, 7, 31)), new CostPerHour(20), new PercentageOfAllocation(100));
         ProjectResource projectResourceSix = projectResourceFactory.createProjectResource(new ProjectResourceId(6),
                 new Code(1), new Email("zb@gmail.com"), Role.TEAM_MEMBER,
-                new Period(LocalDate.of(2022, 1, 8), LocalDate.of(2022, 7, 20)), new CostPerHour(20), new PercentageOfAllocation(100));
+                new Period(LocalDate.of(2022, 1, 8), LocalDate.of(2022, 7,
+                        20)), new CostPerHour(20), new PercentageOfAllocation(100));
         ProjectResource projectResourceSeven = projectResourceFactory.createProjectResource(new ProjectResourceId(7),
                 new Code(1), new Email("to.f@gmail.com"), Role.TEAM_MEMBER,
-                new Period(LocalDate.of(2022, 1, 8), LocalDate.of(2022, 7, 20)), new CostPerHour(20), new PercentageOfAllocation(100));
+                new Period(LocalDate.of(2022, 1, 8), LocalDate.of
+                        (2022, 7, 20)), new CostPerHour(20), new PercentageOfAllocation(100));
         ProjectResource projectResourceEight = projectResourceFactory.createProjectResource(new ProjectResourceId(8),
                 new Code(1), new Email("tdc@gmail.com"), Role.TEAM_MEMBER,
-                new Period(LocalDate.of(2022, 1, 10), LocalDate.of(2022, 7, 20)), new CostPerHour(20), new PercentageOfAllocation(100));
+                new Period(LocalDate.of(2022, 1, 10), LocalDate.of
+                        (2022, 7, 20)), new CostPerHour(20), new PercentageOfAllocation(100));
         ProjectResource projectResourceNine = projectResourceFactory.createProjectResource(new ProjectResourceId(9),
                 new Code(2), new Email("qb@gmail.com"), Role.PROJECT_MANAGER,
-                new Period(LocalDate.of(2022, 5, 15), LocalDate.of(2022, 7, 30)), new CostPerHour(42), new PercentageOfAllocation(20));
+                new Period(LocalDate.of(2022, 5, 15), LocalDate.of
+                        (2022, 7, 30)), new CostPerHour(42), new PercentageOfAllocation(20));
         ProjectResource projectResourceTen = projectResourceFactory.createProjectResource(new ProjectResourceId(10),
                 new Code(2), new Email("tg@gmail.com"), Role.PRODUCT_OWNER,
-                new Period(LocalDate.of(2022, 5, 15), LocalDate.of(2022, 7, 30)), new CostPerHour(30), new PercentageOfAllocation(20));
+                new Period(LocalDate.of(2022, 5, 15), LocalDate.of
+                        (2022, 7, 30)), new CostPerHour(30), new PercentageOfAllocation(20));
         ProjectResource projectResourceEleven = projectResourceFactory.createProjectResource(new ProjectResourceId(11),
                 new Code(2), new Email("zm@gmail.com"), Role.TEAM_MEMBER,
-                new Period(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 7, 30)), new CostPerHour(20), new PercentageOfAllocation(100));
+                new Period(LocalDate.of(2022, 5, 31), LocalDate.of
+                        (2022, 7, 30)), new CostPerHour(20), new PercentageOfAllocation(100));
         ProjectResource projectResourceTwelve = projectResourceFactory.createProjectResource(new ProjectResourceId(12),
                 new Code(2), new Email("as@gmail.com"), Role.TEAM_MEMBER,
-                new Period(LocalDate.of(2022, 5, 31), LocalDate.of(2022, 7, 30)), new CostPerHour(18), new PercentageOfAllocation(100));
+                new Period(LocalDate.of(2022, 5, 31), LocalDate.of
+                        (2022, 7, 30)), new CostPerHour(18), new PercentageOfAllocation(100));
 
         this.resources.save(resourceDomainDataAssembler.toData(projectResourceOne));
         this.resources.save(resourceDomainDataAssembler.toData(projectResourceTwo));
