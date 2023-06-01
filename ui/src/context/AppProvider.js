@@ -11,7 +11,7 @@ const menu = [
     {key: 'home', label: 'home', hidden: true},
     {key: 'createProject', label: "create project", hidden: true},
     {key: 'projects', label: "projects"},
-    {key: 'createUserStory', label: "create user story", hidden: false},
+    {key: 'createUserStory', label: "create user story", hidden: true},
     {key: 'productBacklog', label: "product backlog", hidden: true},
     {key: 'createSprint', label: "create sprint", hidden: true},
     {key: 'project', label: "project", hidden: true},
