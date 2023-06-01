@@ -131,6 +131,7 @@
                     <excludes>
                         <exclude>**/ui/**/*</exclude>
                         <exclude>**/org/switch2022/project/ddd/datamodel_jpa/**</exclude>
+                        <exclude>**/org/switch2022/project/ddd/webcontrollers/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
