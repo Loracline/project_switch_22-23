@@ -9,12 +9,15 @@ import {
     selectMenu
 } from "../../context/Actions";
 import AppContext from "../../context/AppContext";
-import {CircularProgress, Dialog, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Dialog, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import './CreateProject.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import {strings} from "../../strings";
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
+import Loading from "../../components/Loading/Loading";
+import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
+import FailureMessage from "../../components/InformationMessage/FailureMessage";
 
 /**
  * Form component in React.
@@ -234,9 +237,7 @@ function CreateProject() {
                 />
             </section>
 
-            <Dialog open={loading}>
-                <CircularProgress style={{color: "#6145AF"}} sx={{m: 5}}/>
-            </Dialog>
+            <Loading handleLoading={loading}/>
 
             <ConfirmationPage
                 handleOpen={showConfirmation}
@@ -245,18 +246,19 @@ function CreateProject() {
                 handleConfirm={handleSubmit}
             />
 
-            <Dialog className="success-dialog"  open={messageSuccess.length > 0}>
-                <CheckCircleIcon style={{color: "green", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
-                <h3>{strings.projectCreatedSuccessMessage}</h3>
-                <h2>{messageSuccess}</h2>
-                <Button type ="button" text="X" onClick={handleClearProject}/>
-            </Dialog>
+            <SuccessMessage
+                handleOpen={messageSuccess.length > 0}
+                title={strings.projectCreatedSuccessMessage}
+                message={messageSuccess}
+                handleClose={handleClearProject}
+            />
 
-            <Dialog className="failure-dialog" open={messageFailure.length > 0}>
-                <ErrorIcon style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
-                <h3>{strings.genericServerError}</h3>
-                <Button type ="button" text="Close" onClick={handleClearProject}/>
-            </Dialog>
+            <FailureMessage
+                handleOpen={messageFailure.length > 0}
+                title={strings.genericServerError}
+                handleClose={handleClearProject}
+            />
+
 
         </div>
     );
