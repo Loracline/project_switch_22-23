@@ -289,7 +289,7 @@ export const POST_SPRINT_SUCCESS = 'POST_SPRINT_SUCCESS';
 
 export function createSprint(dispatch, sprintToSubmit) {
     postSprint((res) => dispatch(postSprintSuccess(res)),
-        (err) => dispatch(fetchFailure(err.message)),
+        (err) => dispatch(fetchFailure(err)),
         sprintToSubmit);
 }
 

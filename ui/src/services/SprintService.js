@@ -8,13 +8,10 @@ export function postSprint(success, failure, sprintToSubmit) {
             'Content-type': 'application/json; charset=UTF-8',
         },
     })
-        .then(res => {console.log(res.status); return res.text()})
-        .then(res => {if (res.status === 201) {
-            success(res)
-        } else {
-           failure(res)
-        }
-        })
-        //.catch(err => failure(err.message))
+        .then(res => {
+            if (res.status === 201)
+                res.text().then(text => success(text));
+            else res.text().then(errText => failure(errText));
+        }).catch(err => failure(err.message))
     ;
 }
