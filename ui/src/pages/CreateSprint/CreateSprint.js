@@ -1,10 +1,12 @@
 import React, {useContext, useState} from 'react';
-import {TextField} from '@mui/material';
+import {Dialog, TextField} from '@mui/material';
 import {closeButton, createSprint, selectMenu} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import './CreateSprint.css';
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
 
 /** This component provides a form for creating a new Sprint for a Project.
  - It allows the user to select a start date for the new Sprint and submits the form. If the form is
@@ -59,10 +61,15 @@ function CreateSprint() {
         setShowConfirmation(false);
     };
 
+    const handleClearSprint = (_) => {
+        setSprintToSubmit(initialSprintState);
+        dispatch(closeButton());
+    }
+
     const dialogContent = () => {
         return (
             <div>
-                <h2 style={{marginBottom: '1rem'}}>Please confirm:</h2>
+                <h2 style={{marginBottom: '1rem', fontSize: '2rem', textAlign: "center"}}>Please confirm:</h2>
                 <table style={{width: '100%'}}>
                     <tbody>
                     <tr>
@@ -88,8 +95,19 @@ function CreateSprint() {
                         <Button text="Submit" type="button" isdisabled={!sprintToSubmit.startDate} onClick={handleConfirmation}/>
                         <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
                     </div>
-                    {messageSuccess && (<div><p>Sprint created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
-                    {messageFailure && (<div><p>Sprint not created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
+
+                    <Dialog className="success-dialog"  open={messageSuccess.length > 0}>
+                        <CheckCircleIcon style={{color: "green", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
+                        <h3>Sprint created!</h3>
+                        <Button text="Close" onClick={handleClearSprint}/>
+                    </Dialog>
+
+                    <Dialog className="failure-dialog"  open={messageFailure?.length > 0}>
+                        <ErrorIcon style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
+                        <h3>Sprint not created!</h3>
+                        <span>{messageFailure}</span>
+                        <Button text="Close" onClick={handleClearSprint}/>
+                    </Dialog>
                 </form>
             </section>
             <ConfirmationPage
