@@ -15,7 +15,7 @@ import org.switch2022.project.ddd.utils.Utils;
 public class TypologyDomainDataAssembler {
     @SuppressWarnings("all")
     @Autowired
-    ITypologyFactory factory;
+    private ITypologyFactory factory;
 
     /**
      * Converts a typology instance to a TypologyJpa instance.
