@@ -133,7 +133,7 @@ const reducer = (state, action) => {
         }
 
         case FETCH_FAILURE: {
-            return {...state, messageFailure: action.payload?.message};
+            return {...state, messageFailure: "fail"};
         }
 
         case CLOSE_BUTTON: {
