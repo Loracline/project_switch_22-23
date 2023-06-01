@@ -67,10 +67,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -89,6 +91,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
             <!-- Required for compiling the project using maven -->
             <plugin><!-- Compiler configuration-->
                 <groupId>org.apache.maven.plugins</groupId>
@@ -97,15 +100,10 @@
                 <configuration>
                     <source>11</source>
                     <target>11</target>
-
                     <showWarnings>false</showWarnings>   <!-- Needs this -->
-
                     <compilerArgs>
-
                     </compilerArgs>
-
                     <encoding>${project.build.sourceEncoding}</encoding>
-
                 </configuration>
             </plugin>
 
@@ -132,6 +130,7 @@
                 <configuration>
                     <excludes>
                         <exclude>**/ui/**/*</exclude>
+                        <exclude>**/org/switch2022/project/ddd/datamodel_jpa/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -164,24 +163,13 @@
                 </dependencies>
                 <configuration>
                     <targetClasses>
-                        <!--<param>org.switch2022.project.container.*</param>
-                        <param>org.switch2022.project.controller.*</param>
-                        <param>org.switch2022.project.dto.*</param>
-                        <param>org.switch2022.project.factories.*</param>
-                        <param>org.switch2022.project.model.*</param>
-                        <param>org.switch2022.project.utils.*</param>-->
                         <param>org.switch2022.project.ddd.application.*</param>
                         <param>org.switch2022.project.ddd.domain.*</param>
                         <param>org.switch2022.project.ddd.dto.*</param>
                         <param>org.switch2022.project.ddd.infrastructure.*</param>
                         <param>org.switch2022.project.ddd.utils.*</param>
-
                     </targetClasses>
                     <targetTests>
-                        <!-- <param>org.switch2022.project.container.*</param>
-                         <param>org.switch2022.project.controller.*</param>
-                         <param>org.switch2022.project.dto.*</param>
-                         <param>org.switch2022.project.model.*</param>-->
                         <param>org.switch2022.project.ddd.application.*</param>
                         <param>org.switch2022.project.ddd.domain.*</param>
                         <param>org.switch2022.project.ddd.dto.*</param>
@@ -192,7 +180,6 @@
                         <outputFormat>XML</outputFormat>
                         <outputFormat>HTML</outputFormat>
                     </outputFormats>
-
                 </configuration>
             </plugin>
         </plugins>
