@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
 import org.switch2022.project.ddd.domain.model.typology.Typology;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
@@ -11,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-@Component
+@Repository("typology_memory")
 public class TypologyRepository implements ITypologyRepository {
     /**
      * Attributes

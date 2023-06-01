@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
@@ -18,15 +19,40 @@ import java.util.Optional;
 
 @Service
 public class AddUserStoryToSprintBacklogService {
+    @Qualifier("sprint_jpa")
     @Autowired
     private ISprintRepository sprintRepository;
+    @Qualifier("us_jpa")
     @Autowired
     private IUsRepository usRepository;
 
     /**
-     * This method adds a userStory to the SprintBacklog. It verifies if the sprint ID is valid and if the sprint
-     * period still allows to add userStories (has not started and is not finished). Checks if the userStory exists in
-     * the repository and if its status is not Finished or blocked. In the end adds the userStory to the sprint.
+     * This method checks if the sprint period still allows to add userStories (has not started
+     * and is not finished).
+     *
+     * @param sprint to add the userStory
+     * @param date   date to verify
+     * @return 1 if the sprint period is valid
+     * @throws Exception if the sprint has already started or has finished
+     */
+    private static int isSprintInValidPeriod(Sprint sprint, LocalDate date) throws Exception {
+        int result;
+
+        if (sprint.isPeriodAfterOrEqualThanDate(date)) {
+            throw new Exception("The Sprint is not valid");
+        } else {
+            result = 1;
+        }
+        return result;
+    }
+
+    /**
+     * This method adds a userStory to the SprintBacklog. It verifies if the sprint ID is valid
+     * and if the sprint
+     * period still allows to add userStories (has not started and is not finished). Checks if
+     * the userStory exists in
+     * the repository and if its status is not Finished or blocked. In the end adds the userStory
+     * to the sprint.
      *
      * @param usId     of the user Story to be added
      * @param sprintId of the sprint where the userStory will be added
@@ -49,7 +75,7 @@ public class AddUserStoryToSprintBacklogService {
 
         if (isSprintInValidPeriod(sprint, LocalDate.now()) == 1) {
             hasUserStoryStatus(usIdVO);
-            addUserStoryToSprintBacklog =  sprint.addUserStory(usIdVO, 1);
+            addUserStoryToSprintBacklog = sprint.addUserStory(usIdVO, 1);
         }
         return addUserStoryToSprintBacklog;
     }
@@ -73,26 +99,8 @@ public class AddUserStoryToSprintBacklogService {
     }
 
     /**
-     * This method checks if the sprint period still allows to add userStories (has not started and is not finished).
-     *
-     * @param sprint to add the userStory
-     * @param date   date to verify
-     * @return 1 if the sprint period is valid
-     * @throws Exception if the sprint has already started or has finished
-     */
-    private static int isSprintInValidPeriod(Sprint sprint, LocalDate date) throws Exception {
-        int result;
-
-        if (sprint.isPeriodAfterOrEqualThanDate(date)) {
-            throw new Exception("The Sprint is not valid");
-        } else {
-            result = 1;
-        }
-        return result;
-    }
-
-    /**
-     * This method verifies if the userStory to be added has status different from finished or blocked
+     * This method verifies if the userStory to be added has status different from finished or
+     * blocked
      *
      * @param usId of the user story to be verified
      * @return true if the user story status is suitable
