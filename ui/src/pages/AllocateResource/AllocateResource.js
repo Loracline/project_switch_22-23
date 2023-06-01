@@ -1,6 +1,6 @@
 import Button from "../../components/Button/Button";
 import React, {useContext, useState} from "react";
-import {closeButton, selectMenu} from "../../context/Actions";
+import { selectMenu} from "../../context/Actions";
 import {
     Autocomplete,
     Box,
@@ -9,15 +9,16 @@ import {
     InputLabel,
     MenuItem,
     Select,
-    Snackbar,
     TextField,
 } from "@mui/material";
 import AppContext from "../../context/AppContext";
 import DatePickerInput from "../../components/DatePickerInput/DatePickerInput";
 import {postResource} from "../../services/ResourceService";
-import Alert from "@mui/material/Alert";
 import {useGetAccounts} from "./useGetAccounts";
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
+import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
+import FailureMessage from "../../components/InformationMessage/FailureMessage";
+import {format} from "date-fns";
 
 function AllocateResource() {
 
@@ -36,11 +37,10 @@ function AllocateResource() {
 
     const [resource, setResource] = useState(initialResource);
     const [percentageError, setPercentageError] = useState('');
-    const [backendError, setBackendError] = useState({message: '', show: false});
+    const [success, setSuccess] = useState({message: '', show: false});
+    const [failure, setFailure] = useState({message: '', show: false});
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [userAccounts] = useGetAccounts();
-    const messageSuccess = state.messageSuccess;
-    const messageFailure = state.messageFailure;
 
     const handleConfirmation = () => {
         setShowConfirmation(true);
@@ -82,26 +82,36 @@ function AllocateResource() {
         setResource(newResource);
     }
     const handleChangeForStartDate = (date) => {
+        const formattedDate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
         const newResource = {...resource};
-        newResource["startDate"] = date;
+        newResource["startDate"] = formattedDate;
         setResource(newResource);
     }
     const handleChangeForEndDate = (date) => {
+        const formattedDate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
         const newResource = {...resource};
-        newResource["endDate"] = date;
+        newResource["endDate"] = formattedDate;
         setResource(newResource);
     }
 
-    const handleBannerClose = () => {
-        setBackendError({message: '', show: false});
+    const handleSuccessClose = () => {
+        setSuccess({message: '', show: false});
+        setResource(initialResource);
+    }
+
+    const handleFailureClose = () => {
+        setFailure({message: '', show: false});
     }
 
     const handleSubmit = () => {
         postResource(resource)
             .then((res) => {
-                console.log("sucesso yeah!");
+                setSuccess({message: "User allocated successfully", show: true});
             })
-            .catch((err) => setBackendError({message: err.message, show: true}))
+            .catch((err) => {
+                setFailure({message: err.message, show: true});
+            })
+
         setShowConfirmation(false);
     }
 
@@ -156,11 +166,16 @@ function AllocateResource() {
 
     return (
         <div className="page">
-            <Snackbar open={backendError.show} autoHideDuration={6000}>
-                <Alert severity="error" onClose={handleBannerClose} sx={{width: '100%'}}>
-                    {backendError.message}
-                </Alert>
-            </Snackbar>
+            <SuccessMessage
+                handleOpen={success.show}
+                title={success.message}
+                handleClose={handleSuccessClose}
+            />
+            <FailureMessage
+                handleOpen={failure.show}
+                title={failure.message}
+                handleClose={handleFailureClose}
+            />
             <section className="formCard">
                 <h2>Allocate Resource</h2>
                 <form className="resource-form">
@@ -173,7 +188,8 @@ function AllocateResource() {
                             renderOption={(props, option) => (
                                 <Box component="li"
                                      sx={{'& > img': {mr: 2, flexShrink: 0}}} {...props}>
-                                    <img loading="lazy" width="35" src={"/user.png"} alt=""/>
+                                    <img loading="lazy" width="35" src={"/user.png"}
+                                         alt=""/>
                                     <Box sx={{flex: 1}}>
                                         <span>{option.name} - {option.email}
                                             <br/>
@@ -271,13 +287,13 @@ function AllocateResource() {
                             width={300}
                             label="Start Date"
                             disablePast={true}
-                            //minDate={detailedProject.startDate}
+                            //minDate={new Date (detailedProject.startDate)}
                             //maxDate={detailedProject.endDate || resource.endDate}
                             value={resource.startDate}
                             onChange={handleChangeForStartDate}
-                            format="DD/MM/YYYY"
+                            format="YYYY-MM-DD"
+                            helperText="YYYY-MM-DD"
                             required={true}
-                            helperText="DD/MM/YYYY"
                         />
 
                         <br/>
@@ -286,13 +302,13 @@ function AllocateResource() {
                             width={300}
                             label="End Date"
                             disablePast={true}
-                            //minDate={resource.startDate/* || detailedProject.startDate*/}
+                            //minDate={resource.startDate || detailedProject.startDate}
                             //maxDate={detailedProject.endDate}
                             value={resource.endDate}
                             onChange={handleChangeForEndDate}
-                            format="DD/MM/YYYY"
+                            format="YYYY-MM-DD"
+                            helperText="YYYY-MM-DD"
                             required={true}
-                            helperText="DD/MM/YYYY"
                         />
                     </div>
                     <Button
@@ -313,9 +329,6 @@ function AllocateResource() {
                             }
                             onClick={handleConfirmation}
                     />
-
-                    {messageSuccess && (<div><p>Resource created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
-                    {messageFailure && (<div><p>Resource not created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
                 </form>
             </section>
             <ConfirmationPage

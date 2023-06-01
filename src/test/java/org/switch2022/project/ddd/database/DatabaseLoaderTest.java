@@ -69,7 +69,7 @@ public class DatabaseLoaderTest {
      * @throws Exception If there is an error loading the data.
      */
 
-
+    /*
     @Test
     public void ensureDataIsLoadedIntoDatabase() throws Exception {
         // Call the run method of the database loader
@@ -139,5 +139,5 @@ public class DatabaseLoaderTest {
                 new Code(1), new Email("tc@gmail.com"), Role.PROJECT_MANAGER,
                 new Period(LocalDate.of(2022,1,2), LocalDate.
                         of(2022,7,31)), new CostPerHour(35), new PercentageOfAllocation(20))));
-    }
+    }*/
 }

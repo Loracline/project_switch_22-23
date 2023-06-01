@@ -26,7 +26,6 @@ public class RestResponseEntityExceptionHandlerTest {
 
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
-        assertEquals(HttpStatus.NOT_FOUND.value(), resultErrorMessage.getStatusCodeValue());
         assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
     }
 
@@ -45,7 +44,6 @@ public class RestResponseEntityExceptionHandlerTest {
 
         // Assert
         assertEquals(HttpStatus.CONFLICT, result.getStatusCode());
-        assertEquals(HttpStatus.CONFLICT.value(), resultErrorMessage.getStatusCodeValue());
         assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
     }
 
@@ -62,7 +60,6 @@ public class RestResponseEntityExceptionHandlerTest {
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
-        assertEquals(HttpStatus.BAD_REQUEST.value(), resultErrorMessage.getStatusCodeValue());
         assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
     }
 }

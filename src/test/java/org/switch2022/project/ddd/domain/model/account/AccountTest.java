@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.account;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 
@@ -423,6 +424,25 @@ class AccountTest {
 
         // Assert
         assertTrue(result);
+    }
+
+    @DisplayName("Account is inactive")
+    @Test
+    void ensureAccountStatusIsNotActive() {
+        // Arrange
+        Name nameDouble = mock(Name.class);
+        Email emailDouble = mock(Email.class);
+        PhoneNumber phoneNumberDouble = mock(PhoneNumber.class);
+        Photo photoDouble = mock(Photo.class);
+
+        Account account = new Account(nameDouble, emailDouble, phoneNumberDouble, photoDouble);
+        account.changeStatus(AccountStatus.INACTIVE);
+
+        // Act
+        boolean result = account.isAccountActive();
+
+        // Assert
+        assertFalse(result);
     }
 
     /**

@@ -52,7 +52,7 @@ public class ResourceAllocationService {
      * @param allocationDto data transfer object carrying the allocation info: projectCode, accountEmail, accountRole,
      *                      accountCostPerHour, accountPercentageOfAllocation, startDate, endDate.
      * @return true if all validations are successful and the resource is created and added to the project resource
-     * list, false otherwise.
+     * list, throws an exception otherwise.
      */
     public boolean addUserToProject(AllocationDto allocationDto) {
         int projectNumber = Utils.getIntFromAlphanumericString(allocationDto.projectCode, "P");
@@ -60,18 +60,18 @@ public class ResourceAllocationService {
         Email email = new Email(allocationDto.accountEmail);
         Role role = generateRole(allocationDto.accountRole);
         CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);
-        PercentageOfAllocation percentageOfAllocation =
-                new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
+        PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
         Period allocationPeriod = new Period(allocationDto.startDate, allocationDto.endDate);
         int id = Math.addExact(resourceRepository.findAll().size(), 1);
         ProjectResourceId projectResourceId = new ProjectResourceId(id);
-        boolean addedUser = false;
-        if (isResourceValid(role, code, allocationPeriod, email, percentageOfAllocation)) {
-            ProjectResource projectResource = resourceFactory.createProjectResource(projectResourceId, code, email,
+
+        isResourceValid(role, code, allocationPeriod, email, percentageOfAllocation);
+
+        ProjectResource projectResource = resourceFactory.createProjectResource(projectResourceId, code, email,
                     role, allocationPeriod, costPerHour, percentageOfAllocation);
-            addedUser = resourceRepository.save(projectResource);
-        }
-        return addedUser;
+        resourceRepository.save(projectResource);
+
+        return true;
     }
 
     /**
@@ -154,12 +154,19 @@ public class ResourceAllocationService {
      * @param allocationPeriod The allocation period to check against.
      * @return {@code TRUE} if the project with the given project code exists,
      * is not in the "PLANNED" or "CLOSED" status, and contains the specified allocation period;
-     * {@code FALSE} otherwise.
+     * throws an exception otherwise.
      */
     protected boolean isProjectValidForAllocation(Code projectCode, Period allocationPeriod) {
-        return doesNotHaveStatus(projectCode, ProjectStatus.PLANNED) &&
-                doesNotHaveStatus(projectCode, ProjectStatus.CLOSED) &&
-                containsPeriod(projectCode, allocationPeriod);
+        if(!doesNotHaveStatus(projectCode, ProjectStatus.PLANNED)){
+            throw new RuntimeException("Users cannot be added to a PLANNED project.");
+        }
+        if(!doesNotHaveStatus(projectCode, ProjectStatus.CLOSED)) {
+            throw new RuntimeException("Users cannot be added to a CLOSED project.");
+        }
+        if(!containsPeriod(projectCode, allocationPeriod)){
+            throw new RuntimeException("The specified period falls outside the specified frame.");
+        }
+        return true;
     }
 
     /**
@@ -176,10 +183,13 @@ public class ResourceAllocationService {
      * This method checks if a given role is not Project Manager.
      *
      * @param role to check.
-     * @return <code>true</code> if role is not Project Manager and <code>false</code> otherwise.
+     * @return <code>true</code> if role is not Project Manager and throws an exception otherwise.
      */
     protected boolean isNotProjectManager(Role role) {
-        return !isProjectManager(role);
+        if(isProjectManager(role)){
+            throw new RuntimeException("PROJECT MANAGER is not a valid role for allocation.");
+        }
+        return true;
     }
 
     /**
@@ -190,10 +200,16 @@ public class ResourceAllocationService {
      * @param code to check.
      * @param period to check.
      * @return <code>true</code> if the project have a Scrum Master or Product Owner in a specific Period and
-     * <code>false</code> if the project does not have a Resource with the role of Scrum Master or
+     * throws an exception if the project does not have a Resource with the role of Scrum Master or
      * Product Owner in a given period of time or if the role to be checked is neither Scrum Master nor Product Owner.
      */
     protected boolean projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
+        if(projectAlreadyHasScrumMasterInThatPeriod(role, code, period)){
+            throw new RuntimeException("Project already has a SCRUM MASTER in the specified period.");
+        }
+        if(projectAlreadyHasProductOwnerInThatPeriod(role, code, period)) {
+            throw new RuntimeException("Project already has a PRODUCT OWNER in the specified period.");
+        }
         return projectAlreadyHasScrumMasterInThatPeriod(role, code, period) ||
                 projectAlreadyHasProductOwnerInThatPeriod(role, code, period);
     }
@@ -341,9 +357,12 @@ public class ResourceAllocationService {
      * @param projectCode being checked.
      * @param email       being checked.
      * @param period      being checked.
-     * @return return true if the resource already exist and false otherwise.
+     * @return return true if the resource already exist and throws an exception otherwise.
      */
     private boolean resourceDoesNotExist(Code projectCode, Email email, Period period) {
+        if(isResourceOverlapping(projectCode, email, period)){
+            throw new RuntimeException("User is already allocated during the specified period.");
+        }
         return !isResourceOverlapping(projectCode, email, period);
     }
 
@@ -352,20 +371,22 @@ public class ResourceAllocationService {
      *
      * @param accountEmail to check if it exists and if it does, if the status is activated.
      * @return true if the account exists and the status is activated. If one of these conditions is not true,
-     * it returns false.
+     * it throws an exception.
      */
     protected boolean isAccountValidForAllocation(Email accountEmail) {
         boolean accountIsValid = false;
         List<Account> accounts = accountRepository.findAll();
         if (!accounts.isEmpty()) {
             for (Account account : accounts) {
-                if (account.hasEmail(accountEmail.getEmail()) &&
-                        account.isAccountActive()) {
+                if (account.hasEmail(accountEmail.getEmail()) && account.isAccountActive()) {
                     accountIsValid = true;
                 }
             }
         }
-        return accountIsValid;
+        if(!accountIsValid){
+            throw new RuntimeException("User does not exist/is inactive.");
+        }
+        return true;
     }
 
     /**
@@ -419,7 +440,7 @@ public class ResourceAllocationService {
      * @param email the email of the account to check the allocation for.
      * @param period the period to check the allocation for.
      * @param percentageOfAllocationToAdd the PercentageOfAllocation object to add to the current allocation percentage.
-     * @return TRUE if the total percentage of allocation is less than or equal to the maximum allowed value, FALSE
+     * @return TRUE if the total percentage of allocation is less than or equal to the maximum allowed value, throws an exception
      * otherwise.
      */
     public boolean isPercentageOfAllocationValid(Period period, Email email,
@@ -435,6 +456,9 @@ public class ResourceAllocationService {
             }
             i++;
         }
-        return result;
+        if(!result){
+            throw new RuntimeException("Percentage of allocation exceeds 100% during the specified period.");
+        }
+        return true;
     }
 }

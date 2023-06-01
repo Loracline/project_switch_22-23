@@ -498,8 +498,6 @@ class PeriodTest {
     /**
      * Scenario 2: when period 2 do not overlap period 1.
      */
-
-    /*
     @Test
     public void ensurePeriodIsNotOverlappingWhenPeriod2DoesNotOverlapPeriod1() {
         // Arrange
@@ -513,7 +511,7 @@ class PeriodTest {
 
         // Assert
         assertEquals(expected, result);
-    }*/
+    }
 
     /**
      * Scenario 3: when one period is before the other.

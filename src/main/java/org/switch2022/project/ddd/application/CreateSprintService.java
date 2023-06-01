@@ -85,12 +85,10 @@ public class CreateSprintService {
      * @return true if period does not overlap
      */
     private static boolean isSprintPeriodValid(List<Sprint> sprints, Sprint sprint) {
-        boolean isSprintPeriodNotOverlapping = false;
-        if (sprints.isEmpty()) {
-            isSprintPeriodNotOverlapping = true;
-        } else {
+        boolean isSprintPeriodNotOverlapping = true;
+        if(!sprints.isEmpty()) {
             Iterator<Sprint> sprintIterator = sprints.iterator();
-            while (sprintIterator.hasNext() && !isSprintPeriodNotOverlapping) {
+            while (sprintIterator.hasNext() && isSprintPeriodNotOverlapping) {
                 Sprint s = sprintIterator.next();
                 isSprintPeriodNotOverlapping = s.isPeriodNotOverlapping(sprint);
             }
