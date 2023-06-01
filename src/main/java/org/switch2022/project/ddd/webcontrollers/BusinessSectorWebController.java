@@ -11,7 +11,7 @@ import org.switch2022.project.ddd.dto.BusinessSectorDto;
 import java.util.List;
 
 /**
- * The BusinessSectorWebController class is a REST controller for handling requests related to resources.
+ * The BusinessSectorWebController.md class is a REST controller for handling requests related to resources.
  */
 
 @CrossOrigin(maxAge = 3600)
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/business_sectors")
 public class BusinessSectorWebController {
     /**
-     * The BusinessSectorService used to creat a new business sector.
+     * The BusinessSectorService used to create a new business sector.
      */
     @SuppressWarnings("all")
     @Autowired

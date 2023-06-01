@@ -1,0 +1,95 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO CREATE NEW SPRINT
+legend top
+US019 - As Project Manager, I want to create a sprint.
+end legend
+autonumber
+
+actor ProjectManager as pm
+participant ":CreateSprintUI" as ui
+participant ":CreateSprintController" as ct
+participant ":CreateSprintService" as c
+participant ":ISprintRepository" as sprintR
+participant ":IProjectRepository" as projectR
+participant "project:Project" as p
+participant ":FactorySprint" as fact
+participant "sprint:Sprint" as ss
+participant "sprintToCompare:Sprint" as sss
+activate pm
+activate ui
+pm -> ui : create sprint
+
+ui --> pm : requests data (startDate)
+pm -> ui: types requested data
+
+
+ui -> ct: createSprint(projectCode,startDate)
+activate ct
+
+ct -> c: createSprint(projectCode,startDate)
+activate c
+c -> sprintR: count()
+activate sprintR
+sprintR --> c:sprintNumber
+deactivate sprintR
+c-> projectR: findByCode(projectCode)
+activate projectR
+projectR --> c: project
+deactivate projectR
+c-> p: hasStatus(status)
+activate p
+p --> c: false
+c -> p: getSprintDuration()
+p --> c: sprintDuration
+deactivate p
+c -> fact: createSprint(code, sprintId, sprintNumber, period)
+activate fact
+
+create ss
+fact -> ss: create()
+deactivate fact
+
+c-> p: project.getStartDate()
+activate p
+p --> c: startDate
+deactivate p
+c -> ss: isPeriodAfterOrEqualThanDate(startDate)
+activate ss
+ss --> c: true
+deactivate ss
+c-> p: project.getEndDate()
+activate p
+p --> c: endDate
+deactivate p
+c -> ss: isEndDateBeforeOrGreaterThanDate(endDate)
+activate ss
+ss --> c: true
+deactivate ss
+
+c -> sprintR : findByProjectCode(projectCode)
+activate sprintR
+sprintR --> c: sprints
+
+loop for each sprint in sprints
+deactivate sprintR
+c -> sss: isPeriodNotOverlapping(sprint)
+activate sss
+sss --> c: true
+deactivate sss
+end loop
+
+c -> sprintR: save(sprint)
+activate sprintR
+sprintR --> c: true
+deactivate sprintR
+c --> ct: true
+deactivate c
+ct --> ui : true
+deactivate ct
+
+ui --> pm: informs sprint created
+deactivate ui
+deactivate pm
+@enduml

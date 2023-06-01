@@ -5,7 +5,7 @@ import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.utils.Validate;
 
 /**
- * Enum Role, that contains the diferente types of roles that an account could have in a specific project.
+ * Enum Role, that contains the different types of roles that an account could have in a specific project.
  */
 public enum Role implements ValueObject<Role> {
     PRODUCT_OWNER, SCRUM_MASTER, PROJECT_MANAGER, TEAM_MEMBER;
@@ -25,7 +25,7 @@ public enum Role implements ValueObject<Role> {
     /**
      * This method generate a Role from a String .
      *
-     * @param role to ckeck.
+     * @param role to check.
      * @return a Role if the given String role is valid.
      * @throws InvalidInputException if the role is not valid.
      */

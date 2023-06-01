@@ -46,4 +46,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                 exception.getMessage());
         return new ResponseEntity<>(message, BAD_REQUEST);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    protected ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
+        final ErrorMessage message = new ErrorMessage(
+                BAD_REQUEST.value(),
+                new Date(),
+                exception.getMessage());
+        return new ResponseEntity<>(message, BAD_REQUEST);
+    }
 }
