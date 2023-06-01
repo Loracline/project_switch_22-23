@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
@@ -18,11 +19,13 @@ import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.model.typology.TypologyFactory;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
@@ -54,6 +57,8 @@ public class DatabaseLoaderTest {
     private IAccountJpaRepository accounts;
     @Mock
     private IProjectResourceJpaRepository resources;
+    @Mock
+    private UsService usService;
     @InjectMocks
     private DatabaseLoader databaseLoader;
 
@@ -74,17 +79,14 @@ public class DatabaseLoaderTest {
         // Business sectors
         BusinessSectorDomainDataAssembler businessSectorDomainDataAssembler = new BusinessSectorDomainDataAssembler();
         BusinessSectorFactory businessSectorFactory = new BusinessSectorFactory();
-        verify(businessSectors).save(businessSectorDomainDataAssembler.toData(businessSectorFactory.createBusinessSector(1, new Name("it doesn't matter"))));
+        verify(businessSectors).save(businessSectorDomainDataAssembler.toData(businessSectorFactory.
+                createBusinessSector(1, new Name("it doesn't matter"))));
 
         // Project typologies
         TypologyFactory typologyFactory = new TypologyFactory();
         TypologyDomainDataAssembler typologyDomainDataAssembler = new TypologyDomainDataAssembler();
-        verify(typologies).save(typologyDomainDataAssembler.toData(typologyFactory.createTypology(1, new Name("fixed cost"))));
-
-        // Customers
-        CustomerFactory customerFactory = new CustomerFactory();
-        CustomerDomainDataAssembler customerDomainDataAssembler = new CustomerDomainDataAssembler();
-        //verify(customers).save(customerDomainDataAssembler.toData(customerFactory.createCustomer(new TaxId("217746691"), new Name("Catarina"))));
+        verify(typologies).save(typologyDomainDataAssembler.toData(typologyFactory.
+                createTypology(1, new Name("fixed cost"))));
 
         // Projects
         FactoryProject factoryProject = new FactoryProject();
@@ -93,7 +95,8 @@ public class DatabaseLoaderTest {
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId("217746691"), new ProjectTypologyId(1));
         projectOne.setProjectStatus(ProjectStatus.INCEPTION);
-        projectOne.setPeriod(LocalDate.of(2022,1,3), LocalDate.of(2022, 7, 31));
+        projectOne.setPeriod(LocalDate.of(2022,1,3),
+                LocalDate.of(2022, 7, 31));
         projectOne.setSprintDuration(2);
         projectOne.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(8));
         projectOne.isBudgetAssigned(new Budget(new BigDecimal(150000)));
@@ -102,20 +105,23 @@ public class DatabaseLoaderTest {
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
         UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
-        verify(userStories).save(userStoryDomainDataAssembler.toData(factoryUserStory.createUserStory(new UsNumber("1"), new UsText("I want to have a farm"),
+        verify(userStories).save(userStoryDomainDataAssembler.toData(factoryUserStory.
+                createUserStory(new UsNumber("1"), new UsText("I want to have a farm"),
                 new Actor("Farmer"), new ArrayList<>(), new Code(1))));
 
          // Sprints
         SprintFactory sprintFactory = new SprintFactory();
         SprintDomainDataAssembler sprintDomainDataAssembler = new SprintDomainDataAssembler();
-        verify(sprints).save(sprintDomainDataAssembler.toData(sprintFactory.createSprint(new Code(1),
+        verify(sprints).save(sprintDomainDataAssembler.toData(sprintFactory.
+                createSprint(new Code(1),
                 new SprintId("p001", "s001"), new SprintNumber(1),
                 new Period(LocalDate.of(2022, 3, 22), 2))));
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
         ProfileDomainDataAssembler profileDomainDataAssembler = new ProfileDomainDataAssembler();
-        verify(profiles).save(profileDomainDataAssembler.toData(profileFactory.createProfile(new Name("Administrator"), 3)));
+        verify(profiles).save(profileDomainDataAssembler.toData(profileFactory.
+                createProfile(new Name("Administrator"), 3)));
 
         // Accounts
         AccountFactory accountFactory = new AccountFactory();
@@ -128,8 +134,10 @@ public class DatabaseLoaderTest {
         // Project resources
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
         ResourceDomainDataAssembler resourceDomainDataAssembler = new ResourceDomainDataAssembler();
-        verify(resources).save(resourceDomainDataAssembler.toData(projectResourceFactory.createProjectResource(new ProjectResourceId(1),
+        verify(resources).save(resourceDomainDataAssembler.toData(projectResourceFactory.
+                createProjectResource(new ProjectResourceId(1),
                 new Code(1), new Email("tc@gmail.com"), Role.PROJECT_MANAGER,
-                new Period(LocalDate.of(2022,1,2), LocalDate.of(2022,7,31)), new CostPerHour(35), new PercentageOfAllocation(20))));
+                new Period(LocalDate.of(2022,1,2), LocalDate.
+                        of(2022,7,31)), new CostPerHour(35), new PercentageOfAllocation(20))));
     }
 }

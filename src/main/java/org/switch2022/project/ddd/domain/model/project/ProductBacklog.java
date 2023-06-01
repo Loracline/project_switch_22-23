@@ -99,7 +99,9 @@ public class ProductBacklog implements Entity<ProductBacklog> {
 
         if (userStories.contains(usId)) {
             result = false;
-        } else if (priority > userStories.size() || priority == -1) {
+        } else if (priority > userStories.size()) {
+            userStories.add(usId);
+        } else if (priority == -1) {
             userStories.add(usId);
         } else {
             userStories.add(priority, usId);
