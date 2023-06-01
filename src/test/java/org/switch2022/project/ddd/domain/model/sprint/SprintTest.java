@@ -498,13 +498,13 @@ class SprintTest {
     void ensurePeriodIsOverlapping() {
         //Arrange
         Code projectCode = new Code(1);
-        LocalDate startDate = mock(LocalDate.class);
-        LocalDate endDate = mock(LocalDate.class);
-        Period period = new Period(startDate, endDate);
+        Period period = mock(Period.class);
+        Period period2 = mock(Period.class);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
-        when(period.isPeriodNotOverlapping(period)).thenReturn(false);
+        //Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        Sprint sprint = mock(Sprint.class);
+        when(period.contains(period2)).thenReturn(true);
 
         Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, period);
         //Act
