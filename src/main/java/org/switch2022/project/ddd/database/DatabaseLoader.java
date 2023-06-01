@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
-import org.switch2022.project.ddd.datamodel_jpa.UserStoryInSprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
@@ -18,14 +16,16 @@ import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResourceFactory;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
-import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
 import org.switch2022.project.ddd.domain.model.typology.TypologyFactory;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
+import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ import java.util.List;
  */
 
 @Component
+@Transactional
 public class DatabaseLoader implements CommandLineRunner {
 
 
@@ -50,13 +51,15 @@ public class DatabaseLoader implements CommandLineRunner {
     private final IAccountJpaRepository accounts;
     private final IProfileJpaRepository profiles;
     private final IProjectResourceJpaRepository resources;
+    private final UsService usService;
 
     @Autowired
     public DatabaseLoader(IProjectJpaRepository projects, IBusinessSectorJpaRepository businessSectors,
                           ITypologyJpaRepository typologies, ICustomerJpaRepository customers,
                           IUserStoryJpaRepository userStories, ISprintJpaRepository sprints,
                           IAccountJpaRepository accounts, IProfileJpaRepository profiles,
-                          IProjectResourceJpaRepository resources) {
+                          IProjectResourceJpaRepository resources,
+                          UsService usService) {
         this.projects = projects;
         this.businessSectors = businessSectors;
         this.typologies = typologies;
@@ -66,6 +69,7 @@ public class DatabaseLoader implements CommandLineRunner {
         this.accounts = accounts;
         this.profiles = profiles;
         this.resources = resources;
+        this.usService = usService;
     }
 
     /**
@@ -131,9 +135,22 @@ public class DatabaseLoader implements CommandLineRunner {
         projectThree.setSprintDuration(3);
         projectThree.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(15));
         projectThree.isBudgetAssigned(new Budget(new BigDecimal(750000)));
-
-        // todo colocar projecto finished
         this.projects.save(projectDomainDataAssembler.toData(projectOne));
+
+        List<String> acceptanceCriteria = new ArrayList<>();
+        usService.createUs(new UserStoryCreationDto("P001", "1", "text",
+                "manager", acceptanceCriteria, 0));
+
+    /*    List<String> userStoriesList = new ArrayList<>();
+        userStoriesList.add(0,"us001");
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("1",userStoriesList);
+        productBacklogJpa.setUserStories(userStoriesList);
+        entityManager.persist(productBacklogJpa);
+
+        ProjectJpa projectJpaOne = projectDomainDataAssembler.toData(projectOne);
+        projectJpaOne.setProductBacklog(productBacklogJpa);*/
+
+        //this.projects.save(projectJpaOne);
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
         this.projects.save(projectDomainDataAssembler.toData(projectThree));
 
