@@ -19,7 +19,7 @@ import java.util.List;
 public class UserStoryDomainDataAssembler {
 
     @Autowired
-    IFactoryUserStory factory;
+    private IFactoryUserStory factory;
 
     /**
      * Converts a UserStory instance to a UserStoryJpa instance.
