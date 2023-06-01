@@ -25,8 +25,6 @@ public class Profile implements Entity<Profile> {
      * It creates a Profile using its identifier: profileId and profileName.
      */
     protected Profile(Name profileName, Integer idProfileNumber) {
-        Validate.notNull(idProfileNumber, "Profile id can't be null.");
-        Validate.notNegative(idProfileNumber, "Profile id can't be negative.");
         Validate.notNull(profileName, "Profile name can't be null.");
         this.profileName = profileName;
         this.profileId = new ProfileId(idProfileNumber);

@@ -19,8 +19,6 @@ public class BusinessSector implements Entity<BusinessSector> {
      * Constructor: the constructor with relevant attributes for a business sector to be created in a valid state.
      */
     protected BusinessSector(Number idNumber, Name name) {
-        Validate.notNull(idNumber, "The business sector id must not be null.");
-        Validate.notNegative(idNumber, "business sector id");
         Validate.notNull(name, "The business sector name must not be null.");
         this.id = new BusinessSectorId(idNumber);
         this.name = name;
