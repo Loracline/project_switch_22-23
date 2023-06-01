@@ -38,7 +38,6 @@ import java.util.List;
  */
 
 @Component
-@Transactional
 public class DatabaseLoader implements CommandLineRunner {
 
 
@@ -131,26 +130,18 @@ public class DatabaseLoader implements CommandLineRunner {
                 new Description("Doomed from the start"), new BusinessSectorId(2),
                 new TaxId("217746691"), new ProjectTypologyId(2));
         projectThree.setProjectStatus(ProjectStatus.INCEPTION);
-        projectThree.setPeriod(LocalDate.of(2023, 3, 10), LocalDate.of(2023, 7, 20));
+        projectThree.setPeriod(LocalDate.of(2023, 3, 10), LocalDate.of(2023, 9, 20));
         projectThree.setSprintDuration(3);
         projectThree.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(15));
         projectThree.isBudgetAssigned(new Budget(new BigDecimal(750000)));
+
+
         this.projects.save(projectDomainDataAssembler.toData(projectOne));
 
         List<String> acceptanceCriteria = new ArrayList<>();
         usService.createUs(new UserStoryCreationDto("P001", "1", "text",
                 "manager", acceptanceCriteria, 0));
 
-    /*    List<String> userStoriesList = new ArrayList<>();
-        userStoriesList.add(0,"us001");
-        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("1",userStoriesList);
-        productBacklogJpa.setUserStories(userStoriesList);
-        entityManager.persist(productBacklogJpa);
-
-        ProjectJpa projectJpaOne = projectDomainDataAssembler.toData(projectOne);
-        projectJpaOne.setProductBacklog(productBacklogJpa);*/
-
-        //this.projects.save(projectJpaOne);
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
         this.projects.save(projectDomainDataAssembler.toData(projectThree));
 
@@ -197,61 +188,61 @@ public class DatabaseLoader implements CommandLineRunner {
         Sprint sprintOne = sprintFactory.createSprint(new Code(1),
                 new SprintId("p001", "s001"), new SprintNumber(1),
                 new Period(LocalDate.of(2022, 3, 22), 2));
-        Sprint sprintTwo = sprintFactory.createSprint(new Code(2),
+        Sprint sprintTwo = sprintFactory.createSprint(new Code(1),
                 new SprintId("p001", "s002"), new SprintNumber(2),
                 new Period(LocalDate.of(2022, 4, 5), 2));
-        Sprint sprintThree = sprintFactory.createSprint(new Code(3),
+        Sprint sprintThree = sprintFactory.createSprint(new Code(1),
                 new SprintId("p001", "s003"), new SprintNumber(3),
                 new Period(LocalDate.of(2022, 4, 26), 2));
-        Sprint sprintFour = sprintFactory.createSprint(new Code(4),
+        Sprint sprintFour = sprintFactory.createSprint(new Code(1),
                 new SprintId("p001", "s004"), new SprintNumber(4),
                 new Period(LocalDate.of(2022, 5, 10), 2));
-        Sprint sprintFive = sprintFactory.createSprint(new Code(5),
+        Sprint sprintFive = sprintFactory.createSprint(new Code(1),
                 new SprintId("p001", "s005"), new SprintNumber(5),
                 new Period(LocalDate.of(2022, 5, 24), 2));
-        Sprint sprintSix = sprintFactory.createSprint(new Code(6),
+        Sprint sprintSix = sprintFactory.createSprint(new Code(1),
                 new SprintId("p001", "s006"), new SprintNumber(6),
                 new Period(LocalDate.of(2022, 6, 7), 2));
-        Sprint sprintSeven = sprintFactory.createSprint(new Code(7),
+        Sprint sprintSeven = sprintFactory.createSprint(new Code(1),
                 new SprintId("p001", "s007"), new SprintNumber(7),
                 new Period(LocalDate.of(2022, 6, 21), 2));
-        Sprint sprintEight = sprintFactory.createSprint(new Code(8),
+        Sprint sprintEight = sprintFactory.createSprint(new Code(1),
                 new SprintId("p001", "s008"), new SprintNumber(8),
                 new Period(LocalDate.of(2022, 7, 19), 2));
-        Sprint sprintNine = sprintFactory.createSprint(new Code(9),
+        Sprint sprintNine = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s001"), new SprintNumber(9),
                 new Period(LocalDate.of(2022, 6, 7), 2));
-        Sprint sprintTen = sprintFactory.createSprint(new Code(10),
+        Sprint sprintTen = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s002"), new SprintNumber(10),
                 new Period(LocalDate.of(2022, 7, 5), 2));
-        Sprint sprintEleven = sprintFactory.createSprint(new Code(11),
+        Sprint sprintEleven = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s003"), new SprintNumber(11),
                 new Period(LocalDate.of(2022, 8, 2), 2));
-        Sprint sprintTwelve = sprintFactory.createSprint(new Code(12),
+        Sprint sprintTwelve = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s004"), new SprintNumber(12),
                 new Period(LocalDate.of(2022, 8, 30), 2));
-        Sprint sprintThirteen = sprintFactory.createSprint(new Code(13),
+        Sprint sprintThirteen = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s005"), new SprintNumber(13),
                 new Period(LocalDate.of(2022, 9, 27), 2));
-        Sprint sprintFourteen = sprintFactory.createSprint(new Code(14),
+        Sprint sprintFourteen = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s006"), new SprintNumber(14),
                 new Period(LocalDate.of(2022, 10, 25), 2));
-        Sprint sprintFifteen = sprintFactory.createSprint(new Code(15),
+        Sprint sprintFifteen = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s007"), new SprintNumber(15),
                 new Period(LocalDate.of(2022, 11, 22), 2));
-        Sprint sprintSixteen = sprintFactory.createSprint(new Code(16),
+        Sprint sprintSixteen = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s008"), new SprintNumber(16),
                 new Period(LocalDate.of(2022, 12, 13), 2));
-        Sprint sprintSeventeen = sprintFactory.createSprint(new Code(17),
+        Sprint sprintSeventeen = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s009"), new SprintNumber(17),
                 new Period(LocalDate.of(2022, 1, 10), 2));
-        Sprint sprintEighteen = sprintFactory.createSprint(new Code(18),
+        Sprint sprintEighteen = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s010"), new SprintNumber(18),
                 new Period(LocalDate.of(2022, 2, 7), 2));
-        Sprint sprintNineteen = sprintFactory.createSprint(new Code(19),
+        Sprint sprintNineteen = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s011"), new SprintNumber(19),
                 new Period(LocalDate.of(2022, 3, 7), 2));
-        Sprint sprintTwenty = sprintFactory.createSprint(new Code(20),
+        Sprint sprintTwenty = sprintFactory.createSprint(new Code(2),
                 new SprintId("p002", "s012"), new SprintNumber(20),
                 new Period(LocalDate.of(2022, 4, 4), 2));
 
