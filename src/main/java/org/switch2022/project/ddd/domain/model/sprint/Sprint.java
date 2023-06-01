@@ -269,7 +269,7 @@ public class Sprint implements Entity<Sprint> {
      * @return true if the periods do not overlap, false otherwise.
      */
     public boolean isPeriodNotOverlapping(Sprint sprint) {
-        return !this.period.contains(sprint.period);
+        return this.period.isPeriodNotOverlapping(sprint.period);
     }
 
     /**

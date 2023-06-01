@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.business_sector;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Name;
 
@@ -132,6 +133,21 @@ class BusinessSectorTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    @DisplayName("Two instances are equal")
+    @Test
+    void ensureTwoInstancesOfBusinessSectorAreEqual() {
+        // Arrange
+        Name nameDouble = mock(Name.class);
+        BusinessSector businessSectorOne = new BusinessSector(1, nameDouble);
+        BusinessSector businessSectorTwo = new BusinessSector(1, nameDouble);
+
+        // Act
+        boolean result = businessSectorOne.equals(businessSectorTwo);
+
+        // Assert
+        assertTrue(result);
     }
 
     /**

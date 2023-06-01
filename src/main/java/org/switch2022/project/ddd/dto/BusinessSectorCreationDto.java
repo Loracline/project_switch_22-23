@@ -17,7 +17,7 @@ public class BusinessSectorCreationDto {
     /**
      * Constructor to instantiate a new business sector dto.
      *
-     * @param name the name of the
+     * @param name the name of the business sector.
      */
 
     public BusinessSectorCreationDto(String name) {
