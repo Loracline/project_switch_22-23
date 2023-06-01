@@ -1,7 +1,6 @@
 import {
     CHECK_PROJECT_SPRINT,
     CREATE_SPRINT,
-    CREATE_USER_STORY,
     SELECT_MENU,
     SELECT_PROJECT,
     GET_PROJECTS_SUCCESS,
@@ -21,7 +20,11 @@ import {
     GET_TYPOLOGIES_FAILURE,
     CREATE_PROJECT_SUCCESS,
     CREATE_PROJECT_FAILURE,
-    RESET_CREATE_PROJECT
+    RESET_CREATE_PROJECT,
+    POST_USER_STORY,
+    POST_USER_STORY_SUCCESS,
+    POST_USER_STORY_FAILURE,
+    RESET_POST_USER_STORY
 } from "./Actions";
 
 /** Reducer function that updates the app state based on the dispatched actions.
@@ -58,18 +61,38 @@ const reducer = (state, action) => {
             return {...state, loading: false, messageFailure: action.payload.error};
         }
 
-        case CREATE_USER_STORY: {
-            const {userStory} = action.payload;
-            const updatedProjects = state.projects.map((project) => {
-                if (project.basicInfo.code === userStory.projectCode) {
-                    return {...project, userStories: [...project.userStories, userStory]}
-                }
-                return project;
-            });
-            /*console.log(updatedProjects)*/
-            const updatedDetailedProject = updatedProjects.find((project) => project.basicInfo.code === state.detailedProject.basicInfo.code);
-            return {...state, projects: updatedProjects, detailedProject: updatedDetailedProject}
+        case POST_USER_STORY: {
+            return {
+                ...state,
+                loading: true
+            }
         }
+
+        case POST_USER_STORY_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                messageSuccess: action.payload.data
+            }
+        }
+
+        case POST_USER_STORY_FAILURE: {
+            return {
+                ...state,
+                loading: false,
+                messageFailure: action.payload.error
+            }
+        }
+
+        case RESET_POST_USER_STORY: {
+            return {
+                ...state,
+                loading: false,
+                messageSuccess: '',
+                messageFailure: ''
+            }
+        }
+
         case SELECT_MENU: {
             const key = action.payload.key;
             const {nav} = state;

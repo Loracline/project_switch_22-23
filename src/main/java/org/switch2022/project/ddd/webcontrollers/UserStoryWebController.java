@@ -8,7 +8,7 @@ import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(maxAge = 3600, origins={"http://localhost:3000"})
 @RestController
 @RequestMapping("/userStories")
 public class UserStoryWebController {
