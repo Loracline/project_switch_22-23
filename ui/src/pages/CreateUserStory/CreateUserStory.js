@@ -1,32 +1,48 @@
 import React, {useContext, useState} from 'react';
 import Button from "../../components/Button/Button";
-import {IconButton, List, ListItem, ListItemText, TextField} from "@mui/material";
+import {
+    CircularProgress,
+    Dialog,
+    IconButton,
+    List,
+    ListItem,
+    ListItemText,
+    TextField
+} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AppContext from "../../context/AppContext";
-import {createUserStory, selectMenu} from "../../context/Actions";
+import {
+    createUserStory,
+    resetPostUserStory,
+    selectMenu
+} from "../../context/Actions";
 import "./CreateUserStory.css";
-
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import {strings} from "../../strings";
+import ErrorIcon from "@mui/icons-material/Error";
 
 /**This component provides a form for creating a new user story.*/
 
 function CreateUserStory() {
     const {state, dispatch} = useContext(AppContext);
-    const [newAcceptanceCriteria, setAcceptanceCriteria] = useState("");
     const {detailedProject} = state;
+    const loading = state.loading;
+    const messageSuccess = state.messageSuccess;
+    const messageFailure = state.messageFailure;
+    const [newAcceptanceCriteria, setAcceptanceCriteria] = useState("");
 
     const initialUsState = {
-        // Hard-coded for validation purposes while
-        projectCode: "p001",
+        projectCode: detailedProject.code,
         userStoryNumber: "",
         userStoryText: "",
         actor: "",
         acceptanceCriteria: [],
         priority: "",
+        description: ''
     };
 
     const [userStory, setUserStory] = useState(initialUsState);
-
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -62,6 +78,10 @@ function CreateUserStory() {
         setUserStory(initialUsState);
     }
 
+    const handleClearUserStory = (_) => {
+        dispatch(resetPostUserStory());
+    }
+
     return (
         <div className="page">
             <section className="formCard">
@@ -86,11 +106,23 @@ function CreateUserStory() {
                         required
                         className="textField"/>
                     <TextField
+                        name="description"
+                        label="Description"
+                        value={userStory.description}
+                        onChange={handleChange}
+                        variant="outlined"
+                        required
+                        multiline
+                        rows={4}
+                        className="textField"
+                    />
+                    <TextField
                         name="actor"
                         label="Actor"
                         value={userStory.actor}
                         onChange={handleChange}
                         variant="outlined"
+                        required
                         className="textField"/>
                     <div className="ac-container">
                         <TextField style={{width: "90%"}}
@@ -101,7 +133,8 @@ function CreateUserStory() {
                                    variant="outlined"
                                    className="textField"
                         />
-                        <IconButton style={{margin: "auto"}} aria-label="add" onClick={addCriteria}>
+                        <IconButton style={{margin: "auto"}} aria-label="add"
+                                    onClick={addCriteria}>
                             <AddIcon/>
                         </IconButton>
                     </div>
@@ -136,7 +169,8 @@ function CreateUserStory() {
                     <div className="buttons-createUs">
                         <Button text="Create US"
                                 isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
-                        <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))}
+                        <Button isSecundary={true}
+                                onClick={() => dispatch(selectMenu('project'))}
                                 text="Return to project"/>
                     </div>
                     <Button isSecundary={true}
@@ -144,8 +178,32 @@ function CreateUserStory() {
                             text="Go to Product Backlog"/>
                 </form>
             </section>
-        </div>)
 
+            <Dialog open={loading}>
+                <CircularProgress style={{color: "#6145AF"}} sx={{m: 5}}/>
+            </Dialog>
+
+            <Dialog className="success-dialog" open={messageSuccess.length > 0}>
+                <CheckCircleIcon style={{
+                    color: "green",
+                    alignSelf: "center",
+                    width: 80,
+                    height: 80,
+                    margin: 10
+                }}/>
+                <h3>{strings.userStoryCreatedSuccessMessage}</h3>
+                <h4>{messageSuccess}</h4>
+                <Button text="Close" onClick={handleClearUserStory}/>
+            </Dialog>
+
+            <Dialog className="failure-dialog" open={messageFailure.length > 0}>
+                <ErrorIcon
+                    style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
+                <h3>{messageFailure}</h3>
+                <Button text="Close" onClick={handleClearUserStory}/>
+            </Dialog>
+        </div>
+    )
 }
 
 export default CreateUserStory;
