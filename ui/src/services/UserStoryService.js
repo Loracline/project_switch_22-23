@@ -10,12 +10,11 @@ export function postUserStory(success, failure, userStoryToSubmit) {
     }
 
     fetch(`${URL}/userStories/`, request_options)
-        .then(response => {
+        .then(async response => {
             if (response.ok) { // When it's a 2xx status code
                 return response.json();
             } else { // When it's a 4xx or 5xx status code
-                // We should never reveal the real backend error to the client
-                throw new Error('Eita, something went wrong!');
+                throw await response.json();
             }
         })
         .then(data => success(data.userStoryId))
