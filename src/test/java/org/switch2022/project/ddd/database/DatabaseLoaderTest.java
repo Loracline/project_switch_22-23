@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
+import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
@@ -19,6 +20,7 @@ import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -72,7 +74,7 @@ public class DatabaseLoaderTest {
         // Business sectors
         BusinessSectorDomainDataAssembler businessSectorDomainDataAssembler = new BusinessSectorDomainDataAssembler();
         BusinessSectorFactory businessSectorFactory = new BusinessSectorFactory();
-        verify(businessSectors).save(businessSectorDomainDataAssembler.toData(businessSectorFactory.createBusinessSector(1, new Name("farming"))));
+        verify(businessSectors).save(businessSectorDomainDataAssembler.toData(businessSectorFactory.createBusinessSector(1, new Name("it doesn't matter"))));
 
         // Project typologies
         TypologyFactory typologyFactory = new TypologyFactory();
@@ -87,13 +89,15 @@ public class DatabaseLoaderTest {
         // Projects
         FactoryProject factoryProject = new FactoryProject();
         ProjectDomainDataAssembler projectDomainDataAssembler = new ProjectDomainDataAssembler();
-        Project project1 = factoryProject.createProject(1, new Name("Project 1"),
-                new Description("potato planting"), new BusinessSectorId(1),
+        Project projectOne = factoryProject.createProject(1, new Name("Dummy 01"),
+                new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId("217746691"), new ProjectTypologyId(1));
-        project1.setProjectStatus(ProjectStatus.INCEPTION);
-        project1.setPeriod(LocalDate.of(2022,4,12), LocalDate.of(2024, 4, 12));
-        project1.setSprintDuration(2);
-        verify(projects).save(projectDomainDataAssembler.toData(project1));
+        projectOne.setProjectStatus(ProjectStatus.INCEPTION);
+        projectOne.setPeriod(LocalDate.of(2022,1,3), LocalDate.of(2022, 7, 31));
+        projectOne.setSprintDuration(2);
+        projectOne.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(8));
+        projectOne.isBudgetAssigned(new Budget(new BigDecimal(150000)));
+        verify(projects).save(projectDomainDataAssembler.toData(projectOne));
 
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
@@ -105,8 +109,8 @@ public class DatabaseLoaderTest {
         SprintFactory sprintFactory = new SprintFactory();
         SprintDomainDataAssembler sprintDomainDataAssembler = new SprintDomainDataAssembler();
         verify(sprints).save(sprintDomainDataAssembler.toData(sprintFactory.createSprint(new Code(1),
-                new SprintId("1", "1"), new SprintNumber(1),
-                new Period(LocalDate.now(), 2))));
+                new SprintId("p001", "s001"), new SprintNumber(1),
+                new Period(LocalDate.of(2022, 3, 22), 2))));
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
@@ -116,14 +120,16 @@ public class DatabaseLoaderTest {
         // Accounts
         AccountFactory accountFactory = new AccountFactory();
         AccountDomainDataAssembler accountDomainDataAssembler = new AccountDomainDataAssembler();
-        this.accounts.save(accountDomainDataAssembler.toData(accountFactory.create(new Name("Miguel"), new Email("oliveira@gmail.com"),
-                new PhoneNumber(964454321), null)));
+        Account accountOne = accountFactory.create(new Name("João Silva"),
+                new Email("js@mymail.com"), new PhoneNumber(915879652), null);
+        accountOne.changeProfile(new ProfileId(3));
+        verify(accounts).save(accountDomainDataAssembler.toData(accountOne));
 
         // Project resources
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
         ResourceDomainDataAssembler resourceDomainDataAssembler = new ResourceDomainDataAssembler();
         verify(resources).save(resourceDomainDataAssembler.toData(projectResourceFactory.createProjectResource(new ProjectResourceId(1),
-                new Code(1), new Email("oliveira@gmail.com"), Role.TEAM_MEMBER,
-                new Period(LocalDate.now(), 2), new CostPerHour(15), new PercentageOfAllocation(75))));
+                new Code(1), new Email("tc@gmail.com"), Role.PROJECT_MANAGER,
+                new Period(LocalDate.of(2022,1,2), LocalDate.of(2022,7,31)), new CostPerHour(35), new PercentageOfAllocation(20))));
     }
 }

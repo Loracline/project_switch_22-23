@@ -38,6 +38,7 @@ public class ProjectService {
     @Qualifier("project_jpa")
     private IProjectRepository projectRepository;
     @Autowired
+    @Qualifier("us_jpa")
     private IUsRepository usRepository;
     @Autowired
     private UserStoryMapper userStoryMapper;

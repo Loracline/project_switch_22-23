@@ -386,15 +386,12 @@ class  ProductBacklogTest {
     }
 
     /**
-     * Scenario 5: verify if a User Story is not added to Product Backlog if the index
-     * is bigger than the list. Should throw an exception.
+     * Scenario 5: verify if a User Story is added to the last position of the list of user stories
+     * of Product Backlog when the index is bigger than the size of the list.
      */
     @Test
-    void ensureThatUserStoryIsNotAddedToTheProductBacklogBecausePriorityIsBiggerThanListSize() {
+    void ensureThatUserStoryIsAddedToTheLastPositionWhenPriorityIsBiggerThanListSize() {
         //Arrange
-        String expected = "This position doesn't exist, since it's" +
-                " bigger than the list of User Stories.";
-
         String code = "P001";
         UsId usId = mock(UsId.class);
         UsId otherUsId = mock(UsId.class);
@@ -402,11 +399,11 @@ class  ProductBacklogTest {
         productBacklog.addUserStory(0, otherUsId);
 
         //Act
-        IndexOutOfBoundsException exception = assertThrowsExactly(IndexOutOfBoundsException.class, () ->
-                productBacklog.addUserStory(2, usId));
+        boolean result = productBacklog.addUserStory(2, usId);
 
         //Assert
-        assertEquals(expected, exception.getMessage());
+        assertTrue(result);
+        assertEquals(usId, productBacklog.getUserStories().get(1));
     }
 
     /**

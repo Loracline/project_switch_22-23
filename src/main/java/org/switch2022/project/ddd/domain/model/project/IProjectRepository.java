@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.domain.model.project;
 
 import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,4 +22,6 @@ public interface IProjectRepository {
     List<Project> findAll();
 
     List<Project> findAllByProjectCodes(List<Code> projectCodes);
+
+   boolean existByProjectCode(Code code);
 }

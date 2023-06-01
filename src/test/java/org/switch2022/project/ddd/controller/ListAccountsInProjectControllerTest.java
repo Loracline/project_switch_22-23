@@ -71,4 +71,19 @@ class ListAccountsInProjectControllerTest {
         // Assert
         assertEquals(expected, result.getMessage());
     }
+    @DisplayName("Empty list is returned when no accounts are allocated to project")
+    @Test
+    void ensureEmptyListIsReturnedWhenNoAccountsAreAllocatedToProject() {
+        // Arrange
+        String projectCode = "P235";
+        List<AccountDto> expected = new ArrayList<>();
+
+        when(service.listAccountsInProject(projectCode)).thenReturn(expected);
+
+        // Act
+        List<AccountDto> result = controller.listAccountsByProject(projectCode);
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }

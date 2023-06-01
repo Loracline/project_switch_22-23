@@ -38,9 +38,6 @@ public class UserStoryRepositoryJpa implements IUsRepository {
     @Override
     public boolean save(UserStory userStory) {
         UserStoryJpa userStoryJpa = assembler.toData(userStory);
-        if (repository.existsByUsId(userStory.getUsId())) {
-            throw new AlreadyExistsInRepoException("User story ID already exists");
-        }
         repository.save(userStoryJpa);
         return true;
     }
@@ -82,5 +79,11 @@ public class UserStoryRepositoryJpa implements IUsRepository {
             userStoryList.add(assembler.toDomain(userStoryJpa));
         }
         return userStoryList;
+    }
+
+
+    @Override
+    public boolean existsByUsId (UsId usId) {
+        return repository.existsByUsId(usId.getUserStoryId());
     }
 }

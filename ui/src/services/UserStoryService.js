@@ -15,9 +15,9 @@ export function postUserStory(success, failure, userStoryToSubmit) {
                 return response.json();
             } else { // When it's a 4xx or 5xx status code
                 // We should never reveal the real backend error to the client
-                throw new Error("Eita, something went wrong!");
+                throw new Error('Eita, something went wrong!');
             }
         })
-        .then(data => success(data))
-        .catch(error => failure(error.message));
+        .then(data => success(data.userStoryId))
+        .catch(error => failure(error));
 }

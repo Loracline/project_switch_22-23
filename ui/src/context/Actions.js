@@ -12,7 +12,6 @@ import {postUserStory} from "../services/UserStoryService";
 /**
  Action types.
  */
-export const CREATE_USER_STORY = 'CREATE_USER_STORY';
 export const CREATE_SPRINT = 'CREATE_SPRINT';
 export const CHECK_PROJECT = 'CHECK_PROJECT';
 export const CHECK_PROJECT_SPRINT = 'CHECK_PROJECT_SPRINT';
@@ -31,8 +30,10 @@ export const GET_TYPOLOGIES_FAILURE = 'GET_TYPOLOGIES_FAILURE';
 export const GET_CUSTOMERS = 'GET_CUSTOMERS';
 export const GET_CUSTOMERS_SUCCESS = 'GET_CUSTOMERS_SUCCESS';
 export const GET_CUSTOMERS_FAILURE = 'GET_CUSTOMERS_FAILURE';
+export const POST_USER_STORY = 'POST_USER_STORY';
 export const POST_USER_STORY_SUCCESS = 'POST_USER_STORY_SUCCESS';
 export const POST_USER_STORY_FAILURE = 'POST_USER_STORY_FAILURE';
+export const RESET_POST_USER_STORY = 'RESET_POST_USER_STORY';
 
 /**
  * Action to fetch business sectors
@@ -202,6 +203,15 @@ function postUserStoryFailure(message) {
         payload: {
             error: message
         }
+    }
+}
+
+/**
+ Function for resetting the data from state after a POST User Story action.
+ */
+export function resetPostUserStory() {
+    return {
+        type: RESET_POST_USER_STORY
     }
 }
 

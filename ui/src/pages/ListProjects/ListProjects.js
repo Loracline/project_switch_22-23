@@ -3,7 +3,7 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import TableBody from "../../components/TableBody/TableBody";
 import AppContext from "../../context/AppContext";
 import Alert from "@mui/material/Alert";
-import {getProject, getProjects, selectMenu, setCurrentProject} from "../../context/Actions";
+import {getProjects, selectMenu, setCurrentProject} from "../../context/Actions";
 import Button from "../../components/Button/Button";
 import './ListProjects.css';
 

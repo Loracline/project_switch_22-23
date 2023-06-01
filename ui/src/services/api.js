@@ -7,5 +7,6 @@ export const API_HEADERS = {
 
 export const API_ROUTES = {
     RESOURCES: 'resources',
-    ACCOUNTS: 'accounts'
+    ACCOUNTS: 'accounts/',
+    PROJECTS: '/projects'
 }

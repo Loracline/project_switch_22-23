@@ -97,18 +97,14 @@ public class ProductBacklog implements Entity<ProductBacklog> {
     protected boolean addUserStory(int priority, UsId usId) {
         boolean result = true;
 
-        if (priority > userStories.size()) {
-            throw new IndexOutOfBoundsException("This position doesn't exist, since it's" +
-                    " bigger than the list of User Stories.");
-        }
-
         if (userStories.contains(usId)) {
             result = false;
-        } else if (priority == -1) {
+        } else if (priority > userStories.size() || priority == -1) {
             userStories.add(usId);
         } else {
             userStories.add(priority, usId);
         }
+
         return result;
     }
 

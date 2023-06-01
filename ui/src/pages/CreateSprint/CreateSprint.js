@@ -4,6 +4,7 @@ import {closeButton, createSprint, selectMenu} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import './CreateSprint.css';
+import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 
 /** This component provides a form for creating a new Sprint for a Project.
  - It allows the user to select a start date for the new Sprint and submits the form. If the form is
@@ -16,6 +17,7 @@ function CreateSprint() {
     const {state, dispatch} = useContext(AppContext);
     const {detailedProject, messageSuccess, messageFailure} = state;
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const initialSprintState = {
         projectCode: detailedProject.code,
         sprintNumber: '',
@@ -45,8 +47,32 @@ function CreateSprint() {
             createSprint(dispatch, sprintToSubmit);
             setSprintToSubmit(initialSprintState);
             setSelectedDate(new Date());
+            setShowConfirmation(false);
         }
     };
+
+    const handleConfirmation = () => {
+        setShowConfirmation(true);
+    }
+
+    const handleCancel = () => {
+        setShowConfirmation(false);
+    };
+
+    const dialogContent = () => {
+        return (
+            <div>
+                <h2 style={{marginBottom: '1rem'}}>Please confirm:</h2>
+                <table style={{width: '100%'}}>
+                    <tbody>
+                    <tr>
+                        <td><strong>Start date:</strong></td>
+                        <td>{new Date(sprintToSubmit.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        )}
 
     if (!detailedProject) return null;
 
@@ -54,18 +80,24 @@ function CreateSprint() {
         <div className="page">
             <section className="formCard">
                 <h2> Create Sprint </h2>
-                <form className="sprint-form" onSubmit={handleSubmit}>
+                <form className="sprint-form">
                     <TextField label="Start Date" type="date" value={selectedDate}
                                onChange={handleDateChange}
                                variant="outlined"/>
                     <div className="sprint-buttons">
-                        <Button text="Submit" isdisabled={!sprintToSubmit.startDate}/>
+                        <Button text="Submit" type="button" isdisabled={!sprintToSubmit.startDate} onClick={handleConfirmation}/>
                         <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
                     </div>
                     {messageSuccess && (<div><p>Sprint created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
                     {messageFailure && (<div><p>Sprint not created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
                 </form>
             </section>
+            <ConfirmationPage
+                handleOpen={showConfirmation}
+                dialogContent={dialogContent()}
+                handleCancel={handleCancel}
+                handleConfirm={handleSubmit}
+            />
         </div>
     );
 }
