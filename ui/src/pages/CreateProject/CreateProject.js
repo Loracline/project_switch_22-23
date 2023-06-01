@@ -14,6 +14,7 @@ import './CreateProject.css';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import {strings} from "../../strings";
+import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 
 /**
  * Form component in React.
@@ -47,6 +48,7 @@ function CreateProject() {
     const messageSuccess = state.messageSuccess;
     const messageFailure = state.messageFailure;
     const [project, setProject] = useState(initialProject);
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     useEffect(() => {
         fetchCustomers(dispatch);
@@ -101,6 +103,50 @@ function CreateProject() {
     const handleClearProject = (_) => {
         setProject(initialProject);
         dispatch(resetCreateProject());
+        setShowConfirmation(false);
+    }
+
+    const handleConfirmation = () => {
+        setShowConfirmation(true);
+    }
+
+
+    const handleCancel = () => {
+        setShowConfirmation(false);
+
+    };
+
+    const dialogContent = () => {
+        return (
+            <div>
+                <h2 style={{marginBottom: '1rem'}}>Please confirm:</h2>
+                <table style={{width: '100%'}}>
+                    <tbody>
+                    <tr>
+                        <td><strong>Name:</strong></td>
+                        <td>{project.name}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Customer:</strong></td>
+                        <td>{project.customer.name}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Business Sector:</strong></td>
+                        <td>{project.businessSector.name}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Typology:</strong></td>
+                        <td>{project.typology.typologyName}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Description:</strong></td>
+                        <td>{project.description}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        )
     }
 
     return (
@@ -171,8 +217,9 @@ function CreateProject() {
                         className="textField"
                     />
                     <Button
+                        type="button"
                         text="Create Project"
-                        onClick={handleSubmit}
+                        onClick={handleConfirmation}
                         isDisabled={project.name.length === 0 ||
                             project.customer.length === 0 ||
                             project.businessSector.length === 0 ||
@@ -191,17 +238,24 @@ function CreateProject() {
                 <CircularProgress style={{color: "#6145AF"}} sx={{m: 5}}/>
             </Dialog>
 
+            <ConfirmationPage
+                handleOpen={showConfirmation}
+                dialogContent={dialogContent()}
+                handleCancel={handleCancel}
+                handleConfirm={handleSubmit}
+            />
+
             <Dialog className="success-dialog"  open={messageSuccess.length > 0}>
                 <CheckCircleIcon style={{color: "green", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
                 <h3>{strings.projectCreatedSuccessMessage}</h3>
-                <h4>{messageSuccess}</h4>
-                <Button text="Close" onClick={handleClearProject}/>
+                <h2>{messageSuccess}</h2>
+                <Button type ="button" text="X" onClick={handleClearProject}/>
             </Dialog>
 
             <Dialog className="failure-dialog" open={messageFailure.length > 0}>
                 <ErrorIcon style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
                 <h3>{strings.genericServerError}</h3>
-                <Button text="Close" onClick={handleClearProject}/>
+                <Button type ="button" text="Close" onClick={handleClearProject}/>
             </Dialog>
 
         </div>
