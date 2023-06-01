@@ -34,16 +34,4 @@ class ResourceWebControllerTest {
         //Assert
         assertEquals(responseEntity.getStatusCodeValue(), 201);
     }
-
-    @Test
-    void ensureThatResourceIsNotCreated() {
-        //Arrange
-        AllocationDto dtoDouble = mock(AllocationDto.class);
-
-        when(service.addUserToProject(dtoDouble)).thenReturn(false);
-        //Act
-        ResponseEntity<Object> responseEntity = controller.createResource(dtoDouble);
-        //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 409);
-    }
 }

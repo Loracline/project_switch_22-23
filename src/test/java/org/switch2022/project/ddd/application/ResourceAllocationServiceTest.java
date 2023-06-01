@@ -21,8 +21,7 @@ import org.switch2022.project.ddd.dto.AllocationDto;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -86,7 +85,7 @@ class ResourceAllocationServiceTest {
     /**
      * Scenario 02: the user was not successfully added to the allocation due to the project status being
      * different from expected.
-     * Expected return: true.
+     * Expected: throws exception.
      */
     @Test
     void ensureAddUserToProjectInsuccessfully() {
@@ -94,7 +93,6 @@ class ResourceAllocationServiceTest {
         AllocationDto allocationDto = new AllocationDto("P02", "test@project.com", TEAM_MEMBER.toString(), 8f, 50f,
                 LocalDate.now(), LocalDate.now().plusWeeks(2));
 
-        Account accountDouble = mock(Account.class);
         Project projectDouble = mock(Project.class);
 
         Optional<Project> projectOptional = Optional.ofNullable(projectDouble);
@@ -102,10 +100,8 @@ class ResourceAllocationServiceTest {
 
         when(projectDouble.hasStatus(any())).thenReturn(true);
 
-        //Act
-        boolean result = service.addUserToProject(allocationDto);
-        //Assert
-        assertFalse(result);
+        //Act, Assert
+        assertThrows(RuntimeException.class, ()->service.addUserToProject(allocationDto));
     }
 
 
@@ -156,11 +152,8 @@ class ResourceAllocationServiceTest {
 
         when(project.hasStatus(ProjectStatus.PLANNED)).thenReturn(true);
 
-        // Act
-        boolean result = service.isProjectValidForAllocation(projectCode, allocationPeriod);
-
-        // Assert
-        assertFalse(result);
+        // Act, Assert
+        assertThrows(RuntimeException.class, ()->service.isProjectValidForAllocation(projectCode, allocationPeriod));
     }
 
     @SuppressWarnings("all")
@@ -180,11 +173,8 @@ class ResourceAllocationServiceTest {
         when(project.hasStatus(ProjectStatus.PLANNED)).thenReturn(false);
         when(project.hasStatus(ProjectStatus.CLOSED)).thenReturn(true);
 
-        // Act
-        boolean result = service.isProjectValidForAllocation(projectCode, allocationPeriod);
-
-        // Assert
-        assertFalse(result);
+        // Act, Assert
+        assertThrows(RuntimeException.class, ()->service.isProjectValidForAllocation(projectCode, allocationPeriod));
     }
 
     @SuppressWarnings("all")
@@ -199,11 +189,8 @@ class ResourceAllocationServiceTest {
         when(projectRepository.findByCode(projectCode)).thenReturn(projectOpt);
         when(projectOpt.isPresent()).thenReturn(false);
 
-        // Act
-        boolean result = service.isProjectValidForAllocation(projectCode, allocationPeriod);
-
-        // Assert
-        assertFalse(result);
+        // Act, Assert
+        assertThrows(RuntimeException.class, ()->service.isProjectValidForAllocation(projectCode, allocationPeriod));
     }
 
     @SuppressWarnings("all")
@@ -222,11 +209,8 @@ class ResourceAllocationServiceTest {
 
         when(project.contains(allocationPeriod)).thenReturn(false);
 
-        // Act
-        boolean result = service.isProjectValidForAllocation(projectCode, allocationPeriod);
-
-        // Assert
-        assertFalse(result);
+        // Act, Assert
+        assertThrows(RuntimeException.class, ()->service.isProjectValidForAllocation(projectCode, allocationPeriod));
     }
 
     /**
@@ -241,11 +225,8 @@ class ResourceAllocationServiceTest {
         //Arrange
         Role projectManager = Role.PROJECT_MANAGER;
 
-        //Act
-        boolean result = service.isNotProjectManager(projectManager);
-
-        //Assert
-        assertFalse(result);
+        //Act, Assert
+        assertThrows(RuntimeException.class, ()->service.isNotProjectManager(projectManager));
     }
 
     /**
@@ -309,11 +290,8 @@ class ResourceAllocationServiceTest {
         when(projectResource.isPeriodOverlapping(periodDouble)).thenReturn(true);
         when(projectResource.hasRole(roleDouble)).thenReturn(true);
 
-        //Act
-        boolean result = service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble, periodDouble);
-
-        //Assert
-        assertTrue(result);
+        //Act, Assert
+        assertThrows(RuntimeException.class, ()->service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble, periodDouble));
     }
 
     /**
@@ -339,11 +317,8 @@ class ResourceAllocationServiceTest {
         when(projectResource.isPeriodOverlapping(periodDouble)).thenReturn(true);
         when(projectResource.hasRole(roleDouble)).thenReturn(true);
 
-        //Act
-        boolean result = service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble, periodDouble);
-
-        //Assert
-        assertTrue(result);
+        //Act, Assert
+        assertThrows(RuntimeException.class, ()->service.projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(roleDouble, codeDouble, periodDouble));
     }
 
     /**
@@ -531,15 +506,15 @@ class ResourceAllocationServiceTest {
 
     /**
      * Scerario 02: the account exists, but is inactive.
-     * Expected return: false.
+     * Expected: throws exception.
      */
     @Test
     void ensureTheAccointExistisButIsInactivate() {
         //Arrange
         Email accountEmailDouble = mock(Email.class);
-        boolean result = service.isAccountValidForAllocation(accountEmailDouble);
-        //Assert
-        assertFalse(result);
+
+        //Act, Assert
+        assertThrows(RuntimeException.class,()->service.isAccountValidForAllocation(accountEmailDouble));
     }
 
     /**
@@ -709,10 +684,7 @@ class ResourceAllocationServiceTest {
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
         when(percentageOfAllocationDouble.getValue()).thenReturn(50f);
 
-        //Act
-        boolean result = service.isPercentageOfAllocationValid(periodDouble, emailDouble, percentageOfAllocationDouble);
-
-        //Assert
-        assertFalse(result);
+        //Act, Assert
+        assertThrows(RuntimeException.class, ()->service.isPercentageOfAllocationValid(periodDouble, emailDouble, percentageOfAllocationDouble));
     }
 }
