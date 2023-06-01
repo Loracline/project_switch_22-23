@@ -1,0 +1,69 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam sequenceMessageAlign center
+title TO CREATE NEW SPRINT
+legend top
+US019 - As Project Manager, I want to create a Sprint.
+end legend
+
+class CreateSprintController {
+- createSprintService
++ createSprint(String projectCode, String startDate)
+}
+CreateSprintController "1"..>"1" CreateSprintService
+
+class CreateSprintService {
+- sprintRepository
+- sprintFactory
+- projectRepository
++createSprint( projectCode, startDate)
+-getProjectByCode( code)
+-verifyIfPeriodIsValid( project,  sprint)
+-getSprintDuration( project)
+-isSprintPeriodValid(sprints, sprint)
+- isProjectInStatus( project)
+-isSprintEndDateBeforeProjectEndDate( project, sprint)
+-isSprintPeriodAfterProjectStartDate( project,  sprint)
+}
+CreateSprintService "1"..>"1" IProjectRepository
+CreateSprintService "1"..>"1" ISprintRepository
+CreateSprintService "1"..>"1" ISprintFactory
+
+interface IProjectRepository {
+-projects
++ findByCode(projectCode)
+}
+IProjectRepository "1"-->"*" Project
+
+interface ISprintRepository {
+-sprints
++ findByProjectCode(projectCode)
++save(sprint)
+}
+ISprintRepository "1"-->"*" Sprint
+
+
+class Project {
++getSprintDuration()
++hasStatus(status)
++getProjectCode()
+}
+
+
+interface ISprintFactory {
++ createSprint(code, sprintId, sprintNumber, period)
+}
+
+class Sprint {
+- sprintId
+-sprintNumber
+- projectCode
+- period
+- userStoriesInSprint
++ isPeriodAfterOrEqualThanDate(startDate)
++ isEndDateBeforeOrGreaterThanDate(endDate)
++ isPeriodNotOverlapping(sprint)
++ getSprintId()
+}
+
+@enduml
