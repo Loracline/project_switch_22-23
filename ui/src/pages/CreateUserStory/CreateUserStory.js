@@ -1,26 +1,16 @@
 import React, {useContext, useState} from 'react';
 import Button from "../../components/Button/Button";
-import {
-    CircularProgress,
-    Dialog,
-    IconButton,
-    List,
-    ListItem,
-    ListItemText,
-    TextField
-} from "@mui/material";
+import {Dialog, IconButton, List, ListItem, ListItemText, TextField} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AppContext from "../../context/AppContext";
-import {
-    createUserStory,
-    resetPostUserStory,
-    selectMenu
-} from "../../context/Actions";
+import {createUserStory, resetPostUserStory, selectMenu} from "../../context/Actions";
 import "./CreateUserStory.css";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {strings} from "../../strings";
 import ErrorIcon from "@mui/icons-material/Error";
+import Loading from "../../components/Loading/Loading";
+import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
+import FailureMessage from "../../components/InformationMessage/FailureMessage";
 
 /**This component provides a form for creating a new user story.*/
 
@@ -94,6 +84,7 @@ function CreateUserStory() {
                         onChange={handleChange}
                         variant="outlined"
                         required
+                        type="number"
                         className="textField"
                     />
                     <TextField
@@ -179,29 +170,19 @@ function CreateUserStory() {
                 </form>
             </section>
 
-            <Dialog open={loading}>
-                <CircularProgress style={{color: "#6145AF"}} sx={{m: 5}}/>
-            </Dialog>
+            <Loading handleLoading={loading}/>
+            <SuccessMessage
+                handleOpen={messageSuccess.length > 0}
+                title={strings.userStoryCreatedSuccessMessage}
+                message={messageSuccess}
+                handleClose={handleClearUserStory}
+            />
+            <FailureMessage
+                handleOpen={messageFailure.length > 0}
+                title={messageFailure}
+                handleClose={handleClearUserStory}
+            />
 
-            <Dialog className="success-dialog" open={messageSuccess.length > 0}>
-                <CheckCircleIcon style={{
-                    color: "green",
-                    alignSelf: "center",
-                    width: 80,
-                    height: 80,
-                    margin: 10
-                }}/>
-                <h3>{strings.userStoryCreatedSuccessMessage}</h3>
-                <h4>{messageSuccess}</h4>
-                <Button text="Close" onClick={handleClearUserStory}/>
-            </Dialog>
-
-            <Dialog className="failure-dialog" open={messageFailure.length > 0}>
-                <ErrorIcon
-                    style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
-                <h3>{messageFailure}</h3>
-                <Button text="Close" onClick={handleClearUserStory}/>
-            </Dialog>
         </div>
     )
 }
