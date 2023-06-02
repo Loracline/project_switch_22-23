@@ -1,12 +1,12 @@
 import React, {useContext, useState} from 'react';
-import {Dialog, TextField} from '@mui/material';
+import {TextField} from '@mui/material';
 import {closeButton, createSprint, selectMenu} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import './CreateSprint.css';
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ErrorIcon from "@mui/icons-material/Error";
+import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
+import FailureMessage from "../../components/InformationMessage/FailureMessage";
 
 /** This component provides a form for creating a new Sprint for a Project.
  - It allows the user to select a start date for the new Sprint and submits the form. If the form is
@@ -96,18 +96,18 @@ function CreateSprint() {
                         <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
                     </div>
 
-                    <Dialog className="success-dialog"  open={messageSuccess.length > 0}>
-                        <CheckCircleIcon style={{color: "green", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
-                        <h3>Sprint created!</h3>
-                        <Button text="Close" onClick={handleClearSprint}/>
-                    </Dialog>
+                    <SuccessMessage
+                        handleOpen={messageSuccess.length > 0}
+                        title="Sprint created!"
+                        handleClose={handleClearSprint}
+                    />
 
-                    <Dialog className="failure-dialog"  open={messageFailure?.length > 0}>
-                        <ErrorIcon style={{color: "red", alignSelf: "center", width: 80, height: 80, margin: 10}}/>
-                        <h3>Sprint not created!</h3>
-                        <span>{messageFailure}</span>
-                        <Button text="Close" onClick={handleClearSprint}/>
-                    </Dialog>
+                    <FailureMessage
+                        handleOpen={messageFailure.length > 0}
+                        title="Sprint not created!"
+                        message={messageFailure}
+                        handleClose={handleClearSprint}
+                    />
                 </form>
             </section>
             <ConfirmationPage
