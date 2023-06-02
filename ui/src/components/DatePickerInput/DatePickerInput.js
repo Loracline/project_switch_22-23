@@ -4,7 +4,7 @@ import {DatePicker} from "@mui/x-date-pickers";
 import {FormHelperText} from "@mui/material";
 import React from "react";
 
-const DatePickerInput = ({width, label, disablePast, minDate, maxDate, format, required, helperText, value, onChange}) => {
+const DatePickerInput = ({width, label, disablePast, minDate, maxDate, format, required, helperText, value, onChange, isDisabled}) => {
     return (
         <div style={{display: "flex", flexDirection: "column"}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -12,6 +12,7 @@ const DatePickerInput = ({width, label, disablePast, minDate, maxDate, format, r
                     sx={{width: width}}
                     label={label}
                     disablePast={disablePast}
+                    disabled = {isDisabled}
                     minDate={minDate}
                     maxDate={maxDate}
                     value={value}
