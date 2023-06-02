@@ -29,6 +29,7 @@ public class UserStoriesInSprintService {
      * Attributes
      */
     @Autowired
+    @Qualifier("sprint_jpa")
     private ISprintRepository sprintRepository;
 
     @Autowired

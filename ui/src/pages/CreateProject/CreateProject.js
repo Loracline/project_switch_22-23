@@ -122,7 +122,7 @@ function CreateProject() {
     const dialogContent = () => {
         return (
             <div>
-                <h2 style={{marginBottom: '1rem'}}>Please confirm:</h2>
+                <h2 style={{marginBottom: '1rem', fontSize: '2rem', textAlign: "center"}}>Please confirm:</h2>
                 <table style={{width: '100%'}}>
                     <tbody>
                     <tr>

@@ -134,6 +134,64 @@ public class ProfileTest {
         //ACT & ASSERT
         assertFalse(profile.equals(name));
     }
+    /**
+     * Scenario 6: Verify if two Profile objects with different ProfileIds are considered not equal.
+     */
+    @Test
+    void ensureProfilesWithDifferentProfileIdsAreNotEqual() {
+        // Arrange
+        Integer profileId1 = 1;
+        Integer profileId2 = 2;
+        Name profileName = new Name("John Doe");
+
+        Profile profile1 = new Profile(profileName, profileId1);
+        Profile profile2 = new Profile(profileName, profileId2);
+
+        // Act
+        boolean result = profile1.equals(profile2);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 7: Verify if two Profile objects with different Names are considered not equal.
+     */
+    @Test
+    void ensureProfilesWithDifferentNamesAreNotEqual() {
+        // Arrange
+        Integer profileId = 1;
+        Name name1 = new Name("John Doe");
+        Name name2 = new Name("Jane Smith");
+
+        Profile profile1 = new Profile(name1, profileId);
+        Profile profile2 = new Profile(name2, profileId);
+
+        // Act
+        boolean result = profile1.equals(profile2);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Scenario 8: Verify if two Profile objects with the same ProfileId and Name are considered equal.
+     */
+    @Test
+    void ensureProfilesWithSameProfileIdAndNameAreEqual() {
+        // Arrange
+        Integer profileId = 1;
+        Name profileName = new Name("John Doe");
+
+        Profile profile1 = new Profile(profileName, profileId);
+        Profile profile2 = new Profile(profileName, profileId);
+
+        // Act
+        boolean result = profile1.equals(profile2);
+
+        // Assert
+        assertTrue(result);
+    }
 
     /**
      * Test for the hashCode() method.

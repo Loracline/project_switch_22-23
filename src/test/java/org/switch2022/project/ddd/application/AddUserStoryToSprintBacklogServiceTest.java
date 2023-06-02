@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
@@ -28,8 +29,10 @@ class AddUserStoryToSprintBacklogServiceTest {
 
     @InjectMocks
     AddUserStoryToSprintBacklogService service;
+    @Qualifier("sprint_jpa")
     @MockBean
     private ISprintRepository sprintRepository;
+    @Qualifier("us_jpa")
     @MockBean
     private IUsRepository usRepository;
 
@@ -56,7 +59,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(),anyInt())).thenReturn(true);
+        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
         //Act
         boolean result = service.addUserStoryToSprintBacklog(usId, sprintId);
         //Assert
@@ -91,9 +94,9 @@ class AddUserStoryToSprintBacklogServiceTest {
 
     /**
      * scenario 3: returns false because US is already in the sprint backlog.
-     *//*
+     */
     @Test
-    void ensureUserStoryIsNotAddedToSprintBecauseIsAlreadyInTheSprint() throws Exception {
+    void ensureUserStoryIsNotAddedToSprintBecauseIsALreadyInTheSprint() throws Exception {
         //Arrange
         String usId = "p001_us001";
         String sprintId = "p001_s001";
@@ -112,7 +115,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         boolean result = service.addUserStoryToSprintBacklog(usId, sprintId);
         //Assert
         assertFalse(result);
-    }*/
+    }
 
     /**
      * scenario 4: Fails to add a finished US to the sprint backlog.
@@ -194,6 +197,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         //Assert
         assertEquals(expected, result);
     }
+
     /**
      * scenario 7: Fails to add a US to a sprint because usId is not in the repository
      */
@@ -217,6 +221,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         //Assert
         assertEquals(expected, result);
     }
+
     /**
      * scenario 8: Fails to add a US to a sprint because sprint is not in the repository.
      */

@@ -19,6 +19,7 @@ import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
 import {format} from "date-fns";
+import dayjs from "dayjs";
 
 function AllocateResource() {
 
@@ -118,7 +119,7 @@ function AllocateResource() {
     const dialogContent = () => {
         return (
             <div>
-                <h2 style={{marginBottom: '1rem'}}>Please confirm:</h2>
+                <h2 style={{marginBottom: '1rem', fontSize: '2rem', textAlign: "center"}}>Please confirm:</h2>
                 <table style={{width: '100%'}}>
                     <tbody>
                     <tr>
@@ -288,8 +289,8 @@ function AllocateResource() {
                             width={300}
                             label="Start Date"
                             disablePast={true}
-                            //minDate={new Date (detailedProject.startDate)}
-                            //maxDate={detailedProject.endDate || resource.endDate}
+                            minDate={dayjs(detailedProject.startDate)}
+                            maxDate={dayjs(detailedProject.endDate) || resource.endDate}
                             value={resource.startDate}
                             onChange={handleChangeForStartDate}
                             format="YYYY-MM-DD"
@@ -303,8 +304,8 @@ function AllocateResource() {
                             width={300}
                             label="End Date"
                             disablePast={true}
-                            //minDate={resource.startDate || detailedProject.startDate}
-                            //maxDate={detailedProject.endDate}
+                            minDate={resource.startDate || dayjs(detailedProject.startDate)}
+                            maxDate={dayjs(detailedProject.endDate)}
                             value={resource.endDate}
                             onChange={handleChangeForEndDate}
                             format="YYYY-MM-DD"

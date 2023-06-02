@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
@@ -16,6 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 @SpringBootTest(
         classes = UserStoryInSprintService.class)
 class UserStoryInSprintServiceTest {
@@ -23,6 +25,7 @@ class UserStoryInSprintServiceTest {
     @InjectMocks
     UserStoryInSprintService service;
 
+    @Qualifier("sprint_jpa")
     @MockBean
     ISprintRepository sprintRepository;
 
@@ -49,7 +52,7 @@ class UserStoryInSprintServiceTest {
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
         when(sprintDouble.hasUserStory(any())).thenReturn(true);
-        when(sprintDouble.estimateEffortUserStory(any(),anyInt())).thenReturn(true);
+        when(sprintDouble.estimateEffortUserStory(any(), anyInt())).thenReturn(true);
 
         //Act
         boolean result = service.estimateEffortUserStory(usId, effort, sprintId);
@@ -58,7 +61,8 @@ class UserStoryInSprintServiceTest {
     }
 
     /**
-     * Scenario 2: does not estimate the effort of a US due to effort value not corresponding to fibonacci sequence.
+     * Scenario 2: does not estimate the effort of a US due to effort value not corresponding to
+     * fibonacci sequence.
      * Expected result: user story effort is not estimated.
      */
 
@@ -74,7 +78,7 @@ class UserStoryInSprintServiceTest {
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
         when(sprintDouble.hasUserStory(any())).thenReturn(true);
-        when(sprintDouble.estimateEffortUserStory(any(),anyInt())).thenReturn(false);
+        when(sprintDouble.estimateEffortUserStory(any(), anyInt())).thenReturn(false);
 
         //Act
         boolean result = service.estimateEffortUserStory(usId, effort, sprintId);
@@ -87,7 +91,7 @@ class UserStoryInSprintServiceTest {
      * Expected result: user story effort is not estimated.
      */
     @Test
-    void ensureEffortIsNotEstimatedInAStartedSprint(){
+    void ensureEffortIsNotEstimatedInAStartedSprint() {
         //Arrange
         String message = "The Sprint is not valid";
         String usId = "p001_us001";

@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.infrastructure;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
@@ -13,7 +14,7 @@ import java.util.*;
  * of this company.
  */
 
-@Component
+@Repository("sprint_memory")
 public class SprintRepository implements ISprintRepository {
 
     /**

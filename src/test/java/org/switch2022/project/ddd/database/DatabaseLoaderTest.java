@@ -10,7 +10,6 @@ import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFactory;
-import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
 import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.model.project.FactoryProject;
 import org.switch2022.project.ddd.domain.model.project.Project;
@@ -18,14 +17,13 @@ import org.switch2022.project.ddd.domain.model.project_resource.ProjectResourceF
 import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.model.typology.TypologyFactory;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
+import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
@@ -69,7 +67,6 @@ public class DatabaseLoaderTest {
      * @throws Exception If there is an error loading the data.
      */
 
-    /*
     @Test
     public void ensureDataIsLoadedIntoDatabase() throws Exception {
         // Call the run method of the database loader
@@ -105,9 +102,11 @@ public class DatabaseLoaderTest {
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
         UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
-        verify(userStories).save(userStoryDomainDataAssembler.toData(factoryUserStory.
-                createUserStory(new UsNumber("1"), new UsText("I want to have a farm"),
-                new Actor("Farmer"), new ArrayList<>(), new Code(1))));
+
+        UserStory userStory = factoryUserStory.createUserStory(new UsNumber("1"), new UsText("I want to be a iguana"),
+                new Actor("Farmer"), new ArrayList<>(), new Code(1));
+        userStory.setStatus(Status.RUNNING);
+        verify(userStories).save(userStoryDomainDataAssembler.toData(userStory));
 
          // Sprints
         SprintFactory sprintFactory = new SprintFactory();
@@ -139,5 +138,5 @@ public class DatabaseLoaderTest {
                 new Code(1), new Email("tc@gmail.com"), Role.PROJECT_MANAGER,
                 new Period(LocalDate.of(2022,1,2), LocalDate.
                         of(2022,7,31)), new CostPerHour(35), new PercentageOfAllocation(20))));
-    }*/
+    }
 }
