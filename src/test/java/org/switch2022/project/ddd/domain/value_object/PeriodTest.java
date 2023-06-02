@@ -278,7 +278,77 @@ class PeriodTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Scenario 4: Verify that two instances of same Period return true.
+     */
+    @Test
+    public void testSameValueAs_SamePeriod_ReturnsTrue() {
+        // Arrange
+        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        LocalDate endDate = LocalDate.of(2022, 1, 31);
+        Period period1 = new Period(startDate, endDate);
+        Period period2 = new Period(startDate, endDate);
 
+        // Act
+        boolean result = period1.sameValueAs(period2);
+
+        // Assert
+        assertTrue(result);
+    }
+    /**
+     * Scenario 5: Verify that different start dates return false.
+     */
+    @Test
+    public void testSameValueAs_DifferentStartDate_ReturnsFalse() {
+        // Arrange
+        LocalDate startDate1 = LocalDate.of(2022, 1, 1);
+        LocalDate endDate = LocalDate.of(2022, 1, 31);
+        Period period1 = new Period(startDate1, endDate);
+
+        LocalDate startDate2 = LocalDate.of(2022, 1, 2);
+        Period period2 = new Period(startDate2, endDate);
+
+        // Act
+        boolean result = period1.sameValueAs(period2);
+
+        // Assert
+        assertFalse(result);
+    }
+    /**
+     * Scenario 6: Verify that different end dates return false.
+     */
+    @Test
+    public void testSameValueAs_DifferentEndDate_ReturnsFalse() {
+        // Arrange
+        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        LocalDate endDate1 = LocalDate.of(2022, 1, 31);
+        Period period1 = new Period(startDate, endDate1);
+
+        LocalDate endDate2 = LocalDate.of(2022, 2, 28);
+        Period period2 = new Period(startDate, endDate2);
+
+        // Act
+        boolean result = period1.sameValueAs(period2);
+
+        // Assert
+        assertFalse(result);
+    }
+    /**
+     * Scenario 7: Verify that null period  return false.
+     */
+    @Test
+    public void testSameValueAs_NullPeriod_ReturnsFalse() {
+        // Arrange
+        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        LocalDate endDate = LocalDate.of(2022, 1, 31);
+        Period period = new Period(startDate, endDate);
+
+        // Act
+        boolean result = period.sameValueAs(null);
+
+        // Assert
+        assertFalse(result);
+    }
     /**
      * METHOD equals()
      * <br>
@@ -874,6 +944,7 @@ class PeriodTest {
         assertTrue(result);
     }
 
+
     /**
      * Method: isDateEqualOrLowerThanStartDate
      * scenario 1: returns true because date is equal
@@ -927,6 +998,76 @@ class PeriodTest {
         boolean result = periodToTest.isDateEqualOrLowerThanStartDate(dateToCompare);
 
         //Assert
+        assertFalse(result);
+    }
+    /**
+     * Test case for the scenario when the date is before the start date.
+     * The method should return true.
+     */
+    @Test
+    public void testIsDateEqualOrLowerThanStartDate_DateBeforeStartDate_ReturnsTrue() {
+        // Arrange
+        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        Period period = new Period(startDate, LocalDate.of(2022, 1, 31));
+        LocalDate date = LocalDate.of(2021, 12, 31);
+
+        // Act
+        boolean result = period.isDateEqualOrLowerThanStartDate(date);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for the scenario when the date is equal to the start date.
+     * The method should return true.
+     */
+    @Test
+    public void testIsDateEqualOrLowerThanStartDate_DateEqualStartDate_ReturnsTrue() {
+        // Arrange
+        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        Period period = new Period(startDate, LocalDate.of(2022, 1, 31));
+        LocalDate date = startDate;
+
+        // Act
+        boolean result = period.isDateEqualOrLowerThanStartDate(date);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for the scenario when the date is after the start date.
+     * The method should return false.
+     */
+    @Test
+    public void testIsDateEqualOrLowerThanStartDate_DateAfterStartDate_ReturnsFalse() {
+        // Arrange
+        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        Period period = new Period(startDate, LocalDate.of(2022, 1, 31));
+        LocalDate date = LocalDate.of(2022, 1, 2);
+
+        // Act
+        boolean result = period.isDateEqualOrLowerThanStartDate(date);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Test case for the scenario when the date is null.
+     * The method should return false.
+     */
+    @Test
+    public void testIsDateEqualOrLowerThanStartDate_NullDate_ReturnsFalse() {
+        // Arrange
+        LocalDate startDate = LocalDate.of(2022, 1, 1);
+        Period period = new Period(startDate, LocalDate.of(2022, 1, 31));
+
+        // Act
+        boolean result = period.isDateEqualOrLowerThanStartDate(null);
+
+        // Assert
         assertFalse(result);
     }
 
@@ -985,6 +1126,77 @@ class PeriodTest {
         boolean result = periodToTest.isDateEqualOrGreaterThanEndDate(dateToCompare);
 
         //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Test case for the scenario when the date is after the end date.
+     * The method should return true.
+     */
+    @Test
+    public void testIsDateEqualOrGreaterThanEndDate_DateAfterEndDate_ReturnsTrue() {
+        // Arrange
+        LocalDate endDate = LocalDate.of(2022, 1, 31);
+        Period period = new Period(LocalDate.of(2022, 1, 1), endDate);
+        LocalDate date = LocalDate.of(2022, 2, 1);
+
+        // Act
+        boolean result = period.isDateEqualOrGreaterThanEndDate(date);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for the scenario when the date is equal to the end date.
+     * The method should return true.
+     */
+    @Test
+    public void testIsDateEqualOrGreaterThanEndDate_DateEqualEndDate_ReturnsTrue() {
+        // Arrange
+        LocalDate endDate = LocalDate.of(2022, 1, 31);
+        Period period = new Period(LocalDate.of(2022, 1, 1), endDate);
+        LocalDate date = endDate;
+
+        // Act
+        boolean result = period.isDateEqualOrGreaterThanEndDate(date);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for the scenario when the date is before the end date.
+     * The method should return false.
+     */
+    @Test
+    public void testIsDateEqualOrGreaterThanEndDate_DateBeforeEndDate_ReturnsFalse() {
+        // Arrange
+        LocalDate endDate = LocalDate.of(2022, 1, 31);
+        Period period = new Period(LocalDate.of(2022, 1, 1), endDate);
+        LocalDate date = LocalDate.of(2022, 1, 30);
+
+        // Act
+        boolean result = period.isDateEqualOrGreaterThanEndDate(date);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    /**
+     * Test case for the scenario when the date is null.
+     * The method should return false.
+     */
+    @Test
+    public void testIsDateEqualOrGreaterThanEndDate_NullDate_ReturnsFalse() {
+        // Arrange
+        LocalDate endDate = LocalDate.of(2022, 1, 31);
+        Period period = new Period(LocalDate.of(2022, 1, 1), endDate);
+
+        // Act
+        boolean result = period.isDateEqualOrGreaterThanEndDate(null);
+
+        // Assert
         assertFalse(result);
     }
 
@@ -1185,6 +1397,68 @@ class PeriodTest {
         //Assert
         assertEquals(expected, result);
     }
+    @Test
+    public void testContainsCurrentDate_StartDateEqualsCurrentDate_ReturnsTrue() {
+        // Arrange
+        LocalDate currentDate = LocalDate.now();
+        Period period = new Period(currentDate, currentDate.plusDays(5));
 
+        // Act
+        boolean result = period.containsCurrentDate();
 
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void testContainsCurrentDate_EndDateEqualsCurrentDate_ReturnsTrue() {
+        // Arrange
+        LocalDate currentDate = LocalDate.now();
+        Period period = new Period(currentDate.minusDays(5), currentDate);
+
+        // Act
+        boolean result = period.containsCurrentDate();
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void testContainsCurrentDate_CurrentDateInsidePeriod_ReturnsTrue() {
+        // Arrange
+        LocalDate currentDate = LocalDate.now();
+        Period period = new Period(currentDate.minusDays(5), currentDate.plusDays(5));
+
+        // Act
+        boolean result = period.containsCurrentDate();
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void testContainsCurrentDate_CurrentDateBeforePeriod_ReturnsFalse() {
+        // Arrange
+        LocalDate currentDate = LocalDate.now();
+        Period period = new Period(currentDate.plusDays(5), currentDate.plusDays(10));
+
+        // Act
+        boolean result = period.containsCurrentDate();
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void testContainsCurrentDate_CurrentDateAfterPeriod_ReturnsFalse() {
+        // Arrange
+        LocalDate currentDate = LocalDate.now();
+        Period period = new Period(currentDate.minusDays(10), currentDate.minusDays(5));
+
+        // Act
+        boolean result = period.containsCurrentDate();
+
+        // Assert
+        assertFalse(result);
+    }
 }
