@@ -1,0 +1,64 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+legend top
+US020 - As Team Member, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+end legend
+skinparam sequenceMessageAlign center
+title  To add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+
+class "AddUserStoryToSprintBacklogController" {
+- addUserStoryToSprintBacklogService
++ addUserStoryToSprintBacklog(userStoryId, sprintId)
+}
+AddUserStoryToSprintBacklogController "1"..>"1" AddUserStoryToSprintBacklogService
+
+class "AddUserStoryToSprintBacklogService" {
+- iSprintRepository
+- iUsRepository
++ addUserStoryToSprintBacklog(usId, sprintId)
+- isSprintInValidPeriod(sprint, date)
+- getSprintById (sprintId)
+- hasUserStoryStatus (usId)
+- getUserStory (usId)
+}
+AddUserStoryToSprintBacklogService "1"..>"1" IUsRepository
+AddUserStoryToSprintBacklogService "1"..>"1" ISprintRepository
+AddUserStoryToSprintBacklogService "1"..>"1" UserStory
+AddUserStoryToSprintBacklogService "1"..>"1" Sprint
+
+interface "ISprintRepository" {
+- sprints
++ findById(sprintId)
+}
+ISprintRepository "1"-->"*" Sprint
+
+interface "IUsRepository" {
+- userStories
++ getListOfUsWithMatchingIds(usIdList)
+}
+IUsRepository "1"-->"*" UserStory
+
+class "UserStory"{
+- usId
+- userStoryNumber
+- actor
+- userStoryText
+- status
+- listOfAcceptanceCriteria
+- effort
+- projectCode
++ hasStatus(status)
+}
+
+class "Sprint"{
+- sprintId
+- sprintNumber
+- period
+- projectCode
+- userStoriesInSprint
++ isPeriodAfterOrEqualThanDate(date)
++ addUserStory(usIdVO,effort)
+}
+
+@enduml
+
