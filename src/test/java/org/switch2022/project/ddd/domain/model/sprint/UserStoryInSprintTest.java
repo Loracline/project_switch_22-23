@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.sprint;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Effort;
 import org.switch2022.project.ddd.domain.value_object.UsId;
@@ -148,6 +149,22 @@ public class UserStoryInSprintTest {
 
         //ACT & ASSERT
         assertNotEquals(userStoryInSprint, effort);
+    }
+
+    @SuppressWarnings("all")
+    @DisplayName("Object does not equal null")
+    @Test
+    void ensureObjectDoesNotEqualNull() {
+        // Arrange
+        UsId usIdDouble = mock(UsId.class);
+        UserStoryInSprint reference = new UserStoryInSprint(usIdDouble);
+        UserStoryInSprint other = null;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertFalse(result);
     }
 
     /**

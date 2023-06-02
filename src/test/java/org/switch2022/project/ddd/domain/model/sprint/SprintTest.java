@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.domain.model.sprint;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 
@@ -648,6 +649,39 @@ class SprintTest {
         //Assert
         assertFalse(result);
     }
+
+    @DisplayName("Sprint has multiple user stories")
+    @Test
+    void ensureReturnsTrueWhenSprintHasMultipleUserStoriesAndItsNotTheFirstInList() {
+        // Arrange
+        Code projectCode = new Code(1);
+        LocalDate startDate = mock(LocalDate.class);
+        Period period = new Period(startDate, 2);
+        SprintNumber sprintNumber = new SprintNumber(2);
+        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
+
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        UsId usIdOne = new UsId(projectCode.getCode(), "US001");
+        sprint.addUserStory(usIdOne, 1);
+
+        UsId usIdTwo = new UsId(projectCode.getCode(), "US002");
+        sprint.addUserStory(usIdTwo, 3);
+
+        UsId usIdThree = new UsId(projectCode.getCode(), "US003");
+        sprint.addUserStory(usIdThree, 5);
+
+        UsId usIdFour = new UsId(projectCode.getCode(), "US004");
+        sprint.addUserStory(usIdFour, 8);
+
+        // Act
+        boolean result = sprint.hasUserStory(usIdThree);
+
+        // Assert
+        assertTrue(result);
+    }
+
+
 
     /**
      * METHOD estimateEffortUserStory()

@@ -4,10 +4,7 @@ import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -121,13 +118,12 @@ public class Sprint implements Entity<Sprint> {
 
     public boolean hasUserStory(UsId usId) {
         boolean hasUs = false;
-        int i = 0;
-        while (i < userStoriesInSprint.size() && !hasUs) {
-            UserStoryInSprint userStory = userStoriesInSprint.get(i);
+        Iterator<UserStoryInSprint> iterator = userStoriesInSprint.iterator();
+        while (iterator.hasNext() && !hasUs) {
+            UserStoryInSprint userStory = iterator.next();
             if (userStory.getUsId().equals(usId)) {
                 hasUs = true;
             }
-            i++;
         }
         return hasUs;
     }
