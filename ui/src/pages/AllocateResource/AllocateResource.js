@@ -1,6 +1,6 @@
 import Button from "../../components/Button/Button";
 import React, {useContext, useState} from "react";
-import {selectMenu} from "../../context/Actions";
+import { selectMenu} from "../../context/Actions";
 import {
     Autocomplete,
     Box,
@@ -19,6 +19,10 @@ import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
 import {format} from "date-fns";
+import dayjs from "dayjs";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from "@mui/icons-material/Error";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './AllocateResource.css';
 
 function AllocateResource() {
@@ -60,7 +64,7 @@ function AllocateResource() {
 
     const handleAccountChange = (event, value) => {
         const newResource = {...resource};
-        newResource["accountEmail"] = value.email;
+        newResource["accountEmail"] = value ? value.email : ""
         setResource(newResource);
     }
 
@@ -106,7 +110,7 @@ function AllocateResource() {
 
     const handleSubmit = () => {
         postResource(resource)
-            .then((res) => {
+            .then(() => {
                 setSuccess({message: "User allocated successfully", show: true});
             })
             .catch((err) => {
@@ -201,8 +205,11 @@ function AllocateResource() {
                                     <Box
                                         sx={{marginLeft: `calc(250px - ${option.name.length + option.email.length}ch)`}}>
 
-                                        <img loading="lazy" width="50" alt=""
-                                             src={option.status.toUpperCase() === "ACTIVE" ? "/active.png" : "/inactive.png"}/>
+                                        {option.status.toUpperCase() === "ACTIVE"
+                                            ?(<CheckCircleIcon style={{color: "green", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
+                                            :(<ErrorIcon style={{color: "red", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
+
+                                        }
                                     </Box>
                                 </Box>
                             )}
@@ -223,6 +230,7 @@ function AllocateResource() {
                                         option.email.toLowerCase().includes(state.inputValue.toLowerCase())
                                 )
                             }
+                            key={success.show}
                         />
 
                         <br/>
@@ -284,8 +292,8 @@ function AllocateResource() {
                             width={140}
                             label="Start Date"
                             disablePast={true}
-                            //minDate={new Date (detailedProject.startDate)}
-                            //maxDate={detailedProject.endDate || resource.endDate}
+                            minDate={dayjs(detailedProject.startDate)}
+                            maxDate={dayjs(detailedProject.endDate) || resource.endDate}
                             value={resource.startDate}
                             onChange={handleChangeForStartDate}
                             format="YYYY-MM-DD"
@@ -299,8 +307,8 @@ function AllocateResource() {
                             width={140}
                             label="End Date"
                             disablePast={true}
-                            //minDate={resource.startDate || detailedProject.startDate}
-                            //maxDate={detailedProject.endDate}
+                            minDate={resource.startDate || dayjs(detailedProject.startDate)}
+                            maxDate={dayjs(detailedProject.endDate)}
                             value={resource.endDate}
                             onChange={handleChangeForEndDate}
                             format="YYYY-MM-DD"
@@ -308,26 +316,29 @@ function AllocateResource() {
                             required={true}
                         />
                     </div>
-                    <div className="buttons-resource">
+
+                    <Box display="flex" justifyContent="space-between">
                         <Button
                             isSecundary={true}
                             onClick={() => dispatch(selectMenu('project'))}
                             text="Return"
+                            startIcon={<ArrowBackIcon />}
                         />
 
-                        <Button text="Submit "
-                                type="button"
-                                isDisabled={
-                                    !resource.accountEmail ||
-                                    !resource.accountRole ||
-                                    !resource.accountCostPerHour ||
-                                    !resource.accountPercentageOfAllocation ||
-                                    !resource.startDate ||
-                                    !resource.endDate
-                                }
-                                onClick={handleConfirmation}
+                        <Button
+                            text="Submit"
+                            type="button"
+                            isDisabled={
+                                !resource.accountEmail ||
+                                !resource.accountRole ||
+                                !resource.accountCostPerHour ||
+                                !resource.accountPercentageOfAllocation ||
+                                !resource.startDate ||
+                                !resource.endDate
+                            }
+                            onClick={handleConfirmation}
                         />
-                    </div>
+                    </Box>
                 </form>
             </section>
             <ConfirmationPage
