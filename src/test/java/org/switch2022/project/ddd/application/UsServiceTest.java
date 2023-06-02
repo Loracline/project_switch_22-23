@@ -119,12 +119,93 @@ class UsServiceTest {
         when(userStoryDouble.getUsNumber()).thenReturn("us001");
 
         usRepository.save(userStoryDouble);
-        when(usRepository.existsByUsId(any())).thenReturn (true);
+        when(usRepository.existsByUsId(any())).thenReturn(true);
 
         // Assert
         assertThrows(AlreadyExistsInRepoException.class, () -> usService.createUs(
                 userStoryCreationDto));
 
+    }
+
+    /**
+     * Scenario 03: verify if a userStory is not created and its ID not returned, due to being present in the
+     * productBacklog
+     * <p>
+     * Expected result: exception is thrown.
+     */
+    @Test
+    void ensureUsIsNotCreated_UsInProductBacklog() {
+        // Arrange
+        AcceptanceCriteria acceptanceCriteriaElementDouble = mock(AcceptanceCriteria.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+        acceptanceCriteriaDouble.add(acceptanceCriteriaElementDouble);
+
+        UserStory userStoryDouble = mock(UserStory.class);
+
+        List<String> acceptanceCriteria = new ArrayList<>();
+
+        UserStoryCreationDto userStoryCreationDto =
+                new UserStoryCreationDto("P001", "1", "text", "manager",
+                        acceptanceCriteria, 1);
+
+        Project projectDouble = mock(Project.class);
+        Optional<Project> optionalProject = Optional.ofNullable(projectDouble);
+
+        // Act
+        when(factoryUserStory.createUserStory(any(), any(), any(), any(), any()))
+                .thenReturn(userStoryDouble);
+        when(userStoryDouble.getUsNumber()).thenReturn("us001");
+
+        usRepository.save(userStoryDouble);
+        when(usRepository.existsByUsId(any())).thenReturn(false);
+        when(projectRepository.findByCode(any())).thenReturn(optionalProject);
+        when(projectDouble.addUserStory(anyInt(), any())).thenReturn(false);
+
+
+        // Assert
+        assertThrows(AlreadyExistsInRepoException.class, () -> usService.createUs(
+                userStoryCreationDto));
+
+    }
+
+    /**
+     * Method: createUs(userStoryCreationDto).
+     * Creates a userStory and return the userStoryId.
+     * <br>
+     * Scenario 4: verify if a userStory is created and its ID returned.
+     * <p>
+     * Expected result: UsId is returned.
+     */
+
+    @Test
+    void ensureUsIsCreated_withAcceptanceCriteria() {
+        // Arrange
+        int priority = 1;
+        UserStory userStoryDouble = mock(UserStory.class);
+        Code code = new Code(1);
+
+
+        when(factoryUserStory.createUserStory(any(), any(), any(), any(), any())).thenReturn(userStoryDouble);
+        when(userStoryDouble.getUsNumber()).thenReturn("US003");
+
+        Project projectDouble = mock(Project.class);
+        when(projectRepository.findByCode(code)).thenReturn(Optional.of(projectDouble));
+        when(projectDouble.addUserStory(priority, new UsId("P001", "US003"))).thenReturn(true);
+
+        List<String> acceptanceCriteria = new ArrayList<>();
+        acceptanceCriteria.add("Hoje eu comi pipoca com sal");
+        acceptanceCriteria.add("Fiquei todo empanzinado");
+        acceptanceCriteria.add("Estou mau mau mau mau");
+
+        UserStoryCreationDto userStoryCreationDto =
+                new UserStoryCreationDto("P001", "1", "text", "manager", acceptanceCriteria, 1);
+
+        // Act
+        UsId result = usService.createUs(userStoryCreationDto);
+
+        // Assert
+        assertNotNull(result);
+        assertTrue(true);
     }
 
 
@@ -238,83 +319,5 @@ class UsServiceTest {
         //Assert
         assertEquals(expected, result);
     }
-
-    //INTEGRATION TESTS
-
-    /* *//**
-     * Method: createUs(userStoryCreationDto, projectCode).
-     * Creates a userStory and return the userStoryId.
-     * <p>
-     * Scenario 01: verify if a userStory is created and added to a list of User Stories.
-     * <p>
-     * Expected result: userStoryId is returned.
-     *//*
-    @Test
-    void ensureThatUserStoryIsCreatedAndAddedToRepository() throws Exception {
-        //ARRANGE
-        UsId expected = new UsId("P001", "US001");;
-
-        //ACT
-
-        userStoryCreationDtoOne = new UserStoryCreationDto("US001", "text", "actor",
-                0);
-        UsId result = usService.createUs(userStoryCreationDtoOne, "P001");
-
-        //ASSERT
-        assertEquals(expected, result);
-    }*/
-    /*
-
-     *//**
-     * Scenario 02: verify if a userStory is not created when already exist.
-     * <p>
-     * Expected result: exception is thrown.
-     *//*
-    @Test
-    void ensureThatUserStoryIsNotCreatedAndAddedToUserStoryRepository() throws Exception {
-        //ARRANGE
-        usService.createUs(userStoryCreationDtoOne, "P001");
-
-
-        //ACT and ASSERT
-        assertThrows(IllegalArgumentException.class, () ->
-                usService.createUs(userStoryCreationDtoOne, "P001"));
-    }
-
-    *//**
-     * Method: deleteUs(UsId).
-     * Deletes a userStory.
-     * <br>
-     * Scenario 01: verify if a userStory is not deleted because it is not there.
-     * <p>
-     * Expected result: tHrow an IllegalArgumentException.
-     *//*
-    @Test
-    void ensureThatUserStoryIsNotDeletedFromRepositoryBecauseIsNotThere() {
-        //ARRANGE
-        UsId expected = usIdOne;
-
-        //ACT and ASSERT
-        assertThrows(IllegalArgumentException.class, () -> usService.deleteUs(expected));
-
-    }
-
-    *//**
-     * Scenario 02: verify if a userStory is deleted.
-     * <p>
-     * Expected result: true.
-     *//*
-    @Test
-    void ensureThatUserStoryIsDeletedFromRepository() throws Exception {
-        //ARRANGE
-        UsId expected = usIdOne;
-        usService.createUs(userStoryCreationDtoOne, "P001");
-
-        //ACT
-        boolean result = usService.deleteUs(expected);
-
-        //ASSERT
-        assertTrue(result);
-    }
-    */
+    
 }
