@@ -205,7 +205,7 @@ function AllocateResource() {
                 <form className="resource-form">
                     <div className={"user-role"}>
                         <Autocomplete
-                            sx={{width: 300}}
+                            sx={{width: 320}}
                             options={userAccounts}
                             getOptionLabel={(option) => option.email}
                             getOptionDisabled={(option) => option.status.toUpperCase() === "INACTIVE"}
@@ -222,10 +222,10 @@ function AllocateResource() {
                                         </span>
                                     </Box>
                                     <Box
-                                        sx={{marginLeft: `calc(250px - ${option.name.length + option.email.length}ch)`}}>
+                                        sx={{marginLeft: `calc(220px - ${option.name.length + option.email.length}ch)`}}>
 
                                         {option.status.toUpperCase() === "ACTIVE"
-                                            ?(<CheckCircleIcon style={{color: "green", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
+                                            ?(<CheckCircleIcon style={{color: "green", alignSelf: "center", width: 35, height: 35, margin: 2}}/>)
                                             :(<ErrorIcon style={{color: "red", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
 
                                         }
@@ -254,7 +254,7 @@ function AllocateResource() {
 
                         <br/>
 
-                        <FormControl required sx={{width: 300}}>
+                        <FormControl required sx={{width: 320}}>
                             <InputLabel>Role</InputLabel>
                             <Select
                                 name="accountRole"
@@ -272,7 +272,7 @@ function AllocateResource() {
 
                     <div className="cost-percentage">
                         <TextField
-                            sx={{width: 300}}
+                            sx={{width: 320}}
                             name="accountCostPerHour"
                             label="Cost"
                             type="number"
@@ -291,7 +291,7 @@ function AllocateResource() {
                         <br/>
 
                         <TextField
-                            sx={{width: 300}}
+                            sx={{width: 320}}
                             label="Percentage Of Allocation"
                             type="number"
                             helperText={'Between 0 - 100%'}
@@ -308,7 +308,7 @@ function AllocateResource() {
 
                     <div className="date-pickers">
                         <DatePickerInput
-                            width={140}
+                            width={150}
                             label="Start Date"
                             disablePast={true}
                             minDate={dayjs(detailedProject.startDate)}
@@ -323,7 +323,7 @@ function AllocateResource() {
                         <br/>
 
                         <DatePickerInput
-                            width={140}
+                            width={150}
                             label="End Date"
                             disablePast={true}
                             isDisabled={!resource.startDate}
