@@ -317,7 +317,7 @@ function AllocateResource() {
                         />
                     </div>
 
-                    <Box display="flex" justifyContent="space-between">
+                    <div className="buttons-resource">
                         <Button
                             isSecundary={true}
                             onClick={() => dispatch(selectMenu('project'))}
@@ -338,7 +338,7 @@ function AllocateResource() {
                             }
                             onClick={handleConfirmation}
                         />
-                    </Box>
+                    </div>
                 </form>
             </section>
             <ConfirmationPage
