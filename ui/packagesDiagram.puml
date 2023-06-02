@@ -3,17 +3,21 @@ title Packages Diagram
 package "Project G4" {
     package Components {
         file Button.js
-        file Calendar.js
-        file Header.js
+        file ConfirmationPage.js
+        file DateInput.js
+        file DatePickerInput.js
+        file Footer.js
+        file FailureMessage.js
+        file SuccessMessage.js
+        file InputText.js
+        file Loading.js
+        file Nav.js
+        file NavItem.js
         file TableBody.js
         file TableHeader.js
-        file NavItem.js
-        file Footer.js
-        file InputText.js
-        file Nav.js
-        file AlertMessages.js
-        file DateInput.js
+        file AlertMessage.js
         file Form.js
+        file Calendar.js
         file Header.js
         file Table.js
     }
@@ -26,13 +30,14 @@ package "Project G4" {
     }
 
     package Pages {
+        file About.js
+        file AllocateResource.js
         file ConsultProductBacklog.js
         file CreateProject.js
         file CreateSprint.js
         file CreateUserStory.js
-        file ListProjects.js
         file Home.js
-        file About.js
+        file ListProjects.js
         file Project.js
     }
 
@@ -40,9 +45,18 @@ package "Project G4" {
         file Router.js
     }
 
+    package Services {
+        file api.js
+        file ProjectService.js
+        file ResourceService.js
+        file SprintService.js
+        file USerStoryService.js
+    }
+
     Context  <... Pages: use
-    Pages ..> Components: import
+    Pages ...> Components: import
     Router ...> Pages: renders
+    Context .....> Services: use
 
 
 

@@ -610,12 +610,27 @@ class ResourceAllocationServiceTest {
         when(resourceRepository.findResourcesByAccountEmail(emailDouble)).thenReturn(resources);
         //2
         Period periodDouble = mock(Period.class);
+        when(resources.get(0).isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(1).isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(2).isPeriodOverlapping(periodDouble)).thenReturn(false);
         //3
         when(periodDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
         //4
         when(periodDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 1).toString());
+        //5
+        when(projectResourceOneDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        when(projectResourceTwoDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
+        //6
         Period periodOneDouble = mock(Period.class);
         Period periodTwoDouble = mock(Period.class);
+        when(projectResourceOneDouble.getPeriod()).thenReturn(periodOneDouble);
+        when(projectResourceTwoDouble.getPeriod()).thenReturn(periodTwoDouble);
+        when(periodOneDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 9).toString());
+        when(periodTwoDouble.getStartDate()).thenReturn(LocalDate.of(2023, 5, 10).toString());
+        //7
+        when(projectResourceOneDouble.getPercentageOfAllocation()).thenReturn(40f);
+        when(projectResourceTwoDouble.getPercentageOfAllocation()).thenReturn(10f);
+        //8
         PercentageOfAllocation percentageOfAllocationDouble = mock(PercentageOfAllocation.class);
         when(percentageOfAllocationDouble.getValue()).thenReturn(50f);
 
@@ -629,9 +644,9 @@ class ResourceAllocationServiceTest {
     /**
      * Scenario 02: Checks whether it is possible to allocate a user to a project if the allocation percentage of that
      * user during a given period of time is greater than 100%.
-     * Expected return: false.
+     * Expected return: Runtime Exception.
      */
-/*
+
     @Test
     void ensureThatPercentageOfAllocationIsInvalid_LastDayHas101percent() {
         //Arrange
@@ -647,9 +662,9 @@ class ResourceAllocationServiceTest {
         when(resourceRepository.findResourcesByAccountEmail(emailDouble)).thenReturn(resources);
         //2
         Period periodDouble = mock(Period.class);
-        when(resources.get(0).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
-        when(resources.get(1).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
-        when(resources.get(2).isPeriodNotOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(0).isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(1).isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(2).isPeriodOverlapping(periodDouble)).thenReturn(false);
         //3
         when(periodDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
         //4
@@ -674,6 +689,4 @@ class ResourceAllocationServiceTest {
         //Act, Assert
         assertThrows(RuntimeException.class, ()->service.isPercentageOfAllocationValid(periodDouble, emailDouble, percentageOfAllocationDouble));
     }
-
- */
 }

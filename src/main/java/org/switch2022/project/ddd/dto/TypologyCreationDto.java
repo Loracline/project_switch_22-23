@@ -9,7 +9,7 @@ public class TypologyCreationDto {
     public final String typologyName;
 
     /**
-     * Constructor to instatiate a new typology dto.
+     * Constructor to instantiate a new typology dto.
      *
      * @param typologyName the name of the
      */

@@ -1,0 +1,23 @@
+.buttons-resource {
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+}
+
+.date-pickers, .cost-percentage {
+    margin-top: 1rem;
+}
+
+.date-pickers {
+    display: flex;
+    justify-content: space-between;
+}
+
+.date-pickers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+}
+.css-1i9x9p3-MuiAutocomplete-root {
+    width: 300px;
+}

@@ -176,11 +176,11 @@ function CreateUserStory() {
                         variant="outlined"
                         className="textField"/>
                     <div className="buttons-createUs">
-                        <Button text="Create US"
-                                isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
                         <Button isSecundary={true}
                                 onClick={() => dispatch(selectMenu('project'))}
                                 text="Return to project"/>
+                        <Button text="Create US"
+                                isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
                     </div>
                     <Button isSecundary={true}
                             onClick={() => dispatch(selectMenu('productBacklog'))}
