@@ -28,6 +28,8 @@ class CreateSprintService {
 CreateSprintService "1"..>"1" IProjectRepository
 CreateSprintService "1"..>"1" ISprintRepository
 CreateSprintService "1"..>"1" ISprintFactory
+CreateSprintService "1"..>"1" Project
+CreateSprintService "1"..>"*" Sprint
 
 interface IProjectRepository {
 -projects
