@@ -35,11 +35,13 @@ class ResourceAllocationServiceTest {
     @InjectMocks
     ResourceAllocationService service;
     @MockBean
+    @Qualifier("project_jpa")
     IProjectRepository projectRepository;
     @MockBean
+    @Qualifier("account_jpa")
     IAccountRepository accountRepository;
     @MockBean
-    @Qualifier("resource_memory")
+    @Qualifier("resource_jpa")
     IProjectResourceRepository resourceRepository;
     @MockBean
     IProjectResourceFactory resourceFactory;

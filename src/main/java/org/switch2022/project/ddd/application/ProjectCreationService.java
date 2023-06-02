@@ -31,6 +31,7 @@ public class ProjectCreationService {
     @Autowired
     @Qualifier("project_jpa")
     private IProjectRepository projectRepository;
+    @Qualifier("typology_jpa")
     @Autowired
     private ITypologyRepository typologyRepository;
     @Autowired

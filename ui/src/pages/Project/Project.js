@@ -9,6 +9,7 @@ const Project = () => {
     const data = state.detailedProject;
 
     const isEndDatePassed = new Date(data?.endDate) < new Date();
+    const isEndDateNull = data?.endDate === "";
 
     return (
         <div className='page'>
@@ -24,7 +25,7 @@ const Project = () => {
                     </div>
                     <div className='buttons-project'>
                         <Button onClick={() => dispatch(selectMenu('createUserStory'))}
-                                text="Create user story" isDisabled={isEndDatePassed}/>
+                                text="Create user story" isDisabled={isEndDatePassed || isEndDateNull}/>
                         <Button onClick={() => dispatch(selectMenu('createSprint'))}
                                 text="Create sprint" isDisabled={!data?.startDate || !data?.endDate || isEndDatePassed}/>
                         <Button onClick={() => dispatch(selectMenu('productBacklog'))} text="Consult product backlog"/>

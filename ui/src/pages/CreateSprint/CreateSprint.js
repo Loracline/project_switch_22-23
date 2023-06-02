@@ -5,6 +5,8 @@ import AppContext from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import './CreateSprint.css';
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
+import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
+import FailureMessage from "../../components/InformationMessage/FailureMessage";
 
 /** This component provides a form for creating a new Sprint for a Project.
  - It allows the user to select a start date for the new Sprint and submits the form. If the form is
@@ -59,10 +61,15 @@ function CreateSprint() {
         setShowConfirmation(false);
     };
 
+    const handleClearSprint = (_) => {
+        setSprintToSubmit(initialSprintState);
+        dispatch(closeButton());
+    }
+
     const dialogContent = () => {
         return (
             <div>
-                <h2 style={{marginBottom: '1rem'}}>Please confirm:</h2>
+                <h2 style={{marginBottom: '1rem', fontSize: '2rem', textAlign: "center"}}>Please confirm:</h2>
                 <table style={{width: '100%'}}>
                     <tbody>
                     <tr>
@@ -85,11 +92,22 @@ function CreateSprint() {
                                onChange={handleDateChange}
                                variant="outlined"/>
                     <div className="sprint-buttons">
-                        <Button text="Submit" type="button" isdisabled={!sprintToSubmit.startDate} onClick={handleConfirmation}/>
+                        <Button text="Submit" type="button" isDisabled={!sprintToSubmit.startDate} onClick={handleConfirmation}/>
                         <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
                     </div>
-                    {messageSuccess && (<div><p>Sprint created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
-                    {messageFailure && (<div><p>Sprint not created!</p><button onClick={() => dispatch(closeButton())}>Close</button></div>)}
+
+                    <SuccessMessage
+                        handleOpen={messageSuccess.length > 0}
+                        title="Sprint created!"
+                        handleClose={handleClearSprint}
+                    />
+
+                    <FailureMessage
+                        handleOpen={messageFailure.length > 0}
+                        title="Sprint not created!"
+                        message={messageFailure}
+                        handleClose={handleClearSprint}
+                    />
                 </form>
             </section>
             <ConfirmationPage

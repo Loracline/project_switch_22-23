@@ -34,6 +34,7 @@ public class UserStoriesInSprintServiceTest {
     @InjectMocks
     UserStoriesInSprintService service;
 
+    @Qualifier("sprint_jpa")
     @MockBean
     ISprintRepository sprintRepository;
 

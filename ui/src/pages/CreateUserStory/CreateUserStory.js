@@ -7,16 +7,13 @@ import {
     List,
     ListItem,
     ListItemText,
-    TextField
+    TextField,
+    Typography,
 } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AppContext from "../../context/AppContext";
-import {
-    createUserStory,
-    resetPostUserStory,
-    selectMenu
-} from "../../context/Actions";
+import {createUserStory, resetPostUserStory, selectMenu} from "../../context/Actions";
 import "./CreateUserStory.css";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import {strings} from "../../strings";
@@ -138,6 +135,9 @@ function CreateUserStory() {
                             <AddIcon/>
                         </IconButton>
                     </div>
+                    <Typography variant="body" color="gray">
+                        Please enter the acceptance criteria and then click on "➕"
+                    </Typography>
                     <List>
                         {userStory.acceptanceCriteria.map((acceptanceCriteria, index) => (
                             <ListItem key={index}
@@ -149,13 +149,19 @@ function CreateUserStory() {
                                       }>
                                 <ListItemText
                                     primary={`${index + 1}. ${acceptanceCriteria}`}> </ListItemText>
+                                primaryTypographyProps={{
+                                sx: {
+                                    color: 'gray',
+                                    fontSize: '0.05rem'
+                                },
+                            }}
+                                />
                             </ListItem>
                         ))}
                     </List>
                     <TextField
                         name="priority"
                         label="Priority"
-                        helperText={'Default priority is the lowest one'}
                         value={userStory.priority}
                         onChange={handleChange}
                         type="number"
