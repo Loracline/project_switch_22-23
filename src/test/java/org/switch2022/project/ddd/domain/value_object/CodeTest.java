@@ -76,6 +76,25 @@ class CodeTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Test case for comparing with a null object.
+     * The sameValueAs method should return false when comparing with a null object.
+     */
+    @Test
+    public void testSameValueAsWithNullObject() {
+        Code code1 = new Code(1);
+        assertFalse(code1.sameValueAs(null));
+    }
+
+    /**
+     * Test case for comparing with the same object.
+     * The sameValueAs method should return true when comparing with the same object.
+     */
+    @Test
+    public void testSameValueAsWithSameObject() {
+        Code code1 = new Code(1);
+        assertTrue(code1.sameValueAs(code1));
+    }
 
     /**
      * METHOD equals()
