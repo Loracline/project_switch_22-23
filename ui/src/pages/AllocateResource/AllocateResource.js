@@ -59,7 +59,7 @@ function AllocateResource() {
 
     const handleAccountChange = (event, value) => {
         const newResource = {...resource};
-        newResource["accountEmail"] = value.email;
+        newResource["accountEmail"] = value ? value.email : ""
         setResource(newResource);
     }
 
@@ -105,7 +105,7 @@ function AllocateResource() {
 
     const handleSubmit = () => {
         postResource(resource)
-            .then((res) => {
+            .then(() => {
                 setSuccess({message: "User allocated successfully", show: true});
             })
             .catch((err) => {
@@ -222,6 +222,7 @@ function AllocateResource() {
                                         option.email.toLowerCase().includes(state.inputValue.toLowerCase())
                                 )
                             }
+                            key={success.show}
                         />
 
                         <br/>
