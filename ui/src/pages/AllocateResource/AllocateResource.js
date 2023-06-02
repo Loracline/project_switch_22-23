@@ -20,6 +20,9 @@ import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
 import {format} from "date-fns";
 import dayjs from "dayjs";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from "@mui/icons-material/Error";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function AllocateResource() {
 
@@ -201,8 +204,11 @@ function AllocateResource() {
                                     <Box
                                         sx={{marginLeft: `calc(250px - ${option.name.length + option.email.length}ch)`}}>
 
-                                        <img loading="lazy" width="50" alt=""
-                                             src={option.status.toUpperCase() === "ACTIVE" ? "/active.png" : "/inactive.png"}/>
+                                        {option.status.toUpperCase() === "ACTIVE"
+                                            ?(<CheckCircleIcon style={{color: "green", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
+                                            :(<ErrorIcon style={{color: "red", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
+
+                                        }
                                     </Box>
                                 </Box>
                             )}
@@ -311,14 +317,19 @@ function AllocateResource() {
                             helperText="YYYY-MM-DD"
                             required={true}
                         />
+                        <br/>
                     </div>
-                    <Button
-                        isSecundary={true}
-                        onClick={() => dispatch(selectMenu('project'))}
-                        text="Return"
-                    />
 
-                    <Button text="Submit "
+                    <Box display="flex" justifyContent="space-between">
+                        <Button
+                            isSecundary={true}
+                            onClick={() => dispatch(selectMenu('project'))}
+                            text="Return"
+                            startIcon={<ArrowBackIcon />}
+                        />
+
+                        <Button
+                            text="Submit"
                             type="button"
                             isDisabled={
                                 !resource.accountEmail ||
@@ -329,7 +340,8 @@ function AllocateResource() {
                                 !resource.endDate
                             }
                             onClick={handleConfirmation}
-                    />
+                        />
+                    </Box>
                 </form>
             </section>
             <ConfirmationPage
