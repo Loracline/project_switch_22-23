@@ -94,6 +94,59 @@ class ProjectTypologyIdTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for the same instance of ProjectTypologyId.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForSameInstance() {
+        ProjectTypologyId typologyId = new ProjectTypologyId(1);
+
+        boolean result = typologyId.sameValueAs(typologyId);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for two instances with the same project typology ID.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForEqualProjectTypologyId() {
+        ProjectTypologyId typologyId1 = new ProjectTypologyId(1);
+        ProjectTypologyId typologyId2 = new ProjectTypologyId(1);
+
+        boolean result = typologyId1.sameValueAs(typologyId2);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for null input.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForNullInput() {
+        ProjectTypologyId typologyId = new ProjectTypologyId(1);
+
+        boolean result = typologyId.sameValueAs(null);
+
+        assertFalse(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for two instances with different project typology IDs.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForDifferentProjectTypologyId() {
+        ProjectTypologyId typologyId1 = new ProjectTypologyId(1);
+        ProjectTypologyId typologyId2 = new ProjectTypologyId(2);
+
+        boolean result = typologyId1.sameValueAs(typologyId2);
+
+        assertFalse(result);
+    }
 
     /**
      * METHOD equals()

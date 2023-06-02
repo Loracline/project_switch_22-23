@@ -98,7 +98,59 @@ class PbIdTest {
         // Assert
         assertEquals(expected, result);
     }
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for the same instance of PbId.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForSameInstance() {
+        PbId pbId = new PbId("ABC");
 
+        boolean result = pbId.sameValueAs(pbId);
+
+        Assertions.assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for two instances with the same product backlog ID.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForEqualProductBacklogId() {
+        PbId pbId1 = new PbId("ABC");
+        PbId pbId2 = new PbId("ABC");
+
+        boolean result = pbId1.sameValueAs(pbId2);
+
+        Assertions.assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for null input.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForNullInput() {
+        PbId pbId = new PbId("ABC");
+
+        boolean result = pbId.sameValueAs(null);
+
+        Assertions.assertFalse(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for two instances with different product backlog IDs.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForDifferentProductBacklogId() {
+        PbId pbId1 = new PbId("ABC");
+        PbId pbId2 = new PbId("XYZ");
+
+        boolean result = pbId1.sameValueAs(pbId2);
+
+        Assertions.assertFalse(result);
+    }
     /**
      * METHOD equals()
      * <br>

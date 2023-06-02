@@ -104,6 +104,59 @@ class SprintDurationTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for the same instance of SprintDuration.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForSameInstance() {
+        SprintDuration sprintDuration = new SprintDuration(2);
+
+        boolean result = sprintDuration.sameValueAs(sprintDuration);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for two instances with the same sprint duration.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForEqualSprintDuration() {
+        SprintDuration sprintDuration1 = new SprintDuration(2);
+        SprintDuration sprintDuration2 = new SprintDuration(2);
+
+        boolean result = sprintDuration1.sameValueAs(sprintDuration2);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for null input.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForNullInput() {
+        SprintDuration sprintDuration = new SprintDuration(2);
+
+        boolean result = sprintDuration.sameValueAs(null);
+
+        assertFalse(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for two instances with different sprint durations.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForDifferentSprintDuration() {
+        SprintDuration sprintDuration1 = new SprintDuration(2);
+        SprintDuration sprintDuration2 = new SprintDuration(4);
+
+        boolean result = sprintDuration1.sameValueAs(sprintDuration2);
+
+        assertFalse(result);
+    }
 
     /**
      * METHOD equals()
