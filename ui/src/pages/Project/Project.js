@@ -15,7 +15,7 @@ const Project = () => {
         <div className='page'>
             <section className='projectCard'>
                 <div className='projectInfo'>
-                    <div className='projectContent'>>
+                    <div className='projectContent'>
                         <h2>{data?.['projectName']}</h2>
                         <p>Code: {data?.['code']}</p>
                         <p>Customer: {data?.['customerName']}</p>

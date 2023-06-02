@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.application;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
@@ -22,6 +23,7 @@ public class UserStoryInSprintService {
      */
 
     @Autowired
+    @Qualifier("sprint_jpa")
     private ISprintRepository sprintRepository;
 
     /**

@@ -1,7 +1,6 @@
 package org.switch2022.project.ddd.infrastructure;
 
-
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
@@ -14,7 +13,7 @@ import java.util.Objects;
 /**
  * Class UsRepository allows to manage userStories records.
  */
-@Component
+@Repository("us_memory")
 public class UsRepository implements IUsRepository {
 
     private final List<UserStory> userStories = new ArrayList<>();
