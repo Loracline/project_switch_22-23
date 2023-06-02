@@ -400,7 +400,7 @@ public class ResourceAllocationService {
     private List<ProjectResource> findResourcesByEmailWithPeriodOverlapping(Period period, Email email) {
         List<ProjectResource> repository = resourceRepository.findResourcesByAccountEmail(email);
         return repository.stream()
-                .filter(projectResource -> projectResource.isPeriodNotOverlapping(period))
+                .filter(projectResource -> projectResource.isPeriodOverlapping(period))
                 .collect(Collectors.toList());
     }
 
