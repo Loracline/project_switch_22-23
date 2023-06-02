@@ -304,8 +304,13 @@ function postSprintSuccess(message) {
  * Actions to get all projects.
  */
 export const GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
+export const FETCH_PROJECTS_STARTED = 'FETCH_PROJECTS_STARTED';
 
 export function getProjects(dispatch) {
+    const action = {
+        type: FETCH_PROJECTS_STARTED
+    }
+    dispatch(action);
     fetchProjects((res) => dispatch(getProjectsSuccess(res)), (err) => fetchFailure(err.message));
 }
 

@@ -24,7 +24,7 @@ import {
     POST_USER_STORY,
     POST_USER_STORY_SUCCESS,
     POST_USER_STORY_FAILURE,
-    RESET_POST_USER_STORY
+    RESET_POST_USER_STORY, FETCH_PROJECTS_STARTED
 } from "./Actions";
 
 /** Reducer function that updates the app state based on the dispatched actions.
@@ -152,11 +152,14 @@ const reducer = (state, action) => {
 
         case GET_PROJECTS_SUCCESS: {
             const projectsBE = action.payload.data;
-            return {...state, projects: projectsBE};
+            return {...state, projects: projectsBE, loading: false};
         }
 
+        case FETCH_PROJECTS_STARTED: {
+            return {...state, loading: true}
+        }
         case FETCH_FAILURE: {
-            return {...state, messageFailure: action.payload};
+            return {...state, messageFailure: action.payload, loading: false};
         }
 
         case CLOSE_BUTTON: {

@@ -92,7 +92,7 @@ function CreateSprint() {
                                onChange={handleDateChange}
                                variant="outlined"/>
                     <div className="sprint-buttons">
-                        <Button text="Submit" type="button" isdisabled={!sprintToSubmit.startDate} onClick={handleConfirmation}/>
+                        <Button text="Submit" type="button" isDisabled={!sprintToSubmit.startDate} onClick={handleConfirmation}/>
                         <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
                     </div>
 
