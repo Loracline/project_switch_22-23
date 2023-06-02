@@ -110,4 +110,53 @@ class UserStoryInSprintServiceTest {
         //Assert
         assertEquals(message, exception.getMessage());
     }
+
+    /**
+     * Method: estimateEffortUserStory(usId, effort, sprintId)
+     * Scenario 4: False.
+     */
+
+    @Test
+    void ensureEffortIsNotEstimated() throws Exception {
+        //Arrange
+        String usId = "p001_us001";
+        String sprintId = "p001_s001";
+        int effort = 3;
+        Sprint sprintDouble = mock(Sprint.class);
+        Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
+
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
+        when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
+        when(sprintDouble.hasUserStory(any())).thenReturn(false);
+        when(sprintDouble.estimateEffortUserStory(any(), anyInt())).thenReturn(true);
+
+        //Act
+        boolean result = service.estimateEffortUserStory(usId, effort, sprintId);
+        //Assert
+        assertFalse(result);
+    }
+    /**
+     * Method: estimateEffortUserStory(usId, effort, sprintId)
+     * Scenario 5: Throws exception.
+     */
+
+    @Test
+    void ensureEffortIsNotEstimated_() throws Exception {
+        //Arrange
+        String message = "No sprint with that id";
+        String usId = "p001_us001";
+        String sprintId = "p001_s001";
+        int effort = 3;
+        Optional<Sprint> sprintOptional = Optional.empty();
+
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
+
+        //Act
+        Exception exception = assertThrows(Exception.class,
+                () -> service.estimateEffortUserStory(usId, effort, sprintId));
+
+        //Assert
+        assertEquals(message, exception.getMessage());
+    }
+
 }

@@ -41,7 +41,7 @@ function AllocateResource() {
     }
 
     const [resource, setResource] = useState(initialResource);
-    const [percentageError, setPercentageError] = useState('');
+    const [error, setError] = useState('');
     const [success, setSuccess] = useState({message: '', show: false});
     const [failure, setFailure] = useState({message: '', show: false});
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -55,10 +55,26 @@ function AllocateResource() {
         setShowConfirmation(false);
     };
 
-    const handleChange = (event) => {
+    const handleRoleChange = (event) => {
         const {name, value} = event.target;
         const newResource = {...resource};
         newResource[name] = value;
+        setResource(newResource);
+    }
+
+    const handleCostChange = (event) => {
+        const {value} = event.target;
+        const newResource = {...resource};
+        const floatValue = parseFloat(value);
+        let valid = true;
+        if (value !== '') {
+            if (floatValue < 0) {
+                valid = false;
+            }
+        }
+        if (valid) {
+            newResource["accountCostPerHour"] = value;
+        }
         setResource(newResource);
     }
 
@@ -70,32 +86,35 @@ function AllocateResource() {
 
     const handleChangeForPercentageOfAllocation = (event) => {
         const {value} = event.target;
-        const newValue = value.replace(/[^0-9.]/g, '');
-        const floatValue = parseFloat(newValue);
-        let inputError = '';
-
-        if (newValue !== '') {
+        const floatValue = parseFloat(value);
+        const newResource = {...resource};
+        let valid = true;
+        if (value !== '') {
             if (floatValue < 0 || floatValue > 100) {
-                inputError = 'Only numbers between 0 and 100 are allowed.';
+                valid = false;
             }
         }
-        const newResource = {...resource};
-        if (inputError === '') {
-            newResource["accountPercentageOfAllocation"] = newValue;
+        if (valid) {
+            newResource["accountPercentageOfAllocation"] = value;
         }
-        setPercentageError(inputError);
         setResource(newResource);
     }
     const handleChangeForStartDate = (date) => {
         const formattedDate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
         const newResource = {...resource};
         newResource["startDate"] = formattedDate;
+        if(dayjs(resource.startDate).isBefore(dayjs(resource.endDate))){
+            setError("End Date must be after Start Date.")
+        }
         setResource(newResource);
     }
     const handleChangeForEndDate = (date) => {
         const formattedDate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
         const newResource = {...resource};
         newResource["endDate"] = formattedDate;
+        if(dayjs(resource.startDate).isAfter(dayjs(resource.endDate))){
+            setError("")
+        }
         setResource(newResource);
     }
 
@@ -241,7 +260,7 @@ function AllocateResource() {
                                 name="accountRole"
                                 value={resource.accountRole}
                                 label="Role"
-                                onChange={handleChange}>
+                                onChange={handleRoleChange}>
                                 <MenuItem value={"Team Member"}>Team Member</MenuItem>
                                 <MenuItem value={"Product Owner"}>Product Owner</MenuItem>
                                 <MenuItem value={"Scrum Master"}>Scrum Master</MenuItem>
@@ -259,7 +278,7 @@ function AllocateResource() {
                             type="number"
                             helperText={'Total paid for each hour of work'}
                             value={resource.accountCostPerHour}
-                            onChange={handleChange}
+                            onChange={handleCostChange}
                             required
                             InputProps={{
                                 endAdornment: (<InputAdornment
@@ -275,14 +294,14 @@ function AllocateResource() {
                             sx={{width: 300}}
                             label="Percentage Of Allocation"
                             type="number"
-                            error={Boolean(percentageError)}
-                            helperText={percentageError || 'Between 0 - 100%'}
+                            helperText={'Between 0 - 100%'}
                             value={resource.accountPercentageOfAllocation}
                             onChange={handleChangeForPercentageOfAllocation}
                             required
                             InputProps={{
                                 endAdornment: (
-                                    <InputAdornment position="end">%</InputAdornment>)
+                                    <InputAdornment position="end">%</InputAdornment>),
+                                inputProps: {min: 0, max:100}
                             }}
                         />
                     </div>
@@ -293,7 +312,7 @@ function AllocateResource() {
                             label="Start Date"
                             disablePast={true}
                             minDate={dayjs(detailedProject.startDate)}
-                            maxDate={dayjs(detailedProject.endDate) || resource.endDate}
+                            maxDate={dayjs(detailedProject.endDate)}
                             value={resource.startDate}
                             onChange={handleChangeForStartDate}
                             format="YYYY-MM-DD"
@@ -307,12 +326,14 @@ function AllocateResource() {
                             width={140}
                             label="End Date"
                             disablePast={true}
-                            minDate={resource.startDate || dayjs(detailedProject.startDate)}
+                            isDisabled={!resource.startDate}
+                            minDate = {dayjs(resource.startDate)}
                             maxDate={dayjs(detailedProject.endDate)}
                             value={resource.endDate}
                             onChange={handleChangeForEndDate}
                             format="YYYY-MM-DD"
-                            helperText="YYYY-MM-DD"
+                            helperText={error && <span style={{ color: 'red' }}>{error}</span> || "YYYY-MM-DD"}
+
                             required={true}
                         />
                     </div>
@@ -334,7 +355,8 @@ function AllocateResource() {
                                 !resource.accountCostPerHour ||
                                 !resource.accountPercentageOfAllocation ||
                                 !resource.startDate ||
-                                !resource.endDate
+                                !resource.endDate ||
+                                dayjs(resource.startDate).isAfter(dayjs(resource.endDate))
                             }
                             onClick={handleConfirmation}
                         />
