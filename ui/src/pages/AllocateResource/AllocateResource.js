@@ -23,6 +23,7 @@ import dayjs from "dayjs";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from "@mui/icons-material/Error";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import './AllocateResource.css';
 
 function AllocateResource() {
 
@@ -204,7 +205,7 @@ function AllocateResource() {
                 <form className="resource-form">
                     <div className={"user-role"}>
                         <Autocomplete
-                            sx={{width: 500}}
+                            sx={{width: 300}}
                             options={userAccounts}
                             getOptionLabel={(option) => option.email}
                             getOptionDisabled={(option) => option.status.toUpperCase() === "INACTIVE"}
@@ -268,9 +269,8 @@ function AllocateResource() {
                             </Select>
                         </FormControl>
                     </div>
-                    <br/>
 
-                    <div className="cost+percentage">
+                    <div className="cost-percentage">
                         <TextField
                             sx={{width: 300}}
                             name="accountCostPerHour"
@@ -306,12 +306,9 @@ function AllocateResource() {
                         />
                     </div>
 
-                    <br/>
-
-
-                    <div className="date pickers">
+                    <div className="date-pickers">
                         <DatePickerInput
-                            width={300}
+                            width={140}
                             label="Start Date"
                             disablePast={true}
                             minDate={dayjs(detailedProject.startDate)}
@@ -326,7 +323,7 @@ function AllocateResource() {
                         <br/>
 
                         <DatePickerInput
-                            width={300}
+                            width={140}
                             label="End Date"
                             disablePast={true}
                             isDisabled={!resource.startDate}
@@ -339,10 +336,9 @@ function AllocateResource() {
 
                             required={true}
                         />
-                        <br/>
                     </div>
 
-                    <Box display="flex" justifyContent="space-between">
+                    <div className="buttons-resource">
                         <Button
                             isSecundary={true}
                             onClick={() => dispatch(selectMenu('project'))}
@@ -364,7 +360,7 @@ function AllocateResource() {
                             }
                             onClick={handleConfirmation}
                         />
-                    </Box>
+                    </div>
                 </form>
             </section>
             <ConfirmationPage

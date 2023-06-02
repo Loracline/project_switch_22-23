@@ -109,6 +109,59 @@ class UsNumberTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for the same instance of UsNumber.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForSameInstance() {
+        UsNumber usNumber = new UsNumber("001");
+
+        boolean result = usNumber.sameValueAs(usNumber);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for two instances with the same user story number.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForEqualUserStoryNumber() {
+        UsNumber usNumber1 = new UsNumber("001");
+        UsNumber usNumber2 = new UsNumber("001");
+
+        boolean result = usNumber1.sameValueAs(usNumber2);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for null input.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForNullInput() {
+        UsNumber usNumber = new UsNumber("001");
+
+        boolean result = usNumber.sameValueAs(null);
+
+        assertFalse(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for two instances with different user story numbers.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForDifferentUserStoryNumber() {
+        UsNumber usNumber1 = new UsNumber("001");
+        UsNumber usNumber2 = new UsNumber("002");
+
+        boolean result = usNumber1.sameValueAs(usNumber2);
+
+        assertFalse(result);
+    }
 
     /**
      * METHOD equals()

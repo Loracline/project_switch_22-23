@@ -93,6 +93,25 @@ class SprintNumberTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Test case for comparing with a null object.
+     * The sameValueAs method should return false when comparing with a null object.
+     */
+    @Test
+    public void testSameValueAsWithNullObject() {
+        SprintNumber sprint1 = new SprintNumber(1);
+        assertFalse(sprint1.sameValueAs(null));
+    }
+
+    /**
+     * Test case for comparing with the same object.
+     * The sameValueAs method should return true when comparing with the same object.
+     */
+    @Test
+    public void testSameValueAsWithSameObject() {
+        SprintNumber sprint1 = new SprintNumber(1);
+        assertTrue(sprint1.sameValueAs(sprint1));
+    }
 
     /**
      * METHOD equals()

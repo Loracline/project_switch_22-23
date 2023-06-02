@@ -36,6 +36,7 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
 
     /**
      * Constructor with only usId, sets effort as one.
+     *
      * @param usId of the user story.
      */
     protected UserStoryInSprint(UsId usId) {
@@ -48,18 +49,21 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
      * This method checks if two instances of UserStoryInSprint are equal by comparing
      * the usId.
      *
-     * @param o userStoryInSprint instance to compare with.
+     * @param toCompare userStoryInSprint instance to compare with.
      * @return TRUE if the two have the same attribute, and FALSE otherwise.
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object toCompare) {
+        if (this == toCompare) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (toCompare == null) {
             return false;
         }
-        UserStoryInSprint userStoryInSprint = (UserStoryInSprint) o;
+        if (this.getClass() != toCompare.getClass()) {
+            return false;
+        }
+        UserStoryInSprint userStoryInSprint = (UserStoryInSprint) toCompare;
         return usId.equals(userStoryInSprint.usId);
     }
 

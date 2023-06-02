@@ -94,6 +94,59 @@ class BusinessSectorIdTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for the same instance of BusinessSectorId.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForSameInstance() {
+        BusinessSectorId businessSectorId = new BusinessSectorId(1);
+
+        boolean result = businessSectorId.sameValueAs(businessSectorId);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for two instances with the same business sector ID.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForEqualBusinessSectorId() {
+        BusinessSectorId businessSectorId1 = new BusinessSectorId(1);
+        BusinessSectorId businessSectorId2 = new BusinessSectorId(1);
+
+        boolean result = businessSectorId1.sameValueAs(businessSectorId2);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for null input.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForNullInput() {
+        BusinessSectorId businessSectorId = new BusinessSectorId(1);
+
+        boolean result = businessSectorId.sameValueAs(null);
+
+        assertFalse(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for two instances with different business sector IDs.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForDifferentBusinessSectorId() {
+        BusinessSectorId businessSectorId1 = new BusinessSectorId(1);
+        BusinessSectorId businessSectorId2 = new BusinessSectorId(2);
+
+        boolean result = businessSectorId1.sameValueAs(businessSectorId2);
+
+        assertFalse(result);
+    }
 
     /**
      * METHOD equals()

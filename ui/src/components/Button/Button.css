@@ -1,5 +1,4 @@
-.button{
-    background: #6145AF;
+.button, .secondaryButton{
     border-radius: 10px;
     padding: 16px 30px;
     font-family: 'Roboto', sans-serif;
@@ -14,19 +13,14 @@
     filter: drop-shadow(4px 5px 1px rgba(0, 0, 0, 0.20));
 }
 
+.button {
+    background: #6145AF;
+}
+
 .secondaryButton {
     color: #6145AF;
     background-color: white;
     border-color: #6145AF;
-    border-radius: 10px;
-    padding: 16px 30px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 1.25rem;
-    line-height: 28px;
-    text-align: center;
-    cursor: pointer;
-    filter: drop-shadow(4px 5px 1px rgba(0, 0, 0, 0.20));
 }
 
 .button:hover {
@@ -43,7 +37,7 @@
 }
 
 @media only screen and (max-width: 425px) {
-    .button{
+    .button, .secondaryButton{
         font-weight: 500;
         font-size: 1rem;
         line-height: 1.5rem;
@@ -52,7 +46,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .button{
+    .button, .secondaryButton{
         font-weight: 700;
         font-size: 1rem;
         line-height: 1.5rem;

@@ -60,6 +60,59 @@ class PhoneNumberTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for the same instance of PhoneNumber.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForSameInstance() {
+        PhoneNumber phoneNumber = new PhoneNumber(923456789);
+
+        boolean result = phoneNumber.sameValueAs(phoneNumber);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns true for two instances with the same phone number.
+     */
+    @Test
+    public void testSameValueAs_ReturnsTrueForEqualPhoneNumber() {
+        PhoneNumber phoneNumber1 = new PhoneNumber(923456789);
+        PhoneNumber phoneNumber2 = new PhoneNumber(923456789);
+
+        boolean result = phoneNumber1.sameValueAs(phoneNumber2);
+
+        assertTrue(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for null input.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForNullInput() {
+        PhoneNumber phoneNumber = new PhoneNumber(923456789);
+
+        boolean result = phoneNumber.sameValueAs(null);
+
+        assertFalse(result);
+    }
+
+    /**
+     * Test case for sameValueAs method.
+     * Returns false for two instances with different phone numbers.
+     */
+    @Test
+    public void testSameValueAs_ReturnsFalseForDifferentPhoneNumber() {
+        PhoneNumber phoneNumber1 = new PhoneNumber(923456789);
+        PhoneNumber phoneNumber2 = new PhoneNumber(987654321);
+
+        boolean result = phoneNumber1.sameValueAs(phoneNumber2);
+
+        assertFalse(result);
+    }
 
     /**
      * METHOD equals()

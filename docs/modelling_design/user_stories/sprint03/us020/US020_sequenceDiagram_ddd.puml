@@ -1,0 +1,54 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO ADD A USER STORY TO THE SPRINT BACKLOG
+legend top
+US020 - As Team Member, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+end legend
+autonumber
+actor "Team Member"
+participant ":AddUserStoryInSprintUI" as ui
+participant ":AddUserStoryToSprintBacklogController" as ct
+participant ":UserStoryInSprintService" as serv
+participant ":IUsRepository" as rep
+participant ":sprintRepository" as sprintRep
+participant "sprint:Sprint" as s
+participant "userStory:UserStory" as us
+
+activate "Team Member"
+
+"Team Member"-> ui: starts adding a User Story to Sprint Backlog
+activate ui
+ui --> "Team Member": requests data (userStoryId, sprintId)
+"Team Member" -> ui: sends requested data
+ui -> ct: addUserStoryToSprintBacklog(usId, sprintId)
+activate ct
+ct -> serv: addUserStoryToSprintBacklog(userStoryId, sprintId)
+activate serv
+serv -> sprintRep: findById(sprintId)
+activate sprintRep
+sprintRep --> serv: sprint
+deactivate sprintRep
+serv -> s: isPeriodAfterOrEqualThanDate(date)
+activate s
+s --> serv: result
+deactivate s
+serv -> rep: getListOfUsWithMatchingIds(usIdList)
+activate rep
+rep --> serv: usId
+deactivate rep
+serv -> us: hasStatus(status)
+activate us
+us --> serv: true
+deactivate us
+serv -> s : addUserStory(usIdVO, effort)
+activate s
+s --> serv: true
+deactivate s
+deactivate rep
+serv --> ct : true
+deactivate serv
+ct --> ui : true
+deactivate ct
+ui --> "Team Member": User Story was added to Sprint Backlog
+deactivate ui
+@enduml

@@ -6,7 +6,7 @@ import React from "react";
 
 const DatePickerInput = ({width, label, disablePast, minDate, maxDate, format, required, helperText, value, onChange, isDisabled}) => {
     return (
-        <>
+        <div style={{display: "flex", flexDirection: "column"}}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                     sx={{width: width}}
@@ -26,7 +26,7 @@ const DatePickerInput = ({width, label, disablePast, minDate, maxDate, format, r
                 />
             </LocalizationProvider>
             <FormHelperText>{helperText}</FormHelperText>
-        </>
+        </div>
     )
 }
 

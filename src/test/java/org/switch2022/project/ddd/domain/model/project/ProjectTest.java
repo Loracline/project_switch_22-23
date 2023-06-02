@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -1181,4 +1183,70 @@ class ProjectTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * METHOD contains()
+     */
+    @DisplayName("Project contains period")
+    @Test
+    void ensureReturnsTrueWhenProjectContainsGivenPeriod() {
+        // Arrange
+        Name nameDouble = mock(Name.class);
+        Description descriptionDouble = mock(Description.class);
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        TaxId taxIdDouble = mock(TaxId.class);
+        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
+
+        Project project = new Project(1, nameDouble, descriptionDouble, businessSectorIdDouble,
+                taxIdDouble, projectTypologyIdDouble);
+
+        LocalDate startDate = LocalDate.of(2023,1,1);
+        LocalDate endDate = LocalDate.of(2023,12,31);
+        project.setPeriod(startDate, endDate);
+
+        Period periodDouble = mock(Period.class);
+        LocalDate otherStartDate = LocalDate.of(2023, 2, 1);
+        LocalDate otherEndDate = LocalDate.of(2023, 11, 1);
+
+        when(periodDouble.contains(any())).thenReturn(true);
+        when(periodDouble.getStartDate()).thenReturn(String.valueOf(otherStartDate));
+        when(periodDouble.getEndDate()).thenReturn(String.valueOf(otherEndDate));
+
+        // Act
+        boolean result = project.contains(periodDouble);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @DisplayName("Project does not contain period")
+    @Test
+    void ensureReturnFalseWhenProjectDoesNotContainPeriod() {
+        // Arrange
+        Name nameDouble = mock(Name.class);
+        Description descriptionDouble = mock(Description.class);
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        TaxId taxIdDouble = mock(TaxId.class);
+        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
+
+        Project project = new Project(1, nameDouble, descriptionDouble, businessSectorIdDouble,
+                taxIdDouble, projectTypologyIdDouble);
+
+        LocalDate startDate = LocalDate.of(2023,1,1);
+        LocalDate endDate = LocalDate.of(2023,12,31);
+        project.setPeriod(startDate, endDate);
+
+        Period periodDouble = mock(Period.class);
+        LocalDate otherStartDate = LocalDate.of(2023, 2, 1);
+        LocalDate otherEndDate = LocalDate.of(2024, 1, 1);
+
+        when(periodDouble.contains(any())).thenReturn(false);
+        when(periodDouble.getStartDate()).thenReturn(String.valueOf(otherStartDate));
+        when(periodDouble.getEndDate()).thenReturn(String.valueOf(otherEndDate));
+
+        // Act
+        boolean result = project.contains(periodDouble);
+
+        // Assert
+        assertFalse(result);
+    }
 }
