@@ -319,5 +319,5 @@ class UsServiceTest {
         //Assert
         assertEquals(expected, result);
     }
-    
+
 }
