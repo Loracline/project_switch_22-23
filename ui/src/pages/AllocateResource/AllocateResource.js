@@ -20,6 +20,10 @@ import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
 import {format} from "date-fns";
 import dayjs from "dayjs";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from "@mui/icons-material/Error";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import './AllocateResource.css';
 
 function AllocateResource() {
 
@@ -182,7 +186,7 @@ function AllocateResource() {
                 <form className="resource-form">
                     <div className={"user-role"}>
                         <Autocomplete
-                            sx={{width: 500}}
+                            sx={{width: 300}}
                             options={userAccounts}
                             getOptionLabel={(option) => option.email}
                             getOptionDisabled={(option) => option.status.toUpperCase() === "INACTIVE"}
@@ -201,8 +205,11 @@ function AllocateResource() {
                                     <Box
                                         sx={{marginLeft: `calc(250px - ${option.name.length + option.email.length}ch)`}}>
 
-                                        <img loading="lazy" width="50" alt=""
-                                             src={option.status.toUpperCase() === "ACTIVE" ? "/active.png" : "/inactive.png"}/>
+                                        {option.status.toUpperCase() === "ACTIVE"
+                                            ?(<CheckCircleIcon style={{color: "green", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
+                                            :(<ErrorIcon style={{color: "red", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
+
+                                        }
                                     </Box>
                                 </Box>
                             )}
@@ -243,9 +250,8 @@ function AllocateResource() {
                             </Select>
                         </FormControl>
                     </div>
-                    <br/>
 
-                    <div className="cost+percentage">
+                    <div className="cost-percentage">
                         <TextField
                             sx={{width: 300}}
                             name="accountCostPerHour"
@@ -281,12 +287,9 @@ function AllocateResource() {
                         />
                     </div>
 
-                    <br/>
-
-
-                    <div className="date pickers">
+                    <div className="date-pickers">
                         <DatePickerInput
-                            width={300}
+                            width={140}
                             label="Start Date"
                             disablePast={true}
                             minDate={dayjs(detailedProject.startDate)}
@@ -301,7 +304,7 @@ function AllocateResource() {
                         <br/>
 
                         <DatePickerInput
-                            width={300}
+                            width={140}
                             label="End Date"
                             disablePast={true}
                             minDate={resource.startDate || dayjs(detailedProject.startDate)}
@@ -313,13 +316,17 @@ function AllocateResource() {
                             required={true}
                         />
                     </div>
-                    <Button
-                        isSecundary={true}
-                        onClick={() => dispatch(selectMenu('project'))}
-                        text="Return"
-                    />
 
-                    <Button text="Submit "
+                    <div className="buttons-resource">
+                        <Button
+                            isSecundary={true}
+                            onClick={() => dispatch(selectMenu('project'))}
+                            text="Return"
+                            startIcon={<ArrowBackIcon />}
+                        />
+
+                        <Button
+                            text="Submit"
                             type="button"
                             isDisabled={
                                 !resource.accountEmail ||
@@ -330,7 +337,8 @@ function AllocateResource() {
                                 !resource.endDate
                             }
                             onClick={handleConfirmation}
-                    />
+                        />
+                    </div>
                 </form>
             </section>
             <ConfirmationPage

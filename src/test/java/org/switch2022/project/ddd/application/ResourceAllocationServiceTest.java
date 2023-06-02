@@ -610,9 +610,9 @@ class ResourceAllocationServiceTest {
         when(resourceRepository.findResourcesByAccountEmail(emailDouble)).thenReturn(resources);
         //2
         Period periodDouble = mock(Period.class);
-        when(resources.get(0).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
-        when(resources.get(1).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
-        when(resources.get(2).isPeriodNotOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(0).isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(1).isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(2).isPeriodOverlapping(periodDouble)).thenReturn(false);
         //3
         when(periodDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
         //4
@@ -644,7 +644,7 @@ class ResourceAllocationServiceTest {
     /**
      * Scenario 02: Checks whether it is possible to allocate a user to a project if the allocation percentage of that
      * user during a given period of time is greater than 100%.
-     * Expected return: false.
+     * Expected return: Runtime Exception.
      */
 
     @Test
@@ -662,9 +662,9 @@ class ResourceAllocationServiceTest {
         when(resourceRepository.findResourcesByAccountEmail(emailDouble)).thenReturn(resources);
         //2
         Period periodDouble = mock(Period.class);
-        when(resources.get(0).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
-        when(resources.get(1).isPeriodNotOverlapping(periodDouble)).thenReturn(false);
-        when(resources.get(2).isPeriodNotOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(0).isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(1).isPeriodOverlapping(periodDouble)).thenReturn(true);
+        when(resources.get(2).isPeriodOverlapping(periodDouble)).thenReturn(false);
         //3
         when(periodDouble.numberOfDaysContainedInPeriod()).thenReturn(10);
         //4

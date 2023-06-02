@@ -1,18 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
 import Button from "../../components/Button/Button";
-import {
-    createProject,
-    fetchBusinessSectors,
-    fetchCustomers,
-    fetchTypologies,
-    resetCreateProject,
-    selectMenu
-} from "../../context/Actions";
+import {createProject, fetchBusinessSectors, fetchCustomers, fetchTypologies, resetCreateProject, selectMenu} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
-import {Dialog, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import './CreateProject.css';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
 import {strings} from "../../strings";
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 import Loading from "../../components/Loading/Loading";
@@ -122,7 +113,11 @@ function CreateProject() {
     const dialogContent = () => {
         return (
             <div>
-                <h2 style={{marginBottom: '1rem', fontSize: '2rem', textAlign: "center"}}>Please confirm:</h2>
+                <h2 style={{
+                    marginBottom: '1rem',
+                    fontSize: '2rem',
+                    textAlign: "center"
+                }}>Please confirm:</h2>
                 <table style={{width: '100%'}}>
                     <tbody>
                     <tr>
@@ -178,19 +173,24 @@ function CreateProject() {
                             label={"Customer"}
                             onChange={handleChangeCustomer}>
                             {customers && customers.map(({taxIdNumber, name}, index) => (
-                                <MenuItem key={index} value={taxIdNumber}>{name}</MenuItem>
+                                <MenuItem key={index}
+                                          value={taxIdNumber}>{name}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
                     <FormControl fullWidth>
-                        <InputLabel id={'projectBusinessSectorInputLabel'}>Business Sector</InputLabel>
+                        <InputLabel id={'projectBusinessSectorInputLabel'}>Business
+                            Sector</InputLabel>
                         <Select
                             labelId={'projectBusinessSectorInputLabel'}
                             id={'projectBusinessSectorSelect'}
                             value={project.businessSector.id}
                             label={"Business Sector"}
                             onChange={handleChangeBusinessSector}>
-                            {businessSectors && businessSectors.map(({id, name}, index) => (
+                            {businessSectors && businessSectors.map(({
+                                                                         id,
+                                                                         name
+                                                                     }, index) => (
                                 <MenuItem key={index} value={id}>{name}</MenuItem>
                             ))}
                         </Select>
@@ -203,8 +203,12 @@ function CreateProject() {
                             value={project.typology.typologyId}
                             label={"Typology"}
                             onChange={handleChangeTypology}>
-                            {typologies && typologies.map(({typologyId, typologyName}, index) => (
-                                <MenuItem key={index} value={typologyId}>{typologyName}</MenuItem>
+                            {typologies && typologies.map(({
+                                                               typologyId,
+                                                               typologyName
+                                                           }, index) => (
+                                <MenuItem key={index}
+                                          value={typologyId}>{typologyName}</MenuItem>
                             ))}
                         </Select>
                     </FormControl>
@@ -219,22 +223,24 @@ function CreateProject() {
                         rows={4}
                         className="textField"
                     />
-                    <Button
-                        type="button"
-                        text="Create Project"
-                        onClick={handleConfirmation}
-                        isDisabled={project.name.length === 0 ||
-                            project.customer.length === 0 ||
-                            project.businessSector.length === 0 ||
-                            project.typology.length === 0 ||
-                            project.description.length === 0}
-                    />
+                    <Box display="flex" justifyContent="space-between">
+                        <Button
+                            isSecundary={true}
+                            onClick={handleReturnToProjects}
+                            text="Return"
+                        />
+                        <Button
+                            type="button"
+                            text="Create Project"
+                            onClick={handleConfirmation}
+                            isDisabled={project.name.length === 0 ||
+                                project.customer.length === 0 ||
+                                project.businessSector.length === 0 ||
+                                project.typology.length === 0 ||
+                                project.description.length === 0}
+                        />
+                    </Box>
                 </form>
-                <Button
-                    isSecundary={true}
-                    onClick={handleReturnToProjects}
-                    text="Return to projects"
-                />
             </section>
 
             <Loading handleLoading={loading}/>
