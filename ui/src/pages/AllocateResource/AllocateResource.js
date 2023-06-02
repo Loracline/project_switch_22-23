@@ -1,6 +1,6 @@
 import Button from "../../components/Button/Button";
 import React, {useContext, useState} from "react";
-import { selectMenu} from "../../context/Actions";
+import {selectMenu} from "../../context/Actions";
 import {
     Autocomplete,
     Box,
@@ -19,6 +19,7 @@ import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
 import {format} from "date-fns";
+import './AllocateResource.css';
 
 function AllocateResource() {
 
@@ -181,7 +182,7 @@ function AllocateResource() {
                 <form className="resource-form">
                     <div className={"user-role"}>
                         <Autocomplete
-                            sx={{width: 500}}
+                            sx={{width: 300}}
                             options={userAccounts}
                             getOptionLabel={(option) => option.email}
                             getOptionDisabled={(option) => option.status.toUpperCase() === "INACTIVE"}
@@ -241,9 +242,8 @@ function AllocateResource() {
                             </Select>
                         </FormControl>
                     </div>
-                    <br/>
 
-                    <div className="cost+percentage">
+                    <div className="cost-percentage">
                         <TextField
                             sx={{width: 300}}
                             name="accountCostPerHour"
@@ -279,12 +279,9 @@ function AllocateResource() {
                         />
                     </div>
 
-                    <br/>
-
-
-                    <div className="date pickers">
+                    <div className="date-pickers">
                         <DatePickerInput
-                            width={300}
+                            width={140}
                             label="Start Date"
                             disablePast={true}
                             //minDate={new Date (detailedProject.startDate)}
@@ -299,7 +296,7 @@ function AllocateResource() {
                         <br/>
 
                         <DatePickerInput
-                            width={300}
+                            width={140}
                             label="End Date"
                             disablePast={true}
                             //minDate={resource.startDate || detailedProject.startDate}
@@ -311,24 +308,26 @@ function AllocateResource() {
                             required={true}
                         />
                     </div>
-                    <Button
-                        isSecundary={true}
-                        onClick={() => dispatch(selectMenu('project'))}
-                        text="Return"
-                    />
+                    <div className="buttons-resource">
+                        <Button
+                            isSecundary={true}
+                            onClick={() => dispatch(selectMenu('project'))}
+                            text="Return"
+                        />
 
-                    <Button text="Submit "
-                            type="button"
-                            isDisabled={
-                                !resource.accountEmail ||
-                                !resource.accountRole ||
-                                !resource.accountCostPerHour ||
-                                !resource.accountPercentageOfAllocation ||
-                                !resource.startDate ||
-                                !resource.endDate
-                            }
-                            onClick={handleConfirmation}
-                    />
+                        <Button text="Submit "
+                                type="button"
+                                isDisabled={
+                                    !resource.accountEmail ||
+                                    !resource.accountRole ||
+                                    !resource.accountCostPerHour ||
+                                    !resource.accountPercentageOfAllocation ||
+                                    !resource.startDate ||
+                                    !resource.endDate
+                                }
+                                onClick={handleConfirmation}
+                        />
+                    </div>
                 </form>
             </section>
             <ConfirmationPage
