@@ -18,6 +18,7 @@ import org.switch2022.project.ddd.utils.Utils;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.switch2022.project.ddd.domain.value_object.Role.*;
 
@@ -398,13 +399,9 @@ public class ResourceAllocationService {
      */
     private List<ProjectResource> findResourcesByEmailWithPeriodOverlapping(Period period, Email email) {
         List<ProjectResource> repository = resourceRepository.findResourcesByAccountEmail(email);
-        for (int i = 0; i < repository.size(); i++) {
-            boolean isPeriodNotOverlapping = repository.get(i).isPeriodNotOverlapping(period);
-            if (isPeriodNotOverlapping) {
-                repository.remove(repository.get(i));
-            }
-        }
-        return repository;
+        return repository.stream()
+                .filter(projectResource -> projectResource.isPeriodOverlapping(period))
+                .collect(Collectors.toList());
     }
 
     /**
