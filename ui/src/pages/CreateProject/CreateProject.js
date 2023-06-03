@@ -1,6 +1,13 @@
 import React, {useContext, useEffect, useState} from "react";
 import Button from "../../components/Button/Button";
-import {createProject, fetchBusinessSectors, fetchCustomers, fetchTypologies, resetCreateProject, selectMenu} from "../../context/Actions";
+import {
+    createProject,
+    fetchBusinessSectors,
+    fetchCustomers,
+    fetchTypologies,
+    resetCreateProject,
+    selectMenu
+} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
 import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import './CreateProject.css';
@@ -165,12 +172,12 @@ function CreateProject() {
                     </FormControl>
 
                     <FormControl fullWidth>
-                        <InputLabel id={'projectCustomerInputLabel'}>Customer</InputLabel>
+                        <InputLabel id={'projectCustomerInputLabel'}>Customer *</InputLabel>
                         <Select
                             labelId={'projectCustomerInputLabel'}
                             id={'projectCustomerSelect'}
                             value={project.customer.taxIdNumber}
-                            label={"Customer"}
+                            label={"Customer *"}
                             onChange={handleChangeCustomer}>
                             {customers && customers.map(({taxIdNumber, name}, index) => (
                                 <MenuItem key={index}
@@ -179,13 +186,13 @@ function CreateProject() {
                         </Select>
                     </FormControl>
                     <FormControl fullWidth>
-                        <InputLabel id={'projectBusinessSectorInputLabel'}>Business
-                            Sector</InputLabel>
+                        <InputLabel id={'projectBusinessSectorInputLabel'}>Business Sector *</InputLabel>
                         <Select
                             labelId={'projectBusinessSectorInputLabel'}
                             id={'projectBusinessSectorSelect'}
                             value={project.businessSector.id}
-                            label={"Business Sector"}
+                            label={"Business Sector *"}
+                            required
                             onChange={handleChangeBusinessSector}>
                             {businessSectors && businessSectors.map(({
                                                                          id,
@@ -196,12 +203,13 @@ function CreateProject() {
                         </Select>
                     </FormControl>
                     <FormControl fullWidth>
-                        <InputLabel id={'projectTypologyInputLabel'}>Typology</InputLabel>
+                        <InputLabel id={'projectTypologyInputLabel'}>Typology *</InputLabel>
                         <Select
                             labelId={'projectTypologyInputLabel'}
                             id={'projectTypologySelect'}
                             value={project.typology.typologyId}
-                            label={"Typology"}
+                            label={"Typology *"}
+                            required
                             onChange={handleChangeTypology}>
                             {typologies && typologies.map(({
                                                                typologyId,
@@ -234,9 +242,9 @@ function CreateProject() {
                             text="Create Project"
                             onClick={handleConfirmation}
                             isDisabled={project.name.length === 0 ||
-                                project.customer.length === 0 ||
-                                project.businessSector.length === 0 ||
-                                project.typology.length === 0 ||
+                                project.customer.name.length === 0 ||
+                                project.businessSector.name.length === 0 ||
+                                project.typology.typologyName.length === 0 ||
                                 project.description.length === 0}
                         />
                     </Box>
@@ -262,6 +270,7 @@ function CreateProject() {
             <FailureMessage
                 handleOpen={messageFailure.length > 0}
                 title={strings.genericServerError}
+                message={messageFailure}
                 handleClose={handleClearProject}
             />
 
