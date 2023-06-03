@@ -1,10 +1,11 @@
 import Button from "../../components/Button/Button";
-import React, {useContext, useState} from "react";
-import { selectMenu} from "../../context/Actions";
+import React, {useContext, useEffect, useState} from "react";
+import {selectMenu} from "../../context/Actions";
 import {
     Autocomplete,
     Box,
     FormControl,
+    FormHelperText,
     InputAdornment,
     InputLabel,
     MenuItem,
@@ -18,11 +19,9 @@ import {useGetAccounts} from "./useGetAccounts";
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
-import {format} from "date-fns";
 import dayjs from "dayjs";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from "@mui/icons-material/Error";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './AllocateResource.css';
 
 function AllocateResource() {
@@ -47,6 +46,18 @@ function AllocateResource() {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [userAccounts] = useGetAccounts();
 
+    const dateError = () => {
+        if (dayjs(resource.startDate).isAfter(dayjs(resource.endDate))) {
+            setError('Start date must be before or Equal to end date');
+        } else {
+            setError('');
+        }
+    }
+
+    useEffect(() => {
+        dateError()
+    })
+
     const handleConfirmation = () => {
         setShowConfirmation(true);
     }
@@ -56,9 +67,9 @@ function AllocateResource() {
     };
 
     const handleRoleChange = (event) => {
-        const {name, value} = event.target;
+        const {value} = event.target;
         const newResource = {...resource};
-        newResource[name] = value;
+        newResource["accountRole"] = value;
         setResource(newResource);
     }
 
@@ -99,23 +110,25 @@ function AllocateResource() {
         }
         setResource(newResource);
     }
+
     const handleChangeForStartDate = (date) => {
-        const formattedDate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
-        const newResource = {...resource};
-        newResource["startDate"] = formattedDate;
-        if(dayjs(resource.startDate).isBefore(dayjs(resource.endDate))){
-            setError("End Date must be after Start Date.")
+        const year = date ? date.year() : 0;
+        if (year >= 1000 && year <= 9999) {
+            const formattedDate = date ? date.format('YYYY-MM-DD') : null;
+            const newResource = {...resource};
+            newResource["startDate"] = formattedDate;
+            setResource(newResource);
         }
-        setResource(newResource);
     }
+
     const handleChangeForEndDate = (date) => {
-        const formattedDate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
-        const newResource = {...resource};
-        newResource["endDate"] = formattedDate;
-        if(dayjs(resource.startDate).isAfter(dayjs(resource.endDate))){
-            setError("")
+        const year = date ? date.year() : 0;
+        if (year >= 1000 && year <= 9999) {
+            const formattedDate = date ? date.format('YYYY-MM-DD') : null;
+            const newResource = {...resource};
+            newResource["endDate"] = formattedDate;
+            setResource(newResource);
         }
-        setResource(newResource);
     }
 
     const handleSuccessClose = () => {
@@ -142,7 +155,11 @@ function AllocateResource() {
     const dialogContent = () => {
         return (
             <div>
-                <h2 style={{marginBottom: '1rem', fontSize: '2rem', textAlign: "center"}}>Please confirm:</h2>
+                <h2 style={{
+                    marginBottom: '1rem',
+                    fontSize: '2rem',
+                    textAlign: "center"
+                }}>Please confirm:</h2>
                 <table style={{width: '100%'}}>
                     <tbody>
                     <tr>
@@ -167,19 +184,11 @@ function AllocateResource() {
                     </tr>
                     <tr>
                         <td><strong>Start Date:</strong></td>
-                        <td>{new Date(resource.startDate).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric'
-                        })}</td>
+                        <td>{resource.startDate ? dayjs(resource.startDate).format('YYYY-MM-DD') : null}</td>
                     </tr>
                     <tr>
                         <td><strong>End Date:</strong></td>
-                        <td>{new Date(resource.endDate).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric'
-                        })}</td>
+                        <td>{resource.endDate ? dayjs(resource.endDate).format('YYYY-MM-DD') : null}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -209,6 +218,8 @@ function AllocateResource() {
                             options={userAccounts}
                             getOptionLabel={(option) => option.email}
                             getOptionDisabled={(option) => option.status.toUpperCase() === "INACTIVE"}
+                            onChange={handleAccountChange}
+                            key={success.show}
                             renderOption={(props, option) => (
                                 <Box component="li"
                                      sx={{'& > img': {mr: 2, flexShrink: 0}}} {...props}>
@@ -223,16 +234,26 @@ function AllocateResource() {
                                     </Box>
                                     <Box
                                         sx={{marginLeft: `calc(220px - ${option.name.length + option.email.length}ch)`}}>
-
                                         {option.status.toUpperCase() === "ACTIVE"
-                                            ?(<CheckCircleIcon style={{color: "green", alignSelf: "center", width: 35, height: 35, margin: 2}}/>)
-                                            :(<ErrorIcon style={{color: "red", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
-
+                                            ? (<CheckCircleIcon style={{
+                                                color: "green",
+                                                alignSelf: "center",
+                                                width: 35,
+                                                height: 35,
+                                                margin: 2
+                                            }}/>)
+                                            : (<ErrorIcon style={{
+                                                color: "red",
+                                                alignSelf: "center",
+                                                width: 35,
+                                                height: 35,
+                                                margin: 5
+                                            }}/>)
                                         }
                                     </Box>
                                 </Box>
                             )}
-                            onChange={handleAccountChange}
+
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -249,7 +270,6 @@ function AllocateResource() {
                                         option.email.toLowerCase().includes(state.inputValue.toLowerCase())
                                 )
                             }
-                            key={success.show}
                         />
 
                         <br/>
@@ -301,10 +321,12 @@ function AllocateResource() {
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">%</InputAdornment>),
-                                inputProps: {min: 0, max:100}
+                                inputProps: {min: 0, max: 100}
                             }}
                         />
                     </div>
+
+                    <br/>
 
                     <div className="date-pickers">
                         <DatePickerInput
@@ -316,7 +338,6 @@ function AllocateResource() {
                             value={resource.startDate}
                             onChange={handleChangeForStartDate}
                             format="YYYY-MM-DD"
-                            helperText="YYYY-MM-DD"
                             required={true}
                         />
 
@@ -327,23 +348,34 @@ function AllocateResource() {
                             label="End Date"
                             disablePast={true}
                             isDisabled={!resource.startDate}
-                            minDate = {dayjs(resource.startDate)}
+                            minDate={dayjs(resource.startDate)}
                             maxDate={dayjs(detailedProject.endDate)}
                             value={resource.endDate}
                             onChange={handleChangeForEndDate}
                             format="YYYY-MM-DD"
-                            helperText={error && <span style={{ color: 'red' }}>{error}</span> || "YYYY-MM-DD"}
-
                             required={true}
                         />
                     </div>
+                    <FormHelperText>{error ? <span style={{
+                        color: '#b30000',
+                        display: 'block',
+                        textAlign: 'center'
+                    }}>{error}</span> : <br/>}</FormHelperText>
+
+                    <FormHelperText style={{textAlign: 'center'}}>
+                        <p1><strong>Project Start
+                            Date: </strong>{detailedProject.startDate}</p1>
+                        <br/>
+                        <p1><strong>Project End Date: </strong>{detailedProject.endDate}
+                        </p1>
+                    </FormHelperText>
+
 
                     <div className="buttons-resource">
                         <Button
                             isSecundary={true}
                             onClick={() => dispatch(selectMenu('project'))}
                             text="Return"
-                            startIcon={<ArrowBackIcon />}
                         />
 
                         <Button
@@ -356,7 +388,13 @@ function AllocateResource() {
                                 !resource.accountPercentageOfAllocation ||
                                 !resource.startDate ||
                                 !resource.endDate ||
-                                dayjs(resource.startDate).isAfter(dayjs(resource.endDate))
+                                dayjs(resource.startDate).isAfter(dayjs(resource.endDate)) ||
+                                dayjs(detailedProject.startDate).isAfter(resource.startDate) ||
+                                dayjs(detailedProject.startDate).isAfter(resource.endDate) ||
+                                dayjs(detailedProject.endDate).isBefore(resource.endDate) ||
+                                dayjs(detailedProject.endDate).isBefore(resource.startDate) ||
+                                dayjs(resource.startDate).isBefore(dayjs(), 'day') ||
+                                dayjs(resource.endDate).isBefore(dayjs(), 'day')
                             }
                             onClick={handleConfirmation}
                         />
