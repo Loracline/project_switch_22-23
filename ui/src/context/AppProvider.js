@@ -123,7 +123,7 @@ const AppProvider = ({children}) => {
         sprints: []
     }]
 
-    const usHeaders = ["US ID", "US Description", "US Status"]
+    const usHeaders = ["US Number", "US Description", "US Status"]
 
     const customers = [];
     const businessSectors = [];
