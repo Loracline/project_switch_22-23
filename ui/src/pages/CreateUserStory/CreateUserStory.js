@@ -1,8 +1,6 @@
 import React, {useContext, useState} from 'react';
 import Button from "../../components/Button/Button";
 import {
-    CircularProgress,
-    Dialog,
     IconButton,
     List,
     ListItem,
@@ -16,7 +14,6 @@ import AppContext from "../../context/AppContext";
 import {createUserStory, resetPostUserStory, selectMenu} from "../../context/Actions";
 import "./CreateUserStory.css";
 import {strings} from "../../strings";
-import ErrorIcon from "@mui/icons-material/Error";
 import Loading from "../../components/Loading/Loading";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
@@ -152,13 +149,6 @@ function CreateUserStory() {
                                       }>
                                 <ListItemText
                                     primary={`${index + 1}. ${acceptanceCriteria}`}> </ListItemText>
-                                primaryTypographyProps={{
-                                sx: {
-                                    color: 'gray',
-                                    fontSize: '0.05rem'
-                                },
-                            }}
-                                />
                             </ListItem>
                         ))}
                     </List>
@@ -197,7 +187,7 @@ function CreateUserStory() {
             />
             <FailureMessage
                 handleOpen={messageFailure.length > 0}
-                title={messageFailure}
+                title={strings.userStoryNumberAlreadyExistsMessage}
                 handleClose={handleClearUserStory}
             />
 
