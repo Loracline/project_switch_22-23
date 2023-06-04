@@ -62,7 +62,7 @@ public class ProjectResourceJpaRepository implements IProjectResourceRepository 
      */
     @Override
     public List<ProjectResource> findResourcesByAccountEmail(Email email) {
-        List <ProjectResourceJpa> list = jpaRepository.findByAccountEmail(email.getEmail());
+        List <ProjectResourceJpa> list = jpaRepository.findByAccountEmail(email.getEmailAddress());
         List<ProjectResource> projectResourceList = new ArrayList<>();
         list.forEach(jpa -> projectResourceList.add(assembler.toDomain(jpa)));
         return Collections.unmodifiableList(projectResourceList);

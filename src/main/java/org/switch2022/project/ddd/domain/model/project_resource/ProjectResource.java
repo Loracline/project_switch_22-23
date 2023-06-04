@@ -187,7 +187,7 @@ public class ProjectResource implements Entity<ProjectResource> {
      * @return the email of the project resource.
      */
     public String getEmail() {
-        return accountEmail.getEmail();
+        return accountEmail.getEmailAddress();
     }
 
     /**

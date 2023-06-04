@@ -29,10 +29,9 @@ public class UserStoryDomainDataAssembler {
      */
 
     public UserStoryJpa toData(UserStory userStory) {
-        UserStoryJpa userStoryJpa = new UserStoryJpa(userStory.getUsId(), userStory.getAcceptanceCriteria(),
+        return new UserStoryJpa(userStory.getUsId(), userStory.getAcceptanceCriteria(),
                 userStory.getUsNumber(), userStory.getActor(), userStory.getUsText(), userStory.getStatus(),
                 userStory.getProjectCode());
-        return userStoryJpa;
     }
 
     /**
@@ -59,9 +58,7 @@ public class UserStoryDomainDataAssembler {
 
         Code projectCode = new Code(Utils.getIntFromAlphanumericString(projectNumber, "p"));
 
-        UserStory userStory = factory.createUserStory(userStoryNumber,
+        return factory.createUserStory(userStoryNumber,
                 userStoryText, actor, acceptanceCriteria, projectCode);
-
-        return userStory;
     }
 }

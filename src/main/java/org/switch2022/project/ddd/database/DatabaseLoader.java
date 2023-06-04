@@ -132,7 +132,8 @@ public class DatabaseLoader implements CommandLineRunner {
         Project projectThree = factoryProject.createProject(PROJECT_THREE, new Name("Inevitable nightmare"),
                 new Description("Doomed from the start"), new BusinessSectorId(2),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_TWO));
-        projectDataInsertion(TWO_THOUSAND_AND_TWENTY_THREE, TEN, FIFTEEN, TWENTY, THREE_WEEKS, BUDGET_PROJECT_THREE, projectThree, MARCH, SEPTEMBER);
+        projectDataInsertion(TWO_THOUSAND_AND_TWENTY_THREE, TEN, FIFTEEN, TWENTY, THREE_WEEKS, BUDGET_PROJECT_THREE,
+                projectThree, MARCH, SEPTEMBER);
 
         this.projects.save(projectDomainDataAssembler.toData(projectOne));
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
@@ -294,8 +295,10 @@ public class DatabaseLoader implements CommandLineRunner {
                 new SprintId("p002", "s012"), new SprintNumber(SPRINT_NUMBER_TWENTY),
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, APRIL, FOUR), SPRINT_DURATION));
 
-        saveAccounts(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive, sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);
-        saveAccounts(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen, sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
+        saveAccounts(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive, sprintSix,
+                sprintSeven, sprintEight, sprintNine, sprintTen);
+        saveAccounts(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
+                sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
@@ -368,8 +371,10 @@ public class DatabaseLoader implements CommandLineRunner {
         Account accountFourteen = accountFactory.create(new Name("Antonio Silva"),
                 new Email("as@mymail.com"), new PhoneNumber(PHONE_NUMBER_SILVA_A), null);
 
-        saveAccounts(accountDomainDataAssembler, accountOne, accountTwo, accountThree, accountFour, accountFive, accountSix, accountSeven);
-        saveAccounts(accountDomainDataAssembler, accountEight, accountNine, accountTen, accountEleven, accountTwelve, accountThirteen, accountFourteen);
+        saveAccounts(accountDomainDataAssembler, accountOne, accountTwo, accountThree, accountFour, accountFive,
+                accountSix, accountSeven);
+        saveAccounts(accountDomainDataAssembler, accountEight, accountNine, accountTen, accountEleven, accountTwelve,
+                accountThirteen, accountFourteen);
 
         // Project resources
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
@@ -394,60 +399,89 @@ public class DatabaseLoader implements CommandLineRunner {
         final int RESOURCE_ELEVEN = 11;
         final int RESOURCE_TWELVE = 12;
 
-        ProjectResource projectResourceOne = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_ONE),
+        ProjectResource projectResourceOne = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_ONE),
                 new Code(PROJECT_ONE), new Email("tc@gmail.com"), Role.PROJECT_MANAGER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, JANUARY, TWO), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(THIRTY_FIVE), new PercentageOfAllocation(TWENTY));
-        ProjectResource projectResourceTwo = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_TWO),
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(THIRTY_FIVE),
+                        new PercentageOfAllocation(TWENTY));
+        ProjectResource projectResourceTwo = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_TWO),
                 new Code(PROJECT_ONE), new Email("js@gmail.com"), Role.PRODUCT_OWNER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, JANUARY, THREE), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(TWENTY_FIVE), new PercentageOfAllocation(TWENTY));
-        ProjectResource projectResourceThree = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_THREE),
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(TWENTY_FIVE),
+                        new PercentageOfAllocation(TWENTY));
+        ProjectResource projectResourceThree = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_THREE),
                 new Code(PROJECT_ONE), new Email("ms@gmail.com"), Role.SCRUM_MASTER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, JANUARY, FOUR), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(TWENTY_FIVE), new PercentageOfAllocation(THIRTY));
-        ProjectResource projectResourceFour = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_FOUR),
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(TWENTY_FIVE),
+                        new PercentageOfAllocation(THIRTY));
+        ProjectResource projectResourceFour = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_FOUR),
                 new Code(PROJECT_ONE), new Email("xf@gmail.com"), Role.TEAM_MEMBER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, JANUARY, FIVE), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(TWENTY), new PercentageOfAllocation(ONE_HUNDRED));
-        ProjectResource projectResourceFive = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_FIVE),
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(TWENTY),
+                        new PercentageOfAllocation(ONE_HUNDRED));
+        ProjectResource projectResourceFive = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_FIVE),
                 new Code(PROJECT_ONE), new Email("nel.m@gmail.com"), Role.TEAM_MEMBER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, JANUARY, SEVEN), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(TWENTY), new PercentageOfAllocation(ONE_HUNDRED));
-        ProjectResource projectResourceSix = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_SIX),
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY_ONE)), new CostPerHour(TWENTY),
+                        new PercentageOfAllocation(ONE_HUNDRED));
+        ProjectResource projectResourceSix = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_SIX),
                 new Code(PROJECT_ONE), new Email("zb@gmail.com"), Role.TEAM_MEMBER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, JANUARY, EIGHT), LocalDate.of(TWENTY_TWENTY_TWO, JULY,
                         TWENTY)), new CostPerHour(TWENTY), new PercentageOfAllocation(ONE_HUNDRED));
-        ProjectResource projectResourceSeven = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_SEVEN),
+        ProjectResource projectResourceSeven = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_SEVEN),
                 new Code(PROJECT_ONE), new Email("to.f@gmail.com"), Role.TEAM_MEMBER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, JANUARY, EIGHT), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, TWENTY)), new CostPerHour(TWENTY), new PercentageOfAllocation(ONE_HUNDRED));
-        ProjectResource projectResourceEight = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_EIGHT),
+                        (TWENTY_TWENTY_TWO, JULY, TWENTY)), new CostPerHour(TWENTY),
+                        new PercentageOfAllocation(ONE_HUNDRED));
+        ProjectResource projectResourceEight = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_EIGHT),
                 new Code(PROJECT_ONE), new Email("tdc@gmail.com"), Role.TEAM_MEMBER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, JANUARY, TEN), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, TWENTY)), new CostPerHour(TWENTY), new PercentageOfAllocation(ONE_HUNDRED));
-        ProjectResource projectResourceNine = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_NINE),
+                        (TWENTY_TWENTY_TWO, JULY, TWENTY)), new CostPerHour(TWENTY),
+                        new PercentageOfAllocation(ONE_HUNDRED));
+        ProjectResource projectResourceNine = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_NINE),
                 new Code(PROJECT_TWO), new Email("qb@gmail.com"), Role.PROJECT_MANAGER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, MAY, FIFTEEN), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY)), new CostPerHour(FORTY_TWO), new PercentageOfAllocation(TWENTY));
-        ProjectResource projectResourceTen = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_TEN),
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY)), new CostPerHour(FORTY_TWO),
+                        new PercentageOfAllocation(TWENTY));
+        ProjectResource projectResourceTen = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_TEN),
                 new Code(PROJECT_TWO), new Email("tg@gmail.com"), Role.PRODUCT_OWNER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, MAY, FIFTEEN), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY)), new CostPerHour(THIRTY), new PercentageOfAllocation(TWENTY));
-        ProjectResource projectResourceEleven = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_ELEVEN),
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY)), new CostPerHour(THIRTY), new
+                        PercentageOfAllocation(TWENTY));
+        ProjectResource projectResourceEleven = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_ELEVEN),
                 new Code(PROJECT_TWO), new Email("zm@gmail.com"), Role.TEAM_MEMBER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, MAY, THIRTY_ONE), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY)), new CostPerHour(TWENTY), new PercentageOfAllocation(ONE_HUNDRED));
-        ProjectResource projectResourceTwelve = projectResourceFactory.createProjectResource(new ProjectResourceId(RESOURCE_TWELVE),
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY)), new CostPerHour(TWENTY), new
+
+                        PercentageOfAllocation(ONE_HUNDRED));
+        ProjectResource projectResourceTwelve = projectResourceFactory.createProjectResource
+                (new ProjectResourceId(RESOURCE_TWELVE),
                 new Code(PROJECT_TWO), new Email("as@gmail.com"), Role.TEAM_MEMBER,
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, MAY, THIRTY_ONE), LocalDate.of
-                        (TWENTY_TWENTY_TWO, JULY, THIRTY)), new CostPerHour(EIGHTEEN), new PercentageOfAllocation(ONE_HUNDRED));
+                        (TWENTY_TWENTY_TWO, JULY, THIRTY)), new CostPerHour(EIGHTEEN),
+                        new PercentageOfAllocation(ONE_HUNDRED));
 
-        saveResources(resourceDomainDataAssembler, projectResourceOne, projectResourceTwo, projectResourceThree, projectResourceFour, projectResourceFive, projectResourceSix);
-        saveResources(resourceDomainDataAssembler, projectResourceSeven, projectResourceEight, projectResourceNine, projectResourceTen, projectResourceEleven, projectResourceTwelve);
+        saveResources(resourceDomainDataAssembler, projectResourceOne, projectResourceTwo, projectResourceThree,
+                projectResourceFour, projectResourceFive, projectResourceSix);
+        saveResources(resourceDomainDataAssembler, projectResourceSeven, projectResourceEight, projectResourceNine,
+                projectResourceTen, projectResourceEleven, projectResourceTwelve);
     }
 
-    private void saveResources(ResourceDomainDataAssembler resourceDomainDataAssembler, ProjectResource projectResourceOne, ProjectResource projectResourceTwo, ProjectResource projectResourceThree, ProjectResource projectResourceFour, ProjectResource projectResourceFive, ProjectResource projectResourceSix) {
+    private void saveResources(ResourceDomainDataAssembler resourceDomainDataAssembler,
+                               ProjectResource projectResourceOne, ProjectResource projectResourceTwo,
+                               ProjectResource projectResourceThree, ProjectResource projectResourceFour,
+                               ProjectResource projectResourceFive, ProjectResource projectResourceSix) {
         this.resources.save(resourceDomainDataAssembler.toData(projectResourceOne));
         this.resources.save(resourceDomainDataAssembler.toData(projectResourceTwo));
         this.resources.save(resourceDomainDataAssembler.toData(projectResourceThree));
@@ -456,7 +490,9 @@ public class DatabaseLoader implements CommandLineRunner {
         this.resources.save(resourceDomainDataAssembler.toData(projectResourceSix));
     }
 
-    private void saveAccounts(AccountDomainDataAssembler accountDomainDataAssembler, Account accountOne, Account accountTwo, Account accountThree, Account accountFour, Account accountFive, Account accountSix, Account accountSeven) {
+    private void saveAccounts(AccountDomainDataAssembler accountDomainDataAssembler, Account accountOne,
+                              Account accountTwo, Account accountThree, Account accountFour, Account accountFive,
+                              Account accountSix, Account accountSeven) {
         this.accounts.save(accountDomainDataAssembler.toData(accountOne));
         this.accounts.save(accountDomainDataAssembler.toData(accountTwo));
         this.accounts.save(accountDomainDataAssembler.toData(accountThree));
@@ -466,12 +502,16 @@ public class DatabaseLoader implements CommandLineRunner {
         this.accounts.save(accountDomainDataAssembler.toData(accountSeven));
     }
 
-    private void saveAccounts(SprintDomainDataAssembler sprintDomainDataAssembler, Sprint sprintOne, Sprint sprintTwo, Sprint sprintThree, Sprint sprintFour, Sprint sprintFive, Sprint sprintSix, Sprint sprintSeven, Sprint sprintEight, Sprint sprintNine, Sprint sprintTen) {
+    private void saveAccounts(SprintDomainDataAssembler sprintDomainDataAssembler, Sprint sprintOne,
+                              Sprint sprintTwo, Sprint sprintThree, Sprint sprintFour, Sprint sprintFive,
+                              Sprint sprintSix, Sprint sprintSeven, Sprint sprintEight, Sprint sprintNine,
+                              Sprint sprintTen) {
         saveSprints(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive);
         saveSprints(sprintDomainDataAssembler, sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);
     }
 
-    private void saveSprints(SprintDomainDataAssembler sprintDomainDataAssembler, Sprint sprintOne, Sprint sprintTwo, Sprint sprintThree, Sprint sprintFour, Sprint sprintFive) {
+    private void saveSprints(SprintDomainDataAssembler sprintDomainDataAssembler, Sprint sprintOne, Sprint sprintTwo,
+                             Sprint sprintThree, Sprint sprintFour, Sprint sprintFive) {
         this.sprints.save(sprintDomainDataAssembler.toData(sprintOne));
         this.sprints.save(sprintDomainDataAssembler.toData(sprintTwo));
         this.sprints.save(sprintDomainDataAssembler.toData(sprintThree));
