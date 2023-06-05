@@ -130,7 +130,8 @@ public class DatabaseLoader implements CommandLineRunner {
         projectInputData(THIRTY_ONE, TWELVE, THIRTY_ONE, FOUR_WEEKS, BUDGET_PROJECT_TWO, projectTwo, MAY);
 
         Project projectThree = factoryProject.createProject(PROJECT_THREE, new Name("Inevitable nightmare"),
-                new Description("Doomed from the start"), new BusinessSectorId(2),
+                new Description("Doomed from the start"),
+                new BusinessSectorId(BUSINESS_SECTOR_NUMBER_TWO),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_TWO));
         projectDataInsertion(TWO_THOUSAND_AND_TWENTY_THREE, TEN, FIFTEEN, TWENTY, THREE_WEEKS, BUDGET_PROJECT_THREE,
                 projectThree, MARCH, SEPTEMBER);
@@ -521,7 +522,9 @@ public class DatabaseLoader implements CommandLineRunner {
 
     private void projectInputData(int ONE, int EIGHT, int THIRTY_ONE, int TWO_WEEKS, int BUDGET_PROJECT_ONE,
                                   Project project, Month january) {
-        projectDataInsertion(2022, ONE, EIGHT, THIRTY_ONE, TWO_WEEKS, BUDGET_PROJECT_ONE, project, january, JULY);
+        final int TWENTY_TWENTY_TWO = 2022;
+        projectDataInsertion(TWENTY_TWENTY_TWO, ONE, EIGHT, THIRTY_ONE, TWO_WEEKS, BUDGET_PROJECT_ONE, project,
+                january, JULY);
     }
 
     private void projectDataInsertion(int YEAR, int START_DAY, int NUMBER_OF_SPRINTS, int END_DAY, int SPRINT_DURATION,
