@@ -130,6 +130,23 @@ class BusinessSectorJpaTest {
     }
 
     /**
+     * Scenario 6: Verify that two objects with different attributes are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_Name() {
+        // Arrange
+        BusinessSectorJpa reference = new BusinessSectorJpa("bs001", "IT");
+        BusinessSectorJpa other = new BusinessSectorJpa("bs001", "Fishing");
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
      * METHOD hashCode()
      * <br>
      * Scenario 1: Verify that two equal BusinessSector objects have the same hashcode.
