@@ -85,10 +85,11 @@ public final class Validate {
      * @param email the string to check.
      * @throws InvalidInputException if the string is null or empty or blank or email invalid.
      */
-    public static void isEmailValid(String email) {
+    public static boolean isEmailValid(String email) {
         if (!email.matches("^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             throw new InvalidInputException("The email is invalid");
         }
+        return true;
     }
 
     /**

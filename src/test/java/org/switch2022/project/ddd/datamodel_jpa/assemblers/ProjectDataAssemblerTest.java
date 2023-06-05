@@ -181,4 +181,53 @@ class ProjectDataAssemblerTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Method:toDomain
+     * scenario 2: status planned
+     */
+    @Test
+    void ensureThatProjectIsCreatedSuccessfully_statusPlanned() {
+        //Arrange
+        Project expected = mock(Project.class);
+        Name nameDouble = new Name("ISEP");
+        Description descriptionDouble = new Description("Project");
+        BusinessSectorId businessSectorIdDouble = new BusinessSectorId(1);
+        TaxId taxIdDouble = new TaxId("2576542324");
+        ProjectTypologyId projectTypologyIdDouble = new ProjectTypologyId(1);
+        when(factoryProject.createProject(1, nameDouble, descriptionDouble, businessSectorIdDouble, taxIdDouble,
+                projectTypologyIdDouble)).thenReturn(expected);
+        expected.addUserStory(0, new UsId("P001", "us001"));
+        expected.addUserStory(0, new UsId("P001", "us002"));
+
+        List<String> userStories = new ArrayList<>();
+        userStories.add("p001_us001");
+        userStories.add("p001_us002");
+        ProductBacklogJpa productBacklogJpa = mock(ProductBacklogJpa.class);
+        ProjectJpa projectJpa = mock(ProjectJpa.class);
+        when(expected.hasStatus(ProjectStatus.INCEPTION)).thenReturn(true);
+        when(projectJpa.getProjectName()).thenReturn("ISEP");
+        when(projectJpa.getDescription()).thenReturn("Project");
+        when(projectJpa.getProjectCode()).thenReturn("P001");
+        when(projectJpa.getBusinessSectorId()).thenReturn("bs001");
+        when(projectJpa.getCustomerTaxId()).thenReturn("2576542324");
+        when(projectJpa.getProjectTypologyId()).thenReturn("pt001");
+        when(projectJpa.getBudget()).thenReturn(0.0);
+        when(projectJpa.getProjectStatus()).thenReturn("PLANNED");
+        when(projectJpa.getNumberOfPlannedSprints()).thenReturn(0);
+        when(projectJpa.getStartDate()).thenReturn("");
+        when(projectJpa.getEndDate()).thenReturn("");
+        when(projectJpa.getSprintDuration()).thenReturn(0);
+        when(projectJpa.getProductBacklog()).thenReturn(productBacklogJpa);
+        when(productBacklogJpa.getUserStories()).thenReturn(userStories);
+        when(productBacklogJpa.getProductBacklogId()).thenReturn("p001_pb001");
+
+
+
+        //Act
+        Project result = projectDataAssembler.toDomain(projectJpa);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
 }

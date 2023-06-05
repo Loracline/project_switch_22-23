@@ -32,12 +32,8 @@ public class ProfileWebController {
      */
     @PostMapping()
     public ResponseEntity<Object> createProfile(@RequestBody ProfileCreationDto profileCreationDto) {
-        try {
             service.createProfile(profileCreationDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
-        }
     }
 
 }
