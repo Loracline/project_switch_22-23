@@ -152,7 +152,6 @@ class SprintJpaTest {
         // Create SprintJpa instances
         SprintJpa sprint1 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-10");
         SprintJpa sprint2 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-10");
-        SprintJpa sprint3 = new SprintJpa("S2", "2", "P2", "2023-06-15", "2023-06-24");
 
         // Test reflexivity
         assertEquals(sprint1, sprint1);
