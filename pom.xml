@@ -130,7 +130,6 @@
                 <configuration>
                     <excludes>
                         <exclude>**/ui/**/*</exclude>
-                        <exclude>**/org/switch2022/project/ddd/datamodel_jpa/**</exclude>
                         <exclude>**/org/switch2022/project/ddd/webcontrollers/**</exclude>
                     </excludes>
                 </configuration>
@@ -169,6 +168,7 @@
                         <param>org.switch2022.project.ddd.dto.*</param>
                         <param>org.switch2022.project.ddd.infrastructure.*</param>
                         <param>org.switch2022.project.ddd.utils.*</param>
+                        <param>org.switch2022.project.ddd.datamodel_jpa.*</param>
                     </targetClasses>
                     <targetTests>
                         <param>org.switch2022.project.ddd.application.*</param>
@@ -176,6 +176,7 @@
                         <param>org.switch2022.project.ddd.dto.*</param>
                         <param>org.switch2022.project.ddd.infrastructure.*</param>
                         <param>org.switch2022.project.ddd.utils.*</param>
+                        <param>org.switch2022.project.ddd.datamodel_jpa.*</param>
                     </targetTests>
                     <outputFormats>
                         <outputFormat>XML</outputFormat>

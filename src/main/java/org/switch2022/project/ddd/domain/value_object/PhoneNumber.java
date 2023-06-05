@@ -12,7 +12,7 @@ public class PhoneNumber implements ValueObject<PhoneNumber> {
      *
      * @param phoneNumber of the project.
      */
-    public PhoneNumber(final int phoneNumber) {
+    public PhoneNumber(final Integer phoneNumber) {
         Validate.notNull(phoneNumber, "The number must not be null");
         Validate.notNegative(phoneNumber, "number");
         Validate.isPhoneNumberValid(String.valueOf(phoneNumber));

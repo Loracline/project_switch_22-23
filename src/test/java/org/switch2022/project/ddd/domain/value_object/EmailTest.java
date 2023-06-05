@@ -1,10 +1,67 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.util.Assert;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
+import org.switch2022.project.ddd.utils.Validate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmailTest {
+
+    /**
+     * METHOD constructor
+     * <p>
+     * Scenario 1: verifies if an instance of Email is not created because the string passed as argument is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsNull() {
+        //Arrange
+        String expected = "The email must not be null";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                new Email(null));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if an instance of Email is not created because the string passed as argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsEmpty() {
+        //Arrange
+        String expected = "The email must not be empty";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                new Email(""));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 3: verifies if an instance of Email is not created because the string passed as argument is empty.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenStringIsBlank() {
+        //Arrange
+        String expected = "The email must not be blank";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                new Email(" "));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
 
     /**
      * METHOD getEmail()
