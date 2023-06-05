@@ -65,11 +65,10 @@ public class ProjectResource implements Entity<ProjectResource> {
      */
     @Override
     public boolean equals(Object other) {
-        Validate.notNull(other, "The Object To Compare must not be null");
         if (this == other) {
             return true;
         }
-        if (getClass() != other.getClass()) {
+        if (other == null || getClass() != other.getClass()) {
             return false;
         }
         return sameIdentityAs((ProjectResource) other);
