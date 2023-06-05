@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @NoArgsConstructor
 @Entity
@@ -39,5 +40,24 @@ public class ProductBacklogJpa {
 
     public List<String> getUserStories() {
         return userStories;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        ProductBacklogJpa that = (ProductBacklogJpa) o;
+        return Objects.equals(productBacklogId, that.productBacklogId) && Objects.equals(userStories, that.userStories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productBacklogId, userStories);
     }
 }

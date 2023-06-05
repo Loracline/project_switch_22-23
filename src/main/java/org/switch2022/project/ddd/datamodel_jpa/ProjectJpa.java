@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.datamodel_jpa;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @NoArgsConstructor
 @Entity
@@ -134,5 +135,32 @@ public class ProjectJpa {
 
     public ProductBacklogJpa getProductBacklog() {
         return productBacklog;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        ProjectJpa that = (ProjectJpa) o;
+        return Double.compare(that.budget, budget) == 0 && numberOfPlannedSprints == that.numberOfPlannedSprints &&
+                sprintDuration == that.sprintDuration && projectCode.equals(that.projectCode) &&
+                projectName.equals(that.projectName) && description.equals(that.description) &&
+                projectStatus.equals(that.projectStatus) && startDate.equals(that.startDate) &&
+                endDate.equals(that.endDate) && businessSectorId.equals(that.businessSectorId) &&
+                customerTaxId.equals(that.customerTaxId) && projectTypologyId.equals(that.projectTypologyId) &&
+                productBacklog.equals(that.productBacklog);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectCode, budget, projectName, description, projectStatus, numberOfPlannedSprints,
+                startDate, endDate, sprintDuration, businessSectorId, customerTaxId, projectTypologyId, productBacklog);
     }
 }
