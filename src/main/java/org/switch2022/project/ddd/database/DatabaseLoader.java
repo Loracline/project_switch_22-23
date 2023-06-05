@@ -112,9 +112,9 @@ public class DatabaseLoader implements CommandLineRunner {
         final int TWO_WEEKS = 2;
         final int THREE_WEEKS = 2;
         final int FOUR_WEEKS = 2;
-        final int BUDGET_PROJECT_ONE = 150000;
-        final int BUDGET_PROJECT_TWO = 350000;
-        final int BUDGET_PROJECT_THREE = 750000;
+        final int BUDGET_PROJECT_ONE = 150_000;
+        final int BUDGET_PROJECT_TWO = 350_000;
+        final int BUDGET_PROJECT_THREE = 750_000;
         final int PROJECT_ONE = 1;
         final int PROJECT_TWO = 2;
         final int PROJECT_THREE = 3;
@@ -296,9 +296,9 @@ public class DatabaseLoader implements CommandLineRunner {
                 new SprintId("p002", "s012"), new SprintNumber(SPRINT_NUMBER_TWENTY),
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, APRIL, FOUR), SPRINT_DURATION));
 
-        saveAccounts(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive, sprintSix,
+        saveSprintsAuxiliary(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive, sprintSix,
                 sprintSeven, sprintEight, sprintNine, sprintTen);
-        saveAccounts(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
+        saveSprintsAuxiliary(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
                 sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
 
         // Profiles
@@ -320,20 +320,20 @@ public class DatabaseLoader implements CommandLineRunner {
         AccountFactory accountFactory = new AccountFactory();
         AccountDomainDataAssembler accountDomainDataAssembler = new AccountDomainDataAssembler();
 
-        final int PHONE_NUMBER_SILVA = 915879652;
-        final int PHONE_NUMBER_COSTA = 263650520;
-        final int PHONE_NUMBER_FERREIRA = 915796520;
-        final int PHONE_NUMBER_CANCADO = 263650345;
-        final int PHONE_NUMBER_URZES = 962547891;
-        final int PHONE_NUMBER_ESQUINA = 212349016;
-        final int PHONE_NUMBER_MOLEIRO = 930123456;
-        final int PHONE_NUMBER_BENTO = 921458791;
-        final int PHONE_NUMBER_FARRULO = 921458795;
-        final int PHONE_NUMBER_CRUZES = 921458799;
-        final int PHONE_NUMBER_BARREIROS = 921458803;
-        final int PHONE_NUMBER_GERINGONÇA = 921458807;
-        final int PHONE_NUMBER_MANEL = 921458811;
-        final int PHONE_NUMBER_SILVA_A = 921458815;
+        final int PHONE_NUMBER_SILVA = 915_879_652;
+        final int PHONE_NUMBER_COSTA = 263_650_520;
+        final int PHONE_NUMBER_FERREIRA = 915_796_520;
+        final int PHONE_NUMBER_CANCADO = 263_650_345;
+        final int PHONE_NUMBER_URZES = 962_547_891;
+        final int PHONE_NUMBER_ESQUINA = 212_349_016;
+        final int PHONE_NUMBER_MOLEIRO = 930_123_456;
+        final int PHONE_NUMBER_BENTO = 921_458_791;
+        final int PHONE_NUMBER_FARRULO = 921_458_795;
+        final int PHONE_NUMBER_CRUZES = 921_458_799;
+        final int PHONE_NUMBER_BARREIROS = 921_458_803;
+        final int PHONE_NUMBER_GERINGONÇA = 921_458_807;
+        final int PHONE_NUMBER_MANEL = 921_458_811;
+        final int PHONE_NUMBER_SILVA_A = 921_458_815;
 
 
 
@@ -503,10 +503,10 @@ public class DatabaseLoader implements CommandLineRunner {
         this.accounts.save(accountDomainDataAssembler.toData(accountSeven));
     }
 
-    private void saveAccounts(SprintDomainDataAssembler sprintDomainDataAssembler, Sprint sprintOne,
-                              Sprint sprintTwo, Sprint sprintThree, Sprint sprintFour, Sprint sprintFive,
-                              Sprint sprintSix, Sprint sprintSeven, Sprint sprintEight, Sprint sprintNine,
-                              Sprint sprintTen) {
+    private void saveSprintsAuxiliary(SprintDomainDataAssembler sprintDomainDataAssembler, Sprint sprintOne,
+                                      Sprint sprintTwo, Sprint sprintThree, Sprint sprintFour, Sprint sprintFive,
+                                      Sprint sprintSix, Sprint sprintSeven, Sprint sprintEight, Sprint sprintNine,
+                                      Sprint sprintTen) {
         saveSprints(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive);
         saveSprints(sprintDomainDataAssembler, sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);
     }
@@ -520,20 +520,21 @@ public class DatabaseLoader implements CommandLineRunner {
         this.sprints.save(sprintDomainDataAssembler.toData(sprintFive));
     }
 
-    private void projectInputData(int ONE, int EIGHT, int THIRTY_ONE, int TWO_WEEKS, int BUDGET_PROJECT_ONE,
+    private void projectInputData(int one, int eight, int thirtyOne, int twoWeeks, int budgetProjectOne,
                                   Project project, Month january) {
         final int TWENTY_TWENTY_TWO = 2022;
-        projectDataInsertion(TWENTY_TWENTY_TWO, ONE, EIGHT, THIRTY_ONE, TWO_WEEKS, BUDGET_PROJECT_ONE, project,
+        projectDataInsertion(TWENTY_TWENTY_TWO, one, eight, thirtyOne, twoWeeks, budgetProjectOne, project,
                 january, JULY);
     }
 
-    private void projectDataInsertion(int YEAR, int START_DAY, int NUMBER_OF_SPRINTS, int END_DAY, int SPRINT_DURATION,
-                                      int BUDGET, Project project, Month startMonth, Month endMonth) {
+    private static void projectDataInsertion(int year, int startDay, int numberOfSprints, int endDay,
+                                             int sprintDuration, int budget, Project project, Month startMonth,
+                                             Month endMonth) {
         project.setProjectStatus(ProjectStatus.INCEPTION);
-        project.setPeriod(LocalDate.of(YEAR, startMonth, START_DAY),
-                LocalDate.of(YEAR, endMonth, END_DAY));
-        project.setSprintDuration(SPRINT_DURATION);
-        project.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(NUMBER_OF_SPRINTS));
-        project.isBudgetAssigned(new Budget(new BigDecimal(BUDGET)));
+        project.setPeriod(LocalDate.of(year, startMonth, startDay),
+                LocalDate.of(year, endMonth, endDay));
+        project.setSprintDuration(sprintDuration);
+        project.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(numberOfSprints));
+        project.isBudgetAssigned(new Budget(new BigDecimal(budget)));
     }
 }
