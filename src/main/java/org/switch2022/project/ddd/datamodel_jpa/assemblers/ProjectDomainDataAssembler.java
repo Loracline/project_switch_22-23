@@ -46,7 +46,7 @@ public class ProjectDomainDataAssembler {
      * @param project The Project object used to create the ProductBacklogJpa.
      * @return The created ProductBacklogJpa object.
      */
-    private ProductBacklogJpa createProductBacklogJpa(Project project) {
+    private static ProductBacklogJpa createProductBacklogJpa(Project project) {
         List<String> userStories = new ArrayList<>();
         List<UsId> userStoriesId = project.getProductBacklog();
         for (UsId userStoryId : userStoriesId) {
