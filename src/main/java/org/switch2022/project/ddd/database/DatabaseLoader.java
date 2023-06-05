@@ -296,8 +296,8 @@ public class DatabaseLoader implements CommandLineRunner {
                 new SprintId("p002", "s012"), new SprintNumber(SPRINT_NUMBER_TWENTY),
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, APRIL, FOUR), SPRINT_DURATION));
 
-        saveSprintsAuxiliary(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive, sprintSix,
-                sprintSeven, sprintEight, sprintNine, sprintTen);
+        saveSprintsAuxiliary(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive,
+                sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
                 sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
 
@@ -331,7 +331,7 @@ public class DatabaseLoader implements CommandLineRunner {
         final int PHONE_NUMBER_FARRULO = 921_458_795;
         final int PHONE_NUMBER_CRUZES = 921_458_799;
         final int PHONE_NUMBER_BARREIROS = 921_458_803;
-        final int PHONE_NUMBER_GERINGONÇA = 921_458_807;
+        final int PHONE_NUMBER_GERINGONCA = 921_458_807;
         final int PHONE_NUMBER_MANEL = 921_458_811;
         final int PHONE_NUMBER_SILVA_A = 921_458_815;
 
@@ -364,7 +364,7 @@ public class DatabaseLoader implements CommandLineRunner {
         Account accountEleven = accountFactory.create(new Name("Quim Barrreiros"),
                 new Email("qb@mymail.com"), new PhoneNumber(PHONE_NUMBER_BARREIROS), null);
         Account accountTwelve = accountFactory.create(new Name("Tiago Geringonca"),
-                new Email("tg@mymail.com"), new PhoneNumber(PHONE_NUMBER_GERINGONÇA), null);
+                new Email("tg@mymail.com"), new PhoneNumber(PHONE_NUMBER_GERINGONCA), null);
         accountTwelve.changeProfile(new ProfileId(PROFILE_TWO));
 
         Account accountThirteen = accountFactory.create(new Name("Zé Manel"),
@@ -520,7 +520,7 @@ public class DatabaseLoader implements CommandLineRunner {
         this.sprints.save(sprintDomainDataAssembler.toData(sprintFive));
     }
 
-    private void projectInputData(int one, int eight, int thirtyOne, int twoWeeks, int budgetProjectOne,
+    private static void projectInputData(int one, int eight, int thirtyOne, int twoWeeks, int budgetProjectOne,
                                   Project project, Month january) {
         final int TWENTY_TWENTY_TWO = 2022;
         projectDataInsertion(TWENTY_TWENTY_TWO, one, eight, thirtyOne, twoWeeks, budgetProjectOne, project,

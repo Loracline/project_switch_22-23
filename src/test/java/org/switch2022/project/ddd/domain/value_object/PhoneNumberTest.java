@@ -1,10 +1,66 @@
 package org.switch2022.project.ddd.domain.value_object;
 
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PhoneNumberTest {
+
+    /**
+     * METHOD constructor
+     * <p>
+     * Scenario 1: verifies if an instance of PhoneNumber is not created because the int
+     * passed as argument is null.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenNumberIsNull() {
+        //Arrange
+        String expected = "The number must not be null";
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                new PhoneNumber(null));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 2: verifies if an instance of PhoneNumber is not created because the int
+     * passed as argument is negative.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenNumberIsBlank() {
+        //Arrange
+        String expected = "The number must not be negative";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                new PhoneNumber(-1));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
+
+    /**
+     * Scenario 3: verifies if an instance of PhoneNumber is not created because the int
+     * passed as argument is not with the correct format.
+     * Should throw an IllegalArgumentException.
+     */
+    @Test
+    void ensureThatAnExceptionIsThrownWhenNumberIsNotWithCorrectFormat() {
+        //Arrange
+        String expected = "The phone number is invalid";
+
+        //Act
+        InvalidInputException exception = assertThrowsExactly(InvalidInputException.class, () ->
+                new PhoneNumber(123456789));
+
+        //Assert
+        assertEquals(expected, exception.getMessage());
+    }
 
     /**
      * METHOD getPhoneNumber()
