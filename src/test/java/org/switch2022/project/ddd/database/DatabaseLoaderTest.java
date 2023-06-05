@@ -73,6 +73,7 @@ public class DatabaseLoaderTest {
         databaseLoader.run();
 
         // Verify that the data was loaded into the database
+        
         // Business sectors
         BusinessSectorDomainDataAssembler businessSectorDomainDataAssembler = new BusinessSectorDomainDataAssembler();
         BusinessSectorFactory businessSectorFactory = new BusinessSectorFactory();
