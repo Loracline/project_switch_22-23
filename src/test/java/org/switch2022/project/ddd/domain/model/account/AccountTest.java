@@ -260,7 +260,7 @@ class AccountTest {
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
         Account account = new Account(name, email, phoneNumber, photo);
-        when(email.getEmail()).thenReturn("johndoe@example.com");
+        when(email.getEmailAddress()).thenReturn("johndoe@example.com");
 
         // Act
         String accountEmail = account.getAccountEmail();
@@ -359,7 +359,7 @@ class AccountTest {
         Photo photo = mock(Photo.class);
 
         Account account = new Account(name, email, phoneNumber, photo);
-        when(email.getEmail()).thenReturn("johndoe@example.com");
+        when(email.getEmailAddress()).thenReturn("johndoe@example.com");
 
         boolean result = account.hasEmail("johndoe@example.com");
 
@@ -377,7 +377,7 @@ class AccountTest {
         Photo photo = mock(Photo.class);
 
         Account account = new Account(name, email, phoneNumber, photo);
-        when(email.getEmail()).thenReturn("johndoe@example.com");
+        when(email.getEmailAddress()).thenReturn("johndoe@example.com");
         boolean result = account.hasEmail("jamese@example.com");
 
         assertFalse(result);
@@ -638,7 +638,7 @@ class AccountTest {
         PhoneNumber phoneNumber = mock(PhoneNumber.class);
         Photo photo = mock(Photo.class);
         BufferedImage bufferedImage = mock(BufferedImage.class);
-        when(photo.getPhoto()).thenReturn(bufferedImage);
+        when(photo.getPicture()).thenReturn(bufferedImage);
 
         Account account = new Account(name, email, phoneNumber, photo);
 

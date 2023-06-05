@@ -467,29 +467,30 @@ class SprintTest {
 
     /**
      * METHOD isPeriodNotOverlapping()
-     * Scenario 1 : return true if period is not overlapping
-     *//*
+     */
+    @DisplayName("Sprint's period do not overlap")
     @Test
-    void ensurePeriodIsNotOverlapping() {
-        //Arrange
-        Code projectCode = new Code(1);
-        LocalDate startDate = mock(LocalDate.class);
-        LocalDate endDate = mock(LocalDate.class);
-        Period period = new Period(startDate, endDate);
-        Period periodOne = new Period(startDate, endDate);
-        SprintNumber sprintNumber = new SprintNumber(2);
-        SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
-        Sprint sprintOne = new Sprint(projectCode, sprintId, sprintNumber, periodOne);
-        when(period.isPeriodNotOverlapping(periodOne)).thenReturn(true);
+    void ensureTwoSprintsPeriodDoNotOverlap() {
+        // Arrange
+        Code codeDouble = mock(Code.class);
+        SprintId sprintIdOneDouble = mock(SprintId.class);
+        SprintId sprintIdTwoDouble = mock(SprintId.class);
+        SprintNumber sprintNumberOneDouble = mock(SprintNumber.class);
+        SprintNumber sprintNumberTwoDouble = mock(SprintNumber.class);
+        Period periodOneDouble = mock(Period.class);
+        Period periodTwoDouble = mock(Period.class);
 
+        Sprint sprintOne = new Sprint(codeDouble, sprintIdOneDouble, sprintNumberOneDouble, periodOneDouble);
+        Sprint sprintTwo = new Sprint(codeDouble, sprintIdTwoDouble, sprintNumberTwoDouble, periodTwoDouble);
 
-        //Act
-        boolean result = sprint.isPeriodNotOverlapping(sprintOne);
+        when(periodOneDouble.isPeriodNotOverlapping(periodTwoDouble)).thenReturn(true);
 
-        //Assert
+        // Act
+        boolean result = sprintOne.isPeriodNotOverlapping(sprintTwo);
+
+        // Assert
         assertTrue(result);
-    }*/
+    }
 
     /**
      * Scenario 2: return false if period is overlapping.
@@ -502,7 +503,7 @@ class SprintTest {
         Period period2 = mock(Period.class);
         SprintNumber sprintNumber = new SprintNumber(2);
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
-        //Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
         Sprint sprint = mock(Sprint.class);
         when(period.contains(period2)).thenReturn(true);
 

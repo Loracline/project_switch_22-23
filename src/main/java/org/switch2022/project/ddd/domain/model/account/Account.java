@@ -101,7 +101,7 @@ public class Account implements Entity<Account> {
      */
 
     public String getAccountEmail() {
-        return email.getEmail();
+        return email.getEmailAddress();
     }
 
     /**
@@ -139,7 +139,7 @@ public class Account implements Entity<Account> {
     public BufferedImage getPhoto() {
         BufferedImage bufferedImage = null;
         if (photo != null) {
-            bufferedImage = photo.getPhoto();
+            bufferedImage = photo.getPicture();
         }
         return bufferedImage;
     }
@@ -162,7 +162,7 @@ public class Account implements Entity<Account> {
      * @return true if account has the given email and false otherwise.
      */
     public boolean hasEmail(String email) {
-        return this.email.getEmail().equals(email);
+        return this.email.getEmailAddress().equals(email);
     }
 
     /**

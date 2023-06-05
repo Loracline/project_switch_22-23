@@ -27,7 +27,7 @@ public class UserStory implements Entity<UserStory> {
     private UsText usText;
     private Status status;
 
-    private Code projectCode;
+    private final Code projectCode;
 
     /**
      * Constructor
@@ -156,11 +156,11 @@ public class UserStory implements Entity<UserStory> {
      * This getter returns the Acceptance Criteria of a user story.
      */
     public List<String> getAcceptanceCriteria() {
-        List<String> acceptanceCriteria = new ArrayList<>();
+        List<String> listOfAcceptanceCriteria = new ArrayList<>();
         for(AcceptanceCriteria ac : this.acceptanceCriteria){
-            acceptanceCriteria.add(ac.getAcceptanceCriteria());
+            listOfAcceptanceCriteria.add(ac.getAcceptanceCriteria());
         }
-        return Collections.unmodifiableList(acceptanceCriteria);
+        return Collections.unmodifiableList(listOfAcceptanceCriteria);
     }
 
     /**

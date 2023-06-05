@@ -148,4 +148,41 @@ class ProjectListAllocationServiceTest {
         //Assert
         assertEquals(expected, result);
     }
+    /**
+     * Method: listProjectsByAccount(Email email).
+     * Scenario 06: The account whose email was passed as argument is involved in one or more projects.
+     * Expected return: An empty list
+     */
+    @Test
+    void ensureThatAListOfProjectDtosIsNotSuccessfullyReturned() {
+        //Arrange
+        Project projectOne = mock(Project.class);
+        Project projectTwo = mock(Project.class);
+
+        List<Project> projects = new ArrayList<>();
+        projects.add(projectOne);
+        projects.add(projectTwo);
+
+        when(projectRepository.findAllByProjectCodes(any())).thenReturn(projects);
+
+        when(projectOne.containsCurrentDate()).thenReturn(false);
+        when(projectTwo.containsCurrentDate()).thenReturn(false);
+
+        ProjectDto projectDtoOne = mock(ProjectDto.class);
+        ProjectDto projectDtoTwo = mock(ProjectDto.class);
+
+        String customerName = "ISEP";
+        when(customerRepository.findCustomerNameByTaxId(any())).thenReturn(customerName);
+
+        when(mapper.projectToDto(projectOne, customerName)).thenReturn(projectDtoOne);
+        when(mapper.projectToDto(projectTwo, customerName)).thenReturn(projectDtoTwo);
+
+        List<ProjectDto> expected = new ArrayList<>();
+
+        //Act
+        List<ProjectDto> result = service.listProjectsByAccount("example@ise.ipp.pt");
+
+        //Assert
+        assertEquals(expected, result);
+    }
 }

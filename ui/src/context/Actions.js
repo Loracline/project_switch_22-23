@@ -5,7 +5,7 @@ import {
     getProjectTypologies,
     postProject
 } from "../services/ProjectService";
-import  {postSprint} from "../services/SprintService";
+import {postSprint} from "../services/SprintService";
 import {strings} from "../strings";
 import {postUserStory} from "../services/UserStoryService";
 
@@ -135,10 +135,11 @@ function fetchCustomersFailure() {
  Action for creating a new project.
  */
 export function createProject(dispatch, projectToSubmit) {
-    postProject((res) => {
-            dispatch(postProjectSuccess(res));
+    postProject((res) => dispatch(postProjectSuccess(res)),
+        (error) => {
+            console.log(JSON.stringify(error));
+            dispatch(postProjectFailure(error));
         },
-        (err) => dispatch(postProjectFailure(err.message)),
         {
             projectName: projectToSubmit.name,
             projectDescription: projectToSubmit.description,

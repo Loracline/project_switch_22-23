@@ -494,7 +494,7 @@ class ResourceAllocationServiceTest {
         List<Account> accounts = new ArrayList<>();
         accounts.add(accountDouble);
 
-        when(accountDouble.hasEmail(accountEmailDouble.getEmail())).thenReturn(true);
+        when(accountDouble.hasEmail(accountEmailDouble.getEmailAddress())).thenReturn(true);
         when(accountDouble.isAccountActive()).thenReturn(true);
 
         when(accountRepository.findAll()).thenReturn(accounts);

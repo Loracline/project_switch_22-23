@@ -1,10 +1,11 @@
 import Button from "../../components/Button/Button";
-import React, {useContext, useState} from "react";
-import { selectMenu} from "../../context/Actions";
+import React, {useContext, useEffect, useState} from "react";
+import {selectMenu} from "../../context/Actions";
 import {
     Autocomplete,
     Box,
     FormControl,
+    FormHelperText,
     InputAdornment,
     InputLabel,
     MenuItem,
@@ -18,11 +19,9 @@ import {useGetAccounts} from "./useGetAccounts";
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
-import {format} from "date-fns";
 import dayjs from "dayjs";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from "@mui/icons-material/Error";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './AllocateResource.css';
 
 function AllocateResource() {
@@ -41,11 +40,23 @@ function AllocateResource() {
     }
 
     const [resource, setResource] = useState(initialResource);
-    const [percentageError, setPercentageError] = useState('');
+    const [error, setError] = useState('');
     const [success, setSuccess] = useState({message: '', show: false});
     const [failure, setFailure] = useState({message: '', show: false});
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [userAccounts] = useGetAccounts();
+
+    const dateError = () => {
+        if (dayjs(resource.startDate).isAfter(dayjs(resource.endDate))) {
+            setError('Start date must be before or Equal to end date');
+        } else {
+            setError('');
+        }
+    }
+
+    useEffect(() => {
+        dateError()
+    })
 
     const handleConfirmation = () => {
         setShowConfirmation(true);
@@ -55,10 +66,26 @@ function AllocateResource() {
         setShowConfirmation(false);
     };
 
-    const handleChange = (event) => {
-        const {name, value} = event.target;
+    const handleRoleChange = (event) => {
+        const {value} = event.target;
         const newResource = {...resource};
-        newResource[name] = value;
+        newResource["accountRole"] = value;
+        setResource(newResource);
+    }
+
+    const handleCostChange = (event) => {
+        const {value} = event.target;
+        const newResource = {...resource};
+        const floatValue = parseFloat(value);
+        let valid = true;
+        if (value !== '') {
+            if (floatValue < 0) {
+                valid = false;
+            }
+        }
+        if (valid) {
+            newResource["accountCostPerHour"] = value;
+        }
         setResource(newResource);
     }
 
@@ -70,33 +97,38 @@ function AllocateResource() {
 
     const handleChangeForPercentageOfAllocation = (event) => {
         const {value} = event.target;
-        const newValue = value.replace(/[^0-9.]/g, '');
-        const floatValue = parseFloat(newValue);
-        let inputError = '';
-
-        if (newValue !== '') {
+        const floatValue = parseFloat(value);
+        const newResource = {...resource};
+        let valid = true;
+        if (value !== '') {
             if (floatValue < 0 || floatValue > 100) {
-                inputError = 'Only numbers between 0 and 100 are allowed.';
+                valid = false;
             }
         }
-        const newResource = {...resource};
-        if (inputError === '') {
-            newResource["accountPercentageOfAllocation"] = newValue;
+        if (valid) {
+            newResource["accountPercentageOfAllocation"] = value;
         }
-        setPercentageError(inputError);
         setResource(newResource);
     }
+
     const handleChangeForStartDate = (date) => {
-        const formattedDate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
-        const newResource = {...resource};
-        newResource["startDate"] = formattedDate;
-        setResource(newResource);
+        const year = date ? date.year() : 0;
+        if (year >= 1000 && year <= 9999) {
+            const formattedDate = date ? date.format('YYYY-MM-DD') : null;
+            const newResource = {...resource};
+            newResource["startDate"] = formattedDate;
+            setResource(newResource);
+        }
     }
+
     const handleChangeForEndDate = (date) => {
-        const formattedDate = date ? format(new Date(date), 'yyyy-MM-dd') : null;
-        const newResource = {...resource};
-        newResource["endDate"] = formattedDate;
-        setResource(newResource);
+        const year = date ? date.year() : 0;
+        if (year >= 1000 && year <= 9999) {
+            const formattedDate = date ? date.format('YYYY-MM-DD') : null;
+            const newResource = {...resource};
+            newResource["endDate"] = formattedDate;
+            setResource(newResource);
+        }
     }
 
     const handleSuccessClose = () => {
@@ -123,7 +155,11 @@ function AllocateResource() {
     const dialogContent = () => {
         return (
             <div>
-                <h2 style={{marginBottom: '1rem', fontSize: '2rem', textAlign: "center"}}>Please confirm:</h2>
+                <h2 style={{
+                    marginBottom: '1rem',
+                    fontSize: '2rem',
+                    textAlign: "center"
+                }}>Please confirm:</h2>
                 <table style={{width: '100%'}}>
                     <tbody>
                     <tr>
@@ -148,19 +184,11 @@ function AllocateResource() {
                     </tr>
                     <tr>
                         <td><strong>Start Date:</strong></td>
-                        <td>{new Date(resource.startDate).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric'
-                        })}</td>
+                        <td>{resource.startDate ? dayjs(resource.startDate).format('YYYY-MM-DD') : null}</td>
                     </tr>
                     <tr>
                         <td><strong>End Date:</strong></td>
-                        <td>{new Date(resource.endDate).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric'
-                        })}</td>
+                        <td>{resource.endDate ? dayjs(resource.endDate).format('YYYY-MM-DD') : null}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -186,10 +214,12 @@ function AllocateResource() {
                 <form className="resource-form">
                     <div className={"user-role"}>
                         <Autocomplete
-                            sx={{width: 300}}
+                            sx={{width: 320}}
                             options={userAccounts}
                             getOptionLabel={(option) => option.email}
                             getOptionDisabled={(option) => option.status.toUpperCase() === "INACTIVE"}
+                            onChange={handleAccountChange}
+                            key={success.show}
                             renderOption={(props, option) => (
                                 <Box component="li"
                                      sx={{'& > img': {mr: 2, flexShrink: 0}}} {...props}>
@@ -203,17 +233,27 @@ function AllocateResource() {
                                         </span>
                                     </Box>
                                     <Box
-                                        sx={{marginLeft: `calc(250px - ${option.name.length + option.email.length}ch)`}}>
-
+                                        sx={{marginLeft: `calc(220px - ${option.name.length + option.email.length}ch)`}}>
                                         {option.status.toUpperCase() === "ACTIVE"
-                                            ?(<CheckCircleIcon style={{color: "green", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
-                                            :(<ErrorIcon style={{color: "red", alignSelf: "center", width: 35, height: 35, margin: 5}}/>)
-
+                                            ? (<CheckCircleIcon style={{
+                                                color: "green",
+                                                alignSelf: "center",
+                                                width: 35,
+                                                height: 35,
+                                                margin: 2
+                                            }}/>)
+                                            : (<ErrorIcon style={{
+                                                color: "red",
+                                                alignSelf: "center",
+                                                width: 35,
+                                                height: 35,
+                                                margin: 5
+                                            }}/>)
                                         }
                                     </Box>
                                 </Box>
                             )}
-                            onChange={handleAccountChange}
+
                             renderInput={(params) => (
                                 <TextField
                                     {...params}
@@ -230,18 +270,17 @@ function AllocateResource() {
                                         option.email.toLowerCase().includes(state.inputValue.toLowerCase())
                                 )
                             }
-                            key={success.show}
                         />
 
                         <br/>
 
-                        <FormControl required sx={{width: 300}}>
+                        <FormControl required sx={{width: 320}}>
                             <InputLabel>Role</InputLabel>
                             <Select
                                 name="accountRole"
                                 value={resource.accountRole}
                                 label="Role"
-                                onChange={handleChange}>
+                                onChange={handleRoleChange}>
                                 <MenuItem value={"Team Member"}>Team Member</MenuItem>
                                 <MenuItem value={"Product Owner"}>Product Owner</MenuItem>
                                 <MenuItem value={"Scrum Master"}>Scrum Master</MenuItem>
@@ -253,13 +292,13 @@ function AllocateResource() {
 
                     <div className="cost-percentage">
                         <TextField
-                            sx={{width: 300}}
+                            sx={{width: 320}}
                             name="accountCostPerHour"
                             label="Cost"
                             type="number"
                             helperText={'Total paid for each hour of work'}
                             value={resource.accountCostPerHour}
-                            onChange={handleChange}
+                            onChange={handleCostChange}
                             required
                             InputProps={{
                                 endAdornment: (<InputAdornment
@@ -272,57 +311,71 @@ function AllocateResource() {
                         <br/>
 
                         <TextField
-                            sx={{width: 300}}
+                            sx={{width: 320}}
                             label="Percentage Of Allocation"
                             type="number"
-                            error={Boolean(percentageError)}
-                            helperText={percentageError || 'Between 0 - 100%'}
+                            helperText={'Between 0 - 100%'}
                             value={resource.accountPercentageOfAllocation}
                             onChange={handleChangeForPercentageOfAllocation}
                             required
                             InputProps={{
                                 endAdornment: (
-                                    <InputAdornment position="end">%</InputAdornment>)
+                                    <InputAdornment position="end">%</InputAdornment>),
+                                inputProps: {min: 0, max: 100}
                             }}
                         />
                     </div>
 
+                    <br/>
+
                     <div className="date-pickers">
                         <DatePickerInput
-                            width={140}
+                            width={150}
                             label="Start Date"
                             disablePast={true}
                             minDate={dayjs(detailedProject.startDate)}
-                            maxDate={dayjs(detailedProject.endDate) || resource.endDate}
+                            maxDate={dayjs(detailedProject.endDate)}
                             value={resource.startDate}
                             onChange={handleChangeForStartDate}
                             format="YYYY-MM-DD"
-                            helperText="YYYY-MM-DD"
                             required={true}
                         />
 
                         <br/>
 
                         <DatePickerInput
-                            width={140}
+                            width={150}
                             label="End Date"
                             disablePast={true}
-                            minDate={resource.startDate || dayjs(detailedProject.startDate)}
+                            isDisabled={!resource.startDate}
+                            minDate={dayjs(resource.startDate)}
                             maxDate={dayjs(detailedProject.endDate)}
                             value={resource.endDate}
                             onChange={handleChangeForEndDate}
                             format="YYYY-MM-DD"
-                            helperText="YYYY-MM-DD"
                             required={true}
                         />
                     </div>
+                    <FormHelperText>{error ? <span style={{
+                        color: '#b30000',
+                        display: 'block',
+                        textAlign: 'center'
+                    }}>{error}</span> : <br/>}</FormHelperText>
+
+                    <FormHelperText style={{textAlign: 'center'}}>
+                        <p1><strong>Project: </strong>{detailedProject.code}</p1>
+                        <br/>
+                        <p1><strong>Start Date: </strong>{detailedProject.startDate}</p1>
+                        <br/>
+                        <p1><strong>End Date: </strong>{detailedProject.endDate}</p1>
+                    </FormHelperText>
+
 
                     <div className="buttons-resource">
                         <Button
                             isSecundary={true}
                             onClick={() => dispatch(selectMenu('project'))}
                             text="Return"
-                            startIcon={<ArrowBackIcon />}
                         />
 
                         <Button
@@ -334,7 +387,14 @@ function AllocateResource() {
                                 !resource.accountCostPerHour ||
                                 !resource.accountPercentageOfAllocation ||
                                 !resource.startDate ||
-                                !resource.endDate
+                                !resource.endDate ||
+                                dayjs(resource.startDate).isAfter(dayjs(resource.endDate)) ||
+                                dayjs(detailedProject.startDate).isAfter(resource.startDate) ||
+                                dayjs(detailedProject.startDate).isAfter(resource.endDate) ||
+                                dayjs(detailedProject.endDate).isBefore(resource.endDate) ||
+                                dayjs(detailedProject.endDate).isBefore(resource.startDate) ||
+                                dayjs(resource.startDate).isBefore(dayjs(), 'day') ||
+                                dayjs(resource.endDate).isBefore(dayjs(), 'day')
                             }
                             onClick={handleConfirmation}
                         />
