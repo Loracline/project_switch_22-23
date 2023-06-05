@@ -73,10 +73,9 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     private boolean exists(ProjectResource projectResource) {
         boolean hasResource = false;
 
-        for (int i = 0; i < projectResources.size(); i++) {
+        for (int i = 0; i < projectResources.size() && !hasResource; i++) {
             if (projectResources.get(i).hasSameAllocationInfo(projectResource)) {
                 hasResource = true;
-                i = projectResources.size();
             }
         }
         return hasResource;

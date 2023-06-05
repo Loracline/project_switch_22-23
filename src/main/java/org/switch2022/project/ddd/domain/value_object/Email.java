@@ -4,17 +4,17 @@ import org.switch2022.project.ddd.domain.shared.ValueObject;
 import org.switch2022.project.ddd.utils.Validate;
 
 public class Email implements ValueObject<Email> {
-    private final String email;
+    private final String emailAddress;
 
     /**
      * Constructor.
      *
-     * @param email of the account.
+     * @param emailAddress of the account.
      */
-    public Email(final String email) {
-        Validate.notNullOrEmptyOrBlank(email, "email");
-        Validate.isEmailValid(email);
-        this.email = email.toLowerCase();
+    public Email(final String emailAddress) {
+        Validate.notNullOrEmptyOrBlank(emailAddress, "email");
+        Validate.isEmailValid(emailAddress);
+        this.emailAddress = emailAddress.toLowerCase();
     }
 
     /**
@@ -22,8 +22,8 @@ public class Email implements ValueObject<Email> {
      *
      * @return String representation of the email.
      */
-    public String getEmail() {
-        return email;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Email implements ValueObject<Email> {
      */
     @Override
     public boolean sameValueAs(Email other) {
-        return other != null && this.email.equals(other.email);
+        return other != null && this.emailAddress.equals(other.emailAddress);
     }
 
     /**
@@ -66,6 +66,6 @@ public class Email implements ValueObject<Email> {
 
     @Override
     public int hashCode() {
-        return email.hashCode();
+        return emailAddress.hashCode();
     }
 }

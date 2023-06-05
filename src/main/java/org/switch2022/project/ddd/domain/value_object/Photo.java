@@ -6,15 +6,15 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 public class Photo implements ValueObject<Photo> {
-    private final BufferedImage photo;
+    private final BufferedImage picture;
 
     /**
      * Constructor.
      *
-     * @param photo of the account.
+     * @param picture of the account.
      */
-    public Photo(final BufferedImage photo) {
-        this.photo = photo;
+    public Photo(final BufferedImage picture) {
+        this.picture = picture;
     }
 
     /**
@@ -22,8 +22,8 @@ public class Photo implements ValueObject<Photo> {
      *
      * @return photo of the account.
      */
-    public BufferedImage getPhoto() {
-        return photo;
+    public BufferedImage getPicture() {
+        return picture;
     }
 
     /**
@@ -34,7 +34,7 @@ public class Photo implements ValueObject<Photo> {
      */
     @Override
     public boolean sameValueAs(Photo other) {
-        return other != null && this.photo == (other.photo);
+        return other != null && this.picture == (other.picture);
     }
 
     /**
@@ -65,6 +65,6 @@ public class Photo implements ValueObject<Photo> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(photo);
+        return Objects.hash(picture);
     }
 }

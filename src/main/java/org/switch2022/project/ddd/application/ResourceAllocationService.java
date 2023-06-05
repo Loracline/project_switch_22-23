@@ -379,7 +379,7 @@ public class ResourceAllocationService {
         List<Account> accounts = accountRepository.findAll();
         if (!accounts.isEmpty()) {
             for (Account account : accounts) {
-                if (account.hasEmail(accountEmail.getEmail()) && account.isAccountActive()) {
+                if (account.hasEmail(accountEmail.getEmailAddress()) && account.isAccountActive()) {
                     accountIsValid = true;
                 }
             }

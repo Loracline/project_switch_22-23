@@ -22,7 +22,7 @@ class PhotoTest {
         BufferedImage expected = value;
 
         // Act
-        BufferedImage result = photo.getPhoto();
+        BufferedImage result = photo.getPicture();
 
         // Assert
         assertEquals(expected, result);

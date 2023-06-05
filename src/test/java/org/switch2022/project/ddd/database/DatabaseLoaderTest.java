@@ -92,7 +92,7 @@ public class DatabaseLoaderTest {
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId("217746691"), new ProjectTypologyId(1));
         projectOne.setProjectStatus(ProjectStatus.INCEPTION);
-        projectOne.setPeriod(LocalDate.of(2022,1,3),
+        projectOne.setPeriod(LocalDate.of(2022,1,1),
                 LocalDate.of(2022, 7, 31));
         projectOne.setSprintDuration(2);
         projectOne.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(8));

@@ -132,9 +132,9 @@ class AccountRepositoryTest {
         String stringOf_emailTwo = "emailTwo@isep.ipp.pt";
         String stringOf_emailThree = "emailThree@isep.ipp.pt";
 
-        when(emailOne.getEmail()).thenReturn(stringOf_emailOne);
-        when(emailTwo.getEmail()).thenReturn(stringOf_emailTwo);
-        when(emailThree.getEmail()).thenReturn(stringOf_emailThree);
+        when(emailOne.getEmailAddress()).thenReturn(stringOf_emailOne);
+        when(emailTwo.getEmailAddress()).thenReturn(stringOf_emailTwo);
+        when(emailThree.getEmailAddress()).thenReturn(stringOf_emailThree);
         when(accountOne.hasEmail(stringOf_emailOne)).thenReturn(true);
         when(accountTwo.hasEmail(stringOf_emailTwo)).thenReturn(true);
         when(accountThree.hasEmail(stringOf_emailThree)).thenReturn(true);

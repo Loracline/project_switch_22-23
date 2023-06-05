@@ -1041,7 +1041,7 @@ class ProjectResourceTest {
         ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
 
-        when(emailDouble.getEmail()).thenReturn("example@isep.ipp.pt");
+        when(emailDouble.getEmailAddress()).thenReturn("example@isep.ipp.pt");
 
         String expected = "example@isep.ipp.pt";
 
