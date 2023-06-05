@@ -266,4 +266,52 @@ class UsRepositoryTest {
         assertFalse(result);
     }
 */
+
+    /**
+     * Method: existsByUsId(usId).
+     * Verifies if a user story with a given ID exists in the repository of user stories.
+     * <br>
+     * Scenario 01: verify that a userStory with a given usId exists in the list of userStories.
+     * Expected result: true.
+     */
+    @Test
+    void ensureItReturnsTrueIfUserStoryWithGiveUsIdExistsInTheRepository() {
+        //ARRANGE
+        UsRepository repository = new UsRepository();
+        UsId usId = new UsId("P01", "1");
+
+        UserStory userStory = mock(UserStory.class);
+        repository.save(userStory);
+        when(userStory.getUsId()).thenReturn("p01_1");
+
+
+        //ACT
+        boolean result = repository.existsByUsId(usId);
+        //ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Method: existsByUsId(usId).
+     * Verifies if a user story with a given ID exists in the repository of user stories.
+     * <br>
+     * Scenario 02: verify that a userStory with a given usId does not exist in the list of userStories.
+     * Expected result: false.
+     */
+    @Test
+    void ensureItReturnsFalseIfUserStoryWithGiveUsIdDoesNotExistInTheRepository() {
+        //ARRANGE
+        UsRepository repository = new UsRepository();
+        UsId usId = new UsId("P01", "2");
+
+        UserStory userStory = mock(UserStory.class);
+        repository.save(userStory);
+        when(userStory.getUsId()).thenReturn("p01_1");
+
+
+        //ACT
+        boolean result = repository.existsByUsId(usId);
+        //ASSERT
+        assertFalse(result);
+    }
 }
