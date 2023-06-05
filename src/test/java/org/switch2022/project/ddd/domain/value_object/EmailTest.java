@@ -20,7 +20,7 @@ class EmailTest {
         String expected = value;
 
         // Act
-        String result = email.getEmail();
+        String result = email.getEmailAddress();
 
         // Assert
         assertEquals(expected, result);
