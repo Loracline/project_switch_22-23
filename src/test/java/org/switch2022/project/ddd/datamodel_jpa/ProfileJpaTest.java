@@ -106,7 +106,7 @@ class ProfileJpaTest {
         //Arrange
         ProfileJpa obj1 = new ProfileJpa("PRF005", "Director");
         ProfileJpa obj2 = new ProfileJpa("PRF005", "Director");
-        ProfileJpa obj3 = new ProfileJpa("PRF005", "Head of Software Development");
+        ProfileJpa obj3 = new ProfileJpa("PRF006", "Head of Software Development");
 
         //Act and Assert
         assertEquals(obj1.hashCode(), obj2.hashCode());
@@ -114,6 +114,9 @@ class ProfileJpaTest {
         assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
 
+    /**
+     * Test for method getProfileId().
+     */
     @DisplayName("ProfileId is retrieved successfully")
     @Test
     void ensureThatProfileIdISRetrieved() {
@@ -128,6 +131,9 @@ class ProfileJpaTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test for method getProfileName().
+     */
     @DisplayName("ProfileName is retrieved successfully")
     @Test
     void ensureThatTypologyNameISRetrieved() {
@@ -142,6 +148,9 @@ class ProfileJpaTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test for no args constructor.
+     */
     @DisplayName("Empty Constructor Testing")
     @Test
     void testEmptyConstructor() {

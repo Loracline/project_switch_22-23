@@ -236,7 +236,7 @@ class ProjectJpaTest {
                 "A dummy Project", "inception", 13,
                 "2021-10-03", "2023-10-03", 3, "bs001",
                 "262727262", "pt001", productBacklogJpa);
-        ProductBacklogJpa expected =new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProductBacklogJpa expected = new ProductBacklogJpa("p001_pb", new ArrayList<>());
 
         //Act
         ProductBacklogJpa result = projectJpa.getProductBacklog();
@@ -244,6 +244,7 @@ class ProjectJpaTest {
         //Assert
         assertEquals(expected, result);
     }
+
     /**
      * METHOD equals()
      * <br>
@@ -350,6 +351,306 @@ class ProjectJpaTest {
                 "2021-10-03", "2023-10-03", 3, "bs001",
                 "262727262", "pt001", productBacklogJpa);
         Project other = mock(Project.class);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 6: Verify that two objects with different projectCode are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_projectCode() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p002", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 7: Verify that two objects with different budget are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_budget() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.1, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 8: Verify that two objects with different projectName are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_projectName() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy2",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 9: Verify that two objects with different description are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_description() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "Dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 10: Verify that two objects with different status are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_status() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "planned", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 11: Verify that two objects with different number of planned sprints are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_NumberofPlannedSprints() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 10,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 12: Verify that two objects with different start date are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_startDate() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-04", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 13: Verify that two objects with different end date are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_endDate() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-04", 3, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 14: Verify that two objects with different sprint duration are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_sprintDuration() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 4, "bs001",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 15: Verify that two objects with different business Sector are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_businessSector() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs002",
+                "262727262", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 16: Verify that two objects with different customer tax id are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_TaxId() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727261", "pt001", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
+        boolean expected = false;
+
+        // Act
+        boolean result = projectJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 18: Verify that two objects with different project typology are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_typology() {
+        // Arrange
+        ProductBacklogJpa productBacklogJpa = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa projectJpa = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt002", productBacklogJpa);
+        ProductBacklogJpa productBacklogJpaO = new ProductBacklogJpa("p001_pb", new ArrayList<>());
+        ProjectJpa other = new ProjectJpa("p001", 175000.0, "dummy1",
+                "A dummy Project", "inception", 13,
+                "2021-10-03", "2023-10-03", 3, "bs001",
+                "262727262", "pt001", productBacklogJpaO);
         boolean expected = false;
 
         // Act
