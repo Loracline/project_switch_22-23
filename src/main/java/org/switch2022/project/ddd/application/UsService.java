@@ -58,9 +58,11 @@ public class UsService {
 
         UserStory userStory = createUserStory(userStoryCreationDto, projectCode);
         UsId usId = new UsId(projectCode.getCode(), userStory.getUsNumber());
-        if (!usRepository.existsByUsId(usId)){
+        if (!usRepository.existsByUsId(usId)) {
             usRepository.save(userStory);
-        } else throw new AlreadyExistsInRepoException("User story ID already exists");
+        } else {
+            throw new AlreadyExistsInRepoException("User story ID already exists");
+        }
 
         try {
             addUsToProductBacklog(usId, projectCode, userStoryCreationDto.priority);
@@ -140,7 +142,7 @@ public class UsService {
      * @param acceptanceCriteria list of Acceptance Criteria as a String
      * @return a list of objects of type AcceptanceCriteria.
      */
-    private List<AcceptanceCriteria> convertToAcceptanceCriteriaList(List<String> acceptanceCriteria) {
+    private static List<AcceptanceCriteria> convertToAcceptanceCriteriaList(List<String> acceptanceCriteria) {
         List<AcceptanceCriteria> newAcceptanceCriteria = new ArrayList<>();
         for (String acceptanceCriterion : acceptanceCriteria) {
             AcceptanceCriteria acceptanceCriteriaElement =

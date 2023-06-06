@@ -74,7 +74,7 @@ public class UserStoriesInSprintService {
      * @return an Optional object containing the current sprint if found, or an empty Optional if
      * no current sprint is found.
      */
-    private Optional<Sprint> getCurrentSprint(List<Sprint> sprints, LocalDate date) {
+    private static Optional<Sprint> getCurrentSprint(List<Sprint> sprints, LocalDate date) {
         Optional<Sprint> currentSprint = Optional.empty();
         for (Sprint sprint : sprints) {
             if (sprint.isDateWithinPeriod(date)) {
@@ -90,7 +90,7 @@ public class UserStoriesInSprintService {
      * @param userStoryInSprints a list of UserStoryInSprint objects.
      * @return a list of UsId objects representing the extracted User Story IDs.
      */
-    private List<UsId> extractUsIds(List<UserStoryInSprint> userStoryInSprints) {
+    private static List<UsId> extractUsIds(List<UserStoryInSprint> userStoryInSprints) {
         List<UsId> usIds = new ArrayList<>();
         for (UserStoryInSprint userStoryInSprint : userStoryInSprints) {
             usIds.add(userStoryInSprint.getUsId());
