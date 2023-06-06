@@ -1,7 +1,6 @@
 package org.switch2022.project.ddd.exceptions;
 
 import java.time.LocalTime;
-import java.util.Date;
 
 public class ErrorMessage {
     private final int statusCode;
