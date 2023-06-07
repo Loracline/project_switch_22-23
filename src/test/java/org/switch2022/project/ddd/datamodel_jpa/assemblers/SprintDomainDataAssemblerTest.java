@@ -1,24 +1,19 @@
 package org.switch2022.project.ddd.datamodel_jpa.assemblers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
-import org.switch2022.project.ddd.datamodel_jpa.UserStoryInSprintJpa;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintFactory;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
-import org.switch2022.project.ddd.domain.value_object.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 public class SprintDomainDataAssemblerTest {
 
@@ -27,10 +22,6 @@ public class SprintDomainDataAssemblerTest {
     @MockBean
     ISprintFactory factory;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     /**
      * Method toData.
@@ -39,20 +30,13 @@ public class SprintDomainDataAssemblerTest {
     void testToData() {
         // Arrange
 
-        UserStoryInSprint userStoryDouble1 = mock(UserStoryInSprint.class);
-        UsId usIdDouble1 = mock(UsId.class);
-        when(usIdDouble1.getUserStoryId()).thenReturn("P001_US001");
-        when(userStoryDouble1.getUsId()).thenReturn(usIdDouble1);
-        when(userStoryDouble1.getEffort()).thenReturn(3);
-        UserStoryInSprint userStoryDouble2 = mock(UserStoryInSprint.class);
-        UsId usIdDouble2 = mock(UsId.class);
-        when(usIdDouble2.getUserStoryId()).thenReturn("P001_US002");
-        when(userStoryDouble2.getEffort()).thenReturn(5);
+        // UserStoryInSprint userStoryDouble1 = mock(UserStoryInSprint.class);
 
-        List<UserStoryInSprint> userStoriesDouble = new ArrayList<>();
-        userStoriesDouble.add(userStoryDouble1);
-        userStoriesDouble.add(userStoryDouble2);
+        // UserStoryInSprint userStoryDouble2 = mock(UserStoryInSprint.class);
 
+        // List<UserStoryInSprint> userStoriesDouble = new ArrayList<>();
+        // userStoriesDouble.add(userStoryDouble1);
+        // userStoriesDouble.add(userStoryDouble2);
 
         // Create the expected SprintJpa object
         SprintJpa expected = new SprintJpa("P001_S001", "S001", "P001", "2023-01-01", "2023-02-01");
@@ -63,19 +47,19 @@ public class SprintDomainDataAssemblerTest {
         when(sprintDouble.getStartDate()).thenReturn("2023-01-01");
         when(sprintDouble.getEndDate()).thenReturn("2023-02-01");
 
-        UserStoryInSprintJpa userStoryJpa1 = new UserStoryInSprintJpa("P001_US001", 3, expected);
-        userStoryJpa1.setUsId("P001_US001");
-        userStoryJpa1.setEffort(3);
-        userStoryJpa1.setSprint(expected);
+       // UserStoryInSprintJpa userStoryJpa1 = new UserStoryInSprintJpa("P001_US001", 3, expected);
+       // userStoryJpa1.setUsId("P001_US001");
+       //  userStoryJpa1.setEffort(3);
+       // userStoryJpa1.setSprint(expected);
 
-        UserStoryInSprintJpa userStoryJpa2 = new UserStoryInSprintJpa("P001_US002", 5, expected);
-        userStoryJpa2.setUsId("P001_US002");
-        userStoryJpa2.setEffort(5);
-        userStoryJpa2.setSprint(expected);
+       // UserStoryInSprintJpa userStoryJpa2 = new UserStoryInSprintJpa("P001_US002", 5, expected);
+       // userStoryJpa2.setUsId("P001_US002");
+       // userStoryJpa2.setEffort(5);
+       // userStoryJpa2.setSprint(expected);
 
-        List<UserStoryInSprintJpa> userStoriesInSprintJpa = new ArrayList<>();
-        userStoriesInSprintJpa.add(userStoryJpa1);
-        userStoriesInSprintJpa.add(userStoryJpa2);
+        //  List<UserStoryInSprintJpa> userStoriesInSprintJpa = new ArrayList<>();
+        //  userStoriesInSprintJpa.add(userStoryJpa1);
+        //  userStoriesInSprintJpa.add(userStoryJpa2);
 
         // Act
         SprintJpa result = sprintDomainDataAssembler.toData(sprintDouble);
@@ -88,6 +72,7 @@ public class SprintDomainDataAssemblerTest {
     /**
      * Method toDomain.
      */
+
     @Test
     void ensureToDomain() {
         // Arrange
@@ -104,7 +89,6 @@ public class SprintDomainDataAssemblerTest {
         SprintJpa sprintJpaDouble = mock(SprintJpa.class);
 
         // Set the SprintJpa property values
-        when(sprintJpaDouble.getSprintId()).thenReturn("P001_S001");
         when(sprintJpaDouble.getSprintNumber()).thenReturn("S001");
         when(sprintJpaDouble.getProjectCode()).thenReturn("P001");
         when(sprintJpaDouble.getStartDate()).thenReturn("2023-01-01");
