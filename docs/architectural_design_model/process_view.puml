@@ -1,0 +1,72 @@
+@startuml
+title Process view, level 1
+sprite $businessProcess [16x16/16] {
+
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFF0FFFFF
+FFFFFFFFFF00FFFF
+FF00000000000FFF
+FF000000000000FF
+FF00000000000FFF
+FFFFFFFFFF00FFFF
+FFFFFFFFFF0FFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+}
+
+rectangle Manager as man
+rectangle  {
+ rectangle "    Project registry \n    (Allow users to \nregister new projects)"  as src
+ rectangle "        Backend \n (Stores information\nregarding to projects)"  as tgt
+ rectangle "                 Notification \n (pushes notifications to device)" as tg
+ src .down.> tgt: "uses"
+ man .down.> src: "uses"
+ tgt ..> tg: "sends notification \n using"
+ tg .up.> man: "sends notification"
+}
+@enduml
+
+@startuml
+title Process view, level 2
+sprite $businessProcess [16x16/16] {
+
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFF0FFFFF
+FFFFFFFFFF00FFFF
+FF00000000000FFF
+FF000000000000FF
+FF00000000000FFF
+FFFFFFFFFF00FFFF
+FFFFFFFFFF0FFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+FFFFFFFFFFFFFFFF
+}
+
+rectangle Manager as man
+rectangle  {
+ rectangle "         Web app \n(renders information)"  as src
+  rectangle " Single page app \n(Javascript, React)"  as srcc
+ rectangle "Api app\n (Java)" as tgt
+ database "     Database h2\n(stores information)\n" as db
+ rectangle "                 Notification \n (pushes notifications to device)" as tg
+ src .down.> srcc: "uses"
+ srcc ..> tgt: "Delivers to \nuser browser"
+ tgt ..> db: "reads from\n writes to"
+ man .down.> src: "https"
+ tgt ..> tg: "sends notification \n using"
+ tg .up.> man: "sends notification"
+}
+@enduml
+
