@@ -73,6 +73,7 @@ public class DatabaseLoaderTest {
         databaseLoader.run();
 
         // Verify that the data was loaded into the database
+
         // Business sectors
         BusinessSectorDomainDataAssembler businessSectorDomainDataAssembler = new BusinessSectorDomainDataAssembler();
         BusinessSectorFactory businessSectorFactory = new BusinessSectorFactory();
@@ -92,7 +93,7 @@ public class DatabaseLoaderTest {
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId("217746691"), new ProjectTypologyId(1));
         projectOne.setProjectStatus(ProjectStatus.INCEPTION);
-        projectOne.setPeriod(LocalDate.of(2022,1,3),
+        projectOne.setPeriod(LocalDate.of(2022,1,1),
                 LocalDate.of(2022, 7, 31));
         projectOne.setSprintDuration(2);
         projectOne.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(8));

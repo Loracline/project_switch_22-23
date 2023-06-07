@@ -1,15 +1,16 @@
 package org.switch2022.project.ddd.datamodel_jpa;
 
-import lombok.Data;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@NoArgsConstructor
 @Entity
 @Table(name = "productBacklog")
 public class ProductBacklogJpa {
@@ -17,7 +18,6 @@ public class ProductBacklogJpa {
      * Attributes
      */
     @Id
-    @Getter
     private String productBacklogId;
     @ElementCollection
     private List<String> userStories;
@@ -31,9 +31,33 @@ public class ProductBacklogJpa {
 
     public ProductBacklogJpa(String productBacklogId, List<String> userStories) {
         this.productBacklogId = productBacklogId;
-        this.userStories = userStories;
+        this.userStories = Collections.unmodifiableList (userStories);
     }
 
-    protected ProductBacklogJpa() {
+    public String getProductBacklogId() {
+        return productBacklogId;
+    }
+
+    public List<String> getUserStories() {
+        return userStories;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        ProductBacklogJpa that = (ProductBacklogJpa) o;
+        return Objects.equals(productBacklogId, that.productBacklogId) && Objects.equals(userStories, that.userStories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productBacklogId, userStories);
     }
 }

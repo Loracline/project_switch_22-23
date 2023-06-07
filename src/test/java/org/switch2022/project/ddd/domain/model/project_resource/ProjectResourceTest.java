@@ -338,7 +338,6 @@ class ProjectResourceTest {
     /**
      * Method: equals()
      * Scenario 05: Test to ensure that one object doesn't equal null.
-     * It should throw an InvalidInputException.
      */
     @SuppressWarnings("all")
     @Test
@@ -355,8 +354,10 @@ class ProjectResourceTest {
         ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
 
-        // Act, Assert
-        assertThrows(InvalidInputException.class, () -> resource.equals(null));
+        // Act
+        boolean result = resource.equals(null);
+        // Assert
+        assertFalse(result);
     }
 
     /**
@@ -1041,7 +1042,7 @@ class ProjectResourceTest {
         ProjectResource resource = new ProjectResource(resourceIdDouble, codeDouble, emailDouble, roleDouble,
                 periodDouble, costDouble, percentageOfAllocationDouble);
 
-        when(emailDouble.getEmail()).thenReturn("example@isep.ipp.pt");
+        when(emailDouble.getEmailAddress()).thenReturn("example@isep.ipp.pt");
 
         String expected = "example@isep.ipp.pt";
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.Date;
+import java.time.LocalTime;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -24,7 +24,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<Object> handleNotFoundInRepo(NotFoundInRepoException exception) {
         final ErrorMessage message = new ErrorMessage(
                 NOT_FOUND.value(),
-                new Date(),
+                LocalTime.now(),
                 exception.getMessage());
         return new ResponseEntity<>(message, NOT_FOUND);
     }
@@ -33,7 +33,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<Object> handleAlreadyExistsInRepo(AlreadyExistsInRepoException exception) {
         final ErrorMessage message = new ErrorMessage(
                 CONFLICT.value(),
-                new Date(),
+                LocalTime.now(),
                 exception.getMessage());
         return new ResponseEntity<>(message, CONFLICT);
     }
@@ -42,7 +42,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<Object> handleInvalidInputException(InvalidInputException exception) {
         final ErrorMessage message = new ErrorMessage(
                 BAD_REQUEST.value(),
-                new Date(),
+                LocalTime.now(),
                 exception.getMessage());
         return new ResponseEntity<>(message, BAD_REQUEST);
     }
@@ -51,7 +51,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     protected ResponseEntity<Object> handleRuntimeException(RuntimeException exception) {
         final ErrorMessage message = new ErrorMessage(
                 BAD_REQUEST.value(),
-                new Date(),
+                LocalTime.now(),
                 exception.getMessage());
         return new ResponseEntity<>(message, BAD_REQUEST);
     }

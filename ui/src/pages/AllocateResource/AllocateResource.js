@@ -363,11 +363,11 @@ function AllocateResource() {
                     }}>{error}</span> : <br/>}</FormHelperText>
 
                     <FormHelperText style={{textAlign: 'center'}}>
-                        <p1><strong>Project Start
-                            Date: </strong>{detailedProject.startDate}</p1>
+                        <p1><strong>Project: </strong>{detailedProject.code}</p1>
                         <br/>
-                        <p1><strong>Project End Date: </strong>{detailedProject.endDate}
-                        </p1>
+                        <p1><strong>Start Date: </strong>{detailedProject.startDate}</p1>
+                        <br/>
+                        <p1><strong>End Date: </strong>{detailedProject.endDate}</p1>
                     </FormHelperText>
 
 

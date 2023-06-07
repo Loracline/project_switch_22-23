@@ -14,38 +14,38 @@ import java.util.Collection;
  */
 public interface IUserStoryJpaRepository extends CrudRepository<UserStoryJpa, UsId> {
 
-   /**
-    * Adds a new UserStoryJpa entity to the repository.
-    *
-    * @param userStory The UserStoryJpa entity to be added.
-    * @return true if the operation is successful, false otherwise.
-    */
-   boolean save(UserStory userStory);
+    /**
+     * Adds a new UserStoryJpa entity to the repository.
+     *
+     * @param userStory The UserStoryJpa entity to be added.
+     * @return true if the operation is successful, false otherwise.
+     */
+    boolean save(UserStory userStory);
 
-   /**
-    * Deletes a UserStoryJpa entity by its unique identifier (usId) from the repository.
-    *
-    * @param usId The unique identifier of the UserStoryJpa entity to be deleted.
-    * @return true if the operation is successful, false otherwise.
-    */
-   boolean deleteByUsId(String usId);
+    /**
+     * Deletes a UserStoryJpa entity by its unique identifier (usId) from the repository.
+     *
+     * @param usId The unique identifier of the UserStoryJpa entity to be deleted.
+     * @return true if the operation is successful, false otherwise.
+     */
+    boolean deleteByUsId(String usId);
 
-   /**
-    * Checks if a UserStoryJpa entity exists in the repository by its unique identifier (usId).
-    *
-    * @param usId The unique identifier of the UserStoryJpa entity to check for existence.
-    * @return true if the entity exists, false otherwise.
-    */
+    /**
+     * Checks if a UserStoryJpa entity exists in the repository by its unique identifier (usId).
+     *
+     * @param usId The unique identifier of the UserStoryJpa entity to check for existence.
+     * @return true if the entity exists, false otherwise.
+     */
 
-   boolean existsByUsId(String usId);
+    boolean existsByUsId(String usId);
 
-   /**
-    * Finds all UserStoryJpa entities in the repository that match the provided usId.
-    *
-    * @param usId The usId to match against UserStoryJpa entities in the repository.
-    * @return An Iterable of UserStoryJpa entities with matching usId.
-    */
+    /**
+     * Finds all UserStoryJpa entities in the repository that match the provided usId.
+     *
+     * @param usId The usId to match against UserStoryJpa entities in the repository.
+     * @return An Iterable of UserStoryJpa entities with matching usId.
+     */
 
-   Iterable<UserStoryJpa> findAllByUsIdIn(Collection<String> usId);
+    Iterable<UserStoryJpa> findAllByUsIdIn(Collection<String> usId);
 }
 

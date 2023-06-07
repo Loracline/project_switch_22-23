@@ -61,7 +61,8 @@ public class ResourceAllocationService {
         Email email = new Email(allocationDto.accountEmail);
         Role role = generateRole(allocationDto.accountRole);
         CostPerHour costPerHour = new CostPerHour(allocationDto.accountCostPerHour);
-        PercentageOfAllocation percentageOfAllocation = new PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
+        PercentageOfAllocation percentageOfAllocation = new
+                PercentageOfAllocation(allocationDto.accountPercentageOfAllocation);
         Period allocationPeriod = new Period(allocationDto.startDate, allocationDto.endDate);
         int id = Math.addExact(resourceRepository.findAll().size(), 1);
         ProjectResourceId projectResourceId = new ProjectResourceId(id);
@@ -69,7 +70,7 @@ public class ResourceAllocationService {
         isResourceValid(role, code, allocationPeriod, email, percentageOfAllocation);
 
         ProjectResource projectResource = resourceFactory.createProjectResource(projectResourceId, code, email,
-                    role, allocationPeriod, costPerHour, percentageOfAllocation);
+                role, allocationPeriod, costPerHour, percentageOfAllocation);
         resourceRepository.save(projectResource);
 
         return true;
@@ -158,13 +159,13 @@ public class ResourceAllocationService {
      * throws an exception otherwise.
      */
     protected boolean isProjectValidForAllocation(Code projectCode, Period allocationPeriod) {
-        if(!doesNotHaveStatus(projectCode, ProjectStatus.PLANNED)){
+        if (!doesNotHaveStatus(projectCode, ProjectStatus.PLANNED)) {
             throw new RuntimeException("Users cannot be added to a PLANNED project.");
         }
-        if(!doesNotHaveStatus(projectCode, ProjectStatus.CLOSED)) {
+        if (!doesNotHaveStatus(projectCode, ProjectStatus.CLOSED)) {
             throw new RuntimeException("Users cannot be added to a CLOSED project.");
         }
-        if(!containsPeriod(projectCode, allocationPeriod)){
+        if (!containsPeriod(projectCode, allocationPeriod)) {
             throw new RuntimeException("The specified period falls outside the specified frame.");
         }
         return true;
@@ -176,7 +177,7 @@ public class ResourceAllocationService {
      * @param role to check.
      * @return <code>true</code> if role is Project Manager and <code>false</code> otherwise.
      */
-    private boolean isProjectManager(Role role) {
+    private static boolean isProjectManager(Role role) {
         return role.sameValueAs(PROJECT_MANAGER);
     }
 
@@ -187,7 +188,7 @@ public class ResourceAllocationService {
      * @return <code>true</code> if role is not Project Manager and throws an exception otherwise.
      */
     protected boolean isNotProjectManager(Role role) {
-        if(isProjectManager(role)){
+        if (isProjectManager(role)) {
             throw new RuntimeException("PROJECT MANAGER is not a valid role for allocation.");
         }
         return true;
@@ -197,18 +198,18 @@ public class ResourceAllocationService {
      * This method checks if one specific Project already has the role of Scrum Master or Product Owner in a specific
      * period.
      *
-     * @param role to check.
-     * @param code to check.
+     * @param role   to check.
+     * @param code   to check.
      * @param period to check.
      * @return <code>true</code> if the project have a Scrum Master or Product Owner in a specific Period and
      * throws an exception if the project does not have a Resource with the role of Scrum Master or
      * Product Owner in a given period of time or if the role to be checked is neither Scrum Master nor Product Owner.
      */
     protected boolean projectAlreadyHasScrumMasterOrProductOwnerInThatPeriod(Role role, Code code, Period period) {
-        if(projectAlreadyHasScrumMasterInThatPeriod(role, code, period)){
+        if (projectAlreadyHasScrumMasterInThatPeriod(role, code, period)) {
             throw new RuntimeException("Project already has a SCRUM MASTER in the specified period.");
         }
-        if(projectAlreadyHasProductOwnerInThatPeriod(role, code, period)) {
+        if (projectAlreadyHasProductOwnerInThatPeriod(role, code, period)) {
             throw new RuntimeException("Project already has a PRODUCT OWNER in the specified period.");
         }
         return projectAlreadyHasScrumMasterInThatPeriod(role, code, period) ||
@@ -218,8 +219,8 @@ public class ResourceAllocationService {
     /**
      * This method checks if one specific Project does not have a Scrum Master or Product Owner in a specific period.
      *
-     * @param role to check.
-     * @param code to check.
+     * @param role   to check.
+     * @param code   to check.
      * @param period to check.
      * @return <code>true</code> if the project does not have a Resource with the role of Scrum Master or Product Owner
      * in a specific Period and
@@ -234,8 +235,8 @@ public class ResourceAllocationService {
      * This method checks if one specific Project already has a resource with the role of Scrum Master in a specific
      * period when trying to create a new resource with that same role.
      *
-     * @param role to check.
-     * @param code to check.
+     * @param role   to check.
+     * @param code   to check.
      * @param period to check.
      * @return <code>true</code> if the project already has a Scrum Master in a given period of time and
      * <code>false</code> if the project does not have a Scrum Master in a given period of time or if the
@@ -361,7 +362,7 @@ public class ResourceAllocationService {
      * @return return true if the resource already exist and throws an exception otherwise.
      */
     private boolean resourceDoesNotExist(Code projectCode, Email email, Period period) {
-        if(isResourceOverlapping(projectCode, email, period)){
+        if (isResourceOverlapping(projectCode, email, period)) {
             throw new RuntimeException("User is already allocated during the specified period.");
         }
         return !isResourceOverlapping(projectCode, email, period);
@@ -379,12 +380,12 @@ public class ResourceAllocationService {
         List<Account> accounts = accountRepository.findAll();
         if (!accounts.isEmpty()) {
             for (Account account : accounts) {
-                if (account.hasEmail(accountEmail.getEmail()) && account.isAccountActive()) {
+                if (account.hasEmail(accountEmail.getEmailAddress()) && account.isAccountActive()) {
                     accountIsValid = true;
                 }
             }
         }
-        if(!accountIsValid){
+        if (!accountIsValid) {
             throw new RuntimeException("User does not exist/is inactive.");
         }
         return true;
@@ -434,10 +435,11 @@ public class ResourceAllocationService {
      * Checks if the total percentage of allocation for a given account during a period of time is valid, after adding
      * the value of a given PercentageOfAllocation (less than or equal to 100).
      *
-     * @param email the email of the account to check the allocation for.
-     * @param period the period to check the allocation for.
+     * @param email                       the email of the account to check the allocation for.
+     * @param period                      the period to check the allocation for.
      * @param percentageOfAllocationToAdd the PercentageOfAllocation object to add to the current allocation percentage.
-     * @return TRUE if the total percentage of allocation is less than or equal to the maximum allowed value, throws an exception
+     * @return TRUE if the total percentage of allocation is less than or equal to the maximum allowed value,
+     * throws an exception
      * otherwise.
      */
     public boolean isPercentageOfAllocationValid(Period period, Email email,
@@ -453,7 +455,7 @@ public class ResourceAllocationService {
             }
             i++;
         }
-        if(!result){
+        if (!result) {
             throw new RuntimeException("Percentage of allocation exceeds 100% during the specified period.");
         }
         return true;

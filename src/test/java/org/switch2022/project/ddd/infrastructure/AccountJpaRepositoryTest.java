@@ -124,10 +124,10 @@ class AccountJpaRepositoryTest {
     void ensureFindAccountsByEmailsReturnsTheCorrectAccounts() {
         // Arrange
         Email emailOne = mock(Email.class);
-        when(emailOne.getEmail()).thenReturn("josh@email.pt");
+        when(emailOne.getEmailAddress()).thenReturn("josh@email.pt");
 
         Email emailTwo = mock(Email.class);
-        when(emailTwo.getEmail()).thenReturn("annah@email.pt");
+        when(emailTwo.getEmailAddress()).thenReturn("annah@email.pt");
 
         List<Email> emails = new ArrayList<>();
         emails.add(emailOne);

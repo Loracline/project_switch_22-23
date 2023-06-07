@@ -25,7 +25,9 @@ public final class Utils {
         Validate.notNull(initialExpression, "The initial expression must not be null");
         Validate.notNull(expressionToRemove, "The expression to remove must not be null");
 
-        String[] array = initialExpression.toLowerCase().split(expressionToRemove.toLowerCase(), -2);
+        final int SPLIT_LIMIT = -2;
+
+        String[] array = initialExpression.toLowerCase().split(expressionToRemove.toLowerCase(), SPLIT_LIMIT);
         return parseInt(array[1]);
     }
 

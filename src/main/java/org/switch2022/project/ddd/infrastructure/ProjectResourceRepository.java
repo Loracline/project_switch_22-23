@@ -1,6 +1,5 @@
 package org.switch2022.project.ddd.infrastructure;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceRepository;
 import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
@@ -73,10 +72,9 @@ public class ProjectResourceRepository implements IProjectResourceRepository {
     private boolean exists(ProjectResource projectResource) {
         boolean hasResource = false;
 
-        for (int i = 0; i < projectResources.size(); i++) {
+        for (int i = 0; i < projectResources.size() && !hasResource; i++) {
             if (projectResources.get(i).hasSameAllocationInfo(projectResource)) {
                 hasResource = true;
-                i = projectResources.size();
             }
         }
         return hasResource;

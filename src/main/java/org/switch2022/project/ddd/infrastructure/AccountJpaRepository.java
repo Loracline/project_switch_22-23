@@ -76,7 +76,7 @@ public class AccountJpaRepository implements IAccountRepository {
         List<String> emailStrings = new ArrayList<>();
 
         for (Email email : emails) {
-            emailStrings.add(email.getEmail());
+            emailStrings.add(email.getEmailAddress());
         }
 
         Iterable<AccountJpa> accountJpas = crudRepository.findAllById(emailStrings);

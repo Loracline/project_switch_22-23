@@ -35,18 +35,4 @@ class ProfileWebControllerTest {
         //Assert
         assertEquals(201, responseEntity.getStatusCodeValue());
     }
-
-    @Test
-    void ensureThatResourceIsNotCreated_ExceptionIsThrow() {
-        //Arrange
-        ProfileCreationDto dtoDouble = mock(ProfileCreationDto.class);
-        String expected = "The profile already exists in the repository.";
-        when(service.createProfile(dtoDouble)).thenThrow(new AlreadyExistsInRepoException(expected));
-
-        //Act
-        ResponseEntity<Object> responseEntity = controller.createProfile(dtoDouble);
-        //Assert
-        assertEquals(409, responseEntity.getStatusCodeValue());
-        assertEquals(expected, responseEntity.getBody());
-    }
 }

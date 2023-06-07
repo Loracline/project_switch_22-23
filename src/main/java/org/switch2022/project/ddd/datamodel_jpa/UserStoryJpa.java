@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -39,7 +40,7 @@ public class UserStoryJpa {
     public UserStoryJpa(String usId, List<String> acceptanceCriteria, String usNumber, String actor, String usText,
                         String status, String projectCode) {
         this.usId = usId;
-        this.acceptanceCriteria = acceptanceCriteria;
+        this.acceptanceCriteria = Collections.unmodifiableList(acceptanceCriteria);
         this.usNumber = usNumber;
         this.actor = actor;
         this.usText = usText;
