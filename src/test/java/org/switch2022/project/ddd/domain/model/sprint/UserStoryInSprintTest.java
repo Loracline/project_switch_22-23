@@ -23,7 +23,7 @@ public class UserStoryInSprintTest {
     void ensureAUserStoryInSprintIsNotCreatedBecauseTheUsIdIsNull() {
         //ACT & ASSERT
         assertThrows(IllegalArgumentException.class, () -> {
-            new UserStoryInSprint(null, ONE);
+            new UserStoryInSprint(null);
         });
     }
 
@@ -79,7 +79,7 @@ public class UserStoryInSprintTest {
     void ensureThatSameObjectEqualsItself() {
         //ARRANGE
         UsId usId = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId, ONE);
+        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId);
         //ACT & ASSERT
         assertEquals(userStoryInSprint, userStoryInSprint);
     }
@@ -94,8 +94,8 @@ public class UserStoryInSprintTest {
     void ensureThatTwoUserStoryInSprintHasTheSameId() {
         //ARRANGE
         UsId usId = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint_one = new UserStoryInSprint(usId, ONE);
-        UserStoryInSprint userStoryInSprint_two = new UserStoryInSprint(usId, TWO);
+        UserStoryInSprint userStoryInSprint_one = new UserStoryInSprint(usId);
+        UserStoryInSprint userStoryInSprint_two = new UserStoryInSprint(usId);
 
         //ACT & ASSERT
         assertEquals(userStoryInSprint_one, userStoryInSprint_two);
@@ -112,8 +112,8 @@ public class UserStoryInSprintTest {
         //ARRANGE
         UsId usIdOne = mock(UsId.class);
         UsId usIdTwo = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint_one = new UserStoryInSprint(usIdOne, ONE);
-        UserStoryInSprint userStoryInSprint_two = new UserStoryInSprint(usIdTwo, ONE);
+        UserStoryInSprint userStoryInSprint_one = new UserStoryInSprint(usIdOne);
+        UserStoryInSprint userStoryInSprint_two = new UserStoryInSprint(usIdTwo);
 
         //ACT & ASSERT
         assertNotEquals(userStoryInSprint_one, userStoryInSprint_two);
@@ -128,7 +128,7 @@ public class UserStoryInSprintTest {
     void ensureThatObjectProfileDoesNotEqualNull() {
         //ARRANGE
         UsId usId = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId, ONE);
+        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId);
 
         //ACT & ASSERT
         assertNotEquals(null, userStoryInSprint);
@@ -144,7 +144,7 @@ public class UserStoryInSprintTest {
     public void ensureThatObjectUserStoryInSprintDoesNotEqualToOtherObjectType() {
         //ARRANGE
         UsId usId = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId, ONE);
+        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId);
         Effort effort = ONE;
 
         //ACT & ASSERT
@@ -174,8 +174,8 @@ public class UserStoryInSprintTest {
     void ensureTwoSprintHashcodeAreTheSame() {
         // ARRANGE
         UsId usIdDouble = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble, ONE);
-        UserStoryInSprint userStoryInSprint_Two = new UserStoryInSprint(usIdDouble, ONE);
+        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble);
+        UserStoryInSprint userStoryInSprint_Two = new UserStoryInSprint(usIdDouble);
 
         //Act
         int userStoryInSprint_OneHashCode = userStoryInSprint_One.hashCode();
@@ -191,8 +191,8 @@ public class UserStoryInSprintTest {
         // ARRANGE
         UsId usIdDouble = mock(UsId.class);
         UsId usIdTriple = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble, ONE);
-        UserStoryInSprint userStoryInSprint_Two = new UserStoryInSprint(usIdTriple, TWO);
+        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble);
+        UserStoryInSprint userStoryInSprint_Two = new UserStoryInSprint(usIdTriple);
 
         //Act
         int userStoryInSprint_OneHashCode = userStoryInSprint_One.hashCode();
@@ -214,8 +214,8 @@ public class UserStoryInSprintTest {
     void ensureTheTwoInstancesOfUserStoryInSprintAreTheSameIfTheirIdAttributeIsTheSame() {
         //ARRANGE
         UsId usIdDouble = mock(UsId.class);
-        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdDouble, ONE);
-        UserStoryInSprint userStoryInSprintTwo = new UserStoryInSprint(usIdDouble, ONE);
+        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdDouble);
+        UserStoryInSprint userStoryInSprintTwo = new UserStoryInSprint(usIdDouble);
 
         //ACT
         boolean result = userStoryInSprintOne.sameIdentityAs(userStoryInSprintTwo);
@@ -233,11 +233,10 @@ public class UserStoryInSprintTest {
     @Test
     void ensureTheTwoInstancesOfUserStoryInSprintAreDifferentIfTheirIdAttributeIsNotTheSame() {
         //ARRANGE
-        Effort effortDouble = mock(Effort.class);
         UsId usIdOne = new UsId("P001", "US001");
         UsId usIdTwo = new UsId("P002", "US002");
-        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdOne, effortDouble);
-        UserStoryInSprint userStoryInSprintTwo = new UserStoryInSprint(usIdTwo, effortDouble);
+        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdOne);
+        UserStoryInSprint userStoryInSprintTwo = new UserStoryInSprint(usIdTwo);
 
         //ACT
         boolean result = userStoryInSprintOne.sameIdentityAs(userStoryInSprintTwo);
@@ -256,7 +255,7 @@ public class UserStoryInSprintTest {
     void ensureTheTwoProfilesAreNotTheSameBecauseOneOfThemIsNull() {
         //ARRANGE
         UsId usIdDouble = mock(UsId.class);
-        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdDouble, ONE);
+        UserStoryInSprint userStoryInSprintOne = new UserStoryInSprint(usIdDouble);
         UserStoryInSprint userStoryInSprintTwo = null;
 
         //ACT
@@ -276,7 +275,7 @@ public class UserStoryInSprintTest {
     public void ensureStringRepresentationOfUserStoryInSprintIdIsRetrieved() {
         //ARRANGE
         UsId usIdDouble = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usIdDouble, ONE);
+        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usIdDouble);
 
         //ACT
         UsId result = userStoryInSprint.getUsId();
@@ -295,7 +294,7 @@ public class UserStoryInSprintTest {
     public void ensureEffortIsSetForUserStory() {
         //ARRANGE
         UsId usIdDouble = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble, ONE);
+        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble);
         boolean result = userStoryInSprint_One.changeEffort(2);
 
         //ACT & ASSERT
@@ -312,7 +311,7 @@ public class UserStoryInSprintTest {
         //ARRANGE
         UsId usIdDouble = mock(UsId.class);
         Effort effortDouble = mock(Effort.class);
-        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble, ONE);
+        UserStoryInSprint userStoryInSprint_One = new UserStoryInSprint(usIdDouble);
         int initialEffort = userStoryInSprint_One.getEffort();
 
         //ACT

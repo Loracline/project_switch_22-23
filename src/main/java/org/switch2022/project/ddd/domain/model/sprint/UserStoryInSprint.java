@@ -22,19 +22,6 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
     private Effort effort;
 
     /**
-     * Constructor
-     *
-     * @param usId   the id of a User Story from a given Project.
-     * @param effort the Fibonacci sequence to be used for estimation the effort for User Stories
-     *               in Sprint.
-     */
-    protected UserStoryInSprint(UsId usId, Effort effort) {
-        Validate.notNull(usId, "UsId cannot be null");
-        this.usId = usId;
-        this.effort = effort;
-    }
-
-    /**
      * Constructor with only usId, sets effort as one.
      *
      * @param usId of the user story.

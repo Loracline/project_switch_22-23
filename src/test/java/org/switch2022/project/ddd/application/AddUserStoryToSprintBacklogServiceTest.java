@@ -59,7 +59,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
+        when(sprintDouble.addUserStory(any())).thenReturn(true);
         //Act
         boolean result = service.addUserStoryToSprintBacklog(usId, sprintId);
         //Assert
@@ -83,7 +83,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
+        when(sprintDouble.addUserStory(any())).thenReturn(true);
         service.addUserStoryToSprintBacklog(usId, sprintId);
 
         //Act
@@ -109,7 +109,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(false);
+        when(sprintDouble.addUserStory(any())).thenReturn(false);
 
         //Act
         boolean result = service.addUserStoryToSprintBacklog(usId, sprintId);
@@ -135,7 +135,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(Status.FINISHED)).thenReturn(true);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
+        when(sprintDouble.addUserStory(any())).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 service.addUserStoryToSprintBacklog(usId, sprintId));
         //Act
@@ -162,7 +162,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(Status.BLOCKED)).thenReturn(true);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
+        when(sprintDouble.addUserStory(any())).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 service.addUserStoryToSprintBacklog(usId, sprintId));
         //Act
@@ -189,7 +189,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(userStoryDouble.hasStatus(any())).thenReturn(false);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(true);
-        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
+        when(sprintDouble.addUserStory(any())).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 service.addUserStoryToSprintBacklog(usId, sprintId));
         //Act
@@ -213,7 +213,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(userStoryList);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isPeriodAfterOrEqualThanDate(any())).thenReturn(false);
-        when(sprintDouble.addUserStory(any(), anyInt())).thenReturn(true);
+        when(sprintDouble.addUserStory(any())).thenReturn(true);
         Exception exception = assertThrows(Exception.class, () ->
                 service.addUserStoryToSprintBacklog(usId, sprintId));
         //Act
