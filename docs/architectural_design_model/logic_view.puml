@@ -1,0 +1,51 @@
+@startuml
+title Logic view, level 1
+component {
+  portin " " as pIn
+  portout " " as pOut
+  component "System"
+}
+UI -- pIn
+pOut --( "API NO SQL"
+@enduml
+
+@startuml
+title Logic view, level 2
+component {
+  portin " " as pIn
+  portout " " as pOut
+  component Client
+  component Server
+  interface "API" as api
+  database "Database \n     SQL" as db
+}
+
+UI -- pIn
+Server -- pOut
+Client -- pOut
+pOut --( "API NO SQL"
+pIn -- Client
+Server -0)- Client
+Server --( api
+api -- db
+@enduml
+
+@startuml
+title Logic view, level 3
+component {
+  portin " " as pIn
+  portout " " as pOut
+  component "Web page" as web
+  component "Backend" as be
+  database "Database \n     SQL" as db
+  interface "API" as api
+}
+UI -- pIn
+pIn -- web
+be -- pOut
+pOut ..( "API NO SQL"
+be -0)- web
+db -- api
+api )-- be
+
+@enduml
