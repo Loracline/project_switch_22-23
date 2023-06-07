@@ -46,10 +46,7 @@ public class TypologyJpa {
         if (this == o) {
             return true;
         }
-        if (o == null) {
-            return false;
-        }
-        if (!(o instanceof TypologyJpa)){
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         TypologyJpa that = (TypologyJpa) o;
@@ -64,7 +61,7 @@ public class TypologyJpa {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(typologyId, typologyName);
+        return Objects.hash(typologyId);
     }
 
     /**

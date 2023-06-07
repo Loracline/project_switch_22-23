@@ -114,6 +114,9 @@ class TypologyJpaTest {
         assertNotEquals(obj1.hashCode(), obj3.hashCode());
     }
 
+    /**
+     * Test for method getTypologyId().
+     */
     @DisplayName("TypologyId is retrieved successfully")
     @Test
     void ensureThatTypologyIdISRetrieved() {
@@ -128,6 +131,9 @@ class TypologyJpaTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test for method getTypologyMane().
+     */
     @DisplayName("TypologyName is retrieved successfully")
     @Test
     void ensureThatTypologyNameISRetrieved() {
@@ -142,6 +148,9 @@ class TypologyJpaTest {
         assertEquals(expected, result);
     }
 
+    /**
+     * Test for no args constructor.
+     */
     @DisplayName("Empty Constructor Testing")
     @Test
     void testEmptyConstructor() {

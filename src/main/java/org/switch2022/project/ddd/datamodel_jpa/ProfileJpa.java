@@ -42,10 +42,7 @@ public class ProfileJpa {
         if (this == o) {
             return true;
         }
-        if (o == null) {
-            return false;
-        }
-        if (!(o instanceof ProfileJpa)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         ProfileJpa that = (ProfileJpa) o;
@@ -60,7 +57,7 @@ public class ProfileJpa {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(profileId, profileName);
+        return Objects.hash(profileId);
     }
 
     /**
