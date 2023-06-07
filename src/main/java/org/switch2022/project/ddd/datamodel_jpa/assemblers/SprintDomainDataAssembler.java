@@ -80,7 +80,6 @@ public class SprintDomainDataAssembler {
             String projectCodeUs = sprintParts[0];
             UsId usId = new UsId(projectCodeUs, sprintNumberUs);
 
-            int effortInt = storyInSprintJpa.getEffort();
             sprint.addUserStory(usId);
         }
         return sprint;

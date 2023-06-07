@@ -921,7 +921,6 @@ class SprintTest {
 
     /**
      * Method: getSprintId()
-     *
      * Scenario 1: verify that a sprintId is retrieved as a string.
      */
     @Test
@@ -945,7 +944,6 @@ class SprintTest {
 
     /**
      * Method: getProjectCode()
-     *
      * Scenario 1: verify that a projectCode is retrieved as a string.
      */
     @Test
@@ -969,7 +967,6 @@ class SprintTest {
 
     /**
      * Method: getStartDate()
-     *
      * Scenario 1: verify that a startDate is retrieved as a string.
      */
     @Test
@@ -993,7 +990,6 @@ class SprintTest {
 
     /**
      * Method: getEndDate()
-     *
      * Scenario 1: verify that a endDate is retrieved as a string.
      */
     @Test
@@ -1016,7 +1012,6 @@ class SprintTest {
     }
     /**
      * Method: getFullSprintNumber()
-     *
      * Scenario 1: verify that a full sprintNumber is retrieved as a string.
      */
     @Test
@@ -1040,7 +1035,6 @@ class SprintTest {
 
     /**
      * Method: getUSerStoriesInSprint()
-     *
      * Scenario 1: verify that a list of userStoryInSprint is retrieved.
      */
     @Test

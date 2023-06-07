@@ -9,7 +9,6 @@ import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.switch2022.project.ddd.domain.value_object.Effort.ONE;
-import static org.switch2022.project.ddd.domain.value_object.Effort.TWO;
 
 public class UserStoryInSprintTest {
 
