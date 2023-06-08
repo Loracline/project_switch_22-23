@@ -10,6 +10,7 @@ import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFactory;
+import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
 import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.model.project.FactoryProject;
 import org.switch2022.project.ddd.domain.model.project.Project;
@@ -73,6 +74,13 @@ public class DatabaseLoaderTest {
         databaseLoader.run();
 
         // Verify that the data was loaded into the database
+
+        // Customers
+        CustomerFactory customerFactory = new CustomerFactory();
+        CustomerDomainDataAssembler customerDomainDataAssembler = new CustomerDomainDataAssembler();
+        verify(customers).save(customerDomainDataAssembler.toData(customerFactory.
+                createCustomer(new TaxId("217746691"), new Name("XPTO, SA"))));
+
 
         // Business sectors
         BusinessSectorDomainDataAssembler businessSectorDomainDataAssembler = new BusinessSectorDomainDataAssembler();
