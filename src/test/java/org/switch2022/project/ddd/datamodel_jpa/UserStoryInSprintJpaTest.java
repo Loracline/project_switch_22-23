@@ -97,8 +97,6 @@ class UserStoryInSprintJpaTest {
     @Test
     void testHashCodeMethod_AttributeCombination1() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-10");
-
         UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5);
         UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5);
 
