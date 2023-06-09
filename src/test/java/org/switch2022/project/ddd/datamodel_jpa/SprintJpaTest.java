@@ -22,9 +22,9 @@ class SprintJpaTest {
     String startDate = "2022-01-01";
     String endDate = "2022-03-01";
     List<UserStoryInSprintJpa> userStories = new ArrayList<>();
-
-        //Act
-    SprintJpa sprintJpa = new SprintJpa(sprintId,sprintNumber,projectCode,startDate,endDate);
+    String status = "Planned";
+    //Act
+    SprintJpa sprintJpa = new SprintJpa(sprintId,sprintNumber,projectCode,startDate,endDate, status);
     //Assert
         assertEquals(sprintId, sprintJpa.getSprintId());
         assertEquals(sprintNumber, sprintJpa.getSprintNumber());
@@ -32,20 +32,21 @@ class SprintJpaTest {
         assertEquals(startDate, sprintJpa.getStartDate());
         assertEquals(endDate, sprintJpa.getEndDate());
         assertEquals(userStories, sprintJpa.getUserStoriesInSprint());
+        assertEquals(status, sprintJpa.getStatus());
     }
 
     @DisplayName("Equals and HashCode Testing")
     @Test
     void testEqualsAndHashCodeMethods() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01");
-        SprintJpa sprint2 = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01");
-        SprintJpa sprint3 = new SprintJpa("s002", "1", "p003", "2022-01-01", "2022-03-01");
-        SprintJpa sprint4 = new SprintJpa("s001", "2", "p003", "2022-01-01", "2022-03-01");
-        SprintJpa sprint5 = new SprintJpa("s001", "1", "p004", "2022-01-01", "2022-03-01");
-        SprintJpa sprint6 = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01");
+        SprintJpa sprint1 = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01","open");
+        SprintJpa sprint2 = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01","open");
+        SprintJpa sprint3 = new SprintJpa("s002", "1", "p003", "2022-01-01", "2022-03-01","open");
+        SprintJpa sprint4 = new SprintJpa("s001", "2", "p003", "2022-01-01", "2022-03-01","open");
+        SprintJpa sprint5 = new SprintJpa("s001", "1", "p004", "2022-01-01", "2022-03-01","open");
+        SprintJpa sprint6 = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01","open");
         sprint6.setUserStoriesInSprint(Collections.singletonList(mock(UserStoryInSprintJpa.class)));
-        SprintJpa sprint7 = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01");
+        SprintJpa sprint7 = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01","open");
         sprint7.setUserStoriesInSprint(Collections.singletonList(mock(UserStoryInSprintJpa.class)));
 
         // Act & Assert
@@ -65,7 +66,7 @@ class SprintJpaTest {
     @Test
     public void equals_WithSameObject_ShouldReturnTrue() {
         // Arrange
-        SprintJpa sprint = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate");
+        SprintJpa sprint = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate","open");
 
         // Act & Assert
         assertEquals(sprint, sprint);
@@ -74,7 +75,7 @@ class SprintJpaTest {
     @Test
     public void equals_WithNullObject_ShouldReturnFalse() {
         // Arrange
-        SprintJpa sprint = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate");
+        SprintJpa sprint = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate","open");
 
         // Act & Assert
         assertNotEquals(null, sprint);
@@ -83,7 +84,7 @@ class SprintJpaTest {
     @Test
     public void equals_WithDifferentClass_ShouldReturnFalse() {
         // Arrange
-        SprintJpa sprint = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate");
+        SprintJpa sprint = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate","open");
         String otherObject = "Not a SprintJpa object";
 
         // Act & Assert
@@ -93,8 +94,8 @@ class SprintJpaTest {
     @Test
     public void equals_WithSameAttributes_ShouldReturnTrue() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate");
-        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate");
+        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate","open");
+        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate","open");
 
         // Act & Assert
         assertEquals(sprint1, sprint2);
@@ -104,8 +105,8 @@ class SprintJpaTest {
     @Test
     public void equals_WithDifferentAttributes_ShouldReturnFalse() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("sprintId1", "sprintNumber", "projectCode", "startDate", "endDate");
-        SprintJpa sprint2 = new SprintJpa("sprintId2", "sprintNumber", "projectCode", "startDate", "endDate");
+        SprintJpa sprint1 = new SprintJpa("sprintId1", "sprintNumber", "projectCode", "startDate", "endDate","open");
+        SprintJpa sprint2 = new SprintJpa("sprintId2", "sprintNumber", "projectCode", "startDate", "endDate","open");
 
         // Act & Assert
         assertNotEquals(sprint1, sprint2);
@@ -115,8 +116,8 @@ class SprintJpaTest {
     @Test
     public void equals_WithNullAttributes_ShouldReturnFalse() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa(null, null, null, null, null);
-        SprintJpa sprint2 = new SprintJpa(null, null, null, null, null);
+        SprintJpa sprint1 = new SprintJpa(null, null, null, null, null, null);
+        SprintJpa sprint2 = new SprintJpa(null, null, null, null, null, null);
 
         // Act & Assert
         assertEquals(sprint1, sprint2);
@@ -126,8 +127,8 @@ class SprintJpaTest {
     @Test
     public void equals_WithMixedAttributes_ShouldReturnFalse() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber1", "projectCode", "startDate", "endDate");
-        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber2", "projectCode", "startDate", "endDate");
+        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber1", "projectCode", "startDate", "endDate","open");
+        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber2", "projectCode", "startDate", "endDate","open");
 
         // Act & Assert
         assertNotEquals(sprint1, sprint2);
@@ -136,8 +137,8 @@ class SprintJpaTest {
     @Test
     public void equals_WithSameAttributesInDifferentOrder_ShouldReturnTrue() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate");
-        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "endDate", "startDate");
+        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate","open");
+        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "endDate", "startDate","open");
 
         // Act & Assert
         assertEquals(sprint1.getSprintId(), sprint2.getSprintId());
@@ -150,8 +151,8 @@ class SprintJpaTest {
     @Test
     void testEqualsMethod() {
         // Create SprintJpa instances
-        SprintJpa sprint1 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-10");
-        SprintJpa sprint2 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-10");
+        SprintJpa sprint1 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-10","open");
+        SprintJpa sprint2 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-10","open");
 
         // Test reflexivity
         assertEquals(sprint1, sprint1);
@@ -167,35 +168,40 @@ class SprintJpaTest {
         assertEquals(sprint2, sprint1);
 
         // Test inequality with different sprintId
-        SprintJpa sprint4 = new SprintJpa("S3", "1", "P1", "2023-06-01", "2023-06-10");
+        SprintJpa sprint4 = new SprintJpa("S3", "1", "P1", "2023-06-01", "2023-06-10","open");
         assertNotEquals(sprint1, sprint4);
         assertNotEquals(sprint4, sprint1);
 
         // Test inequality with different sprintNumber
-        SprintJpa sprint5 = new SprintJpa("S1", "2", "P1", "2023-06-01", "2023-06-10");
+        SprintJpa sprint5 = new SprintJpa("S1", "2", "P1", "2023-06-01", "2023-06-10","open");
         assertNotEquals(sprint1, sprint5);
         assertNotEquals(sprint5, sprint1);
 
         // Test inequality with different projectCode
-        SprintJpa sprint6 = new SprintJpa("S1", "1", "P2", "2023-06-01", "2023-06-10");
+        SprintJpa sprint6 = new SprintJpa("S1", "1", "P2", "2023-06-01", "2023-06-10","open");
         assertNotEquals(sprint1, sprint6);
         assertNotEquals(sprint6, sprint1);
 
         // Test inequality with different startDate
-        SprintJpa sprint7 = new SprintJpa("S1", "1", "P1", "2023-06-02", "2023-06-10");
+        SprintJpa sprint7 = new SprintJpa("S1", "1", "P1", "2023-06-02", "2023-06-10","open");
         assertNotEquals(sprint1, sprint7);
         assertNotEquals(sprint7, sprint1);
 
         // Test inequality with different endDate
-        SprintJpa sprint8 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-11");
+        SprintJpa sprint8 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-11","open");
         assertNotEquals(sprint1, sprint8);
         assertNotEquals(sprint8, sprint1);
+
+        // Test inequality with different status
+        SprintJpa sprint9 = new SprintJpa("S1", "1", "P1", "2023-06-01", "2023-06-11","closed");
+        assertNotEquals(sprint1, sprint9);
+        assertNotEquals(sprint9, sprint1);
     }
     @Test
     public void hashCode_WithSameAttributes_ShouldReturnEqualHashCodes() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate");
-        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate");
+        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate","open");
+        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber", "projectCode", "startDate", "endDate","open");
 
         // Act
         int hashCode1 = sprint1.hashCode();
@@ -208,8 +214,8 @@ class SprintJpaTest {
     @Test
     public void hashCode_WithDifferentAttributes_ShouldReturnDifferentHashCodes() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("sprintId1", "sprintNumber", "projectCode", "startDate", "endDate");
-        SprintJpa sprint2 = new SprintJpa("sprintId2", "sprintNumber", "projectCode", "startDate", "endDate");
+        SprintJpa sprint1 = new SprintJpa("sprintId1", "sprintNumber", "projectCode", "startDate", "endDate","open");
+        SprintJpa sprint2 = new SprintJpa("sprintId2", "sprintNumber", "projectCode", "startDate", "endDate","open");
 
         // Act
         int hashCode1 = sprint1.hashCode();
@@ -222,8 +228,8 @@ class SprintJpaTest {
     @Test
     public void hashCode_WithNullAttributes_ShouldReturnSameHashCode() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa(null, null, null, null, null);
-        SprintJpa sprint2 = new SprintJpa(null, null, null, null, null);
+        SprintJpa sprint1 = new SprintJpa(null, null, null, null, null,null);
+        SprintJpa sprint2 = new SprintJpa(null, null, null, null, null,null);
 
         // Act
         int hashCode1 = sprint1.hashCode();
@@ -236,8 +242,8 @@ class SprintJpaTest {
     @Test
     public void hashCode_WithMixedAttributes_ShouldReturnDifferentHashCodes() {
         // Arrange
-        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber1", "projectCode", "startDate", "endDate");
-        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber2", "projectCode", "startDate", "endDate");
+        SprintJpa sprint1 = new SprintJpa("sprintId", "sprintNumber1", "projectCode", "startDate", "endDate","open");
+        SprintJpa sprint2 = new SprintJpa("sprintId", "sprintNumber2", "projectCode", "startDate", "endDate","open");
 
         // Act
         int hashCode1 = sprint1.hashCode();
@@ -252,10 +258,11 @@ class SprintJpaTest {
     @Test
     void testToStringMethod() {
         // Create an instance with specific values
-        SprintJpa sprintJpa = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01");
+        SprintJpa sprintJpa = new SprintJpa("s001", "1", "p003", "2022-01-01", "2022-03-01","open");
 
         // Test individual field values
-        assertEquals("SprintJpa(sprintId=s001, sprintNumber=1, projectCode=p003, startDate=2022-01-01, endDate=2022-03-01, userStoriesInSprint=[])", sprintJpa.toString());
+        assertEquals("SprintJpa(sprintId=s001, sprintNumber=1, projectCode=p003, startDate=2022-01-01, " +
+                "endDate=2022-03-01, userStoriesInSprint=[], status=open)", sprintJpa.toString());
     }
 
     @DisplayName("Empty Constructor Testing")
@@ -271,12 +278,13 @@ class SprintJpaTest {
         assertNull(sprint.getStartDate());
         assertNull(sprint.getEndDate());
         assertNull(sprint.getUserStoriesInSprint());
+        assertNull(sprint.getStatus());
     }
     @DisplayName("Invalid Input Values")
     @Test
     void testInvalidInputValues() {
         // Arrange and Act
-        SprintJpa sprintJpa = new SprintJpa(null, null, "p003", "2022-01-01", "2022-03-01");
+        SprintJpa sprintJpa = new SprintJpa(null, null, "p003", "2022-01-01", "2022-03-01","open");
 
         // Assert
         assertNull(sprintJpa.getSprintId());
@@ -285,6 +293,7 @@ class SprintJpaTest {
         assertEquals("2022-01-01", sprintJpa.getStartDate());
         assertEquals("2022-03-01", sprintJpa.getEndDate());
         assertEquals(0, sprintJpa.getUserStoriesInSprint().size());
+        assertEquals("open", sprintJpa.getStatus());
     }
 
     @DisplayName("Date Format Parsing")
@@ -295,7 +304,7 @@ class SprintJpaTest {
         String endDate = "03/01/2022";
 
         // Act
-        SprintJpa sprintJpa = new SprintJpa("s001", "1", "p003", startDate, endDate);
+        SprintJpa sprintJpa = new SprintJpa("s001", "1", "p003", startDate, endDate, "open");
 
         // Assert
         assertEquals("s001", sprintJpa.getSprintId());
@@ -304,6 +313,7 @@ class SprintJpaTest {
         assertEquals("01/01/2022", sprintJpa.getStartDate());
         assertEquals("03/01/2022", sprintJpa.getEndDate());
         assertEquals(0, sprintJpa.getUserStoriesInSprint().size());
+        assertEquals("open",sprintJpa.getStatus());
     }
     @DisplayName("Setters Testing")
     @Test
@@ -319,6 +329,7 @@ class SprintJpaTest {
         sprintJpa.setEndDate("2022-03-01");
         List<UserStoryInSprintJpa> userStories = new ArrayList<>();
         sprintJpa.setUserStoriesInSprint(userStories);
+        sprintJpa.setStatus("open");
 
         // Assert
         assertEquals("s001", sprintJpa.getSprintId());
@@ -327,5 +338,6 @@ class SprintJpaTest {
         assertEquals("2022-01-01", sprintJpa.getStartDate());
         assertEquals("2022-03-01", sprintJpa.getEndDate());
         assertEquals(userStories, sprintJpa.getUserStoriesInSprint());
+        assertEquals("open",sprintJpa.getStatus());
     }
 }

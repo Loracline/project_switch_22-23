@@ -28,6 +28,7 @@ public class SprintJpa {
     private String endDate;
     @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserStoryInSprintJpa> userStoriesInSprint;
+    private String status;
 
     /**
      * Constructor
@@ -36,13 +37,14 @@ public class SprintJpa {
      * Attributes: usNumber, actor, usText, acceptanceCriteria.
      */
     public SprintJpa(String sprintId, String sprintNumber, String projectCode,
-                  String startDate, String endDate){
+                  String startDate, String endDate, String status){
         this.sprintId = sprintId;
         this.sprintNumber = sprintNumber;
         this.projectCode = projectCode;
         this.startDate = startDate;
         this.endDate = endDate;
         userStoriesInSprint = new ArrayList<>();
+        this.status = status;
     }
 
     protected SprintJpa(){
