@@ -22,8 +22,9 @@ public class Sprint implements Entity<Sprint> {
 
     private final Period period;
 
-    private final List<UserStoryInSprint> userStoriesInSprint;
     private SprintStatus status;
+    private final List<UserStoryInSprint> userStoriesInSprint;
+    private SprintStatus sprintStatus;
 
 
     /**
@@ -319,5 +320,13 @@ public class Sprint implements Entity<Sprint> {
      */
     public String getStatus() {
         return this.status.getStatus();
+    }
+
+    /**
+     * This method checks if the sprint status is valid
+     * @return true if the sprint status is OPEN, false otherwise.
+     */
+    public boolean isOpen() {
+       return this.status == SprintStatus.OPEN;
     }
 }

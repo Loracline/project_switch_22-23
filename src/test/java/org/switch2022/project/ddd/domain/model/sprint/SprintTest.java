@@ -1122,4 +1122,64 @@ class SprintTest {
         //ASSERT
         assertEquals("PLANNED", result);
     }
+
+    /**
+     * Method: isOpen()
+     * Scenario 1: true if that Sprint has OPEN status.
+     */
+    @Test
+    public void testIsValidToAddUserStories_WhenStatusIsOpen_ReturnsTrue() {
+        // Arrange
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        sprint.changeStatus("OPEN");
+
+        // Act
+        boolean isValid = sprint.isOpen();
+
+        // Assert
+        assertTrue(isValid);
+    }
+
+    /**
+     * Scenario 2: false if that Sprint has PLANNED status.
+     */
+    @Test
+    public void testIsValidToAddUserStories_WhenStatusIsPlanned_ReturnsFalse() {
+        // Arrange
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        // Act
+        boolean isValid = sprint.isOpen();
+
+        // Assert
+        assertFalse(isValid);
+    }
+
+    /**
+     * Scenario 3: false if that Sprint has CLOSED status.
+     */
+    @Test
+    public void testIsValidToAddUserStories_WhenStatusIsClosed_ReturnsFalse() {
+        // Arrange
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        sprint.changeStatus("CLOSED");
+
+        // Act
+        boolean isValid = sprint.isOpen();
+
+        // Assert
+        assertFalse(isValid);
+    }
 }
