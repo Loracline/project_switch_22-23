@@ -39,7 +39,7 @@ public class UserStoriesInSprintController {
         Validate.notNullOrEmptyOrBlank(projectCode, "Project Code");
         Validate.notNull(date, "Date");
 
-        List<UserStoryDto> userStoryDtos = userStoriesInSprintService.getScrumBoard(projectCode, date);
+        List<UserStoryDto> userStoryDtos = userStoriesInSprintService.getSprintBacklog(projectCode);
 
         return userStoryDtos;
     }

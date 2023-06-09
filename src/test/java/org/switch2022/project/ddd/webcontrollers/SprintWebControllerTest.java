@@ -9,9 +9,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.switch2022.project.ddd.application.CreateSprintService;
+import org.switch2022.project.ddd.application.UserStoriesInSprintService;
 import org.switch2022.project.ddd.dto.SprintCreationDto;
+import org.switch2022.project.ddd.dto.UserStoryDto;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,6 +26,8 @@ import static org.mockito.Mockito.when;
 class SprintWebControllerTest {
     @MockBean
     CreateSprintService createSprintService;
+    @MockBean
+    UserStoriesInSprintService userStoriesInSprintService;
     @InjectMocks
     SprintWebController sprintWebController;
 
@@ -56,5 +64,57 @@ class SprintWebControllerTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
         assertEquals("Failed to create sprint", responseEntity.getBody());
+    }
+
+
+    /**
+     * Method: getSprintBacklog()
+     * Scenario 1: retrieves a list of user stories for a specific sprint.
+     *
+     * @returns a list of user stories.
+     */
+    @Test
+    void ensureSprintBacklogIsRetrieved() {
+        // Arrange
+        String sprintId = "P001_S001";
+        List<UserStoryDto> expectedUserStories = new ArrayList<>();
+        expectedUserStories.add(new UserStoryDto("us001",
+                "I love chocolate","Planned"));
+
+        when(userStoriesInSprintService.getSprintBacklog(any())).thenReturn(expectedUserStories);
+
+        // Act
+        ResponseEntity<List<UserStoryDto>> responseEntity =
+                sprintWebController.getSprintBacklog(sprintId);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<UserStoryDto> actualUserStories = responseEntity.getBody();
+        assertNotNull(actualUserStories);
+        assertEquals(expectedUserStories, actualUserStories);
+    }
+
+    /**
+     * Scenario 2: returns an empty list if no user stories are associated with the sprint.
+     *
+     * @returns an empty list.
+     */
+    @Test
+    void ensureThatEmptyListIsReturnedForValidProjectWithNoUserStories() {
+        // Arrange
+        String sprintId = "P001_S001";
+        List<UserStoryDto> expectedUserStories = new ArrayList<>();
+
+        when(userStoriesInSprintService.getSprintBacklog(sprintId)).thenReturn(expectedUserStories);
+
+        // Act
+        ResponseEntity<List<UserStoryDto>> responseEntity =
+                sprintWebController.getSprintBacklog(sprintId);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<UserStoryDto> actualUserStories = responseEntity.getBody();
+        assertNotNull(actualUserStories);
+        assertTrue(actualUserStories.isEmpty());
     }
 }
