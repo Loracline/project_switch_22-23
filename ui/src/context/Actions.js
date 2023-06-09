@@ -34,6 +34,10 @@ export const POST_USER_STORY = 'POST_USER_STORY';
 export const POST_USER_STORY_SUCCESS = 'POST_USER_STORY_SUCCESS';
 export const POST_USER_STORY_FAILURE = 'POST_USER_STORY_FAILURE';
 export const RESET_POST_USER_STORY = 'RESET_POST_USER_STORY';
+export const UPDATE_SPRINT_STATUS = 'UPDATE_SPRINT_STATUS';
+export const UPDATE_SPRINT_STATUS_SUCCESS = 'UPDATE_SPRINT_STATUS_SUCCESS';
+export const UPDATE_SPRINT_STATUS_FAILURE = 'UPDATE_SPRINT_STATUS_FAILURE';
+
 
 /**
  * Action to fetch business sectors
@@ -324,6 +328,34 @@ function getProjectsSuccess(projects) {
         }
     }
 }
+
+// Action to update sprint status
+export function updateSprintStatus(sprintId, status) {
+    return (dispatch) => {
+        // Dispatch action to indicate update started
+        dispatch({
+            type: UPDATE_SPRINT_STATUS,
+        });
+
+
+// Function to handle successful update
+        function updateSprintStatusSuccess(message) {
+            return {
+                type: UPDATE_SPRINT_STATUS_SUCCESS,
+                payload: message,
+            };
+        }
+
+// Function to handle update failure
+        function updateSprintStatusFailure(error) {
+            return {
+                type: UPDATE_SPRINT_STATUS_FAILURE,
+                payload: error,
+            };
+        }
+    }
+}
+
 
 /*
 export const checkProject = (code) => {
