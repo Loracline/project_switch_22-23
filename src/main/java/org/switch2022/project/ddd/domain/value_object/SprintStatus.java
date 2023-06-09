@@ -60,5 +60,14 @@ public enum SprintStatus implements ValueObject<SprintStatus> {
         }
         return result;
     }
+
+    /**
+     * This method returns a string representation of the SprintStatus enum.
+     *
+     * @return a string representing the sprint status value.
+     */
+    public String getStatus() {
+       return this.name();
+    }
 }
 
