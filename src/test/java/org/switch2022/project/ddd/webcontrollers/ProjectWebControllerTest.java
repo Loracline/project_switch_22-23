@@ -136,6 +136,8 @@ class ProjectWebControllerTest {
         // Arrange
         String projectCode = "P001";
         List<UserStoryDto> expectedUserStories = new ArrayList<>();
+        expectedUserStories.add(new UserStoryDto("us001",
+                "I love chocolate","Planned"));
 
         when(projectService.getProductBacklog(projectCode)).thenReturn(expectedUserStories);
 
