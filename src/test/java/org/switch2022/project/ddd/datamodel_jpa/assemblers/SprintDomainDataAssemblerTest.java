@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = SprintDomainDataAssemblerTest.class)
 public class SprintDomainDataAssemblerTest {
 
     @InjectMocks
