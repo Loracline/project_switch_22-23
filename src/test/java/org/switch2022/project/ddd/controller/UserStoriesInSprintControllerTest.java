@@ -47,7 +47,7 @@ class UserStoriesInSprintControllerTest {
         List<UserStoryDto> expected = new ArrayList<>();
         UserStoryDto userStoryDtoDouble = mock(UserStoryDto.class);
         expected.add(userStoryDtoDouble);
-        when(userStoriesInSprintService.getScrumBoard(projectCode, date)).thenReturn(expected);
+        when(userStoriesInSprintService.getSprintBacklog(projectCode)).thenReturn(expected);
 
         // Act
         List<UserStoryDto> result = controller.getScrumBoard(projectCode, date);
@@ -65,7 +65,7 @@ class UserStoriesInSprintControllerTest {
         String projectCode = "ABC";
         LocalDate date = LocalDate.now();
         List<UserStoryDto> expected = new ArrayList<>();
-        when(userStoriesInSprintService.getScrumBoard(projectCode, date)).thenReturn(expected);
+        when(userStoriesInSprintService.getSprintBacklog(projectCode)).thenReturn(expected);
 
         // Act
         List<UserStoryDto> result = controller.getScrumBoard(projectCode, date);

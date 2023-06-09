@@ -7,22 +7,28 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.switch2022.project.ddd.domain.model.sprint.ISprintFactory;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
+import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
+import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
+import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(
@@ -43,146 +49,131 @@ public class UserStoriesInSprintServiceTest {
     IUsRepository userStoryRepository;
 
     /**
-     * METHOD: getScrumBoard()
-     * Scenario 1: ensure the view of the Scrum Board of current sprint.
+     * METHOD: getSprintBacklog()
+     * Scenario 1: ensure the sprint backlog of the chosen sprint is returned.
      *
-     * @return a list of UserStoryDto objects representing the user stories in the current sprint
-     * of a given project.
+     * @return a list of UserStoryDto objects representing the user stories in the chosen sprint.
      */
     @Test
-    public void ensureTheViewOfTheScrumBoardOfCurrentSprint() {
+    public void ensureTheSprintBacklogIsRetrieved() {
         //ARRANGE
-        String projectCode = "P123";
-        LocalDate date = LocalDate.now();
-        Code code = new Code(123);
-
-        UsId usId = mock(UsId.class);
-        UserStoryInSprint userStoryInSprint = mock(UserStoryInSprint.class);
-        when(userStoryInSprint.getUsId()).thenReturn(usId);
-
-        List<UserStoryInSprint> userStoryInSprints = new ArrayList<>();
-        userStoryInSprints.add(userStoryInSprint);
-
-        Sprint sprint = mock(Sprint.class);
-        when(sprint.isDateWithinPeriod(date)).thenReturn(true);
-        when(sprint.getUserStoriesInSprint()).thenReturn(userStoryInSprints);
-
-        List<Sprint> sprintsOfProject = new ArrayList<>();
-        sprintsOfProject.add(sprint);
-
-        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
-
-        List<UsId> usIds = new ArrayList<>();
-        usIds.add(usId);
-
-        UserStory userStory = mock(UserStory.class);
-        when(userStory.getUsNumber()).thenReturn("023");
-        when(userStory.getUsText()).thenReturn("As an Administrator, I want to create a Project" +
-                " in the web UI.");
-        when(userStory.getStatus()).thenReturn("Planned");
-
+        IFactoryUserStory factoryUserStory = new FactoryUserStory();
         List<UserStory> userStories = new ArrayList<>();
-        userStories.add(userStory);
+        List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
+        userStories.add(factoryUserStory.createUserStory(new UsNumber("023"), new UsText("As an Administrator, I want to create a " +
+                "Project" + " in the web UI."), new Actor("manager"),acceptanceCriteria, new Code(123)));
 
-        when(userStoryRepository.getListOfUsWithMatchingIds(usIds)).thenReturn(userStories);
+        String sprintId = "p123_s001";
+        ISprintFactory sprintFactory = new SprintFactory();
+        Sprint sprint = sprintFactory.createSprint(new Code(123),new SprintId("P123",
+                "S001"),new SprintNumber(1),new Period(LocalDate.now(),2));
 
-        List<UserStoryDto> expectedList = new ArrayList<>();
-        expectedList.add(new UserStoryDto("023", "As an Administrator, I want to create a Project" +
-                " in the web UI.", "Planned"));
+        when(sprintRepository.findById(any())).thenReturn(Optional.ofNullable(sprint));
+        when(userStoryRepository.getListOfUsWithMatchingIds(anyList())).thenReturn(userStories);
+
+        List<UserStoryDto> expected = new ArrayList<>();
+        expected.add(new UserStoryDto("us023", "As an Administrator, I want to create a " +
+                "Project" + " in the web UI.", "Planned"));
+
         //ACT
-        List<UserStoryDto> result = service.getScrumBoard(projectCode, date);
+        List<UserStoryDto> result = service.getSprintBacklog(sprintId);
 
         //ASSERT
-        assertEquals(expectedList, result);
+        assertEquals(expected, result);
     }
 
     /**
-     * Scenario 2: ensure the view of the Scrum Board of current sprint with no user stories in it.
+     * Scenario 2: ensure the sprint backlog of the chosen sprint is returned.
      *
-     * @return an empty list of UserStoryDto objects since there are no user stories in the current
+     * @return a list of UserStoryDto objects representing the user stories in the chosen sprint.
+     */
+    @Test
+    public void ensureTheSprintBacklogIsRetrieved_Two() {
+        //ARRANGE
+        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        List<UserStory> userStories = new ArrayList<>();
+        List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
+        userStories.add(factoryUserStory.createUserStory(new UsNumber("023"), new UsText("As an Administrator, I want to create a " +
+                "Project" + " in the web UI."), new Actor("manager"),acceptanceCriteria, new Code(123)));
+        userStories.add(factoryUserStory.createUserStory(new UsNumber("024"), new UsText("As an Administrator, I want to create a " +
+                "Project" + " in the web UI."), new Actor("manager"),acceptanceCriteria, new Code(123)));
+        userStories.add(factoryUserStory.createUserStory(new UsNumber("025"), new UsText("As an Administrator, I want to create a " +
+                "Project" + " in the web UI."), new Actor("manager"),acceptanceCriteria, new Code(123)));
+
+        String sprintId = "p123_s001";
+        ISprintFactory sprintFactory = new SprintFactory();
+        Sprint sprint = sprintFactory.createSprint(new Code(123),new SprintId("P123",
+                "S001"),new SprintNumber(1),new Period(LocalDate.now(),2));
+
+        when(sprintRepository.findById(any())).thenReturn(Optional.ofNullable(sprint));
+        when(userStoryRepository.getListOfUsWithMatchingIds(anyList())).thenReturn(userStories);
+
+        List<UserStoryDto> expected = new ArrayList<>();
+        expected.add(new UserStoryDto("us023", "As an Administrator, I want to create a " +
+                "Project" + " in the web UI.", "Planned"));
+        expected.add(new UserStoryDto("us024", "As an Administrator, I want to create a " +
+                "Project" + " in the web UI.", "Planned"));
+        expected.add(new UserStoryDto("us025", "As an Administrator, I want to create a " +
+                "Project" + " in the web UI.", "Planned"));
+        //ACT
+        List<UserStoryDto> result = service.getSprintBacklog(sprintId);
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: ensure the sprint backlog of the chosen sprint is returned as an empty list.
+     *
+     * @return an empty list of UserStoryDto objects since there are no user stories in the chosen
      * sprint of the given project.
      */
     @Test
-    public void ensureTheViewOfTheScrumBoardOfCurrentSprintHasNoUserStories() {
+    public void ensureTheSprintBacklogIsRetrieved_emptyList() {
         //ARRANGE
-        String projectCode = "P123";
-        LocalDate date = LocalDate.now();
-        Code code = new Code(123);
+        List<UserStory> userStories = new ArrayList<>();
 
-        List<UserStoryInSprint> userStoryInSprints = new ArrayList<>();
+        String sprintId = "p123_s001";
+        ISprintFactory sprintFactory = new SprintFactory();
+        Sprint sprint = sprintFactory.createSprint(new Code(123),new SprintId("P123",
+                "S001"),new SprintNumber(1),new Period(LocalDate.now(),2));
 
-        Sprint sprint = mock(Sprint.class);
-        when(sprint.isDateWithinPeriod(date)).thenReturn(true);
-        when(sprint.getUserStoriesInSprint()).thenReturn(userStoryInSprints);
+        when(sprintRepository.findById(any())).thenReturn(Optional.ofNullable(sprint));
+        when(userStoryRepository.getListOfUsWithMatchingIds(anyList())).thenReturn(userStories);
 
-        List<Sprint> sprintsOfProject = new ArrayList<>();
-        sprintsOfProject.add(sprint);
-
-        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
-
-        List<UserStoryDto> expectedList = new ArrayList<>();
+        List<UserStoryDto> expected = new ArrayList<>();
 
         //ACT
-        List<UserStoryDto> result = service.getScrumBoard(projectCode, date);
+        List<UserStoryDto> result = service.getSprintBacklog(sprintId);
 
         //ASSERT
-        assertEquals(expectedList, result);
+        assertEquals(expected, result);
     }
 
 
     /**
-     * Scenario 3: ensure no Scrum Board of current sprint is returned because of invalid project
-     * code.
+     * Scenario 4: ensure the sprint backlog of chosen sprint is not returned because the sprint Id does
+     * not exist.
      *
-     * @return an empty list of UserStoryDto objects since the project code "ABC" is not valid.
+     * @return an exception stating that the sprint ID does not exist.
      */
     @Test
-    public void ensureNoScrumBoardIsReturnedWhenProjectCodeInvalid() {
+    public void ensureSprintBacklogIsNotReturned_sprintIdDoesNotExist() {
         //ARRANGE
-        String projectCode = "P123";
-        LocalDate date = LocalDate.now();
-        Code code = new Code(123);
+        Optional<Sprint> sprint = Optional.empty();
 
-        when(sprintRepository.findByProjectCode(code)).thenReturn(new ArrayList<>());
+        when(sprintRepository.findById(any())).thenReturn(sprint);
 
-        List<UserStoryDto> expectedList = new ArrayList<>();
+        NotFoundInRepoException exception = assertThrows(NotFoundInRepoException.class, () ->
+                service.getSprintBacklog("p123_s001"));
+
+        String expected = "No sprint with that id";
 
         //ACT
-        List<UserStoryDto> result = service.getScrumBoard(projectCode, date);
+        String result = exception.getMessage();
 
         //ASSERT
-        assertEquals(expectedList, result);
-    }
-
-    /**
-     * Scenario 4: ensure no Scrum Board of current sprint is returned because there is no current
-     * sprint.
-     *
-     * @return an empty list of UserStoryDto objects since there is no current sprint for the given
-     * project.
-     */
-    @Test
-    public void ensureNoScrumBoardIsReturnedWhenThereIsNoCurrentSprint() {
-        //ARRANGE
-        String projectCode = "P123";
-        LocalDate date = LocalDate.now();
-        Code code = new Code(123);
-
-        Sprint sprint = mock(Sprint.class);
-        when(sprint.isDateWithinPeriod(date)).thenReturn(false);
-
-        List<Sprint> sprintsOfProject = new ArrayList<>();
-        sprintsOfProject.add(sprint);
-
-        when(sprintRepository.findByProjectCode(code)).thenReturn(sprintsOfProject);
-
-        List<UserStoryDto> expectedList = new ArrayList<>();
-
-        //ACT
-        List<UserStoryDto> result = service.getScrumBoard(projectCode, date);
-
-        //ASSERT
-        assertEquals(expectedList, result);
+        assertEquals(expected, result);
     }
 }
 
