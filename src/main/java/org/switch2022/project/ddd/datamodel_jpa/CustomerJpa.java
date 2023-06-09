@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.datamodel_jpa;
 
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "customers")
+@Data
 public class CustomerJpa {
 
     /**

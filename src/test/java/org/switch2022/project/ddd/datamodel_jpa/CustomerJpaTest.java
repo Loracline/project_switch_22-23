@@ -34,4 +34,12 @@ class CustomerJpaTest {
         // Assert
         assertEquals(expected, result);
     }
+
+    @Test
+    public void testNoArgsConstructor() {
+        CustomerJpa customer = new CustomerJpa();
+
+        assertNull(customer.getCustomerTaxId());
+        assertNull(customer.getCustomerName());
+    }
 }

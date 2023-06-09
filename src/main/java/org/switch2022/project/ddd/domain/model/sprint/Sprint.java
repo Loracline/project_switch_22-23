@@ -96,9 +96,8 @@ public class Sprint implements Entity<Sprint> {
      */
 
 
-    public boolean addUserStory(UsId usId, int effort) {
-        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId, Effort.ONE);
-        userStoryInSprint.changeEffort(effort);
+    public boolean addUserStory(UsId usId) {
+        UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId);
         boolean isAdded = true;
         if (userStoriesInSprint.contains(userStoryInSprint)) {
             isAdded = false;

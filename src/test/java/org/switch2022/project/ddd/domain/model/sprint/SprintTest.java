@@ -531,7 +531,7 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         //Act
-        boolean result = sprint.addUserStory(usId, 1);
+        boolean result = sprint.addUserStory(usId);
 
         //Assert
         assertTrue(result);
@@ -552,9 +552,9 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         UsId usIdDouble = mock(UsId.class);
-        sprint.addUserStory(usIdDouble, 1);
+        sprint.addUserStory(usIdDouble);
         //Act
-        boolean result = sprint.addUserStory(usId, 1);
+        boolean result = sprint.addUserStory(usId);
 
         //Assert
         assertTrue(result);
@@ -574,9 +574,9 @@ class SprintTest {
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
-        sprint.addUserStory(usId, 1);
+        sprint.addUserStory(usId);
         //Act
-        boolean result = sprint.addUserStory(usId, 1);
+        boolean result = sprint.addUserStory(usId);
 
         //Assert
         assertFalse(result);
@@ -597,7 +597,7 @@ class SprintTest {
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
-        sprint.addUserStory(usId, 1);
+        sprint.addUserStory(usId);
 
         //Act
         boolean result = sprint.hasUserStory(usId);
@@ -621,7 +621,7 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         UsId usIdDouble = mock(UsId.class);
-        sprint.addUserStory(usIdDouble, 1);
+        sprint.addUserStory(usIdDouble);
 
         //Act
         boolean result = sprint.hasUserStory(usId);
@@ -664,16 +664,16 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
 
         UsId usIdOne = new UsId(projectCode.getCode(), "US001");
-        sprint.addUserStory(usIdOne, 1);
+        sprint.addUserStory(usIdOne);
 
         UsId usIdTwo = new UsId(projectCode.getCode(), "US002");
-        sprint.addUserStory(usIdTwo, 3);
+        sprint.addUserStory(usIdTwo);
 
         UsId usIdThree = new UsId(projectCode.getCode(), "US003");
-        sprint.addUserStory(usIdThree, 5);
+        sprint.addUserStory(usIdThree);
 
         UsId usIdFour = new UsId(projectCode.getCode(), "US004");
-        sprint.addUserStory(usIdFour, 8);
+        sprint.addUserStory(usIdFour);
 
         // Act
         boolean result = sprint.hasUserStory(usIdThree);
@@ -700,7 +700,7 @@ class SprintTest {
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
-        sprint.addUserStory(usId, 1);
+        sprint.addUserStory(usId);
         when(period.isDateEqualOrGreaterThanStartDate(date)).thenReturn(false);
 
         //Act
@@ -749,7 +749,7 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         UsId usIdDouble = mock(UsId.class);
-        sprint.addUserStory(usIdDouble, 2);
+        sprint.addUserStory(usIdDouble);
         when(date.isAfter(any())).thenReturn(true);
 
         //Act
@@ -800,9 +800,9 @@ class SprintTest {
         expected.add(usId);
         expected.add(usIdDouble);
         expected.add(usIdTriple);
-        sprint.addUserStory(usId, 1);
-        sprint.addUserStory(usIdDouble, 2);
-        sprint.addUserStory(usIdTriple, 3);
+        sprint.addUserStory(usId);
+        sprint.addUserStory(usIdDouble);
+        sprint.addUserStory(usIdTriple);
 
         //Act
         List<UsId> result = sprint.getSprintBacklog();
@@ -921,7 +921,6 @@ class SprintTest {
 
     /**
      * Method: getSprintId()
-     *
      * Scenario 1: verify that a sprintId is retrieved as a string.
      */
     @Test
@@ -945,7 +944,6 @@ class SprintTest {
 
     /**
      * Method: getProjectCode()
-     *
      * Scenario 1: verify that a projectCode is retrieved as a string.
      */
     @Test
@@ -969,7 +967,6 @@ class SprintTest {
 
     /**
      * Method: getStartDate()
-     *
      * Scenario 1: verify that a startDate is retrieved as a string.
      */
     @Test
@@ -993,7 +990,6 @@ class SprintTest {
 
     /**
      * Method: getEndDate()
-     *
      * Scenario 1: verify that a endDate is retrieved as a string.
      */
     @Test
@@ -1016,7 +1012,6 @@ class SprintTest {
     }
     /**
      * Method: getFullSprintNumber()
-     *
      * Scenario 1: verify that a full sprintNumber is retrieved as a string.
      */
     @Test
@@ -1040,7 +1035,6 @@ class SprintTest {
 
     /**
      * Method: getUSerStoriesInSprint()
-     *
      * Scenario 1: verify that a list of userStoryInSprint is retrieved.
      */
     @Test
@@ -1054,11 +1048,11 @@ class SprintTest {
 
         UsId usId1 = mock(UsId.class);
         UsId usId2 = mock(UsId.class);
-        sprint.addUserStory(usId1, 1);
-        sprint.addUserStory(usId2, 2);
+        sprint.addUserStory(usId1);
+        sprint.addUserStory(usId2);
 
-        UserStoryInSprint userStoryInSprint1 = new UserStoryInSprint(usId1, Effort.ONE);
-        UserStoryInSprint userStoryInSprint2 = new UserStoryInSprint(usId2, Effort.TWO);
+        UserStoryInSprint userStoryInSprint1 = new UserStoryInSprint(usId1);
+        UserStoryInSprint userStoryInSprint2 = new UserStoryInSprint(usId2);
         List<UserStoryInSprint> expected = Arrays.asList(userStoryInSprint1, userStoryInSprint2);
 
         // Act
