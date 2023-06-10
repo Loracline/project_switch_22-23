@@ -22,7 +22,9 @@ public class Sprint implements Entity<Sprint> {
 
     private final Period period;
 
+    private SprintStatus status;
     private final List<UserStoryInSprint> userStoriesInSprint;
+    private SprintStatus sprintStatus;
 
 
     /**
@@ -41,7 +43,7 @@ public class Sprint implements Entity<Sprint> {
         this.sprintNumber = sprintNumber;
         this.period = period;
         this.userStoriesInSprint = new ArrayList<>();
-
+        this.status = SprintStatus.PLANNED;
     }
 
     /**
@@ -296,5 +298,35 @@ public class Sprint implements Entity<Sprint> {
      */
     public List<UserStoryInSprint> getUserStoriesInSprint() {
         return userStoriesInSprint;
+    }
+
+    /**
+     * This method changes the status of the sprint.
+     *
+     * @param status to be changed to.
+     * @return true if the status was successfully updated, or propagates an exception from the generateSprintStatus
+     * otherwise.
+     */
+    public boolean changeStatus(String status) {
+        SprintStatus sprintStatus = SprintStatus.generateSprintStatus(status);
+        this.status = sprintStatus;
+        return true;
+    }
+
+    /**
+     * Getter method for the attribute: status.
+     *
+     * @return a string representation of the SprintStatus enum.
+     */
+    public String getStatus() {
+        return this.status.getStatus();
+    }
+
+    /**
+     * This method checks if the sprint status is valid
+     * @return true if the sprint status is OPEN, false otherwise.
+     */
+    public boolean isOpen() {
+       return this.status == SprintStatus.OPEN;
     }
 }

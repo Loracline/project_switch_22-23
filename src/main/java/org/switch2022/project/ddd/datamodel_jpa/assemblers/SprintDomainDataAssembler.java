@@ -1,8 +1,10 @@
 package org.switch2022.project.ddd.datamodel_jpa.assemblers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.UserStoryInSprintJpa;
+import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceFactory;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintFactory;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
@@ -21,6 +23,8 @@ import java.util.Locale;
  */
 @Service
 public class SprintDomainDataAssembler {
+    @Autowired
+    ISprintFactory factory;
     /**
      * Converts a Sprint instance to a SprintJpa instance.
      *
@@ -30,7 +34,8 @@ public class SprintDomainDataAssembler {
     public SprintJpa toData(Sprint sprint) {
         SprintJpa sprintJpa = new SprintJpa(sprint.getSprintId(),
                 sprint.getFullSprintNumber(), sprint.getProjectCode(),
-                sprint.getStartDate(), sprint.getEndDate());
+                sprint.getStartDate(), sprint.getEndDate(), sprint.getStatus());
+
         List<UserStoryInSprint> userStoriesInSprint =
                 sprint.getUserStoriesInSprint();
         List<UserStoryInSprintJpa> userStoriesInSprintJpa =
@@ -50,9 +55,7 @@ public class SprintDomainDataAssembler {
      * @return The converted Sprint instance.
      */
     public Sprint toDomain (SprintJpa sprintJpa) {
-        ISprintFactory iSprintFactory = new SprintFactory();
-
-        int projectNumber = Utils.getIntFromAlphanumericString
+               int projectNumber = Utils.getIntFromAlphanumericString
                 (sprintJpa.getProjectCode(), "p");
         Code projectCode = new Code(projectNumber);
 
@@ -68,8 +71,9 @@ public class SprintDomainDataAssembler {
         LocalDate endDate = LocalDate.parse(sprintJpa.getEndDate(), formatter);
         Period period = new Period(startDate, endDate);
 
-        Sprint sprint = iSprintFactory.createSprint(projectCode, sprintId, sprintNumber
+        Sprint sprint = factory.createSprint(projectCode, sprintId, sprintNumber
                 , period);
+        sprint.changeStatus(sprintJpa.getStatus());
 
         List<UserStoryInSprintJpa> userStoryInSprintJpa =
                 sprintJpa.getUserStoriesInSprint();
