@@ -1,0 +1,61 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO VIEW THE SPRINT BACKLOG OF SPRINT
+legend top
+US022 - As Team Member, I want to view the Sprint Backlog of the current sprint.
+end legend
+autonumber
+actor "Team Member" as member
+participant ":UserStoriesInSprintUI" as ui
+participant ":SprintWebController" as controller
+participant ":UserStoriesInSprintService" as service
+participant ":SprintRepository" as repository
+participant ":Sprint" as sprint
+
+participant ":UserStoryRepository" as usRepository
+participant ":UsId" as usId
+participant ":UserStoryMapper" as mapper
+
+activate member
+activate ui
+member -> ui : requests to view the Sprint Backlog of current sprint
+
+ui --> member : requests data (sprintId)
+member -> ui : enters requested data
+
+"ui" -> controller : getSprintBacklog(sprintId)
+activate controller
+"controller" -> service : getSprintBacklog(sprintId)
+activate service
+
+loop for each sprintId in SprintRepository
+service -> repository: getSprintById(sprintIdVO)
+activate repository
+repository --> service: sprint
+deactivate repository
+end loop
+service -> sprint: getUserStoriesInSprint()
+activate sprint
+sprint --> service: userStoriesInSprint
+deactivate sprint
+service -> usId: extractUsIds(userStoriesInSprint)
+activate usId
+usId --> service: usIds
+deactivate usId
+deactivate repository
+service -> usRepository: getListOfUsWithMatchingIds(usIds)
+activate usRepository
+usRepository --> service: userStories
+deactivate usRepository
+service -> mapper: userStoryToDtoList(userStories)
+activate mapper
+mapper --> service : userStoryDtos
+deactivate mapper
+service --> controller: userStoryDtos
+deactivate service
+controller --> ui : userStoryDtos
+deactivate controller
+ui --> member : shows sprint backlog of chosen sprint
+deactivate ui
+
+@enduml

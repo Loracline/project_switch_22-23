@@ -69,8 +69,8 @@ public class UserStoriesInSprintService {
         Optional<Sprint> sprint = sprintRepository.findById(sprintIdVO);
 
         if (sprint.isPresent()) {
-            List<UserStoryInSprint> userStoryInSprints = sprint.get().getUserStoriesInSprint();
-            List<UsId> usIds = extractUsIds(userStoryInSprints);
+            List<UserStoryInSprint> userStoriesInSprint = sprint.get().getUserStoriesInSprint();
+            List<UsId> usIds = extractUsIds(userStoriesInSprint);
             List<UserStory> userStories = userStoryRepository.getListOfUsWithMatchingIds(usIds);
             userStoryDtos = new UserStoryMapper().userStoryToDtoList(userStories);
         } else {

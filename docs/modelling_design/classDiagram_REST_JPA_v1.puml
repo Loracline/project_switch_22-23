@@ -44,7 +44,9 @@ class ResourceWebController {
 
 class SprintWebController {
 + createSprintService
+userStoriesInSprintService
 + createSprint(sprintCreationDto)
++ getSprintBacklog(sprintId)
 }
 
 class TypologyWebController {
@@ -179,6 +181,13 @@ class UsService {
 + addUsToProductBacklog(usId, projectCode, priority)
 - createUserStory(userStoryCreationDto, projectCode)
 - convertToAcceptanceCriteria(acceptanceCriteria)
+}
+
+class UserStoriesInSprintService{
+- sprintRepository
+- userStoryRepository
+- extractUsIds(userStoriesInSprint)
++ getSprintBacklog(sprintId)
 }
 
 class CustomerListService{
@@ -644,6 +653,7 @@ class Sprint {
 - projectCode
 - period
 - userStoriesInSprint
++ getUserStoriesInSprint()
 }
 
 class UserStory{
@@ -1099,6 +1109,7 @@ ProjectResourceFactory ..> ProjectResource: creates
 SprintWebController ..> SprintCreationDto: uses
 
 SprintWebController <.. CreateSprintService: is injected
+SprintWebController <.. UserStoriesInSprintService: is injected
 CreateSprintService <.. ISprintRepository: is injected
 CreateSprintService <.. ISprintFactory: is injected
 CreateSprintService <.. IProjectRepository: is injected
@@ -1146,6 +1157,11 @@ UserStoryWebController <.. UsService: is injected
 UsService <.. IUsRepository: is injected
 UsService <.. IProjectRepository: is injected
 UsService <.. IFactoryUserStory: is injected
+
+UserStoriesInSprintService <.. ISprintRepository: is injected
+UserStoriesInSprintService <.. IUsRepository: is injected
+UserStoriesInSprintService ..> UserStoryMapper: uses
+
 
 IUsRepository <|.. UserStoryRepositoryJpa: implements
 UserStoryRepositoryJpa <.. IUserStoryJpaRepository: is injected
