@@ -17,7 +17,8 @@ const menu = [
     {key: 'project', label: "project", hidden: true},
     {key: 'about', label: "about"},
     {key: 'allocateResource', label: "allocate resource", hidden: true},
-    {key: 'sprint', label: "sprint", hidden: false}
+    {key: 'sprint', label: "sprint", hidden: false},
+    {key: 'sprintBacklog', label: "sprint Backlog", hidden: true}
 ]
 const nav = {selectedMenu: menu[0], menu: menu,}
 const detailedProject = null;
