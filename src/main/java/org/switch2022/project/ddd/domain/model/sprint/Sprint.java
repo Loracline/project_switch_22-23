@@ -17,11 +17,8 @@ import static java.lang.Integer.parseInt;
 public class Sprint implements Entity<Sprint> {
     private final SprintId sprintId;
     private final SprintNumber sprintNumber;
-
     private final Code projectCode;
-
     private final Period period;
-
     private final List<UserStoryInSprint> userStoriesInSprint;
 
 

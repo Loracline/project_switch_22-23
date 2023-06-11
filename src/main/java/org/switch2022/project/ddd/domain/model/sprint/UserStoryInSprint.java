@@ -13,11 +13,9 @@ import java.util.Objects;
  * Sprint and track its effort.
  */
 public class UserStoryInSprint implements Entity<UserStoryInSprint> {
-
     /**
      * Attributes
      */
-
     private final UsId usId;
     private Effort effort;
 
