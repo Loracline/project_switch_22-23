@@ -20,7 +20,7 @@ public class Sprint implements Entity<Sprint> {
     private final Code projectCode;
     private final Period period;
     private final List<UserStoryInSprint> userStoriesInSprint;
-    private SprintStatus sprintStatus;
+    private SprintStatus status;
 
 
     /**
