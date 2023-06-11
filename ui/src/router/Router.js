@@ -7,6 +7,7 @@ import Project from "../pages/Project/Project";
 import CreateUserStory from "../pages/CreateUserStory/CreateUserStory";
 import Home from "../pages/Home/Home";
 import AllocateResource from "../pages/AllocateResource/AllocateResource";
+import SprintBacklog from "../pages/SprintBacklog/SprintBacklog";
 
 const Router = ({ selected }) => {
     return (
@@ -20,6 +21,7 @@ const Router = ({ selected }) => {
             {selected === 'project' && <Project/>}
             {selected === 'home' && <Home/>}
             {selected === 'allocateResource' && <AllocateResource/>}
+            {selected === 'sprintBacklog' && <SprintBacklog />}
         </div>
     )
 }
