@@ -1,0 +1,77 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO VIEW THE SPRINT BACKLOG OF SPRINT
+legend top
+US022 - As Team Member, I want to view the Sprint Backlog of the chosen sprint.
+end legend
+
+class "SprintWebController"{
+createSprintService
+userStoriesInSprintService
++ getSprintBacklog(sprintId)
+}
+
+class UserStoriesInSprintService{
+- sprintRepository
+- userStoryRepository
+- extractUsIds(userStoriesInSprint)
++ getSprintBacklog(sprintId)
+}
+
+class UserStoryMapper{
++ userStoryToDtoList(userStories)
+}
+
+class UserStoryDto {
++ userStoryNumber
++ userStoryText
++ status
+}
+
+interface ISprintRepository{
++ findById(sprintIdVO)
+}
+
+class UsRepository{
++ getListOfUsWithMatchingIds(usId)
+}
+
+interface IUsRepository{
++ getListOfUsWithMatchingIds(usId)
+}
+
+class SprintRepository{
++ findById(sprintIdVO)
+}
+
+class Sprint<<root>>{
+- sprintId
+- sprintNumber
+- projectCode
+- period
+- userStoriesInSprint
++ getUserStoriesInSprint()
+}
+
+class UserStory<<root>>{
+- usId
+- acceptanceCriteria
+- usNumber
+- actor
+- usText
+- status
+- projectCode
+}
+
+SprintWebController <.. UserStoriesInSprintService: is injected
+UserStoriesInSprintService <.. ISprintRepository: is injected
+UserStoriesInSprintService <.. IUsRepository: is injected
+UserStoriesInSprintService ..> UserStoryMapper: uses
+IUsRepository <|.. UsRepository: implements
+ISprintRepository <|.. SprintRepository: implements
+SprintRepository --> Sprint: has
+UsRepository --> UserStory: has
+UserStoryMapper ..> UserStoryDto: creates
+UserStoryDto ..> UserStory: uses
+@enduml

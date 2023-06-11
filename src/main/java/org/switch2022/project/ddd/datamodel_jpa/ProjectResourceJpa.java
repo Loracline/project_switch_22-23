@@ -1,13 +1,8 @@
 package org.switch2022.project.ddd.datamodel_jpa;
 
 import javax.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
-import org.switch2022.project.ddd.domain.value_object.UsId;
-import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.Objects;
 

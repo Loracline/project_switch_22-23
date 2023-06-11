@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.sprint;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -531,7 +532,7 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         //Act
-        boolean result = sprint.addUserStory(usId, 1);
+        boolean result = sprint.addUserStory(usId);
 
         //Assert
         assertTrue(result);
@@ -552,9 +553,9 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         UsId usIdDouble = mock(UsId.class);
-        sprint.addUserStory(usIdDouble, 1);
+        sprint.addUserStory(usIdDouble);
         //Act
-        boolean result = sprint.addUserStory(usId, 1);
+        boolean result = sprint.addUserStory(usId);
 
         //Assert
         assertTrue(result);
@@ -574,9 +575,9 @@ class SprintTest {
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
-        sprint.addUserStory(usId, 1);
+        sprint.addUserStory(usId);
         //Act
-        boolean result = sprint.addUserStory(usId, 1);
+        boolean result = sprint.addUserStory(usId);
 
         //Assert
         assertFalse(result);
@@ -597,7 +598,7 @@ class SprintTest {
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
-        sprint.addUserStory(usId, 1);
+        sprint.addUserStory(usId);
 
         //Act
         boolean result = sprint.hasUserStory(usId);
@@ -621,7 +622,7 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         UsId usIdDouble = mock(UsId.class);
-        sprint.addUserStory(usIdDouble, 1);
+        sprint.addUserStory(usIdDouble);
 
         //Act
         boolean result = sprint.hasUserStory(usId);
@@ -664,16 +665,16 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
 
         UsId usIdOne = new UsId(projectCode.getCode(), "US001");
-        sprint.addUserStory(usIdOne, 1);
+        sprint.addUserStory(usIdOne);
 
         UsId usIdTwo = new UsId(projectCode.getCode(), "US002");
-        sprint.addUserStory(usIdTwo, 3);
+        sprint.addUserStory(usIdTwo);
 
         UsId usIdThree = new UsId(projectCode.getCode(), "US003");
-        sprint.addUserStory(usIdThree, 5);
+        sprint.addUserStory(usIdThree);
 
         UsId usIdFour = new UsId(projectCode.getCode(), "US004");
-        sprint.addUserStory(usIdFour, 8);
+        sprint.addUserStory(usIdFour);
 
         // Act
         boolean result = sprint.hasUserStory(usIdThree);
@@ -700,7 +701,7 @@ class SprintTest {
         SprintId sprintId = new SprintId(projectCode.toString(), sprintNumber.getSprintNumber());
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
-        sprint.addUserStory(usId, 1);
+        sprint.addUserStory(usId);
         when(period.isDateEqualOrGreaterThanStartDate(date)).thenReturn(false);
 
         //Act
@@ -749,7 +750,7 @@ class SprintTest {
         Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
         UsId usId = new UsId(projectCode.getCode(), "US001");
         UsId usIdDouble = mock(UsId.class);
-        sprint.addUserStory(usIdDouble, 2);
+        sprint.addUserStory(usIdDouble);
         when(date.isAfter(any())).thenReturn(true);
 
         //Act
@@ -800,9 +801,9 @@ class SprintTest {
         expected.add(usId);
         expected.add(usIdDouble);
         expected.add(usIdTriple);
-        sprint.addUserStory(usId, 1);
-        sprint.addUserStory(usIdDouble, 2);
-        sprint.addUserStory(usIdTriple, 3);
+        sprint.addUserStory(usId);
+        sprint.addUserStory(usIdDouble);
+        sprint.addUserStory(usIdTriple);
 
         //Act
         List<UsId> result = sprint.getSprintBacklog();
@@ -921,7 +922,6 @@ class SprintTest {
 
     /**
      * Method: getSprintId()
-     *
      * Scenario 1: verify that a sprintId is retrieved as a string.
      */
     @Test
@@ -945,7 +945,6 @@ class SprintTest {
 
     /**
      * Method: getProjectCode()
-     *
      * Scenario 1: verify that a projectCode is retrieved as a string.
      */
     @Test
@@ -969,7 +968,6 @@ class SprintTest {
 
     /**
      * Method: getStartDate()
-     *
      * Scenario 1: verify that a startDate is retrieved as a string.
      */
     @Test
@@ -993,7 +991,6 @@ class SprintTest {
 
     /**
      * Method: getEndDate()
-     *
      * Scenario 1: verify that a endDate is retrieved as a string.
      */
     @Test
@@ -1016,7 +1013,6 @@ class SprintTest {
     }
     /**
      * Method: getFullSprintNumber()
-     *
      * Scenario 1: verify that a full sprintNumber is retrieved as a string.
      */
     @Test
@@ -1040,7 +1036,6 @@ class SprintTest {
 
     /**
      * Method: getUSerStoriesInSprint()
-     *
      * Scenario 1: verify that a list of userStoryInSprint is retrieved.
      */
     @Test
@@ -1054,11 +1049,11 @@ class SprintTest {
 
         UsId usId1 = mock(UsId.class);
         UsId usId2 = mock(UsId.class);
-        sprint.addUserStory(usId1, 1);
-        sprint.addUserStory(usId2, 2);
+        sprint.addUserStory(usId1);
+        sprint.addUserStory(usId2);
 
-        UserStoryInSprint userStoryInSprint1 = new UserStoryInSprint(usId1, Effort.ONE);
-        UserStoryInSprint userStoryInSprint2 = new UserStoryInSprint(usId2, Effort.TWO);
+        UserStoryInSprint userStoryInSprint1 = new UserStoryInSprint(usId1);
+        UserStoryInSprint userStoryInSprint2 = new UserStoryInSprint(usId2);
         List<UserStoryInSprint> expected = Arrays.asList(userStoryInSprint1, userStoryInSprint2);
 
         // Act
@@ -1066,5 +1061,125 @@ class SprintTest {
 
         // Assert
         assertEquals(expected, result);
+    }
+
+    /**
+     * Method: changeStatus(String status)
+     * Scenario 1: checks if the status was successfully changed.
+     * It should return true.
+     */
+    @Test
+    void ensureThatItReturnsTrueIfTheStatusIsSuccessfullyChangedToOneOfTheValidStatuses() {
+        //ARRANGE
+        Code code = mock(Code.class);
+        SprintId id = mock(SprintId.class);
+        SprintNumber number = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(code, id, number, period);
+        //ACT
+        boolean result = sprint.changeStatus("open");
+        //ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Method: changeStatus(String status)
+     * Scenario 2: checks if the status was not successfully changed because the string passed as argument is not a
+     * valid status.
+     * It should throw an InvalidInputException.
+     */
+    @Test
+    void ensureThatItThrowsAnExceptionIfTheStatusPassedAsArgumentIsNotValid() {
+        //ARRANGE
+        Code code = mock(Code.class);
+        SprintId id = mock(SprintId.class);
+        SprintNumber number = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(code, id, number, period);
+        //ACT
+        InvalidInputException exception = assertThrows(InvalidInputException.class,
+                () -> SprintStatus.generateSprintStatus("Invalid Status"));
+
+        //ASSERT
+        assertEquals("Sprint status must be OPEN, PLANNED or CLOSED", exception.getMessage());
+    }
+
+    /**
+     * Method: getStatus()
+     * Scenario 1: checks if the string representation of the status is successfully returned.
+     * It should assert equals.
+     */
+    @Test
+    void ensureThatTheStringRepresentationOfTheSprintStatusIsSuccessfullyReturned() {
+        //ARRANGE
+        Code code = mock(Code.class);
+        SprintId id = mock(SprintId.class);
+        SprintNumber number = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(code, id, number, period);
+        //ACT
+        String result = sprint.getStatus();
+        //ASSERT
+        assertEquals("PLANNED", result);
+    }
+
+    /**
+     * Method: isOpen()
+     * Scenario 1: true if that Sprint has OPEN status.
+     */
+    @Test
+    public void testIsValidToAddUserStories_WhenStatusIsOpen_ReturnsTrue() {
+        // Arrange
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        sprint.changeStatus("OPEN");
+
+        // Act
+        boolean isValid = sprint.isOpen();
+
+        // Assert
+        assertTrue(isValid);
+    }
+
+    /**
+     * Scenario 2: false if that Sprint has PLANNED status.
+     */
+    @Test
+    public void testIsValidToAddUserStories_WhenStatusIsPlanned_ReturnsFalse() {
+        // Arrange
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+
+        // Act
+        boolean isValid = sprint.isOpen();
+
+        // Assert
+        assertFalse(isValid);
+    }
+
+    /**
+     * Scenario 3: false if that Sprint has CLOSED status.
+     */
+    @Test
+    public void testIsValidToAddUserStories_WhenStatusIsClosed_ReturnsFalse() {
+        // Arrange
+        Code projectCode = mock(Code.class);
+        SprintId sprintId = mock(SprintId.class);
+        SprintNumber sprintNumber = mock(SprintNumber.class);
+        Period period = mock(Period.class);
+        Sprint sprint = new Sprint(projectCode, sprintId, sprintNumber, period);
+        sprint.changeStatus("CLOSED");
+
+        // Act
+        boolean isValid = sprint.isOpen();
+
+        // Assert
+        assertFalse(isValid);
     }
 }

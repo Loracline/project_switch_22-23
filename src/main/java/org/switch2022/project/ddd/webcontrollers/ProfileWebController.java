@@ -32,8 +32,8 @@ public class ProfileWebController {
      */
     @PostMapping()
     public ResponseEntity<Object> createProfile(@RequestBody ProfileCreationDto profileCreationDto) {
-            service.createProfile(profileCreationDto);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+        service.createProfile(profileCreationDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

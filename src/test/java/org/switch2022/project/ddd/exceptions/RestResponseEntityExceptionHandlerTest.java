@@ -63,4 +63,20 @@ public class RestResponseEntityExceptionHandlerTest {
         assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
         assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
     }
+
+    @Test
+    public void handleRunTimeExceptionTest() {
+        // Arrange
+        RuntimeException exception = new RuntimeException("Run time exception");
+        ErrorMessage expected = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), LocalTime.now(),
+                "Run time exception");
+
+        // Act
+        ResponseEntity<Object> result = exceptionHandler.handleRuntimeException(exception);
+        ErrorMessage resultErrorMessage = (ErrorMessage) result.getBody();
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+        assertEquals(expected.getMessage(), resultErrorMessage.getMessage());
+    }
 }

@@ -15,3 +15,26 @@ export function postSprint(success, failure, sprintToSubmit) {
         }).catch(err => failure(err.message))
     ;
 }
+export function postUpdateSprintStatus(sprintId, status) {
+    return new Promise((resolve, reject) => {
+        fetch(`${URL}/sprints/${sprintId}`, {
+            method: 'PUT',
+            body: JSON.stringify({ status }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    res.text().then(text => resolve(text));
+                } else {
+                    res.text().then(errText => reject(errText));
+                }
+            })
+            .catch(err => reject(err.message));
+    });
+}
+
+
+
+

@@ -107,6 +107,12 @@ public class UsRepository implements IUsRepository {
         return userStoriesWithMatchingIds;
     }
 
+    /**
+     * Checks if a UserStory with the given UsId exists in the list of UserStories.
+     *
+     * @param usId the UsId to search for
+     * @return true if a UserStory with the given UsId is found, false otherwise
+     */
     @Override
     public boolean existsByUsId(UsId usId) {
         boolean usFound = false;

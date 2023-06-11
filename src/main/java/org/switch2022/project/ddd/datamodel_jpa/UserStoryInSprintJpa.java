@@ -25,13 +25,15 @@ public class UserStoryInSprintJpa {
      * Constructor
      * It creates an userStoryInSprint using its identifier: usId  and effort.
      */
-    public UserStoryInSprintJpa(String usId, int effort, SprintJpa sprintJpa) {
+    public UserStoryInSprintJpa(String usId, int effort) {
         this.usId = usId;
         this.effort = effort;
-        this.sprint = sprintJpa;
 
     }
-
+    /**
+     * Constructor
+     * It creates an userStoryInSprint with empty .
+     */
     protected UserStoryInSprintJpa() {
     }
 }
