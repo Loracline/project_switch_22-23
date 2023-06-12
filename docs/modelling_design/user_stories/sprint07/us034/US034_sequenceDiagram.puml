@@ -9,7 +9,7 @@ autonumber
 actor "Project Manager"
 participant ":CloseSprintUi" as ui
 participant ":SprintWebController" as controller
-participant ":CloseSprintService" as service
+participant ":SprintStatusChangeService" as service
 participant ":SprintRepository" as sprintRepo
 participant ":Sprint" as sprint
 participant ":UserStory" as us
