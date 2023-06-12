@@ -36,6 +36,22 @@ function SprintBacklog() {
     }, [])
 
 
+//fetch para post UserStoryToAdd
+    const [userStoriesToAdd, setUserStoriesToAdd] = useState([]);
+    useEffect(() => {
+        for (let i = 0; i < userStoriesToAdd.length; i++) {
+            fetch(`${API_URL}${API_ROUTES.SPRINTS}/${sprintId}${API_ROUTES.SPRINTBACKLOG}`, {
+                method: 'POST',
+                body: JSON.stringify(userStoriesToAdd[i]),
+                headers,
+            }).then(async response => {
+                if (!response.ok) {
+                    throw await response.json()
+                }
+                return {}
+            })
+        }
+    }, [userStoriesToAdd])
 
 
     const icon = <CheckBoxOutlineBlankIcon fontSize="small"/>;
