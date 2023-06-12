@@ -1,0 +1,50 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO ADD A USER STORY TO THE SPRINT BACKLOG
+legend top
+US020 - As Project Manager, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+end legend
+autonumber
+actor "Project Manager"
+participant ":AddUserStoryInSprintUI" as ui
+participant ":SprintWebController" as ct
+participant ":AddUserStoryToSprintBacklogService" as serv
+participant ":sprintRepository" as sprintRep
+participant "sprint:Sprint" as s
+participant "userStory:UserStory" as us
+
+activate "Project Manager"
+
+"Project Manager"-> ui: starts adding a User Story to Sprint Backlog
+activate ui
+ui --> "Project Manager": requests data (userStoryId, sprintId)
+"Project Manager" -> ui: sends requested data
+ui -> ct: addUserStoryToSprintBacklog(usId, sprintId)
+activate ct
+ct -> serv: addUserStoryToSprintBacklog(userStoryId, sprintId)
+activate serv
+serv -> sprintRep: findById(sprintId)
+activate sprintRep
+sprintRep --> serv: sprint
+deactivate sprintRep
+serv -> s: isOpen(status)
+activate s
+s --> serv: true
+deactivate s
+
+serv -> us: hasUserStoryStatus(status)
+activate us
+us --> serv: true
+deactivate us
+serv -> s : addUserStory(usIdVO)
+activate s
+s --> serv: true
+deactivate s
+
+serv --> ct : true
+deactivate serv
+ct --> ui : true
+deactivate ct
+ui --> "Project Manager": User Story was added to Sprint Backlog
+deactivate ui
+@enduml

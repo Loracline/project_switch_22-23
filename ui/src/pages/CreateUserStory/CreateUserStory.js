@@ -1,13 +1,6 @@
 import React, {useContext, useState} from 'react';
 import Button from "../../components/Button/Button";
-import {
-    IconButton,
-    List,
-    ListItem,
-    ListItemText,
-    TextField,
-    Typography,
-} from "@mui/material";
+import {Box, IconButton, List, ListItem, ListItemText, TextField, Typography,} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AppContext from "../../context/AppContext";
@@ -17,6 +10,7 @@ import {strings} from "../../strings";
 import Loading from "../../components/Loading/Loading";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
+import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 
 /**This component provides a form for creating a new user story.*/
 
@@ -27,6 +21,7 @@ function CreateUserStory() {
     const messageSuccess = state.messageSuccess;
     const messageFailure = state.messageFailure;
     const [newAcceptanceCriteria, setAcceptanceCriteria] = useState("");
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
     const initialUsState = {
         projectCode: detailedProject.code,
@@ -67,15 +62,65 @@ function CreateUserStory() {
         setAcceptanceCriteria("");
     }
 
-
     const handleSubmit = (event) => {
         event.preventDefault();
-        createUserStory(dispatch, {...userStory, priority: userStory.priority || -1});
-        setUserStory(initialUsState);
-    }
+        createUserStory(dispatch, {...userStory, priority: userStory.priority || -1})
+    };
 
     const handleClearUserStory = (_) => {
+        setUserStory(initialUsState);
         dispatch(resetPostUserStory());
+        setShowConfirmation(false);
+    }
+
+    const handleConfirmation = () => {
+        setShowConfirmation(true);
+    }
+
+    const handleCancel = () => {
+        setShowConfirmation(false);
+
+    };
+
+    const dialogContent = () => {
+        return (
+            <div>
+                <h2 style={{
+                    marginBottom: '1rem',
+                    fontSize: '2rem',
+                    textAlign: "center"
+                }}>Please confirm:</h2>
+                <table style={{width: '100%'}}>
+                    <tbody>
+                    <tr>
+                        <td><strong>User Story Number:</strong></td>
+                        <td>{userStory.userStoryNumber}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>User Story Text:</strong></td>
+                        <td>{userStory.userStoryText}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Actor:</strong></td>
+                        <td>{userStory.actor}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Acceptance Criteria:</strong></td>
+                        <td>{userStory.acceptanceCriteria}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Priority:</strong></td>
+                        <td>{userStory.priority}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Description:</strong></td>
+                        <td>{userStory.description}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        )
     }
 
     return (
@@ -165,26 +210,43 @@ function CreateUserStory() {
                         }}
                         variant="outlined"
                         className="textField"/>
-                    <div className="buttons-createUs">
-                        <Button isSecundary={true}
-                                onClick={() => dispatch(selectMenu('project'))}
-                                text="Return to project"/>
-                        <Button text="Create US"
-                                isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}/>
-                    </div>
-                    <Button isSecundary={true}
+                    <Box display="flex" justifyContent="space-between">
+                        <Button
+                            isSecundary={true}
+                            onClick={() => dispatch(selectMenu('project'))}
+                            text="Return to project"
+                        />
+                        <Button
+                            isSecundary={true}
                             onClick={() => dispatch(selectMenu('productBacklog'))}
-                            text="Go to Product Backlog"/>
+                            text="Go to Product Backlog"
+                        />
+                        <Button
+                            type="button"
+                            text="Create US"
+                            onClick={handleConfirmation}
+                            isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}
+                        />
+                    </Box>
                 </form>
             </section>
 
             <Loading handleLoading={loading}/>
+
+            <ConfirmationPage
+                handleOpen={showConfirmation}
+                dialogContent={dialogContent()}
+                handleCancel={handleCancel}
+                handleConfirm={handleSubmit}
+            />
+
             <SuccessMessage
                 handleOpen={messageSuccess.length > 0}
                 title={strings.userStoryCreatedSuccessMessage}
                 message={messageSuccess}
                 handleClose={handleClearUserStory}
             />
+
             <FailureMessage
                 handleOpen={messageFailure.length > 0}
                 title={strings.userStoryNumberAlreadyExistsMessage}
