@@ -18,7 +18,7 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
     const projectCode = detailedProject.code;
 
     useEffect(() => {
-        fetch(`http://localhost:8080/projects/${projectCode}/productBacklog`, { //`http://localhost:8080/projects?projectCode=${detailedProject.code}/productBacklog`, {
+        fetch(`http://localhost:8080/projects/${projectCode}/productBacklog`, {
             method: 'GET',
             headers,
         })

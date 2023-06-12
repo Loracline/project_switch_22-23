@@ -2,46 +2,74 @@ import React, {useContext, useEffect} from 'react';
 import AppContext from "../../context/AppContext";
 import './ListSprints.css';
 import Loading from "../../components/Loading/Loading";
-import {selectMenu} from "../../context/Actions";
+import {getSprintsFromProject, selectMenu, setCurrentSprint} from "../../context/Actions";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableBody from "../../components/TableBody/TableBody";
 import Alert from "@mui/material/Alert";
 import Button from "../../components/Button/Button";
 
+/**
+ * Renders a list of sprints for a selected project.
+ */
 const ListSprints = () => {
+    // Access the global app state and dispatch actions.
     const {state, dispatch} = useContext(AppContext);
-    const headers = state.headersSprints;
-    const body = state.sprints;
-    const loading = state.loading;
 
-    const sprints = () => {
+    // Represents the header and body of the sprints table.
+    const tableHeader = state.sprintsTableHeader;
+    const tableBody = state.sprintsTableBody;
+
+    // Holds the currently selected project.
+    const selectedProject = state.detailedProject;
+
+    // Checks if the project's end date has already passed.
+    const isProjectEndDatePassed = new Date(selectedProject?.endDate) < new Date();
+
+    // Stores the loading state of the page.
+    const loadingPage = state.loading;
+
+    // Fetch the sprints data when the 'dispatch' function changes, allowing the display of updated info.
+    useEffect(() => {
+        getSprintsFromProject(dispatch)
+    }, [dispatch]);
+
+    /**
+     * Renders the sprints table body.
+     * @returns {JSX.Element} The table body JSX element.
+     */
+    const sprintsTable = () => {
         let table;
-        if (body.length > 0) {
-            const onClickSelectSprint = (index) => {
-                if (body.length > index) {
-                    const selectedSprint = body[index];
-                    //dispatch(setCurrentSprint(selectedSprint));
+        // If there are sprints in the selected project...
+        if (tableBody.length > 0) {
+            // Allows the selection of a specific sprint from list.
+            const onClickSelectSprint = (sprintIndex) => {
+                if (tableBody.length > sprintIndex) {
+                    const selectedSprint = tableBody[sprintIndex];
+                    dispatch(setCurrentSprint(selectedSprint));
                 }
                 dispatch(selectMenu('sprint'));
             }
+
             table = (
                 <table className='table'>
-                    <TableHeader headers={headers}/>
-                    <TableBody body={body} onClick={onClickSelectSprint}/>
+                    <TableHeader headers={tableHeader}/>
+                    <TableBody body={tableBody} onClick={onClickSelectSprint}/>
                 </table>)
+
         } else {
             table = <Alert variant="filled" severity="info">
-                There are no sprints in this project!
+                The selected project doesn't have sprints yet!
             </Alert>
         }
         return table;
     };
 
-    if (loading === true) {
+    // Conditional rendering based on loading state.
+    if (loadingPage === true) {
         return (
             <div>
                 <p style={{height: "calc(100vh - 172px - 2rem)"}}/>
-                <Loading handleLoading={loading}/>
+                <Loading handleLoading={loadingPage}/>
             </div>
         )
     } else {
@@ -49,15 +77,21 @@ const ListSprints = () => {
             <div className='page pageTable'>
                 <h2 className="pageH2">Sprints</h2>
 
-                {sprints()}
+                {sprintsTable()}
 
                 <Button isSecundary={true} onClick={() => {
                     dispatch(selectMenu('project'))
-                }} text='Return to project'/>
+                }}
+                        text='Return'/>
 
                 <Button onClick={() => {
                     dispatch(selectMenu('createSprint'))
-                }} text='Create sprint'/>
+                }}
+                        text='Create sprint'
+                        isDisabled={
+                            !selectedProject?.startDate ||
+                            !selectedProject?.endDate ||
+                            isProjectEndDatePassed}/>
             </div>
         );
     }
