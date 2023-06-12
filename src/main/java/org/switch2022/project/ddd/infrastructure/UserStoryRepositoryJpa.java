@@ -12,6 +12,7 @@ import org.switch2022.project.ddd.infrastructure.jpa.IUserStoryJpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This class is responsible for implementing the IUserStoryRepository interface using JPA for persistence.
@@ -85,5 +86,21 @@ public class UserStoryRepositoryJpa implements IUsRepository {
     @Override
     public boolean existsByUsId (UsId usId) {
         return repository.existsByUsId(usId.getUserStoryId());
+    }
+
+    /**
+     * Returns a USer Story based on its Id.
+     * @param usId from the User Story one searches for.
+     * @return an Optional containing the desired User Story.
+     */
+    @Override
+    public Optional<UserStory> findByUsId(UsId usId) {
+        Optional<UserStoryJpa> userStoryJpa = repository.findByUsId(usId.getUserStoryId());
+        Optional<UserStory> userStoryOptional = Optional.empty();
+        if (userStoryJpa.isPresent()) {
+            UserStory userStory = assembler.toDomain(userStoryJpa.get());
+            userStoryOptional = Optional.of(userStory);
+        }
+        return userStoryOptional;
     }
 }

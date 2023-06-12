@@ -17,11 +17,8 @@ import static java.lang.Integer.parseInt;
 public class Sprint implements Entity<Sprint> {
     private final SprintId sprintId;
     private final SprintNumber sprintNumber;
-
     private final Code projectCode;
-
     private final Period period;
-
     private final List<UserStoryInSprint> userStoriesInSprint;
     private SprintStatus status;
 
@@ -331,4 +328,12 @@ public class Sprint implements Entity<Sprint> {
         return this.status.sameValueAs(status);
     }
 
+
+    /**
+     * This method checks if the sprint status is valid
+     * @return true if the sprint status is OPEN, false otherwise.
+     */
+    public boolean isOpen() {
+       return this.status == SprintStatus.OPEN;
+    }
 }

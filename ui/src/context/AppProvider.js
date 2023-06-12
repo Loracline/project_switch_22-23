@@ -11,15 +11,19 @@ const menu = [
     {key: 'home', label: 'home', hidden: true},
     {key: 'createProject', label: "create project", hidden: true},
     {key: 'projects', label: "projects"},
+    {key: 'sprints', label: "sprints", hidden: false},
     {key: 'createUserStory', label: "create user story", hidden: true},
     {key: 'productBacklog', label: "product backlog", hidden: true},
     {key: 'createSprint', label: "create sprint", hidden: true},
     {key: 'project', label: "project", hidden: true},
     {key: 'about', label: "about"},
-    {key: 'allocateResource', label: "allocate resource", hidden: true}
+    {key: 'allocateResource', label: "allocate resource", hidden: true},
+    {key: 'sprint', label: "sprint", hidden: false},
+    {key: 'sprintBacklog', label: "sprint Backlog", hidden: true}
 ]
 const nav = {selectedMenu: menu[0], menu: menu,}
 const detailedProject = null;
+const detailedSprint = null;
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
     const projects = [{
@@ -129,12 +133,19 @@ const AppProvider = ({children}) => {
     const businessSectors = [];
     const typologies = [];
 
+    // Represents the header and body of the sprints of a project table.
+    const sprintsTableHeader = ["Sprint number", "Status", "Start date", "End date"];
+    const sprintsTableBody = [];
+
     const initialState = {
         nav,
         headersProjects,
+        sprintsTableHeader,
+        sprintsTableBody,
         usHeaders,
         projects: [],
         detailedProject,
+        detailedSprint,
         customers,
         businessSectors,
         typologies,
@@ -142,6 +153,7 @@ const AppProvider = ({children}) => {
         messageFailure: '',
         messageSuccess: '',
     }
+
     const [state, dispatch] = useReducer(reducer, initialState);
 
     return (

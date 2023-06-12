@@ -18,7 +18,7 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
     const projectCode = detailedProject.code;
 
     useEffect(() => {
-        fetch(`http://localhost:8080/projects/${projectCode}/productBacklog`, { //`http://localhost:8080/projects?projectCode=${detailedProject.code}/productBacklog`, {
+        fetch(`http://localhost:8080/projects/${projectCode}/productBacklog`, {
             method: 'GET',
             headers,
         })
@@ -49,8 +49,9 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
             <h2 className="pageH2">Consult Product Backlog</h2>
             {tableData}
             <div className="buttons-backlog">
-                <Button onClick={() => dispatch(selectMenu('createUserStory'))} text="Create user story"/>
                 <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
+                <Button onClick={() => dispatch(selectMenu('createUserStory'))} text="Create user story"/>
+
             </div>
         </div>);
 }

@@ -26,7 +26,6 @@ public class UserStory implements Entity<UserStory> {
     private Actor actor;
     private UsText usText;
     private Status status;
-
     private final Code projectCode;
 
     /**
