@@ -25,7 +25,7 @@ public class ResourceWebController {
      *
      * @param allocationDto The AllocationDto object containing the information needed to create
      *                      a new resource.
-     * @return A ResponseEntity containing the project code and a status code of 201 (CREATED).
+     * @return A ResponseEntity containing the status code of 201 (CREATED).
      */
     @PostMapping()
     public ResponseEntity<Object> createResource(@RequestBody AllocationDto allocationDto) {
