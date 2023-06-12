@@ -12,8 +12,9 @@ participant ":SprintWebController" as controller
 participant ":SprintStatusChangeService" as service
 participant ":SprintRepository" as sprintRepo
 participant ":Sprint" as sprint
-participant ":UserStory" as us
 participant ":UserStoryRepository" as usRepo
+participant ":UserStory" as us
+
 
 activate "Project Manager"
 "Project Manager" -> ui: asks to close a current sprint of a project
@@ -36,20 +37,25 @@ service -> sprint: isOpen(sprint)
 activate sprint
 sprint -> service: true
 deactivate sprint
-
-loop for each UsId in sprint
+service -> usRepo: userStories = getListOfUsWithMatchingIds(sprint.getSprintBacklog)
+activate usRepo
+usRepo --> service: userStories
+deactivate usRepo
+loop for each userStory in userStories
 service -> us: hasStatus(blocked) || hasStatus(running)
 activate us
 us --> service: true
 deactivate us
-service -> usRepo: findByUsId(UsId)
-activate usRepo
-usRepo --> service: userStory
-deactivate usRepo
+
 service -> us: changeStatus(status)
 activate us
 us --> service: true
 deactivate us
+service -> usRepo: save(userStory)
+activate usRepo
+usRepo --> service: true
+deactivate usRepo
+
 end loop
 service -> sprint: changeStatus(status)
 activate sprint

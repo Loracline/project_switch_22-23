@@ -5,6 +5,7 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
+import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 
 import java.util.*;
 
@@ -111,8 +112,26 @@ public class SprintRepository implements ISprintRepository {
         for (Sprint sprint : sprints) {
             if (sprint.hasProjectCode(projectCode)) {
                 sprintsByProject.add(sprint);
+
             }
         }
         return Collections.unmodifiableList(sprintsByProject);
+    }
+
+    /**
+     * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
+     *
+     * @param sprintStatus SprintStatus to look for in the sprint list.
+     * @return true if at least one instance of Sprint with a given status already exists in the list, and false otherwise.
+     */
+    public boolean existsByStatus(SprintStatus sprintStatus){
+        boolean exists = false;
+        for (Sprint sprint : sprints) {
+            if (sprint.hasStatus(sprintStatus)) {
+                exists = true;
+
+            }
+        }
+        return exists;
     }
 }

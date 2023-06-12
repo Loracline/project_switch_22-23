@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.infrastructure.jpa;
 import org.springframework.data.repository.CrudRepository;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
+import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,4 +47,12 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
      * @return true if exists.
      */
     boolean existsById (String id);
+
+    /**
+     * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
+     *
+     * @param status SprintStatus to look for in the sprint list.
+     * @return true if at least one instance of Sprint with a given status already exists in the list, and false otherwise.
+     */
+    boolean existsByStatus(String status);
 }

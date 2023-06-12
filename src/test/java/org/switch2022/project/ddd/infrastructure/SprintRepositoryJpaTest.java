@@ -6,13 +6,18 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.switch2022.project.ddd.datamodel_jpa.ProjectResourceJpa;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
+import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.SprintId;
+import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
+import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +34,6 @@ import static org.mockito.Mockito.when;
         webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = SprintRepositoryJpa.class
 )
-
 class SprintRepositoryJpaTest {
 
     @InjectMocks
@@ -103,7 +107,6 @@ class SprintRepositoryJpaTest {
     /**
      * Method : Count
      * Scenario 1 : ensure it returns the list size.
-     *
      */
 
     @Test
@@ -116,7 +119,7 @@ class SprintRepositoryJpaTest {
         long result = sprintRepositoryJpa.count();
 
         //Assert
-        assertEquals(expected , result);
+        assertEquals(expected, result);
     }
 
 
@@ -177,9 +180,9 @@ class SprintRepositoryJpaTest {
         List<Sprint> sprintByProject = Arrays.asList(sprint, sprintDouble);
         SprintJpa sprintJpaDouble = mock(SprintJpa.class);
         SprintJpa sprintJpa = mock(SprintJpa.class);
-        List<SprintJpa> sprintJpas = Arrays.asList(sprintJpa,sprintJpaDouble);
+        List<SprintJpa> sprintJpas = Arrays.asList(sprintJpa, sprintJpaDouble);
 
-        when( ISprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
+        when(ISprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
 
         Code projectCode = mock(Code.class);
         when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(sprint);
@@ -205,7 +208,7 @@ class SprintRepositoryJpaTest {
         List<Sprint> sprintByProject = new ArrayList<>();
         List<SprintJpa> sprintJpas = new ArrayList<>();
 
-        when( ISprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
+        when(ISprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
 
         Code projectCode = mock(Code.class);
 
@@ -215,5 +218,40 @@ class SprintRepositoryJpaTest {
         //Assert
         assertEquals(sprintByProject, result);
 
+    }
+
+    /**
+     * Method: existsByStatus(status)
+     * Scenario 1: checks if the repository of sprints has any sprint with a status matching the status passed as
+     * parameter.
+     * It should assert true.
+     */
+    @Test
+    void ensureThatReturnsTrueIfAtLeastOneInstanceOfSprintInTheSprintRepositoryHasTheStatusPassedAsParameter() {
+        // ARRANGE
+        when(ISprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(true);
+        // ACT
+        boolean result = sprintRepositoryJpa.existsByStatus(SprintStatus.OPEN);
+        // ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Method: existsByStatus(status)
+     * Scenario 2: checks if the sprint repository does not have any sprint with a status matching the status passed
+     * as argument.
+     * It should throw an NotFoundInRepoException.
+     */
+    @Test
+    void ensureThatThrowsAnExceptionIfNoInstancesOfSprintInTheSprintRepositoryHaveTheStatusPassedAsParameter() {
+        //Arrange
+        String expected = "There are no CLOSED sprints in the repository.";
+
+        //Act
+        NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
+                () -> sprintRepositoryJpa.existsByStatus(SprintStatus.CLOSED));
+
+        //Assert
+        assertEquals(expected, result.getMessage());
     }
 }
