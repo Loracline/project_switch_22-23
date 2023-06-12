@@ -27,7 +27,6 @@ const detailedProject = null;
 const detailedSprint = null;
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
-    const headersSprints = ["Sprint number", "Status", "Start date", "End date"];
     const projects = [{
         basicInfo: {
             code: "P01",
@@ -129,46 +128,23 @@ const AppProvider = ({children}) => {
         sprints: []
     }]
 
-    const sprints = [
-        {
-            id: 1,
-            name: "Sprint 1",
-            startDate: "2023-05-01",
-            endDate: "2023-05-07",
-            status: "close"
-        },
-        {
-            id: 2,
-            name: "Sprint 2",
-            startDate: "2023-05-07",
-            endDate: "2023-05-27",
-            status: "close"
-        },
-        {
-            id: 3,
-            name: "Sprint 3",
-            startDate: "2023-06-15",
-            endDate: "2023-06-27",
-            status: "planned"
-        },
-
-
-    ];
-
-
     const usHeaders = ["US Number", "US Description", "US Status"]
 
     const customers = [];
     const businessSectors = [];
     const typologies = [];
 
+    // Represents the header and body of the sprints of a project table.
+    const sprintsTableHeader = ["Sprint number", "Status", "Start date", "End date"];
+    const sprintsTableBody = [];
+
     const initialState = {
         nav,
         headersProjects,
-        headersSprints,
+        sprintsTableHeader,
+        sprintsTableBody,
         usHeaders,
         projects: [],
-        sprints: [],
         detailedProject,
         detailedSprint,
         customers,
@@ -178,6 +154,7 @@ const AppProvider = ({children}) => {
         messageFailure: '',
         messageSuccess: '',
     }
+
     const [state, dispatch] = useReducer(reducer, initialState);
 
     return (

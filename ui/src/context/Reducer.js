@@ -24,7 +24,11 @@ import {
     POST_USER_STORY,
     POST_USER_STORY_SUCCESS,
     POST_USER_STORY_FAILURE,
-    RESET_POST_USER_STORY, FETCH_PROJECTS_STARTED
+    RESET_POST_USER_STORY,
+    FETCH_PROJECTS_STARTED,
+    GET_SPRINTS_SUCCESS,
+    FETCH_SPRINTS_STARTED,
+    SELECT_SPRINT
 } from "./Actions";
 
 /** Reducer function that updates the app state based on the dispatched actions.
@@ -32,7 +36,6 @@ import {
  * @param action - The action that was dispatched by the action creator.
  * @returns The new state of the app.
  */
-
 const reducer = (state, action) => {
     switch (action.type) {
 
@@ -100,6 +103,7 @@ const reducer = (state, action) => {
             const newNav = {...nav, selectedMenu: menu};
             return {...state, nav: newNav,}
         }
+
         case CHECK_PROJECT_SPRINT: {
             const projectCode = action.payload.projectToCheck;
             return {
@@ -126,7 +130,9 @@ const reducer = (state, action) => {
         }
 
         case GET_CUSTOMERS:
+
         case GET_BUSINESS_SECTORS:
+
         case GET_TYPOLOGIES:
             return {...state, loading: true};
 
@@ -146,7 +152,9 @@ const reducer = (state, action) => {
         }
 
         case GET_CUSTOMERS_FAILURE:
+
         case GET_BUSINESS_SECTORS_FAILURE:
+
         case GET_TYPOLOGIES_FAILURE:
             return {...state, loading: false, messageFailure: action.payload.error};
 
@@ -158,6 +166,7 @@ const reducer = (state, action) => {
         case FETCH_PROJECTS_STARTED: {
             return {...state, loading: true}
         }
+
         case FETCH_FAILURE: {
             return {...state, messageFailure: action.payload, loading: false};
         }
@@ -175,8 +184,35 @@ const reducer = (state, action) => {
             return {...state, messageSuccess: action.payload};
         }
 
+        // List all sprints from a project
+        case GET_SPRINTS_SUCCESS: {
+            const sprintsFromProject = action.payload.data;
+            return {
+                ...state,
+                sprintsTableBody: sprintsFromProject,
+                loading: false
+            };
+        }
+
+        case FETCH_SPRINTS_STARTED: {
+            return {
+                ...state,
+                loading: true
+            }
+        }
+
+        // Select a sprint from a sprint's list
+        case SELECT_SPRINT: {
+            const sprint = action.payload.selected;
+            return {
+                ...state,
+                detailedSprint: sprint
+            }
+        }
+
         default:
             return state;
     }
 };
+
 export default reducer;
