@@ -11,6 +11,7 @@ const menu = [
     {key: 'home', label: 'home', hidden: true},
     {key: 'createProject', label: "create project", hidden: true},
     {key: 'projects', label: "projects"},
+    {key: 'sprints', label: "sprints", hidden: false},
     {key: 'createUserStory', label: "create user story", hidden: true},
     {key: 'productBacklog', label: "product backlog", hidden: true},
     {key: 'createSprint', label: "create sprint", hidden: true},
@@ -25,6 +26,7 @@ const detailedProject = null;
 const detailedSprint = null;
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
+    const headersSprints = ["Sprint number", "Status", "Start date", "End date"];
     const projects = [{
         basicInfo: {
             code: "P01",
@@ -162,8 +164,10 @@ const AppProvider = ({children}) => {
     const initialState = {
         nav,
         headersProjects,
+        headersSprints,
         usHeaders,
         projects: [],
+        sprints: [],
         detailedProject,
         detailedSprint,
         customers,
