@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.user_story;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * User Story Repository interface.
@@ -17,7 +18,7 @@ public interface IUsRepository {
      * @return true if the user story is added and an exception otherwise.
      */
 
-    public boolean save(UserStory userStory);
+    boolean save(UserStory userStory);
 
     /**
      * This method deletes a userStory from the repository of userStories if it exists.
@@ -25,7 +26,7 @@ public interface IUsRepository {
      * @param usId of the userStory to be deleted from the repository.
      * @return true if the user story is deleted or throws an exception otherwise.
      */
-    public boolean delete(UsId usId);
+    boolean delete(UsId usId);
 
     /**
      * Lists all userStories with a matching ID.
@@ -44,5 +45,11 @@ public interface IUsRepository {
      */
     boolean existsByUsId (UsId usId);
 
+    /**
+     * Returns a USer Story based on its Id.
+     * @param usId from the User Story one searches for.
+     * @return an Optional containing the desired User Story.
+     */
+    Optional<UserStory> findByUsId(UsId usId);
 }
 

@@ -6,12 +6,13 @@ import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class UsRepositoryTest {
+class UserStoryRepositoryTest {
 
     /**
      * Method: add(userStory).
@@ -26,8 +27,8 @@ class UsRepositoryTest {
     void ensureUserStoryIsAdded() throws Exception {
         // Arrange
         UserStory userStoryDouble = mock(UserStory.class);
-        UsRepository usRepositoryDouble = new UsRepository();
-        UsRepository emptyUsRepositoryDouble = new UsRepository();
+        UserStoryRepository usRepositoryDouble = new UserStoryRepository();
+        UserStoryRepository emptyUsRepositoryDouble = new UserStoryRepository();
 
         // Act
         usRepositoryDouble.save(userStoryDouble);
@@ -48,7 +49,7 @@ class UsRepositoryTest {
     void ensureUserStoryIsNotAdded() throws Exception {
         // Arrange
         UserStory userStoryDouble = mock(UserStory.class);
-        UsRepository usRepositoryDouble = new UsRepository();
+        UserStoryRepository usRepositoryDouble = new UserStoryRepository();
         usRepositoryDouble.save(userStoryDouble);
 
         // Act
@@ -75,8 +76,8 @@ class UsRepositoryTest {
         // Arrange
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
-        UsRepository usRepositoryDouble = new UsRepository();
-        UsRepository emptyUsRepositoryDouble = new UsRepository();
+        UserStoryRepository usRepositoryDouble = new UserStoryRepository();
+        UserStoryRepository emptyUsRepositoryDouble = new UserStoryRepository();
         usRepositoryDouble.save(userStoryDouble);
 
         // Act
@@ -101,7 +102,7 @@ class UsRepositoryTest {
         // Arrange
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
-        UsRepository usRepositoryDouble = new UsRepository();
+        UserStoryRepository usRepositoryDouble = new UserStoryRepository();
         usRepositoryDouble.save(userStoryDouble);
 
 
@@ -129,7 +130,7 @@ class UsRepositoryTest {
     void ensureListOfUsIsRetrieved() throws Exception {
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
-        UsRepository usRepositoryDouble = new UsRepository();
+        UserStoryRepository usRepositoryDouble = new UserStoryRepository();
         usRepositoryDouble.save(userStoryDouble);
 
         List<UsId> userStoryIds = new ArrayList<>();
@@ -156,7 +157,7 @@ class UsRepositoryTest {
     void ensureListOfEmptyUsIsRetrieved() {
         UsId usIdDouble = mock(UsId.class);
         UserStory userStoryDouble = mock(UserStory.class);
-        UsRepository usRepositoryDouble = new UsRepository();
+        UserStoryRepository usRepositoryDouble = new UserStoryRepository();
 
         List<UsId> userStoryIds = new ArrayList<>();
         userStoryIds.add(usIdDouble);
@@ -180,8 +181,8 @@ class UsRepositoryTest {
     @Test
     public void ensureTwoUsRepositoryInstancesHashcodeAreTheSame() {
         // Arrange
-        UsRepository usRepositoryOne = new UsRepository();
-        UsRepository usRepositoryTwo = new UsRepository();
+        UserStoryRepository usRepositoryOne = new UserStoryRepository();
+        UserStoryRepository usRepositoryTwo = new UserStoryRepository();
 
         // Act
         int repositoryOneHashCode = usRepositoryOne.hashCode();
@@ -198,8 +199,8 @@ class UsRepositoryTest {
     @Test
     public void ensureTwoUsRepositoryInstancesHashcodeAreNotTheSame() throws Exception {
         // Arrange
-        UsRepository usRepositoryOne = new UsRepository();
-        UsRepository usRepositoryThree = new UsRepository();
+        UserStoryRepository usRepositoryOne = new UserStoryRepository();
+        UserStoryRepository usRepositoryThree = new UserStoryRepository();
         UserStory userStoryDouble = mock(UserStory.class);
         usRepositoryThree.save(userStoryDouble);
 
@@ -220,7 +221,7 @@ class UsRepositoryTest {
     @Test
     public void ensureTwoUsRepositoryInstancesAreEqual() {
         // Arrange
-        UsRepository usRepositoryOne = new UsRepository();
+        UserStoryRepository usRepositoryOne = new UserStoryRepository();
 
         // Assert
         assertEquals(usRepositoryOne, usRepositoryOne);
@@ -233,7 +234,7 @@ class UsRepositoryTest {
     @Test
     public void ensureTwoUsRepositoryInstancesAreNotEqual() {
         // Arrange
-        UsRepository usRepositoryOne = new UsRepository();
+        UserStoryRepository usRepositoryOne = new UserStoryRepository();
         Object object = new Object();
 
         // Assert
@@ -243,21 +244,11 @@ class UsRepositoryTest {
     /**
      * Scenario 3: Two UsRepository objects are not equal because one of them is null.
      */
-/*
     @Test
     public void ensureTwoUsRepositoryInstancesAreNotEqualBecauseOneItIsNull() throws Exception {
         // Arrange
-        Code projectCode = new Code(1);
-        UsNumber usNumber = new UsNumber("US1");
-        UsText usText = new UsText("I want to create profiles.");
-        Actor usActor = new Actor("Administrator");
-
-        FactoryUserStory factoryUserStory = new FactoryUserStory();
-
-        UsRepository usRepository = new UsRepository();
-        usRepository.add(factoryUserStory.createUserStory(usNumber, usText, usActor, 0, projectCode));
-
-        UsRepository other = null;
+        UserStoryRepository usRepository = new UserStoryRepository();
+        UserStoryRepository other = null;
 
         // Act
         boolean result = usRepository.equals(other);
@@ -265,7 +256,6 @@ class UsRepositoryTest {
         // Assert
         assertFalse(result);
     }
-*/
 
     /**
      * Method: existsByUsId(usId).
@@ -277,7 +267,7 @@ class UsRepositoryTest {
     @Test
     void ensureItReturnsTrueIfUserStoryWithGiveUsIdExistsInTheRepository() {
         //ARRANGE
-        UsRepository repository = new UsRepository();
+        UserStoryRepository repository = new UserStoryRepository();
         UsId usId = new UsId("P01", "1");
 
         UserStory userStory = mock(UserStory.class);
@@ -301,7 +291,7 @@ class UsRepositoryTest {
     @Test
     void ensureItReturnsFalseIfUserStoryWithGiveUsIdDoesNotExistInTheRepository() {
         //ARRANGE
-        UsRepository repository = new UsRepository();
+        UserStoryRepository repository = new UserStoryRepository();
         UsId usId = new UsId("P01", "2");
 
         UserStory userStory = mock(UserStory.class);
@@ -313,5 +303,70 @@ class UsRepositoryTest {
         boolean result = repository.existsByUsId(usId);
         //ASSERT
         assertFalse(result);
+    }
+
+    /**
+     * Method: findById(usId)
+     * Returns an Optional with the desired User Story based on its UsId.
+     *
+     * Scenario 1: Returns an Optional with the User Story.
+     */
+    @Test
+    void ensureThatAUserStoryOptionalIsReturnedBasedOnTheGivenId() {
+        //ARRANGE
+        UserStoryRepository repository = new UserStoryRepository();
+        UsId usId = new UsId("P01", "2");
+
+        UserStory userStory = mock(UserStory.class);
+        repository.save(userStory);
+        when(userStory.hasUsId(usId)).thenReturn(true);
+        Optional<UserStory> expected = Optional.of(userStory);
+
+        //ACT
+        Optional<UserStory> result = repository.findByUsId(usId);
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: returns an Optional with null object because the User Story list is
+     * empty
+     */
+    @Test
+    void ensureThatEmptyOptionalIsReturnedBecauseTheUserStoryListIsEmpty() {
+        //ARRANGE
+        UserStoryRepository repository = new UserStoryRepository();
+        UsId usId = new UsId("P01", "2");
+
+        Optional<UserStory> expected = Optional.ofNullable(null);
+
+        //ACT
+        Optional<UserStory> result = repository.findByUsId(usId);
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: returns an Optional with null object because the user story was not
+     * found.
+     */
+    @Test
+    void ensureThatAnEmptyOptionalIsReturnedBecauseTheUserStoryDoesNotExist() {
+        //ARRANGE
+        UserStoryRepository repository = new UserStoryRepository();
+        UsId usId = new UsId("P01", "2");
+
+        UserStory userStory = mock(UserStory.class);
+        repository.save(userStory);
+        when(userStory.hasUsId(usId)).thenReturn(false);
+        Optional<UserStory> expected = Optional.ofNullable(null);
+
+        //ACT
+        Optional<UserStory> result = repository.findByUsId(usId);
+
+        //ASSERT
+        assertEquals(expected, result);
     }
 }

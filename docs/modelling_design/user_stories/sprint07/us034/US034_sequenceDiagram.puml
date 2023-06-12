@@ -42,7 +42,7 @@ service -> us: hasStatus(blocked) || hasStatus(running)
 activate us
 us --> service: true
 deactivate us
-service -> usRepo: findById(UsId)
+service -> usRepo: findByUsId(UsId)
 activate usRepo
 usRepo --> service: userStory
 deactivate usRepo
