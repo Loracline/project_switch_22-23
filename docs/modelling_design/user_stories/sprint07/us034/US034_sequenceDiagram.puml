@@ -1,0 +1,66 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO CLOSE A CURRENT/ACTIVE SPRINT OF A PROJECT
+legend top
+US034 - As Project Manager, I want to close the current/active sprint of a project in the web UI.
+end legend
+autonumber
+
+actor "Project Manager"
+participant ":CloseSprintUi" as ui
+participant ":SprintWebController" as controller
+participant ":CloseSprintService" as service
+participant ":SprintRepository" as sprintRepo
+participant ":Sprint" as sprint
+participant ":UserStory" as us
+participant ":UserStoryRepository" as usRepo
+
+activate "Project Manager"
+"Project Manager" -> ui: asks to close a current sprint of a project
+activate ui
+ui --> "Project Manager": requests confirmation
+deactivate ui
+"Project Manager" -> ui: confirms
+activate ui
+ui -> controller: patch ("/sprints") {sprintId}
+activate controller
+controller -> service: changeSprintStatus(SprintStatusDto)
+activate service
+service -> sprintRepo: sprint = findById(sprintId)
+activate sprintRepo
+sprintRepo --> service: sprint
+deactivate sprintRepo
+opt sprintStatusDto.status == open
+
+service -> sprint: isOpen(sprint)
+activate sprint
+sprint -> service: true
+deactivate sprint
+
+loop for each UsId in sprint
+service -> us: hasStatus(blocked) || hasStatus(running)
+activate us
+us --> service: true
+deactivate us
+service -> usRepo: findById(UsId)
+activate usRepo
+usRepo --> service: userStory
+deactivate usRepo
+service -> us: changeStatus(status)
+activate us
+us --> service: true
+deactivate us
+end loop
+service -> sprint: changeStatus(status)
+activate sprint
+sprint --> service: true
+end opt
+deactivate sprint
+service --> controller: ok
+deactivate service
+controller --> ui: ok
+deactivate controller
+ui --> "Project Manager": informs about operation success
+deactivate ui
+
+@enduml
