@@ -320,4 +320,15 @@ public class Sprint implements Entity<Sprint> {
     public String getStatus() {
         return this.status.getStatus();
     }
+
+    /**
+     * This method verifies if the Sprint has the given status.
+     *
+     * @param status to compare to.
+     * @return TRUE if Sprint has the given status, and FALSE otherwise.
+     */
+    public boolean hasStatus(SprintStatus status) {
+        return this.status.sameValueAs(status);
+    }
+
 }

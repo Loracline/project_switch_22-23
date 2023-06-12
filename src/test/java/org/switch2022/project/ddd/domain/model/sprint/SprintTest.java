@@ -1122,4 +1122,50 @@ class SprintTest {
         //ASSERT
         assertEquals("PLANNED", result);
     }
+
+    /**
+     * Method: hasStatus(status)
+     * Scenario 1: checks if the sprint has a given status.
+     * It should assert true.
+     */
+    @Test
+    void ensureThatReturnsTrueIfSprintHasStatus() {
+        // ARRANGE
+        Code projectCodeDouble = mock(Code.class);
+        SprintId sprintIdDouble = mock(SprintId.class);
+        SprintNumber sprintNumberDouble = mock(SprintNumber.class);
+        Period periodDouble = mock(Period.class);
+
+        Sprint sprint = new Sprint(projectCodeDouble, sprintIdDouble, sprintNumberDouble, periodDouble);
+
+        // ACT
+        boolean result = sprint.hasStatus(SprintStatus.PLANNED);
+
+        // ASSERT
+        assertTrue(result);
+    }
+
+
+
+    /**
+     * Method: hasStatus(status)
+     * Scenario 2: checks if the sprint does not have a given status.
+     * It should assert FALSE.
+     */
+    @Test
+    void ensureThatReturnsFalseIfSprintDoesNotHaveStatus() {
+        // ARRANGE
+        Code projectCodeDouble = mock(Code.class);
+        SprintId sprintIdDouble = mock(SprintId.class);
+        SprintNumber sprintNumberDouble = mock(SprintNumber.class);
+        Period periodDouble = mock(Period.class);
+
+        Sprint sprint = new Sprint(projectCodeDouble, sprintIdDouble, sprintNumberDouble, periodDouble);
+
+        // ACT
+        boolean result = sprint.hasStatus(SprintStatus.CLOSED);
+
+        // ASSERT
+        assertFalse(result);
+    }
 }
