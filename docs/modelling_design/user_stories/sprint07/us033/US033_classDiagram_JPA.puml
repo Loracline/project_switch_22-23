@@ -12,6 +12,7 @@ class UserStoryWebController{
 }
 
 UserStoryWebController <.. UserStoriesInSprintService: is injected
+UserStoryWebController ..> UserStoryStatusDto: uses
 
 class UserStoriesInSprintService{
 -sprintRepository
