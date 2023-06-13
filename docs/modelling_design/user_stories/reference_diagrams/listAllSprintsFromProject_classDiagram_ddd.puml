@@ -19,14 +19,11 @@ class ProjectCodeDtoAssembler {
 
 class SprintWebController {
 -sprintListService
--sprintDtoAssembler
--projectCodeDtoAssembler
 +listSprintsFromProject(projectCodeStringDto)
 }
 
 class SprintListService {
 -iSprintRepository
--sprintDtoAssembler
 +listSprintsFromProject(projectCodeValueObjectDto)
 }
 
@@ -80,9 +77,9 @@ SprintWebController <.. SprintListService: is injected
 SprintListService <.. ISprintRepository: is injected
 SprintRepository ..|> ISprintRepository: implements
 SprintListService ..> Sprint: uses
-SprintDtoAssembler ..> SprintListService: is injected
-SprintDtoAssembler ..> SprintWebController: is injected
-ProjectCodeDtoAssembler ..> SprintWebController: is injected
+SprintDtoAssembler ..> SprintListService: uses
+SprintDtoAssembler ..> SprintWebController: uses
+ProjectCodeDtoAssembler ..> SprintWebController: uses
 SprintDtoAssembler ..> Sprint: uses
 SprintValueObjectsDto <.. SprintDtoAssembler: uses
 SprintPrimitiveTypesDto <.. SprintDtoAssembler: uses
