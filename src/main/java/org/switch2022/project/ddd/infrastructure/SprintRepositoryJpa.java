@@ -9,7 +9,6 @@ import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
@@ -89,12 +88,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
      */
     public boolean existsByStatus(SprintStatus sprintStatus) {
         String status = sprintStatus.getStatus();
-        if (iSprintJpaRepository.existsByStatus(status)) {
-            return true;
-        } else {
-            throw new NotFoundInRepoException(String.format("There are no %s sprints in the repository.",
-                    status));
-        }
+        return iSprintJpaRepository.existsByStatus(status);
     }
     /**
      * Checks if a Sprint with the given SprintId exists in the repository.
@@ -105,5 +99,17 @@ public class SprintRepositoryJpa implements ISprintRepository {
     @Override
     public boolean existsById(SprintId sprintId) {
         return iSprintJpaRepository.existsById(sprintId.getSprintId());
+    }
+    /**
+     * This method checks if one given sprint has the status given
+     *
+     * @param sprintId the identifier of the sprint
+     * @param status   the sprint status that needs to be checked
+     * @return true if the sprint has the given status and false otherwise
+     */
+    public boolean hasStatus(SprintId sprintId, SprintStatus status) {
+        String sprintStatus = status.getStatus();
+        String id = sprintId.getSprintId();
+        return iSprintJpaRepository.existsBySprintIdAndStatus(id, sprintStatus);
     }
 }

@@ -76,7 +76,7 @@ public class SprintWebController {
      * ResponseEntity with HTTP status code 404 (NOT FOUND).
      */
 
-    @PatchMapping("/sprints/{sprintId}")
+    @PatchMapping("/{sprintId}")
     @ResponseBody
     public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto) {
         sprintStatusChangeService.changeSprintStatus(sprintStatusDto);
