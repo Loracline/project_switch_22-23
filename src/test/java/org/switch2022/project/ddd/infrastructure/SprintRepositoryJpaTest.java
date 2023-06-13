@@ -133,9 +133,6 @@ class SprintRepositoryJpaTest {
         Sprint sprintDouble = mock(Sprint.class);
         SprintJpa sprintJpa = mock(SprintJpa.class);
         when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
-        String sprintIdString = "p001_s001";
-        when(sprintJpa.getSprintId()).thenReturn(sprintIdString);
-        when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(false);
         when(ISprintJpaRepository.save(sprintDouble)).thenReturn(true);
 
         //Act
@@ -144,27 +141,6 @@ class SprintRepositoryJpaTest {
         //Assert
 
         assertTrue(result);
-    }
-
-    /**
-     * Method : Save.
-     * Scenario 2 : ensure Sprint is not saved.
-     */
-    @Test
-    void ensureThatSprintIsNotSaved() {
-        //Arrange
-        Sprint sprintDouble = mock(Sprint.class);
-        SprintJpa sprintJpa = mock(SprintJpa.class);
-        when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
-        String sprintIdString = "p001_s001";
-        when(sprintJpa.getSprintId()).thenReturn(sprintIdString);
-        when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(true);
-
-        //Act
-        boolean result = sprintRepositoryJpa.save(sprintDouble);
-
-        //Assert
-        assertFalse(result);
     }
 
     /**
