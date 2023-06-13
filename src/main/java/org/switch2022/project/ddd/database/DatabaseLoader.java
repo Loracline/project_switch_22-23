@@ -24,6 +24,7 @@ import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import javax.transaction.Transactional;
@@ -313,7 +314,8 @@ public class DatabaseLoader implements CommandLineRunner {
         sprints.save(sprintDomainDataAssembler.toData(sprintTwentyOne));
 
         // User story in sprint
-        addService.addUserStoryToSprintBacklog("p001_us001","p001_s021");
+        UserStoryInSprintDto dto = new UserStoryInSprintDto("p001_us001","p001_s021");
+        addService.addUserStoryToSprint(dto);
 
 
         // Profiles
