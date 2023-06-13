@@ -11,9 +11,9 @@ participant ":CloseSprintUi" as ui
 participant ":SprintWebController" as controller
 participant ":SprintStatusChangeService" as service
 participant ":SprintRepository" as sprintRepo
-participant ":Sprint" as sprint
+participant "sprint:Sprint" as sprint
 participant ":UserStoryRepository" as usRepo
-participant ":UserStory" as us
+participant "userStory:UserStory" as us
 
 
 activate "Project Manager"

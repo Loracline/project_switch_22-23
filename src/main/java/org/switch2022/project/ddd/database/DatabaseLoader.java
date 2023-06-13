@@ -3,7 +3,10 @@ package org.switch2022.project.ddd.database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
 import org.switch2022.project.ddd.application.UsService;
+
+import org.switch2022.project.ddd.application.UserStoryInSprintService;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
@@ -21,6 +24,7 @@ import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import javax.transaction.Transactional;
@@ -52,7 +56,8 @@ public class DatabaseLoader implements CommandLineRunner {
     @Autowired private IProfileJpaRepository profiles;
     @Autowired private IProjectResourceJpaRepository resources;
     @Autowired private UsService usService;
-
+    @Autowired private AddUserStoryToSprintBacklogService addService;
+    @Autowired private UserStoryInSprintService us;
 
     /**
      * Called by Spring Boot when the application starts up. Loads initial data into
@@ -123,11 +128,13 @@ public class DatabaseLoader implements CommandLineRunner {
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
         projectInputData(ONE, EIGHT, THIRTY_ONE, TWO_WEEKS, BUDGET_PROJECT_ONE, projectOne, JANUARY);
+        projectOne.setProjectStatus(ProjectStatus.CLOSED);
 
         Project projectTwo = factoryProject.createProject(PROJECT_TWO, new Name("Dummy 02"),
                 new Description("Just another dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
         projectInputData(THIRTY_ONE, TWELVE, THIRTY_ONE, FOUR_WEEKS, BUDGET_PROJECT_TWO, projectTwo, MAY);
+        projectTwo.setProjectStatus(ProjectStatus.CLOSED);
 
         Project projectThree = factoryProject.createProject(PROJECT_THREE, new Name("Inevitable nightmare"),
                 new Description("Doomed from the start"),
@@ -135,6 +142,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_TWO));
         projectDataInsertion(TWO_THOUSAND_AND_TWENTY_THREE, TEN, FIFTEEN, TWENTY, THREE_WEEKS, BUDGET_PROJECT_THREE,
                 projectThree, MARCH, SEPTEMBER);
+        projectThree.setProjectStatus(ProjectStatus.INCEPTION);
 
         this.projects.save(projectDomainDataAssembler.toData(projectOne));
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
@@ -157,10 +165,8 @@ public class DatabaseLoader implements CommandLineRunner {
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
         UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
-
         final String USER_STORY_ONE = "1";
         final String USER_STORY_TWO = "2";
-
         UserStory userStoryOne = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
                 new UsText("I want to be a iguana"),
                 new Actor("Farmer"), new ArrayList<>(), new Code(PROJECT_ONE));
@@ -219,6 +225,7 @@ public class DatabaseLoader implements CommandLineRunner {
         final int SPRINT_NUMBER_EIGHTEEN = 18;
         final int SPRINT_NUMBER_NINETEEN = 19;
         final int SPRINT_NUMBER_TWENTY = 20;
+        final int SPRINT_NUMBER_TWENTY_ONE = 21;
         final int SPRINT_DURATION = 2;
 
         final int TWO = 2;
@@ -234,6 +241,7 @@ public class DatabaseLoader implements CommandLineRunner {
         final int TWENTY_SIX = 26;
         final int TWENTY_SEVEN = 27;
         final int THIRTY = 30;
+        final int TWENTY_TWENTY_THREE = 2023;
 
         Sprint sprintOne = sprintFactory.createSprint(new Code(PROJECT_ONE),
                 new SprintId("p001", "s001"), new SprintNumber(SPRINT_NUMBER_ONE),
@@ -295,11 +303,15 @@ public class DatabaseLoader implements CommandLineRunner {
         Sprint sprintTwenty = sprintFactory.createSprint(new Code(PROJECT_TWO),
                 new SprintId("p002", "s012"), new SprintNumber(SPRINT_NUMBER_TWENTY),
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, APRIL, FOUR), SPRINT_DURATION));
+        Sprint sprintTwentyOne = sprintFactory.createSprint(new Code(PROJECT_ONE),
+                new SprintId("p001", "s021"), new SprintNumber(SPRINT_NUMBER_TWENTY_ONE),
+                new Period(LocalDate.of(TWENTY_TWENTY_THREE, JUNE, 1), SPRINT_DURATION));
 
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive,
                 sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
                 sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
+        sprints.save(sprintDomainDataAssembler.toData(sprintTwentyOne));
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
@@ -334,8 +346,6 @@ public class DatabaseLoader implements CommandLineRunner {
         final int PHONE_NUMBER_GERINGONCA = 921_458_807;
         final int PHONE_NUMBER_MANEL = 921_458_811;
         final int PHONE_NUMBER_SILVA_A = 921_458_815;
-
-
 
         Account accountOne = accountFactory.create(new Name("João Silva"),
                 new Email("js@mymail.com"), new PhoneNumber(PHONE_NUMBER_SILVA), null);

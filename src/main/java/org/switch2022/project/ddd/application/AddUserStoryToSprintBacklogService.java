@@ -7,10 +7,13 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,58 +29,89 @@ public class AddUserStoryToSprintBacklogService {
     @Autowired
     private IUsRepository usRepository;
 
-    /**
-     * This method checks if the sprint period still allows to add userStories (has not started
-     * and is not finished).
-     *
-     * @param sprint to add the userStory
-     * @param date   date to verify
-     * @return 1 if the sprint period is valid
-     * @throws Exception if the sprint has already started or has finished
-     */
-    private static int isSprintInValidPeriod(Sprint sprint, LocalDate date) throws Exception {
-        int result;
 
-        if (sprint.isPeriodAfterOrEqualThanDate(date)) {
-            throw new Exception("The Sprint is not valid");
-        } else {
-            result = 1;
+    /**
+     * Adds a user story to the Sprint Backlog.
+     * Verifies if the sprint is valid to add a User Story and if the user Story is valid to be added to the Sprint.
+     *
+     * @param dto The UserStoryInSprintDto containing the user story ID and sprint ID.
+     * @return {@code true} if the user story is added successfully, and {@code false} otherwise.
+     * @throws RuntimeException if the User Story is not added to the sprint.
+     */
+
+    public boolean addUserStoryToSprint(UserStoryInSprintDto dto) {
+        String projectCodeFromUS = dto.userStoryId.split("_")[0];
+        String userStoryNumber = dto.userStoryId.split("_")[1];
+        UsId userStoryId = new UsId(projectCodeFromUS, userStoryNumber);
+        UserStory userStory = getUserStory(userStoryId);
+
+        String projectCodeFromSprint = dto.sprintId.split("_")[0];
+        String sprintNumber = dto.sprintId.split("_")[1];
+        SprintId sprintId = new SprintId(projectCodeFromSprint, sprintNumber);
+        Sprint sprint = getSprintById(sprintId);
+
+        boolean userStoryWasAddedToSprintBacklog = false;
+        if (isSprintValidToAddUserStories(sprint) && isUserStoryValidToBeAddedToSprint(sprint, userStory)) {
+            sprint.addUserStory(userStoryId);
+            sprintRepository.save(sprint);
+            userStoryWasAddedToSprintBacklog = true;
         }
-        return result;
+        return userStoryWasAddedToSprintBacklog;
     }
 
     /**
-     * This method adds a userStory to the SprintBacklog. It verifies if the sprint ID is valid
-     * and if the sprint
-     * period still allows to add userStories (has not started and is not finished). Checks if
-     * the userStory exists in
-     * the repository and if its status is not Finished or blocked. In the end adds the userStory
-     * to the sprint.
+     * Checks if a sprint is valid to add user stories to the Sprint Backlog.
      *
-     * @param usId     of the user Story to be added
-     * @param sprintId of the sprint where the userStory will be added
-     * @return true if the userStory is added with success false if it is not added
+     * @param sprint The Sprint to be checked.
+     * @return {@code true} if the sprint is valid to add user stories.
+     * @throws RuntimeException if the sprint is not valid to add user stories.
      */
-
-    public boolean addUserStoryToSprintBacklog(String usId, String sprintId) throws Exception {
-        String[] parts = sprintId.split("_");
-        String code = parts[0];
-        String sprintNumber = parts[1];
-        SprintId sprintIdVO = new SprintId(code, sprintNumber);
-
-        String[] usParts = usId.split("_");
-        String projectCode = usParts[0];
-        String usNumber = usParts[1];
-        UsId usIdVO = new UsId(projectCode, usNumber);
-
-        boolean addUserStoryToSprintBacklog = false;
-        Sprint sprint = getSprintById(sprintIdVO);
-
-        if (isSprintInValidPeriod(sprint, LocalDate.now()) == 1) {
-            hasUserStoryStatus(usIdVO);
-            addUserStoryToSprintBacklog = sprint.addUserStory(usIdVO);
+    private boolean isSprintValidToAddUserStories(Sprint sprint) {
+        if (!sprint.isOpen()) {
+            throw new RuntimeException("Cannot add user stories to a sprint that is not in the 'OPEN' state");
         }
-        return addUserStoryToSprintBacklog;
+        return true;
+    }
+
+    /**
+     * Checks if a User Story is valid to be added to the Sprint Backlog.
+     *
+     * @param sprint    The Sprint to validate.
+     * @param userStory The User Story to validate.
+     * @return {@code true} if the User Story is valid to be added to the Sprint Backlog.
+     * @throws RuntimeException if the User Story does not have the 'PLANNED' status or if the Sprint and User Story do
+     *                          not belong to the same project.
+     */
+    private boolean isUserStoryValidToBeAddedToSprint(Sprint sprint, UserStory userStory) {
+        if (!doesUserStoryHavePlannedStatus(userStory)) {
+            throw new RuntimeException("Only User Stories with 'PLANNED' status can be added to the Sprint");
+        }
+        if (!validateSprintAndUserStoryProject(sprint, userStory)) {
+            throw new RuntimeException("The Sprint and User Story do not belong to the same project");
+        }
+        return true;
+    }
+
+    /**
+     * Checks if a User Story has the 'PLANNED' status.
+     *
+     * @param userStory The User Story to be checked.
+     * @return {@code true} if the User Story has the 'PLANNED' status and {@code false} otherwise. .
+     */
+    private boolean doesUserStoryHavePlannedStatus(UserStory userStory) {
+        return userStory.hasStatus(Status.PLANNED);
+    }
+
+    /**
+     * Validates if the Sprint and User Story belong to the same project.
+     *
+     * @param sprint    The Sprint to validate.
+     * @param userStory The User Story to validate.
+     * @return {@code true} if the Sprint and User Story belong to the same project and {@code false} otherwise.
+     */
+    private boolean validateSprintAndUserStoryProject(Sprint sprint, UserStory userStory) {
+        Code projectCodeFromUserStory = new Code(Utils.getIntFromAlphanumericString(userStory.getProjectCode(), "p"));
+        return sprint.hasProjectCode(projectCodeFromUserStory);
     }
 
     /**
@@ -98,21 +132,6 @@ public class AddUserStoryToSprintBacklogService {
         return sprint;
     }
 
-    /**
-     * This method verifies if the userStory to be added has status different from finished or
-     * blocked
-     *
-     * @param usId of the user story to be verified
-     * @return true if the user story status is suitable
-     * @throws Exception if the user story status is finished or blocked
-     */
-    private boolean hasUserStoryStatus(UsId usId) throws Exception {
-        UserStory userStory = getUserStory(usId);
-        if (userStory.hasStatus(Status.FINISHED) || userStory.hasStatus(Status.BLOCKED)) {
-            throw new Exception("The User Story Status is not suitable to be added to the Sprint");
-        }
-        return true;
-    }
 
     /**
      * this method retrieves an userStory from the repository by the usId

@@ -59,13 +59,9 @@ public class SprintRepositoryJpa implements ISprintRepository {
      */
     @Override
     public boolean save(Sprint sprint) {
-        boolean result = false;
         SprintJpa sprintJpa = sprintDomainDataAssembler.toData(sprint);
-        if (!iSprintJpaRepository.existsById(sprintJpa.getSprintId())) {
-            iSprintJpaRepository.save(sprintJpa);
-            result = true;
-        }
-        return result;
+        iSprintJpaRepository.save(sprintJpa);
+        return true;
     }
 
     /**
@@ -99,5 +95,15 @@ public class SprintRepositoryJpa implements ISprintRepository {
             throw new NotFoundInRepoException(String.format("There are no %s sprints in the repository.",
                     status));
         }
+    }
+    /**
+     * Checks if a Sprint with the given SprintId exists in the repository.
+     *
+     * @param sprintId The SprintId to check.
+     * @return {@code true} if a Sprint with the given SprintId exists, {@code false} otherwise.
+     */
+    @Override
+    public boolean existsById(SprintId sprintId) {
+        return iSprintJpaRepository.existsById(sprintId.getSprintId());
     }
 }

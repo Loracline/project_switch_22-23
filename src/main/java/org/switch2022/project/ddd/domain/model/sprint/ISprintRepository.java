@@ -20,6 +20,7 @@ public interface ISprintRepository {
 
     /**
      * Counts the number of Sprint objects.
+     *
      * @return The total count of Sprint objects.
      */
     long count();
@@ -31,6 +32,7 @@ public interface ISprintRepository {
      * @return True if the save operation is successful, false otherwise.
      */
     boolean save(Sprint sprint);
+
     /**
      * Retrieves a list of Sprint objects associated with a specific project code.
      *
@@ -46,4 +48,13 @@ public interface ISprintRepository {
      * @return true if at least one instance of Sprint with a given status already exists in the list, and false otherwise.
      */
     boolean existsByStatus(SprintStatus sprintStatus);
+
+    /**
+     * This method checks if at least one instance of Sprint with a given id already exists in the list of sprints.
+     *
+     * @param sprintId SprintId to look for in the sprint list.
+     * @return true if at least one instance of Sprint with a given id already exists in the list,
+     * and false otherwise.
+     */
+    boolean existsById(SprintId sprintId);
 }

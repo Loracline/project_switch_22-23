@@ -27,7 +27,7 @@ const Router = ({selected}) => {
             {selected === 'allocateResource' && <AllocateResource/>}
             {selected === 'sprint' && <Sprint/>}
             {selected === 'sprintBacklog' && <SprintBacklog/>}
-            {selected === 'sprintBacklog' && <SprintBacklog/>}
+            {selected === 'scrumBoard' && <ScrumBoard/>}
         </div>
     )
 }

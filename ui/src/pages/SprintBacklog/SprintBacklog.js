@@ -1,72 +1,76 @@
 import {Autocomplete, TextField} from "@mui/material";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import AppContext from "../../context/AppContext";
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import Checkbox from '@mui/material/Checkbox';
 import Button from "../../components/Button/Button";
+import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
+
 
 function SprintBacklog() {
+
     const {state, dispatch} = useContext(AppContext);
-    const {detailedProject} = state;
+    const {detailedSprint, detailedProject} = state;
+    // sprintId = detailedSprint.sprintId;
+    const code = detailedProject.code;
+    const sprintId = "p001_s001";
 
 
     let newSprintBacklog = [];
-    const [sprintBacklog, setSprintBacklog] = useState([]);
+
+
+    //fetch para get Product Backlog
+
+    const [productBacklog, setProductBacklog] = useState([]);
+    useEffect(() => {
+        fetch(`${API_URL}${API_ROUTES.PROJECTS}/${code}${API_ROUTES.PRODUCTBACKLOG}`, {
+            method: 'GET',
+            headers,
+        })
+            .then(response => response.json())
+            .then(response => {
+                setProductBacklog(response);
+            })
+
+    }, [])
+
+
+//fetch para post UserStoryToAdd
+    const [userStoriesToAdd, setUserStoriesToAdd] = useState([]);
+    useEffect(() => {
+        for (let i = 0; i < userStoriesToAdd.length; i++) {
+            fetch(`${API_URL}${API_ROUTES.SPRINTS}/${sprintId}${API_ROUTES.SPRINTBACKLOG}`, {
+                method: 'POST',
+                body: JSON.stringify({userStoryId: code+ "_"+ userStoriesToAdd[i].userStoryNumber, sprintId: sprintId}),
+                headers,
+            }).then(async response => {
+                if (!response.ok) {
+                    throw await response.json()
+                }
+                return {}
+            })
+        }
+    }, [userStoriesToAdd])
+
+
     const icon = <CheckBoxOutlineBlankIcon fontSize="small"/>;
     const checkedIcon = <CheckBoxIcon fontSize="small"/>
 
-    /*
-    export function useGetProductBacklog() {
-        const [productBacklog, setProductBacklog] = useState([]);
-
-        useEffect(() => {
-            fetch(`http://localhost:8080/${API_ROUTES.USERSTORIES}`, {method: 'GET',})
-                .then(response => response.json())
-                .then(response => {setUserStories(response);})
-        }, [])
-        return [userStories];
-    }
-
-    const [productBacklog] = useGetProductBacklog();
-    */
-    const productBaclog = [
-        {
-            userStoryNumber: 'US1',
-            userStoryText: 'Como utilizador, quero poder efetuar login no sistema',
-            status: 'Em progresso'
-        },
-        {
-            userStoryNumber: 'US2',
-            userStoryText: 'Como utilizador, quero poder registar novos produtos',
-            status: 'Concluída'
-        },
-        {
-            userStoryNumber: 'US3',
-            userStoryText: 'Como utilizador, quero poder adicionar itens ao carrinho de compras',
-            status: 'A fazer'
-        },
-        {
-            userStoryNumber: 'US4',
-            userStoryText: 'Como utilizador, quero poder visualizar o histórico de pedidos',
-            status: 'A fazer'
-        }
-    ];
-
 
     const handleSprintBacklogChange = (event, value) => {
-            newSprintBacklog=value;
+        newSprintBacklog = value;
     }
 
     const handleConfirmation = (event) => {
         console.log(newSprintBacklog);
-        setSprintBacklog(newSprintBacklog);
+        setUserStoriesToAdd(newSprintBacklog);
     }
 
     return (
         <>
-            <table style={{ background: '#f2f2f2' }}>
-                <caption style={{ fontWeight: 'bold', marginBottom: '1rem' }}>
+            <table style={{background: '#f2f2f2'}}>
+                <caption style={{fontWeight: 'bold', marginBottom: '1rem'}}>
                     SPRINT BACKLOG
                 </caption>
                 <thead>
@@ -76,12 +80,12 @@ function SprintBacklog() {
                 </tr>
                 </thead>
                 <tbody>
-                {sprintBacklog.length === 0 ? (
+                {userStoriesToAdd.length === 0 ? (
                     <tr>
                         <td colSpan="2">No UserStories added</td>
                     </tr>
                 ) : (
-                    sprintBacklog.map((item) => (
+                    userStoriesToAdd.map((item) => (
                         <tr key={item.userStoryNumber}>
                             <td>{item.userStoryNumber}</td>
                             <td>{item.userStoryText}</td>
@@ -95,7 +99,7 @@ function SprintBacklog() {
                 multiple
                 disableCloseOnSelect
                 sx={{width: 600}}
-                options={productBaclog}
+                options={productBacklog}
                 getOptionLabel={(option) => option.userStoryNumber}
                 onChange={handleSprintBacklogChange}
                 renderOption={(props, option, {selected}) => (
