@@ -319,6 +319,17 @@ public class Sprint implements Entity<Sprint> {
     }
 
     /**
+     * This method verifies if the Sprint has the given status.
+     *
+     * @param status to compare to.
+     * @return TRUE if Sprint has the given status, and FALSE otherwise.
+     */
+    public boolean hasStatus(SprintStatus status) {
+        return this.status.sameValueAs(status);
+    }
+
+
+    /**
      * This method checks if the sprint status is valid
      * @return true if the sprint status is OPEN, false otherwise.
      */

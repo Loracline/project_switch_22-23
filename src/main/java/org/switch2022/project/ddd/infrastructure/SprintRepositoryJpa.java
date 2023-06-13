@@ -8,6 +8,8 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
+import org.switch2022.project.ddd.domain.value_object.SprintStatus;
+import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
@@ -65,6 +67,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
         }
         return result;
     }
+
     /**
      * Retrieves a list of Sprint objects associated with a specific project code.
      *
@@ -75,9 +78,26 @@ public class SprintRepositoryJpa implements ISprintRepository {
     public List<Sprint> findByProjectCode(Code projectCode) {
         List<Sprint> sprintsByProject = new ArrayList<>();
         List<SprintJpa> sprintJpas = iSprintJpaRepository.findByProjectCode(projectCode.getCode());
-        for ( SprintJpa sprintJpa : sprintJpas) {
+        for (SprintJpa sprintJpa : sprintJpas) {
             sprintsByProject.add(sprintDomainDataAssembler.toDomain(sprintJpa));
         }
         return sprintsByProject;
+    }
+
+    /**
+     * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
+     *
+     * @param sprintStatus SprintStatus to look for in the sprint list.
+     * @return true if at least one instance of Sprint with a given status already exists in the list, and false
+     * otherwise.
+     */
+    public boolean existsByStatus(SprintStatus sprintStatus) {
+        String status = sprintStatus.getStatus();
+        if (iSprintJpaRepository.existsByStatus(status)) {
+            return true;
+        } else {
+            throw new NotFoundInRepoException(String.format("There are no %s sprints in the repository.",
+                    status));
+        }
     }
 }

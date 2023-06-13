@@ -5,7 +5,10 @@ import {
     getProjectTypologies,
     postProject
 } from "../services/ProjectService";
-import {postSprint} from "../services/SprintService";
+import {
+    fetchSprintsFromProject,
+    postSprint
+} from "../services/SprintService";
 import {strings} from "../strings";
 import {postUserStory} from "../services/UserStoryService";
 
@@ -42,7 +45,6 @@ export const UPDATE_SPRINT_STATUS_FAILURE = 'UPDATE_SPRINT_STATUS_FAILURE';
 /**
  * Action to fetch business sectors
  */
-
 export function fetchBusinessSectors(dispatch) {
     const action = {
         type: GET_BUSINESS_SECTORS
@@ -71,10 +73,10 @@ function fetchBusinessSectorsFailure() {
     }
 }
 
+
 /**
  * Action to fetch project Typologies
  */
-
 export function fetchTypologies(dispatch) {
     const action = {
         type: GET_TYPOLOGIES
@@ -102,10 +104,10 @@ function fetchTypologiesFailure() {
     }
 }
 
+
 /**
  * Action to fetch project Customers
  */
-
 export function fetchCustomers(dispatch) {
     const action = {
         type: GET_CUSTOMERS
@@ -134,6 +136,7 @@ function fetchCustomersFailure() {
         }
     }
 }
+
 
 /**
  Action for creating a new project.
@@ -178,6 +181,7 @@ function postProjectFailure(message) {
     }
 }
 
+
 /**
  Action for creating a new user story.
  */
@@ -186,6 +190,7 @@ export function createUserStory(dispatch, userStoryToSubmit) {
         (error) => dispatch(postUserStoryFailure(error.message)), userStoryToSubmit
     );
 }
+
 
 /**
  Function for dealing with a POST User Story with success.
@@ -199,6 +204,7 @@ function postUserStorySuccess(userStoryId) {
     }
 }
 
+
 /**
  Function for dealing with a POST User Story with failure.
  */
@@ -211,6 +217,7 @@ function postUserStoryFailure(message) {
     }
 }
 
+
 /**
  Function for resetting the data from state after a POST User Story action.
  */
@@ -219,6 +226,7 @@ export function resetPostUserStory() {
         type: RESET_POST_USER_STORY
     }
 }
+
 
 /**
  * Action to set the current selected menu.
@@ -234,6 +242,7 @@ export function selectMenu(name) {
     }
 }
 
+
 /**
  * Action to set the current selected project.
  * @param project to be used.
@@ -248,6 +257,7 @@ export function setCurrentProject(project) {
     }
 }
 
+
 /**
  * Action to close messages
  */
@@ -258,6 +268,7 @@ export function closeButton() {
         type: CLOSE_BUTTON
     }
 }
+
 
 /**
  * Generic action for fetch failure.
@@ -270,6 +281,7 @@ export function fetchFailure(message) {
         payload: message
     }
 }
+
 
 /**
  * Actions to get a specific project.
@@ -286,6 +298,7 @@ export function getProjectSuccess(project) {
         payload: project?.[0],
     }
 }
+
 
 /**
  * Actions to create a sprint.
@@ -304,6 +317,7 @@ function postSprintSuccess(message) {
         payload: message
     }
 }
+
 
 /**
  * Actions to get all projects.
@@ -329,31 +343,54 @@ function getProjectsSuccess(projects) {
     }
 }
 
-// Action to update sprint status
+
+/**
+ * Action to update sprint status
+ */
 export function updateSprintStatus(sprintId, status) {
     return (dispatch) => {
-        // Dispatch action to indicate update started
         dispatch({
             type: UPDATE_SPRINT_STATUS,
         });
 
+        fetch(`/api/sprints/${sprintId}/status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status }),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    if (status === 'Open') {
+                        dispatch(updateSprintStatusSuccess("Sprint successfully opened."));
+                    } else if (status === 'Close') {
+                        dispatch(updateSprintStatusSuccess('Sprint successfully closed.'));
+                    } else {
+                        dispatch(updateSprintStatusFailure('Invalid status.'));
+                    }
+                } else {
+                    throw new Error('Failed to update sprint status.');
+                }
+            })
+            .catch((error) => {
+                dispatch(updateSprintStatusFailure(error.message));
+            });
+    };
+}
 
-// Function to handle successful update
-        function updateSprintStatusSuccess(message) {
-            return {
-                type: UPDATE_SPRINT_STATUS_SUCCESS,
-                payload: message,
-            };
-        }
+function updateSprintStatusSuccess(message) {
+    return {
+        type: UPDATE_SPRINT_STATUS_SUCCESS,
+        payload: message,
+    };
+}
 
-// Function to handle update failure
-        function updateSprintStatusFailure(error) {
-            return {
-                type: UPDATE_SPRINT_STATUS_FAILURE,
-                payload: error,
-            };
-        }
-    }
+function updateSprintStatusFailure(error) {
+    return {
+        type: UPDATE_SPRINT_STATUS_FAILURE,
+        payload: error,
+    };
 }
 
 
@@ -375,3 +412,42 @@ export const checkProjectSprint = (projectCode) => {
         }
     }
 }*/
+
+
+/**
+ * Actions to list all sprints of a specific project.
+ */
+export const GET_SPRINTS_SUCCESS = 'GET_SPRINTS_SUCCESS'
+export function getSprintsFromProjectSuccessfully(sprintsFromProject) {
+    return {
+        type: GET_SPRINTS_SUCCESS,
+        payload: {
+            data: [...sprintsFromProject]
+        }
+    }
+}
+
+export const FETCH_SPRINTS_STARTED = 'FETCH_SPRINTS_STARTED';
+export function getSprintsFromProject(dispatch) {
+    const action = {
+        type: FETCH_SPRINTS_STARTED
+    }
+    dispatch(action);
+    fetchSprintsFromProject(
+        (res) => dispatch(getSprintsFromProjectSuccessfully(res)),
+        (err) => fetchFailure(err.message));
+}
+
+
+/**
+ * Action to select a sprint from a list of sprints of a project.
+ */
+export const SELECT_SPRINT = 'SELECT_SPRINT';
+export function setCurrentSprint(sprint) {
+    return {
+        type: SELECT_SPRINT,
+        payload: {
+            selected: sprint
+        }
+    }
+}

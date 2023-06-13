@@ -1,0 +1,56 @@
+@startuml
+
+title TO LIST ALL SPRINTS FROM A PROJECT
+skinparam sequenceMessageAlign center
+
+class SprintWebController {
+-sprintListService
++listSprintsFromProject(codeStringDto)
+}
+
+class SprintListService {
+-iSprintRepository
+-sprintMapper
++listSprintsFromProject(codeVoDto)
+}
+
+interface ISprintRepository {
++findByProjectCode(code)
+}
+
+class SprintRepository {
+-sprints
++findByProjectCode(code)
+}
+
+class SprintMapper {
++sprintToDto(sprint)
+}
+
+class SprintDto {
++sprintNumber
++sprintStatus
++startDate
++endDate
+}
+
+class Sprint {
+-sprintNumber
+-sprintStatus
+-period
++getSprintNumber()
++getStatus()
++getStartDate()
++getEndDate()
+}
+
+SprintWebController <.. SprintListService: is injected
+SprintListService <.. ISprintRepository: is injected
+SprintRepository ..|> ISprintRepository: implements
+SprintListService ..> Sprint: uses
+SprintMapper ..> SprintListService: is injected
+SprintMapper ..> Sprint: uses
+SprintDto <.. SprintMapper: uses
+Sprint "*" <-down- "1" SprintRepository: has
+
+@enduml

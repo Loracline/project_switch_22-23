@@ -6,6 +6,7 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.Collection;
+import java.util.Optional;
 
 
 /**
@@ -47,5 +48,12 @@ public interface IUserStoryJpaRepository extends CrudRepository<UserStoryJpa, Us
      */
 
     Iterable<UserStoryJpa> findAllByUsIdIn(Collection<String> usId);
+
+    /**
+     * Returns a USerStoryJpa based on its Id.
+     * @param usId from the User Story one searches for.
+     * @return an Optional containing the desired UserStoryJpa.
+     */
+    Optional<UserStoryJpa> findByUsId(String usId);
 }
 
