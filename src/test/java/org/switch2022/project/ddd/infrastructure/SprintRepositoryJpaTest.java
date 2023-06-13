@@ -254,7 +254,7 @@ class SprintRepositoryJpaTest {
     void ensureThatReturnsTrue_ifAtLeastOneInstanceOfSprintInTheSprintRepositoryHasTheIdPassedAsParameter() {
         // ARRANGE
         SprintId sprintId = new SprintId("P001","S001");
-        when(ISprintJpaRepository.existsById(any())).thenReturn(true);
+        when(iSprintJpaRepository.existsById(any())).thenReturn(true);
         // ACT
         boolean result = sprintRepositoryJpa.existsById(sprintId);
         // ASSERT

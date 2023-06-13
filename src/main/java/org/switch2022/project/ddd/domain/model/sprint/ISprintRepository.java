@@ -49,6 +49,8 @@ public interface ISprintRepository {
      */
     boolean existsByStatus(SprintStatus sprintStatus);
 
+    boolean existsById(SprintId sprintId);
+
     /**
      * This method checks if one given sprint has the status given
      * @param sprintId the identifier of the sprint
