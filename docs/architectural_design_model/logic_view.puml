@@ -1,51 +1,74 @@
 @startuml
 title Logic view, level 1
-component {
-  portin " " as pIn
-  portout " " as pOut
-  component "System"
+() "User REST API" as API
+() "UI" as UI
+component "<<component>> \n <<C4 Context>> \n G4" as G4 {
+port " "
+port "  "
+UI -- "  "
+API -- " "
 }
-UI -- pIn
-pOut --( "API NO SQL"
 @enduml
 
 @startuml
 title Logic view, level 2
-component {
-  portin " " as pIn
-  portout " " as pOut
-  component Client
-  component Server
-  interface "API" as api
-  database "Database \n     SQL" as db
+() "User REST API" as API
+() "UI" as UI
+component "<<System G4>>" as G4 {
+portin " "
+port "   "
+component " <<Component>>\n <<Container (C4)>>\nG4-FE" as fe {
+    port " " as frontEndPort
 }
-
-UI -- pIn
-Server -- pOut
-Client -- pOut
-pOut --( "API NO SQL"
-pIn -- Client
-Server -0)- Client
-Server --( api
-api -- db
+component "  <<Component>>\n<<Container (C4)>>\n G4-BE" as be {
+    port " " as backEndPort
+}
+database "     <<Component>>\n   <<Container (C4)>>\n          <<DB H2>>" as h2 {
+}
+UI -- " "
+API -- "   "
+" " -- frontEndPort
+"   " -- frontEndPort
+fe -(0- backEndPort: BE API
+be -(0- h2: SQL API
 @enduml
 
 @startuml
 title Logic view, level 3
-component {
-  portin " " as pIn
-  portout " " as pOut
-  component "Web page" as web
-  component "Backend" as be
-  database "Database \n     SQL" as db
-  interface "API" as api
-}
-UI -- pIn
-pIn -- web
-be -- pOut
-pOut ..( "API NO SQL"
-be -0)- web
-db -- api
-api )-- be
+() "User REST API" as API
+() "UI" as UI
+component "<<System G4>>" as G4 {
+port " "
 
+package "Frameworks" {
+
+  [ <<component>>\n <<component(C4)>>\n        Routers] as R
+  database "<<component>> \n <<component(C4)>> \n        DB H2" as DB
+
+  }
+
+component "       <<component>> \n DataDomainAssembler" as schema
+
+package "Interface Adapters" {
+  [<<component>> \n       DTO] as DTO
+  [ <<component>>\n <<component(C4)>>\n  Controllers] as Cont
+  [ <<component>>\n <<component(C4)>>\n  Repositories] as Rep
+}
+
+package "Application Business Rules" {
+    [ <<component>>\n <<component(C4)>>\n  Services] as Serv
+}
+
+R -(0- Cont : controllers API
+Cont -(0- Serv : services API
+Cont -(0-- DTO : DTO API
+Serv -(0- DTO : DTO API
+Serv -(0- Rep : Repositories API
+Rep -(0- schema: Assembler API
+schema -0)- DB: Assembler API
+API -- " "
+UI -- " "
+" " -- R
 @enduml
+
+
