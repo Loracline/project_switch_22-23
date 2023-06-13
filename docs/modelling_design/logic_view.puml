@@ -1,0 +1,52 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+() "User REST API" as URA
+() "H2 API" as H2
+component "<<System G4>>" as G4 {
+port " "
+port "   "
+package "Frameworks" {
+
+  [ <<component>>\n <<component(C4)>>\n        Routers] as R
+
+  database "<<component>> \n <<component(C4)>> \n        DB H2" as DB
+  }
+
+component "       <<component>> \n DataDomainAssembler" as schema
+
+package "Interface Adapters" {
+  [<<component>> \n       DTO] as DTO
+  [ <<component>>\n <<component(C4)>>\n  Controllers] as Cont
+  [ <<component>>\n <<component(C4)>>\n  Repositories] as Rep
+  }
+
+package "Application Business Rules" {
+    [ <<component>>\n <<component(C4)>>\n  Services] as Serv
+    }
+
+
+R -(0- Cont : controllers API
+
+Cont -(0- Serv : services API
+
+Cont -(0- DTO : DTO API
+
+Serv -(0- DTO : DTO API
+
+Serv -(0- Rep : service API
+
+Rep -(0- schema
+
+schema -0)- DB
+
+URA -- " "
+
+" " -- R
+
+DB - "   "
+H2 -- "   "
+
+@enduml
+
+
