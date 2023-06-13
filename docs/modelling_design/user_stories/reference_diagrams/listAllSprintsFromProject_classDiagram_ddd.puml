@@ -42,10 +42,12 @@ class SprintDtoAssembler {
 }
 
 class SprintValueObjectsDto {
+-id
 -number
 -status
 -startDate
 -endDate
++getId()
 +getNumber()
 +getStatus()
 +getStartDate()
@@ -53,24 +55,18 @@ class SprintValueObjectsDto {
 }
 
 class SprintPrimitiveTypesDto {
+-id
 -number
 -status
 -startDate
 -endDate
-+getNumber()
-+getStatus()
-+getStartDate()
-+getEndDate()
 }
 
 class Sprint {
+-sprintId
 -sprintNumber
 -sprintStatus
 -period
-+getSprintNumber()
-+getStatus()
-+getStartDate()
-+getEndDate()
 }
 
 SprintWebController <.. SprintListService: is injected
