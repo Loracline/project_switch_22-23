@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.dto.mapper;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.dto.ProjectCodeStringDto;
 import org.switch2022.project.ddd.dto.ProjectCodeValueObjectDto;
 
@@ -15,16 +16,18 @@ class ProjectCodeDtoAssemblerTest {
     @Test
     void ensureConversionIsMadeSuccessfully() {
         // Arrange
-        String expected = "p001";
+        String code = "p001";
+        ProjectCodeStringDto dto = new ProjectCodeStringDto(code);
 
-        ProjectCodeStringDto dtoDouble = mock(ProjectCodeStringDto.class);
+        Code codeDouble = mock(Code.class);
+        ProjectCodeValueObjectDto expected = new ProjectCodeValueObjectDto(codeDouble);
 
-        when(dtoDouble.getCode()).thenReturn("p001");
+        when(codeDouble.getCode()).thenReturn(code);
 
         // Act
-        ProjectCodeValueObjectDto result = ProjectCodeDtoAssembler.convertToValueObject(dtoDouble);
+        ProjectCodeValueObjectDto result = ProjectCodeDtoAssembler.convertToValueObject(dto);
 
         // Assert
-        assertEquals(expected, result.getCode());
+        assertEquals(expected.getCode().getCode(), result.getCode().getCode());
     }
 }

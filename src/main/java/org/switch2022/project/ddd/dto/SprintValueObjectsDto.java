@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.dto;
 
+import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintNumber;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
  */
 public class SprintValueObjectsDto {
 
+    private final SprintId id;
     private final SprintNumber number;
     private final SprintStatus status;
     private final LocalDate startDate;
@@ -25,7 +27,8 @@ public class SprintValueObjectsDto {
      * @param startDate The start date of the sprint.
      * @param endDate   The end date of the sprint.
      */
-    public SprintValueObjectsDto(SprintNumber number, SprintStatus status, LocalDate startDate, LocalDate endDate) {
+    public SprintValueObjectsDto(SprintId id, SprintNumber number, SprintStatus status, LocalDate startDate, LocalDate endDate) {
+        this.id = id;
         this.number = number;
         this.status = status;
         this.startDate = startDate;
@@ -33,25 +36,34 @@ public class SprintValueObjectsDto {
     }
 
     /**
-     * Retrieves the sprint number value object.
+     * Returns the ID of the sprint.
      *
-     * @return The sprint number value object.
+     * @return The ID of the sprint.
+     */
+    public String getId() {
+        return id.getSprintId();
+    }
+
+    /**
+     * Returns the number of the sprint.
+     *
+     * @return The number of the sprint.
      */
     public String getNumber() {
         return number.getSprintNumber();
     }
 
     /**
-     * Retrieves the sprint status value object.
+     * Returns the status of the sprint.
      *
-     * @return The sprint status value object.
+     * @return The status of the sprint.
      */
     public String getStatus() {
         return status.getStatus();
     }
 
     /**
-     * Retrieves the start date of the sprint.
+     * Returns the start date of the sprint as a string representation.
      *
      * @return The start date of the sprint.
      */
@@ -60,7 +72,7 @@ public class SprintValueObjectsDto {
     }
 
     /**
-     * Retrieves the end date of the sprint.
+     * Returns the end date of the sprint as a string representation.
      *
      * @return The end date of the sprint.
      */

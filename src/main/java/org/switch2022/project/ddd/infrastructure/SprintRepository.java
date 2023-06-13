@@ -153,4 +153,17 @@ public class SprintRepository implements ISprintRepository {
         }
         return sprintExists;
     }
+
+    /**
+     * This method checks if one given sprint has the status given
+     *
+     * @param sprintId the identifier of the sprint
+     * @param status   the sprint status that needs to be checked
+     * @return true if the sprint has the given status and false otherwise
+     */
+
+    public boolean hasStatus(SprintId sprintId, SprintStatus status) {
+        Optional<Sprint> sprint = findById(sprintId);
+        return sprint.isPresent() && sprint.get().hasStatus(status);
+    }
 }
