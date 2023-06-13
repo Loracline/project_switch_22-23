@@ -24,7 +24,6 @@ activate repo
 repo --> service: sprint
 deactivate repo
 opt sprintStatusDto.status == open
-service -> service: openSprint(sprint)
 service -> repo: existsByStatus(open)
 activate repo
 repo --> service: false

@@ -1,0 +1,137 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO UPDATE THE STATUS OF A USER STORY IN THE WEB UI
+legend top
+US033 - As Project Member, I want to update the status (i.e.: the Scrum Board category) of a
+        user story in the scope of the current/active sprint backlog in the web UI.
+end legend
+
+class UserStoryWebController{
+- userStoriesInSprintService
++ changeUserStoryStatus(userStoryStatusDto)
+}
+
+UserStoryWebController <.. UserStoriesInSprintService: is injected
+UserStoryWebController ..> UserStoryStatusDto: uses
+
+class UserStoriesInSprintService{
+-sprintRepository
+-userStoryRepository
++ changeUserStoryStatus(userStoryStatusDto)
+}
+
+UserStoriesInSprintService ..> UserStoryStatusDto: uses
+UserStoriesInSprintService <.. ISprintRepository: is injected
+UserStoriesInSprintService <.. IUserStoryRepository: is injected
+UserStoriesInSprintService ..> UserStory: updates
+
+class UserStoryStatusDto{
+- sprintId
+- usId
+- status
+}
+
+interface ISprintRepository {
++ hasStatus(sprintId, status)
+}
+
+ISprintRepository <|.. SprintRepositoryJpa: implements
+SprintRepositoryJpa <.. ISprintJpaRepository: is injected
+
+interface ISprintJpaRepository {
++ hasStatus(sprintId, status)
+}
+ISprintJpaRepository <|-- CrudRepository: extends
+
+interface CrudRepository {
+}
+
+class SprintRepositoryJpa {
+- iSprintJpaRepository
+- sprintDomainDataAssembler
++ hasStatus(sprintId, status)
+}
+SprintRepositoryJpa <.. SprintDomainDataAssembler: is injected
+SprintRepositoryJpa "1"--> "*"SprintJpa: has
+
+interface IUserStoryRepository{
++ findByUsId(usId)
++ save(userStory)
+}
+
+IUserStoryRepository <|.. UserStoryRepositoryJpa: implements
+UserStoryRepositoryJpa <.. IUserStoryRepositoryJpa: is injected
+
+
+class UserStoryRepositoryJpa{
+- iUserStoryJpaRepository
+- userStoryDomainDataAssembler
++ findByUsId(usId)
++ save(userStory)
+}
+UserStoryRepositoryJpa <.. UserStoryDomainDataAssembler: is injected
+UserStoryRepositoryJpa "1"--> "*"UserStoryJpa: has
+
+interface IUserStoryRepositoryJpa{
++ findByUsId(usId)
++ save(userStory)
+}
+IUserStoryRepositoryJpa <|-- CrudRepository: extends
+
+class UserStory{
+- usId
+- status
++ changeStatus(status)
+}
+
+class SprintJpa {
+- sprintId
+- status
+}
+
+class SprintDomainDataAssembler{
+- factory
++ toData(sprint)
++ toDomain(sprintJpa)
+}
+SprintDomainDataAssembler ..> SprintJpa: creates
+SprintDomainDataAssembler <.. ISprintFactory: is injected
+
+interface ISprintFactory{
++ createSprint(projectCode, sprintId, sprintNumber, period)
+}
+ISprintFactory <|.. SprintFactory: implements
+
+
+class SprintFactory{
++ createSprint(projectCode, sprintId, sprintNumber, period)
+}
+SprintFactory ..> Sprint: creates
+
+class Sprint {
+- sprintId
+}
+
+class UserStoryJpa {
+- usId
+- status
+}
+
+class UserStoryDomainDataAssembler{
+- factory
++ toData(userStory)
++ toDomain(userStoryJpa)
+}
+UserStoryDomainDataAssembler ..> UserStoryJpa: creates
+UserStoryDomainDataAssembler <.. IFactoryUserStory: is injected
+
+interface IFactoryUserStory{
++ createUserStory(usNumber,usText, actor, acceptanceCriteria, projectCode)
+}
+IFactoryUserStory <|.. FactoryUserStory: implements
+
+class FactoryUserStory{
++ createUserStory(usNumber,usText, actor, acceptanceCriteria, projectCode)
+}
+FactoryUserStory ..> UserStory: creates
+@enduml

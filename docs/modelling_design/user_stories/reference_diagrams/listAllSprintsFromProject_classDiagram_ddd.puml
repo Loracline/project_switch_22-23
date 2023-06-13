@@ -3,15 +3,31 @@
 title TO LIST ALL SPRINTS FROM A PROJECT
 skinparam sequenceMessageAlign center
 
+class ProjectCodeStringDto {
+-code
++getCode()
+}
+
+class ProjectCodeValueObjectDto {
+-code
++getCode()
+}
+
+class ProjectCodeDtoAssembler {
++convertToValueObject(projectCodeStringDto)
+}
+
 class SprintWebController {
 -sprintListService
-+listSprintsFromProject(codeStringDto)
+-sprintDtoAssembler
+-projectCodeDtoAssembler
++listSprintsFromProject(projectCodeStringDto)
 }
 
 class SprintListService {
 -iSprintRepository
--sprintMapper
-+listSprintsFromProject(codeVoDto)
+-sprintDtoAssembler
++listSprintsFromProject(projectCodeValueObjectDto)
 }
 
 interface ISprintRepository {
@@ -23,15 +39,31 @@ class SprintRepository {
 +findByProjectCode(code)
 }
 
-class SprintMapper {
-+sprintToDto(sprint)
+class SprintDtoAssembler {
++sprintToValueObjectsDto(sprint)
++convertToPrimitiveTypes(sprintValueObjectsDto)
 }
 
-class SprintDto {
-+sprintNumber
-+sprintStatus
-+startDate
-+endDate
+class SprintValueObjectsDto {
+-number
+-status
+-startDate
+-endDate
++getNumber()
++getStatus()
++getStartDate()
++getEndDate()
+}
+
+class SprintPrimitiveTypesDto {
+-number
+-status
+-startDate
+-endDate
++getNumber()
++getStatus()
++getStartDate()
++getEndDate()
 }
 
 class Sprint {
@@ -48,9 +80,14 @@ SprintWebController <.. SprintListService: is injected
 SprintListService <.. ISprintRepository: is injected
 SprintRepository ..|> ISprintRepository: implements
 SprintListService ..> Sprint: uses
-SprintMapper ..> SprintListService: is injected
-SprintMapper ..> Sprint: uses
-SprintDto <.. SprintMapper: uses
+SprintDtoAssembler ..> SprintListService: is injected
+SprintDtoAssembler ..> SprintWebController: is injected
+ProjectCodeDtoAssembler ..> SprintWebController: is injected
+SprintDtoAssembler ..> Sprint: uses
+SprintValueObjectsDto <.. SprintDtoAssembler: uses
+SprintPrimitiveTypesDto <.. SprintDtoAssembler: uses
+ProjectCodeStringDto <.. ProjectCodeDtoAssembler: uses
+ProjectCodeValueObjectDto <.. ProjectCodeDtoAssembler: uses
 Sprint "*" <-down- "1" SprintRepository: has
 
 @enduml

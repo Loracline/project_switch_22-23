@@ -9,8 +9,8 @@ participant ":ListSprintsUI" as ui
 participant ":SprintWebController" as controller
 participant ":SprintListService" as service
 participant ":SprintRepository" as repository
-participant "sprintsVoDto: List<SprintDto>" as list
-participant ":SprintMapper" as mapper
+participant "sprintValueObjectsDto: List<SprintDto>" as list
+participant ":SprintDtoAssembler" as assembler
 participant "sprintDto: SprintDto" as dto
 
 activate pm
@@ -19,12 +19,12 @@ activate ui
 note right
 primitive type DTO
 end note
-ui -> controller: listSprintsFromProject(codeStringDto)
+ui -> controller: listSprintsFromProject(projectCodeStringDto)
 note right
 value object DTO
 end note
 activate controller
-controller -> service: listSprintsFromProject(codeVoDto)
+controller -> service: listSprintsFromProject(projectCodeValueObjectDto)
 activate service
 service -> repository: findByProjectCode(code)
 activate repository
@@ -33,20 +33,20 @@ deactivate repository
 create list
 service -> list: create()
 loop for each sprint in sprints
-service -> mapper: sprintToDto(sprint)
-activate mapper
+service -> assembler: sprintToDto(sprint)
+activate assembler
 create dto
-mapper -> dto: create()
+assembler -> dto: create()
 activate dto
-dto --> mapper: sprintDto
+dto --> assembler: sprintDto
 deactivate dto
-mapper --> service: sprintDto
-deactivate mapper
+assembler --> service: sprintDto
+deactivate assembler
 service -> list: add(sprintDto)
 end loop
-service --> controller: sprintsVoDto
+service --> controller: sprintValueObjectsDto
 deactivate service
-ui <-- controller: sprintsPtDto
+ui <-- controller: sprintPrimitiveTypesDto
 note right
 value objects DTOs
 end note

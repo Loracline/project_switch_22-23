@@ -1,0 +1,51 @@
+@startuml
+skinparam sequenceMessageAlign center
+title TO UPDATE THE STATUS OF A USER STORY IN THE WEB UI
+legend top
+US033 - As Project Member, I want to update the status (i.e.: the Scrum Board category) of a
+        user story in the scope of the current/active sprint backlog in the web UI.
+end legend
+
+class UserStoryWebController{
+- userStoriesInSprintService
++ changeUserStoryStatus(userStoryStatusDto)
+}
+
+UserStoryWebController <.. UserStoriesInSprintService: is injected
+
+class UserStoriesInSprintService{
+-sprintRepository
+-userStoryRepository
++ changeUserStoryStatus(userStoryStatusDto)
+}
+
+UserStoriesInSprintService ..> UserStoryStatusDto: uses
+UserStoriesInSprintService <.. ISprintRepository: is injected
+UserStoriesInSprintService <.. IUserStoryRepository: is injected
+UserStoriesInSprintService ..> UserStory: updates
+
+class UserStoryStatusDto{
+- sprintId
+- usId
+- status
+}
+
+interface ISprintRepository {
++ hasStatus(sprintId, status)
+}
+
+interface IUserStoryRepository{
++ findByUsId(usId)
++ save(userStory)
+}
+
+IUserStoryRepository   "1"..>  "*" UserStory
+
+class UserStory{
+- usId
+- status
++ changeStatus(status)
+}
+
+
+@enduml

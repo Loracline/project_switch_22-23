@@ -13,15 +13,14 @@ import static java.lang.Integer.parseInt;
  * Represents a short period of time defined by a Sprint Number, Period and Sprint
  * Backlog.
  */
-
 public class Sprint implements Entity<Sprint> {
+
     private final SprintId sprintId;
     private final SprintNumber sprintNumber;
     private final Code projectCode;
     private final Period period;
     private final List<UserStoryInSprint> userStoriesInSprint;
     private SprintStatus status;
-
 
     /**
      * Constructor
@@ -31,7 +30,6 @@ public class Sprint implements Entity<Sprint> {
      * @param sprintNumber the number of the sprint.
      * @param period       the duration of the sprint.
      */
-
     protected Sprint(Code projectCode, SprintId sprintId, SprintNumber
             sprintNumber, Period period) {
         this.projectCode = projectCode;
@@ -92,8 +90,6 @@ public class Sprint implements Entity<Sprint> {
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise.
      */
-
-
     public boolean addUserStory(UsId usId) {
         UserStoryInSprint userStoryInSprint = new UserStoryInSprint(usId);
         boolean isAdded = true;
@@ -111,8 +107,6 @@ public class Sprint implements Entity<Sprint> {
      * @param usId to check the presence in the list.
      * @return TRUE if the User Story is present in the list and FALSE otherwise.
      */
-
-
     public boolean hasUserStory(UsId usId) {
         boolean hasUs = false;
         Iterator<UserStoryInSprint> iterator = userStoriesInSprint.iterator();
@@ -132,7 +126,6 @@ public class Sprint implements Entity<Sprint> {
      * @param effort of the userStory.
      * @return true if the effort is set and false otherwise.
      */
-
     public boolean estimateEffortUserStory(UsId usId, int effort) {
         boolean hasEffortChanged = false;
         for (UserStoryInSprint userStory : userStoriesInSprint) {
@@ -149,7 +142,6 @@ public class Sprint implements Entity<Sprint> {
      * @param sprintId of the seeked Sprint.
      * @return TRUE if Sprint has the given Sprint ID, and FALSE otherwise.
      */
-
     public boolean hasSprintId(SprintId sprintId) {
         return this.sprintId.equals(sprintId);
     }
@@ -160,7 +152,6 @@ public class Sprint implements Entity<Sprint> {
      * @param projectCode of the seeked Sprint.
      * @return TRUE if Sprint has the given projectCode, and FALSE otherwise.
      */
-
     public boolean hasProjectCode(Code projectCode) {
         return this.projectCode.equals(projectCode);
     }
@@ -223,8 +214,6 @@ public class Sprint implements Entity<Sprint> {
      *
      * @return a sprint backlog with list of copies of user stories.
      */
-
-
     public List<UsId> getSprintBacklog() {
         List<UsId> sprintBacklog = new ArrayList<>();
         for (UserStoryInSprint userStory : userStoriesInSprint) {
@@ -271,7 +260,6 @@ public class Sprint implements Entity<Sprint> {
      * @param date to be compared in the period.
      * @return true if the sprint start date is after or equal the date
      */
-
     public boolean isPeriodAfterOrEqualThanDate(LocalDate date) {
         return period.isDateEqualOrLowerThanStartDate(date);
 

@@ -8,11 +8,11 @@ end legend
 
 
 class SprintWebController {
-- sprintStatusService
+- sprintStatusChangeService
 + changeStatus(sprintStatusChangeDto)
 }
 
-class SprintStatusService {
+class SprintStatusChangeService {
 - iSprintRepository
 + changeStatus(sprintStatusChangeDto)
 - openSprint(sprint)
@@ -73,8 +73,9 @@ interface CrudRepository {
 
 
 SprintWebController ..> SprintStatusChangeDto: uses
-SprintWebController <.. SprintStatusService: is injected
-SprintStatusService <.. ISprintRepository: is injected
+SprintWebController <.. SprintStatusChangeService: is injected
+SprintStatusChangeService <.. ISprintRepository: is injected
+SprintStatusChangeService ..> SprintStatusChangeDto: uses
 ISprintRepository <|.. SprintRepositoryJpa: implements
 SprintRepositoryJpa <.. ISprintJpaRepository: is injected
 ISprintJpaRepository <|-- CrudRepository: extends
