@@ -1,21 +1,21 @@
 @startuml
 'https://plantuml.com/sequence-diagram
 legend top
-US020 - As Project Manager, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+US020 - As Project Manager, I want to add a user story to the open/current sprint backlog using the web UI.
 end legend
 skinparam sequenceMessageAlign center
-title  To add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+title  To add a user story to the open/current sprint backlog using the web UI.
 
 class "SprintWebController" {
 addUserStoryToSprintBacklogService
-+ addUserStoryToSprintBacklog(userStoryId, sprintId)
++ addUserStoryToSprintBacklog(dto)
 }
 SprintWebController "1"..>"1" AddUserStoryToSprintBacklogService
 
 class "AddUserStoryToSprintBacklogService" {
 - ISprintRepository
 - IUsRepository
-+ addUserStoryToSprintBacklog(usId, sprintId)
++ addUserStoryToSprintBacklog(dto)
 - getSprintById (sprintId)
 - hasUserStoryStatus (usId)
 - getUserStory (usId)

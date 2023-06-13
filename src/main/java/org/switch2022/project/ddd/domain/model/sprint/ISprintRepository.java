@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.sprint;
 
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
+import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,4 +38,12 @@ public interface ISprintRepository {
      * @return A list of Sprint objects associated with the project code.
      */
     List<Sprint> findByProjectCode(Code projectCode);
+
+    /**
+     * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
+     *
+     * @param sprintStatus SprintStatus to look for in the sprint list.
+     * @return true if at least one instance of Sprint with a given status already exists in the list, and false otherwise.
+     */
+    boolean existsByStatus(SprintStatus sprintStatus);
 }
