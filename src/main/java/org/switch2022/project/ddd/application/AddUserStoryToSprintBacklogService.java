@@ -76,6 +76,7 @@ public class AddUserStoryToSprintBacklogService {
         if (isSprintInValidPeriod(sprint, LocalDate.now()) == 1) {
             hasUserStoryStatus(usIdVO);
             addUserStoryToSprintBacklog = sprint.addUserStory(usIdVO);
+            sprintRepository.save(sprint);
         }
         return addUserStoryToSprintBacklog;
     }

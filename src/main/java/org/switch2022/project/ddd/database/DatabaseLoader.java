@@ -3,7 +3,10 @@ package org.switch2022.project.ddd.database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
 import org.switch2022.project.ddd.application.UsService;
+import org.switch2022.project.ddd.application.UserStoriesInSprintService;
+import org.switch2022.project.ddd.application.UserStoryInSprintService;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
@@ -52,7 +55,8 @@ public class DatabaseLoader implements CommandLineRunner {
     @Autowired private IProfileJpaRepository profiles;
     @Autowired private IProjectResourceJpaRepository resources;
     @Autowired private UsService usService;
-
+    @Autowired private AddUserStoryToSprintBacklogService addService;
+    @Autowired private UserStoryInSprintService us;
 
     /**
      * Called by Spring Boot when the application starts up. Loads initial data into
@@ -160,10 +164,8 @@ public class DatabaseLoader implements CommandLineRunner {
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
         UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
-
         final String USER_STORY_ONE = "1";
         final String USER_STORY_TWO = "2";
-
         UserStory userStoryOne = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
                 new UsText("I want to be a iguana"),
                 new Actor("Farmer"), new ArrayList<>(), new Code(PROJECT_ONE));
@@ -222,6 +224,7 @@ public class DatabaseLoader implements CommandLineRunner {
         final int SPRINT_NUMBER_EIGHTEEN = 18;
         final int SPRINT_NUMBER_NINETEEN = 19;
         final int SPRINT_NUMBER_TWENTY = 20;
+        final int SPRINT_NUMBER_TWENTY_ONE = 21;
         final int SPRINT_DURATION = 2;
 
         final int TWO = 2;
@@ -237,6 +240,7 @@ public class DatabaseLoader implements CommandLineRunner {
         final int TWENTY_SIX = 26;
         final int TWENTY_SEVEN = 27;
         final int THIRTY = 30;
+        final int TWENTY_TWENTY_THREE = 2023;
 
         Sprint sprintOne = sprintFactory.createSprint(new Code(PROJECT_ONE),
                 new SprintId("p001", "s001"), new SprintNumber(SPRINT_NUMBER_ONE),
@@ -298,11 +302,19 @@ public class DatabaseLoader implements CommandLineRunner {
         Sprint sprintTwenty = sprintFactory.createSprint(new Code(PROJECT_TWO),
                 new SprintId("p002", "s012"), new SprintNumber(SPRINT_NUMBER_TWENTY),
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, APRIL, FOUR), SPRINT_DURATION));
+        Sprint sprintTwentyOne = sprintFactory.createSprint(new Code(PROJECT_ONE),
+                new SprintId("p001", "s021"), new SprintNumber(SPRINT_NUMBER_TWENTY_ONE),
+                new Period(LocalDate.of(TWENTY_TWENTY_THREE, JUNE, 1), SPRINT_DURATION));
 
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive,
                 sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
                 sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
+        sprints.save(sprintDomainDataAssembler.toData(sprintTwentyOne));
+
+        // User story in sprint
+        addService.addUserStoryToSprintBacklog("p001_us001","p001_s021");
+
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
@@ -337,8 +349,6 @@ public class DatabaseLoader implements CommandLineRunner {
         final int PHONE_NUMBER_GERINGONCA = 921_458_807;
         final int PHONE_NUMBER_MANEL = 921_458_811;
         final int PHONE_NUMBER_SILVA_A = 921_458_815;
-
-
 
         Account accountOne = accountFactory.create(new Name("João Silva"),
                 new Email("js@mymail.com"), new PhoneNumber(PHONE_NUMBER_SILVA), null);
