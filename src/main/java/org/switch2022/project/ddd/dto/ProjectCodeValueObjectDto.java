@@ -25,7 +25,7 @@ public class ProjectCodeValueObjectDto {
      *
      * @return The project code as a Code value object.
      */
-    public String getCode() {
-        return code.getCode();
+    public Code getCode() {
+        return code;
     }
 }

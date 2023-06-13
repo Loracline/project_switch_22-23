@@ -1,6 +1,7 @@
 package org.switch2022.project.ddd.dto.mapper;
 
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
+import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintNumber;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 import org.switch2022.project.ddd.dto.SprintPrimitiveTypesDto;
@@ -21,12 +22,13 @@ public class SprintDtoAssembler {
      * @return The converted SprintValueObjectsDto.
      */
     public static SprintValueObjectsDto sprintToValueObjectsDto(Sprint sprint) {
+        SprintId id = new SprintId(sprint.getProjectCode(), sprint.getFullSprintNumber());
         SprintNumber number = new SprintNumber(sprint.getSprintNumber());
         SprintStatus status = SprintStatus.generateSprintStatus(sprint.getStatus());
         LocalDate startDate = LocalDate.parse(sprint.getStartDate());
         LocalDate endDate = LocalDate.parse(sprint.getEndDate());
 
-        return new SprintValueObjectsDto(number, status, startDate, endDate);
+        return new SprintValueObjectsDto(id, number, status, startDate, endDate);
     }
 
     /**
@@ -37,6 +39,7 @@ public class SprintDtoAssembler {
      */
     public static SprintPrimitiveTypesDto convertToPrimitiveTypes(SprintValueObjectsDto dto) {
         return new SprintPrimitiveTypesDto(
+                dto.getId(),
                 dto.getNumber(),
                 dto.getStatus(),
                 dto.getStartDate(),
