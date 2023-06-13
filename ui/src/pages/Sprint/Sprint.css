@@ -14,18 +14,30 @@
     align-items: center;
 }
 
-.status {
-    align-self: flex-start;
+.statusContainer {
+    position: absolute;
+    top: 90px;
+    right: 0;
+    margin-right: 170px;
+    margin-bottom: 20px;
 }
 
 .sprintButtons {
     display: flex;
     gap: 1rem;
+    top: 240px;
+    margin-left: 110px;
 }
 
 .sprintButtonsProject {
     display: flex;
     gap: 1rem;
+}
+
+.returnButtonContainer {
+    position: absolute;
+    top: 120px;
+    right: 50px;
 }
 
 @media only screen and (min-width: 769px) {
@@ -43,10 +55,5 @@
     .user-story {
         display: flex;
         align-items: center;
-    }
-
-    .autocomplete-container {
-        flex: 1;
-        margin-right: 10px;
     }
 }
