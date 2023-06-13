@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
 import org.switch2022.project.ddd.application.CreateSprintService;
+import org.switch2022.project.ddd.application.SprintStatusChangeService;
 import org.switch2022.project.ddd.application.UserStoriesInSprintService;
 import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
 import org.switch2022.project.ddd.dto.AllocationDto;
 import org.switch2022.project.ddd.dto.SprintCreationDto;
+import org.switch2022.project.ddd.dto.SprintStatusDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 
@@ -19,7 +21,7 @@ import java.util.List;
  * The SprintWebController class is a REST controller for handling requests related to
  * sprints.
  */
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(maxAge = 3600, origins={"http://localhost:3000"})
 @RestController
 @RequestMapping("/sprints")
 public class SprintWebController {
@@ -28,6 +30,8 @@ public class SprintWebController {
      */
     @Autowired
     CreateSprintService createSprintService;
+    @Autowired
+    SprintStatusChangeService sprintStatusChangeService;
     @Autowired
     UserStoriesInSprintService userStoriesInSprintService;
     @Autowired
@@ -63,6 +67,23 @@ public class SprintWebController {
     public ResponseEntity<List<UserStoryDto>> getSprintBacklog(@PathVariable String sprintId) {
         List<UserStoryDto> userStories = userStoriesInSprintService.getSprintBacklog(sprintId);
         return new ResponseEntity<>(userStories, HttpStatus.OK);
+    }
+
+    /**
+     * Handles a PATCH request to change the status of a sprint with the specified sprint ID.
+     *
+     * @param sprintStatusDto with the necessary info to change the state of a sprint.
+     * @return ResponseEntity<Object> representing the result of the status change operation: if
+     * the status change is successful, returns a ResponseEntity with HTTP status
+     * code 200 (OK); if the sprint with the specified ID is not found, returns a
+     * ResponseEntity with HTTP status code 404 (NOT FOUND).
+     */
+
+    @PatchMapping("/sprints/{sprintId}")
+    @ResponseBody
+    public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto) {
+        sprintStatusChangeService.changeSprintStatus(sprintStatusDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**

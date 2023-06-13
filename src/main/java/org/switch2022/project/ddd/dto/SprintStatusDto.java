@@ -8,8 +8,8 @@ public class SprintStatusDto {
     /**
      * Attributes
      */
-    public final String sprintId;
-    public final String status;
+    private final String sprintId;
+    private final String status;
 
     /**
      * Constructs a new SprintStatusDto with the specified sprint ID and the status that will

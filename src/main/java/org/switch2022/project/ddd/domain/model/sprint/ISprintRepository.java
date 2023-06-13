@@ -20,6 +20,7 @@ public interface ISprintRepository {
 
     /**
      * Counts the number of Sprint objects.
+     *
      * @return The total count of Sprint objects.
      */
     long count();
@@ -31,6 +32,7 @@ public interface ISprintRepository {
      * @return True if the save operation is successful, false otherwise.
      */
     boolean save(Sprint sprint);
+
     /**
      * Retrieves a list of Sprint objects associated with a specific project code.
      *
