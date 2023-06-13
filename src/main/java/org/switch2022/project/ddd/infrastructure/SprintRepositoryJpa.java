@@ -96,7 +96,12 @@ public class SprintRepositoryJpa implements ISprintRepository {
                     status));
         }
     }
-
+    /**
+     * Checks if a Sprint with the given SprintId exists in the repository.
+     *
+     * @param sprintId The SprintId to check.
+     * @return {@code true} if a Sprint with the given SprintId exists, {@code false} otherwise.
+     */
     @Override
     public boolean existsById(SprintId sprintId) {
         return iSprintJpaRepository.existsById(sprintId.getSprintId());

@@ -142,6 +142,7 @@ public class SprintRepository implements ISprintRepository {
      * @return true if at least one instance of Sprint with a given id already exists in the list,
      * and false otherwise.
      */
+
     @Override
     public boolean existsById(SprintId sprintId) {
         boolean sprintExists = false;
