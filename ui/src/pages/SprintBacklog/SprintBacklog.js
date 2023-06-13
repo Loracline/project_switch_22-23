@@ -42,7 +42,7 @@ function SprintBacklog() {
         for (let i = 0; i < userStoriesToAdd.length; i++) {
             fetch(`${API_URL}${API_ROUTES.SPRINTS}/${sprintId}${API_ROUTES.SPRINTBACKLOG}`, {
                 method: 'POST',
-                body: JSON.stringify(userStoriesToAdd[i]),
+                body: JSON.stringify({userStoryId: code+ "_"+ userStoriesToAdd[i].userStoryNumber, sprintId: sprintId}),
                 headers,
             }).then(async response => {
                 if (!response.ok) {
