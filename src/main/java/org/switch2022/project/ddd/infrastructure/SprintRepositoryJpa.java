@@ -57,14 +57,11 @@ public class SprintRepositoryJpa implements ISprintRepository {
      */
     @Override
     public boolean save(Sprint sprint) {
-        boolean result = false;
         SprintJpa sprintJpa = sprintDomainDataAssembler.toData(sprint);
-        if (!iSprintJpaRepository.existsById(sprintJpa.getSprintId())) {
-            iSprintJpaRepository.save(sprintJpa);
-            result = true;
-        }
-        return result;
+        iSprintJpaRepository.save(sprintJpa);
+        return true;
     }
+
     /**
      * Retrieves a list of Sprint objects associated with a specific project code.
      *
@@ -75,7 +72,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
     public List<Sprint> findByProjectCode(Code projectCode) {
         List<Sprint> sprintsByProject = new ArrayList<>();
         List<SprintJpa> sprintJpas = iSprintJpaRepository.findByProjectCode(projectCode.getCode());
-        for ( SprintJpa sprintJpa : sprintJpas) {
+        for (SprintJpa sprintJpa : sprintJpas) {
             sprintsByProject.add(sprintDomainDataAssembler.toDomain(sprintJpa));
         }
         return sprintsByProject;

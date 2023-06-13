@@ -18,17 +18,17 @@ public class UserStoryInSprintJpa {
     private String usId;
     private int effort;
     @ManyToOne
-    @JoinColumn(name = "sprint", nullable = false)
+    @JoinColumn(name = "sprint")
     private SprintJpa sprint;
 
     /**
      * Constructor
      * It creates an userStoryInSprint using its identifier: usId  and effort.
      */
-    public UserStoryInSprintJpa(String usId, int effort) {
+    public UserStoryInSprintJpa(String usId, int effort, SprintJpa sprint) {
         this.usId = usId;
         this.effort = effort;
-
+        this.sprint = sprint;
     }
     /**
      * Constructor

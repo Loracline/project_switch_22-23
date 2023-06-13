@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
 import org.switch2022.project.ddd.application.UsService;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
@@ -20,11 +21,13 @@ import org.switch2022.project.ddd.domain.model.typology.TypologyFactory;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
@@ -58,6 +61,8 @@ public class DatabaseLoaderTest {
     private IProjectResourceJpaRepository resources;
     @Mock
     private UsService usService;
+    @Mock
+    private AddUserStoryToSprintBacklogService addService;
     @InjectMocks
     private DatabaseLoader databaseLoader;
 
@@ -117,7 +122,10 @@ public class DatabaseLoaderTest {
         userStory.setStatus(Status.RUNNING);
         verify(userStories).save(userStoryDomainDataAssembler.toData(userStory));
 
-         // Sprints
+        // User story in sprint
+        verify(addService).addUserStoryToSprintBacklog("p001_us001","p001_s021");
+
+        // Sprints
         SprintFactory sprintFactory = new SprintFactory();
         SprintDomainDataAssembler sprintDomainDataAssembler = new SprintDomainDataAssembler();
         verify(sprints).save(sprintDomainDataAssembler.toData(sprintFactory.
