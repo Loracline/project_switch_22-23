@@ -1,8 +1,8 @@
 @startuml
 skinparam sequenceMessageAlign center
-title TO ADD A USER STORY TO THE SPRINT BACKLOG
+title TO ADD A USER STORY TO THE SPRINT BACKLOG USING THE WEB UI
 legend top
-US020 - As Project Manager, I want to add a user story in the product backlog to the sprint backlog, during the sprint planning ceremony.
+US020 - As Project Manager, I want to add a user story to the open/current sprint backlog using the web UI.
 end legend
 autonumber
 actor "Project Manager"
@@ -19,9 +19,9 @@ activate "Project Manager"
 activate ui
 ui --> "Project Manager": requests data (userStoryId, sprintId)
 "Project Manager" -> ui: sends requested data
-ui -> ct: addUserStoryToSprintBacklog(usId, sprintId)
+ui -> ct: addUserStoryToSprintBacklog(dto)
 activate ct
-ct -> serv: addUserStoryToSprintBacklog(userStoryId, sprintId)
+ct -> serv: addUserStoryToSprintBacklog(dto)
 activate serv
 serv -> sprintRep: findById(sprintId)
 activate sprintRep

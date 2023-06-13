@@ -10,7 +10,7 @@ participant ":SprintWebController" as controller
 participant ":SprintListService" as service
 participant ":SprintRepository" as repository
 participant "sprintsVoDto: List<SprintDto>" as list
-participant ":SprintMapper" as mapper
+participant ":SprintDtoAssembler" as assembler
 participant "sprintDto: SprintDto" as dto
 
 activate pm
@@ -33,15 +33,15 @@ deactivate repository
 create list
 service -> list: create()
 loop for each sprint in sprints
-service -> mapper: sprintToDto(sprint)
-activate mapper
+service -> assembler: sprintToDto(sprint)
+activate assembler
 create dto
-mapper -> dto: create()
+assembler -> dto: create()
 activate dto
-dto --> mapper: sprintDto
+dto --> assembler: sprintDto
 deactivate dto
-mapper --> service: sprintDto
-deactivate mapper
+assembler --> service: sprintDto
+deactivate assembler
 service -> list: add(sprintDto)
 end loop
 service --> controller: sprintsVoDto
