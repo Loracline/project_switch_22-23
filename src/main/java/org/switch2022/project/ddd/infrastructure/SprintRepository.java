@@ -136,13 +136,33 @@ public class SprintRepository implements ISprintRepository {
     }
 
     /**
+     * This method checks if at least one instance of Sprint with a given id already exists in the list of sprints.
+     *
+     * @param sprintId SprintId to look for in the sprint list.
+     * @return true if at least one instance of Sprint with a given id already exists in the list,
+     * and false otherwise.
+     */
+
+    @Override
+    public boolean existsById(SprintId sprintId) {
+        boolean sprintExists = false;
+        for (Sprint sprint : sprints) {
+            if (sprint.hasSprintId(sprintId)) {
+                sprintExists = true;
+            }
+        }
+        return sprintExists;
+    }
+
+    /**
      * This method checks if one given sprint has the status given
      *
      * @param sprintId the identifier of the sprint
      * @param status   the sprint status that needs to be checked
      * @return true if the sprint has the given status and false otherwise
      */
-    public boolean hasStatus(SprintId sprintId, SprintStatus status){
+
+    public boolean hasStatus(SprintId sprintId, SprintStatus status) {
         Optional<Sprint> sprint = findById(sprintId);
         return sprint.isPresent() && sprint.get().hasStatus(status);
     }
