@@ -1,8 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import Button from '../../components/Button/Button';
-import { selectMenu, updateSprintStatus } from '../../context/Actions';
+import {closeButton, selectMenu, updateSprintStatus} from '../../context/Actions';
 import AppContext from '../../context/AppContext';
 import './Sprint.css';
+import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
+import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
+import FailureMessage from "../../components/InformationMessage/FailureMessage";
 
 /**
  * Sprint component.
@@ -12,17 +15,47 @@ import './Sprint.css';
  */
 const Sprint = () => {
     const {state, dispatch} = useContext(AppContext);
-    const data = state.detailedSprint;
-    const isEndDatePassed = new Date(data?.endDate) < new Date();
-    const isEndDateNull = data?.endDate === '';
+    const {selectedSprint, messageSuccess, messageFailure} = state;
+    const data = selectedSprint;
+
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const isOpen = data?.status === "open";
+    const isClosed = data?.status === "closed" || data?.status === "planned";
+
+    const handleConfirmation = () => {
+        setShowConfirmation(true);
+    }
+
+    const handleCancel = () => {
+        setShowConfirmation(false);
+    };
 
     const handleUpdateSprintStatus = (status) => {
-        if (isEndDatePassed || isEndDateNull || !data) {
-            return;
-        }
         dispatch(updateSprintStatus(data?.id, status));
     };
 
+    const handleUpdateSprintButton = (status) => {
+        //&& hasUnfinishedUserStories
+        if (status === "close") {
+            handleConfirmation();
+        } else {
+            handleUpdateSprintStatus(status);
+        }
+    }
+
+    const handleClearSprint = (_) => {
+        //setSprintToSubmit(initialSprintState);
+        dispatch(closeButton());
+    }
+
+    const dialogContent = () => {
+        return (
+            <div>
+                <h2 style={{marginBottom: '1rem', fontSize: '2rem', textAlign: "center"}}>Alert!</h2>
+                <p>You have unfinished user stories, are you sure you want to close the sprint?</p>
+            </div>
+        )
+    }
 
     return (
         <div className="page">
@@ -39,14 +72,14 @@ const Sprint = () => {
                     </div>
                     <div className="sprintButtons">
                         <Button
-                            onClick={() => handleUpdateSprintStatus('Open')}
+                            onClick={() => handleUpdateSprintButton('Open')}
                             text="Open"
-                            isDisabled={isEndDatePassed || isEndDateNull}
+                            isDisabled={isOpen}
                         />
                         <Button
-                            onClick={() => handleUpdateSprintStatus('Close')}
+                            onClick={() => handleUpdateSprintButton('close')}
                             text="Close"
-                            isDisabled={isEndDatePassed || isEndDateNull}
+                            isDisabled={isClosed}
                         />
                     </div>
                     <div className='start'>
@@ -55,14 +88,31 @@ const Sprint = () => {
             </section>
             <div className="returnButtonContainer">
                 <Button
-                    className="returnButton"
-                    isSecondary={true}
+                    isSecundary={true}
                     onClick={() =>
                         dispatch(selectMenu('sprints'))
                     }
                     text='Return'
                 />
             </div>
+            <SuccessMessage
+                handleOpen={messageSuccess.length > 0}
+                title="Sprint status updated!"
+                handleClose={handleClearSprint}
+            />
+
+            <FailureMessage
+                handleOpen={messageFailure.length > 0}
+                title="Sprint not created!"
+                message={messageFailure}
+                handleClose={handleClearSprint}
+            />
+            <ConfirmationPage
+                handleOpen={showConfirmation}
+                dialogContent={dialogContent()}
+                handleCancel={handleCancel}
+                handleConfirm={handleUpdateSprintStatus}
+            />
         </div>
 
     )

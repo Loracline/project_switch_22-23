@@ -214,7 +214,7 @@ function CreateUserStory() {
                         <Button
                             isSecundary={true}
                             onClick={() => dispatch(selectMenu('project'))}
-                            text="Return to project"
+                            text="Return"
                         />
                         <Button
                             isSecundary={true}
