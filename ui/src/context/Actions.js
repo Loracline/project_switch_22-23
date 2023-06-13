@@ -349,28 +349,48 @@ function getProjectsSuccess(projects) {
  */
 export function updateSprintStatus(sprintId, status) {
     return (dispatch) => {
-        // Dispatch action to indicate update started
         dispatch({
             type: UPDATE_SPRINT_STATUS,
         });
 
+        fetch(`/api/sprints/${sprintId}/status`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ status }),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    if (status === 'Open') {
+                        dispatch(updateSprintStatusSuccess("Sprint successfully opened."));
+                    } else if (status === 'Close') {
+                        dispatch(updateSprintStatusSuccess('Sprint successfully closed.'));
+                    } else {
+                        dispatch(updateSprintStatusFailure('Invalid status.'));
+                    }
+                } else {
+                    throw new Error('Failed to update sprint status.');
+                }
+            })
+            .catch((error) => {
+                dispatch(updateSprintStatusFailure(error.message));
+            });
+    };
+}
 
-// Function to handle successful update
-        function updateSprintStatusSuccess(message) {
-            return {
-                type: UPDATE_SPRINT_STATUS_SUCCESS,
-                payload: message,
-            };
-        }
+function updateSprintStatusSuccess(message) {
+    return {
+        type: UPDATE_SPRINT_STATUS_SUCCESS,
+        payload: message,
+    };
+}
 
-// Function to handle update failure
-        function updateSprintStatusFailure(error) {
-            return {
-                type: UPDATE_SPRINT_STATUS_FAILURE,
-                payload: error,
-            };
-        }
-    }
+function updateSprintStatusFailure(error) {
+    return {
+        type: UPDATE_SPRINT_STATUS_FAILURE,
+        payload: error,
+    };
 }
 
 
