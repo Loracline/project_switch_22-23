@@ -1,0 +1,138 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO CLOSE THE CURRENT/ACTIVE SPRINT OF A PROJECT IN THE WEB UI.
+legend top
+US034 - As Project Manager, I want to close the current/active sprint of a project in the web UI.
+end legend
+
+
+class SprintWebController {
+- sprintStatusChangeService
++ changeSprintStatus(sprintStatusDto)
+}
+
+class SprintStatusChangeService {
+- sprintRepository
+- userStoryRepository
++ changeStatus(status)
+- isOpen(sprint)
+}
+
+interface ISprintRepository {
++ findById(sprintId)
++ existsByStatus(sprintStatus)
+}
+
+class SprintRepositoryJpa {
+- iSprintJpaRepository
+- sprintDomainDataAssembler
++ findById(sprintId)
++ existsByStatus(sprintStatus)
+}
+
+interface ISprintJpaRepository {
++ findById(sprintId)
++ existsByStatus(sprintStatus)
+}
+
+interface ISprintFactory{
++ createSprint(projectCode, sprintId, sprintNumber, period)
+}
+
+class SprintFactory{
++ createSprint(projectCode, sprintId, sprintNumber, period)
+}
+
+class Sprint {
+- sprintId
+- status
++ changeStatus(status)
++ getStatus()
+}
+
+class SprintJpa {
+- sprintId
+- status
+}
+
+class SprintDomainDataAssembler{
+- factory
++ toData(sprint)
++ toDomain(sprintJpa)
+}
+
+interface IUserStoryRepository {
++ getListOfUsWithMatchingIds(usId)
+}
+
+class UserStoryRepositoryJpa {
+- iUserStoryJpaRepository
+- userStoryDomainDataAssembler
++ findById(usId)
++ existsByStatus(usStatus)
+}
+
+interface IUserStoryJpaRepository {
++ findById(usId)
++ existsByStatus(usStatus)
+}
+
+interface IFactoryUserStory{
++ createUserStory(usNumber, usText, actor, acceptanceCriteria, projectCode)
+}
+
+class FactoryUserStory{
++ createUserStory(usNumber, usText, actor, acceptanceCriteria, projectCode)
+}
+
+class UserStory {
+- usId
+- status
++ changeStatus(status)
++ hasStatus(status)
+}
+
+class UserStoryJpa {
+- usId
+- status
+}
+
+class UserStoryDomainDataAssembler{
+- factory
++ toData(userStory))
++ toDomain(userStoryJpa)
+}
+
+class SprintStatusChangeDto {
++ sprintId
++ status
+}
+
+interface CrudRepository {
++ findById(id)
+}
+
+
+SprintWebController <.. SprintStatusChangeService: is injected
+SprintStatusChangeService ..> SprintStatusChangeDto: uses
+SprintStatusChangeService <.. ISprintRepository: is injected
+SprintStatusChangeService <.. IUserStoryRepository: is injected
+IUserStoryRepository <|.. UserStoryRepositoryJpa: implements
+ISprintRepository <|.. SprintRepositoryJpa: implements
+SprintRepositoryJpa <.. ISprintJpaRepository: is injected
+ISprintJpaRepository <|-- CrudRepository: extends
+SprintRepositoryJpa <.. SprintDomainDataAssembler: is injected
+SprintDomainDataAssembler ..> SprintJpa: creates
+SprintDomainDataAssembler <.. ISprintFactory: is injected
+ISprintFactory <|.. SprintFactory: implements
+SprintFactory ..> Sprint: creates
+SprintRepositoryJpa "1"--> "*"SprintJpa: has
+UserStoryRepositoryJpa <.. IUserStoryJpaRepository: is injected
+UserStoryDomainDataAssembler <.. UserStoryRepositoryJpa: is injected
+UserStoryRepositoryJpa "1"--> "*"UserStoryJpa: has
+IFactoryUserStory <|.. FactoryUserStory: implements
+FactoryUserStory ..> UserStory: creates
+UserStoryDomainDataAssembler <.. IFactoryUserStory: is injected
+IUserStoryJpaRepository <|-- CrudRepository: extends
+@enduml

@@ -22,11 +22,11 @@ public class UserStory implements Entity<UserStory> {
      */
     private final UsId usId;
     private final List<AcceptanceCriteria> acceptanceCriteria;
+    private final Code projectCode;
     private UsNumber usNumber;
     private Actor actor;
     private UsText usText;
     private Status status;
-    private final Code projectCode;
 
     /**
      * Constructor
@@ -42,7 +42,7 @@ public class UserStory implements Entity<UserStory> {
         Validate.notNull(acceptanceCriteria, "User Story's Acceptance Criteria can't be null.");
         this.projectCode = projectCode;
         this.usNumber = usNumber;
-        this.actor =actor;
+        this.actor = actor;
         this.usText = usText;
         this.status = Status.PLANNED;
         this.acceptanceCriteria = acceptanceCriteria;
@@ -106,9 +106,7 @@ public class UserStory implements Entity<UserStory> {
     /**
      * This getter method returns a String with User Story status.
      */
-    public String getStatus() {
-        return status.getStatus();
-    }
+    public String getStatus() {return status.getStatus();}
 
     /**
      * This protected method sets the status of the userStory.
@@ -156,7 +154,7 @@ public class UserStory implements Entity<UserStory> {
      */
     public List<String> getAcceptanceCriteria() {
         List<String> listOfAcceptanceCriteria = new ArrayList<>();
-        for(AcceptanceCriteria ac : this.acceptanceCriteria){
+        for (AcceptanceCriteria ac : this.acceptanceCriteria) {
             listOfAcceptanceCriteria.add(ac.getAcceptanceCriteria());
         }
         return Collections.unmodifiableList(listOfAcceptanceCriteria);
