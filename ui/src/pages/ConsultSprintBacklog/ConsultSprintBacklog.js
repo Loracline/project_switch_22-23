@@ -12,10 +12,10 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
 
 function ConsultSprintBacklog() {
     const {state, dispatch} = useContext(AppContext);
-    const {usHeaders, detailedSprint} = state;
+    const {usHeaders, selectedSprint} = state;
 
     const [sprintBacklog, setSprintBacklog] = useState([]);
-    //const sprintId = detailedSprint.sprintNumber;
+    //const sprintId = selectedSprint.sprintNumber;
 
     const sprintId = [
         {
@@ -53,7 +53,7 @@ function ConsultSprintBacklog() {
 
 
 /*    useEffect(() => {
-        fetch(`http://localhost:8080/sprints/${sprintId}/userStoriesInSprint`, { //`http://localhost:8080/sprints?sprintId=${detailedProject.sprintNumber}/userStoriesInSprint`, {
+        fetch(`http://localhost:8080/sprints/${sprintId}/userStoriesInSprint`, { //`http://localhost:8080/sprints?sprintId=${selectedSprint.sprintNumber}/userStoriesInSprint`, {
             method: 'GET',
             headers,
         })

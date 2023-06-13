@@ -13,9 +13,11 @@ class UserStoryInSprintJpaTest {
         //Arrange
         String usId = "us001";
         int effort = 2;
+        SprintJpa sprintJpa = new SprintJpa();
+
 
         //Act
-        UserStoryInSprintJpa userStoryInSprintJpa = new UserStoryInSprintJpa(usId,effort);
+        UserStoryInSprintJpa userStoryInSprintJpa = new UserStoryInSprintJpa(usId,effort,sprintJpa);
 
         //Assert
         assertEquals(usId, userStoryInSprintJpa.getUsId());
@@ -25,12 +27,13 @@ class UserStoryInSprintJpaTest {
     @Test
     void testEqualsAndHashCodeMethods() {
         // Arrange
-        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5);
-        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5);
-        UserStoryInSprintJpa userStory3 = new UserStoryInSprintJpa("us002", 5);
-        UserStoryInSprintJpa userStory4 = new UserStoryInSprintJpa("us001", 10);
-        UserStoryInSprintJpa userStory6 = new UserStoryInSprintJpa(null, 5);
-        UserStoryInSprintJpa userStory7 = new UserStoryInSprintJpa("us001", 5);
+        SprintJpa sprintJpa = new SprintJpa();
+        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5,sprintJpa);
+        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5,sprintJpa);
+        UserStoryInSprintJpa userStory3 = new UserStoryInSprintJpa("us002", 5,sprintJpa);
+        UserStoryInSprintJpa userStory4 = new UserStoryInSprintJpa("us001", 10,sprintJpa);
+        UserStoryInSprintJpa userStory6 = new UserStoryInSprintJpa(null, 5,sprintJpa);
+        UserStoryInSprintJpa userStory7 = new UserStoryInSprintJpa("us001", 5,sprintJpa);
         userStory7.setSprint(mock(SprintJpa.class));
 
         // Act & Assert
@@ -50,8 +53,9 @@ class UserStoryInSprintJpaTest {
     @Test
     void testEqualsAndHashCodeAdditionalCases() {
         // Arrange
-        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5);
-        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5);
+        SprintJpa sprintJpa = new SprintJpa();
+        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5, sprintJpa);
+        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5,sprintJpa);
 
         // Act & Assert
         assertEquals(userStory1, userStory2);
@@ -62,8 +66,9 @@ class UserStoryInSprintJpaTest {
     @Test
     void testEqualsAndHashCodeMethodsAdditional() {
         // Arrange
-        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5);
-        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5);
+        SprintJpa sprintJpa = new SprintJpa();
+        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5, sprintJpa);
+        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5, sprintJpa);
 
         // Act & Assert
         assertEquals(userStory1, userStory2);
@@ -71,7 +76,7 @@ class UserStoryInSprintJpaTest {
         assertEquals(userStory1.hashCode(), userStory2.hashCode());
 
         // Test with different attribute values
-        UserStoryInSprintJpa userStory3 = new UserStoryInSprintJpa("us002", 3);
+        UserStoryInSprintJpa userStory3 = new UserStoryInSprintJpa("us002", 3, sprintJpa);
         assertNotEquals(userStory1, userStory3);
         assertNotEquals(userStory3, userStory1);
     }
@@ -79,9 +84,10 @@ class UserStoryInSprintJpaTest {
     @Test
     void testHashCodeMethod() {
         // Arrange
-        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5);
-        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5);
-        UserStoryInSprintJpa userStory3 = new UserStoryInSprintJpa("us002", 10);
+        SprintJpa sprintJpa = new SprintJpa();
+        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5,sprintJpa);
+        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5,sprintJpa);
+        UserStoryInSprintJpa userStory3 = new UserStoryInSprintJpa("us002", 10,sprintJpa);
 
         // Act
         int hashCode1 = userStory1.hashCode();
@@ -97,8 +103,9 @@ class UserStoryInSprintJpaTest {
     @Test
     void testHashCodeMethod_AttributeCombination1() {
         // Arrange
-        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5);
-        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5);
+        SprintJpa sprintJpa = new SprintJpa();
+        UserStoryInSprintJpa userStory1 = new UserStoryInSprintJpa("us001", 5,sprintJpa);
+        UserStoryInSprintJpa userStory2 = new UserStoryInSprintJpa("us001", 5,sprintJpa);
 
         // Act
         int hashCode1 = userStory1.hashCode();
@@ -146,7 +153,8 @@ class UserStoryInSprintJpaTest {
     @Test
     void testToStringMethod() {
         //Arrange & Act
-        UserStoryInSprintJpa userStory = new UserStoryInSprintJpa("us001", 5);
+        SprintJpa sprintJpa = new SprintJpa();
+        UserStoryInSprintJpa userStory = new UserStoryInSprintJpa("us001", 5, null);
 
         //Assert
         assertEquals("UserStoryInSprintJpa(usId=us001, effort=5, sprint=null)", userStory.toString());
@@ -158,15 +166,16 @@ class UserStoryInSprintJpaTest {
         UserStoryInSprintJpa usSprintJpa = new UserStoryInSprintJpa();
 
         // Verify that the attributes are initialized with default values
-        assertNull(usSprintJpa.getUsId());
+        assertNull(usSprintJpa.getSprint());
         assertEquals(0,usSprintJpa.getEffort());
-
+        assertNull(usSprintJpa.getSprint());
     }
     @DisplayName("Invalid Input Values")
     @Test
     void testInvalidInputValues() {
         // Arrange and Act
-        UserStoryInSprintJpa userStoryInSprintJpa = new UserStoryInSprintJpa(null, -1);
+        SprintJpa sprintJpa = new SprintJpa();
+        UserStoryInSprintJpa userStoryInSprintJpa = new UserStoryInSprintJpa(null, -1, null);
 
         // Assert
         assertNull(userStoryInSprintJpa.getUsId());
@@ -178,11 +187,12 @@ class UserStoryInSprintJpaTest {
     @Test
     void testDateFormatParsing() {
         // Arrange
+        SprintJpa sprintJpa = new SprintJpa();
         String usId = "us001";
         int effort = 5;
 
         // Act
-        UserStoryInSprintJpa userStoryInSprintJpa = new UserStoryInSprintJpa(usId, effort);
+        UserStoryInSprintJpa userStoryInSprintJpa = new UserStoryInSprintJpa(usId, effort, sprintJpa);
 
         // Assert
         assertEquals(usId, userStoryInSprintJpa.getUsId());

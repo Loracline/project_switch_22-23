@@ -59,13 +59,9 @@ public class SprintRepositoryJpa implements ISprintRepository {
      */
     @Override
     public boolean save(Sprint sprint) {
-        boolean result = false;
         SprintJpa sprintJpa = sprintDomainDataAssembler.toData(sprint);
-        if (!iSprintJpaRepository.existsById(sprintJpa.getSprintId())) {
-            iSprintJpaRepository.save(sprintJpa);
-            result = true;
-        }
-        return result;
+        iSprintJpaRepository.save(sprintJpa);
+        return true;
     }
 
     /**

@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,10 +12,10 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
     /**
      * Finds a SprintJpa entity by its unique identifier (sprintId).
      *
-     * @param id The unique identifier of the SprintJpa entity to be found.
+     * @param sprintId The unique identifier of the SprintJpa entity to be found.
      * @return An Optional containing the found SprintJpa entity, or empty if not found.
      */
-    Optional<SprintJpa> findById(String id);
+    Optional<SprintJpa> findById(String sprintId);
 
     /**
      * This method returns the number of sprints contained in the list.
@@ -38,15 +39,6 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
      * @return An Iterable containing the found SprintJpa entities.
      */
     List<SprintJpa> findByProjectCode(String projectCode);
-
-    /**
-     * Verifies that the Sprint id exists.
-     *
-     * @param id of the sprint.
-     * @return true if exists.
-     */
-    boolean existsById (String id);
-
     /**
      * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
      *

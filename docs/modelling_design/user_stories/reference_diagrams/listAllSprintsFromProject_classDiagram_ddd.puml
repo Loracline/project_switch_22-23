@@ -3,16 +3,31 @@
 title TO LIST ALL SPRINTS FROM A PROJECT
 skinparam sequenceMessageAlign center
 
+class ProjectCodeStringDto {
+-code
++getCode()
+}
+
+class ProjectCodeValueObjectDto {
+-code
++getCode()
+}
+
+class ProjectCodeDtoAssembler {
++convertToValueObject(projectCodeStringDto)
+}
+
 class SprintWebController {
 -sprintListService
 -sprintDtoAssembler
-+listSprintsFromProject(codeStringDto)
+-projectCodeDtoAssembler
++listSprintsFromProject(projectCodeStringDto)
 }
 
 class SprintListService {
 -iSprintRepository
 -sprintDtoAssembler
-+listSprintsFromProject(codeVoDto)
++listSprintsFromProject(projectCodeValueObjectDto)
 }
 
 interface ISprintRepository {
@@ -67,9 +82,12 @@ SprintRepository ..|> ISprintRepository: implements
 SprintListService ..> Sprint: uses
 SprintDtoAssembler ..> SprintListService: is injected
 SprintDtoAssembler ..> SprintWebController: is injected
+ProjectCodeDtoAssembler ..> SprintWebController: is injected
 SprintDtoAssembler ..> Sprint: uses
 SprintValueObjectsDto <.. SprintDtoAssembler: uses
 SprintPrimitiveTypesDto <.. SprintDtoAssembler: uses
+ProjectCodeStringDto <.. ProjectCodeDtoAssembler: uses
+ProjectCodeValueObjectDto <.. ProjectCodeDtoAssembler: uses
 Sprint "*" <-down- "1" SprintRepository: has
 
 @enduml

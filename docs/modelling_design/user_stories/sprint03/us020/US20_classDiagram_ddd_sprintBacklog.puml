@@ -8,14 +8,14 @@ title  To add a user story to the open/current sprint backlog using the web UI.
 
 class "SprintWebController" {
 addUserStoryToSprintBacklogService
-+ addUserStoryToSprintBacklog(dto)
++ addUserStoryToSprintBacklog(UserStoryInSprintDto)
 }
 SprintWebController "1"..>"1" AddUserStoryToSprintBacklogService
 
 class "AddUserStoryToSprintBacklogService" {
 - ISprintRepository
 - IUsRepository
-+ addUserStoryToSprintBacklog(dto)
++ addUserStoryToSprintBacklog(UserStoryInSprintDto)
 - getSprintById (sprintId)
 - hasUserStoryStatus (usId)
 - getUserStory (usId)
@@ -24,6 +24,14 @@ AddUserStoryToSprintBacklogService "1"..>"1" IUsRepository
 AddUserStoryToSprintBacklogService "1"..>"1" ISprintRepository
 AddUserStoryToSprintBacklogService "1"..>"1" UserStory
 AddUserStoryToSprintBacklogService "1"..>"1" Sprint
+
+class "UserStoryInSprintDto" {
++usId
++sprintId
+}
+
+UserStoryInSprintDto <.left. SprintWebController : uses
+UserStoryInSprintDto <. AddUserStoryToSprintBacklogService :uses
 
 interface "ISprintRepository" {
 - sprints

@@ -128,9 +128,6 @@ class SprintRepositoryJpaTest {
         Sprint sprintDouble = mock(Sprint.class);
         SprintJpa sprintJpa = mock(SprintJpa.class);
         when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
-        String sprintIdString = "p001_s001";
-        when(sprintJpa.getSprintId()).thenReturn(sprintIdString);
-        when(iSprintJpaRepository.existsById(sprintIdString)).thenReturn(false);
         when(iSprintJpaRepository.save(sprintDouble)).thenReturn(true);
 
         //Act
@@ -139,27 +136,6 @@ class SprintRepositoryJpaTest {
         //Assert
 
         assertTrue(result);
-    }
-
-    /**
-     * Method : Save.
-     * Scenario 2 : ensure Sprint is not saved.
-     */
-    @Test
-    void ensureThatSprintIsNotSaved() {
-        //Arrange
-        Sprint sprintDouble = mock(Sprint.class);
-        SprintJpa sprintJpa = mock(SprintJpa.class);
-        when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
-        String sprintIdString = "p001_s001";
-        when(sprintJpa.getSprintId()).thenReturn(sprintIdString);
-        when(iSprintJpaRepository.existsById(sprintIdString)).thenReturn(true);
-
-        //Act
-        boolean result = sprintRepositoryJpa.save(sprintDouble);
-
-        //Assert
-        assertFalse(result);
     }
 
     /**
@@ -287,5 +263,22 @@ class SprintRepositoryJpaTest {
 
         //Assert
         assertFalse(result);
+    }
+
+    /**
+     * Method: existsByStatus(status)
+     * Scenario 1: checks if the repository of sprints has any sprint with a status matching the status passed as
+     * parameter.
+     * It should assert true.
+     */
+    @Test
+    void ensureThatReturnsTrue_ifAtLeastOneInstanceOfSprintInTheSprintRepositoryHasTheIdPassedAsParameter() {
+        // ARRANGE
+        SprintId sprintId = new SprintId("P001","S001");
+        when(ISprintJpaRepository.existsById(any())).thenReturn(true);
+        // ACT
+        boolean result = sprintRepositoryJpa.existsById(sprintId);
+        // ASSERT
+        assertTrue(result);
     }
 }

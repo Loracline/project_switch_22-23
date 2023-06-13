@@ -49,7 +49,7 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
             <h2 className="pageH2">Consult Product Backlog</h2>
             {tableData}
             <div className="buttons-backlog">
-                <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return to project"/>
+                <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return"/>
                 <Button onClick={() => dispatch(selectMenu('createUserStory'))} text="Create user story"/>
 
             </div>
