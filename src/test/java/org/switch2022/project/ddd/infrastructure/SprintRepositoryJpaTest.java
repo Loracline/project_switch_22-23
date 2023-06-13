@@ -6,18 +6,13 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.datamodel_jpa.ProjectResourceJpa;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
-import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +34,7 @@ class SprintRepositoryJpaTest {
     @InjectMocks
     SprintRepositoryJpa sprintRepositoryJpa;
     @MockBean
-    ISprintJpaRepository ISprintJpaRepository;
+    ISprintJpaRepository iSprintJpaRepository;
     @MockBean
     SprintDomainDataAssembler sprintDomainDataAssembler;
 
@@ -71,7 +66,7 @@ class SprintRepositoryJpaTest {
         String sprintIdString = "P001_S002";
         SprintId sprintId = new SprintId("P001", "S001");
 
-        when(ISprintJpaRepository.findById(sprintIdString)).thenReturn(sprintJpaOptional);
+        when(iSprintJpaRepository.findById(sprintIdString)).thenReturn(sprintJpaOptional);
         when(sprintDomainDataAssembler.toDomain(any())).thenReturn(null);
 
         Optional<Sprint> expected = Optional.empty();
@@ -92,7 +87,7 @@ class SprintRepositoryJpaTest {
         String sprintIdString = "p001_s001";
         SprintId sprintId = new SprintId("P001", "S001");
 
-        when(ISprintJpaRepository.findById(sprintIdString)).thenReturn(sprintJpaOptional);
+        when(iSprintJpaRepository.findById(sprintIdString)).thenReturn(sprintJpaOptional);
         Sprint sprintDouble = mock(Sprint.class);
         when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(sprintDouble);
 
@@ -113,7 +108,7 @@ class SprintRepositoryJpaTest {
     void ensureTheListSizeIsReturned() {
         //Arrange
         long expected = 2L;
-        when(ISprintJpaRepository.count()).thenReturn(expected);
+        when(iSprintJpaRepository.count()).thenReturn(expected);
 
         //Act
         long result = sprintRepositoryJpa.count();
@@ -135,8 +130,8 @@ class SprintRepositoryJpaTest {
         when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
         String sprintIdString = "p001_s001";
         when(sprintJpa.getSprintId()).thenReturn(sprintIdString);
-        when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(false);
-        when(ISprintJpaRepository.save(sprintDouble)).thenReturn(true);
+        when(iSprintJpaRepository.existsById(sprintIdString)).thenReturn(false);
+        when(iSprintJpaRepository.save(sprintDouble)).thenReturn(true);
 
         //Act
         boolean result = sprintRepositoryJpa.save(sprintDouble);
@@ -158,7 +153,7 @@ class SprintRepositoryJpaTest {
         when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
         String sprintIdString = "p001_s001";
         when(sprintJpa.getSprintId()).thenReturn(sprintIdString);
-        when(ISprintJpaRepository.existsById(sprintIdString)).thenReturn(true);
+        when(iSprintJpaRepository.existsById(sprintIdString)).thenReturn(true);
 
         //Act
         boolean result = sprintRepositoryJpa.save(sprintDouble);
@@ -182,7 +177,7 @@ class SprintRepositoryJpaTest {
         SprintJpa sprintJpa = mock(SprintJpa.class);
         List<SprintJpa> sprintJpas = Arrays.asList(sprintJpa, sprintJpaDouble);
 
-        when(ISprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
+        when(iSprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
 
         Code projectCode = mock(Code.class);
         when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(sprint);
@@ -208,7 +203,7 @@ class SprintRepositoryJpaTest {
         List<Sprint> sprintByProject = new ArrayList<>();
         List<SprintJpa> sprintJpas = new ArrayList<>();
 
-        when(ISprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
+        when(iSprintJpaRepository.findByProjectCode(any())).thenReturn(sprintJpas);
 
         Code projectCode = mock(Code.class);
 
@@ -229,7 +224,7 @@ class SprintRepositoryJpaTest {
     @Test
     void ensureThatReturnsTrueIfAtLeastOneInstanceOfSprintInTheSprintRepositoryHasTheStatusPassedAsParameter() {
         // ARRANGE
-        when(ISprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(true);
+        when(iSprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(true);
         // ACT
         boolean result = sprintRepositoryJpa.existsByStatus(SprintStatus.OPEN);
         // ASSERT
@@ -253,5 +248,44 @@ class SprintRepositoryJpaTest {
 
         //Assert
         assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * Method: hasStatus
+     * Scenario 1: the sprint has the given status, returns true
+     */
+
+    @Test
+    void ensureThatSprintHasTheGivenStatus() {
+        //Arrange
+        SprintId sprintId = new SprintId("p001", "s001");
+        SprintStatus status = SprintStatus.OPEN;
+        when(iSprintJpaRepository.existsBySprintIdAndStatus(sprintId.getSprintId(), status.getStatus()))
+                .thenReturn(true);
+
+        //Act
+        boolean result = sprintRepositoryJpa.hasStatus(sprintId, status);
+
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * Method: hasStatus
+     * Scenario 2: the sprint has not the given status, returns false
+     */
+
+    @Test
+    void ensureThatSprintHasNotTheGivenStatus() {
+        //Arrange
+        SprintId sprintId = new SprintId("p001", "s001");
+        SprintStatus status = SprintStatus.OPEN;
+        when(iSprintJpaRepository.existsBySprintIdAndStatus(sprintId.getSprintId(), status.getStatus()))
+                .thenReturn(false);
+
+        //Act
+        boolean result = sprintRepositoryJpa.hasStatus(sprintId, status);
+
+        //Assert
+        assertFalse(result);
     }
 }
