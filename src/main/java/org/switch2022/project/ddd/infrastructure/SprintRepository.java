@@ -124,7 +124,7 @@ public class SprintRepository implements ISprintRepository {
      * @param sprintStatus SprintStatus to look for in the sprint list.
      * @return true if at least one instance of Sprint with a given status already exists in the list, and false otherwise.
      */
-    public boolean existsByStatus(SprintStatus sprintStatus){
+    public boolean existsByStatus(SprintStatus sprintStatus) {
         boolean exists = false;
         for (Sprint sprint : sprints) {
             if (sprint.hasStatus(sprintStatus)) {
@@ -133,5 +133,17 @@ public class SprintRepository implements ISprintRepository {
             }
         }
         return exists;
+    }
+
+    /**
+     * This method checks if one given sprint has the status given
+     *
+     * @param sprintId the identifier of the sprint
+     * @param status   the sprint status that needs to be checked
+     * @return true if the sprint has the given status and false otherwise
+     */
+    public boolean hasStatus(SprintId sprintId, SprintStatus status){
+        Optional<Sprint> sprint = findById(sprintId);
+        return sprint.isPresent() && sprint.get().hasStatus(status);
     }
 }
