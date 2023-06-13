@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
+import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 
 @Controller
 public class AddUserStoryToSprintBacklogController {
@@ -20,7 +21,7 @@ public class AddUserStoryToSprintBacklogController {
      *
      * @return true if the user story is added and false if it is already in the sprint.
      */
-    public boolean addUserStoryToSprintBacklog(String usId, String sprintId) throws Exception {
-        return service.addUserStoryToSprintBacklog(usId, sprintId);
+    public boolean addUserStoryToSprintBacklog(UserStoryInSprintDto userStoriesInSprintDto) {
+        return service.addUserStoryToSprint(userStoriesInSprintDto);
     }
 }

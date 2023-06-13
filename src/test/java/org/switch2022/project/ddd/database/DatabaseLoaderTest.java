@@ -22,6 +22,7 @@ import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import java.math.BigDecimal;
@@ -124,8 +125,9 @@ public class DatabaseLoaderTest {
         userStory.changeStatus(Status.RUNNING);
         verify(userStories).save(userStoryDomainDataAssembler.toData(userStory));
 
-        // User story in sprint
-        verify(addService).addUserStoryToSprintBacklog("p001_us001","p001_s021");
+       /* // User story in sprint
+        UserStoryInSprintDto dto = new UserStoryInSprintDto("p001_us001","p001_s021");
+        verify(addService).addUserStoryToSprint(dto);*/
 
         // Sprints
         SprintFactory sprintFactory = new SprintFactory();

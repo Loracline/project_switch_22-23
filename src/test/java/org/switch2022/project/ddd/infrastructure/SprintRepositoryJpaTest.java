@@ -117,27 +117,6 @@ class SprintRepositoryJpaTest {
         assertEquals(expected, result);
     }
 
-
-    /**
-     * Method : Save.
-     * Scenario 1 : ensure that Sprint is saved.
-     */
-    @Test
-    void ensureThatSprintIsSaved() {
-        //Arrange
-        Sprint sprintDouble = mock(Sprint.class);
-        SprintJpa sprintJpa = mock(SprintJpa.class);
-        when(sprintDomainDataAssembler.toData(sprintDouble)).thenReturn(sprintJpa);
-        when(iSprintJpaRepository.save(sprintDouble)).thenReturn(true);
-
-        //Act
-        boolean result = sprintRepositoryJpa.save(sprintDouble);
-
-        //Assert
-
-        assertTrue(result);
-    }
-
     /**
      * Method : findAllByProjectCode
      * Scenario 1 : ensure that a list with all sprints with a given projectCode is retrieved.

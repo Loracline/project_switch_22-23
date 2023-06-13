@@ -4,12 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
 import org.switch2022.project.ddd.application.CreateSprintService;
 import org.switch2022.project.ddd.application.SprintStatusChangeService;
 import org.switch2022.project.ddd.application.UserStoriesInSprintService;
+import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
+import org.switch2022.project.ddd.dto.AllocationDto;
 import org.switch2022.project.ddd.dto.SprintCreationDto;
 import org.switch2022.project.ddd.dto.SprintStatusDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 
 import java.util.List;
 
@@ -28,9 +32,10 @@ public class SprintWebController {
     CreateSprintService createSprintService;
     @Autowired
     SprintStatusChangeService sprintStatusChangeService;
-
     @Autowired
     UserStoriesInSprintService userStoriesInSprintService;
+    @Autowired
+    AddUserStoryToSprintBacklogService addUserStoryToSprintBacklogService;
 
     /**
      * Handles a POST request to create a new sprint.
@@ -79,5 +84,21 @@ public class SprintWebController {
     public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto) {
         sprintStatusChangeService.changeSprintStatus(sprintStatusDto);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
+     * Handles a POST request to create a new userStoryInSprint.
+     *
+     * @param userStoryInSprintDto containing the information needed to create a new UserStoryInSprint.
+     * @return A ResponseEntity containing the status code of 201 (CREATED).
+     */
+    @PostMapping("/{SprintId}/SprintBacklog")
+    public ResponseEntity<Object> addUserStoryToSprintBacklog(@RequestBody UserStoryInSprintDto userStoryInSprintDto,
+                                                              @PathVariable String SprintId) {
+        if (addUserStoryToSprintBacklogService.addUserStoryToSprint(userStoryInSprintDto)) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
     }
 }
