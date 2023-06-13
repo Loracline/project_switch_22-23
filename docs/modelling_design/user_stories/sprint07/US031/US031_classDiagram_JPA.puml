@@ -75,6 +75,7 @@ interface CrudRepository {
 SprintWebController ..> SprintStatusChangeDto: uses
 SprintWebController <.. SprintStatusChangeService: is injected
 SprintStatusChangeService <.. ISprintRepository: is injected
+SprintStatusChangeService ..> SprintStatusChangeDto: uses
 ISprintRepository <|.. SprintRepositoryJpa: implements
 SprintRepositoryJpa <.. ISprintJpaRepository: is injected
 ISprintJpaRepository <|-- CrudRepository: extends
