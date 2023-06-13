@@ -21,13 +21,11 @@ import org.switch2022.project.ddd.domain.model.typology.TypologyFactory;
 import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
@@ -66,7 +64,7 @@ public class DatabaseLoaderTest {
     @InjectMocks
     private DatabaseLoader databaseLoader;
 
-/**
+    /**
      * Verifies that the correct data is loaded into the database when the
      * {@link DatabaseLoader} is executed.
      *
@@ -106,12 +104,14 @@ public class DatabaseLoaderTest {
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId("217746691"), new ProjectTypologyId(1));
         projectOne.setProjectStatus(ProjectStatus.INCEPTION);
-        projectOne.setPeriod(LocalDate.of(2022,1,1),
+        projectOne.setPeriod(LocalDate.of(2022, 1, 1),
                 LocalDate.of(2022, 7, 31));
         projectOne.setSprintDuration(2);
         projectOne.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(8));
         projectOne.isBudgetAssigned(new Budget(new BigDecimal(150000)));
+        projectOne.setProjectStatus(ProjectStatus.CLOSED);
         verify(projects).save(projectDomainDataAssembler.toData(projectOne));
+
 
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
@@ -122,16 +122,13 @@ public class DatabaseLoaderTest {
         userStory.changeStatus(Status.RUNNING);
         verify(userStories).save(userStoryDomainDataAssembler.toData(userStory));
 
-        // User story in sprint
-        verify(addService).addUserStoryToSprintBacklog("p001_us001","p001_s021");
-
         // Sprints
         SprintFactory sprintFactory = new SprintFactory();
         SprintDomainDataAssembler sprintDomainDataAssembler = new SprintDomainDataAssembler();
         verify(sprints).save(sprintDomainDataAssembler.toData(sprintFactory.
                 createSprint(new Code(1),
-                new SprintId("p001", "s001"), new SprintNumber(1),
-                new Period(LocalDate.of(2022, 3, 22), 2))));
+                        new SprintId("p001", "s001"), new SprintNumber(1),
+                        new Period(LocalDate.of(2022, 3, 22), 2))));
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
@@ -152,8 +149,8 @@ public class DatabaseLoaderTest {
         ResourceDomainDataAssembler resourceDomainDataAssembler = new ResourceDomainDataAssembler();
         verify(resources).save(resourceDomainDataAssembler.toData(projectResourceFactory.
                 createProjectResource(new ProjectResourceId(1),
-                new Code(1), new Email("tc@gmail.com"), Role.PROJECT_MANAGER,
-                new Period(LocalDate.of(2022,1,2), LocalDate.
-                        of(2022,7,31)), new CostPerHour(35), new PercentageOfAllocation(20))));
+                        new Code(1), new Email("tc@gmail.com"), Role.PROJECT_MANAGER,
+                        new Period(LocalDate.of(2022, 1, 2), LocalDate.
+                                of(2022, 7, 31)), new CostPerHour(35), new PercentageOfAllocation(20))));
     }
 }

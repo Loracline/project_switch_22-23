@@ -5,7 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
 import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.application.UserStoriesInSprintService;
+
 import org.switch2022.project.ddd.application.UserStoryInSprintService;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
@@ -24,6 +24,7 @@ import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import javax.transaction.Transactional;
@@ -127,11 +128,13 @@ public class DatabaseLoader implements CommandLineRunner {
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
         projectInputData(ONE, EIGHT, THIRTY_ONE, TWO_WEEKS, BUDGET_PROJECT_ONE, projectOne, JANUARY);
+        projectOne.setProjectStatus(ProjectStatus.CLOSED);
 
         Project projectTwo = factoryProject.createProject(PROJECT_TWO, new Name("Dummy 02"),
                 new Description("Just another dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
         projectInputData(THIRTY_ONE, TWELVE, THIRTY_ONE, FOUR_WEEKS, BUDGET_PROJECT_TWO, projectTwo, MAY);
+        projectTwo.setProjectStatus(ProjectStatus.CLOSED);
 
         Project projectThree = factoryProject.createProject(PROJECT_THREE, new Name("Inevitable nightmare"),
                 new Description("Doomed from the start"),
@@ -139,6 +142,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_TWO));
         projectDataInsertion(TWO_THOUSAND_AND_TWENTY_THREE, TEN, FIFTEEN, TWENTY, THREE_WEEKS, BUDGET_PROJECT_THREE,
                 projectThree, MARCH, SEPTEMBER);
+        projectThree.setProjectStatus(ProjectStatus.INCEPTION);
 
         this.projects.save(projectDomainDataAssembler.toData(projectOne));
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
@@ -308,10 +312,6 @@ public class DatabaseLoader implements CommandLineRunner {
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
                 sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
         sprints.save(sprintDomainDataAssembler.toData(sprintTwentyOne));
-
-        // User story in sprint
-        addService.addUserStoryToSprintBacklog("p001_us001","p001_s021");
-
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
