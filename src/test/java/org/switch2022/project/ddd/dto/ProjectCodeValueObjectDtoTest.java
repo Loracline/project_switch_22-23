@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.value_object.Code;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ProjectCodeValueObjectDtoTest {
 
@@ -12,16 +14,16 @@ class ProjectCodeValueObjectDtoTest {
     @Test
     void ensureCodeIsRetrievedSuccessfully() {
         // Arrange
-        Code code = new Code(1);
+        Code codeDouble = mock(Code.class);
 
-        ProjectCodeValueObjectDto dto = new ProjectCodeValueObjectDto(code);
+        ProjectCodeValueObjectDto dto = new ProjectCodeValueObjectDto(codeDouble);
 
-        String expected = "p001";
+        when(codeDouble.getCode()).thenReturn("p001");
 
         // Act
-        String result = dto.getCode();
+        Code result = dto.getCode();
 
         // Assert
-        assertEquals(expected, result);
+        assertEquals(codeDouble, result);
     }
 }
