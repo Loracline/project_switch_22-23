@@ -123,11 +123,13 @@ public class DatabaseLoader implements CommandLineRunner {
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
         projectInputData(ONE, EIGHT, THIRTY_ONE, TWO_WEEKS, BUDGET_PROJECT_ONE, projectOne, JANUARY);
+        projectOne.setProjectStatus(ProjectStatus.CLOSED);
 
         Project projectTwo = factoryProject.createProject(PROJECT_TWO, new Name("Dummy 02"),
                 new Description("Just another dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
         projectInputData(THIRTY_ONE, TWELVE, THIRTY_ONE, FOUR_WEEKS, BUDGET_PROJECT_TWO, projectTwo, MAY);
+        projectTwo.setProjectStatus(ProjectStatus.CLOSED);
 
         Project projectThree = factoryProject.createProject(PROJECT_THREE, new Name("Inevitable nightmare"),
                 new Description("Doomed from the start"),
@@ -135,6 +137,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_TWO));
         projectDataInsertion(TWO_THOUSAND_AND_TWENTY_THREE, TEN, FIFTEEN, TWENTY, THREE_WEEKS, BUDGET_PROJECT_THREE,
                 projectThree, MARCH, SEPTEMBER);
+        projectThree.setProjectStatus(ProjectStatus.INCEPTION);
 
         this.projects.save(projectDomainDataAssembler.toData(projectOne));
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
