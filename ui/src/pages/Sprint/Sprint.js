@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import Button from '../../components/Button/Button';
-import {selectMenu, updateSprintStatus} from '../../context/Actions';
+import { selectMenu, updateSprintStatus } from '../../context/Actions';
 import AppContext from '../../context/AppContext';
 import './Sprint.css';
 
@@ -16,16 +16,11 @@ const Sprint = () => {
     const isEndDatePassed = new Date(data?.endDate) < new Date();
     const isEndDateNull = data?.endDate === '';
 
-
-    /**
-     * Handles updating the sprint status.
-     *
-     */
     const handleUpdateSprintStatus = (status) => {
-        if (isEndDatePassed || isEndDateNull) {
+        if (isEndDatePassed || isEndDateNull || !data) {
             return;
         }
-        dispatch(updateSprintStatus(data.id, status));
+        dispatch(updateSprintStatus(data?.id, status));
     };
 
 
@@ -36,9 +31,11 @@ const Sprint = () => {
                     <div className="sprintContent">
                         <h2>Sprint Number: {data?.['sprintNumber']}</h2>
                         <p>Project Name: {data?.['projectName']}</p>
-                        <p>Status: {data?.status || 'Planned'}</p>
                         <p>Start date: {data?.['startDate']}</p>
                         <p>End date: {data?.['endDate']}</p>
+                    </div>
+                    <div className="statusContainer">
+                        <h3>Status: {data?.status || 'planned'}</h3>
                     </div>
                     <div className="sprintButtons">
                         <Button
@@ -55,14 +52,17 @@ const Sprint = () => {
                     <div className='start'>
                     </div>
                 </div>
+            </section>
+            <div className="returnButtonContainer">
                 <Button
+                    className="returnButton"
                     isSecondary={true}
                     onClick={() =>
                         dispatch(selectMenu('sprints'))
                     }
                     text='Return'
                 />
-            </section>
+            </div>
         </div>
 
     )
