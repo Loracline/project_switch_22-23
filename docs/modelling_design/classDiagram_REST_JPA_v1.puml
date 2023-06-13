@@ -629,6 +629,12 @@ class SprintCreationDto{
 + SprintCreationDto(projectCode, startDate)
 }
 
+class UserStoryInSprintDto {
++usId
++sprintId
++UserStoryInSprintDto(usId, sprintId)
+}
+
 class TypologyCreationDto{
 + typologyName
 + TypologyCreationDto(typologyName)
@@ -1159,6 +1165,9 @@ SprintDomainDataAssembler ..> SprintJpa: creates
 SprintDomainDataAssembler <.. ISprintFactory
 ISprintFactory ..> Sprint: creates
 SprintRepositoryJpa "1" --> "*" SprintJpa: has
+
+UserStoryInSprintDto <. SprintWebController : uses
+UserStoryInSprintDto <. AddUserStoryToSprintBacklogService :uses
 
 /'Typology'/
 TypologyWebController ..> TypologyCreationDto: uses
