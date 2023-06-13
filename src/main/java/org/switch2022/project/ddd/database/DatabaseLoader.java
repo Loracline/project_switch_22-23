@@ -5,7 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
 import org.switch2022.project.ddd.application.UsService;
-import org.switch2022.project.ddd.application.UserStoriesInSprintService;
+
 import org.switch2022.project.ddd.application.UserStoryInSprintService;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
 import org.switch2022.project.ddd.domain.model.account.Account;
@@ -24,7 +24,7 @@ import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
-import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
+
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import javax.transaction.Transactional;
@@ -312,11 +312,6 @@ public class DatabaseLoader implements CommandLineRunner {
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
                 sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
         sprints.save(sprintDomainDataAssembler.toData(sprintTwentyOne));
-
-        // User story in sprint
-        UserStoryInSprintDto dto = new UserStoryInSprintDto("p001_us001","p001_s021");
-        addService.addUserStoryToSprint(dto);
-
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
