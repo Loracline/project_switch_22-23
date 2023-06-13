@@ -10,7 +10,6 @@ import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
@@ -195,7 +194,7 @@ class SprintRepositoryJpaTest {
     @Test
     void ensureThatReturnsFalseIfThereAreNoInstancesOfSprintInTheSprintRepositoryWithTheStatusPassedAsParameter() {
         //Arrange
-        when(ISprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(false);
+        when(iSprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(false);
 
         //Act
         boolean result = sprintRepositoryJpa.existsByStatus(SprintStatus.OPEN);
