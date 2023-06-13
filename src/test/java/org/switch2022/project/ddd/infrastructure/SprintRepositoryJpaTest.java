@@ -6,18 +6,12 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.switch2022.project.ddd.datamodel_jpa.ProjectResourceJpa;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
-import org.switch2022.project.ddd.domain.model.project_resource.ProjectResource;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -198,16 +192,15 @@ class SprintRepositoryJpaTest {
      * It should throw an NotFoundInRepoException.
      */
     @Test
-    void ensureThatThrowsAnExceptionIfNoInstancesOfSprintInTheSprintRepositoryHaveTheStatusPassedAsParameter() {
+    void ensureThatReturnsFalseIfThereAreNoInstancesOfSprintInTheSprintRepositoryWithTheStatusPassedAsParameter() {
         //Arrange
-        String expected = "There are no CLOSED sprints in the repository.";
+        when(ISprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(false);
 
         //Act
-        NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
-                () -> sprintRepositoryJpa.existsByStatus(SprintStatus.CLOSED));
+        boolean result = sprintRepositoryJpa.existsByStatus(SprintStatus.OPEN);
 
         //Assert
-        assertEquals(expected, result.getMessage());
+        assertFalse(result);
     }
 
     /**

@@ -8,8 +8,6 @@ import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService
 import org.switch2022.project.ddd.application.CreateSprintService;
 import org.switch2022.project.ddd.application.SprintStatusChangeService;
 import org.switch2022.project.ddd.application.UserStoriesInSprintService;
-import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
-import org.switch2022.project.ddd.dto.AllocationDto;
 import org.switch2022.project.ddd.dto.SprintCreationDto;
 import org.switch2022.project.ddd.dto.SprintStatusDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
@@ -79,7 +77,7 @@ public class SprintWebController {
      * ResponseEntity with HTTP status code 404 (NOT FOUND).
      */
 
-    @PatchMapping("/sprints/{sprintId}")
+    @PatchMapping("/{sprintId}")
     @ResponseBody
     public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto) {
         sprintStatusChangeService.changeSprintStatus(sprintStatusDto);

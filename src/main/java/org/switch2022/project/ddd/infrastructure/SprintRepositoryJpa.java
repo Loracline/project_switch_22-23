@@ -9,7 +9,6 @@ import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
@@ -89,12 +88,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
      */
     public boolean existsByStatus(SprintStatus sprintStatus) {
         String status = sprintStatus.getStatus();
-        if (iSprintJpaRepository.existsByStatus(status)) {
-            return true;
-        } else {
-            throw new NotFoundInRepoException(String.format("There are no %s sprints in the repository.",
-                    status));
-        }
+        return iSprintJpaRepository.existsByStatus(status);
     }
     /**
      * Checks if a Sprint with the given SprintId exists in the repository.

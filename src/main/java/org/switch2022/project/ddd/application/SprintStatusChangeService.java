@@ -77,7 +77,9 @@ public class SprintStatusChangeService {
                     userStoryRepository.save(userStory);
                 }
             }
-            return sprint.changeStatus("CLOSED");
+            sprint.changeStatus("CLOSED");
+            sprintRepository.save(sprint);
+            return true;
         } else {
             throw new InvalidInputException("The sprint is already closed");
         }
@@ -104,6 +106,8 @@ public class SprintStatusChangeService {
         if (sprintRepository.existsByStatus(SprintStatus.OPEN)) {
             throw new AlreadyExistsInRepoException("There is currently another OPEN sprint.");
         }
-        return sprint.changeStatus("OPEN");
+        sprint.changeStatus("OPEN");
+        sprintRepository.save(sprint);
+        return true;
     }
 }
