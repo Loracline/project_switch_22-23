@@ -47,6 +47,7 @@ class SprintWebController {
 userStoriesInSprintService
 + createSprint(sprintCreationDto)
 + getSprintBacklog(sprintId)
++ addUserStoryToSprintBacklog(dto)
 }
 
 class TypologyWebController {
@@ -76,6 +77,11 @@ class AccountListService {
 - accountRepository
 - accountMapper
 + listAllAccounts()
+}
+
+class AddUserStoryToSprintBacklogService {
+-sprintRepository
+-usRepository
 }
 
 class BusinessSectorService {
@@ -1108,6 +1114,7 @@ ProjectResourceFactory ..> ProjectResource: creates
 /'Sprint'/
 SprintWebController ..> SprintCreationDto: uses
 
+SprintWebController <.. AddUserStoryToSprintBacklogService: is injected
 SprintWebController <.. CreateSprintService: is injected
 SprintWebController <.. UserStoriesInSprintService: is injected
 CreateSprintService <.. ISprintRepository: is injected
@@ -1116,6 +1123,9 @@ CreateSprintService <.. IProjectRepository: is injected
 
 ISprintFactory <|.. SprintFactory: implements
 SprintFactory ..> Sprint: creates
+
+AddUserStoryToSprintBacklogService <.. ISprintRepository: is injected
+AddUserStoryToSprintBacklogService <.. IUsRepository: is injected
 
 ISprintRepository <|.. SprintRepositoryJpa: implements
 SprintRepositoryJpa <.. ISprintJpaRepository: is injected

@@ -28,7 +28,9 @@ import {
     FETCH_PROJECTS_STARTED,
     GET_SPRINTS_SUCCESS,
     FETCH_SPRINTS_STARTED,
-    SELECT_SPRINT
+    SELECT_SPRINT,
+    UPDATE_SPRINT_STATUS_SUCCESS,
+    UPDATE_SPRINT_STATUS_FAILURE
 } from "./Actions";
 
 /** Reducer function that updates the app state based on the dispatched actions.
@@ -210,9 +212,25 @@ const reducer = (state, action) => {
             }
         }
 
+        case UPDATE_SPRINT_STATUS_SUCCESS:
+            return {
+                ...state,
+                sprints: state.sprints.map((sprint, index) =>
+                    index === action.payload.sprintId ? action.payload.status : sprint
+                ),
+            };
+
+        case UPDATE_SPRINT_STATUS_FAILURE:
+            return {
+                ...state,
+                messageFailure: action.payload.error,
+                loading: false,
+            };
+
         default:
             return state;
     }
+
 };
 
 export default reducer;
