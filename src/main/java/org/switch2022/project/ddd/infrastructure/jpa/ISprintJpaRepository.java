@@ -46,7 +46,7 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
      * @param id of the sprint.
      * @return true if exists.
      */
-    boolean existsById (String id);
+    boolean existsBySprintId (String id);
 
     /**
      * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.

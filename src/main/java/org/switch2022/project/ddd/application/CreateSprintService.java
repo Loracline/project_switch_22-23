@@ -86,7 +86,7 @@ public class CreateSprintService {
      */
     private static boolean isSprintPeriodValid(List<Sprint> sprints, Sprint sprint) {
         boolean isSprintPeriodNotOverlapping = true;
-        if(!sprints.isEmpty()) {
+        if (!sprints.isEmpty()) {
             Iterator<Sprint> sprintIterator = sprints.iterator();
             while (sprintIterator.hasNext() && isSprintPeriodNotOverlapping) {
                 Sprint s = sprintIterator.next();
@@ -146,65 +146,65 @@ public class CreateSprintService {
             Period period = new Period(LocalDate.parse(startDate),
                     getSprintDuration(project).getSprintDuration());
             Sprint sprint = sprintFactory.createSprint(code, sprintId, sprintNumber, period);
-            if (verifyIfPeriodIsValid(project, sprint) == 1 &&
-                    sprintRepository.save(sprint)) {
-                sprintIdToBeReturned = sprintId.getSprintId();
-            } else {
-                throw new AlreadyExistsInRepoException("The sprint already exists");
-            }
-        }
-        return sprintIdToBeReturned;
-    }
-
-    /**
-     * This method will return an Optional Project from the repository.
-     *
-     * @param code of the project to be retrieved.
-     * @return a project from the repository.
-     */
-    private Project getProjectByCode(String code) {
-        Project project;
-        int codeNumber = Utils.getIntFromAlphanumericString(code, "p");
-        Code projectCode = new Code(codeNumber);
-        Optional<Project> projectOptional = projectRepository.findByCode(projectCode);
-        if (projectOptional.isPresent()) {
-            project = projectOptional.get();
-        } else {
-            throw new NotFoundInRepoException("No project with that code");
-        }
-        return project;
-    }
-
-    /**
-     * This method verifies if the Period of the Sprint is valid by checking the period with the
-     * project Period
-     * and with the other sprints
-     *
-     * @param project to be checked
-     * @param sprint  that was created
-     * @return a 1 if the period is valid for the sprint
-     * @throws Exception if the sprint period is overlapping with other sprint,
-     *                   if the sprint end date is after the project end date and
-     *                   if the sprint start date is before the project start date
-     */
-
-    private int verifyIfPeriodIsValid(Project project, Sprint sprint) throws Exception {
-        int result;
-        Code projectCode = new Code
-                (Utils.getIntFromAlphanumericString(project.getProjectCode(), "P"));
-        if (isSprintPeriodAfterProjectStartDate(project, sprint)) {
-            if (isSprintEndDateBeforeProjectEndDate(project, sprint)) {
-                if (isSprintPeriodValid(sprintRepository.findByProjectCode(projectCode), sprint)) {
-                    result = 1;
+                if (!sprintRepository.existsById(sprintId) && verifyIfPeriodIsValid(project, sprint) == 1 &&
+                        sprintRepository.save(sprint)) {
+                    sprintIdToBeReturned = sprintId.getSprintId();
                 } else {
-                    throw new Exception("The sprint period is overlapping with other sprint");
+                    throw new AlreadyExistsInRepoException("The sprint already exists");
+                }
+            }
+            return sprintIdToBeReturned;
+        }
+
+        /**
+         * This method will return an Optional Project from the repository.
+         *
+         * @param code of the project to be retrieved.
+         * @return a project from the repository.
+         */
+        private Project getProjectByCode (String code){
+            Project project;
+            int codeNumber = Utils.getIntFromAlphanumericString(code, "p");
+            Code projectCode = new Code(codeNumber);
+            Optional<Project> projectOptional = projectRepository.findByCode(projectCode);
+            if (projectOptional.isPresent()) {
+                project = projectOptional.get();
+            } else {
+                throw new NotFoundInRepoException("No project with that code");
+            }
+            return project;
+        }
+
+        /**
+         * This method verifies if the Period of the Sprint is valid by checking the period with the
+         * project Period
+         * and with the other sprints
+         *
+         * @param project to be checked
+         * @param sprint  that was created
+         * @return a 1 if the period is valid for the sprint
+         * @throws Exception if the sprint period is overlapping with other sprint,
+         *                   if the sprint end date is after the project end date and
+         *                   if the sprint start date is before the project start date
+         */
+
+        private int verifyIfPeriodIsValid (Project project, Sprint sprint) throws Exception {
+            int result;
+            Code projectCode = new Code
+                    (Utils.getIntFromAlphanumericString(project.getProjectCode(), "P"));
+            if (isSprintPeriodAfterProjectStartDate(project, sprint)) {
+                if (isSprintEndDateBeforeProjectEndDate(project, sprint)) {
+                    if (isSprintPeriodValid(sprintRepository.findByProjectCode(projectCode), sprint)) {
+                        result = 1;
+                    } else {
+                        throw new Exception("The sprint period is overlapping with other sprint");
+                    }
+                } else {
+                    throw new Exception("The sprint end date is after the project end date");
                 }
             } else {
-                throw new Exception("The sprint end date is after the project end date");
+                throw new Exception("The sprint start date is before the project start date");
             }
-        } else {
-            throw new Exception("The sprint start date is before the project start date");
+            return result;
         }
-        return result;
     }
-}

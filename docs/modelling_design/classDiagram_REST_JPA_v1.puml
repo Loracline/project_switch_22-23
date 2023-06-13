@@ -58,7 +58,9 @@ class TypologyWebController {
 
 class UserStoryWebController {
 + usService
+- userStoriesInSprintService
 + createUs(userStoryCreationDto)
++ changeUserStoryStatus(userStoryStatusDto)
 }
 
 /'SERVICES'/
@@ -194,11 +196,18 @@ class UserStoriesInSprintService{
 - userStoryRepository
 - extractUsIds(userStoriesInSprint)
 + getSprintBacklog(sprintId)
++ changeUserStoryStatus(userStoryStatusDto)
 }
 
 class CustomerListService{
 - repository
 - mapper
+}
+
+class SprintStatusChangeService {
+- iSprintRepository
++ changeStatus(sprintStatusChangeDto)
+- openSprint(sprint)
 }
 
 /'REPOSITORIES'/
@@ -629,6 +638,17 @@ class TypologyCreationDto{
 class CustomerDto {
 + name
 + taxIdNumber
+}
+
+class SprintStatusChangeDto {
++ sprintId
++ status
+}
+
+class UserStoryStatusDto{
+- sprintId
+- usId
+- status
 }
 
 /'ENTITIES'/
@@ -1127,6 +1147,10 @@ SprintFactory ..> Sprint: creates
 AddUserStoryToSprintBacklogService <.. ISprintRepository: is injected
 AddUserStoryToSprintBacklogService <.. IUsRepository: is injected
 
+SprintStatusChangeService ..> SprintCreationDto: uses
+SprintStatusChangeService <.. ISprintRepository: is injected
+
+
 ISprintRepository <|.. SprintRepositoryJpa: implements
 SprintRepositoryJpa <.. ISprintJpaRepository: is injected
 ISprintJpaRepository <|-- CrudRepository: extends
@@ -1162,16 +1186,21 @@ TypologyDto ..> Typology: uses
 
 /'User Story'/
 UserStoryWebController ..> UserStoryCreationDto: uses
+UserStoryWebController ..> UserStoryStatusDto: uses
 
 UserStoryWebController <.. UsService: is injected
+
 UsService <.. IUsRepository: is injected
 UsService <.. IProjectRepository: is injected
 UsService <.. IFactoryUserStory: is injected
 
+UserStoryWebController <.. UserStoriesInSprintService: is injected
+UserStoriesInSprintService ..> UserStoryStatusDto: uses
 UserStoriesInSprintService <.. ISprintRepository: is injected
 UserStoriesInSprintService <.. IUsRepository: is injected
+UserStoriesInSprintService <.. IUserStoryRepository: is injected
 UserStoriesInSprintService ..> UserStoryMapper: uses
-
+UserStoriesInSprintService ..> UserStory: updates
 
 IUsRepository <|.. UserStoryRepositoryJpa: implements
 UserStoryRepositoryJpa <.. IUserStoryJpaRepository: is injected

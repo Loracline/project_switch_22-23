@@ -42,8 +42,8 @@ public class SprintDomainDataAssembler {
                 sprintJpa.getUserStoriesInSprint();
         for (UserStoryInSprint userStory: userStoriesInSprint) {
             UserStoryInSprintJpa userStoryInSprintJpa =
-                    new UserStoryInSprintJpa(userStory.getUsId().toString(),
-                    userStory.getEffort());
+                    new UserStoryInSprintJpa(userStory.getUsId().getUserStoryId(),
+                    userStory.getEffort(),sprintJpa);
             userStoriesInSprintJpa.add(userStoryInSprintJpa);
         }
         return sprintJpa;
