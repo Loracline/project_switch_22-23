@@ -9,8 +9,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.switch2022.project.ddd.application.CreateSprintService;
+import org.switch2022.project.ddd.application.SprintStatusChangeService;
 import org.switch2022.project.ddd.application.UserStoriesInSprintService;
+import org.switch2022.project.ddd.dto.AllocationDto;
 import org.switch2022.project.ddd.dto.SprintCreationDto;
+import org.switch2022.project.ddd.dto.SprintStatusDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,6 +32,8 @@ class SprintWebControllerTest {
     CreateSprintService createSprintService;
     @MockBean
     UserStoriesInSprintService userStoriesInSprintService;
+    @MockBean
+    SprintStatusChangeService sprintStatusChangeService;
     @InjectMocks
     SprintWebController sprintWebController;
 
@@ -40,12 +46,12 @@ class SprintWebControllerTest {
         SprintCreationDto sprintCreationDto = new SprintCreationDto(projectCode, startDate);
 
         when(createSprintService.createSprint(projectCode, startDate)).thenReturn
-        (sprintCode);
+                (sprintCode);
 
         ResponseEntity<Object> responseEntity =
                 sprintWebController.createSprint(sprintCreationDto);
 
-        assertEquals(responseEntity.getStatusCodeValue(),201);
+        assertEquals(responseEntity.getStatusCodeValue(), 201);
         Object res = responseEntity.getBody();
         assertEquals(sprintCode, res);
     }
@@ -79,7 +85,7 @@ class SprintWebControllerTest {
         String sprintId = "P001_S001";
         List<UserStoryDto> expectedUserStories = new ArrayList<>();
         expectedUserStories.add(new UserStoryDto("us001",
-                "I love chocolate","Planned"));
+                "I love chocolate", "Planned"));
 
         when(userStoriesInSprintService.getSprintBacklog(any())).thenReturn(expectedUserStories);
 
@@ -116,5 +122,22 @@ class SprintWebControllerTest {
         List<UserStoryDto> actualUserStories = responseEntity.getBody();
         assertNotNull(actualUserStories);
         assertTrue(actualUserStories.isEmpty());
+    }
+
+    /**
+     * Method: changeSprintStatus()
+     * Scenario 1: changes the state of a specific sprint.
+     */
+
+    @Test
+    void ensureThatStateOfSprintIsChanged() {
+        //ARRANGE
+        SprintStatusDto dtoDouble = mock(SprintStatusDto.class);
+
+        when(sprintStatusChangeService.changeSprintStatus(dtoDouble)).thenReturn(true);
+        //ACT
+        ResponseEntity<Object> responseEntity = sprintWebController.changeSprintStatus(dtoDouble);
+        //ASSERT
+        assertEquals(responseEntity.getStatusCodeValue(), 200);
     }
 }
