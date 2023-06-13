@@ -96,4 +96,9 @@ public class SprintRepositoryJpa implements ISprintRepository {
                     status));
         }
     }
+
+    @Override
+    public boolean existsById(SprintId sprintId) {
+        return iSprintJpaRepository.existsById(sprintId.getSprintId());
+    }
 }

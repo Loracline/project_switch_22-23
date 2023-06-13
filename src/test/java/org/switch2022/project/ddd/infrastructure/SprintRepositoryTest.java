@@ -333,4 +333,48 @@ class SprintRepositoryTest {
         // ASSERT
         assertFalse(result);
     }
+
+    /**
+     * Method: existsById(sprintId)
+     * Scenario 1: checks if the list of sprints has any sprint with a given id.
+     * It should assert true.
+     */
+    @Test
+    void ensureThatReturnsTrue_ifAtLeastOneInstanceOfSprintInTheListOfSprints() {
+        // ARRANGE
+        SprintRepository sprintRepository = new SprintRepository();
+        SprintId sprintId = new SprintId("P001","S001");
+
+        Sprint sprint = mock(Sprint.class);
+        sprintRepository.save(sprint);
+        when(sprint.hasSprintId(any())).thenReturn(true);
+
+        // ACT
+        boolean result = sprintRepository.existsById(sprintId);
+
+        // ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Method: existsByStatus(status)
+     * Scenario 2: checks if the list of sprints does not have any sprint with a given status.
+     * It should assert false.
+     */
+    @Test
+    void ensureThatReturnsFalse_thereIsNoInstanceOfSprintInTheListOfSprints() {
+        // ARRANGE
+        SprintRepository sprintRepository = new SprintRepository();
+        SprintId sprintId = new SprintId("P001","S001");
+
+        Sprint sprint = mock(Sprint.class);
+        sprintRepository.save(sprint);
+        when(sprint.hasSprintId(any())).thenReturn(false);
+
+        // ACT
+        boolean result = sprintRepository.existsById(sprintId);
+
+        // ASSERT
+        assertFalse(result);
+    }
 }
