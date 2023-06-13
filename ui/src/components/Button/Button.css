@@ -20,7 +20,7 @@
 .secondaryButton {
     color: #6145AF;
     background-color: white;
-    border-color: #6145AF;
+    border: solid 1px #6145AF;
 }
 
 .button:hover {
