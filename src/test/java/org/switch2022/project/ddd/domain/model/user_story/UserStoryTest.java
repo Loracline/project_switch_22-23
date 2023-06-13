@@ -576,7 +576,7 @@ class UserStoryTest {
 
         Status usStatus = mock(Status.class);
         when(usStatus.getStatus()).thenReturn("Planned");
-        userStory.setStatus(usStatus);
+        userStory.changeStatus(usStatus);
 
         // Act
         String result = userStory.getStatus();
@@ -697,7 +697,7 @@ class UserStoryTest {
                 acceptanceCriteriaDouble);
         Status usStatusToVerify = mock(Status.class);
         when(usStatusToVerify.getStatus()).thenReturn("Running");
-        userStory.setStatus(usStatusToVerify);
+        userStory.changeStatus(usStatusToVerify);
 
         //Act
         boolean result = userStory.hasStatus(usStatusToVerify);

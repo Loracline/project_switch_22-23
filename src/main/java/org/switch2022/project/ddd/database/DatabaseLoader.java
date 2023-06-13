@@ -164,19 +164,19 @@ public class DatabaseLoader implements CommandLineRunner {
         UserStory userStoryOne = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
                 new UsText("I want to be a iguana"),
                 new Actor("Farmer"), new ArrayList<>(), new Code(PROJECT_ONE));
-        userStoryOne.setStatus(Status.RUNNING);
+        userStoryOne.changeStatus(Status.RUNNING);
         UserStory userStoryTwo = factoryUserStory.createUserStory(new UsNumber(USER_STORY_TWO),
                 new UsText("I want to be like a hippo"),
                 new Actor("Manuela"), new ArrayList<>(), new Code(PROJECT_ONE));
-        userStoryTwo.setStatus(Status.RUNNING);
+        userStoryTwo.changeStatus(Status.RUNNING);
         UserStory userStoryThree = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
                 new UsText("I want to marry with Cristiana"),
                 new Actor("Gaiato"), new ArrayList<>(), new Code(PROJECT_TWO));
-        userStoryThree.setStatus(Status.RUNNING);
+        userStoryThree.changeStatus(Status.RUNNING);
         UserStory userStoryFour = factoryUserStory.createUserStory(new UsNumber(USER_STORY_TWO),
                 new UsText("I want to break free"),
                 new Actor("Gervásio"), new ArrayList<>(), new Code(PROJECT_TWO));
-        userStoryFour.setStatus(Status.RUNNING);
+        userStoryFour.changeStatus(Status.RUNNING);
         UserStory userStoryFive = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
                 new UsText("I want to live forever"),
                 new Actor("Anacleto"), new ArrayList<>(), new Code(PROJECT_THREE));
