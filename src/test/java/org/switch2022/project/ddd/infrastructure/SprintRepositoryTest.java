@@ -335,6 +335,81 @@ class SprintRepositoryTest {
     }
 
     /**
+     * Method: hasStatus
+     * Scenario 1: the sprint has the given status, returns true
+     */
+
+    @Test
+    void ensureThatSprintHasTheGivenStatus(){
+        //Arrange
+        SprintRepository sprintRepository = new SprintRepository();
+
+        Sprint sprint = mock(Sprint.class);
+        sprintRepository.save(sprint);
+
+        SprintId sprintId = new SprintId("p001", "s001");
+        SprintStatus sprintStatus = SprintStatus.OPEN;
+        when(sprint.hasSprintId(sprintId)).thenReturn(true);
+        when(sprint.hasStatus(sprintStatus)).thenReturn(true);
+
+
+        //Act
+        boolean result = sprintRepository.hasStatus(sprintId,sprintStatus);
+
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * Method: hasStatus
+     * Scenario 2: the sprint hasn't the given status, returns false
+     */
+
+    @Test
+    void ensureThatSprintHasntTheGivenStatus(){
+        //Arrange
+        SprintRepository sprintRepository = new SprintRepository();
+
+        Sprint sprint = mock(Sprint.class);
+        sprintRepository.save(sprint);
+
+        SprintId sprintId = new SprintId("p001", "s001");
+        SprintStatus sprintStatus = SprintStatus.OPEN;
+        when(sprint.hasSprintId(sprintId)).thenReturn(true);
+        when(sprint.hasStatus(sprintStatus)).thenReturn(false);
+
+
+        //Act
+        boolean result = sprintRepository.hasStatus(sprintId,sprintStatus);
+
+        //Assert
+        assertFalse(result);
+    }
+    /**
+     * Method: hasStatus
+     * Scenario 3: the sprint is not present, returns false
+     */
+
+    @Test
+    void ensureThatSprintHasNotTheGivenStatus_NoSprint(){
+        //Arrange
+        SprintRepository sprintRepository = new SprintRepository();
+
+        Sprint sprint = mock(Sprint.class);
+
+        SprintId sprintId = new SprintId("p001", "s001");
+        SprintStatus sprintStatus = SprintStatus.OPEN;
+        when(sprint.hasSprintId(sprintId)).thenReturn(false);
+        when(sprint.hasStatus(sprintStatus)).thenReturn(true);
+
+
+        //Act
+        boolean result = sprintRepository.hasStatus(sprintId,sprintStatus);
+
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
      * Method: existsById(sprintId)
      * Scenario 1: checks if the list of sprints has any sprint with a given id.
      * It should assert true.

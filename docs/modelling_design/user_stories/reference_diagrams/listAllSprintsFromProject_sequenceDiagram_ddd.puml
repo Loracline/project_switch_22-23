@@ -9,9 +9,9 @@ participant ":ListSprintsUI" as ui
 participant ":SprintWebController" as controller
 participant ":SprintListService" as service
 participant ":SprintRepository" as repository
-participant "sprintValueObjectsDto: List<SprintDto>" as list
+participant "sprintsValueObjectsDto: List<SprintValueObjectsDto>" as list
 participant ":SprintDtoAssembler" as assembler
-participant "sprintDto: SprintDto" as dto
+participant "sprintValueObjectsDto: SprintValueObjectsDto" as dto
 
 activate pm
 pm -> ui: asks for list of sprints of a specific project
@@ -33,20 +33,20 @@ deactivate repository
 create list
 service -> list: create()
 loop for each sprint in sprints
-service -> assembler: sprintToDto(sprint)
+service -> assembler: sprintToValueObjectsDto(sprint)
 activate assembler
 create dto
 assembler -> dto: create()
 activate dto
-dto --> assembler: sprintDto
+dto --> assembler: sprintValueObjectsDto
 deactivate dto
-assembler --> service: sprintDto
+assembler --> service: sprintValueObjectsDto
 deactivate assembler
-service -> list: add(sprintDto)
+service -> list: add(sprintValueObjectsDto)
 end loop
-service --> controller: sprintValueObjectsDto
+service --> controller: sprintsValueObjectsDto
 deactivate service
-ui <-- controller: sprintPrimitiveTypesDto
+ui <-- controller: sprintsPrimitiveTypesDto
 note right
 value objects DTOs
 end note

@@ -106,4 +106,16 @@ public class SprintRepositoryJpa implements ISprintRepository {
     public boolean existsById(SprintId sprintId) {
         return iSprintJpaRepository.existsById(sprintId.getSprintId());
     }
+    /**
+     * This method checks if one given sprint has the status given
+     *
+     * @param sprintId the identifier of the sprint
+     * @param status   the sprint status that needs to be checked
+     * @return true if the sprint has the given status and false otherwise
+     */
+    public boolean hasStatus(SprintId sprintId, SprintStatus status) {
+        String sprintStatus = status.getStatus();
+        String id = sprintId.getSprintId();
+        return iSprintJpaRepository.existsBySprintIdAndStatus(id, sprintStatus);
+    }
 }

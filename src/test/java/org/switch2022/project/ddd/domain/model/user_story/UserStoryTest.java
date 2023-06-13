@@ -846,6 +846,54 @@ class UserStoryTest {
         assertEquals("p001", result);
     }
 
+    /**
+     * Method: hasProjectCode
+     * scenario 1: true
+     */
+    @Test
+    void ensureHasSameProjectCode(){
+        // Arrange
+        Code projectCode = new Code(1);
+        Code projectCodeOne = new Code(1);
+        UsNumber usNumberDouble = mock(UsNumber.class);
+        Actor actorDouble = mock(Actor.class);
+        UsText usTextDouble = mock(UsText.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+        when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
+
+        UserStory userStory = new UserStory(projectCode, usNumberDouble, actorDouble, usTextDouble,
+                acceptanceCriteriaDouble);
+        //Act
+        boolean result = userStory.hasProjectCode(projectCodeOne);
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Method: hasProjectCode
+     * scenario 2: false
+     */
+    @Test
+    void ensureHasNotTheSameProjectCode(){
+        // Arrange
+        Code projectCode = new Code(1);
+        Code projectCodeOne = new Code(2);
+        UsNumber usNumberDouble = mock(UsNumber.class);
+        Actor actorDouble = mock(Actor.class);
+        UsText usTextDouble = mock(UsText.class);
+        List<AcceptanceCriteria> acceptanceCriteriaDouble = new ArrayList<>();
+        when(usNumberDouble.getUserStoryNumber()).thenReturn("us001");
+
+        UserStory userStory = new UserStory(projectCode, usNumberDouble, actorDouble, usTextDouble,
+                acceptanceCriteriaDouble);
+        //Act
+        boolean result = userStory.hasProjectCode(projectCodeOne);
+
+        //Assert
+        assertFalse(result);
+    }
+
     /*
     /**
      * METHOD setValidUserStory() sets the relevant attributes for a user story to be in a valid state.
