@@ -9,14 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.datamodel_jpa.UserStoryJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.UserStoryDomainDataAssembler;
-import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.infrastructure.jpa.IUserStoryJpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -251,6 +250,54 @@ class UserStoryRepositoryJpaTest {
         boolean result = repository.existsByUsId(usId);
         //Assert
         assertTrue(result);
+    }
+
+    /**
+     * Method: findById(usId)
+     * Returns an Optional with the desired User Story based on its UsId.
+     *
+     * Scenario 1: Returns an Optional with the User Story.
+     */
+    @Test
+    void ensureThatAnOptionalWithTheDesiredUserStoryIsReturned() {
+        //Arrange
+        UsId usId = new UsId("p001", "us001");
+        UserStory userStory = mock(UserStory.class);
+
+        UserStoryJpa userStoryJpa = mock(UserStoryJpa.class);
+        Optional<UserStoryJpa> userStoryJpaOptional = Optional.of(userStoryJpa);
+
+        when(repositoryJpa.findByUsId("p001_us001")).thenReturn(userStoryJpaOptional);
+        when(assembler.toDomain(userStoryJpa)).thenReturn(userStory);
+
+        Optional<UserStory> expected = Optional.of(userStory);
+
+        //Act
+        Optional<UserStory> result = repository.findByUsId(usId);
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: returns an Optional with null object because the User Story does not
+     * exist.
+     */
+    @Test
+    void ensureThatAnEmptyOptionalIsReturnedBecauseTheUserStoryDoesNotExist() {
+        //Arrange
+        UsId usId = new UsId("p001", "us001");
+
+        Optional<UserStoryJpa> userStoryJpaOptional = Optional.empty();
+        when(repositoryJpa.findByUsId("p001_us001")).thenReturn(userStoryJpaOptional);
+
+        Optional<UserStory> expected = Optional.empty();
+
+        //Act
+        Optional<UserStory> result = repository.findByUsId(usId);
+
+        //Assert
+        assertEquals(expected, result);
     }
 }
 

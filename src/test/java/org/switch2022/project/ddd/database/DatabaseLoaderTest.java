@@ -119,7 +119,7 @@ public class DatabaseLoaderTest {
 
         UserStory userStory = factoryUserStory.createUserStory(new UsNumber("1"), new UsText("I want to be a iguana"),
                 new Actor("Farmer"), new ArrayList<>(), new Code(1));
-        userStory.setStatus(Status.RUNNING);
+        userStory.changeStatus(Status.RUNNING);
         verify(userStories).save(userStoryDomainDataAssembler.toData(userStory));
 
         // User story in sprint

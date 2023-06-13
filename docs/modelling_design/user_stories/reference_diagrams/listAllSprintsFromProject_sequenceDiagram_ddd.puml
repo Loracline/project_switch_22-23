@@ -1,0 +1,60 @@
+@startuml
+
+skinparam sequenceMessageAlign center
+title TO LIST ALL SPRINTS FROM A PROJECT
+autonumber
+actor "Project Manager" as pm
+
+participant ":ListSprintsUI" as ui
+participant ":SprintWebController" as controller
+participant ":SprintListService" as service
+participant ":SprintRepository" as repository
+participant "sprintValueObjectsDto: List<SprintDto>" as list
+participant ":SprintDtoAssembler" as assembler
+participant "sprintDto: SprintDto" as dto
+
+activate pm
+pm -> ui: asks for list of sprints of a specific project
+activate ui
+note right
+primitive type DTO
+end note
+ui -> controller: listSprintsFromProject(projectCodeStringDto)
+note right
+value object DTO
+end note
+activate controller
+controller -> service: listSprintsFromProject(projectCodeValueObjectDto)
+activate service
+service -> repository: findByProjectCode(code)
+activate repository
+repository --> service: sprints
+deactivate repository
+create list
+service -> list: create()
+loop for each sprint in sprints
+service -> assembler: sprintToDto(sprint)
+activate assembler
+create dto
+assembler -> dto: create()
+activate dto
+dto --> assembler: sprintDto
+deactivate dto
+assembler --> service: sprintDto
+deactivate assembler
+service -> list: add(sprintDto)
+end loop
+service --> controller: sprintValueObjectsDto
+deactivate service
+ui <-- controller: sprintPrimitiveTypesDto
+note right
+value objects DTOs
+end note
+deactivate controller
+ui --> pm: shows list of sprints of a specific project
+note right
+primitive types DTOs
+end note
+deactivate ui
+
+@enduml

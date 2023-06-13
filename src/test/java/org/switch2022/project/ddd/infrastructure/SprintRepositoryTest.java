@@ -2,8 +2,7 @@ package org.switch2022.project.ddd.infrastructure;
 
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.SprintId;
+import org.switch2022.project.ddd.domain.value_object.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -292,5 +291,46 @@ class SprintRepositoryTest {
         List<Sprint> result = sprintRepository.findByProjectCode(projectCode);
         //Assert
         assertEquals(expected, result);
+    }
+
+    @Test
+    void existsByStatus() {
+    }
+
+    /**
+     * Method: existsByStatus(status)
+     * Scenario 1: checks if the list of sprints has any sprint with a given status.
+     * It should assert true.
+     */
+    @Test
+    void ensureThatReturnsTrueIfAtLeastOneInstanceOfSprintInTheListOfSprintsHasTheStatusPassedAsParameter() {
+        // ARRANGE
+        SprintRepository sprintRepository = new SprintRepository();
+
+        Sprint sprint = mock(Sprint.class);
+        sprintRepository.save(sprint);
+        when(sprint.hasStatus(SprintStatus.OPEN)).thenReturn(true);
+        // ACT
+        boolean result = sprintRepository.existsByStatus(SprintStatus.OPEN);
+        // ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Method: existsByStatus(status)
+     * Scenario 2: checks if the list of sprints does not have any sprint with a given status.
+     * It should assert false.
+     */
+    @Test
+    void ensureThatReturnsFalseIfNoInstancesOfSprintInTheListOfSprintsHaveTheStatusPassedAsParameter() {
+        // ARRANGE
+        SprintRepository sprintRepository = new SprintRepository();
+
+        Sprint sprint = mock(Sprint.class);
+        sprintRepository.save(sprint);
+        // ACT
+        boolean result = sprintRepository.existsByStatus(SprintStatus.OPEN);
+        // ASSERT
+        assertFalse(result);
     }
 }

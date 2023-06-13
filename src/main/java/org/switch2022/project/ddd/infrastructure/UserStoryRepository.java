@@ -9,12 +9,13 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Class UsRepository allows to manage userStories records.
  */
 @Repository("us_memory")
-public class UsRepository implements IUsRepository {
+public class UserStoryRepository implements IUsRepository {
 
     private final List<UserStory> userStories = new ArrayList<>();
 
@@ -37,7 +38,7 @@ public class UsRepository implements IUsRepository {
         if (o.getClass() != this.getClass()) {
             return false;
         }
-        UsRepository that = (UsRepository) o;
+        UserStoryRepository that = (UserStoryRepository) o;
         return Objects.equals(userStories, that.userStories);
     }
 
@@ -122,5 +123,23 @@ public class UsRepository implements IUsRepository {
             }
     }
         return usFound;
+    }
+
+    /**
+     * Returns a USer Story based on its Id.
+     * @param usId from the User Story one searches for.
+     * @return an Optional containing the desired User Story.
+     */
+    @Override
+    public Optional<UserStory> findByUsId(UsId usId) {
+        UserStory usRequested = null;
+        int i = 0;
+        while (i < this.userStories.size() && usRequested == null) {
+            if (userStories.get(i) != null && userStories.get(i).hasUsId(usId)) {
+                usRequested = userStories.get(i);
+            }
+            i++;
+        }
+        return Optional.ofNullable(usRequested);
     }
 }
