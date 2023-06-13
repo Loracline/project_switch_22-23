@@ -36,7 +36,7 @@ public class AddUserStoryToSprintBacklogService {
      *
      * @param dto The UserStoryInSprintDto containing the user story ID and sprint ID.
      * @return {@code true} if the user story is added successfully, and {@code false} otherwise.
-     * @throws RuntimeException if the User Story is not added to the sprint because is not valid to be added.
+     * @throws RuntimeException if the User Story is not added to the sprint.
      */
 
     public boolean addUserStoryToSprint(UserStoryInSprintDto dto) {
@@ -96,8 +96,7 @@ public class AddUserStoryToSprintBacklogService {
      * Checks if a User Story has the 'PLANNED' status.
      *
      * @param userStory The User Story to be checked.
-     * @return {@code true} if the User Story has the 'PLANNED' status.
-     * @throws RuntimeException if the User Story does not have the 'PLANNED' status.
+     * @return {@code true} if the User Story has the 'PLANNED' status and {@code false} otherwise. .
      */
     private boolean doesUserStoryHavePlannedStatus(UserStory userStory) {
         return userStory.hasStatus(Status.PLANNED);
@@ -108,8 +107,7 @@ public class AddUserStoryToSprintBacklogService {
      *
      * @param sprint    The Sprint to validate.
      * @param userStory The User Story to validate.
-     * @return {@code true} if the Sprint and User Story belong to the same project.
-     * @throws RuntimeException if the Sprint and User Story do not belong to the same project.
+     * @return {@code true} if the Sprint and User Story belong to the same project and {@code false} otherwise.
      */
     private boolean validateSprintAndUserStoryProject(Sprint sprint, UserStory userStory) {
         Code projectCodeFromUserStory = new Code(Utils.getIntFromAlphanumericString(userStory.getProjectCode(), "p"));
