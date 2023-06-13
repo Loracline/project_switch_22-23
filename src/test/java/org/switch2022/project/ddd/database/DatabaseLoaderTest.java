@@ -111,7 +111,9 @@ public class DatabaseLoaderTest {
         projectOne.setSprintDuration(2);
         projectOne.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(8));
         projectOne.isBudgetAssigned(new Budget(new BigDecimal(150000)));
+        projectOne.setProjectStatus(ProjectStatus.CLOSED);
         verify(projects).save(projectDomainDataAssembler.toData(projectOne));
+
 
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();

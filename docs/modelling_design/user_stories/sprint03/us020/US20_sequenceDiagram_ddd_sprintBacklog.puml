@@ -17,11 +17,11 @@ activate "Project Manager"
 
 "Project Manager"-> ui: starts adding a User Story to Sprint Backlog
 activate ui
-ui --> "Project Manager": requests data (userStoryId, sprintId)
+ui --> "Project Manager": requests data (usId, sprintId)
 "Project Manager" -> ui: sends requested data
-ui -> ct: addUserStoryToSprintBacklog(dto)
+ui -> ct: addUserStoryToSprintBacklog(UserStoryInSprintDto)
 activate ct
-ct -> serv: addUserStoryToSprintBacklog(dto)
+ct -> serv: addUserStoryToSprintBacklog(UserStoryInSprintDto)
 activate serv
 serv -> sprintRep: findById(sprintId)
 activate sprintRep
