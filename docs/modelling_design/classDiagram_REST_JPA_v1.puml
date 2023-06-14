@@ -43,21 +43,22 @@ class ResourceWebController {
 }
 
 class SprintWebController {
-+ createSprintService
-userStoriesInSprintService
+- createSprintService
+- userStoriesInSprintService
+- sprintListService
 + createSprint(sprintCreationDto)
 + getSprintBacklog(sprintId)
 + addUserStoryToSprintBacklog(dto)
 }
 
 class TypologyWebController {
-+ service
+- service
 + createTypology(dto)
 + listAllTypologies()
 }
 
 class UserStoryWebController {
-+ usService
+- usService
 - userStoriesInSprintService
 + createUs(userStoryCreationDto)
 + changeUserStoryStatus(userStoryStatusDto)
@@ -92,7 +93,6 @@ class BusinessSectorService {
 - businessSectorFactory
 }
 
-
 class CreateSprintService{
 - sprintRepository
 - sprintFactory
@@ -123,7 +123,6 @@ class ProjectCreationService{
 + getProjectByCode(code)
 + addProject(project)
 }
-
 
 class ProjectListService{
 - projectRepository
@@ -171,7 +170,6 @@ class ResourceAllocationService {
 + isPercentageOfAllocationValid(period, email, percentageOfAllocationToAdd)
 }
 
-
 class TypologyService {
 - typologyRepository
 - factoryTypology
@@ -210,6 +208,11 @@ class SprintStatusChangeService {
 - openSprint(sprint)
 }
 
+class SprintListService {
+-iSprintRepository
++listSprintsFromProject(projectCodeValueObjectDto)
+}
+
 /'REPOSITORIES'/
 interface CrudRepository {
 + save()
@@ -221,7 +224,7 @@ interface CrudRepository {
 + count()
 + deleteById(id)
 + delete(entity)
-+  deleteAllById(ids)
++ deleteAllById(ids)
 + deleteAll(entities)
 + deleteAll()
 }
@@ -527,6 +530,14 @@ class CustomerMapper {
 + customerToDto(customer)
 }
 
+class SprintDtoAssembler {
++sprintToValueObjectsDto(sprint)
++convertToPrimitiveTypes(sprintValueObjectsDto)
+}
+
+class ProjectCodeDtoAssembler {
++convertToValueObject(projectCodeStringDto)
+}
 
 /'DTOS'/
 
@@ -655,6 +666,37 @@ class UserStoryStatusDto{
 - sprintId
 - usId
 - status
+}
+
+class ProjectCodeStringDto {
+-code
++getCode()
+}
+
+class ProjectCodeValueObjectDto {
+-code
++getCode()
+}
+
+class SprintValueObjectsDto {
+-id
+-number
+-status
+-startDate
+-endDate
++getId()
++getNumber()
++getStatus()
++getStartDate()
++getEndDate()
+}
+
+class SprintPrimitiveTypesDto {
+-id
+-number
+-status
+-startDate
+-endDate
 }
 
 /'ENTITIES'/
@@ -1138,8 +1180,10 @@ ProjectResourceFactory ..> ProjectResource: creates
 
 
 /'Sprint'/
+
 SprintWebController ..> SprintCreationDto: uses
 
+SprintWebController <.. SprintListService: is injected
 SprintWebController <.. AddUserStoryToSprintBacklogService: is injected
 SprintWebController <.. CreateSprintService: is injected
 SprintWebController <.. UserStoriesInSprintService: is injected
@@ -1156,6 +1200,8 @@ AddUserStoryToSprintBacklogService <.. IUsRepository: is injected
 SprintStatusChangeService ..> SprintCreationDto: uses
 SprintStatusChangeService <.. ISprintRepository: is injected
 
+SprintListService <.. ISprintRepository: is injected
+SprintListService ..> Sprint: uses
 
 ISprintRepository <|.. SprintRepositoryJpa: implements
 SprintRepositoryJpa <.. ISprintJpaRepository: is injected
@@ -1168,6 +1214,15 @@ SprintRepositoryJpa "1" --> "*" SprintJpa: has
 
 UserStoryInSprintDto <. SprintWebController : uses
 UserStoryInSprintDto <. AddUserStoryToSprintBacklogService :uses
+
+SprintDtoAssembler ..> SprintListService: uses
+SprintDtoAssembler ..> SprintWebController: uses
+ProjectCodeDtoAssembler ..> SprintWebController: uses
+SprintDtoAssembler ..> Sprint: uses
+SprintValueObjectsDto <.. SprintDtoAssembler: uses
+SprintPrimitiveTypesDto <.. SprintDtoAssembler: uses
+ProjectCodeStringDto <.. ProjectCodeDtoAssembler: uses
+ProjectCodeValueObjectDto <.. ProjectCodeDtoAssembler: uses
 
 /'Typology'/
 TypologyWebController ..> TypologyCreationDto: uses
@@ -1191,7 +1246,6 @@ TypologyFactory ..> Typology: creates
 
 TypologyMapper ..> TypologyDto: creates
 TypologyDto ..> Typology: uses
-
 
 /'User Story'/
 UserStoryWebController ..> UserStoryCreationDto: uses
