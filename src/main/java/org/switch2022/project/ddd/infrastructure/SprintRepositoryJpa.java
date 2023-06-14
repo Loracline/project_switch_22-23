@@ -130,4 +130,20 @@ public class SprintRepositoryJpa implements ISprintRepository {
         String id = sprintId.getSprintId();
         return iSprintJpaRepository.existsBySprintIdAndAndUserStoriesInSprintContains(id, userStoryId);
     }
+
+    /**
+     * Retrieves a Sprint object based on the provided project code and status.
+     *
+     * @param projectCode The project code to search for.
+     * @param status      The status of the Sprint to search for.
+     * @return An Optional containing the retrieved Sprint object if found, or an empty Optional otherwise.
+     */
+    @Override
+    public Optional<Sprint> findByProjectCodeAndStatus(Code projectCode, SprintStatus status) {
+        String sprintStatus = status.getStatus();
+        String code = projectCode.getCode();
+
+        return iSprintJpaRepository.findByProjectCodeAndStatus(code, sprintStatus)
+                .map(sprintDomainDataAssembler::toDomain);
+    }
 }

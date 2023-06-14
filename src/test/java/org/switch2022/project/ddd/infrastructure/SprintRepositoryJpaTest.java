@@ -222,6 +222,7 @@ class SprintRepositoryJpaTest {
         //Assert
         assertTrue(result);
     }
+
     /**
      * Method: hasStatus
      * Scenario 2: the sprint has not the given status, returns false
@@ -251,13 +252,14 @@ class SprintRepositoryJpaTest {
     @Test
     void ensureThatReturnsTrue_ifAtLeastOneInstanceOfSprintInTheSprintRepositoryHasTheIdPassedAsParameter() {
         // ARRANGE
-        SprintId sprintId = new SprintId("P001","S001");
+        SprintId sprintId = new SprintId("P001", "S001");
         when(iSprintJpaRepository.existsById(any())).thenReturn(true);
         // ACT
         boolean result = sprintRepositoryJpa.existsById(sprintId);
         // ASSERT
         assertTrue(result);
     }
+
     /**
      * Method: hasUsId
      * Scenario 1: the sprint has the usId, returns true
@@ -280,6 +282,7 @@ class SprintRepositoryJpaTest {
         //Assert
         assertTrue(result);
     }
+
     /**
      * Method: hasUsId
      * Scenario 2: the sprint has the usId, returns false
@@ -302,4 +305,50 @@ class SprintRepositoryJpaTest {
         //Assert
         assertFalse(result);
     }
+
+    /**
+     * Method: findByProjectCodeAndStatus
+     * scenario 1: returns a sprint
+     */
+    @Test
+    void ensureThatSprintIsRetrievedSuccessfully() {
+        //Arrange
+        SprintJpa sprintJpa = mock(SprintJpa.class);
+        Optional<SprintJpa> sprintJpaOptional = Optional.of(sprintJpa);
+        Code projectCode = mock(Code.class);
+        SprintStatus status = mock(SprintStatus.class);
+
+        when(iSprintJpaRepository.findByProjectCodeAndStatus(any(),any())).thenReturn(sprintJpaOptional);
+        Sprint sprintDouble = mock(Sprint.class);
+        when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(sprintDouble);
+
+        Optional<Sprint> expected = Optional.of(sprintDouble);
+        //Act
+        Optional<Sprint> result = sprintRepositoryJpa.findByProjectCodeAndStatus(projectCode,status);
+        //Assert
+        assertEquals(expected, result);
+    }
+    /**
+     * scenario 2: returns an  empty sprint
+     */
+    @Test
+    void ensureThatSprintIsNotRetrievedSuccessfully() {
+        //Arrange
+        SprintJpa sprintJpa = mock(SprintJpa.class);
+        Optional<SprintJpa> sprintJpaOptional = Optional.empty();
+        Code projectCode = mock(Code.class);
+        SprintStatus status = mock(SprintStatus.class);
+
+        when(iSprintJpaRepository.findByProjectCodeAndStatus(any(),any())).thenReturn(sprintJpaOptional);
+        Sprint sprintDouble = mock(Sprint.class);
+        when(sprintDomainDataAssembler.toDomain(sprintJpa)).thenReturn(sprintDouble);
+
+        Optional<Sprint> expected = Optional.empty();
+        //Act
+        Optional<Sprint> result = sprintRepositoryJpa.findByProjectCodeAndStatus(projectCode,status);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+
 }
