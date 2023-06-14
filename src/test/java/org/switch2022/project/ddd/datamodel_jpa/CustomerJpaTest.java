@@ -68,7 +68,7 @@ class CustomerJpaTest {
         CustomerJpa customerJpa3 = new CustomerJpa("123456789", "Another Customer");
 
         // Assert
-        assertTrue(customerJpa1.equals(customerJpa2));
+        assertEquals(customerJpa1, customerJpa2);
         assertEquals(customerJpa1.hashCode(), customerJpa2.hashCode());
 
         // Objects with different tax IDs should have different hash codes

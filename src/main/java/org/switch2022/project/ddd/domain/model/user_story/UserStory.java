@@ -24,7 +24,7 @@ public class UserStory implements Entity<UserStory> {
     private final List<AcceptanceCriteria> acceptanceCriteria;
     private final Code projectCode;
     private UsNumber usNumber;
-    private Actor actor;
+    private final Actor actor;
     private UsText usText;
     private Status status;
 
@@ -106,7 +106,9 @@ public class UserStory implements Entity<UserStory> {
     /**
      * This getter method returns a String with User Story status.
      */
-    public String getStatus() {return status.getStatus();}
+    public String getStatus() {
+        return status.getStatus();
+    }
 
     /**
      * This protected method sets the status of the userStory.
