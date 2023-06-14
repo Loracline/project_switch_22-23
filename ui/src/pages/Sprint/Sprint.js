@@ -6,6 +6,7 @@ import './Sprint.css';
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
+import ConsultSprintBacklog from "../ConsultSprintBacklog/ConsultSprintBacklog";
 
 /**
  * Sprint component.
@@ -86,6 +87,7 @@ const Sprint = () => {
                     <div className='start'>
                     </div>
                 </div>
+                <ConsultSprintBacklog/>
             </section>
             <div className="returnButtonContainer">
                 <Button

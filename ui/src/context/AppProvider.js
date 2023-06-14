@@ -28,9 +28,11 @@ const detailedSprint = null;
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
     const usHeaders = ["US Number", "US Description", "US Status"]
+    const usHeadersSprintBacklog = ["US Number", "US Description"]
     const customers = [];
     const businessSectors = [];
     const typologies = [];
+    const sprintBacklog = [];
 
     // Represents the header and body of the sprints of a project table.
     const sprintsTableHeader = ["Sprint number", "Status", "Start date", "End date"];
@@ -42,12 +44,14 @@ const AppProvider = ({children}) => {
         sprintsTableHeader,
         sprintsTableBody,
         usHeaders,
+        usHeadersSprintBacklog,
         projects: [],
         detailedProject,
         detailedSprint,
         customers,
         businessSectors,
         typologies,
+        sprintBacklog,
         loading: false,
         messageFailure: '',
         messageSuccess: '',
