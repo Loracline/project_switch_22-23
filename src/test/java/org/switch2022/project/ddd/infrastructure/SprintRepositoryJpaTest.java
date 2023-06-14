@@ -10,7 +10,6 @@ import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
@@ -193,16 +192,15 @@ class SprintRepositoryJpaTest {
      * It should throw an NotFoundInRepoException.
      */
     @Test
-    void ensureThatThrowsAnExceptionIfNoInstancesOfSprintInTheSprintRepositoryHaveTheStatusPassedAsParameter() {
+    void ensureThatReturnsFalseIfThereAreNoInstancesOfSprintInTheSprintRepositoryWithTheStatusPassedAsParameter() {
         //Arrange
-        String expected = "There are no CLOSED sprints in the repository.";
+        when(iSprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(false);
 
         //Act
-        NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
-                () -> sprintRepositoryJpa.existsByStatus(SprintStatus.CLOSED));
+        boolean result = sprintRepositoryJpa.existsByStatus(SprintStatus.OPEN);
 
         //Assert
-        assertEquals(expected, result.getMessage());
+        assertFalse(result);
     }
 
     /**

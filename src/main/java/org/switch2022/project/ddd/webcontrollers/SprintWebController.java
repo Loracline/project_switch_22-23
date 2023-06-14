@@ -4,24 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.switch2022.project.ddd.application.AddUserStoryToSprintBacklogService;
-import org.switch2022.project.ddd.application.CreateSprintService;
-import org.switch2022.project.ddd.application.SprintStatusChangeService;
-import org.switch2022.project.ddd.application.UserStoriesInSprintService;
-import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
-import org.switch2022.project.ddd.dto.AllocationDto;
-import org.switch2022.project.ddd.dto.SprintCreationDto;
-import org.switch2022.project.ddd.dto.SprintStatusDto;
-import org.switch2022.project.ddd.dto.UserStoryDto;
-import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
+import org.switch2022.project.ddd.application.*;
+import org.switch2022.project.ddd.dto.*;
+import org.switch2022.project.ddd.dto.mapper.ProjectCodeDtoAssembler;
+import org.switch2022.project.ddd.dto.mapper.SprintDtoAssembler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * The SprintWebController class is a REST controller for handling requests related to
  * sprints.
  */
-@CrossOrigin(maxAge = 3600, origins={"http://localhost:3000"})
+@CrossOrigin(maxAge = 3600, origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/sprints")
 public class SprintWebController {
@@ -36,6 +31,8 @@ public class SprintWebController {
     UserStoriesInSprintService userStoriesInSprintService;
     @Autowired
     AddUserStoryToSprintBacklogService addUserStoryToSprintBacklogService;
+    @Autowired
+    SprintListService sprintListService;
 
     /**
      * Handles a POST request to create a new sprint.
@@ -79,7 +76,7 @@ public class SprintWebController {
      * ResponseEntity with HTTP status code 404 (NOT FOUND).
      */
 
-    @PatchMapping("/sprints/{sprintId}")
+    @PatchMapping("/{sprintId}")
     @ResponseBody
     public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto) {
         sprintStatusChangeService.changeSprintStatus(sprintStatusDto);
@@ -100,5 +97,24 @@ public class SprintWebController {
         } else {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+    }
+
+    /**
+     * Retrieves a list of sprints from a project identified by the provided project code.
+     *
+     * @param projectCode The project code used to identify the project.
+     * @return ResponseEntity containing the list of sprints represented as SprintPrimitiveTypesDto objects.
+     */
+    @GetMapping("/{projectCode}")
+    public ResponseEntity<Object> listSprintsFromProject(@PathVariable ProjectCodeStringDto projectCode) {
+        ProjectCodeValueObjectDto codeValueObjectDto = ProjectCodeDtoAssembler.convertToValueObject(projectCode);
+        List<SprintValueObjectsDto> valueObjectsDtos = sprintListService.listSprintsFromProject(codeValueObjectDto);
+        List<SprintPrimitiveTypesDto> primitiveTypesDtos = new ArrayList<>();
+        for (int i = 0; i < valueObjectsDtos.size(); i++) {
+            SprintPrimitiveTypesDto primitiveTypesDto =
+                    SprintDtoAssembler.convertToPrimitiveTypes(valueObjectsDtos.get(i));
+            primitiveTypesDtos.add(primitiveTypesDto);
+        }
+        return new ResponseEntity<>(primitiveTypesDtos, HttpStatus.OK);
     }
 }

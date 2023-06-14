@@ -11,6 +11,8 @@ class SprintWebController {
 - sprintStatusChangeService
 + changeSprintStatus(sprintStatusDto)
 }
+SprintWebController <.. SprintStatusChangeService: is injected
+SprintWebController <..SprintStatusChangeDto: uses
 
 class SprintStatusChangeService {
 - sprintRepository
@@ -18,11 +20,15 @@ class SprintStatusChangeService {
 + changeStatus(status)
 - isOpen(sprint)
 }
+SprintStatusChangeService ..> SprintStatusChangeDto: uses
+SprintStatusChangeService <.. ISprintRepository: is injected
+SprintStatusChangeService <.. IUserStoryRepository: is injected
 
 interface ISprintRepository {
 + findById(sprintId)
-+ existsByStatus(sprintStatus)
++ existsByStatus(status)
 }
+ISprintRepository <|.. SprintRepositoryJpa: implements
 
 class SprintRepositoryJpa {
 - iSprintJpaRepository
@@ -30,19 +36,25 @@ class SprintRepositoryJpa {
 + findById(sprintId)
 + existsByStatus(sprintStatus)
 }
+SprintRepositoryJpa <.. ISprintJpaRepository: is injected
+SprintRepositoryJpa <.. SprintDomainDataAssembler: is injected
+SprintRepositoryJpa "1"--> "*"SprintJpa: has
 
 interface ISprintJpaRepository {
 + findById(sprintId)
 + existsByStatus(sprintStatus)
 }
+ISprintJpaRepository <|-- CrudRepository: extends
 
 interface ISprintFactory{
 + createSprint(projectCode, sprintId, sprintNumber, period)
 }
+ISprintFactory <|.. SprintFactory: implements
 
 class SprintFactory{
 + createSprint(projectCode, sprintId, sprintNumber, period)
 }
+SprintFactory ..> Sprint: creates
 
 class Sprint {
 - sprintId
@@ -61,30 +73,35 @@ class SprintDomainDataAssembler{
 + toData(sprint)
 + toDomain(sprintJpa)
 }
+SprintDomainDataAssembler ..> SprintJpa: creates
+SprintDomainDataAssembler <.. ISprintFactory: is injected
 
 interface IUserStoryRepository {
 + getListOfUsWithMatchingIds(usId)
 }
+IUserStoryRepository <|.. UserStoryRepositoryJpa: implements
 
 class UserStoryRepositoryJpa {
 - iUserStoryJpaRepository
 - userStoryDomainDataAssembler
 + findById(usId)
-+ existsByStatus(usStatus)
 }
+UserStoryRepositoryJpa <.. IUserStoryJpaRepository: is injected
 
 interface IUserStoryJpaRepository {
 + findById(usId)
-+ existsByStatus(usStatus)
 }
+IUserStoryJpaRepository <|-- CrudRepository: extends
 
 interface IFactoryUserStory{
 + createUserStory(usNumber, usText, actor, acceptanceCriteria, projectCode)
 }
+IFactoryUserStory <|.. FactoryUserStory: implements
 
 class FactoryUserStory{
 + createUserStory(usNumber, usText, actor, acceptanceCriteria, projectCode)
 }
+FactoryUserStory ..> UserStory: creates
 
 class UserStory {
 - usId
@@ -103,6 +120,8 @@ class UserStoryDomainDataAssembler{
 + toData(userStory))
 + toDomain(userStoryJpa)
 }
+UserStoryDomainDataAssembler ..> UserStoryJpa: creates
+UserStoryDomainDataAssembler <.. IFactoryUserStory: is injected
 
 class SprintStatusChangeDto {
 + sprintId
@@ -110,29 +129,6 @@ class SprintStatusChangeDto {
 }
 
 interface CrudRepository {
-+ findById(id)
 }
 
-
-SprintWebController <.. SprintStatusChangeService: is injected
-SprintStatusChangeService ..> SprintStatusChangeDto: uses
-SprintStatusChangeService <.. ISprintRepository: is injected
-SprintStatusChangeService <.. IUserStoryRepository: is injected
-IUserStoryRepository <|.. UserStoryRepositoryJpa: implements
-ISprintRepository <|.. SprintRepositoryJpa: implements
-SprintRepositoryJpa <.. ISprintJpaRepository: is injected
-ISprintJpaRepository <|-- CrudRepository: extends
-SprintRepositoryJpa <.. SprintDomainDataAssembler: is injected
-SprintDomainDataAssembler ..> SprintJpa: creates
-SprintDomainDataAssembler <.. ISprintFactory: is injected
-ISprintFactory <|.. SprintFactory: implements
-SprintFactory ..> Sprint: creates
-SprintRepositoryJpa "1"--> "*"SprintJpa: has
-UserStoryRepositoryJpa <.. IUserStoryJpaRepository: is injected
-UserStoryDomainDataAssembler <.. UserStoryRepositoryJpa: is injected
-UserStoryRepositoryJpa "1"--> "*"UserStoryJpa: has
-IFactoryUserStory <|.. FactoryUserStory: implements
-FactoryUserStory ..> UserStory: creates
-UserStoryDomainDataAssembler <.. IFactoryUserStory: is injected
-IUserStoryJpaRepository <|-- CrudRepository: extends
 @enduml
