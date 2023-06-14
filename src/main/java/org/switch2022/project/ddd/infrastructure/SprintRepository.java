@@ -122,7 +122,8 @@ public class SprintRepository implements ISprintRepository {
      * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
      *
      * @param sprintStatus SprintStatus to look for in the sprint list.
-     * @return true if at least one instance of Sprint with a given status already exists in the list, and false otherwise.
+     * @return true if at least one instance of Sprint with a given status already exists in the list,
+     * and false otherwise.
      */
     public boolean existsByStatus(SprintStatus sprintStatus) {
         boolean exists = false;
