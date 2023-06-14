@@ -21,6 +21,7 @@ const ListSprints = () => {
 
     // Holds the currently selected project.
     const selectedProject = state.detailedProject;
+    const projectCode = selectedProject.code;
 
     // Checks if the project's end date has already passed.
     const isProjectEndDatePassed = new Date(selectedProject?.endDate) < new Date();
@@ -30,7 +31,7 @@ const ListSprints = () => {
 
     // Fetch the sprints data when the 'dispatch' function changes, allowing the display of updated info.
     useEffect(() => {
-        getSprintsFromProject(dispatch)
+        getSprintsFromProject(dispatch, projectCode)
     }, [dispatch]);
 
     /**
@@ -38,12 +39,21 @@ const ListSprints = () => {
      * @returns {JSX.Element} The table body JSX element.
      */
     const sprintsTable = () => {
+        // Create new array with the info shown on sprints list table.
+        const data = tableBody.map(sprint => {
+            return {
+                sprintNumber: sprint.number,
+                sprintStatus: sprint.status,
+                sprintStartDate: sprint.startDate,
+                sprintEndDate: sprint.endDate
+            }
+        })
         let table;
         // If there are sprints in the selected project...
-        if (tableBody.length > 0) {
+        if (data.length > 0) {
             // Allows the selection of a specific sprint from list.
             const onClickSelectSprint = (sprintIndex) => {
-                if (tableBody.length > sprintIndex) {
+                if (data.length > sprintIndex) {
                     const selectedSprint = tableBody[sprintIndex];
                     dispatch(setCurrentSprint(selectedSprint));
                 }
@@ -53,7 +63,7 @@ const ListSprints = () => {
             table = (
                 <table className='table'>
                     <TableHeader headers={tableHeader}/>
-                    <TableBody body={tableBody} onClick={onClickSelectSprint}/>
+                    <TableBody body={data} onClick={onClickSelectSprint}/>
                 </table>)
 
         } else {

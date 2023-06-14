@@ -86,7 +86,7 @@ public class Sprint implements Entity<Sprint> {
     /**
      * This method adds a new User Story to the list of user stories in sprint
      *
-     * @param usId   from the new User Story to be added
+     * @param usId from the new User Story to be added
      * @return TRUE if the User Story was successfully added to the list and FALSE
      * otherwise.
      */
@@ -158,6 +158,7 @@ public class Sprint implements Entity<Sprint> {
 
     /**
      * Getter method that returns the sprintId
+     *
      * @return a String representing the sprintId.
      */
     public String getSprintId() {
@@ -166,6 +167,7 @@ public class Sprint implements Entity<Sprint> {
 
     /**
      * Getter method that returns the Sprint projectCode.
+     *
      * @return a String representing the projectCode.
      */
     public String getProjectCode() {
@@ -174,6 +176,7 @@ public class Sprint implements Entity<Sprint> {
 
     /**
      * Getter method that returns the Sprint startDate.
+     *
      * @return a String representing the startDate.
      */
     public String getStartDate() {
@@ -182,6 +185,7 @@ public class Sprint implements Entity<Sprint> {
 
     /**
      * Getter method that returns the Sprint endDate.
+     *
      * @return a String representing the endDate.
      */
     public String getEndDate() {
@@ -203,6 +207,7 @@ public class Sprint implements Entity<Sprint> {
 
     /**
      * This method returns the full sprint number (format: S00d).
+     *
      * @return a String with that represents the sprintNUmber.
      */
     public String getFullSprintNumber() {
@@ -319,9 +324,10 @@ public class Sprint implements Entity<Sprint> {
 
     /**
      * This method checks if the sprint status is valid
+     *
      * @return true if the sprint status is OPEN, false otherwise.
      */
     public boolean isOpen() {
-       return this.status == SprintStatus.OPEN;
+        return this.status == SprintStatus.OPEN;
     }
 }

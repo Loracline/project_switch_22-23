@@ -20,11 +20,11 @@ const menu = [
     {key: 'allocateResource', label: "allocate resource", hidden: true},
     {key: 'sprint', label: "sprint", hidden: false},
     {key: 'sprintBacklog', label: "sprint Backlog", hidden: true},
-    {key: 'scrumBoard', label: "scrum board", hidden: true}
+    {key: 'scrumBoard', label: "scrum board", hidden: false}
 ]
 const nav = {selectedMenu: menu[0], menu: menu,}
 const detailedProject = null;
-const selectedSprint = null;
+const detailedSprint = null;
 const AppProvider = ({children}) => {
     const headersProjects = ["Project code", "Project name", "Customer", "Status", "Start date", "End date"];
     const usHeaders = ["US Number", "US Description", "US Status"]
@@ -44,7 +44,7 @@ const AppProvider = ({children}) => {
         usHeaders,
         projects: [],
         detailedProject,
-        selectedSprint,
+        detailedSprint,
         customers,
         businessSectors,
         typologies,

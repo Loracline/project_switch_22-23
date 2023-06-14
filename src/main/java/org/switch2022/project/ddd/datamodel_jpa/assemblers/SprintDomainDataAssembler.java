@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.UserStoryInSprintJpa;
-import org.switch2022.project.ddd.domain.model.project_resource.IProjectResourceFactory;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintFactory;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.model.sprint.SprintFactory;
 import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.utils.Utils;
@@ -25,6 +23,7 @@ import java.util.Locale;
 public class SprintDomainDataAssembler {
     @Autowired
     ISprintFactory factory;
+
     /**
      * Converts a Sprint instance to a SprintJpa instance.
      *
@@ -40,22 +39,23 @@ public class SprintDomainDataAssembler {
                 sprint.getUserStoriesInSprint();
         List<UserStoryInSprintJpa> userStoriesInSprintJpa =
                 sprintJpa.getUserStoriesInSprint();
-        for (UserStoryInSprint userStory: userStoriesInSprint) {
+        for (UserStoryInSprint userStory : userStoriesInSprint) {
             UserStoryInSprintJpa userStoryInSprintJpa =
                     new UserStoryInSprintJpa(userStory.getUsId().getUserStoryId(),
-                    userStory.getEffort(),sprintJpa);
+                            userStory.getEffort(), sprintJpa);
             userStoriesInSprintJpa.add(userStoryInSprintJpa);
         }
         return sprintJpa;
     }
+
     /**
      * Converts a SprintJpa instance to a Sprint instance.
      *
      * @param sprintJpa The SprintJpa instance to be converted.
      * @return The converted Sprint instance.
      */
-    public Sprint toDomain (SprintJpa sprintJpa) {
-               int projectNumber = Utils.getIntFromAlphanumericString
+    public Sprint toDomain(SprintJpa sprintJpa) {
+        int projectNumber = Utils.getIntFromAlphanumericString
                 (sprintJpa.getProjectCode(), "p");
         Code projectCode = new Code(projectNumber);
 
@@ -66,7 +66,7 @@ public class SprintDomainDataAssembler {
         SprintId sprintId = new SprintId(projectCode.getCode(), sprintNumber.getSprintNumber());
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        formatter = formatter.withLocale( Locale.UK );
+        formatter = formatter.withLocale(Locale.UK);
         LocalDate startDate = LocalDate.parse(sprintJpa.getStartDate(), formatter);
         LocalDate endDate = LocalDate.parse(sprintJpa.getEndDate(), formatter);
         Period period = new Period(startDate, endDate);

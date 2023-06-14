@@ -1,5 +1,5 @@
 @startuml
-title Logic view, level 1
+title Logic View - Level 1
 () "User REST API" as API
 () "UI" as UI
 component "<<component>> \n <<C4 Context>> \n G4" as G4 {
@@ -11,7 +11,7 @@ API -- " "
 @enduml
 
 @startuml
-title Logic view, level 2
+title Logic View - Level 2
 () "User REST API" as API
 () "UI" as UI
 component "<<System G4>>" as G4 {
@@ -34,18 +34,18 @@ be -(0- h2: SQL API
 @enduml
 
 @startuml
-title Logic view, level 3
+title Logic View - Level 3
 () "User REST API" as API
 () "UI" as UI
 component "<<System G4>>" as G4 {
 port " "
+port "  "
 
 package "Frameworks" {
 
   [ <<component>>\n <<component(C4)>>\n        Routers] as R
   database "<<component>> \n <<component(C4)>> \n        DB H2" as DB
-
-  }
+}
 
 component "       <<component>> \n DataDomainAssembler" as schema
 
@@ -67,8 +67,9 @@ Serv -(0- Rep : Repositories API
 Rep -(0- schema: Assembler API
 schema -0)- DB: Assembler API
 API -- " "
-UI -- " "
+UI -- "  "
 " " -- R
+"  " -- R
 @enduml
 
 

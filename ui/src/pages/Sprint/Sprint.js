@@ -15,8 +15,9 @@ import FailureMessage from "../../components/InformationMessage/FailureMessage";
  */
 const Sprint = () => {
     const {state, dispatch} = useContext(AppContext);
-    const {selectedSprint, messageSuccess, messageFailure} = state;
-    const data = selectedSprint;
+    const {detailedProject, detailedSprint, messageSuccess, messageFailure} = state;
+    const data = detailedSprint;
+    const projectName = detailedProject.projectName;
 
     const [showConfirmation, setShowConfirmation] = useState(false);
     const isOpen = data?.status === "open";
@@ -62,8 +63,8 @@ const Sprint = () => {
             <section className="sprintCard">
                 <div className="sprintInfo">
                     <div className="sprintContent">
-                        <h2>Sprint Number: {data?.['sprintNumber']}</h2>
-                        <p>Project Name: {data?.['projectName']}</p>
+                        <h2>Sprint Number: {data?.['number']}</h2>
+                        <p>Project Name: {projectName}</p>
                         <p>Start date: {data?.['startDate']}</p>
                         <p>End date: {data?.['endDate']}</p>
                     </div>
