@@ -280,7 +280,7 @@ public class UserStoriesInSprintServiceTest {
         List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
         userStories.add(factoryUserStory.createUserStory(new UsNumber("023"), new UsText("As an Administrator, I want to create a " +
                 "Project" + " in the web UI."), new Actor("manager"), acceptanceCriteria, new Code(123)));
-        
+
         ISprintFactory sprintFactory = new SprintFactory();
         Sprint sprint = sprintFactory.createSprint(new Code(123), new SprintId("P123",
                 "S001"), new SprintNumber(1), new Period(LocalDate.now(), 2));

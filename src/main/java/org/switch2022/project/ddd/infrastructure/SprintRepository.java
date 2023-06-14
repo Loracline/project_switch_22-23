@@ -179,4 +179,21 @@ public class SprintRepository implements ISprintRepository {
         Optional<Sprint> sprint = findById(sprintId);
         return sprint.isPresent() && sprint.get().hasUserStory(usId);
     }
+
+    /**
+     * Finds a Sprint object based on the provided project code and status.
+     *
+     * @param projectCode The project code to search for.
+     * @param status      The status of the Sprint to search for.
+     * @return An Optional containing the found Sprint object, or an empty Optional if no matching Sprint is found.
+     */
+    public Optional<Sprint> findByProjectCodeAndStatus(Code projectCode, SprintStatus status) {
+        Optional<Sprint> sprintOptional = Optional.empty();
+        for (Sprint sprint : this.sprints) {
+            if (sprint.hasProjectCode(projectCode) && sprint.hasStatus(status)) {
+                sprintOptional = Optional.of(sprint);
+            }
+        }
+        return sprintOptional;
+    }
 }

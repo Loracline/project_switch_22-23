@@ -68,4 +68,14 @@ public interface ISprintRepository {
      * @return true if the userStory is present
      */
     boolean hasUsId(SprintId sprintId, UsId usId);
+
+    /**
+     * Retrieves a Sprint object by its ProjectCode and status.
+     *
+     * @param projectCode the project code of the sprint
+     * @param status the status of the sprint
+     * @return An Optional object containing the found Sprint, or an empty Optional if no Sprint is found.
+     */
+
+    Optional<Sprint> findByProjectCodeAndStatus(Code projectCode,SprintStatus status);
 }

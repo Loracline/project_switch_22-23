@@ -529,4 +529,79 @@ class SprintRepositoryTest {
         //Assert
         assertFalse(result);
     }
+    /**
+     * Method: findByProjectCodeAndStatus
+     * scenario 1: returns an empty sprint due to repository being empty
+     */
+
+    @Test
+    void ensureSprintIsEmptyBecauseRepositoryIsEmpty_findByProjectCodeAndStatus() {
+        //Arrange
+        SprintRepository sprintRepository = new SprintRepository();
+        SprintStatus status= mock(SprintStatus.class);
+        Code projectCode = mock(Code.class);
+
+        Optional<Sprint> expected = Optional.empty();
+        //Act
+        Optional<Sprint> result = sprintRepository.findByProjectCodeAndStatus(projectCode,status);
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 2: returns an empty sprint due to projectCode not matching
+     */
+    @Test
+    void ensureSprintIsEmptyBecauseProjectCodeNotMatch() {
+        //Arrange
+        SprintRepository sprintRepository = new SprintRepository();
+        SprintStatus status= mock(SprintStatus.class);
+        Code projectCode = mock(Code.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        sprintRepository.save(sprintDouble);
+        when(sprintDouble.hasProjectCode(projectCode)).thenReturn(false);
+        Optional<Sprint> expected = Optional.empty();
+        //Act
+        Optional<Sprint> result = sprintRepository.findByProjectCodeAndStatus(projectCode,status);
+        //Assert
+        assertEquals(expected, result);
+    }
+    /**
+     * scenario 3: returns an empty sprint due to sprintStatus not matching
+     */
+    @Test
+    void ensureSprintIsEmptyBecauseSprintStatusNotMatch() {
+        //Arrange
+        SprintRepository sprintRepository = new SprintRepository();
+        SprintStatus status= mock(SprintStatus.class);
+        Code projectCode = mock(Code.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        sprintRepository.save(sprintDouble);
+        when(sprintDouble.hasProjectCode(projectCode)).thenReturn(true);
+        when(sprintDouble.hasStatus(status)).thenReturn(false);
+        Optional<Sprint> expected = Optional.empty();
+        //Act
+        Optional<Sprint> result = sprintRepository.findByProjectCodeAndStatus(projectCode,status);
+        //Assert
+        assertEquals(expected, result);
+    }
+    /**
+     * scenario 4: returns a sprint
+     */
+    @Test
+    void ensureSprintIsRetrieved() {
+        //Arrange
+        SprintRepository sprintRepository = new SprintRepository();
+        SprintStatus status= mock(SprintStatus.class);
+        Code projectCode = mock(Code.class);
+        Sprint sprintDouble = mock(Sprint.class);
+        sprintRepository.save(sprintDouble);
+        when(sprintDouble.hasProjectCode(projectCode)).thenReturn(true);
+        when(sprintDouble.hasStatus(status)).thenReturn(true);
+        Optional<Sprint> expected = Optional.of(sprintDouble);
+        //Act
+        Optional<Sprint> result = sprintRepository.findByProjectCodeAndStatus(projectCode,status);
+        //Assert
+        assertEquals(expected, result);
+    }
 }
