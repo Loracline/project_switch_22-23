@@ -18,7 +18,7 @@ const menu = [
     {key: 'project', label: "project", hidden: true},
     {key: 'about', label: "about"},
     {key: 'allocateResource', label: "allocate resource", hidden: true},
-    {key: 'sprint', label: "sprint", hidden: false},
+    {key: 'sprint', label: "sprint", hidden: true},
     {key: 'sprintBacklog', label: "sprint Backlog", hidden: true},
     {key: 'scrumBoard', label: "scrum board", hidden: false}
 ]
@@ -51,6 +51,7 @@ const AppProvider = ({children}) => {
         loading: false,
         messageFailure: '',
         messageSuccess: '',
+        isSprintOpen: false
     }
 
     const [state, dispatch] = useReducer(reducer, initialState);
