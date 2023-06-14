@@ -428,14 +428,15 @@ export function getSprintsFromProjectSuccessfully(sprintsFromProject) {
 }
 
 export const FETCH_SPRINTS_STARTED = 'FETCH_SPRINTS_STARTED';
-export function getSprintsFromProject(dispatch) {
+export function getSprintsFromProject(dispatch, projectCode) {
     const action = {
         type: FETCH_SPRINTS_STARTED
     }
     dispatch(action);
     fetchSprintsFromProject(
         (res) => dispatch(getSprintsFromProjectSuccessfully(res)),
-        (err) => fetchFailure(err.message));
+        (err) => fetchFailure(err.message),
+        projectCode);
 }
 
 
