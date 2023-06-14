@@ -16,6 +16,7 @@ import org.switch2022.project.ddd.domain.model.user_story.IFactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.ProjectCodeValueObjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.UserStoryStatusDto;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
@@ -188,8 +189,8 @@ public class UserStoriesInSprintServiceTest {
         UserStory userStoryDouble = mock(UserStory.class);
         Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
         when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
-        when(userStoryDouble.hasProjectCode(any())).thenReturn(true);
         when(sprintRepository.hasStatus(any(), any())).thenReturn(true);
+        when(sprintRepository.hasUsId(any(), any())).thenReturn(true);
         when(userStoryRepository.save(userStoryDouble)).thenReturn(true);
 
         //Act
@@ -253,7 +254,7 @@ public class UserStoriesInSprintServiceTest {
         UserStory userStoryDouble = mock(UserStory.class);
         Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
         when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
-        when(userStoryDouble.hasProjectCode(any())).thenReturn(false);
+        when(sprintRepository.hasUsId(any(), any())).thenReturn(false);
         when(sprintRepository.hasStatus(any(), any())).thenReturn(true);
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
                 service.changeUserStoryStatus(userStoryStatusDto));
@@ -262,6 +263,61 @@ public class UserStoriesInSprintServiceTest {
 
         //ACT
         String result = exception.getMessage();
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: getScrumBoard
+     * scenario 1: returns a list of dtos
+     */
+    @Test
+    public void ensureTheScrumBoardIsRetrieved() {
+        //ARRANGE
+        IFactoryUserStory factoryUserStory = new FactoryUserStory();
+        List<UserStory> userStories = new ArrayList<>();
+        List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
+        userStories.add(factoryUserStory.createUserStory(new UsNumber("023"), new UsText("As an Administrator, I want to create a " +
+                "Project" + " in the web UI."), new Actor("manager"), acceptanceCriteria, new Code(123)));
+        
+        ISprintFactory sprintFactory = new SprintFactory();
+        Sprint sprint = sprintFactory.createSprint(new Code(123), new SprintId("P123",
+                "S001"), new SprintNumber(1), new Period(LocalDate.now(), 2));
+
+        when(sprintRepository.findById(any())).thenReturn(Optional.ofNullable(sprint));
+        when(userStoryRepository.getListOfUsWithMatchingIds(anyList())).thenReturn(userStories);
+
+        List<UserStoryDto> expected = new ArrayList<>();
+        expected.add(new UserStoryDto("us023", "As an Administrator, I want to create a " +
+                "Project" + " in the web UI.", "Planned"));
+
+        Code projectCode = mock(Code.class);
+        ProjectCodeValueObjectDto dto = mock(ProjectCodeValueObjectDto.class);
+        when(dto.getCode()).thenReturn(projectCode);
+        when(sprintRepository.findByProjectCodeAndStatus
+                (projectCode, SprintStatus.OPEN)).thenReturn(Optional.ofNullable(sprint));
+        //ACT
+        List<UserStoryDto> result = service.getScrumBoard(dto);
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 2: returns an empty list
+     */
+    @Test
+    public void ensureTheScrumBoardIsNotRetrieved() {
+        //ARRANGE
+        List<UserStoryDto> expected = new ArrayList<>();
+        Code projectCode = mock(Code.class);
+        ProjectCodeValueObjectDto dto = mock(ProjectCodeValueObjectDto.class);
+        when(dto.getCode()).thenReturn(projectCode);
+        when(sprintRepository.findByProjectCodeAndStatus
+                (projectCode, SprintStatus.OPEN)).thenReturn(Optional.empty());
+        //ACT
+        List<UserStoryDto> result = service.getScrumBoard(dto);
 
         //ASSERT
         assertEquals(expected, result);

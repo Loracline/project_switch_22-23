@@ -12,6 +12,7 @@ import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.dto.ProjectCodeValueObjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.UserStoryStatusDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
@@ -161,7 +162,7 @@ public class UserStoriesInSprintService {
      * Validates if the given user story belongs to the specified project code and sprint.
      * Throws a RuntimeException if the user story does not belong to the sprint.
      *
-     * @param usId the UsId of the user story to be validated
+     * @param usId     the UsId of the user story to be validated
      * @param sprintId the SprintId of the sprint to be checked
      * @return true if the user story belongs to the specified project code and sprint, false otherwise
      * @throws RuntimeException if the user story does not belong to the sprint
@@ -173,4 +174,18 @@ public class UserStoriesInSprintService {
         return sprintRepository.hasUsId(sprintId, usId);
     }
 
+    /**
+     * Retrieves the user stories for the Scrum board associated with the specified project code.
+     *
+     * @param dto The ProjectCodeValueObjectDto containing the project code for the Scrum board.
+     * @return A list of UserStoryDto objects representing the user stories on the Scrum board, or an empty list if no Scrum board is found.
+     */
+    public List<UserStoryDto> getScrumBoard(ProjectCodeValueObjectDto dto) {
+        List<UserStoryDto> userStoryDtos = new ArrayList<>();
+        Optional<Sprint> optionalSprint = sprintRepository.findByProjectCodeAndStatus(dto.getCode(), SprintStatus.OPEN);
+    if (optionalSprint.isPresent()){
+        userStoryDtos= getSprintBacklog(optionalSprint.get().getSprintId());
+    }
+    return userStoryDtos;
+    }
 }
