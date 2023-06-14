@@ -17,6 +17,7 @@ import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.switch2022.project.ddd.dto.UserStoryStatusDto;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.time.LocalDate;
@@ -24,8 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
@@ -61,12 +61,12 @@ public class UserStoriesInSprintServiceTest {
         List<UserStory> userStories = new ArrayList<>();
         List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
         userStories.add(factoryUserStory.createUserStory(new UsNumber("023"), new UsText("As an Administrator, I want to create a " +
-                "Project" + " in the web UI."), new Actor("manager"),acceptanceCriteria, new Code(123)));
+                "Project" + " in the web UI."), new Actor("manager"), acceptanceCriteria, new Code(123)));
 
         String sprintId = "p123_s001";
         ISprintFactory sprintFactory = new SprintFactory();
-        Sprint sprint = sprintFactory.createSprint(new Code(123),new SprintId("P123",
-                "S001"),new SprintNumber(1),new Period(LocalDate.now(),2));
+        Sprint sprint = sprintFactory.createSprint(new Code(123), new SprintId("P123",
+                "S001"), new SprintNumber(1), new Period(LocalDate.now(), 2));
 
         when(sprintRepository.findById(any())).thenReturn(Optional.ofNullable(sprint));
         when(userStoryRepository.getListOfUsWithMatchingIds(anyList())).thenReturn(userStories);
@@ -94,16 +94,16 @@ public class UserStoriesInSprintServiceTest {
         List<UserStory> userStories = new ArrayList<>();
         List<AcceptanceCriteria> acceptanceCriteria = new ArrayList<>();
         userStories.add(factoryUserStory.createUserStory(new UsNumber("023"), new UsText("As an Administrator, I want to create a " +
-                "Project" + " in the web UI."), new Actor("manager"),acceptanceCriteria, new Code(123)));
+                "Project" + " in the web UI."), new Actor("manager"), acceptanceCriteria, new Code(123)));
         userStories.add(factoryUserStory.createUserStory(new UsNumber("024"), new UsText("As an Administrator, I want to create a " +
-                "Project" + " in the web UI."), new Actor("manager"),acceptanceCriteria, new Code(123)));
+                "Project" + " in the web UI."), new Actor("manager"), acceptanceCriteria, new Code(123)));
         userStories.add(factoryUserStory.createUserStory(new UsNumber("025"), new UsText("As an Administrator, I want to create a " +
-                "Project" + " in the web UI."), new Actor("manager"),acceptanceCriteria, new Code(123)));
+                "Project" + " in the web UI."), new Actor("manager"), acceptanceCriteria, new Code(123)));
 
         String sprintId = "p123_s001";
         ISprintFactory sprintFactory = new SprintFactory();
-        Sprint sprint = sprintFactory.createSprint(new Code(123),new SprintId("P123",
-                "S001"),new SprintNumber(1),new Period(LocalDate.now(),2));
+        Sprint sprint = sprintFactory.createSprint(new Code(123), new SprintId("P123",
+                "S001"), new SprintNumber(1), new Period(LocalDate.now(), 2));
 
         when(sprintRepository.findById(any())).thenReturn(Optional.ofNullable(sprint));
         when(userStoryRepository.getListOfUsWithMatchingIds(anyList())).thenReturn(userStories);
@@ -135,8 +135,8 @@ public class UserStoriesInSprintServiceTest {
 
         String sprintId = "p123_s001";
         ISprintFactory sprintFactory = new SprintFactory();
-        Sprint sprint = sprintFactory.createSprint(new Code(123),new SprintId("P123",
-                "S001"),new SprintNumber(1),new Period(LocalDate.now(),2));
+        Sprint sprint = sprintFactory.createSprint(new Code(123), new SprintId("P123",
+                "S001"), new SprintNumber(1), new Period(LocalDate.now(), 2));
 
         when(sprintRepository.findById(any())).thenReturn(Optional.ofNullable(sprint));
         when(userStoryRepository.getListOfUsWithMatchingIds(anyList())).thenReturn(userStories);
@@ -175,5 +175,95 @@ public class UserStoriesInSprintServiceTest {
         //ASSERT
         assertEquals(expected, result);
     }
-}
 
+    /**
+     * Method: changeUserStoryStatus
+     * scenario 1: returns true
+     */
+    @Test
+    void ensureTheStatusOfAUserStoryIsChangedSuccessfully() {
+        //Arrange
+        UserStoryStatusDto userStoryStatusDto =
+                new UserStoryStatusDto("p001_us001", "p001_s_001", "RUNNING");
+        UserStory userStoryDouble = mock(UserStory.class);
+        Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
+        when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
+        when(userStoryDouble.hasProjectCode(any())).thenReturn(true);
+        when(sprintRepository.hasStatus(any(), any())).thenReturn(true);
+        when(userStoryRepository.save(userStoryDouble)).thenReturn(true);
+
+        //Act
+        boolean result = service.changeUserStoryStatus(userStoryStatusDto);
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * scenario 2: returns false
+     */
+    @Test
+    void ensureTheStatusOfAUserStoryIsChangedUnsuccessfully() {
+        //Arrange
+        UserStoryStatusDto userStoryStatusDto =
+                new UserStoryStatusDto("p001_us001", "p001_s_001", "RUNNING");
+        UserStory userStoryDouble = mock(UserStory.class);
+        Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
+        when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
+        when(sprintRepository.hasStatus(any(), any())).thenReturn(false);
+
+        //Act
+        boolean result = service.changeUserStoryStatus(userStoryStatusDto);
+        //Assert
+        assertFalse(result);
+    }
+
+    /**
+     * scenario 3: returns an exception because there is no userStory with that Id
+     */
+
+    @Test
+    void ensureTheStatusOfAUserStoryIsChangedUnsuccessfully_NoUserStory() {
+        //Arrange
+        UserStoryStatusDto userStoryStatusDto =
+                new UserStoryStatusDto("p001_us001", "p001_s_001", "RUNNING");
+
+        Optional<UserStory> userStoryOptional = Optional.empty();
+        when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                service.changeUserStoryStatus(userStoryStatusDto));
+
+        String expected = "No user story with that id";
+
+        //ACT
+        String result = exception.getMessage();
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+
+    /**
+     * scenario 4: returns an exception because the userStory and the sprint don't belong to the same project
+     */
+    @Test
+    void ensureTheStatusOfAUserStoryIsChangedUnsuccessfully_NotSameProjectCode() {
+        //Arrange
+        UserStoryStatusDto userStoryStatusDto =
+                new UserStoryStatusDto("p001_us001", "p001_s_001", "RUNNING");
+        UserStory userStoryDouble = mock(UserStory.class);
+        Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
+        when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
+        when(userStoryDouble.hasProjectCode(any())).thenReturn(false);
+        when(sprintRepository.hasStatus(any(), any())).thenReturn(true);
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                service.changeUserStoryStatus(userStoryStatusDto));
+
+        String expected = "The User Story doesn't belong to the sprint";
+
+        //ACT
+        String result = exception.getMessage();
+
+        //ASSERT
+        assertEquals(expected, result);
+    }
+}
