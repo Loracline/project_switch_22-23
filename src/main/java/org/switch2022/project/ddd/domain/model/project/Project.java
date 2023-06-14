@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.project;
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -365,12 +366,16 @@ public class Project implements Entity<Project> {
         this.period = new Period(startDate, endDate);
     }
 
-    /*
-    public void setProjectHistory(Project project, BigDecimal budget) {
-        if (project.hasStatus(ProjectStatus.CLOSED)) {
+    public void setProjectHistory(BigDecimal budget,
+                                  NumberOfPlannedSprints numberOfPlannedSprints,
+                                  int sprintDuration, LocalDate startDate, LocalDate endDate) {
+        if (this.projectStatus == ProjectStatus.CLOSED) {
             this.budget = new Budget(budget);
+            this.numberOfPlannedSprints = numberOfPlannedSprints;
+            this.sprintDuration = new SprintDuration(sprintDuration);
+            this.setPeriod(startDate, endDate);
         }
-    }*/
+    }
 }
 
 
