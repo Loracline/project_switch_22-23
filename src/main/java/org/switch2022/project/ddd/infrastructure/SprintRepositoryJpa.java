@@ -9,6 +9,7 @@ import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
@@ -90,6 +91,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
         String status = sprintStatus.getStatus();
         return iSprintJpaRepository.existsByStatus(status);
     }
+
     /**
      * Checks if a Sprint with the given SprintId exists in the repository.
      *
@@ -100,6 +102,7 @@ public class SprintRepositoryJpa implements ISprintRepository {
     public boolean existsById(SprintId sprintId) {
         return iSprintJpaRepository.existsById(sprintId.getSprintId());
     }
+
     /**
      * This method checks if one given sprint has the status given
      *
@@ -111,5 +114,20 @@ public class SprintRepositoryJpa implements ISprintRepository {
         String sprintStatus = status.getStatus();
         String id = sprintId.getSprintId();
         return iSprintJpaRepository.existsBySprintIdAndStatus(id, sprintStatus);
+    }
+
+    /**
+     * This method checks if the userStory is in the sprint
+     *
+     * @param usId     the id of the userStory
+     * @param sprintId the id of the sprint
+     * @return true if the userStory is present
+     */
+
+    @Override
+    public boolean hasUsId(SprintId sprintId, UsId usId) {
+        String userStoryId = usId.getUserStoryId();
+        String id = sprintId.getSprintId();
+        return iSprintJpaRepository.existsBySprintIdAndAndUserStoriesInSprintContains(id, userStoryId);
     }
 }

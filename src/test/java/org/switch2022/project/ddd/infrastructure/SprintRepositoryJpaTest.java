@@ -258,4 +258,48 @@ class SprintRepositoryJpaTest {
         // ASSERT
         assertTrue(result);
     }
+    /**
+     * Method: hasUsId
+     * Scenario 1: the sprint has the usId, returns true
+     */
+
+    @Test
+    void ensureThatSprintHasTheGivenUsId() {
+        //Arrange
+        SprintId sprintId = mock(SprintId.class);
+        when(sprintId.getSprintId()).thenReturn("p001_s001");
+        UsId usId = mock(UsId.class);
+        when(usId.getUserStoryId()).thenReturn("p001_us001");
+        when(iSprintJpaRepository.existsBySprintIdAndAndUserStoriesInSprintContains(sprintId.getSprintId(),
+                usId.getUserStoryId()))
+                .thenReturn(true);
+
+        //Act
+        boolean result = sprintRepositoryJpa.hasUsId(sprintId, usId);
+
+        //Assert
+        assertTrue(result);
+    }
+    /**
+     * Method: hasUsId
+     * Scenario 2: the sprint has the usId, returns false
+     */
+
+    @Test
+    void ensureThatSprintHasNotTheGivenUsId() {
+        //Arrange
+        SprintId sprintId = mock(SprintId.class);
+        when(sprintId.getSprintId()).thenReturn("p001_s001");
+        UsId usId = mock(UsId.class);
+        when(usId.getUserStoryId()).thenReturn("p001_us001");
+        when(iSprintJpaRepository.existsBySprintIdAndAndUserStoriesInSprintContains(sprintId.getSprintId(),
+                usId.getUserStoryId()))
+                .thenReturn(false);
+
+        //Act
+        boolean result = sprintRepositoryJpa.hasUsId(sprintId, usId);
+
+        //Assert
+        assertFalse(result);
+    }
 }
