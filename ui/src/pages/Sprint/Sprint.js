@@ -33,7 +33,7 @@ const Sprint = () => {
     };
 
     const handleUpdateSprintStatus = (status) => {
-        dispatch(updateSprintStatus(data?.id, status));
+        updateSprintStatus(dispatch, data?.id, status);
     };
 
     const handleUpdateSprintButton = (status) => {
@@ -74,7 +74,7 @@ const Sprint = () => {
                     </div>
                     <div className="sprintButtons">
                         <Button
-                            onClick={() => handleUpdateSprintButton('Open')}
+                            onClick={() => handleUpdateSprintButton('open')}
                             text="Open"
                             isDisabled={isOpen}
                         />

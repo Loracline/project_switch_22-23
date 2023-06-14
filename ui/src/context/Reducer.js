@@ -215,16 +215,14 @@ const reducer = (state, action) => {
         case UPDATE_SPRINT_STATUS_SUCCESS:
             return {
                 ...state,
-                sprints: state.sprints.map((sprint, index) =>
-                    index === action.payload.sprintId ? action.payload.status : sprint
-                ),
+                isSprintOpen: true
             };
 
         case UPDATE_SPRINT_STATUS_FAILURE:
             return {
                 ...state,
-                messageFailure: action.payload.error,
-                loading: false,
+                messageFailure: action.payload,
+
             };
 
         default:

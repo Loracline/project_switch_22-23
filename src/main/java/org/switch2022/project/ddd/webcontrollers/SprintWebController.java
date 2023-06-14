@@ -77,8 +77,8 @@ public class SprintWebController {
      */
 
     @PatchMapping("/{sprintId}")
-    @ResponseBody
-    public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto) {
+    public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto,
+                                                     @PathVariable String sprintId) {
         sprintStatusChangeService.changeSprintStatus(sprintStatusDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
