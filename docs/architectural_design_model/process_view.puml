@@ -26,7 +26,7 @@ be --> "<<Component>> \n <<Container (C4)>> \n G4-FE": informs about operation s
 
 @startuml
 skinparam sequenceMessageAlign center
-title Process View - Level 3
+title Process View - Level 2
 
 autonumber
 
@@ -47,4 +47,68 @@ deactivate db
 be --> fe: 201/40?
 [o<-- fe: Informs operation success
 deactivate fe
+@enduml
+
+@startuml
+skinparam sequenceMessageAlign center
+title Process View - Level 2
+
+autonumber
+
+participant Bootstrap as boot
+participant "<<Component: (C4)>> \n Routers :Routers" as router
+participant "<<Component (C4)>> \n AddUserToProjectController :Controllers" as controller
+participant "allocationDto : \n DTO" as dto
+participant "<<Component (C4)>> \n ResourceAllocationService :Services" as service
+participant "<<Component (C4)>> \n ProjectRepo :Repo \n Projects" as repop
+participant "<<Component (C4)>> \n accountRepo :Repo \n Accounts" as repoa
+participant "<<Component (C4)>> \n ProjectResourceRepo :Repo \n Resources" as repor
+participant "<<Component (C4)>> \n <<Database>> \n DB H2" as db
+participant "<<Component (C4)>> restUser :REST User" as api
+participant "resource :Model" as rmodel
+participant "addResource :Model" as addmodel
+participant "DataDomainAssembler" as assembler
+
+create db
+boot --> db: create(config)
+create repop
+boot --> repop: create(dbh2)
+create repoa
+boot --> repoa: create(dbh2)
+create repor
+boot --> repor: create(dbh2)
+create api
+boot --> api: create(config)
+create service
+boot --> service: create(repoProjects, repoAccounts, repoResources)
+create controller
+boot --> controller: create(service)
+create router
+boot --> router: create(controller)
+
+[o-> router: POST / allocate (allocate resources)
+router -> controller: addUserToProject(allocationDto)
+create dto
+controller -> dto: addUserToProject(allocationDtoJson)
+controller -> service: addUserToProject(allocationDto)
+service -> repop: isProjectValidForAllocation(code, period)
+repop --> service: true
+service -> repoa: isAccountValidForAllocation(email)
+repoa --> service: true
+service -> repor: isAllocationInfoValid(role, percentageOfAllocation,\n email, code, period)
+repor --> service: true
+create rmodel
+repor -> rmodel: create(resourceJson)
+repor --> service: resource
+create addmodel
+service --> addmodel: create(allocationDto.projectCode, allocationDto.accountEmail, ...)
+service -> repor: save(addResource)
+create assembler
+repor --> assembler: create(resource)
+repor -> db: save(resourceAssembler)
+repor --> service: true
+service --> controller: true
+controller --> router: 201/40?
+[o<-- router : 201/40?
+
 @enduml

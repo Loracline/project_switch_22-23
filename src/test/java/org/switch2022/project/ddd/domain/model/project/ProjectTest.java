@@ -603,10 +603,13 @@ class ProjectTest {
         Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Period periodDouble = mock(Period.class);
+        String message = "The project must be in either phase: INCEPTION, ELABORATION, " +
+                "CONSTRUCTION, TRANSITION or WARRANTY";
         //Act
-        boolean result = project.isPeriodAssigned(periodDouble);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> project.isPeriodAssigned(periodDouble));
         //Assert
-        assertFalse(result);
+        assertEquals(message, exception.getMessage());
     }
 
     /**
@@ -781,10 +784,15 @@ class ProjectTest {
                 projectTypologyId);
         Period periodDouble = new Period(LocalDate.of(2023, 1, 21),
                 LocalDate.of(2024, 1, 21));
+        String message = "The project must be in either phase: INCEPTION, ELABORATION, " +
+                "CONSTRUCTION, TRANSITION or WARRANTY";
+
         //Act
-        boolean result = project.isPeriodAssigned(periodDouble);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> project.isPeriodAssigned(periodDouble));
+
         //Assert
-        assertFalse(result);
+        assertEquals(message, exception.getMessage());
     }
 
     /**
@@ -938,10 +946,15 @@ class ProjectTest {
         Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         Budget budgetDouble = mock(Budget.class);
+        String message = "The project must be in either phase: INCEPTION, ELABORATION, " +
+                "CONSTRUCTION, TRANSITION or WARRANTY";
+
         //Act
-        boolean result = project.isBudgetAssigned(budgetDouble);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> project.isBudgetAssigned(budgetDouble));
+
         //Assert
-        assertFalse(result);
+        assertEquals(message, exception.getMessage());
     }
 
     /**
@@ -971,10 +984,14 @@ class ProjectTest {
         Project project = new Project(1, projectName, description, businessSectorId, customerTaxId,
                 projectTypologyId);
         NumberOfPlannedSprints numberOfPlannedSprintsDouble = mock(NumberOfPlannedSprints.class);
+        String message = "The project must be in either phase: INCEPTION, ELABORATION, " +
+                "CONSTRUCTION, TRANSITION or WARRANTY";
         //Act
-        boolean result = project.isNumberOfPlannedSprintsDefined(numberOfPlannedSprintsDouble);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> project.isNumberOfPlannedSprintsDefined(numberOfPlannedSprintsDouble));
+
         //Assert
-        assertFalse(result);
+        assertEquals(message, exception.getMessage());
     }
 
     /**
@@ -1248,5 +1265,159 @@ class ProjectTest {
 
         // Assert
         assertFalse(result);
+    }
+
+    /**
+     * Method getProjectName()
+     *
+     * Scenario 1: should return a String with the projectName
+     */
+    @Test
+    void ensureThatAStringWithTheProjectNameIsReturned() {
+        //Arrange
+        Name nameDouble = mock(Name.class);
+        Description descriptionDouble = mock(Description.class);
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        TaxId taxIdDouble = mock(TaxId.class);
+        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
+
+        Project project = new Project(1, nameDouble, descriptionDouble, businessSectorIdDouble,
+                taxIdDouble, projectTypologyIdDouble);
+        String expected = "Project name";
+        when(nameDouble.getName()).thenReturn(expected);
+
+        //Act
+        String result = project.getProjectName();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method getDescription()
+     *
+     * Scenario 1: should return a String with the project description
+     */
+    @Test
+    void ensureThatAStringWithTheProjectDescriptionIsReturned() {
+        //Arrange
+        Name nameDouble = mock(Name.class);
+        Description descriptionDouble = mock(Description.class);
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        TaxId taxIdDouble = mock(TaxId.class);
+        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
+
+        Project project = new Project(1, nameDouble, descriptionDouble, businessSectorIdDouble,
+                taxIdDouble, projectTypologyIdDouble);
+        String expected = "A very important project";
+        when(descriptionDouble.getDescription()).thenReturn(expected);
+
+        //Act
+        String result = project.getDescription();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method getBusinessSectorId()
+     *
+     * Scenario 1: should return a String with the business sector Id
+     */
+    @Test
+    void ensureThatAStringWithTheBusinessSectorIdIsReturned() {
+        //Arrange
+        Name nameDouble = mock(Name.class);
+        Description descriptionDouble = mock(Description.class);
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        TaxId taxIdDouble = mock(TaxId.class);
+        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
+
+        Project project = new Project(1, nameDouble, descriptionDouble, businessSectorIdDouble,
+                taxIdDouble, projectTypologyIdDouble);
+        String expected = "TP001";
+        when(businessSectorIdDouble.getBusinessSectorId()).thenReturn(expected);
+
+        //Act
+        String result = project.getBusinessSectorId();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method getProjectTypologyId()
+     *
+     * Scenario 1: should return a String with the project typology Id.
+     */
+    @Test
+    void ensureThatAStringWithTheProjectTypologyIdIsReturned() {
+        //Arrange
+        Name nameDouble = mock(Name.class);
+        Description descriptionDouble = mock(Description.class);
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        TaxId taxIdDouble = mock(TaxId.class);
+        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
+
+        Project project = new Project(1, nameDouble, descriptionDouble, businessSectorIdDouble,
+                taxIdDouble, projectTypologyIdDouble);
+        String expected = "TP001";
+        when(projectTypologyIdDouble.getProjectTypologyId()).thenReturn(expected);
+
+        //Act
+        String result = project.getProjectTypologyId();
+
+        //Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method hasEditableStatus()
+     *
+     * Scenario 1: returns true because project is editable (has inception status)
+     */
+    @Test
+    void ensureThatProjectIsEditable() {
+        //Arrange
+        Name nameDouble = mock(Name.class);
+        Description descriptionDouble = mock(Description.class);
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        TaxId taxIdDouble = mock(TaxId.class);
+        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
+
+        Project project = new Project(1, nameDouble, descriptionDouble, businessSectorIdDouble,
+                taxIdDouble, projectTypologyIdDouble);
+        project.setProjectStatus(ProjectStatus.INCEPTION);
+
+        //Act
+        boolean result = project.hasEditableStatus();
+
+        //Assert
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: returns an exception because project is not editable (has planned
+     * status)
+     */
+    @Test
+    void ensureThatProjectIsNotEditableBecauseHasPlannedStatus() {
+        //Arrange
+        Name nameDouble = mock(Name.class);
+        Description descriptionDouble = mock(Description.class);
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        TaxId taxIdDouble = mock(TaxId.class);
+        ProjectTypologyId projectTypologyIdDouble = mock(ProjectTypologyId.class);
+
+        Project project = new Project(1, nameDouble, descriptionDouble, businessSectorIdDouble,
+                taxIdDouble, projectTypologyIdDouble);
+        String message = "The project must be in either phase: INCEPTION, ELABORATION, " +
+                "CONSTRUCTION, TRANSITION or WARRANTY";
+        //Act
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> project.hasEditableStatus());
+
+        //Assert
+        assertEquals(message, exception.getMessage());
     }
 }

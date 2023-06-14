@@ -74,26 +74,34 @@ public class ProjectDomainDataAssembler {
         TaxId taxId = new TaxId(projectJpa.getCustomerTaxId());
         ProjectTypologyId projectTypology = new ProjectTypologyId(Utils.getIntFromAlphanumericString
                 (projectJpa.getProjectTypologyId(), "pt"));
-        Budget budget = new Budget(BigDecimal.valueOf(projectJpa.getBudget()));
-        ProjectStatus projectstatus =
-                ProjectStatus.valueOf(projectJpa.getProjectStatus().toUpperCase());
-        NumberOfPlannedSprints numberOfPlannedSprints = new NumberOfPlannedSprints
-                (projectJpa.getNumberOfPlannedSprints());
         Project project = factoryProject.createProject(projectNumber, projectName, projectDescription, businessSectorId,
                 taxId, projectTypology);
+        ProjectStatus projectstatus =
+                ProjectStatus.valueOf(projectJpa.getProjectStatus().toUpperCase());
         project.setProjectStatus(projectstatus);
-        project.isBudgetAssigned(budget);
 
-        project.isNumberOfPlannedSprintsDefined(numberOfPlannedSprints);
+        if (project.hasStatus(ProjectStatus.CLOSED)) {
+            project.setProjectHistory(BigDecimal.valueOf(projectJpa.getBudget()),
+                    new NumberOfPlannedSprints(projectJpa.getNumberOfPlannedSprints()),
+                    projectJpa.getSprintDuration(), LocalDate.parse(projectJpa.getStartDate()),
+                    LocalDate.parse(projectJpa.getEndDate()));
+        } else {
+            Budget budget = new Budget(BigDecimal.valueOf(projectJpa.getBudget()));
+            NumberOfPlannedSprints numberOfPlannedSprints = new NumberOfPlannedSprints
+                    (projectJpa.getNumberOfPlannedSprints());
 
-        if (project.hasStatus(ProjectStatus.INCEPTION)) {
-            project.setSprintDuration(projectJpa.getSprintDuration());
-        }
-        if(!Objects.equals(projectJpa.getStartDate(), "") && !Objects.equals(projectJpa.getEndDate(), "")) {
-            LocalDate startDate = LocalDate.parse(projectJpa.getStartDate());
-            LocalDate endDate = LocalDate.parse(projectJpa.getEndDate());
-            Period projectPeriod = new Period(startDate, endDate);
-            project.isPeriodAssigned(projectPeriod);
+            project.isBudgetAssigned(budget);
+            project.isNumberOfPlannedSprintsDefined(numberOfPlannedSprints);
+
+            if (project.hasStatus(ProjectStatus.INCEPTION)) {
+                project.setSprintDuration(projectJpa.getSprintDuration());
+            }
+            if(!Objects.equals(projectJpa.getStartDate(), "") && !Objects.equals(projectJpa.getEndDate(), "")) {
+                LocalDate startDate = LocalDate.parse(projectJpa.getStartDate());
+                LocalDate endDate = LocalDate.parse(projectJpa.getEndDate());
+                Period projectPeriod = new Period(startDate, endDate);
+                project.isPeriodAssigned(projectPeriod);
+            }
         }
 
         Iterator<String> userStoriesIterator = projectJpa.getProductBacklog().getUserStories().iterator();
