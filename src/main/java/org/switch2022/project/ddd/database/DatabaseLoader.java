@@ -25,6 +25,7 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
+import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import javax.transaction.Transactional;
@@ -314,12 +315,17 @@ public class DatabaseLoader implements CommandLineRunner {
         Sprint sprintTwentyOne = sprintFactory.createSprint(new Code(PROJECT_ONE),
                 new SprintId("p001", "s021"), new SprintNumber(SPRINT_NUMBER_TWENTY_ONE),
                 new Period(LocalDate.of(TWENTY_TWENTY_THREE, JUNE, 1), SPRINT_DURATION));
+        sprintTwentyOne.changeStatus("OPEN");
 
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive,
                 sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
                 sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
         sprints.save(sprintDomainDataAssembler.toData(sprintTwentyOne));
+
+        // User story in sprint
+        UserStoryInSprintDto userStoryInSprintDto = new UserStoryInSprintDto("p001_us001","p001_s021");
+        addService.addUserStoryToSprint(userStoryInSprintDto);
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
