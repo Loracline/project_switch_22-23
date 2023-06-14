@@ -8,12 +8,14 @@ import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.domain.value_object.SprintId;
+import org.switch2022.project.ddd.domain.value_object.SprintStatus;
+import org.switch2022.project.ddd.domain.value_object.Status;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.UserStoryStatusDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
-import org.switch2022.project.ddd.utils.Utils;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
@@ -97,10 +99,9 @@ public class UserStoriesInSprintService {
         SprintId sprintId = createSprintId(userStoryStatusDto.sprintId);
         UsId usId = createUsId(userStoryStatusDto.usId);
         Status userStoryStatus = Status.valueOf(userStoryStatusDto.status.toUpperCase());
-        Code projectCodeToCompare = createProjectCode(userStoryStatusDto.sprintId);
         UserStory userStory = getUserStory(usId);
-        if (sprintRepository.hasStatus(sprintId, SprintStatus.OPEN) && haveSameProjectCode
-                (userStory, projectCodeToCompare)) {
+        if (sprintRepository.hasStatus(sprintId, SprintStatus.OPEN) && isUserStoryInSprint
+                (usId, sprintId)) {
             userStory.changeStatus(userStoryStatus);
             userStoryRepository.save(userStory);
             result = true;
@@ -141,21 +142,6 @@ public class UserStoriesInSprintService {
     }
 
     /**
-     * Creates a Code object with a project code from the given sprint ID.
-     * The sprint ID is split into parts, and the first part is used as the project code.
-     *
-     * @param sprintId the Sprint ID to be used for creating the project code
-     * @return the Code object with the project code derived from the sprint ID
-     */
-
-    private static Code createProjectCode(String sprintId) {
-        Validate.notNullOrEmptyOrBlank(sprintId, "sprintId");
-        String[] parts = sprintId.split("_");
-        String code = parts[0];
-        return new Code(Utils.getIntFromAlphanumericString(code, "p"));
-    }
-
-    /**
      * Retrieves the UserStory object with the specified UsId.
      * If no UserStory is found with the given UsId, a RuntimeException is thrown.
      *
@@ -173,18 +159,18 @@ public class UserStoriesInSprintService {
 
     /**
      * Validates if the given user story belongs to the specified project code and sprint.
-     * If the user story does not belong to the sprint, a RuntimeException is thrown.
+     * Throws a RuntimeException if the user story does not belong to the sprint.
      *
-     * @param userStory   the user story to be validated
-     * @param projectCode the project code to be checked
+     * @param usId the UsId of the user story to be validated
+     * @param sprintId the SprintId of the sprint to be checked
      * @return true if the user story belongs to the specified project code and sprint, false otherwise
      * @throws RuntimeException if the user story does not belong to the sprint
      */
-    private boolean haveSameProjectCode(UserStory userStory, Code projectCode) {
-        if (!userStory.hasProjectCode(projectCode)) {
+    private boolean isUserStoryInSprint(UsId usId, SprintId sprintId) {
+        if (!sprintRepository.hasUsId(sprintId, usId)) {
             throw new RuntimeException("The User Story doesn't belong to the sprint");
         }
-        return userStory.hasProjectCode(projectCode);
+        return sprintRepository.hasUsId(sprintId, usId);
     }
 
 }

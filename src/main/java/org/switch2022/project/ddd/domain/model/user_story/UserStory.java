@@ -204,13 +204,5 @@ public class UserStory implements Entity<UserStory> {
     public String getProjectCode() {
         return projectCode.getCode();
     }
-
-    /**
-     * This method verifies if the userStory has the given projectCode
-     */
-
-    public boolean hasProjectCode (Code projectCode){
-        return projectCode.equals(this.projectCode);
-    }
 }
 
