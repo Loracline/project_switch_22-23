@@ -1,14 +1,12 @@
 import {
-    fetchProject, fetchProjects,
+    fetchProject,
+    fetchProjects,
     getBusinessSectors,
     getCustomers,
     getProjectTypologies,
     postProject
 } from "../services/ProjectService";
-import {
-    fetchSprintsFromProject,
-    postSprint
-} from "../services/SprintService";
+import {fetchSprintsFromProject, patchSprintStatus, postSprint} from "../services/SprintService";
 import {strings} from "../strings";
 import {postUserStory} from "../services/UserStoryService";
 
@@ -347,46 +345,18 @@ function getProjectsSuccess(projects) {
 /**
  * Action to update sprint status
  */
-export function updateSprintStatus(sprintId, status) {
-    return (dispatch) => {
-        dispatch({
-            type: UPDATE_SPRINT_STATUS,
-        });
-
-        fetch(`/api/sprints/${sprintId}/status`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ status }),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    if (status === 'Open') {
-                        dispatch(updateSprintStatusSuccess("Sprint successfully opened."));
-                    } else if (status === 'Close') {
-                        dispatch(updateSprintStatusSuccess('Sprint successfully closed.'));
-                    } else {
-                        dispatch(updateSprintStatusFailure('Invalid status.'));
-                    }
-                } else {
-                    throw new Error('Failed to update sprint status.');
-                }
-            })
-            .catch((error) => {
-                dispatch(updateSprintStatusFailure(error.message));
-            });
-    };
+export function updateSprintStatus(dispatch, sprintId, status) {
+    patchSprintStatus(sprintId, status, (result) => dispatch(updateSprintStatusSuccess(result)),
+        (result) => dispatch(updateSprintStatusFailure(result)))
 }
 
-function updateSprintStatusSuccess(message) {
+export function updateSprintStatusSuccess() {
     return {
         type: UPDATE_SPRINT_STATUS_SUCCESS,
-        payload: message,
     };
 }
 
-function updateSprintStatusFailure(error) {
+export function updateSprintStatusFailure(error) {
     return {
         type: UPDATE_SPRINT_STATUS_FAILURE,
         payload: error,
@@ -418,6 +388,7 @@ export const checkProjectSprint = (projectCode) => {
  * Actions to list all sprints of a specific project.
  */
 export const GET_SPRINTS_SUCCESS = 'GET_SPRINTS_SUCCESS'
+
 export function getSprintsFromProjectSuccessfully(sprintsFromProject) {
     return {
         type: GET_SPRINTS_SUCCESS,
@@ -428,6 +399,7 @@ export function getSprintsFromProjectSuccessfully(sprintsFromProject) {
 }
 
 export const FETCH_SPRINTS_STARTED = 'FETCH_SPRINTS_STARTED';
+
 export function getSprintsFromProject(dispatch, projectCode) {
     const action = {
         type: FETCH_SPRINTS_STARTED
@@ -444,6 +416,7 @@ export function getSprintsFromProject(dispatch, projectCode) {
  * Action to select a sprint from a list of sprints of a project.
  */
 export const SELECT_SPRINT = 'SELECT_SPRINT';
+
 export function setCurrentSprint(sprint) {
     return {
         type: SELECT_SPRINT,
@@ -452,3 +425,5 @@ export function setCurrentSprint(sprint) {
         }
     }
 }
+
+

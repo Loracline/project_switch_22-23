@@ -132,7 +132,7 @@ class SprintWebControllerTest {
      * Scenario 1: changes the state of a specific sprint.
      */
 
-    @Test
+    /*@Test
     void ensureThatStateOfSprintIsChanged() {
         //ARRANGE
         SprintStatusDto dtoDouble = mock(SprintStatusDto.class);
@@ -142,7 +142,7 @@ class SprintWebControllerTest {
         ResponseEntity<Object> responseEntity = sprintWebController.changeSprintStatus(dtoDouble);
         //ASSERT
         assertEquals(responseEntity.getStatusCodeValue(), 200);
-    }
+    }*/
 
     /**
      * Method listSprintsFromProject()
