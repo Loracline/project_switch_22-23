@@ -97,4 +97,16 @@ public class CustomerJpaRepository implements ICustomerRepository {
         customersJpa.forEach(customerJpa -> customers.add(assembler.toDomain(customerJpa)));
         return customers;
     }
+
+    /**
+     * Retrieves an optional customer from the repository based on the provided tax ID.
+     *
+     * @param taxId The tax ID of the customer to be retrieved.
+     * @return An optional containing the customer object corresponding to the provided tax ID, or an empty optional if
+     * the customer is not found.
+     */
+    public Optional<Customer> findCustomerByTaxId(TaxId taxId) {
+        Optional<CustomerJpa> opCustomerJpa = crudRepository.findByCustomerTaxId(taxId.getNumber());
+        return opCustomerJpa.map(customerJpa -> assembler.toDomain(customerJpa));
+    }
 }

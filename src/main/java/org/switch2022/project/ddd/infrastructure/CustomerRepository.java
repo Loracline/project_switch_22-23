@@ -10,6 +10,7 @@ import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Implementation of the {@link ICustomerRepository} interface that stores customer data in memory.
@@ -93,5 +94,25 @@ public class CustomerRepository implements ICustomerRepository {
      */
     public List<Customer> findAll() {
         return Collections.unmodifiableList(customers);
+    }
+
+    /**
+     * Retrieves an optional customer from the repository based on the provided tax ID.
+     *
+     * @param taxId The tax ID of the customer to be retrieved.
+     * @return An optional containing the customer object corresponding to the provided tax ID, or an empty optional if
+     * the customer is not found.
+     */
+    public Optional<Customer> findCustomerByTaxId(TaxId taxId) {
+        Optional<Customer> opCustomer = Optional.empty();
+        int i = 0;
+        while (i < this.customers.size()) {
+            if (customers.get(i).hasTaxId(taxId)) {
+                opCustomer = Optional.of(customers.get(i));
+                i = this.customers.size();
+            }
+            i++;
+        }
+        return opCustomer;
     }
 }
