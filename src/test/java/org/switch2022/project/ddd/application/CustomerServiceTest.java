@@ -45,8 +45,8 @@ class CustomerServiceTest {
         CustomerCreationDto dtoDouble = mock(CustomerCreationDto.class);
         Customer customerDouble = mock(Customer.class);
 
-        when(dtoDouble.getCustomerName()).thenReturn("Partilha Cortesia Lda.");
-        when(dtoDouble.getCustomerTaxId()).thenReturn("514024054");
+        when(dtoDouble.getName()).thenReturn("Partilha Cortesia Lda.");
+        when(dtoDouble.getTaxIdNumber()).thenReturn("514024054");
         when(factory.createCustomer(any(), any())).thenReturn(customerDouble);
         when(repository.save(any())).thenReturn(true);
 
@@ -68,8 +68,8 @@ class CustomerServiceTest {
 
         String expected = "Customer's tax ID already exists!";
 
-        when(dtoDouble.getCustomerName()).thenReturn("Partilha Cortesia Lda.");
-        when(dtoDouble.getCustomerTaxId()).thenReturn("514024054");
+        when(dtoDouble.getName()).thenReturn("Partilha Cortesia Lda.");
+        when(dtoDouble.getTaxIdNumber()).thenReturn("514024054");
         when(factory.createCustomer(any(), any())).thenReturn(customerDouble);
         when(repository.save(any())).thenThrow(new AlreadyExistsInRepoException(expected));
 
@@ -89,8 +89,8 @@ class CustomerServiceTest {
 
         String expected = "Invalid or unsupported country for tax ID validation.";
 
-        when(dtoDouble.getCustomerName()).thenReturn("Partilha Cortesia Lda.");
-        when(dtoDouble.getCustomerTaxId()).thenReturn("51402X054");
+        when(dtoDouble.getName()).thenReturn("Partilha Cortesia Lda.");
+        when(dtoDouble.getTaxIdNumber()).thenReturn("51402X054");
 
         // Act
         InvalidInputException result =

@@ -10,13 +10,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.customer.Customer;
 import org.switch2022.project.ddd.domain.model.customer.ICustomerRepository;
+import org.switch2022.project.ddd.domain.value_object.TaxId;
 import org.switch2022.project.ddd.dto.CustomerDto;
 import org.switch2022.project.ddd.dto.mapper.CustomerMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -84,6 +87,48 @@ class CustomerListServiceTest {
 
         // Act
         List<CustomerDto> result = service.listAllCustomers();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD getCustomerByTaxId()
+     */
+    @DisplayName("Optional of customer")
+    @Test
+    void ensureCustomerIsRetrievedSuccessfully() {
+        // Arrange
+        TaxId taxIdDouble = mock(TaxId.class);
+        CustomerDto customerDtoDouble = mock(CustomerDto.class);
+        Customer customerDouble = mock(Customer.class);
+
+        Optional<Customer> optional = Optional.of(customerDouble);
+        Optional<CustomerDto> expected = Optional.of(customerDtoDouble);
+
+        when(repository.findCustomerByTaxId(any())).thenReturn(optional);
+        when(mapper.customerToDto(customerDouble)).thenReturn(customerDtoDouble);
+
+        // Act
+        Optional<CustomerDto> result = service.getCustomerByTaxId(taxIdDouble);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Empty optional")
+    @Test
+    void ensureCustomerIsNotRetrievedBecauseDoesntExist() {
+        // Arrange
+        TaxId taxIdDouble = mock(TaxId.class);
+
+        Optional<Customer> optional = Optional.empty();
+        Optional<CustomerDto> expected = Optional.empty();
+
+        when(repository.findCustomerByTaxId(any())).thenReturn(optional);
+
+        // Act
+        Optional<CustomerDto> result = service.getCustomerByTaxId(taxIdDouble);
 
         // Assert
         assertEquals(expected, result);
