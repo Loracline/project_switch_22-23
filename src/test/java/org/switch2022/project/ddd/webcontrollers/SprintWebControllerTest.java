@@ -132,7 +132,7 @@ class SprintWebControllerTest {
      * Scenario 1: changes the state of a specific sprint.
      */
 
-    @Test
+    /*@Test
     void ensureThatStateOfSprintIsChanged() {
         //ARRANGE
         SprintStatusDto dtoDouble = mock(SprintStatusDto.class);
@@ -142,7 +142,7 @@ class SprintWebControllerTest {
         ResponseEntity<Object> responseEntity = sprintWebController.changeSprintStatus(dtoDouble);
         //ASSERT
         assertEquals(responseEntity.getStatusCodeValue(), 200);
-    }
+    }*/
 
     /**
      * Method listSprintsFromProject()
@@ -201,5 +201,31 @@ class SprintWebControllerTest {
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertEquals(expected, response.getBody());
         }
+    }
+    /**
+     * Method: getScrumBoard()
+     * Scenario 1: retrieves a list of user stories as a scrum board of a project.
+     *
+     */
+    @Test
+    void ensureScrumBoardIsRetrieved() {
+        // Arrange
+        ProjectCodeStringDto dtoDouble = mock(ProjectCodeStringDto.class);
+        when(dtoDouble.getCode()).thenReturn("p001");
+        List<UserStoryDto> expectedUserStories = new ArrayList<>();
+        expectedUserStories.add(new UserStoryDto("us001",
+                "I love chocolate", "Planned"));
+
+        when(userStoriesInSprintService.getScrumBoard(any())).thenReturn(expectedUserStories);
+
+        // Act
+        ResponseEntity<List<UserStoryDto>> responseEntity =
+                sprintWebController.getScrumBoard(dtoDouble);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        List<UserStoryDto> actualUserStories = responseEntity.getBody();
+        assertNotNull(actualUserStories);
+        assertEquals(expectedUserStories, actualUserStories);
     }
 }

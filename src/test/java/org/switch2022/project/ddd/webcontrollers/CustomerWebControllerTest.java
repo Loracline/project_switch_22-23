@@ -16,8 +16,11 @@ import org.switch2022.project.ddd.dto.CustomerDto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -104,5 +107,42 @@ class CustomerWebControllerTest {
         // Assert
         assertEquals(expected, response.getBody());
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    /**
+     * METHOD getByTaxId()
+     */
+    @DisplayName("Customer DTO")
+    @Test
+    void ensureCustomerDtoIsRetrievedWhenCustomerExistsInDatabase() {
+        // Arrange
+        String taxId = "217746691";
+
+        CustomerDto expected = new CustomerDto("XPTO, SA", "217746691");
+
+        when(listService.getCustomerByTaxId(any())).thenReturn(Optional.of(expected));
+
+        // Act
+        ResponseEntity<CustomerDto> response = controller.getByTaxId(taxId);
+
+        // Assert
+        assertEquals(expected, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @DisplayName("Not found")
+    @Test
+    void ensureCustomerNotFoundWhenDoesntExistInDatabase() {
+        // Arrange
+        String taxId = "228019885";
+
+        when(listService.getCustomerByTaxId(any())).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<CustomerDto> response = controller.getByTaxId(taxId);
+
+        // Assert
+        assertNull(response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }

@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.domain.model.customer;
 import org.switch2022.project.ddd.domain.value_object.TaxId;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interface representing a repository for managing {@link Customer} entities.
@@ -40,4 +41,13 @@ public interface ICustomerRepository {
      * @return A list of Customer objects representing all customers.
      */
     List<Customer> findAll();
+
+    /**
+     * Retrieves an optional customer from the repository based on the provided tax ID.
+     *
+     * @param taxId The tax ID of the customer to be retrieved.
+     * @return An optional containing the customer object corresponding to the provided tax ID, or an empty optional if
+     * the customer is not found.
+     */
+    Optional<Customer> findCustomerByTaxId(TaxId taxId);
 }

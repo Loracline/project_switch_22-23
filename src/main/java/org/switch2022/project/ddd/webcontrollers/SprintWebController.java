@@ -77,8 +77,8 @@ public class SprintWebController {
      */
 
     @PatchMapping("/{sprintId}")
-    @ResponseBody
-    public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto) {
+    public ResponseEntity<Object> changeSprintStatus(@RequestBody SprintStatusDto sprintStatusDto,
+                                                     @PathVariable String sprintId) {
         sprintStatusChangeService.changeSprintStatus(sprintStatusDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -92,11 +92,8 @@ public class SprintWebController {
     @PostMapping("/{SprintId}/SprintBacklog")
     public ResponseEntity<Object> addUserStoryToSprintBacklog(@RequestBody UserStoryInSprintDto userStoryInSprintDto,
                                                               @PathVariable String SprintId) {
-        if (addUserStoryToSprintBacklogService.addUserStoryToSprint(userStoryInSprintDto)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+        addUserStoryToSprintBacklogService.addUserStoryToSprint(userStoryInSprintDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**
@@ -116,5 +113,18 @@ public class SprintWebController {
             primitiveTypesDtos.add(primitiveTypesDto);
         }
         return new ResponseEntity<>(primitiveTypesDtos, HttpStatus.OK);
+    }
+    /**
+     * Handles a GET request to retrieve a list of user stories of the scrumBoard.
+     *
+     * @return A ResponseEntity containing a list of User stories objects and a status code of
+     * 200 (OK).
+     */
+    @GetMapping("/{projectCode}/scrumBoard")
+    @ResponseBody
+    public ResponseEntity<List<UserStoryDto>> getScrumBoard(@PathVariable ProjectCodeStringDto projectCode) {
+        ProjectCodeValueObjectDto codeValueObjectDto = ProjectCodeDtoAssembler.convertToValueObject(projectCode);
+        List<UserStoryDto> userStories = userStoriesInSprintService.getScrumBoard(codeValueObjectDto);
+        return new ResponseEntity<>(userStories, HttpStatus.OK);
     }
 }
