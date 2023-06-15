@@ -110,6 +110,10 @@ public class DatabaseLoaderTest {
         projectOne.isNumberOfPlannedSprintsDefined(new NumberOfPlannedSprints(8));
         projectOne.isBudgetAssigned(new Budget(new BigDecimal(150000)));
         projectOne.setProjectStatus(ProjectStatus.CLOSED);
+        projectOne.setProjectHistory(BigDecimal.valueOf(150_000),
+                new NumberOfPlannedSprints(8), 2,
+                LocalDate.of(2022, 3, 1),
+                LocalDate.of(2022, 7, 31));
         verify(projects).save(projectDomainDataAssembler.toData(projectOne));
 
 

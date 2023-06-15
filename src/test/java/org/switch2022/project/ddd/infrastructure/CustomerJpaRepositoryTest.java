@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -220,6 +221,53 @@ class CustomerJpaRepositoryTest {
 
         // Act
         List<Customer> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD findCustomerByTaxId()
+     */
+    @DisplayName("Optional of customer")
+    @Test
+    void ensureCustomerIsRetrievedSuccessfully() {
+        // Arrange
+        String taxId = "514 024 054";
+
+        TaxId taxIdDouble = mock(TaxId.class);
+        CustomerJpa customerJpaDouble = mock(CustomerJpa.class);
+        Customer customerDouble = mock(Customer.class);
+        Optional<CustomerJpa> optionalDouble = Optional.of(customerJpaDouble);
+
+        Optional<Customer> expected = Optional.of(customerDouble);
+
+        when(taxIdDouble.getNumber()).thenReturn(taxId);
+        when(crudRepository.findByCustomerTaxId(taxId)).thenReturn(optionalDouble);
+        when(assembler.toDomain(customerJpaDouble)).thenReturn(customerDouble);
+
+        // Act
+        Optional<Customer> result = repository.findCustomerByTaxId(taxIdDouble);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Empty optional")
+    @Test
+    void ensureCustomerIsNotRetrievedBecauseDoesntExist() {
+        // Arrange
+        TaxId taxIdDouble = mock(TaxId.class);
+        Customer customerDouble = mock(Customer.class);
+
+        Optional<CustomerJpa> empty = Optional.empty();
+        Optional<Customer> expected = Optional.empty();
+
+        when(crudRepository.findByCustomerTaxId(anyString())).thenReturn(empty);
+        when(assembler.toDomain(any())).thenReturn(customerDouble);
+
+        // Act
+        Optional<Customer> result = repository.findCustomerByTaxId(taxIdDouble);
 
         // Assert
         assertEquals(expected, result);

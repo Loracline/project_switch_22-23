@@ -6,24 +6,24 @@ package org.switch2022.project.ddd.dto;
 public class CustomerCreationDto {
 
     /**
-     * The tax ID of the customer.
-     */
-    private final String customerTaxId;
-
-    /**
      * The name of the customer.
      */
-    private final String customerName;
+    private final String name;
+
+    /**
+     * The tax ID of the customer.
+     */
+    private final String taxIdNumber;
 
     /**
      * Constructs a new CustomerCreationDto with the specified tax ID and name.
      *
-     * @param customerTaxId The tax ID of the customer.
-     * @param customerName  The name of the customer.
+     * @param name The tax ID of the customer.
+     * @param taxIdNumber  The name of the customer.
      */
-    public CustomerCreationDto(String customerTaxId, String customerName) {
-        this.customerTaxId = customerTaxId;
-        this.customerName = customerName;
+    public CustomerCreationDto(String name, String taxIdNumber) {
+        this.name = name.toLowerCase();
+        this.taxIdNumber = taxIdNumber.trim();
     }
 
     /**
@@ -31,8 +31,8 @@ public class CustomerCreationDto {
      *
      * @return The tax ID of the customer as a String.
      */
-    public String getCustomerTaxId() {
-        return customerTaxId;
+    public String getTaxIdNumber() {
+        return taxIdNumber;
     }
 
     /**
@@ -40,7 +40,7 @@ public class CustomerCreationDto {
      *
      * @return The name of the customer as a String.
      */
-    public String getCustomerName() {
-        return customerName;
+    public String getName() {
+        return name;
     }
 }

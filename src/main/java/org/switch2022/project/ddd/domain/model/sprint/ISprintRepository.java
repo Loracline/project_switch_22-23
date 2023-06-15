@@ -45,7 +45,8 @@ public interface ISprintRepository {
      * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
      *
      * @param sprintStatus SprintStatus to look for in the sprint list.
-     * @return true if at least one instance of Sprint with a given status already exists in the list, and false otherwise.
+     * @return true if at least one instance of Sprint with a given status already exists in the list,
+     * and false otherwise.
      */
     boolean existsByStatus(SprintStatus sprintStatus);
 
@@ -53,8 +54,9 @@ public interface ISprintRepository {
 
     /**
      * This method checks if one given sprint has the status given
+     *
      * @param sprintId the identifier of the sprint
-     * @param status the sprint status that needs to be checked
+     * @param status   the sprint status that needs to be checked
      * @return true if the sprint has the given status and false otherwise
      */
 

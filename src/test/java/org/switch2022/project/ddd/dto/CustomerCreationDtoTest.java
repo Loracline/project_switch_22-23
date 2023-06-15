@@ -16,10 +16,10 @@ class CustomerCreationDtoTest {
         // Arrange
         String expectedTaxId = "123456789";
         String customerName = "John Doe";
-        CustomerCreationDto customer = new CustomerCreationDto(expectedTaxId, customerName);
+        CustomerCreationDto customer = new CustomerCreationDto(customerName, expectedTaxId);
 
         // Act
-        String actualTaxId = customer.getCustomerTaxId();
+        String actualTaxId = customer.getTaxIdNumber();
 
         // Assert
         assertEquals(expectedTaxId, actualTaxId);
@@ -33,13 +33,13 @@ class CustomerCreationDtoTest {
         // Arrange
         String customerTaxId = "123456789";
         String expectedName = "John Doe";
-        CustomerCreationDto customer = new CustomerCreationDto(customerTaxId, expectedName);
+        CustomerCreationDto customer = new CustomerCreationDto(expectedName, customerTaxId);
 
         // Act
-        String actualName = customer.getCustomerName();
+        String actualName = customer.getName();
 
         // Assert
-        assertEquals(expectedName, actualName);
+        assertEquals(expectedName.toLowerCase(), actualName);
     }
 
     /**
@@ -53,10 +53,10 @@ class CustomerCreationDtoTest {
         String expectedName = "John Doe";
 
         // Act
-        CustomerCreationDto customer = new CustomerCreationDto(expectedTaxId, expectedName);
+        CustomerCreationDto customer = new CustomerCreationDto(expectedName, expectedTaxId);
 
         // Assert
-        Assertions.assertEquals(expectedTaxId, customer.getCustomerTaxId());
-        Assertions.assertEquals(expectedName, customer.getCustomerName());
+        Assertions.assertEquals(expectedTaxId, customer.getTaxIdNumber());
+        Assertions.assertEquals(expectedName.toLowerCase(), customer.getName());
     }
 }

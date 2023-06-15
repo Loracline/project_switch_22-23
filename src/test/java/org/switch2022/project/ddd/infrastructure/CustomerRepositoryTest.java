@@ -9,9 +9,11 @@ import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -61,7 +63,7 @@ class CustomerRepositoryTest {
     @SuppressWarnings("all")
     @DisplayName("Customer retrieved successfully")
     @Test
-    void ensureCustomerIsRetrievedSuccessfully() {
+    void ensureCustomerNameIsRetrievedSuccessfully() {
         // ARRANGE
         // Double of Customer One.
         TaxId customerTaxIdOne = mock(TaxId.class);
@@ -216,6 +218,59 @@ class CustomerRepositoryTest {
         List<Customer> result = repository.findAll();
 
         // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD findCustomerByTaxId()
+     */
+    @DisplayName("Optional with customer")
+    @Test
+    void ensureCustomerIsRetrievedSuccessfully() {
+        // ARRANGE
+        // Double of Customer One.
+        TaxId customerTaxIdOne = mock(TaxId.class);
+        Customer customerOne = mock(Customer.class);
+
+        // Setting up mock behaviour.
+        when(customerOne.hasTaxId(any())).thenReturn(true);
+
+        // Adding customer to the Repository.
+        CustomerRepository repository = new CustomerRepository();
+        repository.save(customerOne);
+
+        // The optional of customer one wishes to retrieve - Customer One.
+        Optional<Customer> expected = Optional.of(customerOne);
+
+        // ACT
+        Optional<Customer> result = repository.findCustomerByTaxId(customerTaxIdOne);
+
+        // ASSERT
+        assertEquals(expected, result);
+    }
+
+    @DisplayName("Empty optional")
+    @Test
+    void ensureCustomerIsNotRetrievedBecauseDoesntExist() {
+        // ARRANGE
+        // Double of Customer One.
+        TaxId customerTaxIdOne = mock(TaxId.class);
+        Customer customerOne = mock(Customer.class);
+
+        // Setting up mock behaviour.
+        when(customerOne.hasTaxId(any())).thenReturn(false);
+
+        // Adding customer to the repository.
+        CustomerRepository repository = new CustomerRepository();
+        repository.save(customerOne);
+
+        // Empty optional is expected as this tax ID number doesn't exist in the repository.
+        Optional<Customer> expected = Optional.empty();
+
+        // ACT
+        Optional<Customer> result = repository.findCustomerByTaxId(customerTaxIdOne);
+
+        // ASSERT
         assertEquals(expected, result);
     }
 }

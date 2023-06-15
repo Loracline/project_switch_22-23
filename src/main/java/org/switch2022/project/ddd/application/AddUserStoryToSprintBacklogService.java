@@ -67,7 +67,7 @@ public class AddUserStoryToSprintBacklogService {
      * @return {@code true} if the sprint is valid to add user stories.
      * @throws RuntimeException if the sprint is not valid to add user stories.
      */
-    private boolean isSprintValidToAddUserStories(Sprint sprint) {
+    private static boolean isSprintValidToAddUserStories(Sprint sprint) {
         if (!sprint.isOpen()) {
             throw new RuntimeException("Cannot add user stories to a sprint that is not in the 'OPEN' state");
         }
@@ -99,7 +99,7 @@ public class AddUserStoryToSprintBacklogService {
      * @param userStory The User Story to be checked.
      * @return {@code true} if the User Story has the 'PLANNED' status and {@code false} otherwise. .
      */
-    private boolean doesUserStoryHavePlannedStatus(UserStory userStory) {
+    private static boolean doesUserStoryHavePlannedStatus(UserStory userStory) {
         return userStory.hasStatus(Status.PLANNED);
     }
 
@@ -110,8 +110,9 @@ public class AddUserStoryToSprintBacklogService {
      * @param userStory The User Story to validate.
      * @return {@code true} if the Sprint and User Story belong to the same project and {@code false} otherwise.
      */
-    private boolean validateSprintAndUserStoryProject(Sprint sprint, UserStory userStory) {
-        Code projectCodeFromUserStory = new Code(Utils.getIntFromAlphanumericString(userStory.getProjectCode(), "p"));
+    private static boolean validateSprintAndUserStoryProject(Sprint sprint, UserStory userStory) {
+        Code projectCodeFromUserStory = new Code(Utils.getIntFromAlphanumericString(userStory.getProjectCode(),
+                "p"));
         return sprint.hasProjectCode(projectCodeFromUserStory);
     }
 

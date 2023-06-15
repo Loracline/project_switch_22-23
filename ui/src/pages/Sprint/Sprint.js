@@ -6,6 +6,7 @@ import './Sprint.css';
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
+import ConsultSprintBacklog from "../ConsultSprintBacklog/ConsultSprintBacklog";
 
 /**
  * Sprint component.
@@ -15,8 +16,9 @@ import FailureMessage from "../../components/InformationMessage/FailureMessage";
  */
 const Sprint = () => {
     const {state, dispatch} = useContext(AppContext);
-    const {selectedSprint, messageSuccess, messageFailure} = state;
-    const data = selectedSprint;
+    const {detailedProject, detailedSprint, messageSuccess, messageFailure} = state;
+    const data = detailedSprint;
+    const projectName = detailedProject.projectName;
 
     const [showConfirmation, setShowConfirmation] = useState(false);
     const isOpen = data?.status === "open";
@@ -31,7 +33,7 @@ const Sprint = () => {
     };
 
     const handleUpdateSprintStatus = (status) => {
-        dispatch(updateSprintStatus(data?.id, status));
+        updateSprintStatus(dispatch, data?.id, status);
     };
 
     const handleUpdateSprintButton = (status) => {
@@ -62,8 +64,8 @@ const Sprint = () => {
             <section className="sprintCard">
                 <div className="sprintInfo">
                     <div className="sprintContent">
-                        <h2>Sprint Number: {data?.['sprintNumber']}</h2>
-                        <p>Project Name: {data?.['projectName']}</p>
+                        <h2>Sprint Number: {data?.['number']}</h2>
+                        <p>Project Name: {projectName}</p>
                         <p>Start date: {data?.['startDate']}</p>
                         <p>End date: {data?.['endDate']}</p>
                     </div>
@@ -72,7 +74,7 @@ const Sprint = () => {
                     </div>
                     <div className="sprintButtons">
                         <Button
-                            onClick={() => handleUpdateSprintButton('Open')}
+                            onClick={() => handleUpdateSprintButton('open')}
                             text="Open"
                             isDisabled={isOpen}
                         />
@@ -85,6 +87,7 @@ const Sprint = () => {
                     <div className='start'>
                     </div>
                 </div>
+                <ConsultSprintBacklog/>
             </section>
             <div className="returnButtonContainer">
                 <Button

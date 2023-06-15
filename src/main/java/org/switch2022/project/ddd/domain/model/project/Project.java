@@ -2,8 +2,8 @@ package org.switch2022.project.ddd.domain.model.project;
 
 import org.switch2022.project.ddd.domain.shared.Entity;
 import org.switch2022.project.ddd.domain.value_object.*;
-import org.switch2022.project.ddd.utils.Utils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -168,7 +168,7 @@ public class Project implements Entity<Project> {
      * @param sprintDuration the sprint duration object to set for this project.
      */
     public void setSprintDuration(int sprintDuration) {
-        Utils.hasStatus(this.projectStatus, ProjectStatus.INCEPTION);
+        hasEditableStatus();
         this.sprintDuration = new SprintDuration(sprintDuration);
     }
 
@@ -178,12 +178,9 @@ public class Project implements Entity<Project> {
      * @param period the period object
      */
     public boolean isPeriodAssigned(Period period) {
-        boolean isAssignedPeriod = false;
-        if (projectStatus == ProjectStatus.INCEPTION) {
-            this.period = period;
-            isAssignedPeriod = true;
-        }
-        return isAssignedPeriod;
+        hasEditableStatus();
+        this.period = period;
+        return true;
     }
 
     /**
@@ -192,12 +189,9 @@ public class Project implements Entity<Project> {
      * @param budget the budget object
      */
     public boolean isBudgetAssigned(Budget budget) {
-        boolean isBudgetAssigned = false;
-        if (projectStatus == ProjectStatus.INCEPTION) {
-            this.budget = budget;
-            isBudgetAssigned = true;
-        }
-        return isBudgetAssigned;
+        hasEditableStatus();
+        this.budget = budget;
+        return true;
     }
 
     /**
@@ -206,12 +200,9 @@ public class Project implements Entity<Project> {
      * @param numberOfPlannedSprints of the project.
      */
     public boolean isNumberOfPlannedSprintsDefined(NumberOfPlannedSprints numberOfPlannedSprints) {
-        boolean isNumberOfPlannedSprintsDefined = false;
-        if (projectStatus == ProjectStatus.INCEPTION) {
-            this.numberOfPlannedSprints = numberOfPlannedSprints;
-            isNumberOfPlannedSprintsDefined = true;
-        }
-        return isNumberOfPlannedSprintsDefined;
+        hasEditableStatus();
+        this.numberOfPlannedSprints = numberOfPlannedSprints;
+        return true;
     }
 
     /**
@@ -258,6 +249,17 @@ public class Project implements Entity<Project> {
      */
     public boolean hasStatus(ProjectStatus projectStatus) {
         return this.projectStatus.equals(projectStatus);
+    }
+
+    public boolean hasEditableStatus() {
+        if (this.projectStatus.equals(ProjectStatus.PLANNED) ||
+                this.projectStatus.equals(ProjectStatus.CLOSED)) {
+            throw new IllegalArgumentException(
+                    "The project must be in either phase: INCEPTION, ELABORATION, " +
+                            "CONSTRUCTION, TRANSITION or WARRANTY");
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -355,9 +357,24 @@ public class Project implements Entity<Project> {
         return this.period.containsCurrentDate();
     }
 
-
+    /**
+     * This method sets the project period (start and end date).
+     * @param startDate of the project.
+     * @param endDate of the project.
+     */
     public void setPeriod(LocalDate startDate, LocalDate endDate) {
         this.period = new Period(startDate, endDate);
+    }
+
+    public void setProjectHistory(BigDecimal budget,
+                                  NumberOfPlannedSprints numberOfPlannedSprints,
+                                  int sprintDuration, LocalDate startDate, LocalDate endDate) {
+        if (this.projectStatus == ProjectStatus.CLOSED) {
+            this.budget = new Budget(budget);
+            this.numberOfPlannedSprints = numberOfPlannedSprints;
+            this.sprintDuration = new SprintDuration(sprintDuration);
+            this.setPeriod(startDate, endDate);
+        }
     }
 }
 

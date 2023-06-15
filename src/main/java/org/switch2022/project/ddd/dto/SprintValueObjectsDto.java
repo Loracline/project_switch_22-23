@@ -27,7 +27,8 @@ public class SprintValueObjectsDto {
      * @param startDate The start date of the sprint.
      * @param endDate   The end date of the sprint.
      */
-    public SprintValueObjectsDto(SprintId id, SprintNumber number, SprintStatus status, LocalDate startDate, LocalDate endDate) {
+    public SprintValueObjectsDto(SprintId id, SprintNumber number, SprintStatus status,
+                                 LocalDate startDate, LocalDate endDate) {
         this.id = id;
         this.number = number;
         this.status = status;

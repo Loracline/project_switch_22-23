@@ -25,6 +25,7 @@ import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
 
+import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import javax.transaction.Transactional;
@@ -108,17 +109,22 @@ public class DatabaseLoader implements CommandLineRunner {
         final int TWENTY_TWENTY_TWO = 2022;
         final int TWO_THOUSAND_AND_TWENTY_THREE = 2023;
         final int ONE = 1;
+        final int THREE = 3;
+        final int FOUR = 4;
+        final int FIVE = 5;
+        final int SEVEN = 7;
         final int EIGHT = 8;
         final int TWELVE = 12;
         final int FIFTEEN = 15;
         final int TEN = 10;
         final int TWENTY = 20;
+        final int TWENTY_NINE = 29;
         final int THIRTY_ONE = 31;
         final int TWO_WEEKS = 2;
         final int THREE_WEEKS = 2;
         final int FOUR_WEEKS = 2;
-        final int BUDGET_PROJECT_ONE = 150_000;
-        final int BUDGET_PROJECT_TWO = 350_000;
+        final BigDecimal BUDGET_PROJECT_ONE = BigDecimal.valueOf(150_000);
+        final BigDecimal BUDGET_PROJECT_TWO = BigDecimal.valueOf(350_000);
         final int BUDGET_PROJECT_THREE = 750_000;
         final int PROJECT_ONE = 1;
         final int PROJECT_TWO = 2;
@@ -127,14 +133,21 @@ public class DatabaseLoader implements CommandLineRunner {
         Project projectOne = factoryProject.createProject(PROJECT_ONE, new Name("Dummy 01"),
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
-        projectInputData(ONE, EIGHT, THIRTY_ONE, TWO_WEEKS, BUDGET_PROJECT_ONE, projectOne, JANUARY);
         projectOne.setProjectStatus(ProjectStatus.CLOSED);
+        projectOne.setProjectHistory(BUDGET_PROJECT_ONE,
+                new NumberOfPlannedSprints(EIGHT), TWO_WEEKS,
+                LocalDate.of(TWENTY_TWENTY_TWO, THREE,ONE),
+                LocalDate.of(TWENTY_TWENTY_TWO, SEVEN, THIRTY_ONE));
 
         Project projectTwo = factoryProject.createProject(PROJECT_TWO, new Name("Dummy 02"),
                 new Description("Just another dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
-        projectInputData(THIRTY_ONE, TWELVE, THIRTY_ONE, FOUR_WEEKS, BUDGET_PROJECT_TWO, projectTwo, MAY);
         projectTwo.setProjectStatus(ProjectStatus.CLOSED);
+        projectTwo.setProjectHistory(BUDGET_PROJECT_TWO,
+                new NumberOfPlannedSprints(TWELVE), FOUR_WEEKS,
+                LocalDate.of(TWENTY_TWENTY_TWO, FIVE,THIRTY_ONE),
+                LocalDate.of(TWO_THOUSAND_AND_TWENTY_THREE, FOUR, TWENTY_NINE));
+
 
         Project projectThree = factoryProject.createProject(PROJECT_THREE, new Name("Inevitable nightmare"),
                 new Description("Doomed from the start"),
@@ -142,7 +155,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_TWO));
         projectDataInsertion(TWO_THOUSAND_AND_TWENTY_THREE, TEN, FIFTEEN, TWENTY, THREE_WEEKS, BUDGET_PROJECT_THREE,
                 projectThree, MARCH, SEPTEMBER);
-        projectThree.setProjectStatus(ProjectStatus.INCEPTION);
 
         this.projects.save(projectDomainDataAssembler.toData(projectOne));
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
@@ -229,9 +241,6 @@ public class DatabaseLoader implements CommandLineRunner {
         final int SPRINT_DURATION = 2;
 
         final int TWO = 2;
-        final int FOUR = 4;
-        final int FIVE = 5;
-        final int SEVEN = 7;
         final int THIRTEEN = 13;
         final int NINETEEN = 19;
         final int TWENTY_ONE = 21;
@@ -306,12 +315,17 @@ public class DatabaseLoader implements CommandLineRunner {
         Sprint sprintTwentyOne = sprintFactory.createSprint(new Code(PROJECT_ONE),
                 new SprintId("p001", "s021"), new SprintNumber(SPRINT_NUMBER_TWENTY_ONE),
                 new Period(LocalDate.of(TWENTY_TWENTY_THREE, JUNE, 1), SPRINT_DURATION));
+        sprintTwentyOne.changeStatus("OPEN");
 
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive,
                 sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintEleven, sprintTwelve, sprintThirteen, sprintFourteen,
                 sprintFifteen, sprintSixteen, sprintSeventeen, sprintEighteen, sprintNineteen, sprintTwenty);
         sprints.save(sprintDomainDataAssembler.toData(sprintTwentyOne));
+
+        // User story in sprint
+        UserStoryInSprintDto userStoryInSprintDto = new UserStoryInSprintDto("p001_us001","p001_s021");
+        addService.addUserStoryToSprint(userStoryInSprintDto);
 
         // Profiles
         ProfileFactory profileFactory = new ProfileFactory();
@@ -391,7 +405,6 @@ public class DatabaseLoader implements CommandLineRunner {
         ProjectResourceFactory projectResourceFactory = new ProjectResourceFactory();
         ResourceDomainDataAssembler resourceDomainDataAssembler = new ResourceDomainDataAssembler();
 
-        final int THREE = 3;
         final int EIGHTEEN = 18;
         final int THIRTY_FIVE = 35;
         final int FORTY_TWO = 42;
@@ -528,13 +541,6 @@ public class DatabaseLoader implements CommandLineRunner {
         this.sprints.save(sprintDomainDataAssembler.toData(sprintThree));
         this.sprints.save(sprintDomainDataAssembler.toData(sprintFour));
         this.sprints.save(sprintDomainDataAssembler.toData(sprintFive));
-    }
-
-    private static void projectInputData(int one, int eight, int thirtyOne, int twoWeeks, int budgetProjectOne,
-                                  Project project, Month january) {
-        final int TWENTY_TWENTY_TWO = 2022;
-        projectDataInsertion(TWENTY_TWENTY_TWO, one, eight, thirtyOne, twoWeeks, budgetProjectOne, project,
-                january, JULY);
     }
 
     private static void projectDataInsertion(int year, int startDay, int numberOfSprints, int endDay,
