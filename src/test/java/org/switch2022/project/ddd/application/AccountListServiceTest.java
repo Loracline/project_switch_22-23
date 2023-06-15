@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.application;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -10,12 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.account.Account;
 import org.switch2022.project.ddd.domain.model.account.IAccountRepository;
+import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.dto.AccountDto;
 import org.switch2022.project.ddd.dto.mapper.AccountMapper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -77,6 +80,45 @@ class AccountListServiceTest {
 
         // Act
         List<AccountDto> result = service.listAllAccounts();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD getAccountByEmail()
+     */
+    @DisplayName("Optional of account")
+    @Test
+    void ensureCustomerIsRetrievedSuccessfully() {
+        // Arrange
+        Email emailDouble = mock(Email.class);
+        AccountDto accountDtoDouble = mock(AccountDto.class);
+        Account accountDouble = mock(Account.class);
+
+        Optional<AccountDto> expected = Optional.of(accountDtoDouble);
+
+        when(accountRepository.findAccountByEmail(any())).thenReturn(accountDouble);
+        when(accountMapper.accountToDto(accountDouble)).thenReturn(accountDtoDouble);
+
+        // Act
+        Optional<AccountDto> result = service.getAccountByEmail(emailDouble);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+    @DisplayName("Empty optional")
+    @Test
+    void ensureCustomerIsNotRetrievedBecauseDoesntExist() {
+        // Arrange
+        Email emailDouble = mock(Email.class);
+
+        Optional<AccountDto> expected = Optional.empty();
+
+        when(accountRepository.findAccountByEmail(any())).thenReturn(null);
+
+        // Act
+        Optional<AccountDto> result = service.getAccountByEmail(emailDouble);
 
         // Assert
         assertEquals(expected, result);
