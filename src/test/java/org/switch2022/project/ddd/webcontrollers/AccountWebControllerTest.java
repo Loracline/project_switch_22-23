@@ -1,5 +1,6 @@
 package org.switch2022.project.ddd.webcontrollers;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,10 +16,11 @@ import org.switch2022.project.ddd.dto.AccountCreationDto;
 import org.switch2022.project.ddd.dto.AccountDto;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -109,6 +111,43 @@ public class AccountWebControllerTest {
         ResponseEntity<Object> response = controller.changeStatus(email, status);
 
         //ASSERT
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    /**
+     * METHOD getByEmail()
+     */
+    @DisplayName("Account DTO")
+    @Test
+    void ensureAccountDtoIsRetrievedWhenAccountExistsInDatabase() {
+        // Arrange
+        String email = "joao@email.pt";
+
+        AccountDto expected = new AccountDto("joao", "joao@email.pt","active");
+
+        when(accountListService.getAccountByEmail(any())).thenReturn(Optional.of(expected));
+
+        // Act
+        ResponseEntity<AccountDto> response = controller.getByEmail(email);
+
+        // Assert
+        assertEquals(expected, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @DisplayName("Not found")
+    @Test
+    void ensureCustomerNotFoundWhenDoesntExistInDatabase() {
+        // Arrange
+        String email = "joao@email.com";
+
+        when(accountListService.getAccountByEmail(any())).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<AccountDto> response = controller.getByEmail(email);
+
+        // Assert
+        assertNull(response.getBody());
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
