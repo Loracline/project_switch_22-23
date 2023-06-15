@@ -7,9 +7,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
+import org.switch2022.project.ddd.datamodel_jpa.UserStoryInSprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
-import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.SprintId;
+import org.switch2022.project.ddd.domain.value_object.SprintStatus;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.infrastructure.jpa.ISprintJpaRepository;
 
 import java.util.ArrayList;
@@ -272,9 +276,13 @@ class SprintRepositoryJpaTest {
         when(sprintId.getSprintId()).thenReturn("p001_s001");
         UsId usId = mock(UsId.class);
         when(usId.getUserStoryId()).thenReturn("p001_us001");
-        when(iSprintJpaRepository.existsBySprintIdAndAndUserStoriesInSprintContains(sprintId.getSprintId(),
-                usId.getUserStoryId()))
-                .thenReturn(true);
+        SprintJpa sprintJpa= mock(SprintJpa.class);
+        when(iSprintJpaRepository.findById(sprintId.getSprintId())).thenReturn(Optional.ofNullable(sprintJpa));
+        UserStoryInSprintJpa userStoryInSprint = mock(UserStoryInSprintJpa.class);
+        List<UserStoryInSprintJpa> userStoryInSprintJpas = new ArrayList<>();
+        userStoryInSprintJpas.add(userStoryInSprint);
+        when(userStoryInSprint.getUsId()).thenReturn("p001_us001");
+        when(sprintJpa.getUserStoriesInSprint()).thenReturn(userStoryInSprintJpas);
 
         //Act
         boolean result = sprintRepositoryJpa.hasUsId(sprintId, usId);
@@ -295,10 +303,13 @@ class SprintRepositoryJpaTest {
         when(sprintId.getSprintId()).thenReturn("p001_s001");
         UsId usId = mock(UsId.class);
         when(usId.getUserStoryId()).thenReturn("p001_us001");
-        when(iSprintJpaRepository.existsBySprintIdAndAndUserStoriesInSprintContains(sprintId.getSprintId(),
-                usId.getUserStoryId()))
-                .thenReturn(false);
-
+        SprintJpa sprintJpa= mock(SprintJpa.class);
+        when(iSprintJpaRepository.findById(sprintId.getSprintId())).thenReturn(Optional.ofNullable(sprintJpa));
+        UserStoryInSprintJpa userStoryInSprint = mock(UserStoryInSprintJpa.class);
+        List<UserStoryInSprintJpa> userStoryInSprintJpas = new ArrayList<>();
+        userStoryInSprintJpas.add(userStoryInSprint);
+        when(userStoryInSprint.getUsId()).thenReturn("p001_us002");
+        when(sprintJpa.getUserStoriesInSprint()).thenReturn(userStoryInSprintJpas);
         //Act
         boolean result = sprintRepositoryJpa.hasUsId(sprintId, usId);
 

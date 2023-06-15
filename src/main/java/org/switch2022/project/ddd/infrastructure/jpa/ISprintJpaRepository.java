@@ -4,6 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> {
 
@@ -34,15 +35,7 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
      */
     boolean existsBySprintIdAndStatus(String sprintId, String status);
 
-    /**
-     * This method checks if the userStory is in the sprint
-     *
-     * @param usId     the id of the userStory
-     * @param sprintId the id of the sprint
-     * @return true if the userStory is present
-     */
-
-    boolean existsBySprintIdAndAndUserStoriesInSprintContains(String sprintId, String usId);
-
     Optional<SprintJpa> findByProjectCodeAndStatus(String projectCode, String status);
+
+
 }

@@ -3,6 +3,7 @@ package org.switch2022.project.ddd.infrastructure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.datamodel_jpa.SprintJpa;
+import org.switch2022.project.ddd.datamodel_jpa.UserStoryInSprintJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.SprintDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
@@ -126,9 +127,18 @@ public class SprintRepositoryJpa implements ISprintRepository {
 
     @Override
     public boolean hasUsId(SprintId sprintId, UsId usId) {
+        boolean result = false;
         String userStoryId = usId.getUserStoryId();
         String id = sprintId.getSprintId();
-        return iSprintJpaRepository.existsBySprintIdAndAndUserStoriesInSprintContains(id, userStoryId);
+        Optional<SprintJpa> sprintOptional = iSprintJpaRepository.findById(id);
+
+        if (sprintOptional.isPresent()) {
+            List<UserStoryInSprintJpa> userStories = sprintOptional.get().getUserStoriesInSprint();
+            result = userStories.stream()
+                    .anyMatch(us -> us.getUsId().equals(userStoryId));
+        }
+
+        return result;
     }
 
     /**
@@ -142,8 +152,12 @@ public class SprintRepositoryJpa implements ISprintRepository {
     public Optional<Sprint> findByProjectCodeAndStatus(Code projectCode, SprintStatus status) {
         String sprintStatus = status.getStatus();
         String code = projectCode.getCode();
-
-        return iSprintJpaRepository.findByProjectCodeAndStatus(code, sprintStatus)
-                .map(sprintDomainDataAssembler::toDomain);
+        Sprint sprint = null;
+        Optional<SprintJpa> sprintJpaOptional =
+                iSprintJpaRepository.findByProjectCodeAndStatus(code, sprintStatus);
+        if (sprintJpaOptional.isPresent()) {
+            sprint = sprintDomainDataAssembler.toDomain(sprintJpaOptional.get());
+        }
+        return Optional.ofNullable(sprint);
     }
 }
