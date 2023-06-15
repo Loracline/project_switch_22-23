@@ -45,9 +45,9 @@ class AddUserStoryToSprintBacklogServiceTest {
      * Method: addUserStoryToSprintBacklog
      * scenario 1: Adds a US to an empty sprint backlog
      */
-  /*  @Test
+    @Test
     void ensureUserStoryIsAddedToEmptySprint() {
-        //Arrange
+        // Arrange
         String usId = "p001_us001";
         String sprintId = "p001_s001";
         UserStoryInSprintDto dto = new UserStoryInSprintDto(usId, sprintId);
@@ -56,6 +56,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         userStoryList.add(userStoryDouble);
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
+
         when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(userStoryList);
         when(userStoryDouble.hasStatus(any())).thenReturn(true);
         when(userStoryDouble.getProjectCode()).thenReturn("p001");
@@ -63,19 +64,22 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isOpen()).thenReturn(true);
         when(sprintDouble.addUserStory(any())).thenReturn(true);
+        when(sprintRepository.save(any())).thenReturn(true); // Mock the save method to return true
 
-        //Act
+        // Act
         boolean result = service.addUserStoryToSprint(dto);
-        //Assert
+
+        // Assert
         assertTrue(result);
-    }*/
+    }
+
 
     /**
      * scenario 2: Adds a US to a non-empty sprint backlog
      */
-  /*  @Test
+    @Test
     void ensureUserStoryIsAddedToSprint() {
-        //Arrange
+        // Arrange
         String usId = "p001_us001";
         String sprintId = "p001_s001";
         UserStoryInSprintDto dto = new UserStoryInSprintDto(usId, sprintId);
@@ -84,6 +88,7 @@ class AddUserStoryToSprintBacklogServiceTest {
         userStoryList.add(userStoryDouble);
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
+
         when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(userStoryList);
         when(userStoryDouble.hasStatus(any())).thenReturn(true);
         when(userStoryDouble.getProjectCode()).thenReturn("p001");
@@ -91,20 +96,22 @@ class AddUserStoryToSprintBacklogServiceTest {
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isOpen()).thenReturn(true);
         when(sprintDouble.addUserStory(any())).thenReturn(true);
-        service.addUserStoryToSprint(dto);
+        when(sprintRepository.save(any())).thenReturn(true);
 
-        //Act
+        // Act
         boolean result = service.addUserStoryToSprint(dto);
-        //Assert
+
+        // Assert
         assertTrue(result);
-    }*/
+    }
+
 
     /**
      * scenario 3: returns false because US is already in the sprint backlog.
      */
-   /* @Test
-    void ensureUserStoryIsNotAddedToSprintBecauseIsALreadyInTheSprint() {
-        //Arrange
+    @Test
+    void ensureUserStoryIsNotAddedToSprintBecauseIsAlreadyInTheSprint() {
+        // Arrange
         String usId = "p001_us001";
         String sprintId = "p001_s001";
         UserStoryInSprintDto dto = new UserStoryInSprintDto(usId, sprintId);
@@ -113,19 +120,32 @@ class AddUserStoryToSprintBacklogServiceTest {
         userStoryList.add(userStoryDouble);
         Sprint sprintDouble = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
+
         when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(userStoryList);
         when(userStoryDouble.hasStatus(any())).thenReturn(true);
         when(userStoryDouble.getProjectCode()).thenReturn("p001");
         when(sprintDouble.hasProjectCode(any())).thenReturn(true);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintDouble.isOpen()).thenReturn(true);
-        when(sprintDouble.addUserStory(any())).thenReturn(false);
+        when(sprintDouble.addUserStory(any())).thenThrow(new RuntimeException("The user story is already assigned to the" +
+                " sprint. Duplicate assignments are not allowed."));
 
-        //Act
-        boolean result = service.addUserStoryToSprint(dto);
-        //Assert
-        assertFalse(result);
-    }*/
+        // Act
+        boolean result = false;
+        try {
+            result = service.addUserStoryToSprint(dto);
+            fail("Expected RuntimeException to be thrown.");
+        } catch (RuntimeException e) {
+            // Assert
+            assertEquals("The user story is already assigned to the sprint. Duplicate assignments are not" +
+                    " allowed.", e.getMessage());
+            assertFalse(result);
+        }
+    }
+
+
+
+
 
     /**
      * scenario 4: Fails to add a finished US to the sprint backlog.

@@ -85,7 +85,9 @@ public class ProjectDomainDataAssembler {
                     new NumberOfPlannedSprints(projectJpa.getNumberOfPlannedSprints()),
                     projectJpa.getSprintDuration(), LocalDate.parse(projectJpa.getStartDate()),
                     LocalDate.parse(projectJpa.getEndDate()));
+        } else if (project.hasStatus(ProjectStatus.PLANNED)){
         } else {
+
             Budget budget = new Budget(BigDecimal.valueOf(projectJpa.getBudget()));
             NumberOfPlannedSprints numberOfPlannedSprints = new NumberOfPlannedSprints
                     (projectJpa.getNumberOfPlannedSprints());

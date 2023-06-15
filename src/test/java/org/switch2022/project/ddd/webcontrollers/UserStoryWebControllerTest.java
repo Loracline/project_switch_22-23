@@ -9,8 +9,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.switch2022.project.ddd.application.UsService;
+import org.switch2022.project.ddd.application.UserStoriesInSprintService;
 import org.switch2022.project.ddd.domain.value_object.UsId;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
+import org.switch2022.project.ddd.dto.UserStoryStatusDto;
 
 import static java.util.Collections.singletonList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,6 +27,9 @@ class UserStoryWebControllerTest {
     UsService usService;
     @InjectMocks
     UserStoryWebController userStoryWebController;
+
+    @MockBean
+    UserStoriesInSprintService usInSprintService;
 
     /**
      * Method: createUs()
@@ -54,5 +59,22 @@ class UserStoryWebControllerTest {
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         Object res = responseEntity.getBody();
         assertEquals(res, usId);
+    }
+
+    /**
+     * Method: changeUserStoryStatus
+     *
+     */
+    @Test
+    void ensureThatUsStatusIsChanged() {
+        //ARRANGE
+        UserStoryStatusDto dtoDouble = mock(UserStoryStatusDto.class);
+        String usId= "p001_us001";
+
+        when(usInSprintService.changeUserStoryStatus(dtoDouble)).thenReturn(true);
+        //ACT
+        ResponseEntity<Object> responseEntity = userStoryWebController.changeUserStoryStatus(dtoDouble,usId);
+        //ASSERT
+        assertEquals(responseEntity.getStatusCodeValue(), 200);
     }
 }

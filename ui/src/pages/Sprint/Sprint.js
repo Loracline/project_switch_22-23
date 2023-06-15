@@ -22,7 +22,7 @@ const Sprint = () => {
 
     const [showConfirmation, setShowConfirmation] = useState(false);
     const isOpen = data?.status === "open";
-    const isClosed = data?.status === "closed" || data?.status === "planned";
+    const isClosed = data?.status === "close" || data?.status === "planned" || data?.status === "CLOSED";
 
     const handleConfirmation = () => {
         setShowConfirmation(true);
