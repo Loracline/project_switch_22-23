@@ -30,7 +30,6 @@ const Project = () => {
                                 text="Sprints"/>
                         <Button onClick={() => dispatch(selectMenu('productBacklog'))} text="Product backlog"/>
                         <Button onClick={() => dispatch(selectMenu('allocateResource'))} text="Add Resource" isDisabled={!data?.startDate || !data?.endDate || isEndDatePassed}/>
-                        <Button onClick={() => dispatch(selectMenu('sprintBacklog'))} text="Sprint Backlog"/>
                         <Button onClick={() => dispatch(selectMenu('scrumBoard'))} text="Scrum Board"/>
                     </div>
                 </div>

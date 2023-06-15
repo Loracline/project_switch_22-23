@@ -19,7 +19,6 @@ const menu = [
     {key: 'about', label: "about"},
     {key: 'allocateResource', label: "allocate resource", hidden: true},
     {key: 'sprint', label: "sprint", hidden: true},
-    {key: 'sprintBacklog', label: "sprint Backlog", hidden: true},
     {key: 'scrumBoard', label: "scrum board", hidden: false}
 ]
 const nav = {selectedMenu: menu[0], menu: menu,}
