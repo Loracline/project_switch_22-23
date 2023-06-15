@@ -350,9 +350,10 @@ export function updateSprintStatus(dispatch, sprintId, status) {
         (result) => dispatch(updateSprintStatusFailure(result)))
 }
 
-export function updateSprintStatusSuccess() {
+export function updateSprintStatusSuccess(status) {
     return {
         type: UPDATE_SPRINT_STATUS_SUCCESS,
+        payload: status
     };
 }
 

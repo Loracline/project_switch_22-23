@@ -212,18 +212,21 @@ const reducer = (state, action) => {
             }
         }
 
-        case UPDATE_SPRINT_STATUS_SUCCESS:
+        case UPDATE_SPRINT_STATUS_SUCCESS: {
             return {
                 ...state,
-                isSprintOpen: true
-            };
+                isSprintOpen: true,
+                detailedSprint : {...state.detailedSprint, status: action.payload}
+            }
+        }
 
-        case UPDATE_SPRINT_STATUS_FAILURE:
+        case UPDATE_SPRINT_STATUS_FAILURE: {
             return {
                 ...state,
                 messageFailure: action.payload,
 
-            };
+            }
+        }
 
         default:
             return state;

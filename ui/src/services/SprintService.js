@@ -43,8 +43,8 @@ export function patchSprintStatus(sprintId, status, success, failure) {
     })
         .then((response) => {
             if (response.ok) {
-                success();
-            }
+                success(status);
+            } else response.json().then(errorObject => failure(errorObject.message));
         })
         .catch((error) => {
                 failure(error.message);
