@@ -101,8 +101,8 @@ public class UserStoriesInSprintService {
         UsId usId = createUsId(userStoryStatusDto.usId);
         Status userStoryStatus = Status.valueOf(userStoryStatusDto.status.toUpperCase());
         UserStory userStory = getUserStory(usId);
-        if (sprintRepository.hasStatus(sprintId, SprintStatus.OPEN) && isUserStoryInSprint
-                (usId, sprintId)) {
+        isSprintOpen(sprintId);
+        if (isUserStoryInSprint(usId, sprintId)) {
             userStory.changeStatus(userStoryStatus);
             userStoryRepository.save(userStory);
             result = true;
@@ -183,9 +183,23 @@ public class UserStoriesInSprintService {
     public List<UserStoryDto> getScrumBoard(ProjectCodeValueObjectDto dto) {
         List<UserStoryDto> userStoryDtos = new ArrayList<>();
         Optional<Sprint> optionalSprint = sprintRepository.findByProjectCodeAndStatus(dto.getCode(), SprintStatus.OPEN);
-    if (optionalSprint.isPresent()){
-        userStoryDtos= getSprintBacklog(optionalSprint.get().getSprintId());
+        if (optionalSprint.isPresent()) {
+            userStoryDtos = getSprintBacklog(optionalSprint.get().getSprintId());
+        }
+        return userStoryDtos;
     }
-    return userStoryDtos;
+
+    /**
+     * Checks if the specified Sprint is open.
+     *
+     * @param sprintId The identifier of the Sprint to check.
+     * @return {@code true} if the Sprint is open, {@code false} otherwise.
+     * @throws RuntimeException if the Sprint is not open.
+     */
+    private boolean isSprintOpen(SprintId sprintId) {
+        if (!sprintRepository.hasStatus(sprintId, SprintStatus.OPEN)) {
+            throw new RuntimeException("The Sprint is not open");
+        }
+        return sprintRepository.hasStatus(sprintId, SprintStatus.OPEN);
     }
 }

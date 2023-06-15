@@ -200,7 +200,7 @@ public class UserStoriesInSprintServiceTest {
     }
 
     /**
-     * scenario 2: returns false
+     * scenario 2: returns an exception because the sprint is not open
      */
     @Test
     void ensureTheStatusOfAUserStoryIsChangedUnsuccessfully() {
@@ -211,11 +211,16 @@ public class UserStoriesInSprintServiceTest {
         Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
         when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
         when(sprintRepository.hasStatus(any(), any())).thenReturn(false);
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                service.changeUserStoryStatus(userStoryStatusDto));
 
-        //Act
-        boolean result = service.changeUserStoryStatus(userStoryStatusDto);
-        //Assert
-        assertFalse(result);
+        String expected = "The Sprint is not open";
+
+        //ACT
+        String result = exception.getMessage();
+
+        //ASSERT
+        assertEquals(expected, result);
     }
 
     /**
