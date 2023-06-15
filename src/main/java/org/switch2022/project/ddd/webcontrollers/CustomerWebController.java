@@ -6,10 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.ddd.application.CustomerListService;
 import org.switch2022.project.ddd.application.CustomerService;
+import org.switch2022.project.ddd.domain.value_object.TaxId;
 import org.switch2022.project.ddd.dto.CustomerCreationDto;
 import org.switch2022.project.ddd.dto.CustomerDto;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller class that handles HTTP requests related to customers.
@@ -58,5 +60,24 @@ public class CustomerWebController {
     public ResponseEntity<List<CustomerDto>> listAllCustomers() {
         List<CustomerDto> customerDtos = listService.listAllCustomers();
         return new ResponseEntity<>(customerDtos, HttpStatus.OK);
+    }
+
+    /**
+     * Retrieves a customer by their tax ID and returns it as a response entity.
+     *
+     * @param customerTaxId The tax ID of the customer to be retrieved.
+     * @return A response entity containing the customer DTO if found, or a not found response if the customer is not
+     * found.
+     */
+    @GetMapping("/{customerTaxId}")
+    public ResponseEntity<CustomerDto> getByTaxId(@PathVariable String customerTaxId) {
+        TaxId taxId = new TaxId(customerTaxId);
+        Optional<CustomerDto> opCustomerDto = listService.getCustomerByTaxId(taxId);
+        if (opCustomerDto.isPresent()) {
+            CustomerDto customerDto = opCustomerDto.get();
+            return new ResponseEntity<>(customerDto, HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

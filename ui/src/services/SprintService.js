@@ -16,27 +16,6 @@ export function postSprint(success, failure, sprintToSubmit) {
     ;
 }
 
-export function postUpdateSprintStatus(sprintId, status) {
-    return new Promise((resolve, reject) => {
-        fetch(`${URL}/sprints/${sprintId}`, {
-            method: 'PUT',
-            body: JSON.stringify({status}),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        })
-            .then(res => {
-                if (res.status === 200) {
-                    res.text().then(text => resolve(text));
-                } else {
-                    res.text().then(errText => reject(errText));
-                }
-            })
-            .catch(err => reject(err.message));
-    });
-}
-
-
 /**
  * Fetches the sprints from a project.
  * @param success The success callback function that will be called when the request is successful. It receives the
@@ -52,6 +31,26 @@ export function fetchSprintsFromProject(success, failure, projectCode) {
         .then(res => res.json())
         .then(res => success(res))
         .catch(err => failure(err.message));
+}
+
+export function patchSprintStatus(sprintId, status, success, failure) {
+    fetch(`${URL}/sprints/${sprintId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({sprintId:sprintId, status:status}),
+    })
+        .then((response) => {
+            if (response.ok) {
+                success(status);
+            } else response.json().then(errorObject => failure(errorObject.message));
+        })
+        .catch((error) => {
+                failure(error.message);
+            }
+        );
+
 }
 
 
