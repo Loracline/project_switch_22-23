@@ -114,4 +114,17 @@ public class SprintWebController {
         }
         return new ResponseEntity<>(primitiveTypesDtos, HttpStatus.OK);
     }
+    /**
+     * Handles a GET request to retrieve a list of user stories of the scrumBoard.
+     *
+     * @return A ResponseEntity containing a list of User stories objects and a status code of
+     * 200 (OK).
+     */
+    @GetMapping("/{projectCode}/scrumBoard")
+    @ResponseBody
+    public ResponseEntity<List<UserStoryDto>> getScrumBoard(@PathVariable ProjectCodeStringDto projectCode) {
+        ProjectCodeValueObjectDto codeValueObjectDto = ProjectCodeDtoAssembler.convertToValueObject(projectCode);
+        List<UserStoryDto> userStories = userStoriesInSprintService.getScrumBoard(codeValueObjectDto);
+        return new ResponseEntity<>(userStories, HttpStatus.OK);
+    }
 }

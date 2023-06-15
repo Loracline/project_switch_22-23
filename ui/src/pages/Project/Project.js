@@ -8,6 +8,7 @@ const Project = () => {
     const {state, dispatch} = useContext(AppContext);
     const data = state.detailedProject;
 
+    const isProjectEditable = data.status === "inception";
     const isEndDatePassed = new Date(data?.endDate) < new Date();
     const isEndDateNull = data?.endDate === "";
 
@@ -25,11 +26,11 @@ const Project = () => {
                     </div>
                     <div className='buttons-project'>
                         <Button onClick={() => dispatch(selectMenu('createUserStory'))}
-                                text="Create user story" isDisabled={isEndDatePassed || isEndDateNull}/>
+                                text="Create user story" isDisabled={!isProjectEditable}/>
                         <Button onClick={() => dispatch(selectMenu('sprints'))}
                                 text="Sprints"/>
                         <Button onClick={() => dispatch(selectMenu('productBacklog'))} text="Product backlog"/>
-                        <Button onClick={() => dispatch(selectMenu('allocateResource'))} text="Add Resource" isDisabled={!data?.startDate || !data?.endDate || isEndDatePassed}/>
+                        <Button onClick={() => dispatch(selectMenu('allocateResource'))} text="Add Resource" isDisabled={!isProjectEditable}/>
                         <Button onClick={() => dispatch(selectMenu('scrumBoard'))} text="Scrum Board"/>
                     </div>
                 </div>

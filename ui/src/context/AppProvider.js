@@ -54,7 +54,8 @@ const AppProvider = ({children}) => {
         loading: false,
         messageFailure: '',
         messageSuccess: '',
-        isSprintOpen: false
+        isSprintOpen: false,
+        userStoriesInSprint: []
     }
 
     const [state, dispatch] = useReducer(reducer, initialState);

@@ -1,9 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import TableBody from "../../components/TableBody/TableBody";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import AppContext from "../../context/AppContext";
 import Alert from "@mui/material/Alert";
-import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
+import {getSprintBacklog} from "../../context/Actions";
+import Loading from "../../components/Loading/Loading";
 
 /**
  * A functional component that displays the sprint backlog.
@@ -11,27 +12,17 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
  */
 
 function ConsultSprintBacklog() {
-    const { state, dispatch } = useContext(AppContext);
-    const { usHeadersSprintBacklog } = state;
-
-    const [sprintBacklog, setSprintBacklog] = useState([]);
+    const {state, dispatch} = useContext(AppContext);
+    const {usHeadersSprintBacklog, userStoriesInSprint, loading} = state;
 
     const selectedSprint = state.detailedSprint;
     const sprintId = selectedSprint.id;
-    //debugger
-    useEffect(() => {
-            fetch(`http://localhost:8080/sprints/${sprintId}/userStoriesInSprint`, {
-                method: 'GET',
-                headers,
-            })
-                .then(res => res.json())
-                .then(res => {
-                    console.log(res);
-                    setSprintBacklog(res);
-                });
-    }, [sprintId]);
 
-    const data = sprintBacklog.map(userStory => {
+    useEffect(() => {
+        getSprintBacklog(dispatch, sprintId)
+    }, [dispatch]);
+
+    const data = userStoriesInSprint.map(userStory => {
         return {
             userStoryNumber: userStory.userStoryNumber,
             userStoryText: userStory.userStoryText,
@@ -41,15 +32,15 @@ function ConsultSprintBacklog() {
     let tableData;
     if (data.length > 0) {
         tableData = (
-            <table className='table' >
-                <TableHeader headers={usHeadersSprintBacklog} />
-                <TableBody body={data} />
+            <table className='table'>
+                <TableHeader headers={usHeadersSprintBacklog}/>
+                <TableBody body={data}/>
             </table>
         );
     } else {
         tableData = (
             <Alert
-                style={{ marginTop: '1.5rem', marginBottom: '2.5rem' }}
+                style={{marginTop: '1.5rem', marginBottom: '2.5rem'}}
                 variant="filled"
                 severity="info"
             >
@@ -57,13 +48,20 @@ function ConsultSprintBacklog() {
             </Alert>
         );
     }
-
-    return (
-        <div>
-            <h2 className="pageH2">Sprint Backlog</h2>
-            {tableData}
-        </div>
-    );
+    if (loading === true) {
+        return (
+            <div>
+                <p style={{height: "calc(100vh - 172px - 2rem)"}}></p>
+                <Loading handleLoading={loading}/>
+            </div>)
+    } else {
+        return (
+            <div>
+                <h2 className="pageH2">Sprint Backlog</h2>
+                {tableData}
+            </div>
+        );
+    }
 }
 
 export default ConsultSprintBacklog;

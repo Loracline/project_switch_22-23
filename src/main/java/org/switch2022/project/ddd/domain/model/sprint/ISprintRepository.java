@@ -4,6 +4,7 @@ package org.switch2022.project.ddd.domain.model.sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,4 +62,22 @@ public interface ISprintRepository {
      */
 
     boolean hasStatus(SprintId sprintId, SprintStatus status);
+
+    /**
+     * This method checks if the userStory is in the sprint
+     * @param usId the id of the userStory
+     * @param sprintId the id of the sprint
+     * @return true if the userStory is present
+     */
+    boolean hasUsId(SprintId sprintId, UsId usId);
+
+    /**
+     * Retrieves a Sprint object by its ProjectCode and status.
+     *
+     * @param projectCode the project code of the sprint
+     * @param status the status of the sprint
+     * @return An Optional object containing the found Sprint, or an empty Optional if no Sprint is found.
+     */
+
+    Optional<Sprint> findByProjectCodeAndStatus(Code projectCode,SprintStatus status);
 }

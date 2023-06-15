@@ -6,7 +6,7 @@ import {
     getProjectTypologies,
     postProject
 } from "../services/ProjectService";
-import {fetchSprintsFromProject, patchSprintStatus, postSprint} from "../services/SprintService";
+import {fetchSprintBacklog, fetchSprintsFromProject, patchSprintStatus, postSprint} from "../services/SprintService";
 import {strings} from "../strings";
 import {postUserStory} from "../services/UserStoryService";
 
@@ -350,9 +350,10 @@ export function updateSprintStatus(dispatch, sprintId, status) {
         (result) => dispatch(updateSprintStatusFailure(result)))
 }
 
-export function updateSprintStatusSuccess() {
+export function updateSprintStatusSuccess(status) {
     return {
         type: UPDATE_SPRINT_STATUS_SUCCESS,
+        payload: status
     };
 }
 
@@ -422,6 +423,34 @@ export function setCurrentSprint(sprint) {
         type: SELECT_SPRINT,
         payload: {
             selected: sprint
+        }
+    }
+}
+
+/**
+ * Actions get sprintBacklog from a specific sprint.
+ */
+
+export const FETCH_SPRINT_BACKLOG = 'FETCH_SPRINT_BACKLOG'
+
+export function getSprintBacklog(dispatch, sprintId) {
+const action = {
+        type: FETCH_SPRINT_BACKLOG
+    }
+    dispatch(action);
+    fetchSprintBacklog(sprintId, (res) => dispatch(getSprintBacklogFromSprintIdSuccessfully(res)),
+        (err) => fetchFailure(err.message));
+}
+
+//export const GET_SPRINT_BACKLOG = 'GET_SPRINT_BACKLOG'
+
+export const GET_SPRINT_BACKLOG_SUCCESS = 'GET_SPRINT_BACKLOG_SUCCESS'
+
+export function getSprintBacklogFromSprintIdSuccessfully(userStoriesInSprint) {
+    return {
+        type: GET_SPRINT_BACKLOG_SUCCESS,
+        payload: {
+            data: [...userStoriesInSprint]
         }
     }
 }

@@ -23,7 +23,7 @@ const Sprint = () => {
 
     const [showConfirmation, setShowConfirmation] = useState(false);
     const isOpen = data?.status === "open";
-    const isClosed = data?.status === "closed" || data?.status === "planned";
+    const isClosed = data?.status === "close" || data?.status === "planned" || data?.status === "CLOSED";
 
     const handleConfirmation = () => {
         setShowConfirmation(true);
@@ -35,12 +35,13 @@ const Sprint = () => {
 
     const handleUpdateSprintStatus = (status) => {
         updateSprintStatus(dispatch, data?.id, status);
+        setShowConfirmation(false);
     };
 
     const handleUpdateSprintButton = (status) => {
         //&& hasUnfinishedUserStories
         if (status === "close") {
-            handleConfirmation();
+            handleConfirmation(status);
         } else {
             handleUpdateSprintStatus(status);
         }
@@ -108,7 +109,7 @@ const Sprint = () => {
 
             <FailureMessage
                 handleOpen={messageFailure.length > 0}
-                title="Sprint not created!"
+                title="Sprint can't be opened!"
                 message={messageFailure}
                 handleClose={handleClearSprint}
             />
@@ -116,7 +117,7 @@ const Sprint = () => {
                 handleOpen={showConfirmation}
                 dialogContent={dialogContent()}
                 handleCancel={handleCancel}
-                handleConfirm={handleUpdateSprintStatus}
+                handleConfirm={() => handleUpdateSprintStatus("close")}
             />
         </div>
 

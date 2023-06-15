@@ -6,6 +6,7 @@ import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
+import org.switch2022.project.ddd.domain.value_object.UsId;
 
 import java.util.*;
 
@@ -166,5 +167,34 @@ public class SprintRepository implements ISprintRepository {
     public boolean hasStatus(SprintId sprintId, SprintStatus status) {
         Optional<Sprint> sprint = findById(sprintId);
         return sprint.isPresent() && sprint.get().hasStatus(status);
+    }
+
+    /**
+     * This method checks if the userStory is in the sprint
+     *
+     * @param usId     the id of the userStory
+     * @param sprintId the id of the sprint
+     * @return true if the userStory is present
+     */
+    public boolean hasUsId(SprintId sprintId, UsId usId) {
+        Optional<Sprint> sprint = findById(sprintId);
+        return sprint.isPresent() && sprint.get().hasUserStory(usId);
+    }
+
+    /**
+     * Finds a Sprint object based on the provided project code and status.
+     *
+     * @param projectCode The project code to search for.
+     * @param status      The status of the Sprint to search for.
+     * @return An Optional containing the found Sprint object, or an empty Optional if no matching Sprint is found.
+     */
+    public Optional<Sprint> findByProjectCodeAndStatus(Code projectCode, SprintStatus status) {
+        Optional<Sprint> sprintOptional = Optional.empty();
+        for (Sprint sprint : this.sprints) {
+            if (sprint.hasProjectCode(projectCode) && sprint.hasStatus(status)) {
+                sprintOptional = Optional.of(sprint);
+            }
+        }
+        return sprintOptional;
     }
 }
