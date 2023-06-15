@@ -15,7 +15,6 @@ import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.utils.Utils;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,11 +50,13 @@ public class AddUserStoryToSprintBacklogService {
         Sprint sprint = getSprintById(sprintId);
 
         boolean userStoryWasAddedToSprintBacklog = false;
-        if (isSprintValidToAddUserStories(sprint) && isUserStoryValidToBeAddedToSprint(sprint, userStory)) {
-            sprint.addUserStory(userStoryId);
-            sprintRepository.save(sprint);
-            userStoryWasAddedToSprintBacklog = true;
-        }
+        if (isSprintValidToAddUserStories(sprint) && isUserStoryValidToBeAddedToSprint(sprint, userStory)){
+                if(!sprint.addUserStory(userStoryId)) {
+                    throw new RuntimeException("The user story is already assigned to the sprint. Duplicate " +
+                            "assignments are not allowed.");
+                }
+                userStoryWasAddedToSprintBacklog= sprintRepository.save(sprint);
+            }
         return userStoryWasAddedToSprintBacklog;
     }
 
