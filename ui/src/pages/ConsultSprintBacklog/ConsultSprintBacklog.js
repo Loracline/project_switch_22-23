@@ -4,6 +4,7 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import AppContext from "../../context/AppContext";
 import Alert from "@mui/material/Alert";
 import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
+import {getSprintBacklog} from "../../context/Actions";
 
 /**
  * A functional component that displays the sprint backlog.
@@ -12,26 +13,16 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
 
 function ConsultSprintBacklog() {
     const { state, dispatch } = useContext(AppContext);
-    const { usHeadersSprintBacklog } = state;
-
-    const [sprintBacklog, setSprintBacklog] = useState([]);
+    const { usHeadersSprintBacklog, userStoriesInSprint } = state;
 
     const selectedSprint = state.detailedSprint;
     const sprintId = selectedSprint.id;
-    //debugger
-    useEffect(() => {
-            fetch(`http://localhost:8080/sprints/${sprintId}/userStoriesInSprint`, {
-                method: 'GET',
-                headers,
-            })
-                .then(res => res.json())
-                .then(res => {
-                    console.log(res);
-                    setSprintBacklog(res);
-                });
-    }, [sprintId]);
 
-    const data = sprintBacklog.map(userStory => {
+    useEffect(() => {
+        getSprintBacklog(dispatch, sprintId)
+    }, [dispatch]);
+
+    const data = userStoriesInSprint.map(userStory => {
         return {
             userStoryNumber: userStory.userStoryNumber,
             userStoryText: userStory.userStoryText,

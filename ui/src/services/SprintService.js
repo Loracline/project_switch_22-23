@@ -1,4 +1,5 @@
 import {URL} from "./ProjectService";
+import {API_HEADERS as headers} from "./api";
 
 export function postSprint(success, failure, sprintToSubmit) {
     fetch(`${URL}/sprints`, {
@@ -39,7 +40,7 @@ export function patchSprintStatus(sprintId, status, success, failure) {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: JSON.stringify({sprintId:sprintId, status:status}),
+        body: JSON.stringify({sprintId: sprintId, status: status}),
     })
         .then((response) => {
             if (response.ok) {
@@ -52,6 +53,17 @@ export function patchSprintStatus(sprintId, status, success, failure) {
         );
 
 }
+
+export function fetchSprintBacklog(sprintId, success, failure) {
+    fetch(`http://localhost:8080/sprints/${sprintId}/userStoriesInSprint`, {
+        method: 'GET',
+        headers,
+    })
+        .then(res => res.json())
+        .then(res => success(res))
+        .catch(err => failure(err.message));
+}
+
 
 
 
