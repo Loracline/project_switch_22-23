@@ -69,10 +69,11 @@ class UserStoryWebControllerTest {
     void ensureThatUsStatusIsChanged() {
         //ARRANGE
         UserStoryStatusDto dtoDouble = mock(UserStoryStatusDto.class);
+        String usId= "p001_us001";
 
         when(usInSprintService.changeUserStoryStatus(dtoDouble)).thenReturn(true);
         //ACT
-        ResponseEntity<Object> responseEntity = userStoryWebController.changeUserStoryStatus(dtoDouble);
+        ResponseEntity<Object> responseEntity = userStoryWebController.changeUserStoryStatus(dtoDouble,usId);
         //ASSERT
         assertEquals(responseEntity.getStatusCodeValue(), 200);
     }

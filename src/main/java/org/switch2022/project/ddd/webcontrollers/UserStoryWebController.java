@@ -44,7 +44,8 @@ public class UserStoryWebController {
      */
     @PatchMapping("/{usId}")
     @ResponseBody
-    public ResponseEntity<Object> changeUserStoryStatus(@RequestBody UserStoryStatusDto userStoryStatusDto) {
+    public ResponseEntity<Object> changeUserStoryStatus(@RequestBody UserStoryStatusDto userStoryStatusDto,
+    @PathVariable String usId) {
         usInSprintService.changeUserStoryStatus(userStoryStatusDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
