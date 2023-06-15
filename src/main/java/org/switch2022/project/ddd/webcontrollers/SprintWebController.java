@@ -92,11 +92,8 @@ public class SprintWebController {
     @PostMapping("/{SprintId}/SprintBacklog")
     public ResponseEntity<Object> addUserStoryToSprintBacklog(@RequestBody UserStoryInSprintDto userStoryInSprintDto,
                                                               @PathVariable String SprintId) {
-        if (addUserStoryToSprintBacklogService.addUserStoryToSprint(userStoryInSprintDto)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+        addUserStoryToSprintBacklogService.addUserStoryToSprint(userStoryInSprintDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     /**

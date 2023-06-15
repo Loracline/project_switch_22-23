@@ -50,11 +50,13 @@ public class AddUserStoryToSprintBacklogService {
         Sprint sprint = getSprintById(sprintId);
 
         boolean userStoryWasAddedToSprintBacklog = false;
-        if (isSprintValidToAddUserStories(sprint) && isUserStoryValidToBeAddedToSprint(sprint, userStory)) {
-            sprint.addUserStory(userStoryId);
-            sprintRepository.save(sprint);
-            userStoryWasAddedToSprintBacklog = true;
-        }
+        if (isSprintValidToAddUserStories(sprint) && isUserStoryValidToBeAddedToSprint(sprint, userStory)){
+                if(!sprint.addUserStory(userStoryId)) {
+                    throw new RuntimeException("The user story is already assigned to the sprint. Duplicate " +
+                            "assignments are not allowed.");
+                }
+                userStoryWasAddedToSprintBacklog= sprintRepository.save(sprint);
+            }
         return userStoryWasAddedToSprintBacklog;
     }
 
