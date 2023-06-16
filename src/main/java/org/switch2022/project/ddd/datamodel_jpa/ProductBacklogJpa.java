@@ -2,17 +2,14 @@ package org.switch2022.project.ddd.datamodel_jpa;
 
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 @NoArgsConstructor
 @Entity
-@Table(name = "productBacklog")
+@Table(name = "ProductBacklogs")
 public class ProductBacklogJpa {
     /**
      * Attributes
@@ -20,6 +17,8 @@ public class ProductBacklogJpa {
     @Id
     private String productBacklogId;
     @ElementCollection
+    @CollectionTable(name = "UserStoriesInProductBacklog", joinColumns = @JoinColumn(name = "ProductBacklogId"))
+    @Column(name = "userStoryInProductBacklog")
     private List<String> userStories;
 
     /**

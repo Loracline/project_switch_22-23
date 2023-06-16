@@ -6,9 +6,15 @@ import {
     getProjectTypologies,
     postProject
 } from "../services/ProjectService";
-import {fetchSprintBacklog, fetchSprintsFromProject, patchSprintStatus, postSprint} from "../services/SprintService";
+import {
+    fetchSprintBacklog,
+    fetchSprintsFromProject,
+    patchSprintStatus,
+    postSprint
+} from "../services/SprintService";
 import {strings} from "../strings";
 import {postUserStory} from "../services/UserStoryService";
+import {postUserStoryInSprint} from "../pages/SprintBacklog/UserStoryInSprintService";
 
 /**
  Action types.
@@ -434,7 +440,7 @@ export function setCurrentSprint(sprint) {
 export const FETCH_SPRINT_BACKLOG = 'FETCH_SPRINT_BACKLOG'
 
 export function getSprintBacklog(dispatch, sprintId) {
-const action = {
+    const action = {
         type: FETCH_SPRINT_BACKLOG
     }
     dispatch(action);
@@ -452,6 +458,22 @@ export function getSprintBacklogFromSprintIdSuccessfully(userStoriesInSprint) {
         payload: {
             data: [...userStoriesInSprint]
         }
+    }
+}
+
+export const POST_USER_STORY_IN_SPRINT = 'POST_USER_STORY_IN_SPRINT'
+
+export function postUserStoryToSprint(sprintId, userStory, code, dispatch) {
+    postUserStoryInSprint(sprintId, userStory, code, (res) => dispatch(postUserStoryInSprintSuccess(res)));
+}
+
+
+export const POST_USER_STORY_TO_SPRINT_SUCCESS = "POST_USER_STORY_TO_SPRINT_SUCCESS"
+
+export function postUserStoryInSprintSuccess(userStory) {
+    return {
+        type: POST_USER_STORY_TO_SPRINT_SUCCESS,
+        payload: userStory
     }
 }
 

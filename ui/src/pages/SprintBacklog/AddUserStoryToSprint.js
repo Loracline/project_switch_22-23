@@ -6,7 +6,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import Checkbox from '@mui/material/Checkbox';
 import Button from "../../components/Button/Button";
 import {useGetProductBacklog} from "./useGetProductBacklog";
-import {userStoryInSprintService} from "./UserStoryInSprintService";
+import {postUserStoryToSprint} from "../../context/Actions";
 
 
 function AddUserStoryToSprint() {
@@ -27,7 +27,7 @@ function AddUserStoryToSprint() {
 
     const handleSubmit = () => {
         for (let i = 0; i < userStoriesToAdd.length; i++) {
-            userStoryInSprintService(sprintId, userStoriesToAdd[i].userStoryNumber, code)
+            postUserStoryToSprint(sprintId, userStoriesToAdd[i], code, dispatch)
         }
     }
 

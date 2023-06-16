@@ -30,7 +30,10 @@ import {
     FETCH_SPRINTS_STARTED,
     SELECT_SPRINT,
     UPDATE_SPRINT_STATUS_SUCCESS,
-    UPDATE_SPRINT_STATUS_FAILURE, GET_SPRINT_BACKLOG, GET_SPRINT_BACKLOG_SUCCESS, FETCH_SPRINT_BACKLOG
+    UPDATE_SPRINT_STATUS_FAILURE,
+    GET_SPRINT_BACKLOG_SUCCESS,
+    FETCH_SPRINT_BACKLOG,
+    POST_USER_STORY_TO_SPRINT_SUCCESS
 } from "./Actions";
 
 /** Reducer function that updates the app state based on the dispatched actions.
@@ -239,6 +242,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 userStoriesInSprint : action.payload.data, loading: false
+            }
+        }
+
+        case POST_USER_STORY_TO_SPRINT_SUCCESS: {
+            return {...state,
+                userStoriesInSprint:[...state.userStoriesInSprint, action.payload]
             }
         }
 
