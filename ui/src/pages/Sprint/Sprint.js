@@ -7,6 +7,7 @@ import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
 import ConsultSprintBacklog from "../ConsultSprintBacklog/ConsultSprintBacklog";
+import AddUserStoryToSprint from "../SprintBacklog/AddUserStoryToSprint";
 
 /**
  * Sprint component.
@@ -16,7 +17,7 @@ import ConsultSprintBacklog from "../ConsultSprintBacklog/ConsultSprintBacklog";
  */
 const Sprint = () => {
     const {state, dispatch} = useContext(AppContext);
-    const {detailedProject, detailedSprint, messageSuccess, messageFailure} = state;
+    const {detailedProject, detailedSprint, messageSuccess, messageFailure, userStoriesInSprint} = state;
     const data = detailedSprint;
     const projectName = detailedProject.projectName;
 
@@ -39,7 +40,9 @@ const Sprint = () => {
 
     const handleUpdateSprintButton = (status) => {
         //&& hasUnfinishedUserStories
-        if (status === "close") {
+        if (status === "close" && unfinishedUserStories.length > 0) {
+            console.log(userStoriesInSprint);
+            console.log(unfinishedUserStories);
             handleConfirmation(status);
         } else {
             handleUpdateSprintStatus(status);
@@ -49,6 +52,12 @@ const Sprint = () => {
     const handleClearSprint = (_) => {
         //setSprintToSubmit(initialSprintState);
         dispatch(closeButton());
+    }
+
+    const unfinishedUserStories = userStoriesInSprint.filter(isUserStoryUnfinished);
+
+    function isUserStoryUnfinished(userStory) {
+        return (userStory.status === "blocked" || userStory.status === "running");
     }
 
     const dialogContent = () => {
@@ -88,6 +97,7 @@ const Sprint = () => {
                     <div className='start'>
                     </div>
                 </div>
+                <AddUserStoryToSprint/>
                 <ConsultSprintBacklog/>
             </section>
             <div className="returnButtonContainer">

@@ -8,7 +8,6 @@ import CreateUserStory from "../pages/CreateUserStory/CreateUserStory";
 import Home from "../pages/Home/Home";
 import AllocateResource from "../pages/AllocateResource/AllocateResource";
 import Sprint from "../pages/Sprint/Sprint";
-import SprintBacklog from "../pages/SprintBacklog/SprintBacklog";
 import ListSprints from "../pages/ListSprints/ListSprints";
 import ScrumBoard from "../pages/ScrumBoard/ScrumBoard";
 
@@ -26,7 +25,6 @@ const Router = ({selected}) => {
             {selected === 'home' && <Home/>}
             {selected === 'allocateResource' && <AllocateResource/>}
             {selected === 'sprint' && <Sprint/>}
-            {selected === 'sprintBacklog' && <SprintBacklog/>}
             {selected === 'scrumBoard' && <ScrumBoard/>}
         </div>
     )
