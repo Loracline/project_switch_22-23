@@ -7,6 +7,7 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintId;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 import org.switch2022.project.ddd.domain.value_object.Status;
@@ -14,6 +15,7 @@ import org.switch2022.project.ddd.dto.SprintStatusDto;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.List;
 import java.util.Optional;
@@ -43,13 +45,15 @@ public class SprintStatusChangeService {
         boolean wasSprintChanged = false;
         String[] sprintIdParts = sprintStatusDto.getSprintId().split("_", -2);
         SprintId sprintId = new SprintId(sprintIdParts[0], sprintIdParts[1]);
+        int projectNumber = Utils.getIntFromAlphanumericString(sprintIdParts[0], "P");
+        Code projectCode = new Code(projectNumber);
         Optional<Sprint> sprintOptional = sprintRepository.findById(sprintId);
 
         if (sprintOptional.isPresent()) {
-            if (sprintStatusDto.getSprintStatus().equalsIgnoreCase("close")) {
+            if ("close".equalsIgnoreCase(sprintStatusDto.getSprintStatus())) {
                 wasSprintChanged = closeSprint(sprintOptional.get());
-            } else if (sprintStatusDto.getSprintStatus().equalsIgnoreCase("open")) {
-                wasSprintChanged = openSprint(sprintOptional.get());
+            } else if ("open".equalsIgnoreCase(sprintStatusDto.getSprintStatus())) {
+                wasSprintChanged = openSprint(projectCode, sprintOptional.get());
             } else {
                 throw new InvalidInputException("Sprint status must be OPEN or CLOSED.");
             }
@@ -91,7 +95,7 @@ public class SprintStatusChangeService {
      * @param userStory to be analysed.
      * @return true if the user story has blocked or running status and false otherwise.
      */
-    private boolean isUserStoryBlockedOrRunning(UserStory userStory) {
+    private static boolean isUserStoryBlockedOrRunning(UserStory userStory) {
         return userStory.hasStatus(Status.RUNNING) || userStory.hasStatus(Status.BLOCKED);
 
     }
@@ -102,9 +106,9 @@ public class SprintStatusChangeService {
      * @param sprint to be open.
      * @return true it the sprint is open, throws an AlreadyExistsInRepoException otherwise..
      */
-    protected boolean openSprint(Sprint sprint) {
-        if (sprintRepository.existsByStatus(SprintStatus.OPEN)) {
-            throw new AlreadyExistsInRepoException("There is currently another OPEN sprint.");
+    protected boolean openSprint(Code projectCode, Sprint sprint) {
+        if (sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN)) {
+            throw new AlreadyExistsInRepoException("There is currently another OPEN sprint in this project.");
         }
         sprint.changeStatus("OPEN");
         sprintRepository.save(sprint);
