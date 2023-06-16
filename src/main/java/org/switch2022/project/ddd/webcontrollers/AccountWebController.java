@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.ddd.application.AccountChangeStatusService;
 import org.switch2022.project.ddd.application.AccountCreationService;
 import org.switch2022.project.ddd.application.AccountListService;
+import org.switch2022.project.ddd.domain.value_object.Email;
 import org.switch2022.project.ddd.dto.AccountCreationDto;
 import org.switch2022.project.ddd.dto.AccountDto;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The AccountWebController class is a REST controller for handling requests related to accounts.
@@ -89,6 +91,25 @@ public class AccountWebController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Retrieves a account by their email and returns it as a response entity.
+     *
+     * @param email The email of the account to be retrieved.
+     * @return A response entity containing the account DTO if found, or a not found response if the account is not
+     * found.
+     */
+    @GetMapping("/{email}")
+    public ResponseEntity<AccountDto> getByEmail(@PathVariable String email) {
+        Email emailId = new Email(email);
+        Optional<AccountDto> opAccountDto = accountListService.getAccountByEmail(emailId);
+        if (opAccountDto.isPresent()) {
+            AccountDto accountDto = opAccountDto.get();
+            return new ResponseEntity<>(accountDto, HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
 

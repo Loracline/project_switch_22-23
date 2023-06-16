@@ -58,7 +58,9 @@ public class UserStoryDomainDataAssembler {
 
         Code projectCode = new Code(Utils.getIntFromAlphanumericString(projectNumber, "p"));
 
-        return factory.createUserStory(userStoryNumber,
+        UserStory userStory = factory.createUserStory(userStoryNumber,
                 userStoryText, actor, acceptanceCriteria, projectCode);
+        userStory.changeStatus(Status.valueOf(userStoryJpa.getStatus().toUpperCase()));
+        return userStory;
     }
 }
