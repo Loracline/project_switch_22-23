@@ -50,13 +50,13 @@ public class AddUserStoryToSprintBacklogService {
         Sprint sprint = getSprintById(sprintId);
 
         boolean userStoryWasAddedToSprintBacklog = false;
-        if (isSprintValidToAddUserStories(sprint) && isUserStoryValidToBeAddedToSprint(sprint, userStory)){
-                if(!sprint.addUserStory(userStoryId)) {
-                    throw new RuntimeException("The user story is already assigned to the sprint. Duplicate " +
-                            "assignments are not allowed.");
-                }
-                userStoryWasAddedToSprintBacklog= sprintRepository.save(sprint);
+        if (isSprintValidToAddUserStories(sprint) && isUserStoryValidToBeAddedToSprint(sprint, userStory)) {
+            if (!sprint.addUserStory(userStoryId)) {
+                throw new RuntimeException("The user story is already assigned to the sprint. Duplicate " +
+                        "assignments are not allowed.");
             }
+            userStoryWasAddedToSprintBacklog = sprintRepository.save(sprint);
+        }
         return userStoryWasAddedToSprintBacklog;
     }
 
@@ -83,7 +83,7 @@ public class AddUserStoryToSprintBacklogService {
      * @throws RuntimeException if the User Story does not have the 'PLANNED' status or if the Sprint and User Story do
      *                          not belong to the same project.
      */
-    private boolean isUserStoryValidToBeAddedToSprint(Sprint sprint, UserStory userStory) {
+    private static boolean isUserStoryValidToBeAddedToSprint(Sprint sprint, UserStory userStory) {
         if (!doesUserStoryHavePlannedStatus(userStory)) {
             throw new RuntimeException("Only User Stories with 'PLANNED' status can be added to the Sprint");
         }

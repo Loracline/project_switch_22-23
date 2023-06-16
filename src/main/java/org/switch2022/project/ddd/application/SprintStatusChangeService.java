@@ -95,7 +95,7 @@ public class SprintStatusChangeService {
      * @param userStory to be analysed.
      * @return true if the user story has blocked or running status and false otherwise.
      */
-    private boolean isUserStoryBlockedOrRunning(UserStory userStory) {
+    private static boolean isUserStoryBlockedOrRunning(UserStory userStory) {
         return userStory.hasStatus(Status.RUNNING) || userStory.hasStatus(Status.BLOCKED);
 
     }
