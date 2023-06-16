@@ -17,7 +17,7 @@ import AddUserStoryToSprint from "../SprintBacklog/AddUserStoryToSprint";
  */
 const Sprint = () => {
     const {state, dispatch} = useContext(AppContext);
-    const {detailedProject, detailedSprint, messageSuccess, messageFailure} = state;
+    const {detailedProject, detailedSprint, messageSuccess, messageFailure, userStoriesInSprint} = state;
     const data = detailedSprint;
     const projectName = detailedProject.projectName;
 
@@ -40,7 +40,9 @@ const Sprint = () => {
 
     const handleUpdateSprintButton = (status) => {
         //&& hasUnfinishedUserStories
-        if (status === "close") {
+        if (status === "close" && unfinishedUserStories.length > 0) {
+            console.log(userStoriesInSprint);
+            console.log(unfinishedUserStories);
             handleConfirmation(status);
         } else {
             handleUpdateSprintStatus(status);
@@ -50,6 +52,12 @@ const Sprint = () => {
     const handleClearSprint = (_) => {
         //setSprintToSubmit(initialSprintState);
         dispatch(closeButton());
+    }
+
+    const unfinishedUserStories = userStoriesInSprint.filter(isUserStoryUnfinished);
+
+    function isUserStoryUnfinished(userStory) {
+        return (userStory.status === "blocked" || userStory.status === "running");
     }
 
     const dialogContent = () => {
