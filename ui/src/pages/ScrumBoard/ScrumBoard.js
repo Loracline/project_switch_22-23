@@ -1,114 +1,103 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import AppContext from '../../context/AppContext';
-import Button from "../../components/Button/Button";
-import { selectMenu } from "../../context/Actions";
 import './ScrumBoard.css';
+import {useGetScrumBoard} from "./useGetScrumBoard";
+import {Button} from "@mui/material";
+import {selectMenu} from "../../context/Actions";
 
 function ScrumBoard() {
-  const { state, dispatch } = useContext(AppContext);
+    const {state, dispatch} = useContext(AppContext);
+    const {detailedProject} = state;
+    const projectCode = detailedProject.code;
+    const [scrumBoard, setScrumBoard] = useGetScrumBoard(projectCode);
 
-  const [columns, setColumns] = useState([
-    {
-      title: 'Planned',
-      cards: [
-        { id: 'US 1', text: 'Planned' },
-        { id: 'US 2', text: 'Planned' },
-        { id: 'US 3', text: 'Planned' },
-      ],
-    },
-    {
-      title: 'In Progress',
-      cards: [
-        { id: 'US 4', text: 'In Progress' },
-        { id: 'US 5', text: 'In Progress' },
-      ],
-    },
-    {
-      title: 'Blocked',
-      cards: [
-        { id: 'US 6', text: 'Blocked' },
-      ],
-    },
-    {
-      title: 'Done',
-      cards: [
-        { id: 'US 7', text: 'Done' },
-        { id: 'US 8', text: 'Done' },
-        { id: 'US 9', text: 'Done' },
-      ],
-    },
-  ]);
 
-  const handleDragStart = (e, cardId, columnIndex) => {
-    e.dataTransfer.setData('text/plain', JSON.stringify({ cardId, sourceColumnIndex: columnIndex }));
-  };
+    const handleDragStart = (event, cardId, sourceColumnIndex) => {
+        event.dataTransfer.setData('text/plain', JSON.stringify({cardId, sourceColumnIndex}));
+    };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
+    const handleDragOver = (event) => {
+        event.preventDefault();
+    };
 
-  const handleDrop = (e, columnIndex) => {
-    e.stopPropagation();
+    const handleDrop = (event, targetColumnIndex) => {
 
-    const { cardId, sourceColumnIndex } = JSON.parse(e.dataTransfer.getData('text/plain'));
+        event.stopPropagation()
 
-    if (columnIndex !== sourceColumnIndex && sourceColumnIndex >= 0 && sourceColumnIndex < columns.length) {
-      const updatedColumns = [...columns];
+        const {cardId, sourceColumnIndex} = JSON.parse(event.dataTransfer.getData('text/plain'));
 
-      const draggedCardIndex = updatedColumns[sourceColumnIndex].cards.findIndex(card => card.id === cardId);
 
-      if (draggedCardIndex !== -1) {
-        const draggedCard = updatedColumns[sourceColumnIndex].cards[draggedCardIndex];
-        updatedColumns[sourceColumnIndex].cards.splice(draggedCardIndex, 1);
-        draggedCard.status = updatedColumns[columnIndex].title;
-        updatedColumns[columnIndex].cards.push(draggedCard);
+        if (targetColumnIndex !== sourceColumnIndex && sourceColumnIndex >= 0 && sourceColumnIndex < scrumBoard.length) {
 
-        setColumns(updatedColumns);
-      }
-    }
-  };
+            const updatedColumns = [...scrumBoard];
 
-  const handleDragEnd = () => {
-  };
+            const draggedCardIndex = updatedColumns[sourceColumnIndex].items.findIndex(card => card.userStoryNumber === cardId);
 
-  return (
-      <div className="scrum-board">
-        <h2>Scrum Board</h2>
-        <div className="board">
-          {columns.map((column, columnIndex) => (
-              <div
-                  key={column.title}
-                  className="column"
-                  onDragOver={handleDragOver}
-                  onDrop={(e) => handleDrop(e, columnIndex)}
-              >
-                <h3>{column.title}</h3>
-                <ul className="card-list">
-                  {column.cards.map((card, cardIndex) => (
-                      <li
-                          key={card.id}
-                          className="card"
-                          draggable
-                          onDragStart={(e) => handleDragStart(e, card.id, columnIndex)}
-                          onDragEnd={handleDragEnd}
-                      >
-                        <div>{card.id}</div>
-                        <div>{card.text}</div>
-                      </li>
-                  ))}
-                </ul>
-              </div>
-          ))}
-        </div>
-        <div className="buttons-backlog">
+
+            if (draggedCardIndex !== -1) {
+
+                const draggedCard = updatedColumns[sourceColumnIndex].items[draggedCardIndex];
+
+                updatedColumns[sourceColumnIndex].items.splice(draggedCardIndex, 1);
+
+                draggedCard.status = updatedColumns[targetColumnIndex].status;
+
+                updatedColumns[targetColumnIndex].items.push(draggedCard);
+
+                console.log(draggedCard)
+
+                setScrumBoard(updatedColumns);
+            }
+        }
+
+    };
+
+
+    const handleDragEnd = () => {
+        // chamar função que altera o status da user story
+    };
+
+    return (
+        <div className="scrum-board">
+            <h2>Scrum Board</h2>
+            <div className="board">
+                {scrumBoard.map((column, columnIndex) => (
+                    <div
+                        key={column.status}
+                        className="column"
+                        onDragOver={handleDragOver}
+                        onDrop={(e) => handleDrop(e, columnIndex)}
+                    >
+                        <h3>{column.status}</h3>
+                        <ul className="card-list">
+                            {column.items.map((item) => (
+                                <li
+                                    key={item.userStoryNumber}
+                                    className="card"
+                                    draggable
+                                    onDragStart={(e) => handleDragStart(e, item.userStoryNumber, columnIndex)}
+                                    onDragEnd={handleDragEnd}
+                                >
+                                    <div>
+                                        <div>{item.userStoryNumber}</div>
+                                        <div>{item.userStoryText}</div>
+                                    </div>
+
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+            <div className="buttons-backlog">
                 <Button
-                  isSecundary={true}
-                  onClick={() => dispatch(selectMenu('project'))}
-                  text="Return"
+                    isSecundary={true}
+                    onClick={() => dispatch(selectMenu('project'))}
+                    text="Return"
                 />
-              </div>
-      </div>
-  );
+            </div>
+        </div>
+    );
 }
 
 export default ScrumBoard;

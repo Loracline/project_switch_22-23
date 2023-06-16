@@ -13,5 +13,7 @@ export const API_ROUTES = {
     PROJECTS: '/projects',
     SPRINTS: '/sprints',
     SPRINTBACKLOG:'/SprintBacklog',
-    PRODUCTBACKLOG: '/productBacklog'
+    PRODUCTBACKLOG: '/productBacklog',
+    SCRUM_BOARD: 'scrumBoard',
+    /*USER_STORIES: 'userStories'*/
 }
