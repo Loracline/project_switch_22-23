@@ -14,6 +14,8 @@ import org.switch2022.project.ddd.domain.model.profile.ProfileFactory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -54,7 +56,7 @@ class ChangeProfileServiceTest {
         Profile assignedProfile = mock(Profile.class);
 
         when(accountRepository.findAccountByEmail(email)).thenReturn(accountTest);
-        when(profileRepository.findByProfileName(any())).thenReturn(assignedProfile);
+        when(profileRepository.findByNameOfProfile(any())).thenReturn(Optional.ofNullable(assignedProfile));
         when(assignedProfile.getProfileId()).thenReturn("prf001");
         when(accountTest.getProfileId()).thenReturn("prf001");
 
@@ -81,7 +83,7 @@ class ChangeProfileServiceTest {
         Account accountTest = mock(Account.class);
 
         when(accountRepository.findAccountByEmail((email))).thenReturn(accountTest);
-        when(profileRepository.findByProfileName(null)).thenReturn(null);
+        when(profileRepository.findByNameOfProfile(null)).thenReturn(null);
 
         // Act & Assert
         assertThrows(InvalidInputException.class, () -> {
@@ -125,7 +127,7 @@ class ChangeProfileServiceTest {
 
         when(accountRepository.findAccountByEmail(email)).thenReturn(accountTest);
         Profile assignedProfile = mock(Profile.class);
-        when(profileRepository.findByProfileName(any())).thenReturn(assignedProfile);
+        when(profileRepository.findByNameOfProfile(any())).thenReturn(Optional.ofNullable(assignedProfile));
         when(assignedProfile.getProfileId()).thenReturn("prf001");
         when(accountTest.getProfileId()).thenReturn("prf001");
 
@@ -156,7 +158,7 @@ class ChangeProfileServiceTest {
         when(accountRepository.findAccountByEmail(any())).thenReturn(accountTest);
         ProfileFactory profileFactory = new ProfileFactory();
         Profile profile = profileFactory.createProfile(name, 3);
-        when(profileRepository.findByProfileName(any())).thenReturn(profile);
+        when(profileRepository.findByNameOfProfile(any())).thenReturn(Optional.ofNullable(profile));
 
         // Act
         boolean result = changeProfileService.changeProfile(String.valueOf(email), profileName);

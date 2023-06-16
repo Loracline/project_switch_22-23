@@ -8,6 +8,10 @@ import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
 import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.dto.ProfileCreationDto;
+import org.switch2022.project.ddd.dto.mapper.ProfileDto;
+import org.switch2022.project.ddd.dto.mapper.ProfileMapper;
+
+import java.util.Optional;
 
 /**
  * Class ProfileService allows to create and manipulate the Profile aggregate.
@@ -19,6 +23,8 @@ public class ProfileService {
     @Qualifier("profile_jpa")
     @Autowired
     private IProfileRepository profileRepository;
+    @Autowired
+    private ProfileMapper mapper;
 
     /**
      * This method receives a name, creates a profile and adds it to the repository.
@@ -45,5 +51,15 @@ public class ProfileService {
      */
     private int calculateNextProfileNumber() {
         return profileRepository.count() + 1;
+    }
+
+    public Optional<ProfileDto> getProfile(String profileName){
+        Name nameOfProfile = new Name(profileName);
+        Optional<Profile> optionalProfile = (profileRepository.findByNameOfProfile(nameOfProfile));
+        Optional<ProfileDto> optionalProfileDto = Optional.empty();
+        if(optionalProfile.isPresent()) {
+            optionalProfileDto = Optional.of(mapper.profileToProfileDto(optionalProfile.get()));
+        }
+        return optionalProfileDto;
     }
 }
