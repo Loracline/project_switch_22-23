@@ -2,16 +2,17 @@
   display: inline-block;
   vertical-align: top;
   margin-right: 20px;
-  width: calc(23% - 20px);
+  width: calc(20% - 20px);
   padding: 1rem;
   border-radius: 8px;
 }
+
 
 .column h3 {
   font-size: 1.5rem;
   color: #000000;
   margin-bottom: 1rem;
-  background-color: #8B7BC1;
+  background-color: #AC99DF;
   border-radius: 8px;
   padding: 1rem;
 }

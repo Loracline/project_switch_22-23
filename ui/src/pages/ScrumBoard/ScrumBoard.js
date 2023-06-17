@@ -58,6 +58,7 @@ function ScrumBoard() {
     };
 
     return (
+    <div className="page">
         <div className="scrum-board">
             <h2>Scrum Board</h2>
              <Button retun-button={true}
@@ -101,6 +102,7 @@ function ScrumBoard() {
                 />
             </div>
         </div>
+     </div>
     );
 }
 
