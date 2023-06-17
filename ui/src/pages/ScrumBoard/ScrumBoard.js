@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import AppContext from '../../context/AppContext';
 import './ScrumBoard.css';
 import {useGetScrumBoard} from "./useGetScrumBoard";
-import {Button} from "@mui/material";
+import Button from "../../components/Button/Button";
 import {selectMenu} from "../../context/Actions";
 
 function ScrumBoard() {
@@ -54,7 +54,7 @@ function ScrumBoard() {
 
 
     const handleDragEnd = () => {
-        // chamar função que altera o status da user story
+
     };
 
     return (

@@ -2,22 +2,36 @@
   display: inline-block;
   vertical-align: top;
   margin-right: 20px;
+  width: calc(23% - 20px);
+  padding: 1rem;
+  border-radius: 8px;
 }
 
-.column.dragging-over {
-  background-color: #f8f8f8;
-  border: 2px dashed #a0a0a0;
+.column h3 {
+  font-size: 1.5rem;
+  color: #000000;
+  margin-bottom: 1rem;
+  background-color: #8B7BC1;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.card-list {
+  list-style-type: none;
+  padding: 0;
 }
 
 .card {
-  transition: opacity 0.3s, box-shadow 0.3s;
+  background-color: #F0EEF5;
+  border: 2px solid #F0EEF5;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  cursor: grab;
+  transition: box-shadow 0.3s;
 }
 
-.card.dragging {
-  opacity: 0.5;
-}
-
-.card.dragging-over {
+.card:hover {
   box-shadow: 0 0 5px #a0a0a0;
 }
 
