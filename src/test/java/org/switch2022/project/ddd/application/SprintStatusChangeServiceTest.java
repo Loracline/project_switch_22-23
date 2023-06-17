@@ -240,7 +240,7 @@ class SprintStatusChangeServiceTest {
         Sprint sprint = mock(Sprint.class);
         Optional<Sprint> sprintOptional = Optional.of(sprint);
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
-        when(sprintStatusDto.getSprintStatus()).thenReturn("close");
+        when(sprintStatusDto.getSprintStatus()).thenReturn("closed");
 
         //Close Sprint
         when(sprint.isOpen()).thenReturn(true);

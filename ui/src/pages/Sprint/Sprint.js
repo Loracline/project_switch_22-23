@@ -22,8 +22,8 @@ const Sprint = () => {
     const projectName = detailedProject.projectName;
 
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const isOpen = data?.status === "open";
-    const isClosed = data?.status === "close" || data?.status === "planned" || data?.status === "CLOSED";
+    const isOpen = data?.status === "OPEN";
+    const isClosed = data?.status === "CLOSE" || data?.status === "planned" || data?.status === "CLOSED";
 
     const handleConfirmation = () => {
         setShowConfirmation(true);
@@ -39,10 +39,7 @@ const Sprint = () => {
     };
 
     const handleUpdateSprintButton = (status) => {
-        //&& hasUnfinishedUserStories
-        if (status === "close" && unfinishedUserStories.length > 0) {
-            console.log(userStoriesInSprint);
-            console.log(unfinishedUserStories);
+        if (status === "closed" && unfinishedUserStories.length > 0) {
             handleConfirmation(status);
         } else {
             handleUpdateSprintStatus(status);
@@ -72,42 +69,44 @@ const Sprint = () => {
     return (
         <div className="page">
             <section className="sprintCard">
+                <div className="sprintHeader">
+                    <h2>Sprint Number: {data?.['number']}</h2>
+                    <Button isSecundary={true} onClick={() =>
+                        dispatch(selectMenu('sprints'))
+                    }
+                            text='Return'
+                    />
+                </div>
+
                 <div className="sprintInfo">
                     <div className="sprintContent">
-                        <h2>Sprint Number: {data?.['number']}</h2>
                         <p>Project Name: {projectName}</p>
                         <p>Start date: {data?.['startDate']}</p>
                         <p>End date: {data?.['endDate']}</p>
                     </div>
                     <div className="statusContainer">
                         <h3>Status: {data?.status || 'planned'}</h3>
-                    </div>
-                    <div className="sprintButtons">
-                        <Button
-                            onClick={() => handleUpdateSprintButton('open')}
-                            text="Open"
-                            isDisabled={isOpen}
-                        />
-                        <Button
-                            onClick={() => handleUpdateSprintButton('close')}
-                            text="Close"
-                            isDisabled={isClosed}
-                        />
-                    </div>
-                    <div className='start'>
+                        <div className="sprintButtons">
+                            <Button
+                                onClick={() => handleUpdateSprintButton('open')}
+                                text="Open"
+                                isDisabled={isOpen}
+                            />
+                            <Button
+                                onClick={() => handleUpdateSprintButton('closed')}
+                                text="Close"
+                                isDisabled={isClosed}
+                            />
+                        </div>
                     </div>
                 </div>
+            </section>
+            <section className="sprintBacklogSection">
                 <AddUserStoryToSprint/>
                 <ConsultSprintBacklog/>
             </section>
             <div className="returnButtonContainer">
-                <Button
-                    isSecundary={true}
-                    onClick={() =>
-                        dispatch(selectMenu('sprints'))
-                    }
-                    text='Return'
-                />
+
             </div>
             <SuccessMessage
                 handleOpen={messageSuccess.length > 0}
@@ -125,7 +124,7 @@ const Sprint = () => {
                 handleOpen={showConfirmation}
                 dialogContent={dialogContent()}
                 handleCancel={handleCancel}
-                handleConfirm={() => handleUpdateSprintStatus("close")}
+                handleConfirm={() => handleUpdateSprintStatus("closed")}
             />
         </div>
 
