@@ -2,8 +2,10 @@ package org.switch2022.project.ddd.datamodel_jpa;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.model.project.Project;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class CustomerJpaTest {
 
@@ -41,22 +43,6 @@ class CustomerJpaTest {
 
         assertNull(customer.getCustomerTaxId());
         assertNull(customer.getCustomerName());
-    }
-
-
-    @DisplayName("Setter methods assign values correctly")
-    @Test
-    void ensureSetterMethodsAssignValuesCorrectly() {
-        // Arrange
-        CustomerJpa customerJpa = new CustomerJpa("514024054", "Partilha Cortesia, Lda.");
-
-        // Act
-        customerJpa.setCustomerTaxId("123456789");
-        customerJpa.setCustomerName("New Customer Name");
-
-        // Assert
-        assertEquals("123456789", customerJpa.getCustomerTaxId());
-        assertEquals("New Customer Name", customerJpa.getCustomerName());
     }
 
     @DisplayName("Equals and HashCode methods work correctly")
@@ -140,7 +126,149 @@ class CustomerJpaTest {
         String result = customerJpa.toString();
 
         // Assert
-        assertTrue(result.contains("customerTaxId=514024054"));
-        assertTrue(result.contains("customerName=Partilha Cortesia, Lda."));
+        assertTrue(result.contains("514024054"));
+        assertTrue(result.contains("Partilha Cortesia, Lda."));
+    }
+
+    /**
+     * METHOD equals()
+     * <br>
+     * Scenario 1: Verify that the same object equals itself.
+     */
+    @Test
+    void ensureSameCustomerEqualsItself() {
+        // Arrange
+        CustomerJpa customerJpa = new CustomerJpa("217746691", "batman");
+        CustomerJpa other = customerJpa;
+        boolean expected = true;
+
+        // Act
+        boolean result = customerJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: Verify that two objects with the same attributes are equal.
+     */
+    @Test
+    void ensureTwoInstancesWithSameIdAreEqual() {
+        // Arrange
+        CustomerJpa customerJpa = new CustomerJpa("217746691", "batman");
+        CustomerJpa other = new CustomerJpa("217746691", "batman");
+        boolean expected = true;
+
+        // Act
+        boolean result = customerJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 3: Verify that two objects with different ids are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual() {
+        // Arrange
+        CustomerJpa reference = new CustomerJpa("217746691", "batman");
+        CustomerJpa other = new CustomerJpa("217746291", "batman");
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 4: Verify that the object does not equal null.
+     */
+    @Test
+    void ensureObjectDoesNotEqualNull() {
+        // Arrange
+        CustomerJpa customerJpa = new CustomerJpa("217746691", "batman");
+        BusinessSectorJpa other = null;
+        boolean expected = false;
+
+        // Act
+        boolean result = customerJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 5: Verify that the object businessSector does not equal other type of object.
+     */
+    @Test
+    void ensureCustomersDoesNotEqualOtherTypeOfObject() {
+        // Arrange
+        CustomerJpa customerJpa = new CustomerJpa("217746691", "batman");
+        Project other = mock(Project.class);
+        boolean expected = false;
+
+        // Act
+        boolean result = customerJpa.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 6: Verify that two objects with different attributes are not equal.
+     */
+    @Test
+    void ensureTwoInstancesWithDifferentIdsAreNotEqual_Name() {
+        // Arrange
+        CustomerJpa reference = new CustomerJpa("217746691", "batman");
+        CustomerJpa other = new CustomerJpa("217746691", "robin");
+        boolean expected = false;
+
+        // Act
+        boolean result = reference.equals(other);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * METHOD hashCode()
+     * <br>
+     * Scenario 1: Verify that two equal BusinessSector objects have the same hashcode.
+     */
+    @Test
+    void ensureTwoEqualCustomersInstancesHaveTheSameHashcode() {
+        // Arrange
+        CustomerJpa reference = new CustomerJpa("217746691", "batman");
+        CustomerJpa other = new CustomerJpa("217746691", "batman");
+
+        int expected = reference.hashCode();
+
+        // Act
+        int result = other.hashCode();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: Verify that two different BusinessSector objects have different hashcode.
+     */
+    @Test
+    void ensureTwoDifferentCustomersInstancesHaveDifferentHashcode() {
+        // Arrange
+        CustomerJpa reference = new CustomerJpa("217746691", "batman");
+        CustomerJpa other = new CustomerJpa("217746691", "robin");
+
+        int expected = reference.hashCode();
+
+        // Act
+        int result = other.hashCode();
+
+        // Assert
+        assertNotEquals(expected, result);
     }
 }

@@ -6,6 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.ddd.application.ProfileService;
 import org.switch2022.project.ddd.dto.ProfileCreationDto;
+import org.switch2022.project.ddd.dto.mapper.ProfileDto;
+
+import java.util.Optional;
 
 
 /**
@@ -34,6 +37,17 @@ public class ProfileWebController {
     public ResponseEntity<Object> createProfile(@RequestBody ProfileCreationDto profileCreationDto) {
         service.createProfile(profileCreationDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{profileName}")
+    public ResponseEntity<ProfileDto> getProfile(@PathVariable String profileName) {
+        Optional<ProfileDto> optionalProfile = service.getProfile(profileName);
+        if (optionalProfile.isPresent()) {
+            ProfileDto profile = optionalProfile.get();
+            return new ResponseEntity<>(profile, HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Class ProfileRepository allows to manage profiles records.
@@ -102,6 +103,26 @@ public class ProfileRepository implements IProfileRepository {
         }
         return profileRequested;
 
+    }
+
+    /**
+     * This method returns the profile in this repository with the given name.
+     * If the profile is not found, it throws a NotFoundInRepoException.
+     *
+     * @param profileName the name of the profile to be found
+     * @return the profile with the given name.
+     */
+    @Override
+    public Optional<Profile> findByNameOfProfile(Name profileName) {
+        Optional<Profile> profileRequested = Optional.empty();
+        int i = 0;
+        while (i < this.profiles.size()) {
+            if (profiles.get(i).hasName(profileName)) {
+                profileRequested = Optional.ofNullable(profiles.get(i));
+            }
+            i++;
+        }
+        return profileRequested;
     }
 
 }

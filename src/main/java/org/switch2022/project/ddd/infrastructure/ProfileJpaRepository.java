@@ -67,5 +67,22 @@ public class ProfileJpaRepository implements IProfileRepository {
         }
     }
 
+    /**
+     * This method returns the optional of a profile in the repository that has a given profile name.
+     *
+     * @param profileName the name of the profile to be found
+     * @return the profile with the given name, and throw an NotFoundInRepoException otherwise.
+     *
+     */
 
+    @Override
+    public Optional<Profile> findByNameOfProfile(Name profileName) {
+        Optional<Profile> profile =
+                Optional.ofNullable(assembler.toDomain(jpaRepository.findByProfileName(profileName.getName())));
+
+        if(profile.isPresent()){
+            return profile;
+        } else {
+            throw new NotFoundInRepoException("There is no profile with the given name in the repository.");
+        }    }
 }

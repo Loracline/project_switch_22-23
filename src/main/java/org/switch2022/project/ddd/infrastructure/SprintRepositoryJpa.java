@@ -82,18 +82,6 @@ public class SprintRepositoryJpa implements ISprintRepository {
     }
 
     /**
-     * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
-     *
-     * @param sprintStatus SprintStatus to look for in the sprint list.
-     * @return true if at least one instance of Sprint with a given status already exists in the list, and false
-     * otherwise.
-     */
-    public boolean existsByStatus(SprintStatus sprintStatus) {
-        String status = sprintStatus.getStatus();
-        return iSprintJpaRepository.existsByStatus(status);
-    }
-
-    /**
      * Checks if a Sprint with the given SprintId exists in the repository.
      *
      * @param sprintId The SprintId to check.
@@ -159,5 +147,20 @@ public class SprintRepositoryJpa implements ISprintRepository {
             sprint = sprintDomainDataAssembler.toDomain(sprintJpaOptional.get());
         }
         return Optional.ofNullable(sprint);
+    }
+
+    /**
+     * This method checks if at least one instance of Sprint with a given status already exists in the list of
+     * sprints of a given project.
+     *
+     * @para projectCode the code of the project to which the sprint belong.
+     * @param sprintStatus SprintStatus to look for in the sprint lisst.
+     * @return true if at least one instance of Sprint with a given status already exists in the list, and false
+     * otherwise.
+     */
+    public boolean existsByProjectCodeAndStatus(Code projectCode, SprintStatus sprintStatus) {
+        String status = sprintStatus.getStatus();
+        String code = projectCode.getCode();
+        return iSprintJpaRepository.existsByProjectCodeAndStatus(code, status);
     }
 }

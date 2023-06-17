@@ -294,32 +294,30 @@ class SprintRepositoryTest {
         assertEquals(expected, result);
     }
 
-    @Test
-    void existsByStatus() {
-    }
-
     /**
-     * Method: existsByStatus(status)
-     * Scenario 1: checks if the list of sprints has any sprint with a given status.
+     * Method: existsByProjectCodeAndStatus(projectCode, status)
+     * Scenario 1: checks if the list of sprints of a given project has any sprint with a given status.
      * It should assert true.
      */
     @Test
-    void ensureThatReturnsTrueIfAtLeastOneInstanceOfSprintInTheListOfSprintsHasTheStatusPassedAsParameter() {
+    void ensureThatReturnsTrueIfAtLeastOneInstanceOfSprintInTheListOfSprintsInAGivenProjectHasTheStatusPassedAsParameter() {
         // ARRANGE
         SprintRepository sprintRepository = new SprintRepository();
 
         Sprint sprint = mock(Sprint.class);
+        Code projectCode = mock(Code.class);
         sprintRepository.save(sprint);
         when(sprint.hasStatus(SprintStatus.OPEN)).thenReturn(true);
+        when(sprint.hasProjectCode(projectCode)).thenReturn(true);
         // ACT
-        boolean result = sprintRepository.existsByStatus(SprintStatus.OPEN);
+        boolean result = sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN);
         // ASSERT
         assertTrue(result);
     }
 
     /**
-     * Method: existsByStatus(status)
-     * Scenario 2: checks if the list of sprints does not have any sprint with a given status.
+     * Method: existsByProjectCodeAndStatus(projectCode, status)
+     * Scenario 2: checks if the list of sprints of a given project does not have any sprint with a given status.
      * It should assert false.
      */
     @Test
@@ -328,9 +326,37 @@ class SprintRepositoryTest {
         SprintRepository sprintRepository = new SprintRepository();
 
         Sprint sprint = mock(Sprint.class);
+        Code projectCode = mock(Code.class);
+
+        when(sprint.hasProjectCode(projectCode)).thenReturn(true);
+        when(sprint.hasStatus(SprintStatus.OPEN)).thenReturn(false);
+
         sprintRepository.save(sprint);
         // ACT
-        boolean result = sprintRepository.existsByStatus(SprintStatus.OPEN);
+        boolean result = sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN);
+        // ASSERT
+        assertFalse(result);
+    }
+
+    /**
+     * Method: existsByProjectCodeAndStatus(projectCode, status)
+     * Scenario 3: checks if the list of sprints does not have any sprint with a given project code.
+     * It should assert false.
+     */
+    @Test
+    void ensureThatReturnsFalseIfNoInstancesOfSprintInTheListOfSprintsHaveTheProjectCodePassedAsParameter() {
+        // ARRANGE
+        SprintRepository sprintRepository = new SprintRepository();
+
+        Sprint sprint = mock(Sprint.class);
+        Code projectCode = mock(Code.class);
+
+        when(sprint.hasProjectCode(projectCode)).thenReturn(false);
+        when(sprint.hasStatus(SprintStatus.OPEN)).thenReturn(true);
+
+        sprintRepository.save(sprint);
+        // ACT
+        boolean result = sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN);
         // ASSERT
         assertFalse(result);
     }

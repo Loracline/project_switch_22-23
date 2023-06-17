@@ -6,6 +6,8 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -275,6 +277,53 @@ class ProfileRepositoryTest {
         assertEquals(message, result.getMessage());
     }
 
+
+    /**
+     * Method: findByProfileName()
+     * <p>
+     * Scenario 1: finds a profile with the given name.
+     * @returns the correspondent profile.
+     */
+    @Test
+    void ensureProfileIsReturnedWithGivenProfileName() {
+        // Arrange
+        Profile profileOne = mock(Profile.class);
+        Optional<Profile> expected = Optional.ofNullable(profileOne);
+        ProfileRepository repository = new ProfileRepository();
+        repository.save(profileOne);
+
+        Name profileName = mock(Name.class);
+        when(profileOne.hasName(profileName)).thenReturn(true);
+
+        // Act
+        Optional<Profile> result = repository.findByNameOfProfile(profileName);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: does not find a profile with the given name.
+     * <p>
+     * @throws NotFoundInRepoException if the profile is not found in the repository
+     */
+    @Test
+    void ensureProfileIsNotReturnedWithGivenProfileName() {
+        //Arrange
+        Profile profileOne = mock(Profile.class);
+
+        ProfileRepository repository = new ProfileRepository();
+        Name profileName = new Name("manager");
+        when(profileOne.hasName(profileName)).thenReturn(false);
+        String message = "There is no profile with the given name in the repository.";
+
+        //Act
+        NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
+                () -> repository.findByProfileName(profileName));
+
+        //Assert
+        assertEquals(message, result.getMessage());
+    }
 
 }
 

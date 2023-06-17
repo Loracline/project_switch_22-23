@@ -11,6 +11,7 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.domain.value_object.ProfileId;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
+import java.util.Optional;
 
 
 /**
@@ -42,9 +43,8 @@ public class ChangeProfileService {
             throw new InvalidInputException("Email and profile name cannot be null");
         }
         Account account = accountRepository.findAccountByEmail(email);
-        Profile profile = profileRepository.findByProfileName(new Name(profileName));
-
-        String[] parts = profile.getProfileId().split("prf");
+        Optional<Profile> profile = profileRepository.findByNameOfProfile(new Name(profileName));
+        String[] parts = profile.get().getProfileId().split("prf");
         int profileNumber = Integer.parseInt(parts[1]);
 
         ProfileId profileId = new ProfileId(profileNumber);

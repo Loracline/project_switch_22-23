@@ -16,16 +16,6 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
      */
     List<SprintJpa> findByProjectCode(String projectCode);
 
-
-    /**
-     * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
-     *
-     * @param status SprintStatus to look for in the sprint list.
-     * @return true if at least one instance of Sprint with a given status already exists in the list,
-     * and false otherwise.
-     */
-    boolean existsByStatus(String status);
-
     /**
      * This method checks if one given sprint has the status given
      *
@@ -36,6 +26,17 @@ public interface ISprintJpaRepository extends CrudRepository<SprintJpa, String> 
     boolean existsBySprintIdAndStatus(String sprintId, String status);
 
     Optional<SprintJpa> findByProjectCodeAndStatus(String projectCode, String status);
+
+    /**
+     * This method checks if at least one instance of Sprint with a given status already exists in the list of
+     * sprints of a given project.
+     *
+     * @param code the code of the project to which the sprints belong.
+     *  @param status SprintStatus to look for in the sprint list.
+     * @return true if at least one instance of Sprint with a given status already exists in the list of sprints of
+     * the project, and false otherwise.
+     */
+    boolean existsByProjectCodeAndStatus(String code, String status);
 
 
 }
