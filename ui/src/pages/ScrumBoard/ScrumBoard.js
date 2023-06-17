@@ -60,6 +60,10 @@ function ScrumBoard() {
     return (
         <div className="scrum-board">
             <h2>Scrum Board</h2>
+             <Button retun-button={true}
+              onClick={() => dispatch(selectMenu('project'))}
+              text="Return"
+              variant="outlined" />
             <div className="board">
                 {scrumBoard.map((column, columnIndex) => (
                     <div
