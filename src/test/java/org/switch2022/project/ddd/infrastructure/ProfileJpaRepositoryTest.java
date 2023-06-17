@@ -14,6 +14,8 @@ import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.IProfileJpaRepository;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -121,6 +123,46 @@ class ProfileJpaRepositoryTest {
         //Act
         NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
                 () -> profileJpaRepository.findByProfileName(profileName));
+
+        //Assert
+        assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * Method: findByNameOfProfile()
+     * Scenario 01: tests getting a profile by name.
+     * Expects the method to return the correct profile.
+     */
+    @Test
+    void ensureProfileIsSuccessfullyReturnedWithGivenProfileName() {
+        //Arrange
+        Name profileName = mock(Name.class);
+        ProfileJpa profileJpaDouble = mock(ProfileJpa.class);
+        Profile profile = mock(Profile.class);
+        Optional<Profile> expected = Optional.ofNullable(profile);
+        when(jpaRepository.findByProfileName(profileName.getName())).thenReturn(profileJpaDouble);
+        when(assembler.toDomain(profileJpaDouble)).thenReturn(profile);
+
+        //Act
+        Optional<Profile> result = profileJpaRepository.findByNameOfProfile(profileName);
+
+        //Assert
+        assertEquals(expected,result);
+    }
+
+    /**
+     * Scenario 02: tests getting a profile by name and there is no profile in the repository with the given name.
+     * Expected return: NotFoundInRepoException.
+     */
+    @Test
+    void ensureAnExceptionIsThrownIfNoProfileIsFoundWithGivenProfileName() {
+        //Arrange
+        Name profileName = mock(Name.class);
+        String expected = "There is no profile with the given name in the repository.";
+
+        //Act
+        NotFoundInRepoException result = assertThrows(NotFoundInRepoException.class,
+                () -> profileJpaRepository.findByNameOfProfile(profileName));
 
         //Assert
         assertEquals(expected, result.getMessage());

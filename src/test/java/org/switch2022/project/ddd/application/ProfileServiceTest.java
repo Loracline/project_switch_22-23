@@ -9,8 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.profile.IProfileFactory;
 import org.switch2022.project.ddd.domain.model.profile.IProfileRepository;
+import org.switch2022.project.ddd.domain.model.profile.Profile;
 import org.switch2022.project.ddd.dto.ProfileCreationDto;
+import org.switch2022.project.ddd.dto.mapper.ProfileDto;
+import org.switch2022.project.ddd.dto.mapper.ProfileMapper;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,6 +35,8 @@ class ProfileServiceTest {
     IProfileRepository repository;
     @MockBean
     IProfileFactory factory;
+    @MockBean
+    ProfileMapper mapper;
 
     /**
      * Method: createProfile().
@@ -69,5 +76,41 @@ class ProfileServiceTest {
 
         //Assert
         assertEquals(expected, result.getMessage());
+    }
+
+    /**
+     * METHOD getProfile()
+     */
+    @Test
+    void ensureProfileIsRetrievedSuccessfully() {
+        // Arrange
+        ProfileDto profileDtoDouble = mock(ProfileDto.class);
+        Profile profileDouble = mock(Profile.class);
+
+        Optional<ProfileDto> expected = Optional.of(profileDtoDouble);
+
+        when(repository.findByNameOfProfile(any())).thenReturn(Optional.ofNullable(profileDouble));
+        when(mapper.profileToProfileDto(profileDouble)).thenReturn(profileDtoDouble);
+
+        // Act
+        Optional<ProfileDto> result = service.getProfile("batman");
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    @Test
+    void ensureProfileIsNotRetrievedBecauseDoesntExist() {
+        // Arrange
+        Optional<Profile> optional = Optional.empty();
+        Optional<ProfileDto> expected = Optional.empty();
+
+        when(repository.findByNameOfProfile(any())).thenReturn(optional);
+
+        // Act
+        Optional<ProfileDto> result = service.getProfile("batman");
+
+        // Assert
+        assertEquals(expected, result);
     }
 }

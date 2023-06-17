@@ -42,15 +42,6 @@ public interface ISprintRepository {
      */
     List<Sprint> findByProjectCode(Code projectCode);
 
-    /**
-     * This method checks if at least one instance of Sprint with a given status already exists in the list of sprints.
-     *
-     * @param sprintStatus SprintStatus to look for in the sprint list.
-     * @return true if at least one instance of Sprint with a given status already exists in the list,
-     * and false otherwise.
-     */
-    boolean existsByStatus(SprintStatus sprintStatus);
-
     boolean existsById(SprintId sprintId);
 
     /**
@@ -80,4 +71,15 @@ public interface ISprintRepository {
      */
 
     Optional<Sprint> findByProjectCodeAndStatus(Code projectCode,SprintStatus status);
+
+    /**
+     * This method checks if at least one instance of Sprint with a given status already exists in the list of
+     * sprints of a given project.
+     *
+     * @param projectCode the code of the project to which the sprints belong.
+     * @param status SprintStatus to look for in the sprint list.
+     * @return true if at least one instance of Sprint with a given status already exists in the list,
+     * and false otherwise.
+     */
+    boolean existsByProjectCodeAndStatus(Code projectCode,SprintStatus status);
 }

@@ -94,8 +94,7 @@ public class ResourceAllocationService {
                                     PercentageOfAllocation percentage) {
         return isProjectValidForAllocation(code, period) && isAccountValidForAllocation(email) &&
                 isNotProjectManager(role) && projectDoesNotHaveScrumMasterOrProductOwnerInThatPeriod(role, code, period)
-                && resourceDoesNotExist(code, email, period) &&
-                isPercentageOfAllocationValid(period, email, percentage);
+                && resourceDoesNotExist(code, email, period) && isPercentageOfAllocationValid(period, email, percentage);
     }
 
 

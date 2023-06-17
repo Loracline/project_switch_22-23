@@ -11,6 +11,7 @@ import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
+import org.switch2022.project.ddd.domain.value_object.Code;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.dto.SprintStatusDto;
@@ -178,10 +179,12 @@ class SprintStatusChangeServiceTest {
     void ensureItReturnsTrueIfThereAreNoOtherCurrentlyOpenSprints() {
         //ARRANGE
         Sprint sprintDouble = mock(Sprint.class);
-        when(sprintRepository.existsByStatus(SprintStatus.OPEN)).thenReturn(false);
+        Code projectCode = mock(Code.class);
+        when(sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN)).thenReturn(false);
         when(sprintDouble.changeStatus("OPEN")).thenReturn(true);
+
         //ACT
-        boolean result = service.openSprint(sprintDouble);
+        boolean result = service.openSprint(projectCode, sprintDouble);
         //ASSERT
         assertTrue(result);
     }
@@ -196,12 +199,14 @@ class SprintStatusChangeServiceTest {
     void ensureItThrowsAnExceptionIfThereAreOtherCurrentlyOpenSprints() {
         //ARRANGE
         Sprint sprintDouble = mock(Sprint.class);
-        when(sprintRepository.existsByStatus(SprintStatus.OPEN)).thenReturn(true);
+        Code projectCode = mock(Code.class);
+        when(sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN)).thenReturn(true);
 
-        String expected = "There is currently another OPEN sprint.";
+
+        String expected = "There is currently another OPEN sprint in this project.";
         //ACT
         AlreadyExistsInRepoException result = assertThrows(AlreadyExistsInRepoException.class,
-                () -> service.openSprint(sprintDouble) );
+                () -> service.openSprint(projectCode, sprintDouble) );
         //ASSERT
         assertEquals(expected, result.getMessage());
     }
@@ -265,6 +270,7 @@ class SprintStatusChangeServiceTest {
     @Test
     void ensureThatSprintIsOpen() {
         //Arrange
+        Code projectCode = mock(Code.class);
         //Change status
         SprintStatusDto sprintStatusDto = mock(SprintStatusDto.class);
         when(sprintStatusDto.getSprintId()).thenReturn("P001_US001");
@@ -274,8 +280,9 @@ class SprintStatusChangeServiceTest {
         when(sprintRepository.findById(any())).thenReturn(sprintOptional);
         when(sprintStatusDto.getSprintStatus()).thenReturn("open");
 
+
         //Close Sprint
-        when(sprintRepository.existsByStatus(SprintStatus.OPEN)).thenReturn(false);
+        when(sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN)).thenReturn(false);
         when(sprint.changeStatus("OPEN")).thenReturn(true);
 
         //Act

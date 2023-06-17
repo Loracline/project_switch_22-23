@@ -2,6 +2,8 @@ package org.switch2022.project.ddd.domain.model.profile;
 
 import org.switch2022.project.ddd.domain.value_object.Name;
 
+import java.util.Optional;
+
 /**
  * Profile Repository Interface.
  */
@@ -29,6 +31,9 @@ public interface IProfileRepository {
      * @return a profile with the given name.
      */
     Profile findByProfileName(Name profileName);
+
+    Optional<Profile> findByNameOfProfile(Name profileName);
+
 }
 
 

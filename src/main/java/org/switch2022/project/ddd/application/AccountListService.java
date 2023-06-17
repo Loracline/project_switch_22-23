@@ -32,6 +32,7 @@ public class AccountListService {
         List<Account> accounts = accountRepository.findAll();
         return accountMapper.listAccountsToDto(accounts);
     }
+
     /**
      * Retrieves an optional account DTO (Data Transfer Object) based on the provided email.
      *
@@ -40,7 +41,7 @@ public class AccountListService {
      * account is not found.
      */
     public Optional<AccountDto> getAccountByEmail(Email email) {
-       Account account = accountRepository.findAccountByEmail(email.getEmailAddress());
+        Account account = accountRepository.findAccountByEmail(email.getEmailAddress());
         Optional<AccountDto> opAccountDto = Optional.empty();
         if (account != null) {
             opAccountDto = Optional.of(accountMapper.accountToDto(account));

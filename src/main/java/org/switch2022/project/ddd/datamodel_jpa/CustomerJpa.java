@@ -1,11 +1,11 @@
 package org.switch2022.project.ddd.datamodel_jpa;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 /**
  * Represents a customer entity in the Java Persistence API (JPA) data model.
@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @Table(name = "customers")
-@Data
 public class CustomerJpa {
 
     /**
@@ -56,4 +55,26 @@ public class CustomerJpa {
     public String getCustomerName() {
         return customerName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CustomerJpa)) return false;
+        CustomerJpa that = (CustomerJpa) o;
+        return Objects.equals(customerTaxId, that.customerTaxId) && Objects.equals(customerName, that.customerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerTaxId, customerName);
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerJpa{" +
+                "customerTaxId='" + customerTaxId + '\'' +
+                ", customerName='" + customerName + '\'' +
+                '}';
+    }
+
 }
