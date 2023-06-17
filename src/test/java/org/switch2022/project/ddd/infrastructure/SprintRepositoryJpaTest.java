@@ -174,34 +174,38 @@ class SprintRepositoryJpaTest {
     }
 
     /**
-     * Method: existsByStatus(status)
-     * Scenario 1: checks if the repository of sprints has any sprint with a status matching the status passed as
-     * parameter.
+     * Method: existsByProjectCodeAndStatus(projectCode, status)
+     * Scenario 1: checks if the repository of sprints has any sprint with a given project and given a status matching
+     * the project and status passed as parameters.
      * It should assert true.
      */
     @Test
-    void ensureThatReturnsTrueIfAtLeastOneInstanceOfSprintInTheSprintRepositoryHasTheStatusPassedAsParameter() {
+    void ensureThatReturnsTrueIfAtLeastOneInstanceOfSprintInTheSprintRepositoryHasTheProjectCodeAndStatusPassedAsParameters() {
         // ARRANGE
-        when(iSprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(true);
+        Code projectCode = mock(Code.class);
+        when(projectCode.getCode()).thenReturn("P001");
+        when(iSprintJpaRepository.existsByProjectCodeAndStatus("P001", SprintStatus.OPEN.getStatus())).thenReturn(true);
         // ACT
-        boolean result = sprintRepositoryJpa.existsByStatus(SprintStatus.OPEN);
+        boolean result = sprintRepositoryJpa.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN);
         // ASSERT
         assertTrue(result);
     }
 
     /**
-     * Method: existsByStatus(status)
-     * Scenario 2: checks if the sprint repository does not have any sprint with a status matching the status passed
-     * as argument.
+     * Method: existsByProjectCodeAndStatus(projectCode, status)
+     * Scenario 2: checks if the sprint repository does not have any sprint with a project code and a status matching
+     * the project code and status passed as arguments.
      * It should throw an NotFoundInRepoException.
      */
     @Test
-    void ensureThatReturnsFalseIfThereAreNoInstancesOfSprintInTheSprintRepositoryWithTheStatusPassedAsParameter() {
+    void ensureThatReturnsFalseIfThereAreNoInstancesOfSprintInTheSprintRepositoryWithTheProjectCodeAndStatusPassedAsParameter() {
         //Arrange
-        when(iSprintJpaRepository.existsByStatus(SprintStatus.OPEN.getStatus())).thenReturn(false);
+        Code projectCode = mock(Code.class);
+        when(projectCode.getCode()).thenReturn("P001");
+        when(iSprintJpaRepository.existsByProjectCodeAndStatus("P001", SprintStatus.OPEN.getStatus())).thenReturn(false);
 
         //Act
-        boolean result = sprintRepositoryJpa.existsByStatus(SprintStatus.OPEN);
+        boolean result = sprintRepositoryJpa.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN);
 
         //Assert
         assertFalse(result);
