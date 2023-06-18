@@ -24,7 +24,6 @@ import org.switch2022.project.ddd.domain.model.user_story.FactoryUserStory;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.UserStoryCreationDto;
-import org.switch2022.project.ddd.dto.UserStoryInSprintDto;
 import org.switch2022.project.ddd.infrastructure.jpa.*;
 
 import javax.transaction.Transactional;

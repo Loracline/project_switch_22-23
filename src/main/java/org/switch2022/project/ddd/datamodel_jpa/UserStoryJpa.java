@@ -58,7 +58,9 @@ public class UserStoryJpa {
         return usId;
     }
 
-    public List<String> getAcceptanceCriteria() {return new ArrayList<>(acceptanceCriteria);}
+    public List<String> getAcceptanceCriteria() {
+        return new ArrayList<>(acceptanceCriteria);
+    }
 
     public String getUsNumber() {
         return usNumber;

@@ -177,7 +177,8 @@ public class UserStoriesInSprintService {
      * Retrieves the user stories for the Scrum board associated with the specified project code.
      *
      * @param dto The ProjectCodeValueObjectDto containing the project code for the Scrum board.
-     * @return A list of UserStoryDto objects representing the user stories on the Scrum board, or an empty list if no Scrum board is found.
+     * @return A list of UserStoryDto objects representing the user stories on the Scrum board,
+     * or an empty list if no Scrum board is found.
      */
     public List<UserStoryDto> getScrumBoard(ProjectCodeValueObjectDto dto) {
         List<UserStoryDto> userStoryDtos = new ArrayList<>();

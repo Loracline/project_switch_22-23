@@ -80,9 +80,10 @@ public class ProfileJpaRepository implements IProfileRepository {
         Optional<Profile> profile =
                 Optional.ofNullable(assembler.toDomain(jpaRepository.findByProfileName(profileName.getName())));
 
-        if(profile.isPresent()){
+        if (profile.isPresent()) {
             return profile;
         } else {
             throw new NotFoundInRepoException("There is no profile with the given name in the repository.");
-        }    }
+        }
+    }
 }

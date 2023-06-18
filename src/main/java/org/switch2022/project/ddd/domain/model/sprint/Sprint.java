@@ -285,7 +285,9 @@ public class Sprint implements Entity<Sprint> {
      *
      * @return a list of User Story In Sprint
      */
-    public List<UserStoryInSprint> getUserStoriesInSprint() {return new ArrayList<>(userStoriesInSprint);}
+    public List<UserStoryInSprint> getUserStoriesInSprint() {
+        return new ArrayList<>(userStoriesInSprint);
+    }
 
     /**
      * This method changes the status of the sprint.
