@@ -1,7 +1,5 @@
 package org.switch2022.project.ddd.domain.model.typology;
 
-import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
-
 import java.util.List;
 
 /**
@@ -28,10 +26,22 @@ public interface ITypologyRepository {
      *
      * @param typologyName the name of the project typology whose ID is being requested.
      * @return the ID of the project typology with the given name.
-     * @throws NotFoundInRepoException if a business sector with the given name is not found in the repository.
      */
 
     String findTypologyIdByTypologyName(String typologyName);
 
+
+    /**
+     * Retrieves a Typology from the database based on the provided typology name.
+     @param typologyName the name of the typology to search for.
+     @return a Typology object that matches the provided typology name, or null if no match is found.
+     */
+    Typology findTypologyByTypologyName(String typologyName);
+
+    /**
+     * Retrieves all typologies from the database.
+     *
+     * @return a List containing all Typology objects found in the database.
+     */
     List<Typology> findAll();
 }
