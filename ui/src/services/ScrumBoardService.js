@@ -8,12 +8,19 @@ export function getScrumBoard(projectCode) {
         .then(res => res.json())
 }
 
-/*
 export function updateUserStoryStatus(projectCode, requestBody) {
-    return fetch(`${API_URL}${API_ROUTES.USER_STORIES}/${projectCode}_${userStory.userStoryNumber}`, {
+    return fetch(`${API_URL}/${API_ROUTES.USER_STORIES}/${requestBody.usId}`, {
         method: 'PATCH',
         body: JSON.stringify(requestBody),
         headers,
     })
-        .then(res => res.json())
-}*/
+        .then(async response => {
+            if (!response.ok) {
+                throw await response.json()
+            }
+            return {}
+        })
+        .catch(error => {
+            console.error('Error:', error)
+        })
+}

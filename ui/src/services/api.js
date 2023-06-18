@@ -15,5 +15,5 @@ export const API_ROUTES = {
     SPRINTBACKLOG:'/sprint_backlog',
     PRODUCTBACKLOG: '/productBacklog',
     SCRUM_BOARD: 'scrumBoard',
-    /*USER_STORIES: 'userStories'*/
+    USER_STORIES: 'userStories'
 }
