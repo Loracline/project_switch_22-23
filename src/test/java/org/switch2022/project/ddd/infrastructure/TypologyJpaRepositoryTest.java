@@ -20,8 +20,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {TypologyJpaRepositoryTest.class})
@@ -185,4 +184,39 @@ class TypologyJpaRepositoryTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    void ensureItFindsTypologyByTypologyName() {
+        // Arrange
+        String typologyName = "typology name";
+        Optional<TypologyJpa> typologyJpaDouble = Optional.of(mock(TypologyJpa.class));
+        when(crudRepository.findByTypologyName(typologyName)).thenReturn(typologyJpaDouble);
+
+        Typology typologyDouble = mock(Typology.class);
+        when(assembler.toDomain(typologyJpaDouble.get())).thenReturn(typologyDouble);
+
+        // Act
+        Typology result = repository.findTypologyByTypologyName(typologyName);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(typologyDouble, result);
+    }
+
+    @Test
+    void ensureItThrowsExceptionWhenDoesNotFindTypologyByTypologyName() {
+        // Arrange
+        String typologyName = "typology name";
+        Optional<TypologyJpa> typologyJpaDouble = Optional.empty();
+        when(crudRepository.findByTypologyName(typologyName)).thenReturn(typologyJpaDouble);
+
+        String expectedMessage = "Typology with this name does not exist in the Repository.";
+
+        // Act
+        Exception result = assertThrows(NotFoundInRepoException.class,
+                () -> repository.findTypologyByTypologyName(typologyName));
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(expectedMessage, result.getMessage());
+    }
 }
