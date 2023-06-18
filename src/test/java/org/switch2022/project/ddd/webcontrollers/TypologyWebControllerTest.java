@@ -108,4 +108,19 @@ class TypologyWebControllerTest {
         assertNotNull(actual);
         assertTrue(actual.isEmpty());
     }
+
+    @Test
+    void ensureThatTypologyIsReturned() {
+        // Arrange
+        String typologyName = "typology name";
+        TypologyDto dtoDouble = mock(TypologyDto.class);
+        when(service.getByTypologyName(typologyName)).thenReturn(dtoDouble);
+
+        // Act
+        ResponseEntity<TypologyDto> responseEntity = controller.getByTypologyName(typologyName);
+
+        // Assert
+        assertEquals(responseEntity.getStatusCodeValue(), 200);
+        assertEquals(dtoDouble, responseEntity.getBody());
+    }
 }
