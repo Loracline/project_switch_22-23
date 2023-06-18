@@ -11,7 +11,7 @@ class UserStoryStatusDtoTest {
         //Act
 
         UserStoryStatusDto userStoryStatusDto =
-                new UserStoryStatusDto("us001", "p001_s001", "CLOSED");
+                new UserStoryStatusDto("us001", "p001", "CLOSED");
 
         //Assert
         assertNotNull(userStoryStatusDto);
