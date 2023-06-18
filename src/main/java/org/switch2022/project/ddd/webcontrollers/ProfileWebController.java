@@ -14,7 +14,7 @@ import java.util.Optional;
 /**
  * The ProfileWebController class is a REST controller for handling requests related to profiles.
  */
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 3600)
 @RestController
 @RequestMapping("/profiles")
 public class ProfileWebController {

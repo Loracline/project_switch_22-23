@@ -285,15 +285,14 @@ public class Sprint implements Entity<Sprint> {
      *
      * @return a list of User Story In Sprint
      */
-    public List<UserStoryInSprint> getUserStoriesInSprint() {
-        return userStoriesInSprint;
-    }
+    public List<UserStoryInSprint> getUserStoriesInSprint() {return new ArrayList<>(userStoriesInSprint);}
 
     /**
      * This method changes the status of the sprint.
      *
      * @param status to be changed to.
-     * @return true if the status was successfully updated, or propagates an exception from the generateSprintStatus
+     * @return true if the status was successfully updated, or propagates an exception from the
+     * generateSprintStatus
      * otherwise.
      */
     public boolean changeStatus(String status) {

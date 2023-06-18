@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * The TypologyWebController class is a REST controller for handling requests related to typologies.
  */
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 3600)
 @RestController
 @RequestMapping("/typologies")
 public class TypologyWebController {

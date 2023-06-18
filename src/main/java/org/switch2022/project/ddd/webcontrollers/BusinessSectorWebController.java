@@ -14,7 +14,7 @@ import java.util.List;
  * The BusinessSectorWebController.md class is a REST controller for handling requests related to resources.
  */
 
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 3600)
 @RestController
 @RequestMapping("/business_sectors")
 public class BusinessSectorWebController {

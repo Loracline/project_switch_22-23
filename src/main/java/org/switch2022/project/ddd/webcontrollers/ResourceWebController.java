@@ -10,7 +10,7 @@ import org.switch2022.project.ddd.dto.AllocationDto;
 /**
  * The ResourceWebController class is a REST controller for handling requests related to resources.
  */
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 3600)
 @RestController
 @RequestMapping("/resources")
 public class ResourceWebController {
