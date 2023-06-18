@@ -185,11 +185,14 @@ public class UserStoriesInSprintServiceTest {
     void ensureTheStatusOfAUserStoryIsChangedSuccessfully() {
         //Arrange
         UserStoryStatusDto userStoryStatusDto =
-                new UserStoryStatusDto("p001_us001", "p001_s_001", "RUNNING");
+                new UserStoryStatusDto("p001_us001", "p001", "RUNNING");
         UserStory userStoryDouble = mock(UserStory.class);
         Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
         when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
-        when(sprintRepository.hasStatus(any(), any())).thenReturn(true);
+        Sprint sprint = mock(Sprint.class);
+        when(sprintRepository.findByProjectCodeAndStatus
+                (any(), any())).thenReturn(Optional.ofNullable(sprint));
+        when(sprint.getSprintId()).thenReturn("p001_s001");
         when(sprintRepository.hasUsId(any(), any())).thenReturn(true);
         when(userStoryRepository.save(userStoryDouble)).thenReturn(true);
 
@@ -206,11 +209,12 @@ public class UserStoriesInSprintServiceTest {
     void ensureTheStatusOfAUserStoryIsChangedUnsuccessfully() {
         //Arrange
         UserStoryStatusDto userStoryStatusDto =
-                new UserStoryStatusDto("p001_us001", "p001_s_001", "RUNNING");
+                new UserStoryStatusDto("p001_us001", "p001", "RUNNING");
         UserStory userStoryDouble = mock(UserStory.class);
         Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
         when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
-        when(sprintRepository.hasStatus(any(), any())).thenReturn(false);
+        when(sprintRepository.findByProjectCodeAndStatus
+                (any(), any())).thenReturn(Optional.empty());
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
                 service.changeUserStoryStatus(userStoryStatusDto));
 
@@ -231,7 +235,7 @@ public class UserStoriesInSprintServiceTest {
     void ensureTheStatusOfAUserStoryIsChangedUnsuccessfully_NoUserStory() {
         //Arrange
         UserStoryStatusDto userStoryStatusDto =
-                new UserStoryStatusDto("p001_us001", "p001_s_001", "RUNNING");
+                new UserStoryStatusDto("p001_us001", "p001", "RUNNING");
 
         Optional<UserStory> userStoryOptional = Optional.empty();
         when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
@@ -255,12 +259,15 @@ public class UserStoriesInSprintServiceTest {
     void ensureTheStatusOfAUserStoryIsChangedUnsuccessfully_NotSameProjectCode() {
         //Arrange
         UserStoryStatusDto userStoryStatusDto =
-                new UserStoryStatusDto("p001_us001", "p001_s_001", "RUNNING");
+                new UserStoryStatusDto("p001_us001", "p001", "RUNNING");
         UserStory userStoryDouble = mock(UserStory.class);
         Optional<UserStory> userStoryOptional = Optional.of(userStoryDouble);
         when(userStoryRepository.findByUsId(any())).thenReturn(userStoryOptional);
         when(sprintRepository.hasUsId(any(), any())).thenReturn(false);
-        when(sprintRepository.hasStatus(any(), any())).thenReturn(true);
+        Sprint sprint = mock(Sprint.class);
+        when(sprintRepository.findByProjectCodeAndStatus
+                (any(), any())).thenReturn(Optional.ofNullable(sprint));
+        when(sprint.getSprintId()).thenReturn("p001_s001");
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
                 service.changeUserStoryStatus(userStoryStatusDto));
 

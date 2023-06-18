@@ -8,15 +8,13 @@ import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.sprint.UserStoryInSprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.domain.value_object.SprintStatus;
-import org.switch2022.project.ddd.domain.value_object.Status;
-import org.switch2022.project.ddd.domain.value_object.UsId;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.ProjectCodeValueObjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
 import org.switch2022.project.ddd.dto.UserStoryStatusDto;
 import org.switch2022.project.ddd.dto.mapper.UserStoryMapper;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
+import org.switch2022.project.ddd.utils.Utils;
 import org.switch2022.project.ddd.utils.Validate;
 
 import java.util.ArrayList;
@@ -97,11 +95,12 @@ public class UserStoriesInSprintService {
      */
     public boolean changeUserStoryStatus(UserStoryStatusDto userStoryStatusDto) {
         boolean result = false;
-        SprintId sprintId = createSprintId(userStoryStatusDto.sprintId);
+        Code projectCode = new Code(Utils.getIntFromAlphanumericString(userStoryStatusDto.projectCode
+                , "p"));
         UsId usId = createUsId(userStoryStatusDto.usId);
         Status userStoryStatus = Status.valueOf(userStoryStatusDto.status.toUpperCase());
         UserStory userStory = getUserStory(usId);
-        isSprintOpen(sprintId);
+        SprintId sprintId = createSprintId(getSprintId(projectCode));
         if (isUserStoryInSprint(usId, sprintId)) {
             userStory.changeStatus(userStoryStatus);
             userStoryRepository.save(userStory);
@@ -178,8 +177,7 @@ public class UserStoriesInSprintService {
      * Retrieves the user stories for the Scrum board associated with the specified project code.
      *
      * @param dto The ProjectCodeValueObjectDto containing the project code for the Scrum board.
-     * @return A list of UserStoryDto objects representing the user stories on the Scrum board, or an empty list if
-     * no Scrum board is found.
+     * @return A list of UserStoryDto objects representing the user stories on the Scrum board, or an empty list if no Scrum board is found.
      */
     public List<UserStoryDto> getScrumBoard(ProjectCodeValueObjectDto dto) {
         List<UserStoryDto> userStoryDtos = new ArrayList<>();
@@ -190,17 +188,12 @@ public class UserStoriesInSprintService {
         return userStoryDtos;
     }
 
-    /**
-     * Checks if the specified Sprint is open.
-     *
-     * @param sprintId The identifier of the Sprint to check.
-     * @return {@code true} if the Sprint is open, {@code false} otherwise.
-     * @throws RuntimeException if the Sprint is not open.
-     */
-    private boolean isSprintOpen(SprintId sprintId) {
-        if (!sprintRepository.hasStatus(sprintId, SprintStatus.OPEN)) {
+    private String getSprintId(Code projectCode) {
+        Optional<Sprint> optionalSprint = sprintRepository.findByProjectCodeAndStatus(projectCode, SprintStatus.OPEN);
+        if (optionalSprint.isEmpty()) {
             throw new RuntimeException("The Sprint is not open");
+
         }
-        return sprintRepository.hasStatus(sprintId, SprintStatus.OPEN);
+        return optionalSprint.get().getSprintId();
     }
 }
