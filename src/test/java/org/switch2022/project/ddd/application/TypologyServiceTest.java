@@ -57,7 +57,8 @@ class TypologyServiceTest {
 
     /**
      * Scenario 02: The typology is not created.
-     * Expected return:  AlreadyExistsInRepoException with "The typology already exists in the repository." .
+     * Expected return:  AlreadyExistsInRepoException with "The typology already exists in the
+     * repository." .
      */
     @DisplayName("Typology not created")
     @Test
@@ -69,7 +70,8 @@ class TypologyServiceTest {
 
         //Act
         AlreadyExistsInRepoException result =
-                assertThrows(AlreadyExistsInRepoException.class, () -> typologyService.createTypology("typology01"));
+                assertThrows(AlreadyExistsInRepoException.class,
+                        () -> typologyService.createTypology("typology01"));
 
         //Assert
         assertEquals(expected, result.getMessage());
@@ -122,5 +124,26 @@ class TypologyServiceTest {
         List<TypologyDto> result = typologyService.requestAllTypologies();
         //Assert
         assertEquals(expected, result);
+    }
+    /**
+     * Method: findTypologyByTypologyName().
+     * Scenario 01: ensure that a TypologyDto is returned successfully.
+     */
+    @Test
+    void ensureItReturnsATypologyDto() {
+        // Arrange
+        String typologyName = "typology name";
+        Typology typology = mock(Typology.class);
+        when(typologyRepository.findTypologyByTypologyName(typologyName)).thenReturn(typology);
+
+        TypologyDto dtoDouble = mock(TypologyDto.class);
+        when(mapper.typologyToDto(typology)).thenReturn(dtoDouble);
+
+        // Act
+        TypologyDto result = typologyService.getByTypologyName(typologyName);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(dtoDouble, result);
     }
 }
