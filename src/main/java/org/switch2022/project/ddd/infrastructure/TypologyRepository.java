@@ -58,7 +58,8 @@ public class TypologyRepository implements ITypologyRepository {
      */
     public boolean save(Typology typology) {
         if (typologies.contains(typology)) {
-            throw new AlreadyExistsInRepoException("The typology already exists in the repository.");
+            throw new AlreadyExistsInRepoException("The typology already exists in the repository" +
+                    ".");
         } else {
             typologies.add(typology);
             return true;
@@ -79,7 +80,8 @@ public class TypologyRepository implements ITypologyRepository {
      *
      * @param typologyName the name of the project typology whose ID is being requested.
      * @return the ID of the project typology with the given name.
-     * @throws NotFoundInRepoException if a business sector with the given name is not found in the repository.
+     * @throws NotFoundInRepoException if a business sector with the given name is not found in
+     * the repository.
      */
 
     @Override
@@ -96,10 +98,23 @@ public class TypologyRepository implements ITypologyRepository {
         }
 
         if (requestedProjectTypologyId == null) {
-            throw new NotFoundInRepoException("Typology with this name does not exist in the Repository.");
+            throw new NotFoundInRepoException("Typology with this name does not exist in the " +
+                    "Repository.");
         }
 
         return requestedProjectTypologyId;
+    }
+
+    /**
+     * Retrieves a Typology from the database based on the provided typology name.
+     *
+     * @param typologyName the name of the typology to search for.
+     * @return a Typology object that matches the provided typology name.
+     * @throws UnsupportedOperationException if the method is not implemented.
+     */
+    @Override
+    public Typology findTypologyByTypologyName(String typologyName) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     /**

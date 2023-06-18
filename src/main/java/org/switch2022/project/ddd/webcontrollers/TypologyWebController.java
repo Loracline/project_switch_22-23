@@ -10,7 +10,6 @@ import org.switch2022.project.ddd.dto.TypologyDto;
 
 import java.util.List;
 
-
 /**
  * The TypologyWebController class is a REST controller for handling requests related to typologies.
  */
@@ -53,5 +52,18 @@ public class TypologyWebController {
     public ResponseEntity<List<TypologyDto>> listAllTypologies() {
         List<TypologyDto> typologies = service.requestAllTypologies();
         return new ResponseEntity<>(typologies, HttpStatus.OK);
+    }
+
+    /**
+     * Retrieves a typology by their typology name and returns it as a response entity.
+     *
+     * @param typologyName The name of the typology to be retrieved.
+     * @return A response entity containing the typology DTO if found, or a not found response if
+     * the typology is not found.
+     */
+    @GetMapping("/{typologyName}")
+    public ResponseEntity<TypologyDto> getByTypologyName(@PathVariable String typologyName) {
+        TypologyDto typologyDto = service.getByTypologyName(typologyName);
+        return new ResponseEntity<>(typologyDto, HttpStatus.OK);
     }
 }

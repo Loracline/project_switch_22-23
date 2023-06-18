@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Implementation of the {@link ITypologyRepository} interface that uses JPA to persist and retrieve tupology data.
- * This class interacts with the {@link ITypologyJpaRepository} for performing CRUD operations on {@link TypologyJpa}
+ * Implementation of the {@link ITypologyRepository} interface that uses JPA to persist and
+ * retrieve tupology data.
+ * This class interacts with the {@link ITypologyJpaRepository} for performing CRUD operations on
+ * {@link TypologyJpa}
  * entities.
  */
 @Repository("typology_jpa")
@@ -31,7 +33,8 @@ public class TypologyJpaRepository implements ITypologyRepository {
 
     /**
      * Saves a {@link Typology} object in the repository.
-     * If the typology's id already exists in the repository, an {@link AlreadyExistsInRepoException} is thrown.
+     * If the typology's id already exists in the repository, an
+     * {@link AlreadyExistsInRepoException} is thrown.
      *
      * @param typology The typology to be saved.
      * @return {@code true} if the typology was successfully saved, {@code false} otherwise.
@@ -41,7 +44,8 @@ public class TypologyJpaRepository implements ITypologyRepository {
     public boolean save(Typology typology) {
         TypologyJpa typologyJpa = assembler.toData(typology);
         if (crudRepository.existsById(typology.getTypologyId())) {
-            throw new AlreadyExistsInRepoException("The typology already exists in the repository.");
+            throw new AlreadyExistsInRepoException("The typology already exists in the repository" +
+                    ".");
         } else {
             crudRepository.save(typologyJpa);
             return true;
@@ -72,10 +76,30 @@ public class TypologyJpaRepository implements ITypologyRepository {
         if (typology.isPresent()) {
             typologyId = typology.get().getTypologyId();
         } else {
-            throw new NotFoundInRepoException("Typology with this name does not exist in the Repository.");
+            throw new NotFoundInRepoException("Typology with this name does not exist in the " +
+                    "Repository.");
         }
         return typologyId;
     }
+
+    /**
+     * Retrieves a Typology based on a given typology name.
+     *
+     * @param typologyName Typology name of the typology to be retrieved.
+     * @return Typology based on the TypologyJpa provided by the CRUD repository or
+     * NotFoundInRepoException if it doesn't retrieve anything.
+     */
+    @Override
+    public Typology findTypologyByTypologyName(String typologyName) {
+        Optional<TypologyJpa> typologyJpa = crudRepository.findByTypologyName(typologyName);
+        if (typologyJpa.isPresent()) {
+            return assembler.toDomain(typologyJpa.get());
+        } else {
+            throw new NotFoundInRepoException("Typology with this name does not exist in the " +
+                    "Repository.");
+        }
+    }
+
     /**
      * Returns a list of all typologies in the repository.
      *
