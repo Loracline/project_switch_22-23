@@ -5,15 +5,15 @@ public class UserStoryStatusDto {
      * Attributes
      */
     public final String usId;
-    public final String sprintId;
+    public final String projectCode;
     public final String status;
 
     /**
      * Constructor
      */
-    public UserStoryStatusDto(String usId, String sprintId, String status) {
+    public UserStoryStatusDto(String usId, String projectCode, String status) {
         this.usId = usId;
-        this.sprintId = sprintId;
+        this.projectCode = projectCode;
         this.status = status;
     }
 }
