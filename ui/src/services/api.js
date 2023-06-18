@@ -12,7 +12,7 @@ export const API_ROUTES = {
     ACCOUNTS: 'accounts/',
     PROJECTS: '/projects',
     SPRINTS: '/sprints',
-    SPRINTBACKLOG:'/SprintBacklog',
+    SPRINTBACKLOG:'/sprint_backlog',
     PRODUCTBACKLOG: '/productBacklog',
     SCRUM_BOARD: 'scrumBoard',
     /*USER_STORIES: 'userStories'*/

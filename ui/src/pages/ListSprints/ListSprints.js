@@ -88,20 +88,21 @@ const ListSprints = () => {
                 <h2 className="pageH2">Sprints</h2>
 
                 {sprintsTable()}
+                <div style={{display: "flex", gap: "2rem"}}>
+                    <Button isSecundary={true} onClick={() => {
+                        dispatch(selectMenu('project'))
+                    }}
+                            text='Return'/>
 
-                <Button isSecundary={true} onClick={() => {
-                    dispatch(selectMenu('project'))
-                }}
-                        text='Return'/>
-
-                <Button onClick={() => {
-                    dispatch(selectMenu('createSprint'))
-                }}
-                        text='Create sprint'
-                        isDisabled={
-                            !selectedProject?.startDate ||
-                            !selectedProject?.endDate ||
-                            isProjectEndDatePassed}/>
+                    <Button onClick={() => {
+                        dispatch(selectMenu('createSprint'))
+                    }}
+                            text='Create sprint'
+                            isDisabled={
+                                !selectedProject?.startDate ||
+                                !selectedProject?.endDate ||
+                                isProjectEndDatePassed}/>
+                </div>
             </div>
         );
     }

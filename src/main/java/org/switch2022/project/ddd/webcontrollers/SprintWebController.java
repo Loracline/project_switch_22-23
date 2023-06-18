@@ -89,9 +89,8 @@ public class SprintWebController {
      * @param userStoryInSprintDto containing the information needed to create a new UserStoryInSprint.
      * @return A ResponseEntity containing the status code of 201 (CREATED).
      */
-    @PostMapping("/{SprintId}/SprintBacklog")
-    public ResponseEntity<Object> addUserStoryToSprintBacklog(@RequestBody UserStoryInSprintDto userStoryInSprintDto,
-                                                              @PathVariable String SprintId) {
+    @PostMapping("/sprint_backlog")
+    public ResponseEntity<Object> addUserStoryToSprintBacklog(@RequestBody UserStoryInSprintDto userStoryInSprintDto) {
         addUserStoryToSprintBacklogService.addUserStoryToSprint(userStoryInSprintDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

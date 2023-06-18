@@ -1,0 +1,21 @@
+.addUserStoryToSprint {
+    margin-bottom: 2.5rem;
+}
+
+.addUserStoryToSprintContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.addUserStoryToSprint h2 {
+    font-size: 1.5rem;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+    .addUserStoryToSprintContent {
+        flex-direction: row;
+    }
+}

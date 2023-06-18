@@ -11,7 +11,7 @@ const menu = [
     {key: 'home', label: 'home', hidden: true},
     {key: 'createProject', label: "create project", hidden: true},
     {key: 'projects', label: "projects"},
-    {key: 'sprints', label: "sprints", hidden: false},
+    {key: 'sprints', label: "sprints", hidden: true},
     {key: 'createUserStory', label: "create user story", hidden: true},
     {key: 'productBacklog', label: "product backlog", hidden: true},
     {key: 'createSprint', label: "create sprint", hidden: true},
@@ -19,7 +19,7 @@ const menu = [
     {key: 'about', label: "about"},
     {key: 'allocateResource', label: "allocate resource", hidden: true},
     {key: 'sprint', label: "sprint", hidden: true},
-    {key: 'scrumBoard', label: "scrum board", hidden: false}
+    {key: 'scrumBoard', label: "scrum board", hidden: true}
 ]
 const nav = {selectedMenu: menu[0], menu: menu,}
 const detailedProject = null;

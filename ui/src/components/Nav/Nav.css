@@ -16,3 +16,9 @@
         align-items: center;
     }
 }
+
+@media only screen and (min-width: 2560px) {
+    .navBar {
+        padding: 16px 630px;
+    }
+}

@@ -50,7 +50,7 @@ public class SprintStatusChangeService {
         Optional<Sprint> sprintOptional = sprintRepository.findById(sprintId);
 
         if (sprintOptional.isPresent()) {
-            if ("close".equalsIgnoreCase(sprintStatusDto.getSprintStatus())) {
+            if ("closed".equalsIgnoreCase(sprintStatusDto.getSprintStatus())) {
                 wasSprintChanged = closeSprint(sprintOptional.get());
             } else if ("open".equalsIgnoreCase(sprintStatusDto.getSprintStatus())) {
                 wasSprintChanged = openSprint(projectCode, sprintOptional.get());

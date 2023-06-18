@@ -5,6 +5,7 @@ import AppContext from "../../context/AppContext";
 import Alert from "@mui/material/Alert";
 import {getSprintBacklog} from "../../context/Actions";
 import Loading from "../../components/Loading/Loading";
+import './ConsultSprintBacklog.css';
 
 /**
  * A functional component that displays the sprint backlog.
@@ -32,7 +33,7 @@ function ConsultSprintBacklog() {
     let tableData;
     if (data.length > 0) {
         tableData = (
-            <table className='table'>
+            <table className='table sprintBacklogTable'>
                 <TableHeader headers={usHeadersSprintBacklog}/>
                 <TableBody body={data}/>
             </table>

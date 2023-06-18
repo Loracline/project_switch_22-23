@@ -219,7 +219,7 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 isSprintOpen: true,
-                detailedSprint : {...state.detailedSprint, status: action.payload}
+                detailedSprint : {...state.detailedSprint, status: action.payload.toUpperCase()}
             }
         }
 
