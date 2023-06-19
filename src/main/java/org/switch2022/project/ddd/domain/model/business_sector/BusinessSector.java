@@ -85,7 +85,15 @@ public class BusinessSector implements Entity<BusinessSector> {
         return this.name.getName();
     }
 
-
+    /**
+     * Checks if this BusinessSector instance has a specific BusinessSectorId.
+     *
+     * @param businessSectorId the BusinessSectorId to check.
+     * @return <code>true</code> if the BusinessSector's BusinessSectorId matches the given BusinessSectorId, and <code>false</code> otherwise.
+     */
+    public boolean hasBusinessSectorId(BusinessSectorId businessSectorId) {
+        return this.id.getBusinessSectorId().equals(businessSectorId.getBusinessSectorId());
+    }
 }
 
 
