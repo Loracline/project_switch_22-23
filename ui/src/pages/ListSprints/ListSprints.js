@@ -1,12 +1,15 @@
 import React, {useContext, useEffect} from 'react';
 import AppContext from "../../context/AppContext";
 import './ListSprints.css';
-import Loading from "../../components/Loading/Loading";
-import {getSprintsFromProject, selectMenu, setCurrentSprint} from "../../context/Actions";
+import {
+    getSprintsFromProject,
+} from "../../context/Actions";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableBody from "../../components/TableBody/TableBody";
 import Alert from "@mui/material/Alert";
 import Button from "../../components/Button/Button";
+import {Link, useNavigate} from "react-router-dom";
+import Loading from "../../components/Loading/Loading";
 
 /**
  * Renders a list of sprints for a selected project.
@@ -21,7 +24,7 @@ const ListSprints = () => {
 
     // Holds the currently selected project.
     const selectedProject = state.detailedProject;
-    const projectCode = selectedProject.code;
+    const projectCode = selectedProject?.code;
 
     // Checks if the project's end date has already passed.
     const isProjectEndDatePassed = new Date(selectedProject?.endDate) < new Date();
@@ -29,10 +32,14 @@ const ListSprints = () => {
     // Stores the loading state of the page.
     const loadingPage = state.loading;
 
+    const navigate = useNavigate();
+
     // Fetch the sprints data when the 'dispatch' function changes, allowing the display of updated info.
     useEffect(() => {
-        getSprintsFromProject(dispatch, projectCode)
-    }, [dispatch]);
+        if(projectCode){
+            getSprintsFromProject(dispatch, projectCode)
+        }
+    }, [dispatch, projectCode]);
 
     /**
      * Renders the sprints table body.
@@ -55,15 +62,14 @@ const ListSprints = () => {
             const onClickSelectSprint = (sprintIndex) => {
                 if (data.length > sprintIndex) {
                     const selectedSprint = tableBody[sprintIndex];
-                    dispatch(setCurrentSprint(selectedSprint));
+                    navigate(`/sprints/${projectCode}/${selectedSprint?.number}`)
                 }
-                dispatch(selectMenu('sprint'));
             }
 
             table = (
                 <table className='table'>
                     <TableHeader headers={tableHeader}/>
-                    <TableBody body={data} onClick={onClickSelectSprint}/>
+                    <TableBody body={data} onClick={onClickSelectSprint} path={`/sprints/${projectCode}`}/>
                 </table>)
 
         } else {
@@ -89,19 +95,17 @@ const ListSprints = () => {
 
                 {sprintsTable()}
                 <div style={{display: "flex", gap: "2rem"}}>
-                    <Button isSecundary={true} onClick={() => {
-                        dispatch(selectMenu('project'))
-                    }}
-                            text='Return'/>
+                    <Link to={`/projects/${selectedProject?.code}`}>
+                        <Button isSecundary={true} text='Return'/>
+                    </Link>
 
-                    <Button onClick={() => {
-                        dispatch(selectMenu('createSprint'))
-                    }}
-                            text='Create sprint'
-                            isDisabled={
-                                !selectedProject?.startDate ||
-                                !selectedProject?.endDate ||
-                                isProjectEndDatePassed}/>
+                    <Link to={`/sprints/${projectCode}/create-sprint`}>
+                        <Button text='Create sprint'
+                                isDisabled={
+                                    !selectedProject?.startDate ||
+                                    !selectedProject?.endDate ||
+                                    isProjectEndDatePassed}/>
+                    </Link>
                 </div>
             </div>
         );

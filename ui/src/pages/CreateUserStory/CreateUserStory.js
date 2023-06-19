@@ -11,6 +11,7 @@ import Loading from "../../components/Loading/Loading";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
+import {Link} from "react-router-dom";
 
 /**This component provides a form for creating a new user story.*/
 
@@ -24,7 +25,7 @@ function CreateUserStory() {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const initialUsState = {
-        projectCode: detailedProject.code,
+        projectCode: detailedProject?.code,
         userStoryNumber: "",
         userStoryText: "",
         actor: "",
@@ -211,16 +212,19 @@ function CreateUserStory() {
                         variant="outlined"
                         className="textField"/>
                     <Box display="flex" justifyContent="space-between">
-                        <Button
-                            isSecundary={true}
-                            onClick={() => dispatch(selectMenu('project'))}
-                            text="Return"
-                        />
-                        <Button
-                            isSecundary={true}
-                            onClick={() => dispatch(selectMenu('productBacklog'))}
-                            text="Go to Product Backlog"
-                        />
+                        <Link to={"/projects/" + detailedProject?.code}>
+                            <Button
+                                isSecundary={true}
+                                text="Return"
+                            />
+                        </Link>
+                        <Link to={"/projects/" + detailedProject?.code + "/product-backlog"}>
+                            <Button
+                                isSecundary={true}
+                                onClick={() => dispatch(selectMenu('productBacklog'))}
+                                text="Go to Product Backlog"
+                            />
+                        </Link>
                         <Button
                             type="button"
                             text="Create US"

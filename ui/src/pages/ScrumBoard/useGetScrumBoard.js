@@ -6,18 +6,21 @@ const status = ['planned', 'running', 'blocked', 'finished'];
 export function useGetScrumBoard(projectCode) {
     const [scrumBoard, setScrumBoard] = useState([]);
     useEffect(() => {
-        getScrumBoard(projectCode).then(
-            (scrumBoardFromBackend) => {
-                const columns = status.map((status) => (
-                        {
-                            status,
-                            items: scrumBoardFromBackend.filter((item) => item.status === status)
-                        }
+        if(projectCode){
+            getScrumBoard(projectCode).then(
+                (scrumBoardFromBackend) => {
+                    const columns = status.map((status) => (
+                            {
+                                status,
+                                items: scrumBoardFromBackend.filter((item) => item.status === status)
+                            }
+                        )
                     )
-                )
-                setScrumBoard(columns)
-            }
-        )
+                    setScrumBoard(columns)
+                }
+            )
+        }
+
     }, [projectCode])
 
     return [scrumBoard, setScrumBoard];

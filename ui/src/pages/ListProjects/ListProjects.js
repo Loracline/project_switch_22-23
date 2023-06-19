@@ -1,12 +1,13 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableBody from "../../components/TableBody/TableBody";
 import AppContext from "../../context/AppContext";
 import Alert from "@mui/material/Alert";
-import {getProjects, selectMenu, setCurrentProject} from "../../context/Actions";
+import {setCurrentProject} from "../../context/Actions";
 import Button from "../../components/Button/Button";
 import './ListProjects.css';
 import Loading from "../../components/Loading/Loading";
+import {Link, Outlet, useNavigate} from "react-router-dom";
 
 /**
  * A functional component that displays a list of all projects.
@@ -18,9 +19,7 @@ const ListProjects = () => {
     const headers = state.headersProjects;
     const loading = state.loading;
     const data = state.projects;
-    useEffect(() => {
-        getProjects(dispatch)
-    }, [dispatch]);
+    const navigate = useNavigate();
 
     const tableData = () => {
         let tableData;
@@ -29,13 +28,13 @@ const ListProjects = () => {
                 if (state.projects.length > index) {
                     const selectedProject = state.projects[index];
                     dispatch(setCurrentProject(selectedProject));
+                    navigate(`/projects/${selectedProject.code}`)
                 }
-                dispatch(selectMenu('project'));
             };
             tableData = (
                 <table className='table'>
                     <TableHeader headers={headers}/>
-                    <TableBody body={data} onClick={onClickTableBody}/>
+                    <TableBody body={data} onClick={onClickTableBody} path={"/projects/"}/>
                 </table>)
         } else {
             tableData = <Alert variant="filled" severity="info">
@@ -48,18 +47,20 @@ const ListProjects = () => {
     if (loading === true) {
         return (
             <div>
-                <p style={{height: "calc(100vh - 172px - 2rem)"}}> </p>
+                <p style={{height: "calc(100vh - 172px - 2rem)"}}></p>
                 <Loading handleLoading={loading}/>
             </div>)
     } else {
         return (
-            <div className='page pageTable'>
-                <h2 className="pageH2">Projects</h2>
-                {tableData()}
-                <Button onClick={() => {
-                    dispatch(selectMenu('createProject'))
-                }} text='Create project'/>
-
+            <div>
+                <div className='page pageTable'>
+                    <h2 className="pageH2">Projects</h2>
+                    {tableData()}
+                    <Link to={"/projects/create-project"}>
+                        <Button text='Create project'/>
+                    </Link>
+                </div>
+                <Outlet />
             </div>
         );
     }

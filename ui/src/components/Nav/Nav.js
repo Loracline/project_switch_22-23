@@ -1,7 +1,7 @@
 import React from "react";
 import NavItem from "../NavItem/NavItem";
-import {selectMenu} from "../../context/Actions";
 import './Nav.css';
+import {Link} from "react-router-dom";
 
 /**
  * A component that renders a navigation menu with clickable items.
@@ -12,23 +12,19 @@ import './Nav.css';
  * @returns {JSX.Element} A React component that renders the navigation menu.
  */
 
-const Nav = ({items, dispatch}) => {
-    const onClick = (label) => {
-        const action = selectMenu(label);
-        dispatch(action);
-    }
+const Nav = ({items}) => {
     return (
         <div>
             <nav>
                 <ul className="navBar">
-                    <li onClick={() => {dispatch(selectMenu('home'))}}><img src='/logoNav.svg' alt="G4 logo"/></li>
+                    <Link to="/home">
+                        <img src='/logoNav.svg' alt="G4 logo"/>
+                    </Link>
                     {
                         items.map(item => (
-                            <NavItem
-                                key={item.key}
-                                item={item}
-                                onClick={onClick}
-                            />
+                            <Link to={`/${item.key}`} key={item.key}>
+                                <NavItem item={item} />
+                            </Link>
                         ))
                     }
                 </ul>

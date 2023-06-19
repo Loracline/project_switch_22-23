@@ -1,6 +1,5 @@
 import Button from "../../components/Button/Button";
 import React, {useContext, useEffect, useState} from "react";
-import {selectMenu} from "../../context/Actions";
 import {
     Autocomplete,
     Box,
@@ -23,14 +22,15 @@ import dayjs from "dayjs";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from "@mui/icons-material/Error";
 import './AllocateResource.css';
+import {Link} from "react-router-dom";
 
 function AllocateResource() {
 
-    const {state, dispatch} = useContext(AppContext);
+    const {state} = useContext(AppContext);
     const {detailedProject} = state;
 
     const initialResource = {
-        projectCode: detailedProject.code,
+        projectCode: detailedProject?.code,
         accountEmail: "",
         accountRole: "",
         accountCostPerHour: "",
@@ -333,8 +333,8 @@ function AllocateResource() {
                             width={150}
                             label="Start Date"
                             disablePast={true}
-                            minDate={dayjs(detailedProject.startDate)}
-                            maxDate={dayjs(detailedProject.endDate)}
+                            minDate={dayjs(detailedProject?.startDate)}
+                            maxDate={dayjs(detailedProject?.endDate)}
                             value={resource.startDate}
                             onChange={handleChangeForStartDate}
                             format="YYYY-MM-DD"
@@ -349,7 +349,7 @@ function AllocateResource() {
                             disablePast={true}
                             isDisabled={!resource.startDate}
                             minDate={dayjs(resource.startDate)}
-                            maxDate={dayjs(detailedProject.endDate)}
+                            maxDate={dayjs(detailedProject?.endDate)}
                             value={resource.endDate}
                             onChange={handleChangeForEndDate}
                             format="YYYY-MM-DD"
@@ -363,20 +363,22 @@ function AllocateResource() {
                     }}>{error}</span> : <br/>}</FormHelperText>
 
                     <FormHelperText style={{textAlign: 'center'}}>
-                        <p1><strong>Project: </strong>{detailedProject.code}</p1>
+                        <p1><strong>Project: </strong>{detailedProject?.code}</p1>
                         <br/>
-                        <p1><strong>Start Date: </strong>{detailedProject.startDate}</p1>
+                        <p1><strong>Start Date: </strong>{detailedProject?.startDate}</p1>
                         <br/>
-                        <p1><strong>End Date: </strong>{detailedProject.endDate}</p1>
+                        <p1><strong>End Date: </strong>{detailedProject?.endDate}</p1>
                     </FormHelperText>
 
 
                     <div className="buttons-resource">
-                        <Button
-                            isSecundary={true}
-                            onClick={() => dispatch(selectMenu('project'))}
-                            text="Return"
-                        />
+                        <Link to={"/projects/" + detailedProject?.code}>
+                            <Button
+                                isSecundary={true}
+                                text="Return"
+                            />
+                        </Link>
+
 
                         <Button
                             text="Submit"

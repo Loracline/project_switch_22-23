@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import Button from '../../components/Button/Button';
-import {closeButton, selectMenu, updateSprintStatus} from '../../context/Actions';
+import {closeButton, updateSprintStatus} from '../../context/Actions';
 import AppContext from '../../context/AppContext';
 import './Sprint.css';
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
@@ -8,6 +8,7 @@ import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
 import ConsultSprintBacklog from "../ConsultSprintBacklog/ConsultSprintBacklog";
 import AddUserStoryToSprint from "../SprintBacklog/AddUserStoryToSprint";
+import {Link} from "react-router-dom";
 
 /**
  * Sprint component.
@@ -19,7 +20,7 @@ const Sprint = () => {
     const {state, dispatch} = useContext(AppContext);
     const {detailedProject, detailedSprint, messageSuccess, messageFailure, userStoriesInSprint} = state;
     const data = detailedSprint;
-    const projectName = detailedProject.projectName;
+    const projectName = detailedProject?.projectName;
 
     const [showConfirmation, setShowConfirmation] = useState(false);
     const isOpen = data?.status === "OPEN";
@@ -71,11 +72,11 @@ const Sprint = () => {
             <section className="sprintCard">
                 <div className="sprintHeader">
                     <h2>Sprint Number: {data?.['number']}</h2>
-                    <Button isSecundary={true} onClick={() =>
-                        dispatch(selectMenu('sprints'))
-                    }
+                    <Link to={`/sprints/${detailedProject?.code}`}>
+                    <Button isSecundary={true}
                             text='Return'
                     />
+                    </Link>
                 </div>
 
                 <div className="sprintInfo">

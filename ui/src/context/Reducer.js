@@ -33,7 +33,9 @@ import {
     UPDATE_SPRINT_STATUS_FAILURE,
     GET_SPRINT_BACKLOG_SUCCESS,
     FETCH_SPRINT_BACKLOG,
-    POST_USER_STORY_TO_SPRINT_SUCCESS
+    POST_USER_STORY_TO_SPRINT_SUCCESS,
+    SET_CURRENT_PROJECT_CODE_FROM_URL,
+    SET_CURRENT_SPRINT_NUMBER_FROM_URL
 } from "./Actions";
 
 /** Reducer function that updates the app state based on the dispatched actions.
@@ -135,8 +137,10 @@ const reducer = (state, action) => {
         }
 
         case GET_CUSTOMERS:
+            return {...state, loading: true};
 
         case GET_BUSINESS_SECTORS:
+            return {...state, loading: true};
 
         case GET_TYPOLOGIES:
             return {...state, loading: true};
@@ -157,15 +161,22 @@ const reducer = (state, action) => {
         }
 
         case GET_CUSTOMERS_FAILURE:
+            return {...state, loading: false, messageFailure: action.payload.error};
 
         case GET_BUSINESS_SECTORS_FAILURE:
+            return {...state, loading: false, messageFailure: action.payload.error};
 
         case GET_TYPOLOGIES_FAILURE:
             return {...state, loading: false, messageFailure: action.payload.error};
 
         case GET_PROJECTS_SUCCESS: {
+            let detailedProject;
             const projectsBE = action.payload.data;
-            return {...state, projects: projectsBE, loading: false};
+            if(state.routerProjectCode) {
+                detailedProject = projectsBE.find(project => project.code === state.routerProjectCode);
+            }
+
+            return {...state, projects: projectsBE, loading: false, detailedProject };
         }
 
         case FETCH_PROJECTS_STARTED: {
@@ -191,12 +202,17 @@ const reducer = (state, action) => {
 
         // List all sprints from a project
         case GET_SPRINTS_SUCCESS: {
+            let detailedSprint;
             const sprintsFromProject = action.payload.data;
+            if(state.routerSprintNumber) {
+                detailedSprint = sprintsFromProject.find(sprint => sprint.number === state.routerSprintNumber);
+            }
             return {
                 ...state,
                 sprintsTableBody: sprintsFromProject,
-                loading: false
-            };
+                loading: false,
+                detailedSprint
+            }
         }
 
         case FETCH_SPRINTS_STARTED: {
@@ -251,9 +267,22 @@ const reducer = (state, action) => {
             }
         }
 
+        case SET_CURRENT_PROJECT_CODE_FROM_URL:
+            return {
+                ...state,
+                routerProjectCode: action.payload.projectCode,
+            };
+
+        case SET_CURRENT_SPRINT_NUMBER_FROM_URL:
+            return {
+                ...state,
+                routerSprintNumber: action.payload.sprintNumber,
+            };
+
         default:
             return state;
     }
+
 
 };
 

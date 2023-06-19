@@ -82,7 +82,7 @@ export function fetchProjects(success, failure) {
 }
 
 export function fetchProject(success, failure, id) {
-    fetch(`${URL}/projects?projectCode=${id}`)
+    fetch(`${URL}/projects/${id}`)
         .then(res => res.json())
         .then(res => success(res))
         .catch(err => failure(err.message));

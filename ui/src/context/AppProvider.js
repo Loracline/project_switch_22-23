@@ -9,17 +9,17 @@ import reducer from "./Reducer";
  */
 const menu = [
     {key: 'home', label: 'home', hidden: true},
-    {key: 'createProject', label: "create project", hidden: true},
+    {key: 'create-project', label: "create project", hidden: true},
     {key: 'projects', label: "projects"},
     {key: 'sprints', label: "sprints", hidden: true},
-    {key: 'createUserStory', label: "create user story", hidden: true},
-    {key: 'productBacklog', label: "product backlog", hidden: true},
+    {key: 'create-us', label: "create user story", hidden: true},
+    {key: 'product-backlog', label: "product backlog", hidden: true},
     {key: 'createSprint', label: "create sprint", hidden: true},
     {key: 'project', label: "project", hidden: true},
     {key: 'about', label: "about"},
-    {key: 'allocateResource', label: "allocate resource", hidden: true},
+    {key: 'allocate-resource', label: "allocate resource", hidden: true},
     {key: 'sprint', label: "sprint", hidden: true},
-    {key: 'scrumBoard', label: "scrum board", hidden: true}
+    {key: 'scrum-board', label: "scrum board", hidden: true}
 ]
 const nav = {selectedMenu: menu[0], menu: menu,}
 const detailedProject = null;
@@ -55,7 +55,9 @@ const AppProvider = ({children}) => {
         messageFailure: '',
         messageSuccess: '',
         isSprintOpen: false,
-        userStoriesInSprint: []
+        userStoriesInSprint: [],
+        routerProjectCode: '',
+        routerSprintNumber: ''
     }
 
     const [state, dispatch] = useReducer(reducer, initialState);

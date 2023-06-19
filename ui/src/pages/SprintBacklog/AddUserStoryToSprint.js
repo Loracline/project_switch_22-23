@@ -14,8 +14,8 @@ function AddUserStoryToSprint() {
 
     const {state, dispatch} = useContext(AppContext);
     const {detailedSprint, detailedProject} = state;
-    const sprintId = detailedSprint.id;
-    const code = detailedProject.code;
+    const sprintId = detailedSprint?.id;
+    const code = detailedProject?.code;
 
 
     const [userStoriesToAdd, setUserStoriesToAdd] = useState([]);

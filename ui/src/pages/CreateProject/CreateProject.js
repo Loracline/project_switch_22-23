@@ -5,8 +5,7 @@ import {
     fetchBusinessSectors,
     fetchCustomers,
     fetchTypologies,
-    resetCreateProject,
-    selectMenu
+    resetCreateProject
 } from "../../context/Actions";
 import AppContext from "../../context/AppContext";
 import {Box, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
@@ -16,6 +15,7 @@ import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage
 import Loading from "../../components/Loading/Loading";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
+import {Link} from "react-router-dom";
 
 /**
  * Form component in React.
@@ -97,9 +97,6 @@ function CreateProject() {
         createProject(dispatch, project);
     }
 
-    const handleReturnToProjects = (_) => {
-        dispatch(selectMenu('projects'));
-    }
 
     const handleClearProject = (_) => {
         setProject(initialProject);
@@ -232,11 +229,12 @@ function CreateProject() {
                         className="textField"
                     />
                     <Box display="flex" justifyContent="space-between">
-                        <Button
-                            isSecundary={true}
-                            onClick={handleReturnToProjects}
-                            text="Return"
-                        />
+                        <Link to={"/projects"}>
+                            <Button
+                                isSecundary={true}
+                                text="Return"
+                            />
+                        </Link>
                         <Button
                             type="button"
                             text="Create Project"

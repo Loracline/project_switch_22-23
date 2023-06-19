@@ -17,11 +17,13 @@ function ConsultSprintBacklog() {
     const {usHeadersSprintBacklog, userStoriesInSprint, loading} = state;
 
     const selectedSprint = state.detailedSprint;
-    const sprintId = selectedSprint.id;
+    const sprintId = selectedSprint?.id;
 
     useEffect(() => {
-        getSprintBacklog(dispatch, sprintId)
-    }, [dispatch]);
+        if(sprintId){
+            getSprintBacklog(dispatch, sprintId)
+        }
+    }, [dispatch, sprintId]);
 
     const data = userStoriesInSprint.map(userStory => {
         return {

@@ -4,9 +4,9 @@ import TableHeader from "../../components/TableHeader/TableHeader";
 import AppContext from "../../context/AppContext";
 import Alert from "@mui/material/Alert";
 import Button from "../../components/Button/Button";
-import {selectMenu} from "../../context/Actions";
 import './ConsultProductBacklog.css';
-import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
+import {API_HEADERS as headers} from "../../services/api";
+import {Link} from "react-router-dom";
 
 /**
  * A functional component that displays the product backlog.
@@ -15,20 +15,21 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
     const {usHeaders, detailedProject} = state;
 
     const [backlog, setBacklog] = useState([]);
-    const projectCode = detailedProject.code;
+    const projectCode = detailedProject?.code;
 
     useEffect(() => {
-        fetch(`http://localhost:8080/projects/${projectCode}/productBacklog`, {
-            method: 'GET',
-            headers,
-        })
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                setBacklog(res);
+        if(projectCode) {
+            fetch(`http://localhost:8080/projects/${projectCode}/productBacklog`, {
+                method: 'GET',
+                headers,
             })
-
-    },[])
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+                    setBacklog(res);
+                })
+        }
+    }, [projectCode, dispatch])
 
 
     const data = backlog.map(userStory => {
@@ -42,15 +43,22 @@ import {API_HEADERS as headers, API_ROUTES, API_URL} from "../../services/api";
     if (data.length > 0) {
         tableData = (<table><TableHeader headers={usHeaders}/><TableBody body={data}/></table>)
     } else {
-        tableData = <Alert style={{marginTop: "1.5rem", marginBottom: "2.5rem"}} variant="filled" severity="info"> The project selected has no user stories! </Alert>;
+        tableData =
+            <Alert style={{marginTop: "1.5rem", marginBottom: "2.5rem"}} variant="filled" severity="info"> The project
+                selected has no user stories! </Alert>;
     }
     return (
         <div className='page'>
             <h2 className="pageH2">Consult Product Backlog</h2>
             {tableData}
             <div className="buttons-backlog">
-                <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return"/>
-                <Button onClick={() => dispatch(selectMenu('createUserStory'))} text="Create user story"/>
+                <Link to={"/projects/" + projectCode}>
+                    <Button isSecundary={true} text="Return"/>
+                </Link>
+                <Link to={"/projects/" + projectCode + "/create-us"}>
+                    <Button text="Create user story"/>
+                </Link>
+
 
             </div>
         </div>);

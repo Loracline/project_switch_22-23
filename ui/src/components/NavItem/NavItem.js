@@ -8,12 +8,12 @@ import './NavItem.css';
  * @returns {JSX.Element} a list item containing a button element with the navigation label.
  */
 let NavItem;
-NavItem = ({item, onClick}) => {
-    const {key, label} = item;
+NavItem = ({item}) => {
+    const {label} = item;
 
     return (
         <li>
-            <button className='navItem' onClick={() => onClick(key)}>
+            <button className='navItem'>
                 {label}
             </button>
         </li>

@@ -3,13 +3,13 @@ import AppContext from '../../context/AppContext';
 import './ScrumBoard.css';
 import {useGetScrumBoard} from "./useGetScrumBoard";
 import Button from "../../components/Button/Button";
-import {selectMenu} from "../../context/Actions";
 import {updateUserStoryStatus} from "../../services/ScrumBoardService";
+import {Link} from "react-router-dom";
 
 function ScrumBoard() {
-    const {state, dispatch} = useContext(AppContext);
+    const {state} = useContext(AppContext);
     const {detailedProject} = state;
-    const projectCode = detailedProject.code;
+    const projectCode = detailedProject?.code;
     const [scrumBoard, setScrumBoard] = useGetScrumBoard(projectCode);
 
 
@@ -55,10 +55,11 @@ function ScrumBoard() {
         <div className="page">
             <div className="scrum-board">
                 <h2>Scrum Board</h2>
-                <Button return-button={true}
-                        onClick={() => dispatch(selectMenu('project'))}
-                        text="Return"
-                        variant="outlined"/>
+                <Link to={"/projects/" + detailedProject?.code}>
+                    <Button return-button={true}
+                            text="Return"
+                            variant="outlined"/>
+                </Link>
                 <div className="board">
                     {scrumBoard.map((column, columnIndex) => (
                         <div
@@ -88,11 +89,12 @@ function ScrumBoard() {
                     ))}
                 </div>
                 <div className="buttons-backlog">
-                    <Button
-                        isSecundary={true}
-                        onClick={() => dispatch(selectMenu('project'))}
-                        text="Return"
-                    />
+                    <Link to={"/projects/" + detailedProject?.code}>
+                        <Button
+                            isSecundary={true}
+                            text="Return"
+                        />
+                    </Link>
                 </div>
             </div>
         </div>

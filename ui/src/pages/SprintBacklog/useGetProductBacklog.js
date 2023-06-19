@@ -5,13 +5,16 @@ export function useGetProductBacklog(code) {
     const [productBacklog, setProductBacklog] = useState([]);
 
     useEffect(() => {
-        fetch(`${API_URL}${API_ROUTES.PROJECTS}/${code}${API_ROUTES.PRODUCTBACKLOG}`, {
-            method: 'GET',
-            headers,
-        })
-            .then(response => response.json())
-            .then(response => {setProductBacklog(response)})
-    }, [])
+        if(code){
+            fetch(`${API_URL}${API_ROUTES.PROJECTS}/${code}${API_ROUTES.PRODUCTBACKLOG}`, {
+                method: 'GET',
+                headers,
+            })
+                .then(response => response.json())
+                .then(response => {setProductBacklog(response)})
+        }
+
+    }, [code])
 
     return [productBacklog, setProductBacklog];
 }

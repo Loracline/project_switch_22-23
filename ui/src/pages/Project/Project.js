@@ -1,16 +1,14 @@
 import React, {useContext} from "react";
 import AppContext from "../../context/AppContext";
 import Button from "../../components/Button/Button";
-import {selectMenu} from "../../context/Actions";
 import './Project.css';
+import {Link} from "react-router-dom";
 
 const Project = () => {
-    const {state, dispatch} = useContext(AppContext);
+    const {state} = useContext(AppContext);
     const data = state.detailedProject;
 
-    const isProjectEditable = data.status === "inception";
-    const isEndDatePassed = new Date(data?.endDate) < new Date();
-    const isEndDateNull = data?.endDate === "";
+    const isProjectEditable = data?.status === "inception";
 
     return (
         <div className='page'>
@@ -25,16 +23,29 @@ const Project = () => {
                         <p>End date: {data?.['endDate']}</p>
                     </div>
                     <div className='buttons-project'>
-                        <Button onClick={() => dispatch(selectMenu('createUserStory'))}
-                                text="Create user story" isDisabled={!isProjectEditable}/>
-                        <Button onClick={() => dispatch(selectMenu('sprints'))}
-                                text="Sprints"/>
-                        <Button onClick={() => dispatch(selectMenu('productBacklog'))} text="Product backlog"/>
-                        <Button onClick={() => dispatch(selectMenu('allocateResource'))} text="Add Resource" isDisabled={!isProjectEditable}/>
-                        <Button onClick={() => dispatch(selectMenu('scrumBoard'))} text="Scrum Board"/>
+                        <Link to={"/projects/" + data?.code + "/create-us"}>
+                            <Button text="Create user story" isDisabled={!isProjectEditable}/>
+                        </Link>
+                        <Link to={"/sprints/" + data?.code}>
+                            <Button text="Sprints"/>
+                        </Link>
+                        <Link to={"/projects/" + data?.code + "/product-backlog"}>
+                            <Button text="Product backlog"/>
+                        </Link>
+                        <Link to={"/projects/" + data?.code + "/allocate-resource"}>
+                            <Button text="Add Resource"
+                                    isDisabled={!isProjectEditable}/>
+                        </Link>
+                        <Link to={"/projects/" + data?.code + "/scrum-board"}>
+                            <Button text="Scrum Board"/>
+                        </Link>
+
+
                     </div>
                 </div>
-                <Button isSecundary={true} onClick={() => dispatch(selectMenu('projects'))} text="Return"/>
+                <Link to={"/projects"}>
+                    <Button isSecundary={true}  text="Return"/>
+                </Link>
             </section>
         </div>
     )

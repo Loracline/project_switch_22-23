@@ -296,10 +296,10 @@ export function getProject(dispatch, projectCode) {
     fetchProject((res) => dispatch(getProjectSuccess(res)), (err) => dispatch(fetchFailure(err.message)), projectCode);
 }
 
-export function getProjectSuccess(project) {
+export function getProjectSuccess(detailedProject) {
     return {
         type: GET_PROJECT_SUCCESS,
-        payload: project?.[0],
+        payload: detailedProject,
     }
 }
 
@@ -478,3 +478,31 @@ export function postUserStoryInSprintSuccess(userStory) {
 }
 
 
+
+/**
+ * Action to set the currently selected project code from a url.
+ */
+export const SET_CURRENT_PROJECT_CODE_FROM_URL = 'SET_CURRENT_PROJECT_CODE_FROM_URL';
+
+export function setCurrentProjectCodeFromURL(projectCode) {
+    return {
+        type: SET_CURRENT_PROJECT_CODE_FROM_URL,
+        payload: {
+            projectCode
+        }
+    }
+}
+
+/**
+ * Action to set the currently selected sprint id from a url.
+ */
+export const SET_CURRENT_SPRINT_NUMBER_FROM_URL = 'SET_CURRENT_SPRINT_NUMBER_FROM_URL';
+
+export function setCurrentSprintNumberFromURL(sprintNumber) {
+    return {
+        type: SET_CURRENT_SPRINT_NUMBER_FROM_URL,
+        payload: {
+            sprintNumber
+        }
+    }
+}

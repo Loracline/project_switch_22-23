@@ -1,12 +1,13 @@
 import React, {useContext, useState} from 'react';
 import {TextField} from '@mui/material';
-import {closeButton, createSprint, selectMenu} from "../../context/Actions";
+import {closeButton, createSprint} from "../../context/Actions";
 import AppContext from "../../context/AppContext";
 import Button from "../../components/Button/Button";
 import './CreateSprint.css';
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
+import {Link} from "react-router-dom";
 
 /** This component provides a form for creating a new Sprint for a Project.
  - It allows the user to select a start date for the new Sprint and submits the form. If the form is
@@ -74,12 +75,17 @@ function CreateSprint() {
                     <tbody>
                     <tr>
                         <td><strong>Start date:</strong></td>
-                        <td>{new Date(sprintToSubmit.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                        <td>{new Date(sprintToSubmit.startDate).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            year: 'numeric'
+                        })}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-        )}
+        )
+    }
 
     if (!detailedProject) return null;
 
@@ -92,8 +98,11 @@ function CreateSprint() {
                                onChange={handleDateChange}
                                variant="outlined"/>
                     <div className="sprint-buttons">
-                        <Button isSecundary={true} onClick={() => dispatch(selectMenu('project'))} text="Return"/>
-                        <Button text="Submit" type="button" isDisabled={!sprintToSubmit.startDate} onClick={handleConfirmation}/>
+                        <Link to={`/sprints/${detailedProject?.code}`}>
+                            <Button isSecundary={true} text="Return"/>
+                        </Link>
+                        <Button text="Submit" type="button" isDisabled={!sprintToSubmit.startDate}
+                                onClick={handleConfirmation}/>
                     </div>
 
                     <SuccessMessage
