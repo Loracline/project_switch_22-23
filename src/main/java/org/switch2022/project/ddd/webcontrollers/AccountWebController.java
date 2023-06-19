@@ -18,7 +18,7 @@ import java.util.Optional;
  * The AccountWebController class is a REST controller for handling requests related to accounts.
  */
 
-@CrossOrigin(maxAge = 3600, origins={"http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 3600)
 @RestController
 @RequestMapping("/accounts")
 public class AccountWebController {

@@ -16,7 +16,7 @@ import java.util.List;
  * The SprintWebController class is a REST controller for handling requests related to
  * sprints.
  */
-@CrossOrigin(maxAge = 3600, origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 3600)
 @RestController
 @RequestMapping("/sprints")
 public class SprintWebController {

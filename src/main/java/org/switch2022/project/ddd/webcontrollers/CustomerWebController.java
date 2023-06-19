@@ -16,7 +16,7 @@ import java.util.Optional;
 /**
  * Controller class that handles HTTP requests related to customers.
  */
-@CrossOrigin(maxAge = 3600)
+@CrossOrigin(origins = {"http://localhost:3000"}, maxAge = 3600)
 @RestController
 @RequestMapping("/customers")
 public class CustomerWebController {

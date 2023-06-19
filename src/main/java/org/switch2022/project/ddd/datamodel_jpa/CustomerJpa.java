@@ -58,8 +58,12 @@ public class CustomerJpa {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CustomerJpa)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CustomerJpa)) {
+            return false;
+        }
         CustomerJpa that = (CustomerJpa) o;
         return Objects.equals(customerTaxId, that.customerTaxId) && Objects.equals(customerName, that.customerName);
     }

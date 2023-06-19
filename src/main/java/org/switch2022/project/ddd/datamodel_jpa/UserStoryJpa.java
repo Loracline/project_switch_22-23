@@ -7,6 +7,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -58,7 +59,7 @@ public class UserStoryJpa {
     }
 
     public List<String> getAcceptanceCriteria() {
-        return acceptanceCriteria;
+        return new ArrayList<>(acceptanceCriteria);
     }
 
     public String getUsNumber() {
