@@ -3,14 +3,17 @@ package org.switch2022.project.ddd.infrastructure;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -302,6 +305,54 @@ class BusinessSectorRepositoryTest {
 
         // Act
         List<BusinessSector> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method findByIdNumber()
+     * Scenario 1: ensure that a BusinessSector is successfully retrieved by its ID.
+     */
+    @Test
+    void ensureBusinessSectorIsRetrievedSuccessfully() {
+        // Arrange
+        BusinessSectorId businessSectorIdOne = mock(BusinessSectorId.class);
+        BusinessSector businessSectorOne =  mock(BusinessSector.class);
+
+        when(businessSectorOne.hasBusinessSectorId(any())).thenReturn(true);
+
+        BusinessSectorRepository repository = new BusinessSectorRepository();
+        repository.save(businessSectorOne);
+
+        Optional<BusinessSector> expected = Optional.of(businessSectorOne);
+
+        // Act
+        Optional<BusinessSector> result = repository.findByIdNumber(businessSectorIdOne);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Scenario 2: Fails to retrieve a BusinessSector object because it doesn't exist.
+     * @return An empty Optional because the BusinessSector corresponding to the provided ID is not found.
+     */
+    @Test
+    void ensureBusinessSectorIsNotRetrievedBecauseDoesntExist() {
+        // Arrange
+        BusinessSectorId businessSectorIdOne = mock(BusinessSectorId.class);
+        BusinessSector businessSectorOne =  mock(BusinessSector.class);
+
+        when(businessSectorOne.hasBusinessSectorId(any())).thenReturn(false);
+
+        BusinessSectorRepository repository = new BusinessSectorRepository();
+        repository.save(businessSectorOne);
+
+        Optional<BusinessSector> expected = Optional.empty();
+
+        // Act
+        Optional<BusinessSector> result = repository.findByIdNumber(businessSectorIdOne);
 
         // Assert
         assertEquals(expected, result);

@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.datamodel_jpa.BusinessSectorJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.BusinessSectorDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.IBusinessSectorJpaRepository;
@@ -18,6 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -214,6 +217,62 @@ class BusinessSectorJpaRepositoryTest {
 
         // Act
         List<BusinessSector> result = repository.findAll();
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: findByBusinessSectorId()
+     * Scenario: 1
+     *
+     * This test verifies that the findBusinessSectorById method retrieves an empty optional
+     * when no BusinessSector is found in the repository based on the provided BusinessSectorId.
+     */
+    @Test
+    void ensureBusinessSectorIsNotRetrievedBecauseDoenstExist() {
+        // Arrange
+        BusinessSectorId businessSectorIdDouble =mock(BusinessSectorId.class);
+        BusinessSector businessSectorDouble =mock(BusinessSector.class);
+
+        Optional<BusinessSectorJpa> empty = Optional.empty();
+        Optional<BusinessSector> expected = Optional.empty();
+
+        when(crudRepository.findByIdNumber(anyString())).thenReturn(empty);
+        when(assembler.toDomain(any())).thenReturn(businessSectorDouble);
+
+        // Act
+        Optional<BusinessSector> result = repository.findByIdNumber(businessSectorIdDouble);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method: findByBusinessSectorId()
+     * Scenario: 2
+     *<p>
+     * This test ensure that a BusinessSector is successfully retrieved by its ID.
+     * when the BusinessSector with the provided ID exists in the repository.
+     */
+    @Test
+    void ensureBusinessSectorIsRetrievedSuccessfully() {
+        // Arrange
+        String businessSectorId = "bs001";
+
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        BusinessSectorJpa businessSectorJpaDouble = mock(BusinessSectorJpa.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
+        Optional<BusinessSectorJpa> optionalDouble = Optional.of(businessSectorJpaDouble);
+
+        Optional<BusinessSector> expected = Optional.of(businessSectorDouble);
+
+        when(businessSectorIdDouble.getBusinessSectorId()).thenReturn(businessSectorId);
+        when(crudRepository.findById(businessSectorId)).thenReturn(optionalDouble);
+        when(assembler.toDomain(businessSectorJpaDouble)).thenReturn(businessSectorDouble);
+
+        // Act
+        Optional<BusinessSector> result = repository.findByIdNumber(businessSectorIdDouble);
 
         // Assert
         assertEquals(expected, result);

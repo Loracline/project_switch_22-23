@@ -1,7 +1,9 @@
 package org.switch2022.project.ddd.domain.model.business_sector;
 
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interface for a repository of business sectors.
@@ -37,4 +39,13 @@ public interface IBusinessSectorRepository {
      * @return A List containing all business sectors.
      */
     List<BusinessSector> findAll();
+
+    /**
+     * Retrieves an optional business sector from the repository based on the provided ID.
+     *
+     *@param businessSectorId The ID of the business sector to be retrieved.
+     *@return An optional containing the business sector object corresponding to the provided business sector ID,
+     * or an empty optional if the business sector is not found.
+     */
+    Optional<BusinessSector> findByIdNumber(BusinessSectorId businessSectorId);
 }
