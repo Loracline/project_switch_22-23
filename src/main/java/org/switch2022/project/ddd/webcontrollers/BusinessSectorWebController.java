@@ -5,10 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.ddd.application.BusinessSectorService;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.dto.BusinessSectorCreationDto;
 import org.switch2022.project.ddd.dto.BusinessSectorDto;
+import org.switch2022.project.ddd.utils.Utils;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The BusinessSectorWebController.md class is a REST controller for handling requests related to resources.
@@ -51,5 +54,26 @@ public class BusinessSectorWebController {
     public ResponseEntity<List<BusinessSectorDto>> listAllBusinessSectors() {
         List<BusinessSectorDto> businessSectors = service.requestAllBusinessSectors();
         return new ResponseEntity<>(businessSectors, HttpStatus.OK);
+    }
+
+    /**
+     * Retrieves a BusinessSector by its ID and returns it as a response entity.
+     *
+     *@param businessSectorId The ID of the BusinessSector to be retrieved.
+     *@return A response entity containing the BusinessSector if found, or a not found
+     * response if the BusinessSector is not found.
+     */
+    @GetMapping("/{businessSectorId}")
+    public ResponseEntity<BusinessSectorDto> getByIdNumber(@PathVariable String businessSectorId) {
+        Number businessSectorNumber = Utils.getIntFromAlphanumericString(businessSectorId
+                , "bs");
+        BusinessSectorId sectorId = new BusinessSectorId(businessSectorNumber);
+        Optional<BusinessSectorDto> opBusinessSector = service.getByIdNumber(sectorId);
+        if (opBusinessSector.isPresent()) {
+            BusinessSectorDto businessSectorDto = opBusinessSector.get();
+            return new ResponseEntity<>(businessSectorDto, HttpStatus.OK);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
