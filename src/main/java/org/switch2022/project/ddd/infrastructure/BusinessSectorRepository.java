@@ -3,13 +3,11 @@ package org.switch2022.project.ddd.infrastructure;
 import org.springframework.stereotype.Repository;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Repository("businessSector_memory")
 public class BusinessSectorRepository implements IBusinessSectorRepository {
@@ -110,4 +108,24 @@ public class BusinessSectorRepository implements IBusinessSectorRepository {
     public List<BusinessSector> findAll() {
         return Collections.unmodifiableList(businessSectors);
     }
+    /**
+     * Retrieves an optional business sector from the repository based on the provided tax ID.
+     *
+     * @param businessSectorId The business sector ID of the business sector to be retrieved.
+     * @return An optional containing the business sector object corresponding to the provided business sector ID,
+     * or an empty optional if the business sector is not found.
+     */
+    public Optional<BusinessSector> findByIdNumber(BusinessSectorId businessSectorId) {
+        Optional<BusinessSector> optionalBusinessSector = Optional.empty();
+        int i = 0;
+        while (i < this.businessSectors.size()) {
+            if (businessSectors.get(i).hasBusinessSectorId(businessSectorId)) {
+                optionalBusinessSector = Optional.of(businessSectors.get(i));
+                i = this.businessSectors.size();
+            }
+            i++;
+        }
+        return optionalBusinessSector;
+    }
+
 }

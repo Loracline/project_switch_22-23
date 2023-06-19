@@ -2,6 +2,7 @@ package org.switch2022.project.ddd.domain.model.business_sector;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.domain.value_object.Name;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -269,4 +270,45 @@ class BusinessSectorTest {
         assertEquals(expected, result);
     }
 
+
+    /**
+     * Method: hasBusinessSectorId()
+     * Scenario 1: Tests the scenario where the business sector ID does not match the given ID.
+     * It ensures that the method hasBusinessSectorId() returns false in this case.
+     */
+    @Test
+    void ensureReturnsTrueWhenBusinessSectorIdEqualsGivenId() {
+        // Arrange
+        Name name = mock(Name.class);
+        BusinessSector businessSector = new BusinessSector(1, name);
+
+        BusinessSectorId businessSectorIdMock = mock(BusinessSectorId.class);
+        when(businessSectorIdMock.getBusinessSectorId()).thenReturn("bs001");
+
+        // Act
+        boolean result = businessSector.hasBusinessSectorId(businessSectorIdMock);
+
+        // Asser
+        assertTrue(result);
+    }
+
+    /**
+     * Scenario 2: Tests the scenario where the business sector ID does not match the given ID.
+     * It ensures that the method hasBusinessSectorId() returns false in this case.
+     */
+    @Test
+    void ensureReturnsFalseWhenBusinessSectorIdDoesNotEqualsGivenId() {
+        // Arrange
+        Name name = mock(Name.class);
+        BusinessSector businessSector = new BusinessSector(1, name);
+
+        BusinessSectorId businessSectorIdMock = mock(BusinessSectorId.class);
+        when(businessSectorIdMock.getBusinessSectorId()).thenReturn("bs002");
+
+        // Act
+        boolean result = businessSector.hasBusinessSectorId(businessSectorIdMock);
+
+        // Assert
+        assertFalse(result);
+    }
 }

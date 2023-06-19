@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.domain.value_object.Name;
 import org.switch2022.project.ddd.dto.BusinessSectorDto;
 import org.switch2022.project.ddd.dto.mapper.BusinessSectorMapper;
@@ -13,6 +14,7 @@ import org.switch2022.project.ddd.dto.mapper.BusinessSectorMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -68,4 +70,21 @@ public class BusinessSectorService {
         }
         return businessSectorsDto;
     }
+
+    /**
+     * Retrieves an optional business sector DTO (Data Transfer Object) based on the provided business sector ID.
+     *
+     *@param businessSectorId The business sector ID of the business sector to be retrieved.
+     *@return An optional containing the business sector DTO corresponding to the provided business sector ID, or
+     * an empty optional if the business sector is not found.
+     */
+    public Optional<BusinessSectorDto> getByIdNumber(BusinessSectorId businessSectorId) {
+        Optional<BusinessSector> opBusinessSector = businessSectorRepository.findByIdNumber(businessSectorId);
+        Optional<BusinessSectorDto> opBusinessSectorDto = Optional.empty();
+        if (opBusinessSector.isPresent()) {
+            opBusinessSectorDto = Optional.of(businessSectorMapper.businessSectorToDto(opBusinessSector.get()));
+        }
+        return opBusinessSectorDto;
+    }
 }
+

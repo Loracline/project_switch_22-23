@@ -41,6 +41,15 @@ public interface IBusinessSectorJpaRepository extends CrudRepository<BusinessSec
      * @return An Iterable containing all business sectors.
      */
     Iterable<BusinessSectorJpa> findAll();
+
+    /** Finds a business sector with the given business sector ID in the
+     * repository.
+     *
+     * @param businessSectorId The business sector ID of the business sector.
+     * @return An optional containing the business sector if found, or an
+     * optional otherwise.
+     */
+    Optional<BusinessSectorJpa>findByIdNumber(String businessSectorId);
 }
 
 

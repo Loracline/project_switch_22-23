@@ -6,6 +6,7 @@ import org.switch2022.project.ddd.datamodel_jpa.BusinessSectorJpa;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.BusinessSectorDomainDataAssembler;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.NotFoundInRepoException;
 import org.switch2022.project.ddd.infrastructure.jpa.IBusinessSectorJpaRepository;
@@ -90,6 +91,19 @@ public class BusinessSectorJpaRepository implements IBusinessSectorRepository {
         businessSectorsJpa.forEach(businessSectorJpa -> businessSectors.add(assembler.toDomain(businessSectorJpa)));
         return businessSectors;
 
+    }
+
+    /**
+     * Retrieves an optional business sector from the repository based on the business sector ID.
+     *
+     *@param businessSectorId The ID of the business sector to be retrieved.
+     *@return An optional containing the business sector object corresponding to the provide
+     * business sector ID, or an empty optional if the business sector is not found.
+     */
+    public Optional<BusinessSector> findByIdNumber (BusinessSectorId businessSectorId) {
+        Optional<BusinessSectorJpa> opBusinessSectorJpa =
+                crudRepository.findById(businessSectorId.getBusinessSectorId());
+        return opBusinessSectorJpa.map(businessSectorJpa -> assembler.toDomain(businessSectorJpa));
     }
 }
 

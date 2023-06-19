@@ -11,12 +11,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSector;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.IBusinessSectorRepository;
+import org.switch2022.project.ddd.domain.value_object.BusinessSectorId;
 import org.switch2022.project.ddd.dto.BusinessSectorDto;
 import org.switch2022.project.ddd.dto.mapper.BusinessSectorMapper;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,7 +34,7 @@ class BusinessSectorServiceTest {
     @InjectMocks
     BusinessSectorService service;
     @MockBean
-    @Qualifier ("businessSector_jpa")
+    @Qualifier("businessSector_jpa")
     IBusinessSectorRepository repository;
     @MockBean
     BusinessSectorMapper businessSectorMapper;
@@ -121,5 +123,55 @@ class BusinessSectorServiceTest {
         assertTrue(result.isEmpty());
     }
 
+    /**
+     * Method getBusinessSectorById()
+     * Scenario 1: Retrieves a BusinessSectorDto object corresponding to the provided ID.
+     *
+     * @returnAn Optional containing the corresponding BusinessSectorDto, if found;
+     * otherwise, an empty Optional
+     */
+    @Test
+    void ensureBusinessSectorIsRetrievedSuccessfully() {
+        // Arrange
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+        BusinessSectorDto businessSectorDtoDouble = mock(BusinessSectorDto.class);
+        BusinessSector businessSectorDouble = mock(BusinessSector.class);
 
+        Optional<BusinessSector> optional = Optional.of(businessSectorDouble);
+        Optional<BusinessSectorDto> expected = Optional.of(businessSectorDtoDouble);
+
+        when(repository.findByIdNumber(any())).thenReturn(optional);
+        when(businessSectorMapper.businessSectorToDto(businessSectorDouble)).thenReturn(businessSectorDtoDouble);
+
+        // Act
+        Optional<BusinessSectorDto> result = service.getByIdNumber(businessSectorIdDouble);
+
+        // Assert
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Method getBusinessSectorById()
+     * Scenario 2: Fails to retrieve a BusinessSectorDto object because it doesn't exist.
+     *
+     * @return An empty Optional because the BusinessSectorDto corresponding to the
+     * provided ID is not found.
+     */
+    @Test
+    void ensureBusinessSectorIsNotRetrievedBecauseDoesntExist() {
+        // Arrange
+        BusinessSectorId businessSectorIdDouble = mock(BusinessSectorId.class);
+
+        Optional<BusinessSector> optional = Optional.empty();
+        Optional<BusinessSectorDto> expected = Optional.empty();
+
+        when(repository.findByIdNumber(any())).thenReturn(optional);
+
+        // Act
+        Optional<BusinessSectorDto> result = service.getByIdNumber(businessSectorIdDouble);
+
+        // Assert
+        assertEquals(expected, result);
+    }
 }
+
