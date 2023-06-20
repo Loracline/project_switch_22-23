@@ -10,6 +10,7 @@ import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
 import org.switch2022.project.ddd.domain.value_object.*;
+import org.switch2022.project.ddd.dto.ProjectCodeStringDto;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.utils.Utils;
 
@@ -47,7 +48,7 @@ public class ProjectCreationService {
      * @param projectCreationDto contains all information needed for creation of a project.
      * @return returns true if the project is created and throws an exception otherwise.
      */
-    public String createProject(ProjectCreationDto projectCreationDto) {
+    public ProjectCodeStringDto createProject(ProjectCreationDto projectCreationDto) {
         int projectNumber = calculateNextProjectNumber();
         Name projectName = new Name(projectCreationDto.projectName);
         Description projectDescription = new Description(projectCreationDto.projectDescription);
@@ -65,7 +66,7 @@ public class ProjectCreationService {
 
         projectRepository.save(project);
 
-        return project.getProjectCode();
+        return new ProjectCodeStringDto(project.getProjectCode());
     }
 
     /**

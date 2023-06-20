@@ -13,6 +13,7 @@ import org.switch2022.project.ddd.domain.model.project.IFactoryProject;
 import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.typology.ITypologyRepository;
+import org.switch2022.project.ddd.dto.ProjectCodeStringDto;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 
 import java.util.Optional;
@@ -143,9 +144,9 @@ class ProjectCreationServiceTest {
         when(projectDouble.getProjectCode()).thenReturn("P001");
 
         String expected = "P001";
-        String result = projectCreationService.createProject(projectCreationDto);
+        ProjectCodeStringDto result = projectCreationService.createProject(projectCreationDto);
 
-        assertEquals(expected, result);
+        assertEquals(expected, result.getCode());
     }
 
 }
