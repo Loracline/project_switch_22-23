@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import org.switch2022.project.ddd.application.ProjectCreationService;
 import org.switch2022.project.ddd.application.ProjectListService;
 import org.switch2022.project.ddd.application.ProjectService;
+import org.switch2022.project.ddd.dto.ProjectCodeStringDto;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
 import java.util.List;
 
@@ -45,7 +48,16 @@ public class ProjectWebController {
     @PostMapping
     public ResponseEntity<Object> createProject(@RequestBody ProjectCreationDto projectCreationDto) {
         try {
-            String projectCode = projectCreationService.createProject(projectCreationDto);
+            ProjectCodeStringDto projectCode =
+                    projectCreationService.createProject(projectCreationDto);
+
+            // Link to directly get the created project
+            Link selfLink = WebMvcLinkBuilder
+                    .linkTo(WebMvcLinkBuilder.methodOn(ProjectWebController.class).getProject(projectCode.getCode()))
+                    .withSelfRel();
+
+            projectCode.add(selfLink);
+
             return new ResponseEntity<>(projectCode, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -79,6 +91,12 @@ public class ProjectWebController {
         return new ResponseEntity<>(userStories, HttpStatus.OK);
     }
 
+    /**
+     * Handles a GET request to retrieve a project based on the given code.
+     *
+     * @param code The code of the project to retrieve.
+     * @return A ResponseEntity containing the ProjectDto if the project is found, or an appropriate error response.
+     */
     @GetMapping("/{code}")
     @ResponseBody
     public ResponseEntity<ProjectDto> getProject(@PathVariable String code) {
