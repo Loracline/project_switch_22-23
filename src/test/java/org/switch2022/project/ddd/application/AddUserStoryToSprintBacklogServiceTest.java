@@ -254,4 +254,44 @@ class AddUserStoryToSprintBacklogServiceTest {
         //Assert
         assertEquals(expected, result);
     }
+
+    /**
+     * scenario 8: Fails to add a user story to a sprint because it is already assigned to the sprint.
+     */
+    @Test
+    void ensureUserStoryIsNotAddedToSprintBecauseAlreadyAssigned() {
+        // Arrange
+        String usId = "p001_us001";
+        String sprintId = "p001_s001";
+        UserStoryInSprintDto dto = new UserStoryInSprintDto(usId, sprintId);
+        UserStory userStoryDouble = mock(UserStory.class);
+        List<UserStory> userStoryList = new ArrayList<>();
+        userStoryList.add(userStoryDouble);
+        Sprint sprintDouble = mock(Sprint.class);
+        Optional<Sprint> sprintOptional = Optional.of(sprintDouble);
+
+        when(usRepository.getListOfUsWithMatchingIds(any())).thenReturn(userStoryList);
+        when(userStoryDouble.hasStatus(any())).thenReturn(true);
+        when(userStoryDouble.getProjectCode()).thenReturn("p001");
+        when(sprintDouble.hasProjectCode(any())).thenReturn(true);
+        when(sprintRepository.findById(any())).thenReturn(sprintOptional);
+        when(sprintDouble.isOpen()).thenReturn(true);
+        when(sprintDouble.addUserStory(any())).thenThrow(
+                new RuntimeException("The user story is already assigned to the sprint. Duplicate assignments are not allowed.")
+        );
+
+        // Act
+        boolean result = false;
+        try {
+            result = service.addUserStoryToSprint(dto);
+            fail("Expected RuntimeException to be thrown.");
+        } catch (RuntimeException e) {
+            // Assert
+            assertEquals(
+                    "The user story is already assigned to the sprint. Duplicate assignments are not allowed.",
+                    e.getMessage()
+            );
+            assertFalse(result);
+        }
+    }
 }
