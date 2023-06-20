@@ -21,6 +21,6 @@ public class CreateProjectController {
      */
 
     public String createProject(ProjectCreationDto projectCreationDto) {
-        return projectCreationService.createProject(projectCreationDto);
+        return projectCreationService.createProject(projectCreationDto).getCode();
     }
 }
