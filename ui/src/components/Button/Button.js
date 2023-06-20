@@ -12,7 +12,7 @@ import "./Button.css";
 function Button(props) {
     let isSecondary = props.isSecundary;
     return (
-        <button className={isSecondary ? 'secondaryButton' : 'button'} onClick={props.onClick}
+        <button className={isSecondary ? 'secondaryButton' : 'button '+ props.pageClass} onClick={props.onClick}
                 type={props.type || "submit"} disabled={props.isDisabled}>
             {props.text}
         </button>

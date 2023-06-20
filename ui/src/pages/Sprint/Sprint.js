@@ -23,8 +23,8 @@ const Sprint = () => {
     const projectName = detailedProject?.projectName;
 
     const [showConfirmation, setShowConfirmation] = useState(false);
-    const isOpen = data?.status === "OPEN";
-    const isClosed = data?.status === "CLOSE" || data?.status === "planned" || data?.status === "CLOSED";
+    const canNotOpenSprint = data?.status === "OPEN" || detailedProject.status === 'closed';
+    const canNotCloseSprint = data?.status === "CLOSE" || data?.status === "PLANNED" || data?.status === "CLOSED";
 
     const handleConfirmation = () => {
         setShowConfirmation(true);
@@ -114,12 +114,12 @@ const Sprint = () => {
                             <Button
                                 onClick={() => handleUpdateSprintButton('open')}
                                 text="Open"
-                                isDisabled={isOpen}
+                                isDisabled={canNotOpenSprint}
                             />
                             <Button
                                 onClick={() => handleUpdateSprintButton('closed')}
                                 text="Close"
-                                isDisabled={isClosed}
+                                isDisabled={canNotCloseSprint}
                             />
                         </div>
                     </div>

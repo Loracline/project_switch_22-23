@@ -27,17 +27,17 @@ const Project = () => {
                             <Button text="Create user story" isDisabled={!isProjectEditable}/>
                         </Link>
                         <Link to={"/sprints/" + data?.code}>
-                            <Button text="Sprints"/>
+                            <Button pageClass="projectButton" text="Sprints"/>
                         </Link>
                         <Link to={"/projects/" + data?.code + "/product-backlog"}>
-                            <Button text="Product backlog"/>
+                            <Button pageClass="projectButton" text="Product backlog"/>
                         </Link>
                         <Link to={"/projects/" + data?.code + "/allocate-resource"}>
-                            <Button text="Add Resource"
+                            <Button pageClass="projectButton" text="Add Resource"
                                     isDisabled={!isProjectEditable}/>
                         </Link>
                         <Link to={"/projects/" + data?.code + "/scrum-board"}>
-                            <Button text="Scrum Board"/>
+                            <Button pageClass="projectButton" text="Scrum Board"/>
                         </Link>
 
 
