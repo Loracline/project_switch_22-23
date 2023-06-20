@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.switch2022.project.ddd.application.ProjectCreationService;
 import org.switch2022.project.ddd.application.ProjectListService;
 import org.switch2022.project.ddd.application.ProjectService;
+import org.switch2022.project.ddd.dto.ProjectCodeStringDto;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 import org.switch2022.project.ddd.dto.ProjectDto;
 import org.switch2022.project.ddd.dto.UserStoryDto;
@@ -47,21 +48,22 @@ class ProjectWebControllerTest {
     @Test
     void ensureThatProjectIsCreated() {
         // Arrange
-        String projectCode = "P001";
         ProjectCreationDto projectCreationDto = new ProjectCreationDto("panic",
                 "panic total", "BS001", "242526272", "TP001");
 
-        when(projectCreationService.createProject(any())).thenReturn("P001");
+        when(projectCreationService.createProject(any())).thenReturn(new ProjectCodeStringDto(
+                "P001"));
 
-        //Act
+        // Act
         ResponseEntity<Object> responseEntity =
                 projectWebController.createProject(projectCreationDto);
 
-        //Assert
-        assertEquals(201,responseEntity.getStatusCodeValue());
-        Object res = responseEntity.getBody();
-        assertEquals(res, projectCode);
-        assertEquals("P001", projectCreationService.createProject(projectCreationDto));
+        // Assert
+        assertEquals(201, responseEntity.getStatusCodeValue());
+        ProjectCodeStringDto responseBody = (ProjectCodeStringDto) responseEntity.getBody();
+        assertNotNull(responseBody);
+        assertEquals("P001", responseBody.getCode());
+        assertEquals("http://localhost/projects/P001", responseBody.getLink("self").get().getHref());
     }
 
 

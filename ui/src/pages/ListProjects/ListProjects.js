@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import TableHeader from "../../components/TableHeader/TableHeader";
 import TableBody from "../../components/TableBody/TableBody";
 import AppContext from "../../context/AppContext";
@@ -20,6 +20,30 @@ const ListProjects = () => {
     const loading = state.loading;
     const data = state.projects;
     const navigate = useNavigate();
+
+    const [showScrollButton, setShowScrollButton] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    const handleScroll = () => {
+        if (window.pageYOffset > 20) {
+            setShowScrollButton(true);
+        } else {
+            setShowScrollButton(false);
+        }
+    };
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const scrollButtonStyle = {
+        display: showScrollButton ? 'block' : 'none',
+    };
+
 
     const tableData = () => {
         let tableData;
@@ -59,6 +83,9 @@ const ListProjects = () => {
                     <Link to={"/projects/create-project"}>
                         <Button text='Create project'/>
                     </Link>
+                    <button className="scroll-to-top-button" style={scrollButtonStyle} onClick={scrollToTop}>
+                        Scroll to Top
+                    </button>
                 </div>
                 <Outlet />
             </div>

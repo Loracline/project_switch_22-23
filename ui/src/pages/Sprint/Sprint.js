@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Button from '../../components/Button/Button';
 import {closeButton, updateSprintStatus} from '../../context/Actions';
 import AppContext from '../../context/AppContext';
@@ -67,6 +67,29 @@ const Sprint = () => {
         )
     }
 
+    const [showScrollButton, setShowScrollButton] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    const handleScroll = () => {
+        if (window.pageYOffset > 20) {
+            setShowScrollButton(true);
+        } else {
+            setShowScrollButton(false);
+        }
+    };
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const scrollButtonStyle = {
+        display: showScrollButton ? 'block' : 'none',
+    };
+
     return (
         <div className="page">
             <section className="sprintCard">
@@ -127,6 +150,9 @@ const Sprint = () => {
                 handleCancel={handleCancel}
                 handleConfirm={() => handleUpdateSprintStatus("closed")}
             />
+            <button className="scroll-to-top-button" style={scrollButtonStyle} onClick={scrollToTop}>
+                Scroll to Top
+            </button>
         </div>
 
     )
