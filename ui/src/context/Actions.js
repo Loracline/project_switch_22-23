@@ -146,7 +146,7 @@ function fetchCustomersFailure() {
  Action for creating a new project.
  */
 export function createProject(dispatch, projectToSubmit) {
-    postProject((res) => dispatch(postProjectSuccess(res)),
+    postProject((res) => dispatch(postProjectSuccess(res, dispatch)),
         (error) => {
             console.log(JSON.stringify(error));
             dispatch(postProjectFailure(error));
@@ -161,7 +161,8 @@ export function createProject(dispatch, projectToSubmit) {
     );
 }
 
-function postProjectSuccess(projectId) {
+function postProjectSuccess(projectId, dispatch) {
+    getProjects(dispatch);
     return {
         type: CREATE_PROJECT_SUCCESS,
         payload: {
