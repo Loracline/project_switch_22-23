@@ -39,19 +39,22 @@ public class ProjectIT {
                 "bs001", "217746691", "pt001");
         ProjectDto newProjectCreated = new ProjectDto("p004", "BetaProject", "xpto, sa",
                 "planned", "", "");
-        ProjectDto projectOne = new ProjectDto("p001", "dummy 01", "xpto, sa", "closed", "2022-03-01", "2022-07-31");
-        ProjectDto projectTwo = new ProjectDto("p002", "dummy 02", "xpto, sa", "closed", "2022-05-31", "2023-04-29");
-        ProjectDto projectThree = new ProjectDto("p003", "inevitable nightmare", "xpto, sa", "inception", "2023-03-10",
+        ProjectDto projectOne = new ProjectDto("p001", "nokia 3310", "xpto, sa", "closed", "2022-03-01", "2022-07-31");
+        ProjectDto projectTwo = new ProjectDto("p002", "super mario 2", "xpto, sa", "closed", "2022-05-31", "2023-04-29");
+        ProjectDto projectThree = new ProjectDto("p003", "G4", "xpto, sa", "inception", "2023-03-10",
                 "2023-09-20");
         List<ProjectDto> projects = new ArrayList<>();
         projects.add(projectOne);
         projects.add(projectTwo);
         projects.add(projectThree);
         projects.add(newProjectCreated);
-        UserStoryDto usdto = new UserStoryDto("us002", "i want to have a gameboy"
+        UserStoryDto usdto = new UserStoryDto("us005", "i want to start a new project"
+                , "planned");
+        UserStoryDto usdtoTwo = new UserStoryDto("us006", "i want to activate a user account"
                 , "planned");
         List<UserStoryDto> userStories = new ArrayList<>();
         userStories.add(usdto);
+        userStories.add(usdtoTwo);
 
         // First call: Ensure that this project does not exist in DB yet.
         // GET projects/p004
@@ -120,7 +123,7 @@ public class ProjectIT {
         //Act FIVE
 
         MvcResult fifthResult = mockMvc
-                .perform(MockMvcRequestBuilders.get("/projects/p002/productBacklog")
+                .perform(MockMvcRequestBuilders.get("/projects/p003/productBacklog")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
