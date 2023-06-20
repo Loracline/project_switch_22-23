@@ -3,14 +3,12 @@ package org.switch2022.project.ddd.application;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
-import org.switch2022.project.ddd.domain.value_object.Code;
-import org.switch2022.project.ddd.domain.value_object.SprintId;
-import org.switch2022.project.ddd.domain.value_object.SprintStatus;
-import org.switch2022.project.ddd.domain.value_object.Status;
+import org.switch2022.project.ddd.domain.value_object.*;
 import org.switch2022.project.ddd.dto.SprintStatusDto;
 import org.switch2022.project.ddd.exceptions.AlreadyExistsInRepoException;
 import org.switch2022.project.ddd.exceptions.InvalidInputException;
@@ -32,6 +30,10 @@ public class SprintStatusChangeService {
     @Qualifier("us_jpa")
     @Autowired
     private IUsRepository userStoryRepository;
+
+    @Qualifier("project_jpa")
+    @Autowired
+    private IProjectRepository projectRepository;
 
     /**
      * This method changes the status os a sprint.
@@ -109,9 +111,27 @@ public class SprintStatusChangeService {
     protected boolean openSprint(Code projectCode, Sprint sprint) {
         if (sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN)) {
             throw new AlreadyExistsInRepoException("There is currently another OPEN sprint in this project.");
+        } else if(isProjectClosed(projectCode)){
+            throw new InvalidInputException("You can not open a sprint in a CLOSED project.");
         }
         sprint.changeStatus("OPEN");
         sprintRepository.save(sprint);
         return true;
+    }
+
+    /**
+     * This method checks if a project with a given projet code is closes.
+     *
+     * @param projectCode of the project.
+     * @return true if the project is closed, and false otherwise.
+     */
+    protected boolean isProjectClosed(Code projectCode){
+        boolean projectClosed = false;
+        if(projectRepository.findByCode(projectCode).isPresent()){
+            if(projectRepository.findByCode(projectCode).get().hasStatus(ProjectStatus.CLOSED)){
+                projectClosed = true;
+            }
+        }
+        return projectClosed;
     }
 }
