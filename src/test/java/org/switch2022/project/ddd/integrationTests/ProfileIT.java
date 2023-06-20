@@ -39,8 +39,8 @@ public class ProfileIT {
         ProfileCreationDto profileDto = new ProfileCreationDto(profileName);
 
 
-        // First call: Ensure that this customer does not exist in DB yet.
-        // GET customers/{profileName}
+        // First call: Ensure that this profile does not exist in DB yet.
+        // GET {profileName}
         // Act - ONE
         MvcResult firstResult = mockMvc
                 .perform(MockMvcRequestBuilders
@@ -56,8 +56,8 @@ public class ProfileIT {
         assertEquals("", firstResultContent);
 
 
-        // Second call: Add this new customer to the DB.
-        // POST customers
+        // Second call: Add this new profile to the DB.
+        // POST profiles
         // Act - TWO
         MvcResult secondResult = mockMvc
                 .perform(MockMvcRequestBuilders
@@ -75,8 +75,8 @@ public class ProfileIT {
         assertEquals("", secondResultContent);
 
 
-        // Third call: Confirm that this new customer now exists in the DB.
-        // GET customers/{profileName}
+        // Third call: Confirm that this new profile now exists in the DB.
+        // GET profileName
         // Act - THREE
         MvcResult thirdResult = mockMvc
                 .perform(MockMvcRequestBuilders.get("/profiles/" + profileDto.profileName)

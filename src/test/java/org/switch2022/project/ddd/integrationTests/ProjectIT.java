@@ -2,9 +2,7 @@ package org.switch2022.project.ddd.integrationTests;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,17 +25,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class ProjectIT {
 
-
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @BeforeEach
-    public void setUp() throws Exception {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void ensureProjectsAreCreatedAndReturnOk() throws Exception {
@@ -92,7 +84,9 @@ public class ProjectIT {
 
         // Assert - TWO
         assertNotNull(secondResultContent);
-        assertEquals("p004", secondResultContent);
+        String expectedResult = "{\"code\":\"p004\",\"_links\":{\"self\":{\"href\":\"http" +
+                "://localhost/projects/p004\"}}}";
+        assertEquals(expectedResult, secondResultContent);
 
         // Third call: Confirm that this new project now exists in the DB.
         // Act - THREE
@@ -133,7 +127,7 @@ public class ProjectIT {
 
         String fifthResultContent = fifthResult.getResponse().getContentAsString();
 
-        // Assert - FOUR
+        // Assert - FIVE
         assertNotNull(fifthResultContent);
         assertEquals(objectMapper.writeValueAsString(userStories), fifthResultContent);
     }
