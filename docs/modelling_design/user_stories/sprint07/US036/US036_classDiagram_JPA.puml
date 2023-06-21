@@ -64,6 +64,37 @@ class UserStory<<root>>{
 - projectCode
 }
 
+class UserStoryJpa{
+    usId
+    acceptanceCriteria
+    usNumber
+    actor
+    usText
+    status
+    projectCode
+}
+
+class UserStoryDomainDataAssembler{
+toData(userStory)
+}
+
+class FactoryUserStory{
+createUserStory(usNumber, usText, actor, acceptanceCriteria, projectCode)
+}
+
+interface IUserStoryJpaRepository{
+getListOfUsWithMatchingIds(usId)
+findAllByUsIdIn(usId)
+}
+
+interface CrudRepository{
+findAllById(ids)
+}
+
+interface IFactoryUserStory{
+createUserStory(usNumber, usText, actor, acceptanceCriteria, projectCode)
+}
+
 SprintWebController <.. UserStoriesInSprintService: is injected
 UserStoriesInSprintService <.. ISprintRepository: is injected
 UserStoriesInSprintService <.. IUserStoryRepository: is injected
@@ -74,4 +105,12 @@ SprintRepository --> Sprint: has
 UserStoryRepository --> UserStory: has
 UserStoryMapper ..> UserStoryDto: creates
 UserStoryDto ..> UserStory: uses
+UserStoryJpa <.. UserStoryDomainDataAssembler: creates
+IFactoryUserStory ..> UserStoryDomainDataAssembler: is injected
+UserStoryRepositoryJpa "1" --> "*" UserStoryJpa: has
+CrudRepository --left|> IUserStoryJpaRepository: extends
+IUserStoryJpaRepository ..> UserStoryRepositoryJpa: is injected
+IUserStoryJpaRepository ..> UserStoriesInSprintService: is injected
+FactoryUserStory --> IFactoryUserStory: implements
+FactoryUserStory --> UserStory: creates
 @enduml

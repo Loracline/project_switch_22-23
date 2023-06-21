@@ -2,7 +2,7 @@
 skinparam sequenceMessageAlign center
 title TO VIEW THE SPRINT BACKLOG OF SPRINT
 legend top
-US022 - As Team Member, I want to view the Sprint Backlog of the current sprint.
+US036 -  As a PO/SM/Team Member, I want to consult the Sprint Backlog of a chosen sprint in the web UI.
 end legend
 autonumber
 actor "Team Member" as member
