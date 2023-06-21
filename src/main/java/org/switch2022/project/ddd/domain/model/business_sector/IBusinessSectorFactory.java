@@ -7,6 +7,7 @@ import org.switch2022.project.ddd.domain.value_object.Name;
  */
 
 public interface IBusinessSectorFactory {
+
     /**
      * This method creates an instance of BusinessSector.
      *
@@ -14,7 +15,5 @@ public interface IBusinessSectorFactory {
      * @param businessSectorName is the name of the business sector.
      * @return a new business sector.
      */
-
     BusinessSector createBusinessSector(final Number businessSectorNumber, Name businessSectorName);
-
 }

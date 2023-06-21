@@ -31,7 +31,14 @@ public class Project implements Entity<Project> {
     private final ProductBacklog productBacklog;
 
     /**
-     * Constructor: the constructor with relevant attributes for a project to be in a valid state.
+     * Constructs a new project.
+     *
+     * @param projectNumber     the number of the project
+     * @param projectName       the name of the project
+     * @param description       the description of the project
+     * @param businessSectorId  the ID of the business sector for the project
+     * @param customerTaxId     the tax ID of the customer associated with the project
+     * @param projectTypologyId the ID of the project typology
      */
     protected Project(int projectNumber, Name projectName, Description description,
                       BusinessSectorId businessSectorId, TaxId customerTaxId, ProjectTypologyId projectTypologyId) {
@@ -133,7 +140,6 @@ public class Project implements Entity<Project> {
         return businessSectorId.getBusinessSectorId();
     }
 
-
     /**
      * Getter method for the attribute: customerTaxId.
      *
@@ -148,7 +154,6 @@ public class Project implements Entity<Project> {
      *
      * @return a String with the customer ID of the project.
      */
-
     public String getCustomerTaxIDAsString() {
         return customerTaxId.getNumber();
     }
@@ -175,7 +180,8 @@ public class Project implements Entity<Project> {
     /**
      * This method sets the period for this project to the specified.
      *
-     * @param period the period object
+     * @param period the period object.
+     * @return TRUE if period is assigned, and FALSE otherwise.
      */
     public boolean isPeriodAssigned(Period period) {
         hasEditableStatus();
@@ -186,7 +192,8 @@ public class Project implements Entity<Project> {
     /**
      * This method sets the budget for the project.
      *
-     * @param budget the budget object
+     * @param budget the budget object.
+     * @return TRUE if budget is assigned, and FALSE otherwise.
      */
     public boolean isBudgetAssigned(Budget budget) {
         hasEditableStatus();
@@ -198,6 +205,7 @@ public class Project implements Entity<Project> {
      * This method sets the numberOfPlannedSprints for the project.
      *
      * @param numberOfPlannedSprints of the project.
+     * @return TRUE if number is defined, and FALSE otherwise.
      */
     public boolean isNumberOfPlannedSprintsDefined(NumberOfPlannedSprints numberOfPlannedSprints) {
         hasEditableStatus();
@@ -216,9 +224,11 @@ public class Project implements Entity<Project> {
     }
 
     /**
-     * This method adds a new User Story to the userStories list if the User Story
-     * doesn't already exist.
-     * return true if the userStory was created with success.
+     * This method adds a new User Story to the userStories list if the User Story doesn't already exist.
+     *
+     * @param priority of the User Story.
+     * @param usId     of the User Story.
+     * @return true if the userStory was created with success.
      */
     public boolean addUserStory(int priority, UsId usId) {
         return productBacklog.addUserStory(priority, usId);
@@ -243,14 +253,20 @@ public class Project implements Entity<Project> {
     }
 
     /**
-     * Method to check if status given is the same as the project status
+     * Method to check if status given is the same as the project status.
      *
-     * @return true if status given is the same as the project status
+     * @param projectStatus status of the project.
+     * @return true if status given is the same as the project status.
      */
     public boolean hasStatus(ProjectStatus projectStatus) {
         return this.projectStatus.equals(projectStatus);
     }
 
+    /**
+     * Checks if the project has an editable status.
+     *
+     * @return {@code true} if the project has an editable status, {@code false} otherwise
+     */
     public boolean hasEditableStatus() {
         if (this.projectStatus.equals(ProjectStatus.PLANNED) ||
                 this.projectStatus.equals(ProjectStatus.CLOSED)) {
@@ -277,7 +293,7 @@ public class Project implements Entity<Project> {
     }
 
     /**
-     * Getter method for the attribute: endDate
+     * Getter method for the attribute: endDate.
      *
      * @return a String with the endDate of the project if there is a period otherwise it will
      * return an empty string
@@ -291,8 +307,9 @@ public class Project implements Entity<Project> {
     }
 
     /**
-     * This method returns an optional of a sprint duration
      * If the project is in status planned the duration will be null.
+     *
+     * @return an optional of a sprint duration
      */
     public Optional<SprintDuration> getSprintDuration() {
         Optional<SprintDuration> result = Optional.empty();
@@ -333,7 +350,6 @@ public class Project implements Entity<Project> {
      *
      * @return The identifier of the product backlog as a string.
      */
-
     public String getProductBacklogId() {
         return this.productBacklog.getProductBacklogId();
     }
@@ -359,13 +375,24 @@ public class Project implements Entity<Project> {
 
     /**
      * This method sets the project period (start and end date).
+     *
      * @param startDate of the project.
-     * @param endDate of the project.
+     * @param endDate   of the project.
      */
     public void setPeriod(LocalDate startDate, LocalDate endDate) {
         this.period = new Period(startDate, endDate);
     }
 
+    /**
+     * Sets the project history with the specified budget, number of planned sprints, sprint duration, start date, and
+     * end date.
+     *
+     * @param budget                 the budget for the project
+     * @param numberOfPlannedSprints the number of planned sprints for the project
+     * @param sprintDuration         the duration of each sprint in days
+     * @param startDate              the start date of the project
+     * @param endDate                the end date of the project
+     */
     public void setProjectHistory(BigDecimal budget,
                                   NumberOfPlannedSprints numberOfPlannedSprints,
                                   int sprintDuration, LocalDate startDate, LocalDate endDate) {
