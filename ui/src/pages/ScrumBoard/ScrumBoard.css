@@ -1,10 +1,14 @@
 .column {
   display: inline-block;
   vertical-align: top;
-  margin-right: 20px;
-  width: calc(20% - 20px);
-  padding: 1rem;
+  width: 20%;
+  min-height: calc(100vh - 412px );
   border-radius: 8px;
+}
+
+.board {
+  display: flex;
+  justify-content: space-between;
 }
 
 
@@ -15,6 +19,7 @@
   background-color: #AC99DF;
   border-radius: 8px;
   padding: 1rem;
+  text-align: center;
 }
 
 .card-list {
@@ -38,4 +43,8 @@
 
 .scrum-board {
   padding: 1rem;
+}
+
+.scrumBoardTitle {
+  margin-bottom: 1.5rem;
 }

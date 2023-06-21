@@ -54,9 +54,10 @@ function ScrumBoard() {
     return (
         <div className="page">
             <div className="scrum-board">
-                <h2>Scrum Board</h2>
+                <h2 className="pageH2 scrumBoardTitle">Scrum Board</h2>
                 <Link to={"/projects/" + detailedProject?.code}>
                     <Button return-button={true}
+                            isSecundary={true}
                             text="Return"
                             variant="outlined"/>
                 </Link>
@@ -87,14 +88,6 @@ function ScrumBoard() {
                             </ul>
                         </div>
                     ))}
-                </div>
-                <div className="buttons-backlog">
-                    <Link to={"/projects/" + detailedProject?.code}>
-                        <Button
-                            isSecundary={true}
-                            text="Return"
-                        />
-                    </Link>
                 </div>
             </div>
         </div>

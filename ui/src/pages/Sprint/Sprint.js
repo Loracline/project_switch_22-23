@@ -95,11 +95,6 @@ const Sprint = () => {
             <section className="sprintCard">
                 <div className="sprintHeader">
                     <h2>Sprint Number: {data?.['number']}</h2>
-                    <Link to={`/sprints/${detailedProject?.code}`}>
-                    <Button isSecundary={true}
-                            text='Return'
-                    />
-                    </Link>
                 </div>
 
                 <div className="sprintInfo">
@@ -124,6 +119,11 @@ const Sprint = () => {
                         </div>
                     </div>
                 </div>
+                <Link to={`/sprints/${detailedProject?.code}`}>
+                    <Button isSecundary={true}
+                            text='Return'
+                    />
+                </Link>
             </section>
             <section className="sprintBacklogSection">
                 <AddUserStoryToSprint/>
