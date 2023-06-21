@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.switch2022.project.ddd.application.ProjectCreationService;
+import org.switch2022.project.ddd.dto.ProjectCodeStringDto;
 import org.switch2022.project.ddd.dto.ProjectCreationDto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,7 +41,7 @@ class CreateProjectControllerTest {
         ProjectCreationDto projectCreationDto = new ProjectCreationDto("panic",
                 "panic total", "BS001", "242526272", "TP001");
 
-        when(createProjectService.createProject(any())).thenReturn("P001");
+        when(createProjectService.createProject(any())).thenReturn(new ProjectCodeStringDto("P001"));
 
         //Act
         String expected = "P001";

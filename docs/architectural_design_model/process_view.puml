@@ -4,23 +4,19 @@ title Process View - Level 1
 
 autonumber
 
-participant "<<Component>> \n <<Container (C4)>> \n G4-FE"
+actor "Client"
 participant "<<Context (C4)>> \n g4 : G4" as be
-participant "<<Internal System>> \n  : H2 DB" as db
 
 
 
-"<<Component>> \n <<Container (C4)>> \n G4-FE" -> be: asks to associate of a User as the Product Owner/\nTeam Member/Scrum Master of a given project
+Client -> be: asks to associate of a User as the Product Owner/\nTeam Member/Scrum Master of a given project
 activate be
-
-be --> "<<Component>> \n <<Container (C4)>> \n G4-FE": requests data
-"<<Component>> \n <<Container (C4)>> \n G4-FE" -> be: sends data (code, email, role,\n costPerHour, percentageOfAllocation, startDate, endDate)
-[o-> be
-be -> db: save
-activate db
-deactivate db
-be --> "<<Component>> \n <<Container (C4)>> \n G4-FE": informs about operation success
-
+be --> Client: UI
+deactivate be
+Client -> be: sends data (code, email, role,\n costPerHour, percentageOfAllocation, startDate, endDate)
+activate be
+be --> Client: OK/~OK
+deactivate be
 @enduml
 
 
@@ -32,20 +28,23 @@ autonumber
 
 participant "<<Component>> \n <<Container (C4)>> \n G4-FE" as fe
 participant "<<Component>> \n <<Container (C4)>> \n G4-BE" as be
-participant "<<Database>> \n DB H2" as db
+participant "<<Container (C4)>> \n <<Database>> \n DB H2" as db
 
 [o-> fe: asks to associate of a User as the Product Owner/\nTeam Member/Scrum Master of a given project
 activate fe
-[o<-- fe: requests data
+[o<-- fe: UI
+deactivate fe
 [o-> fe: sends data (code, email, role,\n costPerHour, percentageOfAllocation, startDate, endDate)
+activate fe
+fe -> be: POST /resources {data}
 activate be
 
-fe -> be: POST / addUserToProject(allocationDto)
 be -> db: INSERT resource
 activate db
 deactivate db
 be --> fe: 201/40?
-[o<-- fe: Informs operation success
+deactivate be
+[o<-- fe: OK/~OK
 deactivate fe
 @enduml
 
@@ -57,12 +56,13 @@ autonumber
 
 participant Bootstrap as boot
 participant "<<Component: (C4)>> \n Routers :Routers" as router
-participant "<<Component (C4)>> \n AddUserToProjectController :Controllers" as controller
+participant "<<Component (C4)>> \n ResourceWebController :Controllers" as controller
 participant "allocationDto : \n DTO" as dto
 participant "<<Component (C4)>> \n ResourceAllocationService :Services" as service
 participant "<<Component (C4)>> \n ProjectRepo :Repo \n Projects" as repop
 participant "<<Component (C4)>> \n accountRepo :Repo \n Accounts" as repoa
 participant "<<Component (C4)>> \n ProjectResourceRepo :Repo \n Resources" as repor
+participant "<<Component (C4)>> \n FactoryResource :factory \n Resources" as factory
 participant "<<Component (C4)>> \n <<Database>> \n DB H2" as db
 participant "<<Component (C4)>> restUser :REST User" as api
 participant "resource :Model" as rmodel
@@ -77,35 +77,31 @@ create repoa
 boot --> repoa: create(dbh2)
 create repor
 boot --> repor: create(dbh2)
+create factory
+boot --> factory: create (resource)
 create api
 boot --> api: create(config)
 create service
 boot --> service: create(repoProjects, repoAccounts, repoResources)
 create controller
 boot --> controller: create(service)
-create router
-boot --> router: create(controller)
-
-[o-> router: POST / allocate (allocate resources)
-router -> controller: addUserToProject(allocationDto)
+[o-> router: POST /resources (allocate)
+router -> controller: createResource(allocationJson)
 create dto
-controller -> dto: addUserToProject(allocationDtoJson)
+controller --> dto: create(allocationJson)
 controller -> service: addUserToProject(allocationDto)
-service -> repop: isProjectValidForAllocation(code, period)
-repop --> service: true
-service -> repoa: isAccountValidForAllocation(email)
-repoa --> service: true
-service -> repor: isAllocationInfoValid(role, percentageOfAllocation,\n email, code, period)
-repor --> service: true
+service -> factory: create(resource)
 create rmodel
-repor -> rmodel: create(resourceJson)
-repor --> service: resource
+factory -> rmodel: create(resource)
+factory --> service: resource
 create addmodel
-service --> addmodel: create(allocationDto.projectCode, allocationDto.accountEmail, ...)
+service -> addmodel: create(allocationDto.projectCode, allocationDto.accountEmail, ...)
 service -> repor: save(addResource)
 create assembler
-repor --> assembler: create(resource)
-repor -> db: save(resourceAssembler)
+repor -> assembler: toData(resource)
+assembler --> repor: resourceJpa
+repor -> db: save(resourceJpa)
+db --> repor: true
 repor --> service: true
 service --> controller: true
 controller --> router: 201/40?

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import AppContext from "../../context/AppContext";
 import './ListSprints.css';
 import {
@@ -40,6 +40,29 @@ const ListSprints = () => {
             getSprintsFromProject(dispatch, projectCode)
         }
     }, [dispatch, projectCode]);
+
+    const [showScrollButton, setShowScrollButton] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    const handleScroll = () => {
+        if (window.pageYOffset > 20) {
+            setShowScrollButton(true);
+        } else {
+            setShowScrollButton(false);
+        }
+    };
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const scrollButtonStyle = {
+        display: showScrollButton ? 'block' : 'none',
+    };
 
     /**
      * Renders the sprints table body.
@@ -106,6 +129,9 @@ const ListSprints = () => {
                                     !selectedProject?.endDate ||
                                     isProjectEndDatePassed}/>
                     </Link>
+                    <button className="scroll-to-top-button" style={scrollButtonStyle} onClick={scrollToTop}>
+                        Scroll to Top
+                    </button>
                 </div>
             </div>
         );

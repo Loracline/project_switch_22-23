@@ -218,13 +218,6 @@ function CreateUserStory() {
                                 text="Return"
                             />
                         </Link>
-                        <Link to={"/projects/" + detailedProject?.code + "/product-backlog"}>
-                            <Button
-                                isSecundary={true}
-                                onClick={() => dispatch(selectMenu('productBacklog'))}
-                                text="Go to Product Backlog"
-                            />
-                        </Link>
                         <Button
                             type="button"
                             text="Create US"
@@ -232,6 +225,13 @@ function CreateUserStory() {
                             isDisabled={!userStory.userStoryNumber || !userStory.userStoryText}
                         />
                     </Box>
+                    <Link to={"/projects/" + detailedProject?.code + "/product-backlog"}>
+                        <Button
+                            isSecundary={true}
+                            onClick={() => dispatch(selectMenu('productBacklog'))}
+                            text="Go to Product Backlog"
+                        />
+                    </Link>
                 </form>
             </section>
 
