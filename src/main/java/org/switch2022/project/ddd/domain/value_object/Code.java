@@ -14,7 +14,7 @@ public class Code implements ValueObject<Code> {
      */
     public Code(final int projectNumber) {
         Validate.notNegative(projectNumber, "project number");
-        Validate.notZero(projectNumber, "project number");
+        Validate.notZero(projectNumber, "Project number");
 
         this.id = String.format("P%03d", projectNumber).toLowerCase();
     }
