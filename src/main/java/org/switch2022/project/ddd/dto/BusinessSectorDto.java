@@ -17,7 +17,7 @@ public class BusinessSectorDto {
      * Constructor to instantiate a new business sector dto.
      *
      * @param name the name of the business sector
-     * @param id
+     * @param id   of the business sector.
      */
     public BusinessSectorDto(String name, String id) {
         this.name = name.toLowerCase().trim();

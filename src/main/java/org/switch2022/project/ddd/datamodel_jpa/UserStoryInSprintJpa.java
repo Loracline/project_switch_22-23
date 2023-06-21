@@ -23,13 +23,17 @@ public class UserStoryInSprintJpa {
 
     /**
      * Constructor
-     * It creates an userStoryInSprint using its identifier: usId  and effort.
+     *
+     * @param usId   of the User Story.
+     * @param effort of this user story in this sprint.
+     * @param sprint where this User Story will be located.
      */
     public UserStoryInSprintJpa(String usId, int effort, SprintJpa sprint) {
         this.usId = usId;
         this.effort = effort;
         this.sprint = sprint;
     }
+
     /**
      * Constructor
      * It creates an userStoryInSprint with empty .

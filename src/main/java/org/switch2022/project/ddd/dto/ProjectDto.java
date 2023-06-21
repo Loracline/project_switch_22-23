@@ -15,9 +15,17 @@ public class ProjectDto {
 
     /**
      * Constructor
+     *
+     * @param code         of the project.
+     * @param projectName  of the project.
+     * @param customerName of the project.
+     * @param status       of the project.
+     * @param startDate    of the project.
+     * @param endDate      of the project.
      */
-    public ProjectDto (String code, String projectName,String customerName, String status, String startDate,
-                       String endDate){
+    public ProjectDto(String code, String projectName, String customerName,
+                      String status, String startDate,
+                      String endDate) {
         this.code = code.toLowerCase().trim();
         this.projectName = projectName.toLowerCase().trim();
         this.customerName = customerName.toLowerCase().trim();
@@ -25,6 +33,7 @@ public class ProjectDto {
         this.startDate = startDate.toLowerCase().trim();
         this.endDate = endDate.toLowerCase().trim();
     }
+
     /**
      * The equals() method is used to determine whether two objects are equal in
      * terms of their content.
@@ -50,7 +59,8 @@ public class ProjectDto {
         ProjectDto that = (ProjectDto) o;
         return Objects.equals(code, that.code) &&
                 Objects.equals(projectName, that.projectName) && Objects.equals(customerName, that.customerName)
-                && Objects.equals(status, that.status) && Objects.equals(startDate, that.startDate)
+                && Objects.equals(status, that.status) && Objects.equals(startDate,
+                that.startDate)
                 && Objects.equals(endDate, that.endDate);
     }
 
@@ -62,6 +72,6 @@ public class ProjectDto {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(code, projectName,customerName, status,startDate,endDate);
+        return Objects.hash(code, projectName, customerName, status, startDate, endDate);
     }
 }

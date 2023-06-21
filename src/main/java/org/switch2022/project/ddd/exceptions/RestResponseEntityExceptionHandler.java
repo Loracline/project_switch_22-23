@@ -12,9 +12,11 @@ import static org.springframework.http.HttpStatus.*;
 /**
  * Global exception handler class using the Spring Boot @ControllerAdvice annotation.
  * When an exception is thrown in the application, Spring will look for a matching
- *
- * @ExceptionHandler method in the @ControllerAdvice class and use it to handle the exception. If
- * no matching @ExceptionHandler method is found in any @RestControllerAdvice class, Spring will
+ * <p>
+ * ExceptionHandler method in the @ControllerAdvice class and use it to handle the
+ * exception. If
+ * no matching @ExceptionHandler method is found in any @RestControllerAdvice class,
+ * Spring will
  * return a default error response.
  */
 

@@ -14,6 +14,8 @@ public enum AccountStatus implements ValueObject<AccountStatus> {
 
     /**
      * This getter method returns a String with the Account status.
+     *
+     * @return a String with the Account status.
      */
     public String getAccountStatus() {
         return value;

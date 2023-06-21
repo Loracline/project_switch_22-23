@@ -43,25 +43,31 @@ public class ProjectCreationService {
     private ICustomerRepository customerRepository;
 
     /**
-     * This method creates a new Project with the next project code available and adds it to the repository.
+     * This method creates a new Project with the next project code available and adds
+     * it to the repository.
      *
-     * @param projectCreationDto contains all information needed for creation of a project.
+     * @param projectCreationDto contains all information needed for creation of a
+     *                           project.
      * @return returns true if the project is created and throws an exception otherwise.
      */
     public ProjectCodeStringDto createProject(ProjectCreationDto projectCreationDto) {
         int projectNumber = calculateNextProjectNumber();
         Name projectName = new Name(projectCreationDto.projectName);
-        Description projectDescription = new Description(projectCreationDto.projectDescription);
+        Description projectDescription =
+                new Description(projectCreationDto.projectDescription);
 
         TaxId customerTaxId = new TaxId(projectCreationDto.customerId);
 
-        BusinessSectorId businessSectorId = new BusinessSectorId(Utils.getIntFromAlphanumericString(
-                projectCreationDto.businessSectorId, "BS"));
+        BusinessSectorId businessSectorId =
+                new BusinessSectorId(Utils.getIntFromAlphanumericString(
+                        projectCreationDto.businessSectorId, "BS"));
 
-        ProjectTypologyId projectTypologyId = new ProjectTypologyId(Utils.getIntFromAlphanumericString(
-                projectCreationDto.typologyId, "PT"));
+        ProjectTypologyId projectTypologyId =
+                new ProjectTypologyId(Utils.getIntFromAlphanumericString(
+                        projectCreationDto.typologyId, "PT"));
 
-        Project project = factoryProject.createProject(projectNumber, projectName, projectDescription,
+        Project project = factoryProject.createProject(projectNumber, projectName,
+                projectDescription,
                 businessSectorId, customerTaxId, projectTypologyId);
 
         projectRepository.save(project);
@@ -70,7 +76,10 @@ public class ProjectCreationService {
     }
 
     /**
-     * This method calculates the number of project to include in the project code using the repository size.
+     * This method calculates the number of project to include in the project code
+     * using the repository size.
+     *
+     * @return the next number.
      */
     public int calculateNextProjectNumber() {
         return projectRepository.count() + 1;
@@ -91,7 +100,8 @@ public class ProjectCreationService {
     /**
      * This method adds a Project to the Repository.
      *
-     * @param project to be added to the Repository
+     * @param project to be added to the Repository.
+     * @return true if the project is created and false otherwise.
      */
 
     public boolean addProject(Project project) {

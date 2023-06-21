@@ -30,8 +30,12 @@ public class UserStory implements Entity<UserStory> {
 
     /**
      * Constructor
-     * It creates an userStory using its identifier: usId  and your minimals attributs.
-     * Attributs: usNumber, actor, usText, accptaneCriteria.
+     *
+     * @param projectCode        where the user story is located.
+     * @param usNumber           of the user story.
+     * @param actor              of the user story.
+     * @param usText             of the user story.
+     * @param acceptanceCriteria of the user story.
      */
     protected UserStory(Code projectCode, UsNumber usNumber, Actor actor, UsText usText,
                         List<AcceptanceCriteria> acceptanceCriteria) {
@@ -39,7 +43,8 @@ public class UserStory implements Entity<UserStory> {
         Validate.notNull(usNumber, "User Story's User Story Number can't be null.");
         Validate.notNull(actor, "User Story's actor can't be null.");
         Validate.notNull(usText, "User Story's Text can't be null");
-        Validate.notNull(acceptanceCriteria, "User Story's Acceptance Criteria can't be null.");
+        Validate.notNull(acceptanceCriteria, "User Story's Acceptance Criteria can't be" +
+                " null.");
         this.projectCode = projectCode;
         this.usNumber = usNumber;
         this.actor = actor;
@@ -96,15 +101,18 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This getter method returns a String with User Story ID.
+     * his getter method returns a String with User Story ID.
+     *
+     * @return a String with User Story ID.
      */
     public String getUsId() {
         return usId.getUserStoryId();
     }
 
-
     /**
      * This getter method returns a String with User Story status.
+     *
+     * @return a String with User Story status.
      */
     public String getStatus() {
         return status.getStatus();
@@ -121,6 +129,8 @@ public class UserStory implements Entity<UserStory> {
 
     /**
      * This getter method returns a String with the User Story Text.
+     *
+     * @return a String with the User Story Text.
      */
     public String getUsText() {
         return usText.getUserStoryText();
@@ -137,6 +147,8 @@ public class UserStory implements Entity<UserStory> {
 
     /**
      * This getter method returns a String with the User Story Number.
+     *
+     * @return a String with the User Story Number.
      */
     public String getUsNumber() {
         return usNumber.getUserStoryNumber();
@@ -152,7 +164,9 @@ public class UserStory implements Entity<UserStory> {
     }
 
     /**
-     * This getter returns the Acceptance Criteria of a user story.
+     * This getter returns a list with the Acceptance Criteria of a user story.
+     *
+     * @return a list with the Acceptance Criteria of a user story.
      */
     public List<String> getAcceptanceCriteria() {
         List<String> listOfAcceptanceCriteria = new ArrayList<>();
@@ -194,6 +208,8 @@ public class UserStory implements Entity<UserStory> {
 
     /**
      * This getter method returns a String with the actor.
+     *
+     * @return a String with the actor.
      */
     public String getActor() {
         return actor.getActor();
@@ -201,8 +217,9 @@ public class UserStory implements Entity<UserStory> {
 
     /**
      * This getter method returns a String with the project code.
+     *
+     * @return a String with the project code.
      */
-
     public String getProjectCode() {
         return projectCode.getCode();
     }
