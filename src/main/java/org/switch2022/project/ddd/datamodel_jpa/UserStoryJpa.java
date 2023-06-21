@@ -39,8 +39,15 @@ public class UserStoryJpa {
 
     /**
      * Constructor
-     * It creates an userStory using its identifier: usId  and your minimals attributes.
-     * Attributes: usNumber, actor, usText, acceptanceCriteria.
+     *
+     * @param usId               of the user story.
+     * @param acceptanceCriteria is the list with the acceptance criteria for this user
+     *                           story.
+     * @param usNumber           of the user story.
+     * @param actor              of the user story.
+     * @param usText             of the user story.
+     * @param status             of the user story.
+     * @param projectCode        where this user story exists.
      */
     public UserStoryJpa(String usId, List<String> acceptanceCriteria, String usNumber,
                         String actor, String usText,
@@ -102,6 +109,7 @@ public class UserStoryJpa {
 
     @Override
     public int hashCode() {
-        return Objects.hash(usId, acceptanceCriteria, usNumber, actor, usText, status, projectCode);
+        return Objects.hash(usId, acceptanceCriteria, usNumber, actor, usText, status,
+                projectCode);
     }
 }

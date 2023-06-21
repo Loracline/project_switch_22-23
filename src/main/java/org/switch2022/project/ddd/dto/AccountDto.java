@@ -13,6 +13,10 @@ public class AccountDto {
 
     /**
      * Constructor
+     *
+     * @param name   of the account user.
+     * @param email  of the account user.
+     * @param status of the account.
      */
     public AccountDto(String name, String email, String status) {
         this.name = name;

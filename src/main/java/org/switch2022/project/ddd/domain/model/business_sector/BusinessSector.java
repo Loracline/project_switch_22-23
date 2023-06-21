@@ -8,15 +8,16 @@ import org.switch2022.project.ddd.utils.Validate;
  * Class Business Sector is built to create and manage new business sectors.
  * A business sector is identified by a unique code. It also has a name.
  */
-
 public class BusinessSector implements Entity<BusinessSector> {
 
     private final BusinessSectorId id;
     private final Name name;
 
-
     /**
-     * Constructor: the constructor with relevant attributes for a business sector to be created in a valid state.
+     * Creates a new protected business sector with the given ID number and name.
+     *
+     * @param idNumber the ID number of the business sector.
+     * @param name     the name of the business sector.
      */
     protected BusinessSector(Number idNumber, Name name) {
         Validate.notNull(name, "The business sector name must not be null.");
@@ -89,7 +90,7 @@ public class BusinessSector implements Entity<BusinessSector> {
      * Checks if this BusinessSector instance has a specific BusinessSectorId.
      *
      * @param businessSectorId the BusinessSectorId to check.
-     * @return <code>true</code> if the BusinessSector's BusinessSectorId matches the given BusinessSectorId, and <code>false</code> otherwise.
+     * @return true if the BusinessSector's BusinessSectorId matches the given BusinessSectorId, and false otherwise.
      */
     public boolean hasBusinessSectorId(BusinessSectorId businessSectorId) {
         return this.id.getBusinessSectorId().equals(businessSectorId.getBusinessSectorId());

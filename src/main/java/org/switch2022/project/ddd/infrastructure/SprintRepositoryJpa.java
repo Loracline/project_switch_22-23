@@ -29,7 +29,8 @@ public class SprintRepositoryJpa implements ISprintRepository {
      * Retrieves a Sprint object by its SprintId.
      *
      * @param sprintId The identifier of the Sprint.
-     * @return An Optional object containing the found Sprint, or an empty Optional if no Sprint is found.
+     * @return An Optional object containing the found Sprint, or an empty Optional if
+     * no Sprint is found.
      */
     @Override
     public Optional<Sprint> findById(SprintId sprintId) {
@@ -74,7 +75,8 @@ public class SprintRepositoryJpa implements ISprintRepository {
     @Override
     public List<Sprint> findByProjectCode(Code projectCode) {
         List<Sprint> sprintsByProject = new ArrayList<>();
-        List<SprintJpa> sprintJpas = iSprintJpaRepository.findByProjectCode(projectCode.getCode());
+        List<SprintJpa> sprintJpas =
+                iSprintJpaRepository.findByProjectCode(projectCode.getCode());
         for (SprintJpa sprintJpa : sprintJpas) {
             sprintsByProject.add(sprintDomainDataAssembler.toDomain(sprintJpa));
         }
@@ -85,7 +87,8 @@ public class SprintRepositoryJpa implements ISprintRepository {
      * Checks if a Sprint with the given SprintId exists in the repository.
      *
      * @param sprintId The SprintId to check.
-     * @return {@code true} if a Sprint with the given SprintId exists, {@code false} otherwise.
+     * @return {@code true} if a Sprint with the given SprintId exists, {@code false}
+     * otherwise.
      */
     @Override
     public boolean existsById(SprintId sprintId) {
@@ -121,7 +124,8 @@ public class SprintRepositoryJpa implements ISprintRepository {
         Optional<SprintJpa> sprintOptional = iSprintJpaRepository.findById(id);
 
         if (sprintOptional.isPresent()) {
-            List<UserStoryInSprintJpa> userStories = sprintOptional.get().getUserStoriesInSprint();
+            List<UserStoryInSprintJpa> userStories =
+                    sprintOptional.get().getUserStoriesInSprint();
             result = userStories.stream()
                     .anyMatch(us -> us.getUsId().equals(userStoryId));
         }
@@ -134,10 +138,12 @@ public class SprintRepositoryJpa implements ISprintRepository {
      *
      * @param projectCode The project code to search for.
      * @param status      The status of the Sprint to search for.
-     * @return An Optional containing the retrieved Sprint object if found, or an empty Optional otherwise.
+     * @return An Optional containing the retrieved Sprint object if found, or an empty
+     * Optional otherwise.
      */
     @Override
-    public Optional<Sprint> findByProjectCodeAndStatus(Code projectCode, SprintStatus status) {
+    public Optional<Sprint> findByProjectCodeAndStatus(Code projectCode,
+                                                       SprintStatus status) {
         String sprintStatus = status.getStatus();
         String code = projectCode.getCode();
         Sprint sprint = null;
@@ -150,15 +156,18 @@ public class SprintRepositoryJpa implements ISprintRepository {
     }
 
     /**
-     * This method checks if at least one instance of Sprint with a given status already exists in the list of
+     * This method checks if at least one instance of Sprint with a given status
+     * already exists in the list of
      * sprints of a given project.
      *
-     * @para projectCode the code of the project to which the sprint belong.
+     * @param projectCode  the code of the project to which the sprint belong.
      * @param sprintStatus SprintStatus to look for in the sprint lisst.
-     * @return true if at least one instance of Sprint with a given status already exists in the list, and false
+     * @return true if at least one instance of Sprint with a given status already
+     * exists in the list, and false
      * otherwise.
      */
-    public boolean existsByProjectCodeAndStatus(Code projectCode, SprintStatus sprintStatus) {
+    public boolean existsByProjectCodeAndStatus(Code projectCode,
+                                                SprintStatus sprintStatus) {
         String status = sprintStatus.getStatus();
         String code = projectCode.getCode();
         return iSprintJpaRepository.existsByProjectCodeAndStatus(code, status);

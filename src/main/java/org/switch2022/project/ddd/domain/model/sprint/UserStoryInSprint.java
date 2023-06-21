@@ -53,7 +53,8 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
     }
 
     /**
-     * The hashCode() method is used to generate a unique hash code for an object, based on the
+     * The hashCode() method is used to generate a unique hash code for an object,
+     * based on the
      * object's state.
      *
      * @return a unique value that represents the object.
@@ -64,7 +65,8 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
     }
 
     /**
-     * This method checks if two instances of UserStoryInSprint are equal by comparing the value of
+     * This method checks if two instances of UserStoryInSprint are equal by comparing
+     * the value of
      * the attribute UsId.
      *
      * @param other UserStoryInSprint instance to compare with.
@@ -93,10 +95,12 @@ public class UserStoryInSprint implements Entity<UserStoryInSprint> {
         return effort.getEffortValue();
     }
 
+
     /**
      * This method sets the effort of the userStory.
      *
      * @param effortEstimate of the User Story to be set.
+     * @return true if the effort is changed and true otherwise.
      */
     public boolean changeEffort(int effortEstimate) {
         for (Effort enumEffort : Effort.values()) {

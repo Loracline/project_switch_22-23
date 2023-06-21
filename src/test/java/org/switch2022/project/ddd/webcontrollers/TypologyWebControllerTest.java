@@ -47,7 +47,7 @@ class TypologyWebControllerTest {
         ResponseEntity<Object> responseEntity = controller.createTypology(dtoDouble);
 
         //Assert
-        assertEquals(responseEntity.getStatusCodeValue(), 201);
+        assertEquals(201, responseEntity.getStatusCodeValue());
     }
     /**
      * Scenario 02: typology is not created.

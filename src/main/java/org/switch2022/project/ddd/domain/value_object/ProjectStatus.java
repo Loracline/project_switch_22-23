@@ -15,6 +15,8 @@ public enum ProjectStatus implements ValueObject<ProjectStatus> {
 
     /**
      * This getter method returns a String with the Project status.
+     *
+     * @return a String with the Project status.
      */
     public String getStatus() {
         return value;

@@ -28,8 +28,10 @@ public class AccountJpa {
     private String name;
     private String phoneNumber;
     private String accountStatus;
-    //There is no primitive data type in Java that is suitable for storing photos. We can use
-    //non-primitive data types like byte[].This is an array of bytes that represents the binary
+    //There is no primitive data type in Java that is suitable for storing photos. We
+    // can use
+    //non-primitive data types like byte[].This is an array of bytes that represents
+    // the binary
     //content of an image. It is commonly used to store images in databases.
     private byte[] photo;
     private String profileId;
@@ -42,6 +44,7 @@ public class AccountJpa {
      * @param name          the name of the account.
      * @param phoneNumber   the phoneNumber of the account.
      * @param accountStatus the status of the account.
+     * @param profileId     the profile of the account.
      * @param photo         the photo (optional) of the account.
      */
 
@@ -84,6 +87,7 @@ public class AccountJpa {
 
     /**
      * Retrieves the account email.
+     *
      * @return The profile email.
      */
     public String getEmail() {
@@ -92,6 +96,7 @@ public class AccountJpa {
 
     /**
      * Retrieves the account name.
+     *
      * @return The account name.
      */
     public String getName() {
@@ -100,6 +105,7 @@ public class AccountJpa {
 
     /**
      * Retrieves the account phone number.
+     *
      * @return The account phone number.
      */
     public String getPhoneNumber() {
@@ -108,6 +114,7 @@ public class AccountJpa {
 
     /**
      * Retrieves the account status.
+     *
      * @return The account status.
      */
     public String getAccountStatus() {
@@ -129,6 +136,7 @@ public class AccountJpa {
 
     /**
      * Retrieves the account profile.
+     *
      * @return The account profile.
      */
     public String getProfileId() {

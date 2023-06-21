@@ -70,7 +70,7 @@ public class SprintWebController {
      * Handles a PATCH request to change the status of a sprint with the specified sprint ID.
      *
      * @param sprintStatusDto with the necessary info to change the state of a sprint.
-     * @return ResponseEntity<Object> representing the result of the status change operation: if
+     * @return ResponseEntity representing the result of the status change operation: if
      * the status change is successful, returns a ResponseEntity with HTTP status
      * code 200 (OK); if the sprint with the specified ID is not found, returns a
      * ResponseEntity with HTTP status code 404 (NOT FOUND).

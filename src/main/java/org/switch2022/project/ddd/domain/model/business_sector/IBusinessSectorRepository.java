@@ -9,6 +9,7 @@ import java.util.Optional;
  * Interface for a repository of business sectors.
  */
 public interface IBusinessSectorRepository {
+
     /**
      * This method adds a new business sector to the repository of business sectors.
      *

@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @Entity
-@Table(name="sprints")
+@Table(name = "sprints")
 public class SprintJpa {
     /**
      * Attributes
@@ -32,12 +32,16 @@ public class SprintJpa {
 
     /**
      * Constructor
-     * It creates a SprintJpa using its identifier: sprintId  and its minimals
-     * attributes.
-     * Attributes: usNumber, actor, usText, acceptanceCriteria.
+     *
+     * @param sprintId     of the sprint.
+     * @param sprintNumber of the sprint.
+     * @param projectCode  where the sprint is.
+     * @param startDate    of the sprint.
+     * @param endDate      of the sprint.
+     * @param status       of the sprint.
      */
     public SprintJpa(String sprintId, String sprintNumber, String projectCode,
-                  String startDate, String endDate, String status){
+                     String startDate, String endDate, String status) {
         this.sprintId = sprintId;
         this.sprintNumber = sprintNumber;
         this.projectCode = projectCode;
@@ -47,7 +51,7 @@ public class SprintJpa {
         this.status = status;
     }
 
-    protected SprintJpa(){
+    protected SprintJpa() {
 
     }
 

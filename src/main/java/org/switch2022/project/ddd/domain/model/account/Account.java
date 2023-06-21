@@ -13,12 +13,8 @@ import java.util.Objects;
  * The account status is "True" if the account is ACTIVE and is "False" if the
  * account is INACTIVE.
  */
-
 public class Account implements Entity<Account> {
 
-    /**
-     * Attributes
-     */
     private final Name name;
     private final Email email;
     private final PhoneNumber phoneNumber;
@@ -26,7 +22,14 @@ public class Account implements Entity<Account> {
     private Photo photo;
     private ProfileId profileId;
 
-
+    /**
+     * Creates a new protected account with the given name, email, phone number, and photo.
+     *
+     * @param name        the name associated with the account
+     * @param email       the email address associated with the account
+     * @param phoneNumber the phone number associated with the account
+     * @param photo       the profile photo for the account (optional)
+     */
     protected Account(Name name, Email email, PhoneNumber phoneNumber, Photo photo) {
         this.name = name;
         this.email = email;
@@ -99,7 +102,6 @@ public class Account implements Entity<Account> {
      *
      * @return account email.
      */
-
     public String getAccountEmail() {
         return email.getEmailAddress();
     }

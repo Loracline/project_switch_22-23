@@ -18,7 +18,6 @@ public class AccountFactory implements IAccountFactory {
      * @param photo is option.
      * @return a new object Account.
      */
-
     @Override
     public Account create(Name name, Email email, PhoneNumber phoneNumber, Photo photo) {
         return new Account(name, email, phoneNumber, photo);

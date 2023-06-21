@@ -9,11 +9,11 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 public interface ITypologyFactory {
 
     /**
-     * This method creates a Typology object with no return.
+     * This method creates a Typology object.
      *
-     * @param typologyNumber of the Typology to create.
+     * @param typologyNumber f the Typology to create.
      * @param typologyName   is the name.
+     * @return the typology created
      */
-
     Typology createTypology(int typologyNumber, Name typologyName);
 }

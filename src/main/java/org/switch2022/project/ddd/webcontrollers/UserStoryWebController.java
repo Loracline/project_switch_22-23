@@ -26,26 +26,29 @@ public class UserStoryWebController {
     /**
      * Handles the HTTP POST request to create a User Story.
      *
-     * @param userStoryCreationDto The DTO containing the data for creating the User Story.
-     * @return A ResponseEntity with the created User Story ID and the HTTP status code 201
-     * (CREATED).
-     * @throws Exception If an error occurs during the creation process.
+     * @param userStoryCreationDto userStoryCreationDto The DTO containing the data for
+     *                            creating the User Story.
+     * @return A ResponseEntity with the created User Story ID and the HTTP status code
+     * 201 (CREATED).
      */
     @PostMapping
     public ResponseEntity<Object> createUs(@RequestBody UserStoryCreationDto userStoryCreationDto) {
         UsId usId = usService.createUs(userStoryCreationDto);
         return new ResponseEntity<>(usId, HttpStatus.CREATED);
     }
+
     /**
      * Updates the status of a user story in a sprint using a JSON Patch document.
      *
-     * @param userStoryStatusDto the User Story Status DTO containing the JSON Patch document
+     * @param userStoryStatusDto the User Story Status DTO containing the JSON Patch
+     *                           document
+     * @param usId               from the UserStory to be changed.
      * @return a ResponseEntity containing the HTTP status code and a response body
      */
     @PatchMapping("/{usId}")
     @ResponseBody
     public ResponseEntity<Object> changeUserStoryStatus(@RequestBody UserStoryStatusDto userStoryStatusDto,
-    @PathVariable String usId) {
+                                                        @PathVariable String usId) {
         usInSprintService.changeUserStoryStatus(userStoryStatusDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

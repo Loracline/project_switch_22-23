@@ -16,9 +16,19 @@ public class AllocationDto {
 
     /**
      * Constructor
+     *
+     * @param projectCode                   of the project.
+     * @param accountEmail                  of the resource.
+     * @param accountRole                   of the resource in this project.
+     * @param accountCostPerHour            of the resource.
+     * @param accountPercentageOfAllocation in this project.
+     * @param startDate                     of this allocation.
+     * @param endDate                       of this allocation.
      */
-    public AllocationDto(String projectCode, String accountEmail, String accountRole, float accountCostPerHour,
-                         float accountPercentageOfAllocation, LocalDate startDate, LocalDate endDate) {
+    public AllocationDto(String projectCode, String accountEmail, String accountRole,
+                         float accountCostPerHour,
+                         float accountPercentageOfAllocation, LocalDate startDate,
+                         LocalDate endDate) {
         this.projectCode = projectCode;
         this.accountEmail = accountEmail;
         this.accountRole = accountRole;

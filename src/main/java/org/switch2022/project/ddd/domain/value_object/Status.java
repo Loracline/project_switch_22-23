@@ -16,11 +16,12 @@ public enum Status implements ValueObject<Status> {
 
     /**
      * This getter method returns a String with User Story status.
+     *
+     * @return a String with User Story status.
      */
     public String getStatus() {
         return value;
     }
-
 
 
     @Override

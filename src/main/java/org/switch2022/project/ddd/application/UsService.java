@@ -35,19 +35,25 @@ public class UsService {
 
 
     /**
-     * This method creates a userStory and adds it to the product backlog or throws an exception
-     * if userStory is not created. This method receives a UserStoryCreationDto and  creates a User
+     * This method creates a userStory and adds it to the product backlog or throws an
+     * exception
+     * if userStory is not created. This method receives a UserStoryCreationDto and
+     * creates a User
      * Story by converting the
      * project
-     * code of interest into a numeric value, creating a project code. The created User Story is
-     * then added to the User Story repository, and its ID is generated. The User Story is also
-     * added to the product backlog with the specified priority, and if it already exists it
+     * code of interest into a numeric value, creating a project code. The created User
+     * Story is
+     * then added to the User Story repository, and its ID is generated. The User Story
+     * is also
+     * added to the product backlog with the specified priority, and if it already
+     * exists it
      * should be deleted and the exception is rethrown.
      *
      * @param userStoryCreationDto the UserStoryCreationDto that represents the data for
      *                             creating the user story
      * @return the created User Story ID
-     * @throws AlreadyExistsInRepoException if an error occurs during the User Story creation
+     * @throws AlreadyExistsInRepoException if an error occurs during the User Story
+     *                                      creation
      *                                      process or if the User Story
      */
 
@@ -74,11 +80,12 @@ public class UsService {
     }
 
     /**
-     * This method deletes the userStory or throws an exception if the userStory does not exist.
+     * This method deletes the userStory or throws an exception if the userStory does
+     * not exist.
      *
      * @param usId of userStory to be deleted from the repository.
+     * @return a boolean if the UserStory was deleted and false otherwise.
      */
-
     public boolean deleteUs(UsId usId) {
         usRepository.delete(usId);
         return true;
@@ -91,9 +98,11 @@ public class UsService {
      * @param projectCode of the project where the user ID will be added.
      * @param priority    that the ID will have in the ProductBacklog.
      * @return true if the ID is successfully added. otherwise it will return false.
-     * @throws NotFoundInRepoException      if the projectCode doesn't match any Project in the
+     * @throws NotFoundInRepoException      if the projectCode doesn't match any
+     *                                      Project in the
      *                                      repository.
-     * @throws AlreadyExistsInRepoException if the User Story is already in the Product Backlog.
+     * @throws AlreadyExistsInRepoException if the User Story is already in the Product
+     *                                      Backlog.
      */
 
     public boolean addUsToProductBacklog(UsId usId, Code projectCode, int priority) {
@@ -105,14 +114,15 @@ public class UsService {
         if (projectOptional.isPresent()) {
             project = projectOptional.get();
             if (!project.addUserStory(priority, usId)) {
-                throw new AlreadyExistsInRepoException("The User Story is already in the Product " +
+                throw new AlreadyExistsInRepoException("The User Story is already in " +
+                        "the Product " +
                         "Backlog");
             }
         } else {
             throw new NotFoundInRepoException("No project with that code");
         }
         project.addUserStory(priority, usId);
-        projectRepository.save (project);
+        projectRepository.save(project);
         return true;
     }
 
@@ -124,7 +134,8 @@ public class UsService {
      * @param projectCode          of the project where the user ID will be created
      * @return a User Story.
      */
-    private UserStory createUserStory(UserStoryCreationDto userStoryCreationDto, Code projectCode) {
+    private UserStory createUserStory(UserStoryCreationDto userStoryCreationDto,
+                                      Code projectCode) {
         UsNumber userStoryNumber = new UsNumber(userStoryCreationDto.userStoryNumber);
         UsText userStoryText = new UsText(userStoryCreationDto.userStoryText);
         Actor actor = new Actor(userStoryCreationDto.actor);
@@ -136,7 +147,8 @@ public class UsService {
     }
 
     /**
-     * This method receives a List of String that represent the Acceptance Criteria of a given
+     * This method receives a List of String that represent the Acceptance Criteria of
+     * a given
      * User Story and converts it into a List of objects of type AcceptanceCriteria.
      *
      * @param acceptanceCriteria list of Acceptance Criteria as a String

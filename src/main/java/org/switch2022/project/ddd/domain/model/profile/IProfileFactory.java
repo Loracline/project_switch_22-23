@@ -11,10 +11,10 @@ public interface IProfileFactory {
     /**
      * This method creates a Profile object with no return.
      *
-     * @param idProfileNumber of the Profile to create.
      * @param profileName     is the name.
+     * @param idProfileNumber of the Profile to create.
+     * @return the created profile.
      */
-
     Profile createProfile(Name profileName, int idProfileNumber);
 }
 

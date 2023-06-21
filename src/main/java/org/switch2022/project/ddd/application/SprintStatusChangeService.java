@@ -105,14 +105,18 @@ public class SprintStatusChangeService {
     /**
      * This method opens a sprint if there are no other open sprints in the repository.
      *
-     * @param sprint to be open.
-     * @return true it the sprint is open, throws an AlreadyExistsInRepoException otherwise..
+     * @param projectCode that contains the sprint.
+     * @param sprint      to be open.
+     * @return true is the sprint is open and false otherwise.
      */
     protected boolean openSprint(Code projectCode, Sprint sprint) {
-        if (sprintRepository.existsByProjectCodeAndStatus(projectCode, SprintStatus.OPEN)) {
-            throw new AlreadyExistsInRepoException("There is currently another OPEN sprint in this project.");
-        } else if(isProjectClosed(projectCode)){
-            throw new InvalidInputException("You can not open a sprint in a CLOSED project.");
+        if (sprintRepository.existsByProjectCodeAndStatus(projectCode,
+                SprintStatus.OPEN)) {
+            throw new AlreadyExistsInRepoException("There is currently another OPEN " +
+                    "sprint in this project.");
+        } else if (isProjectClosed(projectCode)) {
+            throw new InvalidInputException("You can not open a sprint in a CLOSED " +
+                    "project.");
         }
         sprint.changeStatus("OPEN");
         sprintRepository.save(sprint);
@@ -125,10 +129,10 @@ public class SprintStatusChangeService {
      * @param projectCode of the project.
      * @return true if the project is closed, and false otherwise.
      */
-    protected boolean isProjectClosed(Code projectCode){
+    protected boolean isProjectClosed(Code projectCode) {
         boolean projectClosed = false;
-        if(projectRepository.findByCode(projectCode).isPresent()){
-            if(projectRepository.findByCode(projectCode).get().hasStatus(ProjectStatus.CLOSED)){
+        if (projectRepository.findByCode(projectCode).isPresent()) {
+            if (projectRepository.findByCode(projectCode).get().hasStatus(ProjectStatus.CLOSED)) {
                 projectClosed = true;
             }
         }

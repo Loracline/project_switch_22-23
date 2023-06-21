@@ -21,6 +21,9 @@ public class Typology implements Entity<Typology> {
 
     /**
      * Constructor
+     *
+     * @param typologyNumber to identify the typology.
+     * @param typologyName   of the typology.
      */
     protected Typology(int typologyNumber, Name typologyName) {
         Validate.notNegative(typologyNumber, "typology id");
@@ -78,6 +81,8 @@ public class Typology implements Entity<Typology> {
 
     /**
      * This getter method returns a string with the typology name.
+     *
+     * @return a string with the typology name.
      */
 
     public String getTypologyName() {
@@ -86,6 +91,8 @@ public class Typology implements Entity<Typology> {
 
     /**
      * This getter method returns a string with the typology id.
+     *
+     * @return a string with the typology id.
      */
     public String getTypologyId() {
         return this.typologyId.getProjectTypologyId();

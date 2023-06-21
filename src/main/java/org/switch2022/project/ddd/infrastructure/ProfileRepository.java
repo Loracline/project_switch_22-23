@@ -27,7 +27,8 @@ public class ProfileRepository implements IProfileRepository {
      * This method checks if an instance of ProfileRepository is equal to another object.
      *
      * @param o object to compare with.
-     * @return </code>true</code> if the two have the same attribute value, and <code>false</code> otherwise.
+     * @return true if the two have the same attribute value, and <code>false</code>
+     * otherwise.
      */
 
     @Override
@@ -44,7 +45,8 @@ public class ProfileRepository implements IProfileRepository {
     }
 
     /**
-     * This method is used to generate a unique hash code for an object, based on the object's state.
+     * This method is used to generate a unique hash code for an object, based on the
+     * object's state.
      *
      * @return a unique value that represents the object.
      */
@@ -64,7 +66,8 @@ public class ProfileRepository implements IProfileRepository {
 
     public boolean save(Profile profile) {
         if (profiles.contains(profile)) {
-            throw new AlreadyExistsInRepoException("The profile already exists in the repository.");
+            throw new AlreadyExistsInRepoException("The profile already exists in the " +
+                    "repository.");
         } else {
             profiles.add(profile);
             return true;
@@ -99,7 +102,8 @@ public class ProfileRepository implements IProfileRepository {
             i++;
         }
         if (profileRequested == null) {
-            throw new NotFoundInRepoException("There is no profile with the given name in the repository.");
+            throw new NotFoundInRepoException("There is no profile with the given name " +
+                    "in the repository.");
         }
         return profileRequested;
 

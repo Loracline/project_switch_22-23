@@ -9,7 +9,8 @@ import java.util.Objects;
 
 /**
  * Class Profile is built to create and manager new profiles.
- * Each profile will have permissions associated with available actions and functionalities.
+ * Each profile will have permissions associated with available actions and
+ * functionalities.
  * A profile is defined by an id and a name.
  */
 
@@ -21,8 +22,10 @@ public class Profile implements Entity<Profile> {
     private final Name profileName;
 
     /**
-     * Constructor
-     * It creates a Profile using its identifier: profileId and profileName.
+     * Constructor.
+     *
+     * @param profileName     of the profile.
+     * @param idProfileNumber of the profile.
      */
     protected Profile(Name profileName, Integer idProfileNumber) {
         Validate.notNull(profileName, "Profile name can't be null.");
@@ -34,7 +37,8 @@ public class Profile implements Entity<Profile> {
      * This method checks if an instance of a Profile is equal to another object.
      *
      * @param toCompare object to compare with.
-     * @return true if the two Profile instances are the same object. Otherwise, checks if the
+     * @return true if the two Profile instances are the same object. Otherwise, checks
+     * if the
      * object parameter is null or has a different class than Profile, and return false if
      * either of these conditions are true.
      */
@@ -52,7 +56,8 @@ public class Profile implements Entity<Profile> {
     }
 
     /**
-     * This method is used to generate a unique hash for an object, based on the object's state.
+     * This method is used to generate a unique hash for an object, based on the
+     * object's state.
      *
      * @return a unique value that represents the object.
      */
@@ -62,7 +67,8 @@ public class Profile implements Entity<Profile> {
     }
 
     /**
-     * This method checks if two instances of Profile are equal by comparing the value of the
+     * This method checks if two instances of Profile are equal by comparing the value
+     * of the
      * attribute profile id.
      *
      * @param other Profile instance to compare with.
