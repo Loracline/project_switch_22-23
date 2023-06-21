@@ -115,7 +115,6 @@ public class ProductBacklog implements Entity<ProductBacklog> {
      *
      * @return The identifier of the product backlog as a string representation.
      */
-
     public String getProductBacklogId() {
         return this.productBacklogId.toString();
     }

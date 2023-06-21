@@ -10,6 +10,7 @@ import org.switch2022.project.ddd.domain.value_object.Name;
 
 @Component
 public class BusinessSectorFactory implements IBusinessSectorFactory {
+
     /**
      * This method creates an instance of business sector.
      *

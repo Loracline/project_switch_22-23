@@ -1,14 +1,12 @@
 package org.switch2022.project.ddd.domain.model.account;
 
 import org.switch2022.project.ddd.domain.value_object.Email;
-import org.switch2022.project.ddd.exceptions.InvalidInputException;
 
 import java.util.List;
 
 /**
  * Interface for a repository of Accounts.
  */
-
 public interface IAccountRepository {
 
     /**
@@ -21,6 +19,7 @@ public interface IAccountRepository {
 
     /**
      * This method returns all the account
+     *
      * @return a list with all accounts.
      */
     List<Account> findAll();
@@ -30,12 +29,12 @@ public interface IAccountRepository {
      *
      * @param emails the list of emails to match accounts against.
      * @return a list of accounts matching the provided emails.
-     * @throws InvalidInputException if the object is null.
      */
     List<Account> findAccountsByEmails(List<Email> emails);
 
     /**
      * This method returns an account with the given.
+     *
      * @param email to search for the account.
      * @return an account with the given email.
      */

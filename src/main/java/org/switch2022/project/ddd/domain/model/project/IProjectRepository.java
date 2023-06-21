@@ -9,9 +9,7 @@ import java.util.Optional;
  * Interface for a ProjectRepository.
  */
 public interface IProjectRepository {
-    /**
-     * Signatures of ProjectRepository class methods to ensure that the interface implements all methods.
-     */
+
     Optional<Project> findByCode(Code code);
 
     int count();

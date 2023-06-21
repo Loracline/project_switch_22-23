@@ -16,12 +16,11 @@ public final class Utils {
     }
 
     /**
-     * This method extracts the number of an alphanumeric string by removing a specified
-     * expression and converts them
+     * This method extracts the number of an alphanumeric string by removing a specified expression and converts them
      * into an integer value.
      *
-     * @param initialExpression  initial alphanumeric string
-     * @param expressionToRemove string to remove
+     * @param initialExpression  initial alphanumeric string.
+     * @param expressionToRemove string to remove.
      * @return the string number as an integer value.
      */
     public static int getIntFromAlphanumericString(String initialExpression,
@@ -56,8 +55,8 @@ public final class Utils {
     /**
      * This method converts a byte[] to a BufferedImage.
      *
-     * @param bytes Array of bytes representing the binary content of the image
-     * @return BufferedImage object converted from the array of bytes
+     * @param bytes Array of bytes representing the binary content of the image.
+     * @return BufferedImage object converted from the array of bytes.
      */
     public static BufferedImage convertByteArrayToBufferedImage(byte[] bytes) {
         BufferedImage image;
@@ -71,11 +70,10 @@ public final class Utils {
     }
 
     /**
-     * This method converts a BufferedImage to a byte[], which is commonly used to
-     * store images in databases.
+     * This method converts a BufferedImage to a byte[], which is commonly used to store images in databases.
      *
-     * @param image BufferedImage object to be converted
-     * @return Array of bytes representing the binary content of the image
+     * @param image BufferedImage object to be converted.
+     * @return Array of bytes representing the binary content of the image.
      */
     public static byte[] convertBufferedImageToByteArray(BufferedImage image) {
         byte[] bytes;
