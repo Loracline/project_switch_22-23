@@ -7,11 +7,14 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.switch2022.project.ddd.domain.model.project.IProjectRepository;
+import org.switch2022.project.ddd.domain.model.project.Project;
 import org.switch2022.project.ddd.domain.model.sprint.ISprintRepository;
 import org.switch2022.project.ddd.domain.model.sprint.Sprint;
 import org.switch2022.project.ddd.domain.model.user_story.IUsRepository;
 import org.switch2022.project.ddd.domain.model.user_story.UserStory;
 import org.switch2022.project.ddd.domain.value_object.Code;
+import org.switch2022.project.ddd.domain.value_object.ProjectStatus;
 import org.switch2022.project.ddd.domain.value_object.SprintStatus;
 import org.switch2022.project.ddd.domain.value_object.Status;
 import org.switch2022.project.ddd.dto.SprintStatusDto;
@@ -47,6 +50,10 @@ class SprintStatusChangeServiceTest {
     @MockBean
     @Qualifier("us_jpa")
     IUsRepository userStoryRepository;
+
+    @MockBean
+    @Qualifier("project_jpa")
+    IProjectRepository projectRepository;
 
     @BeforeEach
     void setUp() {
@@ -212,6 +219,31 @@ class SprintStatusChangeServiceTest {
     }
 
     /**
+     * Method: openSprint(sprint)
+     *
+     * Scenario 3: does not open the sprint because the project of the sprint is CLOSED.
+     * It should throw an InvalidInputException.
+     */
+    @Test
+    void ensureItThrowsAnExceptionIfTheProjectOfTheSprintIsClosed() {
+        //ARRANGE
+        Sprint sprintDouble = mock(Sprint.class);
+        Code projectCode = mock(Code.class);
+        Project projectDouble = mock(Project.class);
+        Optional<Project> projectOptional = Optional.ofNullable(projectDouble);
+
+        when(projectRepository.findByCode(projectCode)).thenReturn(projectOptional);
+        when(projectDouble.hasStatus(ProjectStatus.CLOSED)).thenReturn(true);
+
+        String expected = "You can not open a sprint in a CLOSED project.";
+        //ACT
+        InvalidInputException result = assertThrows(InvalidInputException.class,
+                () -> service.openSprint(projectCode, sprintDouble) );
+        //ASSERT
+        assertEquals(expected, result.getMessage());
+    }
+
+    /**
      * Method: changeSprintStatus(sprintStatusDto).
      *
      * Scenario 1: sprint status doesn't change because the sprint doesn't exist.
@@ -314,5 +346,49 @@ class SprintStatusChangeServiceTest {
 
         //Assert
         assertEquals(message, exception.getMessage());
+    }
+
+    /**
+     * Method: isProjectClosed(projectCode)
+     *
+     * Scenario 1: verifies that a project is closed because it has a status that is equal to "CLOSED".
+     * It should assert true.
+     */
+    @Test
+    void ensureThatReturnsTrueIfStatusIsClosed() {
+        //ARRANGE
+        Code projectCode = mock(Code.class);
+        Project projectDouble = mock(Project.class);
+        Optional<Project> projectOptional = Optional.ofNullable(projectDouble);
+
+        when(projectRepository.findByCode(projectCode)).thenReturn(projectOptional);
+        when(projectDouble.hasStatus(ProjectStatus.CLOSED)).thenReturn(true);
+        //ACT
+        boolean result = service.isProjectClosed(projectCode);
+
+        //ASSERT
+        assertTrue(result);
+    }
+
+    /**
+     * Method: isProjectClosed(projectCode)
+     *
+     * Scenario 2: verifies that a project is not closed because it has a status that is not equal to "CLOSED".
+     * It should assert false.
+     */
+    @Test
+    void ensureThatReturnsFalseIfStatusIsNotClosed() {
+        //ARRANGE
+        Code projectCode = mock(Code.class);
+        Project projectDouble = mock(Project.class);
+        Optional<Project> projectOptional = Optional.ofNullable(projectDouble);
+
+        when(projectRepository.findByCode(projectCode)).thenReturn(projectOptional);
+        when(projectDouble.hasStatus(ProjectStatus.CLOSED)).thenReturn(false);
+        //ACT
+        boolean result = service.isProjectClosed(projectCode);
+
+        //ASSERT
+        assertFalse(result);
     }
 }

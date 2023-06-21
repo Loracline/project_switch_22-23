@@ -8,7 +8,8 @@ import org.switch2022.project.ddd.application.UsService;
 
 import org.switch2022.project.ddd.application.UserStoryInSprintService;
 import org.switch2022.project.ddd.datamodel_jpa.assemblers.*;
-import org.switch2022.project.ddd.domain.model.account.Account;
+import org.switch2022.project.ddd.domain.model.account.Account
+        ;
 import org.switch2022.project.ddd.domain.model.account.AccountFactory;
 import org.switch2022.project.ddd.domain.model.business_sector.BusinessSectorFactory;
 import org.switch2022.project.ddd.domain.model.customer.CustomerFactory;
@@ -127,8 +128,11 @@ public class DatabaseLoader implements CommandLineRunner {
         final int PROJECT_ONE = 1;
         final int PROJECT_TWO = 2;
         final int PROJECT_THREE = 3;
+        final String USER_STORY_THREE = "3";
+        final String USER_STORY_FOUR = "4";
 
-        Project projectOne = factoryProject.createProject(PROJECT_ONE, new Name("Dummy 01"),
+
+        Project projectOne = factoryProject.createProject(PROJECT_ONE, new Name("Nokia 3310"),
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
         projectOne.setProjectStatus(ProjectStatus.CLOSED);
@@ -137,7 +141,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 LocalDate.of(TWENTY_TWENTY_TWO, THREE,ONE),
                 LocalDate.of(TWENTY_TWENTY_TWO, SEVEN, THIRTY_ONE));
 
-        Project projectTwo = factoryProject.createProject(PROJECT_TWO, new Name("Dummy 02"),
+        Project projectTwo = factoryProject.createProject(PROJECT_TWO, new Name("Super Mario 2"),
                 new Description("Just another dummy project"), new BusinessSectorId(1),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_ONE));
         projectTwo.setProjectStatus(ProjectStatus.CLOSED);
@@ -147,7 +151,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 LocalDate.of(TWO_THOUSAND_AND_TWENTY_THREE, FOUR, TWENTY_NINE));
 
 
-        Project projectThree = factoryProject.createProject(PROJECT_THREE, new Name("Inevitable nightmare"),
+        Project projectThree = factoryProject.createProject(PROJECT_THREE, new Name("G4"),
                 new Description("Doomed from the start"),
                 new BusinessSectorId(BUSINESS_SECTOR_NUMBER_TWO),
                 new TaxId(CUSTOMER_SERRA_TAX_ID), new ProjectTypologyId(TYPOLOGY_NUMBER_TWO));
@@ -158,19 +162,13 @@ public class DatabaseLoader implements CommandLineRunner {
         this.projects.save(projectDomainDataAssembler.toData(projectTwo));
         this.projects.save(projectDomainDataAssembler.toData(projectThree));
 
+        // Product Backlog
         List<String> acceptanceCriteria = new ArrayList<>();
-        usService.createUs(new UserStoryCreationDto("P001", "1",
-                "I want to be a iguana", "Farmer", acceptanceCriteria, 0));
-        usService.createUs(new UserStoryCreationDto("P001", "2",
-                "I want to be like a hippo", "Manuela", acceptanceCriteria, 0));
-        usService.createUs(new UserStoryCreationDto("P002", "1",
-                "I want to marry with Cristiana", "Gaiato", acceptanceCriteria, 0));
-        usService.createUs(new UserStoryCreationDto("P002", "2",
-                "I want to break free", "Gervásio", acceptanceCriteria, 0));
-        usService.createUs(new UserStoryCreationDto("P003", "1",
-                "I want to live forever", "Anacleto", acceptanceCriteria, 0));
-        usService.createUs(new UserStoryCreationDto("P003", "2",
-                "I want pantallones", "Josefina", acceptanceCriteria, 0));
+        usService.createUs(new UserStoryCreationDto("P003", "5",
+                "I want to start a new project", "Administrator", acceptanceCriteria, 0));
+        usService.createUs(new UserStoryCreationDto("P003", "6",
+                "I want to activate a user account", "Administrator", acceptanceCriteria, 0));
+
 
         // User Stories
         FactoryUserStory factoryUserStory = new FactoryUserStory();
@@ -178,30 +176,36 @@ public class DatabaseLoader implements CommandLineRunner {
         final String USER_STORY_ONE = "1";
         final String USER_STORY_TWO = "2";
         UserStory userStoryOne = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
-                new UsText("I want to be a iguana"),
-                new Actor("Farmer"), new ArrayList<>(), new Code(PROJECT_ONE));
+                new UsText("I want to create a sprint"),
+                new Actor("Manager"), new ArrayList<>(), new Code(PROJECT_ONE));
         userStoryOne.changeStatus(Status.RUNNING);
         UserStory userStoryTwo = factoryUserStory.createUserStory(new UsNumber(USER_STORY_TWO),
-                new UsText("I want to be like a hippo"),
-                new Actor("Manuela"), new ArrayList<>(), new Code(PROJECT_ONE));
+                new UsText("I want to create a user story"),
+                new Actor("Team member"), new ArrayList<>(), new Code(PROJECT_ONE));
         userStoryTwo.changeStatus(Status.RUNNING);
         UserStory userStoryThree = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
-                new UsText("I want to marry with Cristiana"),
-                new Actor("Gaiato"), new ArrayList<>(), new Code(PROJECT_TWO));
+                new UsText("I want to add a user story to a sprint"),
+                new Actor("Team member"), new ArrayList<>(), new Code(PROJECT_TWO));
         userStoryThree.changeStatus(Status.RUNNING);
         UserStory userStoryFour = factoryUserStory.createUserStory(new UsNumber(USER_STORY_TWO),
-                new UsText("I want to break free"),
-                new Actor("Gervásio"), new ArrayList<>(), new Code(PROJECT_TWO));
+                new UsText("I want to create a project"),
+                new Actor("Manager"), new ArrayList<>(), new Code(PROJECT_TWO));
         userStoryFour.changeStatus(Status.RUNNING);
         UserStory userStoryFive = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
-                new UsText("I want to live forever"),
-                new Actor("Anacleto"), new ArrayList<>(), new Code(PROJECT_THREE));
-        UserStory userStorySix = factoryUserStory.createUserStory(new UsNumber(USER_STORY_ONE),
-                new UsText("I want to be like superman"),
-                new Actor("Josefina"), new ArrayList<>(), new Code(PROJECT_THREE));
-        UserStory userStorySeven = factoryUserStory.createUserStory(new UsNumber(USER_STORY_TWO),
-                new UsText("I want to have a gameboy"),
-                new Actor("Bina"), new ArrayList<>(), new Code(PROJECT_TWO));
+                new UsText("I want to change the status of a sprint"),
+                new Actor("Manager"), new ArrayList<>(), new Code(PROJECT_THREE));
+        userStoryFive.changeStatus(Status.RUNNING);
+        UserStory userStorySix = factoryUserStory.createUserStory(new UsNumber(USER_STORY_TWO),
+                new UsText("I want to change the profile of a user"),
+                new Actor("Administrator"), new ArrayList<>(), new Code(PROJECT_THREE));
+        userStorySix.changeStatus(Status.BLOCKED);
+        UserStory userStorySeven = factoryUserStory.createUserStory(new UsNumber(USER_STORY_THREE),
+                new UsText("I want to estimate the effort of a user story"),
+                new Actor("Team member"), new ArrayList<>(), new Code(PROJECT_THREE));
+        userStorySeven.changeStatus(Status.FINISHED);
+        UserStory userStoryEight = factoryUserStory.createUserStory(new UsNumber(USER_STORY_FOUR),
+                new UsText("I want to change the status of a user story"),
+                new Actor("Team member"), new ArrayList<>(), new Code(PROJECT_THREE));
 
         this.userStories.save(userStoryDomainDataAssembler.toData(userStoryOne));
         this.userStories.save(userStoryDomainDataAssembler.toData(userStoryTwo));
@@ -210,6 +214,9 @@ public class DatabaseLoader implements CommandLineRunner {
         this.userStories.save(userStoryDomainDataAssembler.toData(userStoryFive));
         this.userStories.save(userStoryDomainDataAssembler.toData(userStorySix));
         this.userStories.save(userStoryDomainDataAssembler.toData(userStorySeven));
+        this.userStories.save(userStoryDomainDataAssembler.toData(userStoryEight));
+
+
 
         // Sprints
         SprintFactory sprintFactory = new SprintFactory();
@@ -310,12 +317,16 @@ public class DatabaseLoader implements CommandLineRunner {
         Sprint sprintTwenty = sprintFactory.createSprint(new Code(PROJECT_TWO),
                 new SprintId("p002", "s012"), new SprintNumber(SPRINT_NUMBER_TWENTY),
                 new Period(LocalDate.of(TWENTY_TWENTY_TWO, APRIL, FOUR), SPRINT_DURATION));
-        Sprint sprintTwentyOne = sprintFactory.createSprint(new Code(PROJECT_ONE),
-                new SprintId("p001", "s021"), new SprintNumber(SPRINT_NUMBER_TWENTY_ONE),
+        Sprint sprintTwentyOne = sprintFactory.createSprint(new Code(PROJECT_THREE),
+                new SprintId("p003", "s021"), new SprintNumber(SPRINT_NUMBER_TWENTY_ONE),
                 new Period(LocalDate.of(TWENTY_TWENTY_THREE, JUNE, 1), SPRINT_DURATION));
         sprintTwentyOne.changeStatus("OPEN");
         // User story in sprint
-        sprintTwentyOne.addUserStory(new UsId("p001","us001"));
+        sprintTwentyOne.addUserStory(new UsId("p003","us001"));
+        sprintTwentyOne.addUserStory(new UsId("p003","us002"));
+        sprintTwentyOne.addUserStory(new UsId("p003","us003"));
+        sprintTwentyOne.addUserStory(new UsId("p003","us004"));
+
 
         saveSprintsAuxiliary(sprintDomainDataAssembler, sprintOne, sprintTwo, sprintThree, sprintFour, sprintFive,
                 sprintSix, sprintSeven, sprintEight, sprintNine, sprintTen);

@@ -100,7 +100,7 @@ public class DatabaseLoaderTest {
         // Projects
         FactoryProject factoryProject = new FactoryProject();
         ProjectDomainDataAssembler projectDomainDataAssembler = new ProjectDomainDataAssembler();
-        Project projectOne = factoryProject.createProject(1, new Name("Dummy 01"),
+        Project projectOne = factoryProject.createProject(1, new Name("Nokia 3310"),
                 new Description("Just a dummy project"), new BusinessSectorId(1),
                 new TaxId("217746691"), new ProjectTypologyId(1));
         projectOne.setProjectStatus(ProjectStatus.INCEPTION);
@@ -121,8 +121,9 @@ public class DatabaseLoaderTest {
         FactoryUserStory factoryUserStory = new FactoryUserStory();
         UserStoryDomainDataAssembler userStoryDomainDataAssembler = new UserStoryDomainDataAssembler();
 
-        UserStory userStory = factoryUserStory.createUserStory(new UsNumber("1"), new UsText("I want to be a iguana"),
-                new Actor("Farmer"), new ArrayList<>(), new Code(1));
+        UserStory userStory = factoryUserStory.createUserStory(new UsNumber("1"), new
+                        UsText("I want to create a sprint"),
+                new Actor("Manager"), new ArrayList<>(), new Code(1));
         userStory.changeStatus(Status.RUNNING);
         verify(userStories).save(userStoryDomainDataAssembler.toData(userStory));
 

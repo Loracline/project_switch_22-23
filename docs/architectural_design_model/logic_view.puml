@@ -2,7 +2,7 @@
 title Logic View - Level 1
 () "User REST API" as API
 () "UI" as UI
-component "<<component>> \n <<C4 Context>> \n G4" as G4 {
+component "<<component>> \n <<System G4>>" as G4 {
 port " "
 port "  "
 UI -- "  "
@@ -14,21 +14,21 @@ API -- " "
 title Logic View - Level 2
 () "User REST API" as API
 () "UI" as UI
-component "<<System G4>>" as G4 {
+component "<<Component>> \n<<System G4>>" as G4 {
 portin " "
 port "   "
-component " <<Component>>\n <<Container (C4)>>\nG4-FE" as fe {
+component " <<Component>>\n <<Container >>\nG4-FE" as fe {
     port " " as frontEndPort
 }
-component "  <<Component>>\n<<Container (C4)>>\n G4-BE" as be {
+component "  <<Component>>\n<<Container >>\n G4-BE" as be {
     port " " as backEndPort
 }
-database "     <<Component>>\n   <<Container (C4)>>\n          <<DB H2>>" as h2 {
+database "     <<Component>>\n   <<Container >>\n          <<DB H2>>" as h2 {
 }
 UI -- " "
 API -- "   "
 " " -- frontEndPort
-"   " -- frontEndPort
+"   " -- backEndPort
 fe -(0- backEndPort: BE API
 be -(0- h2: SQL API
 @enduml
@@ -36,10 +36,8 @@ be -(0- h2: SQL API
 @startuml
 title Logic View - Level 3
 () "User REST API" as API
-() "UI" as UI
-component "<<System G4>>" as G4 {
+component "<<component>>\n<<Container>>\n<<G4-BE>>" as G4 {
 port " "
-port "  "
 
 package "Frameworks" {
 
@@ -47,10 +45,9 @@ package "Frameworks" {
   database "<<component>> \n <<component(C4)>> \n        DB H2" as DB
 }
 
-component "       <<component>> \n DataDomainAssembler" as schema
+component "<<component>> \n DB schema" as schema
 
 package "Interface Adapters" {
-  [<<component>> \n       DTO] as DTO
   [ <<component>>\n <<component(C4)>>\n  Controllers] as Cont
   [ <<component>>\n <<component(C4)>>\n  Repositories] as Rep
 }
@@ -59,17 +56,57 @@ package "Application Business Rules" {
     [ <<component>>\n <<component(C4)>>\n  Services] as Serv
 }
 
+package "Enterprise Business Rules Layer"{
+    [ <<component>>\n <<component(C4)>>\n  Model] as model
+}
+
+[<<component>> \n       DTO] as DTO
+
+
 R -(0- Cont : controllers API
 Cont -(0- Serv : services API
-Cont -(0-- DTO : DTO API
-Serv -(0- DTO : DTO API
-Serv -(0- Rep : Repositories API
-Rep -(0- schema: Assembler API
-schema -0)- DB: Assembler API
+Cont --(0- DTO : DTO API
+Serv -left(0- DTO : DTO API
+Serv -(0- Rep : repositories API
+Rep -(0- schema: DB schema API
+schema -up0)- DB: DB schema API
 API -- " "
-UI -- "  "
 " " -- R
-"  " -- R
+Serv -(0-- model: model API
 @enduml
 
+@startuml
+'https://plantuml.com/class-diagram
+title Logic View - Level 4
+package "Frameworks and Drivers Layer" {
+class Route
+interface IClient
+class Client
+}
+
+package "Interface Adpters Layers" {
+class Repo
+interface IController
+class Controller
+}
+
+package "Application Services" {
+interface IService
+class Service
+interface IRepo
+}
+
+package "Enterprise Business Rules Layer"  {
+class Model
+
+Route ..> IController
+Controller --|> IController
+Controller ..> IService
+Repo ..> IClient
+Client --|> IClient
+Service .up.> IRepo
+Service --|> IService
+Repo --|> IRepo
+Service .up.> Model
+@enduml
 
