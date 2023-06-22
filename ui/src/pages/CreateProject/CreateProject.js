@@ -5,6 +5,7 @@ import {
     fetchBusinessSectors,
     fetchCustomers,
     fetchTypologies,
+    getProjectFromSelfLink,
     resetCreateProject
 } from "../../context/Actions";
 import AppContext from "../../context/AppContext";
@@ -13,9 +14,9 @@ import './CreateProject.css';
 import {strings} from "../../strings";
 import ConfirmationPage from "../../components/ConfirmationPage/ConfirmationPage";
 import Loading from "../../components/Loading/Loading";
-import SuccessMessage from "../../components/InformationMessage/SuccessMessage";
 import FailureMessage from "../../components/InformationMessage/FailureMessage";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import SuccessMessageWithSelfLink from "../../components/InformationMessage/SuccessMessageWithLink";
 
 /**
  * Form component in React.
@@ -50,6 +51,8 @@ function CreateProject() {
     const messageFailure = state.messageFailure;
     const [project, setProject] = useState(initialProject);
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const selfLink = state.selfLink;
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchCustomers(dispatch);
@@ -97,6 +100,12 @@ function CreateProject() {
         createProject(dispatch, project);
     }
 
+    const onButtonClick = (event) => {
+        event.preventDefault();
+        getProjectFromSelfLink(dispatch, selfLink);
+        dispatch(resetCreateProject());
+        navigate(`/projects/${messageSuccess}`)
+    }
 
     const handleClearProject = (_) => {
         setProject(initialProject);
@@ -258,10 +267,11 @@ function CreateProject() {
                 handleConfirm={handleSubmit}
             />
 
-            <SuccessMessage
+            <SuccessMessageWithSelfLink
                 handleOpen={messageSuccess.length > 0}
                 title={strings.projectCreatedSuccessMessage}
                 message={messageSuccess}
+                onButtonClick={onButtonClick}
                 handleClose={handleClearProject}
             />
 
