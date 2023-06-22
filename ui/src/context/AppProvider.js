@@ -57,7 +57,8 @@ const AppProvider = ({children}) => {
         isSprintOpen: false,
         userStoriesInSprint: [],
         routerProjectCode: '',
-        routerSprintNumber: ''
+        routerSprintNumber: '',
+        selfLink: ''
     }
 
     const [state, dispatch] = useReducer(reducer, initialState);

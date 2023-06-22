@@ -10,10 +10,10 @@ export function postProject(success, failure, projectToSubmit) {
     })
         .then(res => {
             if (res.ok) {
-                return res.text();
+                return res.json();
             } else {
-                return res.text().then(text => {
-                    throw text
+                return res.json().then(json => {
+                    throw json
                 })
             }
         })
@@ -83,6 +83,13 @@ export function fetchProjects(success, failure) {
 
 export function fetchProject(success, failure, id) {
     fetch(`${URL}/projects/${id}`)
+        .then(res => res.json())
+        .then(res => success(res))
+        .catch(err => failure(err.message));
+}
+
+export function fetchProjectWithSelfLink(success, failure, selfLink) {
+    fetch(selfLink)
         .then(res => res.json())
         .then(res => success(res))
         .catch(err => failure(err.message));
