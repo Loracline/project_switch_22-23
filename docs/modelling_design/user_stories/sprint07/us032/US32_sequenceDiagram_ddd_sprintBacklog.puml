@@ -9,10 +9,10 @@ actor "Project Manager"
 participant ":AddUserStoryInSprintUI" as ui
 participant ":SprintWebController" as ct
 participant ":AddUserStoryToSprintBacklogService" as serv
-participant ":sprintRepository" as sprintRep
-participant "sprint:Sprint" as s
-participant "userStory:UserStory" as us
-
+participant ":SprintRepository" as rep
+participant "sprint:Sprint" as sprint
+participant ":SprintDataAssembler" as ass
+participant ":ISprintJpaRepository" as i
 activate "Project Manager"
 
 "Project Manager"-> ui: starts adding a User Story to Sprint Backlog
@@ -23,24 +23,26 @@ ui -> ct: addUserStoryToSprintBacklog(UserStoryInSprintDto)
 activate ct
 ct -> serv: addUserStoryToSprintBacklog(UserStoryInSprintDto)
 activate serv
-serv -> sprintRep: findById(sprintId)
-activate sprintRep
-sprintRep --> serv: sprint
-deactivate sprintRep
-serv -> s: isOpen(status)
-activate s
-s --> serv: true
-deactivate s
-
-serv -> us: hasUserStoryStatus(status)
-activate us
-us --> serv: true
-deactivate us
-serv -> s : addUserStory(usIdVO)
-activate s
-s --> serv: true
-deactivate s
-
+serv -> rep : getSprintById(sprintId)
+activate rep
+rep --> serv : sprint
+deactivate rep
+serv -> sprint : addUserStory(userStoryId)
+activate sprint
+sprint --> serv :true
+deactivate sprint
+serv -> rep : save(sprint)
+activate rep
+rep -> ass : toData
+activate ass
+ass -> i : save(sprint)
+activate i
+i --> ass : true
+deactivate i
+ass --> rep : sprintJpa
+deactivate ass
+rep --> serv : true
+deactivate rep
 serv --> ct : true
 deactivate serv
 ct --> ui : true
