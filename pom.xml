@@ -135,7 +135,6 @@
                 <configuration>
                     <excludes>
                         <exclude>**/ui/**/*</exclude>
-                        <exclude>**/org/switch2022/project/ddd/webcontrollers/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
