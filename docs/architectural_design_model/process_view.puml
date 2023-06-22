@@ -68,7 +68,7 @@ participant "<<Component (C4)>> restUser :REST User" as api
 participant "resource :Model" as rmodel
 participant "addResource :Model" as addmodel
 participant "DataDomainAssembler" as assembler
-
+activate boot
 create db
 boot --> db: create(config)
 create repop
@@ -83,28 +83,46 @@ create api
 boot --> api: create(config)
 create service
 boot --> service: create(repoProjects, repoAccounts, repoResources)
+deactivate boot
 create controller
 boot --> controller: create(service)
 [o-> router: POST /resources (allocate)
+activate router
 router -> controller: createResource(allocationJson)
+deactivate router
 create dto
+activate controller
 controller --> dto: create(allocationJson)
 controller -> service: addUserToProject(allocationDto)
+activate service
 service -> factory: create(resource)
+activate factory
 create rmodel
 factory -> rmodel: create(resource)
 factory --> service: resource
+deactivate factory
 create addmodel
 service -> addmodel: create(allocationDto.projectCode, allocationDto.accountEmail, ...)
+deactivate service
 service -> repor: save(addResource)
+activate repor
+activate service
 create assembler
 repor -> assembler: toData(resource)
 assembler --> repor: resourceJpa
+deactivate repor
 repor -> db: save(resourceJpa)
+activate db
+activate repor
 db --> repor: true
+deactivate db
 repor --> service: true
+deactivate repor
 service --> controller: true
+deactivate service
 controller --> router: 201/40?
+deactivate controller
+activate router
 [o<-- router : 201/40?
-
+deactivate router
 @enduml
