@@ -1,6 +1,7 @@
 import {
     fetchProject,
     fetchProjects,
+    fetchProjectWithSelfLink,
     getBusinessSectors,
     getCustomers,
     getProjectTypologies,
@@ -161,12 +162,13 @@ export function createProject(dispatch, projectToSubmit) {
     );
 }
 
-function postProjectSuccess(projectId, dispatch) {
+function postProjectSuccess(response, dispatch) {
     getProjects(dispatch);
     return {
         type: CREATE_PROJECT_SUCCESS,
         payload: {
-            message: projectId,
+            code: response.code,
+            selfLink: response._links.self.href,
         }
     }
 }
@@ -186,6 +188,10 @@ function postProjectFailure(message) {
     }
 }
 
+export function getProjectFromSelfLink(dispatch, projectSelfLink) {
+    fetchProjectWithSelfLink((res) => dispatch(getProjectSuccess(res)),
+        (err) => dispatch(fetchFailure(err.message)), projectSelfLink);
+}
 
 /**
  Action for creating a new user story.

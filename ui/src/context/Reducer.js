@@ -63,8 +63,9 @@ const reducer = (state, action) => {
         }
 
         case CREATE_PROJECT_SUCCESS: {
-            const message = action.payload.message;
-            return {...state, loading: false, messageSuccess: message};
+            const code = action.payload.code;
+            const selfLink = action.payload.selfLink;
+            return {...state, loading: false, messageSuccess: code, selfLink: selfLink};
         }
 
         case CREATE_PROJECT_FAILURE: {
