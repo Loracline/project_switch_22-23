@@ -17,6 +17,16 @@ services:
     volumes:
       - database-data:/var/lib/mysql
 
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: database
+    networks:
+      - g4Network
+    ports:
+      - '8081:80'
+
 networks:
   g4Network:
 
