@@ -1,0 +1,37 @@
+# Stage 1: Build the backend
+
+# Base image
+FROM maven:3.9.1 as backend-build
+
+# Creates that directory within the container image if it does not exist and
+# Set the working directory so that all subsequent command runs in this folder
+WORKDIR /app
+
+# Clone repository for app
+RUN git clone https://ruipppinho@bitbucket.org/joaoserra1993/project_g4_open_doors.git
+
+# Set the working directory so that all subsequent command runs in this folder
+WORKDIR /app/project_g4_open_doors
+
+# Install dependencies
+RUN mvn dependency:go-offline
+
+#Generate the .war file
+RUN mvn package -DskipTests
+
+# Stage 2: Create the final container
+FROM tomcat:9.0.54-jdk11
+
+# Remove the default Tomcat webapps
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Copy backend build (WAR file) to Tomcat webapps directory
+COPY --from=backend-build /app/project_g4_open_doors/target/switch2022project-g4-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+
+# Expose port to access server
+EXPOSE 8080
+
+# Command to run our app
+CMD ["catalina.sh", "run"]
+
+
