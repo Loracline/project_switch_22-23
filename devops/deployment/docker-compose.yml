@@ -27,6 +27,13 @@ services:
     ports:
       - '8081:80'
 
+  frontend:
+    image: 'ruipppinho/g4:frontend40'
+    networks:
+      - g4Network
+    ports:
+      - '3000:3000'
+
 networks:
   g4Network:
 
