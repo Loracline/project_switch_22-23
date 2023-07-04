@@ -321,9 +321,9 @@ pipeline {
             steps {
             echo 'Building and publishing Docker image...'
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredentials') {
-                        def frontendImage =  docker.build("ruipppinho/g4:frontend${env.BUILD_ID}","-f ./Dockerfile-frontend ." )
-                        def backendImage  =  docker.build("ruipppinho/g4:backend${env.BUILD_ID}","-f ./Dockerfile-backend ." )
+                    docker.withRegistry('https://registry.hub.docker.com', 'DockerHubPersonal') {
+                       def frontendImage =  docker.build("marianazancheta/g4:frontend${env.BUILD_ID}","-f ./Dockerfile-frontend ." )
+                        def backendImage  =  docker.build("marianazancheta/g4:backend${env.BUILD_ID}","-f ./Dockerfile-backend ." )
                         frontendImage.push()
                         backendImage.push()
                     }
@@ -523,26 +523,7 @@ To configure the project to use MariaDB, follow these steps:
 </dependency>
 ```
 
-2. Open the `application.properties` file and update the following properties:
-
-```bash
-server.port = 8080      
-
-spring.datasource.driverClassName=org.mariadb.jdbc.Driver
-spring.datasource.username=switch
-spring.datasource.password=switch
-spring.datasource.url=jdbc:mariadb://database:3306/g4db
-```
-- `server.port = 8080` This property sets the port number for the server to 8080. It indicates that the application will be accessible on port 8080.
-- `spring.datasource.driverClassName=org.mariadb.jdbc.Driver` This property specifies the driver class name for MariaDB.
-- `spring.datasource.username=switch` & `spring.datasource.password=switch` These properties define the username and password to connect to the MariaDB database.
-- `spring.datasource.url=jdbc:mariadb://database:3306/g4db` This property sets the JDBC URL for connecting to the MariaDB database.
-  In this case, the host is set to "database" (which might be the hostname or IP address of the database server),
-  the port is set to 3306 (the default port for MariaDB), and the database name is set to "g4db".
-
-These properties define the database connection details and instruct the application to use MariaDB.
-
-3. In the `docker-compose.yml` file, you'll find the service configuration for the database:
+2. In the `docker-compose.yml` file, you'll find the service configuration for the database:
 
 ```bash
 services:
@@ -600,36 +581,40 @@ To configure the project to use PhpMyAdmin, follow these steps:
 
 #### Step 6:
 
+Add the frontend and backend services to your docker-compose.yml :
+
 ```bash
-frontend:
-image: 'ruipppinho/g4:frontend40'
-networks:
-- g4Network
-ports:
-- '3000:3000'
+  frontend:
+    image: 'marianazancheta/g4:frontend31'
+    networks:
+      - g4Network
+    ports:
+      - '3000:3000'
 ```
 - `frontend`: This is the name of the service.
-- `image`: 'ruipppinho/g4:frontend40': Specifies the Docker image to use for the service. The image name is ruipppinho/g4 and the tag is frontend40.
+- `image`: 'marianazancheta/g4:frontend31': Specifies the Docker image to use for the service. The image name is marianazancheta/g4 and the tag is frontend31.
 - `networks`: Specifies the networks to which this service will be connected.
 - `g4Network`: Refers to the g4Network network defined elsewhere in the Docker Compose file.
   ` ports`: Exposes ports from the container to the host.
 - `'3000:3000'`: Maps port 3000 of the host to port 3000 of the container. This allows accessing the service running inside the container on port 3000 via the host machine.
 
 ```bash
-backend:
-image: 'ruipppinho/g4:backend40'
-environment:
-spring.datasource.url: jdbc:mariadb://database:3306/g4db
-spring.datasource.driver-class-name: org.mariadb.jdbc.Driver
-networks:
-- g4Network
-ports:
-- '8080:8080'
-depends_on:
-- database
+  backend:
+    image: 'marianazancheta/g4:backend31'
+    environment:
+      spring.datasource.url: jdbc:mariadb://database:3306/g4db
+      spring.datasource.driver-class-name: org.mariadb.jdbc.Driver
+      spring.datasource.username: switch
+      spring.datasource.password: switch
+    networks:
+      - g4Network
+    ports:
+      - '8080:8080'
+    depends_on:
+      - database
 ```
 - `backend`: This is the name of the service.
-- `image: 'ruipppinho/g4:backend40'`: Specifies the Docker image to use for the service. The image name is ruipppinho/g4 and the tag is frontend40.
+- `image: 'marianazancheta/g4:backend31'`: Specifies the Docker image to use for the service. The image name is marianazancheta/g4 and the tag is frontend31.
 - `environment`: Defines environment variables for the service.
 - `spring.datasource.url: jdbc:mariadb://database:3306/g4db`: Sets the spring.datasource.url environment variable to the JDBC URL for connecting to the MariaDB database. The URL jdbc:mariadb://database:3306/g4db indicates that the service should connect to a database service named database on port 3306 using the database g4db.
 - `spring.datasource.driver-class-name: org.mariadb.jdbc.Driver`: Sets the spring.datasource.driver-class-name environment variable to specify the JDBC driver class for MariaDB.
@@ -637,3 +622,62 @@ depends_on:
 - `ports:'8080:8080'`: Exposes ports from the container to the host. Maps port 8080 of the host to port 8080 of the container. This allows accessing the service running inside the container on port 8080 via the host machine.
 - `depends_on: database`: Defines dependencies between services. Will ensure that the database service is up and running before the backend container is instantiated.
 
+In the end, your docker-compose.yml should look like this : 
+
+```bash
+# Use root/admin as user/password credentials
+version: '3.1'
+
+services:
+  database:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: admin
+      MARIADB_USER: switch
+      MARIADB_PASSWORD: switch
+      MARIADB_DATABASE: g4db
+    networks:
+      - g4Network
+    ports:
+      - '3306:3306'
+    volumes:
+      - database-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: database
+    networks:
+      - g4Network
+    ports:
+      - '8081:80'
+
+  frontend:
+    image: 'marianazancheta/g4:frontend31'
+    networks:
+      - g4Network
+    ports:
+      - '3000:3000'
+
+  backend:
+    image: 'marianazancheta/g4:backend31'
+    environment:
+      spring.datasource.url: jdbc:mariadb://database:3306/g4db
+      spring.datasource.driver-class-name: org.mariadb.jdbc.Driver
+      spring.datasource.username: switch
+      spring.datasource.password: switch
+    networks:
+      - g4Network
+    ports:
+      - '8080:8080'
+    depends_on:
+      - database
+
+networks:
+  g4Network:
+
+volumes:
+  database-data:
+```
