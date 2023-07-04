@@ -1,5 +1,5 @@
 # Base image
-FROM node:18.15.0 as frontend-build
+FROM node:latest as frontend-build
 
 # Creates that directory within the container image if it does not exist and
 # Set the working directory so that all subsequent command runs in this folder

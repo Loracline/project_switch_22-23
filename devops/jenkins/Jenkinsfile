@@ -108,9 +108,9 @@ pipeline {
             steps {
             echo 'Building and publishing Docker image...'
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerHubCredentials') {
-                        def frontendImage =  docker.build("ruipppinho/g4:frontend${env.BUILD_ID}","-f ./Dockerfile-frontend ." )
-                        def backendImage  =  docker.build("ruipppinho/g4:backend${env.BUILD_ID}","-f ./Dockerfile-backend ." )
+                    docker.withRegistry('https://registry.hub.docker.com', 'DockerHubPersonal') {
+                        def frontendImage =  docker.build("marianazancheta/g4:frontend${env.BUILD_ID}","-f ./Dockerfile-frontend ." )
+                        def backendImage  =  docker.build("marianazancheta/g4:backend${env.BUILD_ID}","-f ./Dockerfile-backend ." )
                         frontendImage.push()
                         backendImage.push()
                     }

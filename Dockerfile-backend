@@ -1,7 +1,7 @@
 # Stage 1: Build the backend
 
 # Base image
-FROM maven:3.9.1 as backend-build
+FROM maven:latest as backend-build
 
 # Creates that directory within the container image if it does not exist and
 # Set the working directory so that all subsequent command runs in this folder
