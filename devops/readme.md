@@ -205,7 +205,7 @@ Create a pipeline scrip with the following stages:
 - Archive: Archives in Jenkins the archive files generated during "Assemble" stage.
 - Publish Image: Generate a docker image with Tomcat and the war file and publish it in the Docker Hub.
 
-Add a new `Jenkinsfile` in the DevOps folder:
+Add a new `Jenkinsfile` in the DevOps/jenkins folder:
 ```bash
 pipeline {
     agent any
@@ -213,12 +213,6 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            agent {
-                docker {
-                    image 'maven:3.9.0-eclipse-temurin-11'
-                    args '-v /root/.m2:/root/.m2'
-                }
-            }
             steps {
                 echo 'Checking out...'
                 git branch: 'master', url: 'https://bitbucket.org/joaoserra1993/project_g4_open_doors'
@@ -234,11 +228,7 @@ pipeline {
             steps {
                 echo 'Assembling...'
                 script {
-                    if (isUnix()) {
-                        sh 'mvn clean package'
-                    } else {
-                        bat 'mvn clean package'
-                    }
+                    sh 'mvn clean package'
                 }
             }
         }
@@ -304,11 +294,7 @@ pipeline {
             steps {
                 echo 'Generating Javadoc...'
                 script {
-                    if (isUnix()) {
-                        sh 'mvn javadoc:javadoc'
-                    } else {
-                        bat 'mvn javadoc:javadoc'
-                    }
+                    sh 'mvn javadoc:javadoc'
                 }
             }
         }
@@ -348,18 +334,12 @@ pipeline {
 }
 ```
 #### Understanding the Jenkinsfile:
-**Agent Section**: The agent section specifies where that the pipeline will run in a Docker agent
-with the Maven image maven:3.9.0-eclipse-temurin-11. This step is necessary so that Jenkins can run
-a maven project.
-
-**Stages Section**: This configuration ensures that the stage runs inside a Docker container with Maven installed,
-allowing Maven-based build operations to be performed within the Jenkins pipeline.
-
 **Checkout Stage**: Checks out the source code from a Git repository hosted on Bitbucket.
-It uses the git command with the specified repository URL, branch (master), and credentials
-(project_g4).
+It uses the git command with the specified repository URL and branch (master).
 
-**Assemble Stage**: Here the project is compiled and packaged  using Maven with the command
+**Assemble Stage**: **Agent Section**: The agent section specifies where that the pipeline will run in a Docker agent
+with the Maven image maven:3.9.0-eclipse-temurin-11. This step is necessary so that Jenkins can run
+a maven project. After that, on the `steps` section the project is compiled and packaged  using Maven with the command
 `mvn clean package`.
 
 **Integration Test Stage**: Runs integration tests using Maven's failsafe plugin with the command
@@ -657,6 +637,3 @@ depends_on:
 - `ports:'8080:8080'`: Exposes ports from the container to the host. Maps port 8080 of the host to port 8080 of the container. This allows accessing the service running inside the container on port 8080 via the host machine.
 - `depends_on: database`: Defines dependencies between services. Will ensure that the database service is up and running before the backend container is instantiated.
 
-
-
-## Conclusion
