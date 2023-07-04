@@ -28,14 +28,14 @@ services:
       - '8081:80'
 
   frontend:
-    image: 'ruipppinho/g4:frontend40'
+    image: 'marianazancheta/g4:frontend31'
     networks:
       - g4Network
     ports:
       - '3000:3000'
 
   backend:
-    image: 'ruipppinho/g4:backend40'
+    image: 'marianazancheta/g4:backend31'
     environment:
       spring.datasource.url: jdbc:mariadb://database:3306/g4db
       spring.datasource.driver-class-name: org.mariadb.jdbc.Driver
