@@ -1,0 +1,23 @@
+# Base image
+FROM node:18.15.0 as frontend-build
+
+# Creates that directory within the container image if it does not exist and
+# Set the working directory so that all subsequent command runs in this folder
+WORKDIR /app
+
+# Clone repository for app
+RUN git clone https://ruipppinho@bitbucket.org/joaoserra1993/project_g4_open_doors.git
+
+WORKDIR /app/project_g4_open_doors/ui
+
+# Install dependencies
+RUN npm ci
+
+# Build
+RUN npm run build
+
+# Expose port to access server
+EXPOSE 3000
+
+# Command to run our app
+CMD [ "npx", "serve", "build" ]
