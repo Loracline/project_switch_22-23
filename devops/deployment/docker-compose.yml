@@ -34,6 +34,20 @@ services:
     ports:
       - '3000:3000'
 
+  backend:
+    image: 'ruipppinho/g4:backend40'
+    environment:
+      spring.datasource.url: jdbc:mariadb://database:3306/g4db
+      spring.datasource.driver-class-name: org.mariadb.jdbc.Driver
+      spring.datasource.username: switch
+      spring.datasource.password: switch
+    networks:
+      - g4Network
+    ports:
+      - '8080:8080'
+    depends_on:
+      - database
+
 networks:
   g4Network:
 
